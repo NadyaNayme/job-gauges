@@ -1,0 +1,16 @@
+{
+	"appName": "JobGauges",
+	"description": "FFXIV-inspired gauges for Runescape combat",
+	"appUrl": "./index.html",
+	"configUrl": "./appconfig.json",
+	"iconUrl": "./icon.png",
+	"defaultWidth": 400,
+	"defaultHeight": 400,
+	"minWidth": 150,
+	"minHeight": 5,
+	"maxWidth": 1000,
+	"maxHeight": 1000,
+	"requestHandlers": [ ],
+	"activators": [],
+	"permissions": "pixel, gamestate, overlay"
+}
