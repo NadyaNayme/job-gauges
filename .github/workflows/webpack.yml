@@ -1,0 +1,28 @@
+name: Webpack
+
+on:
+  push:
+    branches: [ master ]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Webpack Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - run: npm install
+      - run: npm run build
+        env:
+          NODE_ENV: production
+      - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add dist
+          git commit -m "[skip ci] updating distribution"
+          git push
