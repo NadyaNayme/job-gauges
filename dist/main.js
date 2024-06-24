@@ -7112,6 +7112,10 @@ function setOverlayPosition() {
                 case 0:
                     updatingOverlayPosition = true;
                     alt1__WEBPACK_IMPORTED_MODULE_7__.once('alt1pressed', updateLocation);
+                    alt1.setTooltip('Press Alt+1 to save position \n Screen tearing is temporary');
+                    setTimeout(function () {
+                        alt1.clearTooltip();
+                    }, 3000);
                     _a.label = 1;
                 case 1:
                     if (!updatingOverlayPosition) return [3 /*break*/, 3];
@@ -7134,6 +7138,7 @@ function updateLocation(e) {
     });
     alt1.overLayClearGroup('overlayPositionHelper');
     alt1.overLayRefreshGroup('overlayPositionHelper');
+    alt1.clearTooltip();
 }
 window.onload = function () {
     //check if we are running inside alt1 by checking if the alt1 global exists

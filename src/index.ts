@@ -193,6 +193,12 @@ let updatingOverlayPosition = false;
 async function setOverlayPosition() {
 	updatingOverlayPosition = true;
 	a1lib.once('alt1pressed', updateLocation);
+	alt1.setTooltip(
+		'Press Alt+1 to save position \n Screen tearing is temporary'
+	);
+	setTimeout(() => {
+		alt1.clearTooltip();
+	}, 3000);
 	while (updatingOverlayPosition) {
 		gauges.necromancy.position.x = a1lib.getMousePosition().x;
 		gauges.necromancy.position.y = a1lib.getMousePosition().y;
@@ -208,6 +214,7 @@ function updateLocation(e) {
 	});
 	alt1.overLayClearGroup('overlayPositionHelper');
 	alt1.overLayRefreshGroup('overlayPositionHelper');
+	alt1.clearTooltip();
 }
 
 window.onload = function () {
