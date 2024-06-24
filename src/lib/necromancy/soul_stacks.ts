@@ -10,6 +10,9 @@ var soulImages = a1lib.webpackImages({
 });
 
 export async function soulsOverlay(gauges) {
+	if (!gauges.necromancy.stacks.souls.visible) {
+		return;
+	}
 	await soulImages.promise;
 	switch (gauges.necromancy.stacks.souls.count) {
 		case 0:

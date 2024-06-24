@@ -14,6 +14,9 @@ var conjureImages = a1lib.webpackImages({
 let white = a1lib.mixColor(255, 255, 255);
 let lastMinValue;
 export async function conjureOverlay(gauges) {
+	if (!gauges.necromancy.conjures.visible) {
+		return
+	}
 	await conjureImages.promise;
 	alt1.overLaySetGroup('Undead_Army');
 	if (gauges.necromancy.conjures.active) {

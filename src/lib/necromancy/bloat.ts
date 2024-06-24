@@ -16,8 +16,11 @@ var bloatImages = a1lib.webpackImages({
 
 let white = a1lib.mixColor(255, 255, 255);
 export async function bloatOverlay(gauges) {
+	if (!gauges.necromancy.bloat.visible) {
+		return;
+	}
 	await bloatImages.promise;
-	if (gauges.necromancy.bloat.active) {
+	if (gauges.necromancy.bloat.active && gauges.necromancy.bloat.visible) {
 		let value = parseFloat(gauges.necromancy.bloat.time);
 		switch (true) {
 			case value < 1.8:
@@ -186,15 +189,14 @@ export async function bloatOverlay(gauges) {
 				alt1.overLayRefreshGroup('Bloat');
 				break;
 		}
-
-	} else {
+	} else if (gauges.necromancy.bloat.visible) {
 		alt1.overLaySetGroup('Bloat');
 		alt1.overLayImage(
-			gauges.necromancy.position.x + gauges.necromancy.bloat.position.active_orientation.x,
-			gauges.necromancy.position.y + gauges.necromancy.bloat.position.active_orientation.y,
-			a1lib.encodeImageString(
-				bloatImages.bloat_0.toDrawableData()
-			),
+			gauges.necromancy.position.x +
+				gauges.necromancy.bloat.position.active_orientation.x,
+			gauges.necromancy.position.y +
+				gauges.necromancy.bloat.position.active_orientation.y,
+			a1lib.encodeImageString(bloatImages.bloat_0.toDrawableData()),
 			bloatImages.bloat_0.width,
 			1000
 		);

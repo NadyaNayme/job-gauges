@@ -2,7 +2,7 @@ import * as a1lib from 'alt1';
 import * as TargetMob from 'alt1/targetmob';
 import * as sauce from './a1sauce';
 
-const { necromancy_overlay_data } = require('./data/necromancy_job_gauge');
+const { necromancy_gauge } = require('./data/necromancy_job_gauge');
 const { readBuffs } = require('./lib/readBuffs');
 const { conjureOverlay } = require('./lib/necromancy/conjures');
 const { soulsOverlay } = require('./lib/necromancy/soul_stacks');
@@ -31,7 +31,7 @@ let helperItems = {
 const gauges = {
 	inCombat: false,
 	checkCombatStatus: false,
-	necromancy: necromancy_overlay_data,
+	necromancy: necromancy_gauge,
 };
 
 async function renderOverlay() {
@@ -89,6 +89,46 @@ export async function startApp() {
 		gauges.checkCombatStatus = sauce.getSetting('hideOutsideCombat');
 	}
 
+	if (sauce.getSetting('showConjures') !== undefined) {
+		gauges.necromancy.conjures.visible = sauce.getSetting('showConjures');
+	}
+
+	if (sauce.getSetting('showLivingDeath') !== undefined) {
+		gauges.necromancy.livingDeath.visible = sauce.getSetting('showLivingDeath');
+	}
+
+	if (sauce.getSetting('showIncantations') !== undefined) {
+		gauges.necromancy.incantations.visible = sauce.getSetting('showIncantations');
+	}
+
+	if (sauce.getSetting('showInvokeDeath') !== undefined) {
+		gauges.necromancy.incantations.invokeDeath.visible = sauce.getSetting('showInvokeDeath');
+	}
+
+	if (sauce.getSetting('showDarkness') !== undefined) {
+		gauges.necromancy.incantations.darkness.visible = sauce.getSetting('showDarkness');
+	}
+
+	if (sauce.getSetting('showThreads') !== undefined) {
+		gauges.necromancy.incantations.threads.visible = sauce.getSetting('showThreads');
+	}
+
+	if (sauce.getSetting('showSplitSoul') !== undefined) {
+		gauges.necromancy.incantations.splitSoul.visible = sauce.getSetting('showSplitSoul');
+	}
+
+	if (sauce.getSetting('showSouls') !== undefined) {
+		gauges.necromancy.stacks.souls.visible = sauce.getSetting('showSouls');
+	}
+
+	if (sauce.getSetting('showNecrosis') !== undefined) {
+		gauges.necromancy.stacks.necrosis.visible = sauce.getSetting('showNecrosis');
+	}
+
+	if (sauce.getSetting('showBloat') !== undefined) {
+		gauges.necromancy.bloat.visible = sauce.getSetting('showBloat');
+	}
+
 	updateActiveOrientationFromLocalStorage();
 
 	setInterval(function () {
@@ -97,33 +137,38 @@ export async function startApp() {
 }
 
 function updateActiveOrientationFromLocalStorage() {
-    // Retrieve selected orientation from localStorage
-    let selectedOrientation = sauce.getSetting('selectedOrientation');
+	// Retrieve selected orientation from localStorage
+	let selectedOrientation = sauce.getSetting('selectedOrientation');
 
-    if (!selectedOrientation) {
-       selectedOrientation = 'reverse_split_orientation';
-	   sauce.updateSetting('selectedOrientation', 'reverse_split_orientation');
-    }
+	if (!selectedOrientation) {
+		selectedOrientation = 'reverse_split_orientation';
+		sauce.updateSetting('selectedOrientation', 'reverse_split_orientation');
+	}
 
-    // Function to recursively update active_orientation in an object
-    function updateActiveOrientation(obj) {
-        for (const key in obj) {
-            if (typeof obj[key] === 'object' && obj[key] !== null) {
-                if (key === 'active_orientation') {
-                    obj[key].x = obj[selectedOrientation].x;
-                    obj[key].y = obj[selectedOrientation].y;
-                } else {
-                    updateActiveOrientation(obj[key]);
-                }
-            }
-        }
-    }
-	updateActiveOrientation(necromancy_overlay_data);
+	// Function to recursively update active_orientation in an object
+	function updateActiveOrientation(obj) {
+		for (const key in obj) {
+			if (typeof obj[key] === 'object' && obj[key] !== null) {
+				if (key === 'active_orientation') {
+					obj[key].x = obj[selectedOrientation].x;
+					obj[key].y = obj[selectedOrientation].y;
+				} else {
+					updateActiveOrientation(obj[key]);
+				}
+			}
+		}
+	}
+	updateActiveOrientation(necromancy_gauge);
 }
 
-
+const version = '0.0.1';
 const settingsObject = {
-	settingsHeader: sauce.createHeading('h2', 'Settings'),
+	appName: sauce.createHeading('h2', 'Job Gauges - v' + version),
+	settingDiscord: sauce.createText(
+		`Please <a href="https://discord.gg/KJ2SgWyJFF" target="_blank" rel="nofollow">join the Discord</a> for any suggestions or support`
+	),
+	generalStart: sauce.createSeperator(),
+	generalHeader: sauce.createHeading('h3', 'General'),
 	hideOutsideCombat: sauce.createCheckboxSetting(
 		'hideOutsideCombat',
 		'Hide the overlay while out of combat',
@@ -134,6 +179,7 @@ const settingsObject = {
 		setOverlayPosition,
 		{ classes: ['nisbutton'] }
 	),
+	orientationReset: sauce.createSeperator(),
 	orientationHeader: sauce.createHeading('h3', 'Incantation Placement'),
 	orientationSelection: sauce.createDropdownSetting(
 		'selectedOrientation',
@@ -145,42 +191,65 @@ const settingsObject = {
 			{ value: 'reverse_split_orientation', name: 'Reverse Split' },
 		]
 	),
-	// visibleComponentsHeader: sauce.createHeading('h3', 'Visible Components'),
-	// showConjures: sauce.createCheckboxSetting(
-	// 	'showConjures',
-	// 	'Show the Conjures component',
-	// 	true
-	// ),
-	// showLivingDeath: sauce.createCheckboxSetting(
-	// 	'showLivingDeath',
-	// 	'Show Living Death component',
-	// 	true
-	// ),
-	// showIncantations: sauce.createCheckboxSetting(
-	// 	'showIncantations',
-	// 	'Show the Incantations component',
-	// 	true
-	// ),
-	// showSouls: sauce.createCheckboxSetting(
-	// 	'showSouls',
-	// 	'Show the Residual Souls component',
-	// 	true
-	// ),
-	// showNecrosis: sauce.createCheckboxSetting(
-	// 	'showNecrosis',
-	// 	'Show the Necrosis component',
-	// 	true
-	// ),
-	// showBloat: sauce.createCheckboxSetting(
-	// 	'showBloat',
-	// 	'Show the Bloat component',
-	// 	true
-	// ),
+	visibleReset: sauce.createSeperator(),
+	visibleComponentsHeader: sauce.createHeading('h3', 'Visible Components'),
+	visibleComponentsText: sauce.createText(
+		'Select which components of the overlay you wish to see.'
+	),
+	visibleComponentsSmallText: sauce.createSmallText(
+		'Give it a few seconds to update.'
+	),
+	showConjures: sauce.createCheckboxSetting(
+		'showConjures',
+		'Show Conjures',
+		sauce.getSetting('showConjures') ?? true
+	),
+	showLivingDeath: sauce.createCheckboxSetting(
+		'showLivingDeath',
+		'Show Living Death',
+		sauce.getSetting('showLivingDeath') ?? true
+	),
+	showIncantations: sauce.createCheckboxSetting(
+		'showIncantations',
+		'Show Incantations',
+		sauce.getSetting('showIncantations') ?? true
+	),
+	showInvokeDeath: sauce.createCheckboxSetting(
+		'showInvokeDeath',
+		'Show Invoke Death',
+		sauce.getSetting('showInvokeDeath') ?? true
+	),
+	showDarkness: sauce.createCheckboxSetting(
+		'showDarkness',
+		'Show Darkness',
+		sauce.getSetting('showDarkness') ?? true
+	),
+	showThreads: sauce.createCheckboxSetting(
+		'showThreads',
+		'Show Threads of Fate',
+		sauce.getSetting('showThreads') ?? true
+	),
+	showSplitSoul: sauce.createCheckboxSetting(
+		'showSplitSoul',
+		'Show Split Soul',
+		sauce.getSetting('showSplitSoul') ?? true
+	),
+	showSouls: sauce.createCheckboxSetting(
+		'showSouls',
+		'Show Residual Souls',
+		sauce.getSetting('showSouls') ?? true
+	),
+	showNecrosis: sauce.createCheckboxSetting(
+		'showNecrosis',
+		'Show Necrosis',
+		sauce.getSetting('showNecrosis') ?? true
+	),
+	showBloat: sauce.createCheckboxSetting(
+		'showBloat',
+		'Show Bloat',
+		sauce.getSetting('showBloat') ?? true
+	),
 };
-
-settingsObject.hideOutsideCombat.addEventListener('click', () => {
-	location.reload();
-});
 
 settingsObject.orientationSelection.addEventListener('change', () => {
 	updateActiveOrientationFromLocalStorage();
@@ -226,7 +295,12 @@ window.onload = function () {
 
 		alt1.identifyAppUrl('./appconfig.json');
 		Object.values(settingsObject).forEach((val) => {
-			helperItems.settings.before(val);
+			document.querySelector('#Settings .container').before(val);
+		});
+		document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
+			checkbox.addEventListener('click', () => {
+				location.reload();
+			});
 		});
 		startApp();
 	} else {

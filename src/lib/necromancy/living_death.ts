@@ -8,19 +8,24 @@ var ultimateImages = a1lib.webpackImages({
 let white = a1lib.mixColor(255, 255, 255);
 let lastValue;
 export async function livingDeathOverlay(gauges) {
+	if (!gauges.necromancy.livingDeath.visible) {
+		return;
+	}
 	await ultimateImages.promise;
-	if (gauges.necromancy.livingDeath.active == true) {
+	if (
+		gauges.necromancy.livingDeath.active == true &&
+		gauges.necromancy.livingDeath.visible
+	) {
 		alt1.overLaySetGroup('LivingDeath');
 		alt1.overLayImage(
-			gauges.necromancy.position.x + gauges.necromancy.livingDeath.position.active_orientation.x,
+			gauges.necromancy.position.x +
+				gauges.necromancy.livingDeath.position.active_orientation.x,
 			gauges.necromancy.position.y,
 			a1lib.encodeImageString(ultimateImages.active.toDrawableData()),
 			ultimateImages.active.width,
 			1000
 		);
-		if (
-			lastValue !== gauges.necromancy.livingDeath.time
-		) {
+		if (lastValue !== gauges.necromancy.livingDeath.time) {
 			alt1.overLaySetGroup('LivingDeath_Text');
 			alt1.overLayFreezeGroup('LivingDeath_Text');
 			alt1.overLayClearGroup('LivingDeath_Text');
@@ -30,7 +35,9 @@ export async function livingDeathOverlay(gauges) {
 				white,
 				8,
 				gauges.necromancy.position.x +
-					gauges.necromancy.livingDeath.position.active_orientation.x + 20,
+					gauges.necromancy.livingDeath.position.active_orientation
+						.x +
+					20,
 				gauges.necromancy.position.y + 20,
 				10000,
 				undefined,
@@ -40,10 +47,11 @@ export async function livingDeathOverlay(gauges) {
 			alt1.overLayRefreshGroup('LivingDeath_Text');
 			lastValue = gauges.necromancy.livingDeath.time;
 		}
-	} else {
+	} else if (gauges.necromancy.livingDeath.visible) {
 		alt1.overLaySetGroup('LivingDeath');
 		alt1.overLayImage(
-			gauges.necromancy.position.x + gauges.necromancy.livingDeath.position.active_orientation.x,
+			gauges.necromancy.position.x +
+				gauges.necromancy.livingDeath.position.active_orientation.x,
 			gauges.necromancy.position.y,
 			a1lib.encodeImageString(ultimateImages.inactive.toDrawableData()),
 			ultimateImages.inactive.width,

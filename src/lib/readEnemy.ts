@@ -74,7 +74,7 @@ export async function readEnemy(gauges) {
 			}, 600);
 			bloatInterval.set(bloat, intervalId);
 		} else if (!targetIsBloated) {
-			if (bloatInterval.has(bloat) {
+			if (bloatInterval.has(bloat)) {
 				clearInterval(bloatInterval.get(bloat));
 				bloatInterval.delete(bloat);
 			}

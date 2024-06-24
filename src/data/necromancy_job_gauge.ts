@@ -1,4 +1,4 @@
-const necromancy_overlay_data = {
+const necromancy_gauge = {
 	inCombat: false,
 	position: {
 		x: 50,
@@ -17,6 +17,7 @@ const necromancy_overlay_data = {
 	},
 	conjures: {
 		active: false,
+		visible: true,
 		position: {
 			active_orientation: {
 				x: 0,
@@ -58,6 +59,7 @@ const necromancy_overlay_data = {
 	},
 	incantations: {
 		active: [0, 0, 1, 1],
+		visible: true,
 		invokeDeath: {
 			visible: true,
 			active: false,
@@ -199,4 +201,4 @@ const necromancy_overlay_data = {
 	},
 };
 
-exports.necromancy_overlay_data = necromancy_overlay_data;
+exports.necromancy_gauge = necromancy_gauge;

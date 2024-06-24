@@ -12,6 +12,9 @@ var necrosisImages = a1lib.webpackImages({
 
 export async function necrosisOverlay(gauges) {
 	await necrosisImages.promise;
+	if (!gauges.necromancy.stacks.necrosis.visible) {
+		return;
+	}
 	switch (gauges.necromancy.stacks.necrosis.count) {
 		case 0:
 			alt1.overLaySetGroup('Necrosis');
