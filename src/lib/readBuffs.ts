@@ -28,7 +28,7 @@ export async function readBuffs(gauges) {
 		updateBuffData(gauges, buffsImages.soul, 200, updateSoulCount);
 		updateBuffData(gauges, buffsImages.necrosis, 200, updateNecrosisCount);
 
-		if (!disableLivingDeathCheck) {
+		if (!disableLivingDeathCheck && gauges.necromancy.livingDeath.visible) {
 			updateBuffData(
 				gauges,
 				buffsImages.living_death,
@@ -110,7 +110,11 @@ async function updateLivingDeath(gauges, value) {
 	}
 }
 
+/* What even is this code lmfao */
 async function startLivingDeathCooldown(gauges) {
+	if (!gauges.necromancy.livingDeath.visible) {
+		return;
+	}
 	let cooldown = 59;
 	let timer = setInterval(() => {
 		cooldown -= 1;
