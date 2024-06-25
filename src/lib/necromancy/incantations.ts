@@ -1,19 +1,19 @@
 import * as a1lib from 'alt1';
 
 var incantationImages = a1lib.webpackImages({
-	invoke_death_inactive: require('../.././asset/data/incantations/invoke_death_inactive.data.png'),
-	invoke_death: require('../.././asset/data/incantations/invoke_death.data.png'),
-	darkness_inactive: require('../.././asset/data/incantations/darkness_inactive.data.png'),
-	darkness: require('../.././asset/data/incantations/darkness.data.png'),
-	threads_inactive: require('../.././asset/data/incantations/threads_inactive.data.png'),
-	threads: require('../.././asset/data/incantations/threads.data.png'),
-	split_soul_inactive: require('../.././asset/data/incantations/splitsoul_inactive.data.png'),
-	split_soul: require('../.././asset/data/incantations/splitsoul.data.png'),
+	invoke_death_inactive: require('../.././asset/data/incantations/lg/invoke_death_inactive.data.png'),
+	invoke_death: require('../.././asset/data/incantations/lg/invoke_death.data.png'),
+	darkness_inactive: require('../.././asset/data/incantations/lg/darkness_inactive.data.png'),
+	darkness: require('../.././asset/data/incantations/lg/darkness.data.png'),
+	threads_inactive: require('../.././asset/data/incantations/lg/threads_inactive.data.png'),
+	threads: require('../.././asset/data/incantations/lg/threads.data.png'),
+	split_soul_inactive: require('../.././asset/data/incantations/lg/splitsoul_inactive.data.png'),
+	split_soul: require('../.././asset/data/incantations/lg/splitsoul.data.png'),
 });
 
 export async function incantationsOverlay(gauges) {
 	if (!gauges.necromancy.incantations.visible) {
-		return
+		return;
 	}
 	await incantationImages.promise;
 	if (

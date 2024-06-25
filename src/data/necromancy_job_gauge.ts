@@ -8,11 +8,47 @@ const necromancy_gauge = {
 		souls: {
 			visible: true,
 			count: 0,
+			position: {
+				active_orientation: {
+					x: 0,
+					y: 0,
+				},
+				grouped_orientation: {
+					x: -10,
+					y: 50,
+				},
+				split_orientation: {
+					x: -10,
+					y: 50,
+				},
+				reverse_split_orientation: {
+					x: -10,
+					y: 50,
+				},
+			},
 		},
 		necrosis: {
 			visible: true,
 			count: 0,
 			dupeRow: false,
+			position: {
+				active_orientation: {
+					x: 0,
+					y: 0,
+				},
+				grouped_orientation: {
+					x: -10,
+					y: 98,
+				},
+				split_orientation: {
+					x: -10,
+					y: 98,
+				},
+				reverse_split_orientation: {
+					x: -10,
+					y: 98,
+				},
+			},
 		},
 	},
 	conjures: {
@@ -24,17 +60,17 @@ const necromancy_gauge = {
 				y: 0,
 			},
 			grouped_orientation: {
-				x: 0,
-				y: 0,
+				x: -12,
+				y: 5,
 			},
 			split_orientation: {
-				x: 10,
-				y: 0,
+				x: 15,
+				y: 5,
 			},
 			reverse_split_orientation: {
-				x: -5,
-				y: 0,
-			}
+				x: -12,
+				y: 5,
+			},
 		},
 		skeleton: {
 			visible: true,
@@ -69,17 +105,17 @@ const necromancy_gauge = {
 					y: 0,
 				},
 				grouped_orientation: {
-					x: 62,
-					y: 0,
+					x: 72,
+					y: 5,
 				},
 				split_orientation: {
-					x: -8,
+					x: -9,
 					y: 0,
 				},
 				reverse_split_orientation: {
 					x: 29,
 					y: 0,
-				}
+				},
 			},
 		},
 		darkness: {
@@ -91,17 +127,17 @@ const necromancy_gauge = {
 					y: 0,
 				},
 				grouped_orientation: {
-					x: 62,
-					y: 16,
+					x: 72,
+					y: 24,
 				},
 				split_orientation: {
-					x: -8,
-					y: 16,
+					x: -9,
+					y: 24,
 				},
 				reverse_split_orientation: {
 					x: 29,
-					y: 16,
-				}
+					y: 24,
+				},
 			},
 		},
 		splitSoul: {
@@ -115,17 +151,17 @@ const necromancy_gauge = {
 					y: 0,
 				},
 				grouped_orientation: {
-					x: 40,
-					y: 16,
+					x: 50,
+					y: 24,
 				},
 				split_orientation: {
-					x: 36,
-					y: 16,
+					x: 49,
+					y: 24,
 				},
 				reverse_split_orientation: {
-					x: 22,
-					y: 16,
-				}
+					x: 28,
+					y: 24,
+				},
 			},
 		},
 		threads: {
@@ -139,17 +175,17 @@ const necromancy_gauge = {
 					y: 0,
 				},
 				grouped_orientation: {
-					x: 40,
+					x: 50,
 					y: 0,
 				},
 				split_orientation: {
-					x: 36,
+					x: 49,
 					y: 0,
 				},
 				reverse_split_orientation: {
-					x: 22,
+					x: 28,
 					y: 0,
-				}
+				},
 			},
 		},
 	},
@@ -164,17 +200,17 @@ const necromancy_gauge = {
 				y: 0,
 			},
 			grouped_orientation: {
-				x: 31,
-				y: 0,
+				x: 30,
+				y: 5,
 			},
 			split_orientation: {
-				x: 43,
-				y: 0,
+				x: 60,
+				y: 5,
 			},
 			reverse_split_orientation: {
-				x: 65,
-				y: 0,
-			}
+				x: 81,
+				y: 5,
+			},
 		},
 	},
 	bloat: {
@@ -182,21 +218,21 @@ const necromancy_gauge = {
 		time: 0,
 		position: {
 			active_orientation: {
-				x: -4,
-				y: 47,
+				x: 0,
+				y: 0,
 			},
 			grouped_orientation: {
-				x: -4,
-				y: 47,
+				x: -10,
+				y: 74,
 			},
 			split_orientation: {
-				x: -4,
-				y: 47,
+				x: -10,
+				y: 74,
 			},
 			reverse_split_orientation: {
-				x: -4,
-				y: 47,
-			}
+				x: -10,
+				y: 74,
+			},
 		},
 	},
 };

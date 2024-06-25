@@ -7,8 +7,8 @@ var conjureImages = a1lib.webpackImages({
 	putrid_zombie: require('../.././asset/data/conjures/conjure_zombie.data.png'),
 	vengeful_ghost_inactive: require('../.././asset/data/conjures/conjure_ghost_inactive.data.png'),
 	vengeful_ghost: require('../.././asset/data/conjures/conjure_ghost.data.png'),
-	undead_army_inactive: require('../.././asset/data/conjures/conjure_undead_army_inactive.data.png'),
-	undead_army: require('../.././asset/data/conjures/conjure_undead_army.data.png'),
+	undead_army_inactive: require('../.././asset/data/conjures/lg/conjure_undead_army_inactive.data.png'),
+	undead_army: require('../.././asset/data/conjures/lg/conjure_undead_army.data.png'),
 });
 
 let white = a1lib.mixColor(255, 255, 255);
@@ -22,7 +22,7 @@ export async function conjureOverlay(gauges) {
 	if (gauges.necromancy.conjures.active) {
 		alt1.overLayImage(
 			gauges.necromancy.position.x + gauges.necromancy.conjures.position.active_orientation.x,
-			gauges.necromancy.position.y,
+			gauges.necromancy.position.y + gauges.necromancy.conjures.position.active_orientation.y,
 			a1lib.encodeImageString(conjureImages.undead_army.toDrawableData()),
 			conjureImages.undead_army.width,
 			1000
@@ -31,11 +31,12 @@ export async function conjureOverlay(gauges) {
 		alt1.overLayImage(
 			gauges.necromancy.position.x +
 				gauges.necromancy.conjures.position.active_orientation.x,
-			gauges.necromancy.position.y,
+			gauges.necromancy.position.y +
+				gauges.necromancy.conjures.position.active_orientation.y,
 			a1lib.encodeImageString(
 				conjureImages.undead_army_inactive.toDrawableData()
 			),
-			conjureImages.undead_army.width,
+			conjureImages.undead_army_inactive.width,
 			1000
 		);
 	}
@@ -50,15 +51,14 @@ export async function conjureOverlay(gauges) {
 		alt1.overLaySetGroup('Undead_Army_Text');
 		alt1.overLayFreezeGroup('Undead_Army_Text');
 		alt1.overLayClearGroup('Undead_Army_Text');
-		alt1.overLaySetGroupZIndex('Undead_Army_Text', 1);
 		alt1.overLayTextEx(
 			minValue.toString(),
 			white,
-			8,
+			14,
 			gauges.necromancy.position.x +
-				20 +
+				26 +
 				gauges.necromancy.conjures.position.active_orientation.x,
-			gauges.necromancy.position.y + 20,
+			gauges.necromancy.position.y + 32,
 			10000,
 			undefined,
 			true,

@@ -10,14 +10,12 @@ const { necrosisOverlay } = require('./lib/necromancy/necrosis_stacks');
 const { incantationsOverlay } = require('./lib/necromancy/incantations');
 const { livingDeathOverlay } = require('./lib/necromancy/living_death');
 const { readEnemy } = require('./lib/readEnemy');
+const { bloatOverlay } = require('./lib/necromancy/bloat');
 
 import './index.html';
 import './appconfig.json';
 import './icon.png';
 import './css/styles.css';
-import { bloatOverlay } from './lib/necromancy/bloat';
-
-var targetDisplay = new TargetMob.default();
 
 function getByID(id: string) {
 	return document.getElementById(id);
@@ -31,10 +29,11 @@ let helperItems = {
 const gauges = {
 	inCombat: false,
 	checkCombatStatus: false,
+	size: 'lg',
 	necromancy: necromancy_gauge,
 };
 
-async function renderOverlay() {
+async function renderOverlays() {
 	await readEnemy(gauges);
 	if (gauges.inCombat || sauce.getSetting('updatingOverlayPosition')) {
 		await readBuffs(gauges);
@@ -131,8 +130,12 @@ export async function startApp() {
 
 	updateActiveOrientationFromLocalStorage();
 
+	// Apparently setting GroupZIndex is a pretty expensive call to do in the loop - so let's only do it once
+	alt1.overLaySetGroupZIndex('Undead_Army_Text', 1);
+	alt1.overLaySetGroupZIndex('LivingDeath_Text', 1);
+
 	setInterval(function () {
-		renderOverlay();
+		renderOverlays();
 	}, 20);
 }
 
@@ -161,7 +164,7 @@ function updateActiveOrientationFromLocalStorage() {
 	updateActiveOrientation(necromancy_gauge);
 }
 
-const version = '0.0.1';
+const version = '0.0.2';
 const settingsObject = {
 	appName: sauce.createHeading('h2', 'Job Gauges - v' + version),
 	settingDiscord: sauce.createText(
@@ -178,6 +181,19 @@ const settingsObject = {
 		'Reposition Overlay',
 		setOverlayPosition,
 		{ classes: ['nisbutton'] }
+	),
+	sizeReset: sauce.createSeperator(),
+	sizeHeader: sauce.createHeading('h3', 'Overlay Size'),
+	sizeSelection: sauce.createDropdownSetting(
+		'overlaySize',
+		'Select size of overlay. Currently not implemented but the setting needs to exist.',
+		sauce.getSetting('overlaySize') ?? 'lg',
+		[
+			{ value: 'sm', name: 'Small' },
+			{ value: 'md', name: 'Medium' },
+			{ value: 'lg', name: 'Large' },
+			{ value: 'xlg', name: 'Extra Large' },
+		]
 	),
 	orientationReset: sauce.createSeperator(),
 	orientationHeader: sauce.createHeading('h3', 'Incantation Placement'),
@@ -253,10 +269,14 @@ const settingsObject = {
 
 settingsObject.orientationSelection.addEventListener('change', () => {
 	updateActiveOrientationFromLocalStorage();
-	console.log(gauges);
 });
 
 settingsObject.repositionOverlay.addEventListener('click', setOverlayPosition);
+
+settingsObject.sizeSelection.addEventListener('change', (e) => {
+	gauges.size = sauce.getSetting('overlaySize');
+	console.log(gauges);
+})
 
 let updatingOverlayPosition = false;
 async function setOverlayPosition() {
@@ -287,12 +307,7 @@ function updateLocation(e) {
 }
 
 window.onload = function () {
-	//check if we are running inside alt1 by checking if the alt1 global exists
 	if (window.alt1) {
-		//tell alt1 about the app
-		//this makes alt1 show the add app button when running inside the embedded browser
-		//also updates app settings if they are changed
-
 		alt1.identifyAppUrl('./appconfig.json');
 		Object.values(settingsObject).forEach((val) => {
 			document.querySelector('#Settings .container').before(val);

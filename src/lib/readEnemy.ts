@@ -15,6 +15,7 @@ const bloatInterval = new Map();
 const bloat = 'bloat';
 
 export async function readEnemy(gauges) {
+	//TODO: Store LastPos and detect when to rescan to avoid spamming CHFRS in loop
 	let targetData = targetDisplay.read();
 
 	if (gauges.checkCombatStatus) {
@@ -58,7 +59,7 @@ export async function readEnemy(gauges) {
 			enemyDebuffImages.bloat
 		).length;
 		if (targetIsBloated && !bloatInterval.has(bloat)) {
-			gauges.necromancy.bloat.time = 19.6;
+			gauges.necromancy.bloat.time = 20.5;
 			gauges.necromancy.bloat.active = true;
 			const intervalId = setInterval(() => {
 				let currentTick = parseFloat(gauges.necromancy.bloat.time);
@@ -82,7 +83,6 @@ export async function readEnemy(gauges) {
 			gauges.necromancy.bloat.active = false;
 		}
 	}
-
 }
 
 function roundedToFixed(input, digits) {

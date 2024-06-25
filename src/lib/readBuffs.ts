@@ -122,9 +122,15 @@ async function startLivingDeathCooldown(gauges) {
 			alt1.overLayTextEx(
 				cooldown.toString(),
 				white,
-				8,
-				gauges.necromancy.position.x + 53,
-				gauges.necromancy.position.y + 20,
+				14,
+				gauges.necromancy.position.x +
+					gauges.necromancy.livingDeath.position.active_orientation
+						.x +
+					26,
+				gauges.necromancy.position.y +
+					gauges.necromancy.livingDeath.position.active_orientation
+						.y +
+					26,
 				3000,
 				undefined,
 				true,

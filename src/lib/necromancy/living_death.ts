@@ -1,8 +1,8 @@
 import * as a1lib from 'alt1';
 
 var ultimateImages = a1lib.webpackImages({
-	inactive: require('../.././asset/data/living_death/living_death_inactive.data.png'),
-	active: require('../.././asset/data/living_death/living_death.data.png'),
+	inactive: require('../.././asset/data/living_death/lg/living_death_inactive.data.png'),
+	active: require('../.././asset/data/living_death/lg/living_death.data.png'),
 });
 
 let white = a1lib.mixColor(255, 255, 255);
@@ -20,7 +20,8 @@ export async function livingDeathOverlay(gauges) {
 		alt1.overLayImage(
 			gauges.necromancy.position.x +
 				gauges.necromancy.livingDeath.position.active_orientation.x,
-			gauges.necromancy.position.y,
+			gauges.necromancy.position.y +
+				gauges.necromancy.livingDeath.position.active_orientation.y,
 			a1lib.encodeImageString(ultimateImages.active.toDrawableData()),
 			ultimateImages.active.width,
 			1000
@@ -29,16 +30,18 @@ export async function livingDeathOverlay(gauges) {
 			alt1.overLaySetGroup('LivingDeath_Text');
 			alt1.overLayFreezeGroup('LivingDeath_Text');
 			alt1.overLayClearGroup('LivingDeath_Text');
-			alt1.overLaySetGroupZIndex('LivingDeath_Text', 1);
 			alt1.overLayTextEx(
 				gauges.necromancy.livingDeath.time.toString(),
 				white,
-				8,
+				14,
 				gauges.necromancy.position.x +
 					gauges.necromancy.livingDeath.position.active_orientation
 						.x +
-					20,
-				gauges.necromancy.position.y + 20,
+					26,
+				gauges.necromancy.position.y +
+					gauges.necromancy.livingDeath.position.active_orientation
+						.y +
+					26,
 				10000,
 				undefined,
 				true,
@@ -52,7 +55,8 @@ export async function livingDeathOverlay(gauges) {
 		alt1.overLayImage(
 			gauges.necromancy.position.x +
 				gauges.necromancy.livingDeath.position.active_orientation.x,
-			gauges.necromancy.position.y,
+			gauges.necromancy.position.y +
+				gauges.necromancy.livingDeath.position.active_orientation.y,
 			a1lib.encodeImageString(ultimateImages.inactive.toDrawableData()),
 			ultimateImages.inactive.width,
 			1000
