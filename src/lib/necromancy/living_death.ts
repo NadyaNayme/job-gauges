@@ -8,74 +8,48 @@ var ultimateImages = a1lib.webpackImages({
 
 let lastValue;
 export async function livingDeathOverlay(gauges) {
-	if (!gauges.necromancy.livingDeath.visible) {
-		utility.forceClearOverlay('LivingDeath_Text');
-		utility.forceClearOverlay('LivingDeath_Cooldown_Text');
-		alt1.overLayClearGroup('LivingDeath');
+
+    const { necromancy } = gauges;
+	const { livingDeath } = necromancy;
+
+	if (!livingDeath.visible) {
+		clearLivingDeathOverlays();
 		return;
 	}
+
 	await ultimateImages.promise;
 
 	// If Living Death is not Active and is not on cooldown it should appear as able to be activated
-	if (
-		!gauges.necromancy.livingDeath.active
-	) {
-		if (!gauges.necromancy.livingDeath.onCooldown) {
-			alt1.overLaySetGroup('LivingDeath');
-			alt1.overLayImage(
-				gauges.necromancy.position.x +
-					gauges.necromancy.livingDeath.position.active_orientation.x,
-				gauges.necromancy.position.y +
-					gauges.necromancy.livingDeath.position.active_orientation.y,
-				a1lib.encodeImageString(ultimateImages.active.toDrawableData()),
-				ultimateImages.active.width,
-				1000
-			);
+	if (!livingDeath.active) {
+		if (!livingDeath.onCooldown) {
+			displayActiveLivingDeath(gauges);
 			alt1.overLayRefreshGroup('LivingDeath_Text');
 			alt1.overLayClearGroup('LivingDeath_Text');
 		} else {
-			alt1.overLaySetGroup('LivingDeath');
-			alt1.overLayImage(
-				gauges.necromancy.position.x +
-					gauges.necromancy.livingDeath.position.active_orientation.x,
-				gauges.necromancy.position.y +
-					gauges.necromancy.livingDeath.position.active_orientation.y,
-				a1lib.encodeImageString(ultimateImages.inactive.toDrawableData()),
-				ultimateImages.inactive.width,
-				1000
-			);
+			displayInactiveLivingDeath(gauges);
 			alt1.overLayRefreshGroup('LivingDeath_Text');
 			alt1.overLayClearGroup('LivingDeath_Text');
 		}
 	} else {
-		gauges.necromancy.livingDeath.onCooldown = false;
+		livingDeath.onCooldown = false;
 		utility.forceClearOverlay('LivingDeath_Cooldown_Text');
-		alt1.overLaySetGroup('LivingDeath');
-		alt1.overLayImage(
-			gauges.necromancy.position.x +
-				gauges.necromancy.livingDeath.position.active_orientation.x,
-			gauges.necromancy.position.y +
-				gauges.necromancy.livingDeath.position.active_orientation.y,
-			a1lib.encodeImageString(ultimateImages.active.toDrawableData()),
-			ultimateImages.active.width,
-			1000
-		);
-		if (lastValue !== gauges.necromancy.livingDeath.time) {
-			gauges.necromancy.livingDeath.cooldown = '';
+		displayActiveLivingDeath(gauges);
+		if (lastValue !== livingDeath.time) {
+			livingDeath.cooldown = '';
 			utility.forceClearOverlay('LivingDeath_Cooldown_Text');
 			alt1.overLaySetGroup('LivingDeath_Text');
 			alt1.overLayFreezeGroup('LivingDeath_Text');
 			alt1.overLayClearGroup('LivingDeath_Text');
 			alt1.overLayTextEx(
-				gauges.necromancy.livingDeath.time.toString(),
+				livingDeath.time.toString(),
 				utility.white,
 				14,
-				gauges.necromancy.position.x +
-					gauges.necromancy.livingDeath.position.active_orientation
+				necromancy.position.x +
+					livingDeath.position.active_orientation
 						.x +
 					26,
-				gauges.necromancy.position.y +
-					gauges.necromancy.livingDeath.position.active_orientation
+				necromancy.position.y +
+					livingDeath.position.active_orientation
 						.y +
 					26,
 				3000,
@@ -86,5 +60,37 @@ export async function livingDeathOverlay(gauges) {
 			alt1.overLayRefreshGroup('LivingDeath_Text');
 		}
 	}
-	lastValue = gauges.necromancy.livingDeath.time;
+	lastValue = livingDeath.time;
+}
+
+function clearLivingDeathOverlays() {
+	utility.forceClearOverlay('LivingDeath_Text');
+	utility.forceClearOverlay('LivingDeath_Cooldown_Text');
+	alt1.overLayClearGroup('LivingDeath');
+}
+
+function displayActiveLivingDeath(gauges) {
+	alt1.overLaySetGroup('LivingDeath');
+	alt1.overLayImage(
+		gauges.necromancy.position.x +
+			gauges.necromancy.livingDeath.position.active_orientation.x,
+		gauges.necromancy.position.y +
+			gauges.necromancy.livingDeath.position.active_orientation.y,
+		a1lib.encodeImageString(ultimateImages.active.toDrawableData()),
+		ultimateImages.active.width,
+		1000
+	);
+}
+
+function displayInactiveLivingDeath(gauges) {
+	alt1.overLaySetGroup('LivingDeath');
+	alt1.overLayImage(
+		gauges.necromancy.position.x +
+			gauges.necromancy.livingDeath.position.active_orientation.x,
+		gauges.necromancy.position.y +
+			gauges.necromancy.livingDeath.position.active_orientation.y,
+		a1lib.encodeImageString(ultimateImages.inactive.toDrawableData()),
+		ultimateImages.inactive.width,
+		1000
+	);
 }
