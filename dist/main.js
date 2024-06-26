@@ -2426,85 +2426,88 @@ var incantationImages = alt1__WEBPACK_IMPORTED_MODULE_0__.webpackImages({
 });
 function incantationsOverlay(gauges) {
     return __awaiter(this, void 0, void 0, function () {
+        var incantations, invokeDeath, darkness, threads, splitSoul;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    if (!gauges.necromancy.incantations.visible) {
+                    incantations = gauges.necromancy.incantations;
+                    invokeDeath = incantations.invokeDeath, darkness = incantations.darkness, threads = incantations.threads, splitSoul = incantations.splitSoul;
+                    if (!incantations.visible) {
                         return [2 /*return*/];
                     }
                     return [4 /*yield*/, incantationImages.promise];
                 case 1:
                     _a.sent();
-                    if (gauges.necromancy.incantations.active[0] &&
-                        gauges.necromancy.incantations.invokeDeath.visible &&
-                        gauges.necromancy.incantations.visible) {
+                    if (incantations.active[0] &&
+                        invokeDeath.visible &&
+                        incantations.visible) {
                         alt1.overLaySetGroup('Invoke_Death');
                         alt1.overLayImage(gauges.necromancy.position.x +
-                            gauges.necromancy.incantations.invokeDeath.position
+                            invokeDeath.position
                                 .active_orientation.x, gauges.necromancy.position.y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(incantationImages.invoke_death.toDrawableData()), incantationImages.invoke_death.width, 1000);
                     }
-                    else if (gauges.necromancy.incantations.invokeDeath.visible &&
-                        gauges.necromancy.incantations.visible) {
+                    else if (invokeDeath.visible &&
+                        incantations.visible) {
                         alt1.overLaySetGroup('Invoke_Death');
                         alt1.overLayImage(gauges.necromancy.position.x +
-                            gauges.necromancy.incantations.invokeDeath.position
+                            invokeDeath.position
                                 .active_orientation.x, gauges.necromancy.position.y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(incantationImages.invoke_death_inactive.toDrawableData()), incantationImages.invoke_death_inactive.width, 1000);
                     }
-                    if (gauges.necromancy.incantations.active[1] &&
-                        gauges.necromancy.incantations.darkness.visible &&
-                        gauges.necromancy.incantations.visible) {
+                    if (incantations.active[1] &&
+                        darkness.visible &&
+                        incantations.visible) {
                         alt1.overLaySetGroup('Darkness');
                         alt1.overLayImage(gauges.necromancy.position.x +
-                            gauges.necromancy.incantations.darkness.position
+                            darkness.position
                                 .active_orientation.x, gauges.necromancy.position.y +
-                            gauges.necromancy.incantations.darkness.position
+                            darkness.position
                                 .active_orientation.y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(incantationImages.darkness.toDrawableData()), incantationImages.darkness.width, 1000);
                     }
-                    else if (gauges.necromancy.incantations.darkness.visible &&
-                        gauges.necromancy.incantations.visible) {
+                    else if (darkness.visible &&
+                        incantations.visible) {
                         alt1.overLaySetGroup('Darkness');
                         alt1.overLayImage(gauges.necromancy.position.x +
-                            gauges.necromancy.incantations.darkness.position
+                            darkness.position
                                 .active_orientation.x, gauges.necromancy.position.y +
-                            gauges.necromancy.incantations.darkness.position
+                            darkness.position
                                 .active_orientation.y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(incantationImages.darkness_inactive.toDrawableData()), incantationImages.darkness_inactive.width, 1000);
                     }
-                    if (gauges.necromancy.incantations.active[2] &&
-                        gauges.necromancy.incantations.threads.visible &&
-                        gauges.necromancy.incantations.visible) {
+                    if (incantations.active[2] &&
+                        threads.visible &&
+                        incantations.visible) {
                         alt1.overLaySetGroup('Threads');
                         alt1.overLayImage(gauges.necromancy.position.x +
-                            gauges.necromancy.incantations.threads.position
+                            threads.position
                                 .active_orientation.x *
                                 2, gauges.necromancy.position.y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(incantationImages.threads_inactive.toDrawableData()), incantationImages.threads_inactive.width, 1000);
                     }
-                    else if (gauges.necromancy.incantations.threads.visible &&
-                        gauges.necromancy.incantations.visible) {
+                    else if (threads.visible &&
+                        incantations.visible) {
                         alt1.overLaySetGroup('Threads');
                         alt1.overLayImage(gauges.necromancy.position.x +
-                            gauges.necromancy.incantations.threads.position
+                            threads.position
                                 .active_orientation.x *
                                 2, gauges.necromancy.position.y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(incantationImages.threads.toDrawableData()), incantationImages.threads.width, 1000);
                     }
-                    if (gauges.necromancy.incantations.active[3] &&
-                        gauges.necromancy.incantations.splitSoul.visible &&
-                        gauges.necromancy.incantations.visible) {
+                    if (incantations.active[3] &&
+                        splitSoul.visible &&
+                        incantations.visible) {
                         alt1.overLaySetGroup('SplitSoul');
                         alt1.overLayImage(gauges.necromancy.position.x +
-                            gauges.necromancy.incantations.splitSoul.position
+                            splitSoul.position
                                 .active_orientation.x *
                                 2, gauges.necromancy.position.y +
-                            gauges.necromancy.incantations.splitSoul.position
+                            splitSoul.position
                                 .active_orientation.y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(incantationImages.split_soul_inactive.toDrawableData()), incantationImages.split_soul_inactive.width, 1000);
                     }
-                    else if (gauges.necromancy.incantations.splitSoul.visible &&
-                        gauges.necromancy.incantations.visible) {
+                    else if (splitSoul.visible &&
+                        incantations.visible) {
                         alt1.overLaySetGroup('SplitSoul');
                         alt1.overLayImage(gauges.necromancy.position.x +
-                            gauges.necromancy.incantations.splitSoul.position
+                            splitSoul.position
                                 .active_orientation.x *
                                 2, gauges.necromancy.position.y +
-                            gauges.necromancy.incantations.splitSoul.position
+                            splitSoul.position
                                 .active_orientation.y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(incantationImages.split_soul.toDrawableData()), incantationImages.split_soul.width, 1000);
                     }
                     return [2 /*return*/];

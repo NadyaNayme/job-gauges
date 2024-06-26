@@ -12,19 +12,25 @@ var incantationImages = a1lib.webpackImages({
 });
 
 export async function incantationsOverlay(gauges) {
-	if (!gauges.necromancy.incantations.visible) {
+
+	const { incantations } = gauges.necromancy;
+	const { invokeDeath, darkness, threads, splitSoul } = incantations;
+
+	if (!incantations.visible) {
 		return;
 	}
+
 	await incantationImages.promise;
+
 	if (
-		gauges.necromancy.incantations.active[0] &&
-		gauges.necromancy.incantations.invokeDeath.visible &&
-		gauges.necromancy.incantations.visible
+		incantations.active[0] &&
+		invokeDeath.visible &&
+		incantations.visible
 	) {
 		alt1.overLaySetGroup('Invoke_Death');
 		alt1.overLayImage(
 			gauges.necromancy.position.x +
-				gauges.necromancy.incantations.invokeDeath.position
+				invokeDeath.position
 					.active_orientation.x,
 			gauges.necromancy.position.y,
 			a1lib.encodeImageString(
@@ -34,13 +40,13 @@ export async function incantationsOverlay(gauges) {
 			1000
 		);
 	} else if (
-		gauges.necromancy.incantations.invokeDeath.visible &&
-		gauges.necromancy.incantations.visible
+		invokeDeath.visible &&
+		incantations.visible
 	) {
 		alt1.overLaySetGroup('Invoke_Death');
 		alt1.overLayImage(
 			gauges.necromancy.position.x +
-				gauges.necromancy.incantations.invokeDeath.position
+				invokeDeath.position
 					.active_orientation.x,
 			gauges.necromancy.position.y,
 			a1lib.encodeImageString(
@@ -52,17 +58,17 @@ export async function incantationsOverlay(gauges) {
 	}
 
 	if (
-		gauges.necromancy.incantations.active[1] &&
-		gauges.necromancy.incantations.darkness.visible &&
-		gauges.necromancy.incantations.visible
+		incantations.active[1] &&
+		darkness.visible &&
+		incantations.visible
 	) {
 		alt1.overLaySetGroup('Darkness');
 		alt1.overLayImage(
 			gauges.necromancy.position.x +
-				gauges.necromancy.incantations.darkness.position
+				darkness.position
 					.active_orientation.x,
 			gauges.necromancy.position.y +
-				gauges.necromancy.incantations.darkness.position
+				darkness.position
 					.active_orientation.y,
 			a1lib.encodeImageString(
 				incantationImages.darkness.toDrawableData()
@@ -71,16 +77,16 @@ export async function incantationsOverlay(gauges) {
 			1000
 		);
 	} else if (
-		gauges.necromancy.incantations.darkness.visible &&
-		gauges.necromancy.incantations.visible
+		darkness.visible &&
+		incantations.visible
 	) {
 		alt1.overLaySetGroup('Darkness');
 		alt1.overLayImage(
 			gauges.necromancy.position.x +
-				gauges.necromancy.incantations.darkness.position
+				darkness.position
 					.active_orientation.x,
 			gauges.necromancy.position.y +
-				gauges.necromancy.incantations.darkness.position
+				darkness.position
 					.active_orientation.y,
 			a1lib.encodeImageString(
 				incantationImages.darkness_inactive.toDrawableData()
@@ -91,14 +97,14 @@ export async function incantationsOverlay(gauges) {
 	}
 
 	if (
-		gauges.necromancy.incantations.active[2] &&
-		gauges.necromancy.incantations.threads.visible &&
-		gauges.necromancy.incantations.visible
+		incantations.active[2] &&
+		threads.visible &&
+		incantations.visible
 	) {
 		alt1.overLaySetGroup('Threads');
 		alt1.overLayImage(
 			gauges.necromancy.position.x +
-				gauges.necromancy.incantations.threads.position
+				threads.position
 					.active_orientation.x *
 					2,
 			gauges.necromancy.position.y,
@@ -109,13 +115,13 @@ export async function incantationsOverlay(gauges) {
 			1000
 		);
 	} else if (
-		gauges.necromancy.incantations.threads.visible &&
-		gauges.necromancy.incantations.visible
+		threads.visible &&
+		incantations.visible
 	) {
 		alt1.overLaySetGroup('Threads');
 		alt1.overLayImage(
 			gauges.necromancy.position.x +
-				gauges.necromancy.incantations.threads.position
+				threads.position
 					.active_orientation.x *
 					2,
 			gauges.necromancy.position.y,
@@ -126,18 +132,18 @@ export async function incantationsOverlay(gauges) {
 	}
 
 	if (
-		gauges.necromancy.incantations.active[3] &&
-		gauges.necromancy.incantations.splitSoul.visible &&
-		gauges.necromancy.incantations.visible
+		incantations.active[3] &&
+		splitSoul.visible &&
+		incantations.visible
 	) {
 		alt1.overLaySetGroup('SplitSoul');
 		alt1.overLayImage(
 			gauges.necromancy.position.x +
-				gauges.necromancy.incantations.splitSoul.position
+				splitSoul.position
 					.active_orientation.x *
 					2,
 			gauges.necromancy.position.y +
-				gauges.necromancy.incantations.splitSoul.position
+				splitSoul.position
 					.active_orientation.y,
 			a1lib.encodeImageString(
 				incantationImages.split_soul_inactive.toDrawableData()
@@ -146,17 +152,17 @@ export async function incantationsOverlay(gauges) {
 			1000
 		);
 	} else if (
-		gauges.necromancy.incantations.splitSoul.visible &&
-		gauges.necromancy.incantations.visible
+		splitSoul.visible &&
+		incantations.visible
 	) {
 		alt1.overLaySetGroup('SplitSoul');
 		alt1.overLayImage(
 			gauges.necromancy.position.x +
-				gauges.necromancy.incantations.splitSoul.position
+				splitSoul.position
 					.active_orientation.x *
 					2,
 			gauges.necromancy.position.y +
-				gauges.necromancy.incantations.splitSoul.position
+				splitSoul.position
 					.active_orientation.y,
 			a1lib.encodeImageString(
 				incantationImages.split_soul.toDrawableData()
