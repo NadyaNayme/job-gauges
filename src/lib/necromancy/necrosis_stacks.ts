@@ -21,6 +21,11 @@ export async function necrosisOverlay(gauges) {
 
 	const { position, dupeRow, count } = necrosis;
 	const { x, y } = position.active_orientation;
+	const bloatVisible = !gauges.necromancy.bloat.visible;
+	let bloatSpace = 0;
+	if (bloatVisible) {
+		bloatSpace = -23;
+	}
 
 	alt1.overLaySetGroup('Necrosis');
 
@@ -40,7 +45,7 @@ export async function necrosisOverlay(gauges) {
 		alt1.overLaySetGroup('Necrosis_Row2');
 		alt1.overLayImage(
 			gauges.necromancy.position.x + x,
-			gauges.necromancy.position.y + y + necrosisImages.necrosis_0.height,
+			gauges.necromancy.position.y + y + necrosisImages.necrosis_0.height + bloatSpace,
 			a1lib.encodeImageString(
 				necrosisImages[`necrosis_${count}`].toDrawableData()
 			),
@@ -52,7 +57,7 @@ export async function necrosisOverlay(gauges) {
 	function displayNecrosisImage(count) {
 		alt1.overLayImage(
 			gauges.necromancy.position.x + x,
-			gauges.necromancy.position.y + y,
+			gauges.necromancy.position.y + y + bloatSpace,
 			a1lib.encodeImageString(
 				necrosisImages[`necrosis_${count}`].toDrawableData()
 			),

@@ -2713,9 +2713,9 @@ var necrosisImages = alt1__WEBPACK_IMPORTED_MODULE_0__.webpackImages({
 function necrosisOverlay(gauges) {
     return __awaiter(this, void 0, void 0, function () {
         function displayNecrosisImage(count) {
-            alt1.overLayImage(gauges.necromancy.position.x + x, gauges.necromancy.position.y + y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(necrosisImages["necrosis_".concat(count)].toDrawableData()), necrosisImages["necrosis_".concat(count)].width, 1000);
+            alt1.overLayImage(gauges.necromancy.position.x + x, gauges.necromancy.position.y + y + bloatSpace, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(necrosisImages["necrosis_".concat(count)].toDrawableData()), necrosisImages["necrosis_".concat(count)].width, 1000);
         }
-        var necrosis, position, dupeRow, count, _a, x, y;
+        var necrosis, position, dupeRow, count, _a, x, y, bloatVisible, bloatSpace;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -2728,6 +2728,11 @@ function necrosisOverlay(gauges) {
                     }
                     position = necrosis.position, dupeRow = necrosis.dupeRow, count = necrosis.count;
                     _a = position.active_orientation, x = _a.x, y = _a.y;
+                    bloatVisible = !gauges.necromancy.bloat.visible;
+                    bloatSpace = 0;
+                    if (bloatVisible) {
+                        bloatSpace = -23;
+                    }
                     alt1.overLaySetGroup('Necrosis');
                     switch (count) {
                         case 0:
@@ -2742,7 +2747,7 @@ function necrosisOverlay(gauges) {
                     }
                     if (dupeRow) {
                         alt1.overLaySetGroup('Necrosis_Row2');
-                        alt1.overLayImage(gauges.necromancy.position.x + x, gauges.necromancy.position.y + y + necrosisImages.necrosis_0.height, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(necrosisImages["necrosis_".concat(count)].toDrawableData()), necrosisImages["necrosis_".concat(count)].width, 1000);
+                        alt1.overLayImage(gauges.necromancy.position.x + x, gauges.necromancy.position.y + y + necrosisImages.necrosis_0.height + bloatSpace, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(necrosisImages["necrosis_".concat(count)].toDrawableData()), necrosisImages["necrosis_".concat(count)].width, 1000);
                     }
                     return [2 /*return*/];
             }
