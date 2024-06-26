@@ -2188,107 +2188,62 @@ var bloatImages = alt1__WEBPACK_IMPORTED_MODULE_0__.webpackImages({
     bloat_0: __webpack_require__(/*! ../.././asset/data/bloat/lg/bloat_0.data.png */ "./asset/data/bloat/lg/bloat_0.data.png"),
     bloat_expired: __webpack_require__(/*! ../.././asset/data/bloat/lg/bloat_expired.data.png */ "./asset/data/bloat/lg/bloat_expired.data.png"),
 });
-var white = alt1__WEBPACK_IMPORTED_MODULE_0__.mixColor(255, 255, 255);
 function bloatOverlay(gauges) {
     return __awaiter(this, void 0, void 0, function () {
-        var value;
+        var bloat, value, imageKey, image;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    if (!gauges.necromancy.bloat.visible) {
+                    bloat = gauges.necromancy.bloat;
+                    if (!bloat.visible) {
                         return [2 /*return*/];
                     }
                     return [4 /*yield*/, bloatImages.promise];
                 case 1:
                     _a.sent();
-                    if (gauges.necromancy.bloat.active && gauges.necromancy.bloat.visible) {
-                        value = parseFloat(gauges.necromancy.bloat.time);
-                        switch (true) {
-                            case value < 2.4:
-                                alt1.overLaySetGroup('Bloat');
-                                alt1.overLayImage(gauges.necromancy.position.x +
-                                    gauges.necromancy.bloat.position.active_orientation.x, gauges.necromancy.position.y +
-                                    gauges.necromancy.bloat.position.active_orientation.y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(bloatImages.bloat_0.toDrawableData()), bloatImages.bloat_0.width, 1000);
-                                alt1.overLayRefreshGroup('Bloat');
-                                break;
-                            case value < 3.6:
-                                alt1.overLaySetGroup('Bloat');
-                                alt1.overLayImage(gauges.necromancy.position.x +
-                                    gauges.necromancy.bloat.position.active_orientation.x, gauges.necromancy.position.y +
-                                    gauges.necromancy.bloat.position.active_orientation.y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(bloatImages.bloat_10.toDrawableData()), bloatImages.bloat_10.width, 1000);
-                                alt1.overLayRefreshGroup('Bloat');
-                                break;
-                            case value < 5.4:
-                                alt1.overLaySetGroup('Bloat');
-                                alt1.overLayImage(gauges.necromancy.position.x +
-                                    gauges.necromancy.bloat.position.active_orientation.x, gauges.necromancy.position.y +
-                                    gauges.necromancy.bloat.position.active_orientation.y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(bloatImages.bloat_20.toDrawableData()), bloatImages.bloat_20.width, 1000);
-                                alt1.overLayRefreshGroup('Bloat');
-                                break;
-                            case value < 7.2:
-                                alt1.overLaySetGroup('Bloat');
-                                alt1.overLayImage(gauges.necromancy.position.x +
-                                    gauges.necromancy.bloat.position.active_orientation.x, gauges.necromancy.position.y +
-                                    gauges.necromancy.bloat.position.active_orientation.y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(bloatImages.bloat_30.toDrawableData()), bloatImages.bloat_30.width, 1000);
-                                alt1.overLayRefreshGroup('Bloat');
-                                break;
-                            case value < 9.0:
-                                alt1.overLaySetGroup('Bloat');
-                                alt1.overLayImage(gauges.necromancy.position.x +
-                                    gauges.necromancy.bloat.position.active_orientation.x, gauges.necromancy.position.y +
-                                    gauges.necromancy.bloat.position.active_orientation.y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(bloatImages.bloat_40.toDrawableData()), bloatImages.bloat_40.width, 1000);
-                                alt1.overLayRefreshGroup('Bloat');
-                                break;
-                            case value < 10.8:
-                                alt1.overLaySetGroup('Bloat');
-                                alt1.overLayImage(gauges.necromancy.position.x +
-                                    gauges.necromancy.bloat.position.active_orientation.x, gauges.necromancy.position.y +
-                                    gauges.necromancy.bloat.position.active_orientation.y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(bloatImages.bloat_50.toDrawableData()), bloatImages.bloat_50.width, 1000);
-                                alt1.overLayRefreshGroup('Bloat');
-                                break;
-                            case value < 12.6:
-                                alt1.overLaySetGroup('Bloat');
-                                alt1.overLayImage(gauges.necromancy.position.x +
-                                    gauges.necromancy.bloat.position.active_orientation.x, gauges.necromancy.position.y +
-                                    gauges.necromancy.bloat.position.active_orientation.y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(bloatImages.bloat_60.toDrawableData()), bloatImages.bloat_60.width, 1000);
-                                alt1.overLayRefreshGroup('Bloat');
-                                break;
-                            case value < 14.4:
-                                alt1.overLaySetGroup('Bloat');
-                                alt1.overLayImage(gauges.necromancy.position.x +
-                                    gauges.necromancy.bloat.position.active_orientation.x, gauges.necromancy.position.y +
-                                    gauges.necromancy.bloat.position.active_orientation.y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(bloatImages.bloat_70.toDrawableData()), bloatImages.bloat_70.width, 1000);
-                                alt1.overLayRefreshGroup('Bloat');
-                                break;
-                            case value < 16.2:
-                                alt1.overLaySetGroup('Bloat');
-                                alt1.overLayImage(gauges.necromancy.position.x +
-                                    gauges.necromancy.bloat.position.active_orientation.x, gauges.necromancy.position.y +
-                                    gauges.necromancy.bloat.position.active_orientation.y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(bloatImages.bloat_80.toDrawableData()), bloatImages.bloat_80.width, 1000);
-                                alt1.overLayRefreshGroup('Bloat');
-                                break;
-                            case value < 18.0:
-                                alt1.overLaySetGroup('Bloat');
-                                alt1.overLayImage(gauges.necromancy.position.x +
-                                    gauges.necromancy.bloat.position.active_orientation.x, gauges.necromancy.position.y +
-                                    gauges.necromancy.bloat.position.active_orientation.y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(bloatImages.bloat_90.toDrawableData()), bloatImages.bloat_90.width, 1000);
-                                alt1.overLayRefreshGroup('Bloat');
-                                break;
-                            case value >= 18.0:
-                                alt1.overLaySetGroup('Bloat');
-                                alt1.overLayImage(gauges.necromancy.position.x +
-                                    gauges.necromancy.bloat.position.active_orientation.x, gauges.necromancy.position.y +
-                                    gauges.necromancy.bloat.position.active_orientation.y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(bloatImages.bloat_100.toDrawableData()), bloatImages.bloat_100.width, 1000);
-                                alt1.overLayRefreshGroup('Bloat');
-                                break;
+                    value = parseFloat(bloat.time);
+                    if (bloat.active) {
+                        if (value < 2.4) {
+                            imageKey = 'bloat_0';
+                        }
+                        else if (value < 3.6) {
+                            imageKey = 'bloat_10';
+                        }
+                        else if (value < 5.4) {
+                            imageKey = 'bloat_20';
+                        }
+                        else if (value < 7.2) {
+                            imageKey = 'bloat_30';
+                        }
+                        else if (value < 9.0) {
+                            imageKey = 'bloat_40';
+                        }
+                        else if (value < 10.8) {
+                            imageKey = 'bloat_50';
+                        }
+                        else if (value < 12.6) {
+                            imageKey = 'bloat_60';
+                        }
+                        else if (value < 14.4) {
+                            imageKey = 'bloat_70';
+                        }
+                        else if (value < 16.2) {
+                            imageKey = 'bloat_80';
+                        }
+                        else if (value < 18.0) {
+                            imageKey = 'bloat_90';
+                        }
+                        else {
+                            imageKey = 'bloat_100';
                         }
                     }
-                    else if (gauges.necromancy.bloat.visible) {
-                        alt1.overLaySetGroup('Bloat');
-                        alt1.overLayImage(gauges.necromancy.position.x +
-                            gauges.necromancy.bloat.position.active_orientation.x, gauges.necromancy.position.y +
-                            gauges.necromancy.bloat.position.active_orientation.y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(bloatImages.bloat_expired.toDrawableData()), bloatImages.bloat_expired.width, 1000);
+                    else {
+                        imageKey = 'bloat_expired';
                     }
+                    alt1.overLaySetGroup('Bloat');
+                    image = bloatImages[imageKey];
+                    alt1.overLayImage(gauges.necromancy.position.x + bloat.position.active_orientation.x, gauges.necromancy.position.y + bloat.position.active_orientation.y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(image.toDrawableData()), image.width, 1000);
+                    alt1.overLayRefreshGroup('Bloat');
                     return [2 /*return*/];
             }
         });
