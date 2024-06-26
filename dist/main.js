@@ -2075,6 +2075,7 @@ var necromancy_gauge = {
         visiblie: true,
         active: false,
         time: 0,
+        onCooldown: false,
         cooldown: 60,
         position: {
             active_orientation: {
@@ -2623,26 +2624,34 @@ function livingDeathOverlay(gauges) {
             switch (_a.label) {
                 case 0:
                     if (!gauges.necromancy.livingDeath.visible) {
+                        _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('LivingDeath_Text');
+                        _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('LivingDeath_Cooldown_Text');
+                        alt1.overLayClearGroup('LivingDeath');
                         return [2 /*return*/];
                     }
                     return [4 /*yield*/, ultimateImages.promise];
                 case 1:
                     _a.sent();
-                    // If Living Death is not Active or is On Cooldown it should render the Inactive LD Image and return early
-                    if ((gauges.necromancy.livingDeath.visible &&
-                        !gauges.necromancy.livingDeath.active) ||
-                        (gauges.necromancy.livingDeath.visible &&
-                            gauges.necromancy.livingDeath.onCooldown)) {
-                        alt1.overLaySetGroup('LivingDeath');
-                        alt1.overLayImage(gauges.necromancy.position.x +
-                            gauges.necromancy.livingDeath.position.active_orientation.x, gauges.necromancy.position.y +
-                            gauges.necromancy.livingDeath.position.active_orientation.y, alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(ultimateImages.inactive.toDrawableData()), ultimateImages.inactive.width, 1000);
-                        alt1.overLayRefreshGroup('LivingDeath_Text');
-                        alt1.overLayClearGroup('LivingDeath_Text');
-                        return [2 /*return*/];
+                    // If Living Death is not Active and is not on cooldown it should appear as able to be activated
+                    if (!gauges.necromancy.livingDeath.active) {
+                        if (!gauges.necromancy.livingDeath.onCooldown) {
+                            alt1.overLaySetGroup('LivingDeath');
+                            alt1.overLayImage(gauges.necromancy.position.x +
+                                gauges.necromancy.livingDeath.position.active_orientation.x, gauges.necromancy.position.y +
+                                gauges.necromancy.livingDeath.position.active_orientation.y, alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(ultimateImages.active.toDrawableData()), ultimateImages.active.width, 1000);
+                            alt1.overLayRefreshGroup('LivingDeath_Text');
+                            alt1.overLayClearGroup('LivingDeath_Text');
+                        }
+                        else {
+                            alt1.overLaySetGroup('LivingDeath');
+                            alt1.overLayImage(gauges.necromancy.position.x +
+                                gauges.necromancy.livingDeath.position.active_orientation.x, gauges.necromancy.position.y +
+                                gauges.necromancy.livingDeath.position.active_orientation.y, alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(ultimateImages.inactive.toDrawableData()), ultimateImages.inactive.width, 1000);
+                            alt1.overLayRefreshGroup('LivingDeath_Text');
+                            alt1.overLayClearGroup('LivingDeath_Text');
+                        }
                     }
-                    if (gauges.necromancy.livingDeath.active &&
-                        gauges.necromancy.livingDeath.visible) {
+                    else {
                         gauges.necromancy.livingDeath.onCooldown = false;
                         _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('LivingDeath_Cooldown_Text');
                         alt1.overLaySetGroup('LivingDeath');
@@ -3472,6 +3481,7 @@ function roundedToFixed(input, digits) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   forceClearOverlay: () => (/* binding */ forceClearOverlay),
+/* harmony export */   updateCoordinates: () => (/* binding */ updateCoordinates),
 /* harmony export */   white: () => (/* binding */ white)
 /* harmony export */ });
 /* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
@@ -3522,6 +3532,15 @@ function forceClearOverlay(overlay) {
             alt1.overLayClearGroup(overlay);
             alt1.overLayRefreshGroup(overlay);
             console.log('Force cleared: ' + overlay);
+            return [2 /*return*/];
+        });
+    });
+}
+function updateCoordinates(component, coordinates) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            component.activePosition.x = coordinates.x;
+            component.activePosition.y = coordinates.y;
             return [2 /*return*/];
         });
     });
