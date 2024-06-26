@@ -1,6 +1,7 @@
 import * as a1lib from 'alt1';
 import * as BuffReader from 'alt1/buffs';
 import * as sauce from '../a1sauce';
+import * as utility from './utility';
 
 var buffs = new BuffReader.default();
 var debuffs = new BuffReader.default();
@@ -28,7 +29,7 @@ export async function readBuffs(gauges) {
 		updateBuffData(gauges, buffsImages.soul, 200, updateSoulCount);
 		updateBuffData(gauges, buffsImages.necrosis, 200, updateNecrosisCount);
 
-		if (!disableLivingDeathCheck && gauges.necromancy.livingDeath.visible) {
+		if (gauges.necromancy.livingDeath.visible) {
 			updateBuffData(
 				gauges,
 				buffsImages.living_death,
@@ -79,53 +80,65 @@ async function updateNecrosisCount(gauges, value) {
 	gauges.necromancy.stacks.necrosis.count = value;
 }
 
-let white = a1lib.mixColor(255, 255, 255);
-let disableLivingDeathCheck = false;
-let disableLivingDeathCountdown = false;
 async function updateLivingDeath(gauges, value) {
-	if (value == 0 && !disableLivingDeathCheck) {
-		gauges.necromancy.livingDeath.active = true;
-		gauges.necromancy.livingDeath.time = '';
-	}
+	// If Living Death has an active buff and a timer:
+	//   - it cannot be on cooldown
+	//   - it must be active
+	//   - The remaining time is its timer
 	if (value > 1) {
+		gauges.necromancy.livingDeath.onCooldown = false;
+		gauges.necromancy.livingDeath.cooldown = '';
 		gauges.necromancy.livingDeath.active = true;
 		gauges.necromancy.livingDeath.time = value;
 	}
-	if (value == 1) {
+
+	// When only 1 second of the buff exists
+	if (value == 1 && gauges.necromancy.livingDeath.active) {
+		// Make sure to update the text one final time
 		gauges.necromancy.livingDeath.time = value;
-		setTimeout(() => {
-			gauges.necromancy.livingDeath.time = '';
-			disableLivingDeathCheck = true;
-			gauges.necromancy.livingDeath.active = false;
-			if (disableLivingDeathCheck && !disableLivingDeathCountdown) {
-				disableLivingDeathCountdown = true;
-				startLivingDeathCooldown(gauges);
-			}
-		}, 1000);
+
+		// Then start a timer to wait just past the last second
+		//  - Clear the timer
+		//  - LD is now on Cooldown so is not active
 		setTimeout(() => {
 			gauges.necromancy.livingDeath.time = '';
 			gauges.necromancy.livingDeath.active = false;
-			disableLivingDeathCheck = false;
-		}, gauges.necromancy.livingDeath.cooldown * 1000);
+			gauges.necromancy.livingDeath.onCooldown = true;
+			startLivingDeathCooldown(gauges);
+		}, 1050);
 	}
 }
 
-/* What even is this code lmfao */
 async function startLivingDeathCooldown(gauges) {
 	if (!gauges.necromancy.livingDeath.visible) {
 		return;
 	}
+
+	// If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
+	if (
+		gauges.necromancy.livingDeath.active
+	) {
+		endLivingDeathCooldown(gauges);
+		return;
+	}
+
+	// Otherwise cooldown has started and we can clear the Active text
+	utility.forceClearOverlay('LivingDeath_Text');
+	alt1.overLaySetGroupZIndex('LivingDeath_Cooldown_Text', 1);
 	let cooldown = 59;
 	let timer = setInterval(() => {
+		// During our interval if the buff ever becomes active - kill the timer
+		if (gauges.necromancy.livingDeath.active) {
+			clearInterval(timer);
+			endLivingDeathCooldown(gauges);
+			return;
+		}
 		cooldown -= 1;
 		if (cooldown > 0) {
-			alt1.overLaySetGroup('LivingDeath_Cooldown_Text');
-			alt1.overLayFreezeGroup('LivingDeath_Cooldown_Text');
-			alt1.overLayClearGroup('LivingDeath_Cooldown_Text');
-			alt1.overLaySetGroupZIndex('LivingDeath_Cooldown_Text', 1);
+			utility.forceClearOverlay('LivingDeath_Cooldown_Text');
 			alt1.overLayTextEx(
 				cooldown.toString(),
-				white,
+				utility.white,
 				14,
 				gauges.necromancy.position.x +
 					gauges.necromancy.livingDeath.position.active_orientation
@@ -142,16 +155,17 @@ async function startLivingDeathCooldown(gauges) {
 			);
 			alt1.overLayRefreshGroup('LivingDeath_Cooldown_Text');
 		} else {
-			alt1.overLayRefreshGroup('LivingDeath_Cooldown_Text');
-			alt1.overLayClearGroup('LivingDeath_Cooldown_Text');
+			clearInterval(timer);
+			endLivingDeathCooldown(gauges);
+			return;
 		}
 	}, 1000);
-	setTimeout(() => {
-		clearInterval(timer);
-		alt1.overLayRefreshGroup('LivingDeath_Cooldown_Text');
-		alt1.overLayClearGroup('LivingDeath_Cooldown_Text');
-		disableLivingDeathCountdown = false;
-	}, gauges.necromancy.livingDeath.cooldown * 1000 + 1000);
+}
+
+async function endLivingDeathCooldown(gauges) {
+	gauges.necromancy.livingDeath.onCooldown = false;
+	gauges.necromancy.livingDeath.cooldown = '';
+	utility.forceClearOverlay('LivingDeath_Cooldown_Text');
 }
 
 async function updateSkeleton(gauges, value) {
