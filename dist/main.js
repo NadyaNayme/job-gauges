@@ -2945,63 +2945,44 @@ var soulImages = alt1__WEBPACK_IMPORTED_MODULE_0__.webpackImages({
 });
 function soulsOverlay(gauges) {
     return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        function displaySoulImage(image) {
+            alt1.overLayImage(gauges.necromancy.position.x + x, gauges.necromancy.position.y + y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(image.toDrawableData()), image.width, 1000);
+        }
+        var souls, position, _a, x, y;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
-                    if (!gauges.necromancy.stacks.souls.visible) {
+                    souls = gauges.necromancy.stacks.souls;
+                    if (!souls.visible) {
                         return [2 /*return*/];
                     }
                     return [4 /*yield*/, soulImages.promise];
                 case 1:
-                    _a.sent();
-                    switch (gauges.necromancy.stacks.souls.count) {
+                    _b.sent();
+                    position = souls.position;
+                    _a = position.active_orientation, x = _a.x, y = _a.y;
+                    alt1.overLaySetGroup('Souls');
+                    switch (souls.count) {
                         case 0:
-                            alt1.overLaySetGroup('Souls');
-                            alt1.overLayImage(gauges.necromancy.position.x +
-                                gauges.necromancy.stacks.souls.position.active_orientation
-                                    .x, gauges.necromancy.position.y +
-                                gauges.necromancy.stacks.souls.position.active_orientation
-                                    .y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(soulImages.souls_0.toDrawableData()), soulImages.souls_0.width, 1000);
+                            displaySoulImage(soulImages.souls_0);
                             break;
                         case 1:
-                            alt1.overLaySetGroup('Souls');
-                            alt1.overLayImage(gauges.necromancy.position.x +
-                                gauges.necromancy.stacks.souls.position.active_orientation
-                                    .x, gauges.necromancy.position.y +
-                                gauges.necromancy.stacks.souls.position.active_orientation
-                                    .y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(soulImages.souls_1.toDrawableData()), soulImages.souls_0.width, 1000);
+                            displaySoulImage(soulImages.souls_1);
                             break;
                         case 2:
-                            alt1.overLaySetGroup('Souls');
-                            alt1.overLayImage(gauges.necromancy.position.x +
-                                gauges.necromancy.stacks.souls.position.active_orientation
-                                    .x, gauges.necromancy.position.y +
-                                gauges.necromancy.stacks.souls.position.active_orientation
-                                    .y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(soulImages.souls_2.toDrawableData()), soulImages.souls_0.width, 1000);
+                            displaySoulImage(soulImages.souls_2);
                             break;
                         case 3:
-                            alt1.overLaySetGroup('Souls');
-                            alt1.overLayImage(gauges.necromancy.position.x +
-                                gauges.necromancy.stacks.souls.position.active_orientation
-                                    .x, gauges.necromancy.position.y +
-                                gauges.necromancy.stacks.souls.position.active_orientation
-                                    .y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(soulImages.souls_3.toDrawableData()), soulImages.souls_0.width, 1000);
+                            displaySoulImage(soulImages.souls_3);
                             break;
                         case 4:
-                            alt1.overLaySetGroup('Souls');
-                            alt1.overLayImage(gauges.necromancy.position.x +
-                                gauges.necromancy.stacks.souls.position.active_orientation
-                                    .x, gauges.necromancy.position.y +
-                                gauges.necromancy.stacks.souls.position.active_orientation
-                                    .y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(soulImages.souls_4.toDrawableData()), soulImages.souls_0.width, 1000);
+                            displaySoulImage(soulImages.souls_4);
                             break;
                         case 5:
-                            alt1.overLaySetGroup('Souls');
-                            alt1.overLayImage(gauges.necromancy.position.x +
-                                gauges.necromancy.stacks.souls.position.active_orientation
-                                    .x, gauges.necromancy.position.y +
-                                gauges.necromancy.stacks.souls.position.active_orientation
-                                    .y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(soulImages.souls_5.toDrawableData()), soulImages.souls_0.width, 1000);
+                            displaySoulImage(soulImages.souls_5);
+                            break;
+                        default:
+                            // Handle cases beyond 5 if needed
                             break;
                     }
                     return [2 /*return*/];

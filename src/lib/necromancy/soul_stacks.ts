@@ -10,94 +10,50 @@ var soulImages = a1lib.webpackImages({
 });
 
 export async function soulsOverlay(gauges) {
-	if (!gauges.necromancy.stacks.souls.visible) {
+	const { souls } = gauges.necromancy.stacks;
+
+	if (!souls.visible) {
 		return;
 	}
+
 	await soulImages.promise;
-	switch (gauges.necromancy.stacks.souls.count) {
+
+	const { position } = souls;
+	const { x, y } = position.active_orientation;
+
+	alt1.overLaySetGroup('Souls');
+
+	switch (souls.count) {
 		case 0:
-			alt1.overLaySetGroup('Souls');
-			alt1.overLayImage(
-				gauges.necromancy.position.x +
-					gauges.necromancy.stacks.souls.position.active_orientation
-						.x,
-				gauges.necromancy.position.y +
-					gauges.necromancy.stacks.souls.position.active_orientation
-						.y,
-				a1lib.encodeImageString(soulImages.souls_0.toDrawableData()),
-				soulImages.souls_0.width,
-				1000
-			);
+			displaySoulImage(soulImages.souls_0);
 			break;
 		case 1:
-			alt1.overLaySetGroup('Souls');
-			alt1.overLayImage(
-				gauges.necromancy.position.x +
-					gauges.necromancy.stacks.souls.position.active_orientation
-						.x,
-				gauges.necromancy.position.y +
-					gauges.necromancy.stacks.souls.position.active_orientation
-						.y,
-				a1lib.encodeImageString(soulImages.souls_1.toDrawableData()),
-				soulImages.souls_0.width,
-				1000
-			);
+			displaySoulImage(soulImages.souls_1);
 			break;
 		case 2:
-			alt1.overLaySetGroup('Souls');
-			alt1.overLayImage(
-				gauges.necromancy.position.x +
-					gauges.necromancy.stacks.souls.position.active_orientation
-						.x,
-				gauges.necromancy.position.y +
-					gauges.necromancy.stacks.souls.position.active_orientation
-						.y,
-				a1lib.encodeImageString(soulImages.souls_2.toDrawableData()),
-				soulImages.souls_0.width,
-				1000
-			);
+			displaySoulImage(soulImages.souls_2);
 			break;
 		case 3:
-			alt1.overLaySetGroup('Souls');
-			alt1.overLayImage(
-				gauges.necromancy.position.x +
-					gauges.necromancy.stacks.souls.position.active_orientation
-						.x,
-				gauges.necromancy.position.y +
-					gauges.necromancy.stacks.souls.position.active_orientation
-						.y,
-				a1lib.encodeImageString(soulImages.souls_3.toDrawableData()),
-				soulImages.souls_0.width,
-				1000
-			);
+			displaySoulImage(soulImages.souls_3);
 			break;
 		case 4:
-			alt1.overLaySetGroup('Souls');
-			alt1.overLayImage(
-				gauges.necromancy.position.x +
-					gauges.necromancy.stacks.souls.position.active_orientation
-						.x,
-				gauges.necromancy.position.y +
-					gauges.necromancy.stacks.souls.position.active_orientation
-						.y,
-				a1lib.encodeImageString(soulImages.souls_4.toDrawableData()),
-				soulImages.souls_0.width,
-				1000
-			);
+			displaySoulImage(soulImages.souls_4);
 			break;
 		case 5:
-			alt1.overLaySetGroup('Souls');
-			alt1.overLayImage(
-				gauges.necromancy.position.x +
-					gauges.necromancy.stacks.souls.position.active_orientation
-						.x,
-				gauges.necromancy.position.y +
-					gauges.necromancy.stacks.souls.position.active_orientation
-						.y,
-				a1lib.encodeImageString(soulImages.souls_5.toDrawableData()),
-				soulImages.souls_0.width,
-				1000
-			);
+			displaySoulImage(soulImages.souls_5);
 			break;
+		default:
+			// Handle cases beyond 5 if needed
+			break;
+	}
+
+	function displaySoulImage(image: ImageData) {
+		alt1.overLayImage(
+			gauges.necromancy.position.x + x,
+			gauges.necromancy.position.y + y,
+			a1lib.encodeImageString(image.toDrawableData()),
+			image.width,
+			1000
+		);
 	}
 }
