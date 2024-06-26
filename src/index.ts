@@ -124,6 +124,10 @@ export async function startApp() {
 		gauges.necromancy.stacks.necrosis.visible = sauce.getSetting('showNecrosis');
 	}
 
+	if (sauce.getSetting('dupeRow') !== undefined) {
+		gauges.necromancy.stacks.necrosis.dupeRow = sauce.getSetting('dupeRow');
+	}
+
 	if (sauce.getSetting('showBloat') !== undefined) {
 		gauges.necromancy.bloat.visible = sauce.getSetting('showBloat');
 	}
@@ -260,6 +264,11 @@ const settingsObject = {
 		'Show Necrosis',
 		sauce.getSetting('showNecrosis') ?? true
 	),
+	dupeRow: sauce.createCheckboxSetting(
+		'dupeRow',
+		'Show 2nd row of Necrosis stacks',
+		sauce.getSetting('dupeRow') ?? false
+	),
 	showBloat: sauce.createCheckboxSetting(
 		'showBloat',
 		'Show Bloat',
@@ -275,7 +284,10 @@ settingsObject.repositionOverlay.addEventListener('click', setOverlayPosition);
 
 settingsObject.sizeSelection.addEventListener('change', (e) => {
 	gauges.size = sauce.getSetting('overlaySize');
-	console.log(gauges);
+})
+
+settingsObject.showNecrosis.addEventListener('change', (e) => {
+	gauges.necromancy.necrosis.dupeRow = sauce.getSetting('dupeRow');
 })
 
 let updatingOverlayPosition = false;

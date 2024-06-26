@@ -2754,127 +2754,37 @@ var necrosisImages = alt1__WEBPACK_IMPORTED_MODULE_0__.webpackImages({
 });
 function necrosisOverlay(gauges) {
     return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, necrosisImages.promise];
+        function displayNecrosisImage(count) {
+            alt1.overLayImage(gauges.necromancy.position.x + x, gauges.necromancy.position.y + y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(necrosisImages["necrosis_".concat(count)].toDrawableData()), necrosisImages["necrosis_".concat(count)].width, 1000);
+        }
+        var necrosis, position, dupeRow, count, _a, x, y;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    necrosis = gauges.necromancy.stacks.necrosis;
+                    return [4 /*yield*/, necrosisImages.promise];
                 case 1:
-                    _a.sent();
-                    if (!gauges.necromancy.stacks.necrosis.visible) {
+                    _b.sent();
+                    if (!necrosis.visible) {
                         return [2 /*return*/];
                     }
-                    switch (gauges.necromancy.stacks.necrosis.count) {
+                    position = necrosis.position, dupeRow = necrosis.dupeRow, count = necrosis.count;
+                    _a = position.active_orientation, x = _a.x, y = _a.y;
+                    alt1.overLaySetGroup('Necrosis');
+                    switch (count) {
                         case 0:
-                            alt1.overLaySetGroup('Necrosis');
-                            alt1.overLayImage(gauges.necromancy.position.x +
-                                gauges.necromancy.stacks.necrosis.position
-                                    .active_orientation.x, gauges.necromancy.position.y +
-                                gauges.necromancy.stacks.necrosis.position
-                                    .active_orientation.y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(necrosisImages.necrosis_0.toDrawableData()), necrosisImages.necrosis_0.width, 1000);
-                            if (gauges.necromancy.stacks.necrosis.dupeRow) {
-                                alt1.overLaySetGroup('Necrosis_Row2');
-                                alt1.overLayImage(gauges.necromancy.position.x +
-                                    gauges.necromancy.stacks.necrosis.position.active_orientation
-                                        .x, gauges.necromancy.position.y +
-                                    gauges.necromancy.stacks.necrosis.position.active_orientation
-                                        .y + necrosisImages.necrosis_0.height, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(necrosisImages.necrosis_0.toDrawableData()), necrosisImages.necrosis_0.width, 1000);
-                            }
-                            break;
                         case 2:
-                            alt1.overLaySetGroup('Necrosis');
-                            alt1.overLayImage(gauges.necromancy.position.x +
-                                gauges.necromancy.stacks.necrosis.position.active_orientation
-                                    .x, gauges.necromancy.position.y +
-                                gauges.necromancy.stacks.necrosis.position.active_orientation
-                                    .y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(necrosisImages.necrosis_2.toDrawableData()), necrosisImages.necrosis_2.width, 1000);
-                            if (gauges.necromancy.stacks.necrosis.dupeRow) {
-                                alt1.overLaySetGroup('Necrosis_Row2');
-                                alt1.overLayImage(gauges.necromancy.position.x +
-                                    gauges.necromancy.stacks.necrosis.position.active_orientation
-                                        .x, gauges.necromancy.position.y +
-                                    gauges.necromancy.stacks.necrosis.position.active_orientation
-                                        .y + necrosisImages.necrosis_0.height, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(necrosisImages.necrosis_2.toDrawableData()), necrosisImages.necrosis_2.width, 1000);
-                            }
-                            break;
                         case 4:
-                            alt1.overLaySetGroup('Necrosis');
-                            alt1.overLayImage(gauges.necromancy.position.x +
-                                gauges.necromancy.stacks.necrosis.position.active_orientation
-                                    .x, gauges.necromancy.position.y +
-                                gauges.necromancy.stacks.necrosis.position.active_orientation
-                                    .y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(necrosisImages.necrosis_4.toDrawableData()), necrosisImages.necrosis_4.width, 1000);
-                            if (gauges.necromancy.stacks.necrosis.dupeRow) {
-                                alt1.overLaySetGroup('Necrosis_Row2');
-                                alt1.overLayImage(gauges.necromancy.position.x +
-                                    gauges.necromancy.stacks.necrosis.position.active_orientation
-                                        .x, gauges.necromancy.position.y +
-                                    gauges.necromancy.stacks.necrosis.position.active_orientation
-                                        .y + necrosisImages.necrosis_0.height, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(necrosisImages.necrosis_4.toDrawableData()), necrosisImages.necrosis_4.width, 1000);
-                            }
-                            break;
                         case 6:
-                            alt1.overLaySetGroup('Necrosis');
-                            alt1.overLayImage(gauges.necromancy.position.x +
-                                gauges.necromancy.stacks.necrosis.position.active_orientation
-                                    .x, gauges.necromancy.position.y +
-                                gauges.necromancy.stacks.necrosis.position.active_orientation
-                                    .y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(necrosisImages.necrosis_6.toDrawableData()), necrosisImages.necrosis_6.width, 1000);
-                            if (gauges.necromancy.stacks.necrosis.dupeRow) {
-                                alt1.overLaySetGroup('Necrosis_Row2');
-                                alt1.overLayImage(gauges.necromancy.position.x +
-                                    gauges.necromancy.stacks.necrosis.position.active_orientation
-                                        .x, gauges.necromancy.position.y +
-                                    gauges.necromancy.stacks.necrosis.position.active_orientation
-                                        .y + necrosisImages.necrosis_0.height, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(necrosisImages.necrosis_6.toDrawableData()), necrosisImages.necrosis_6.width, 1000);
-                            }
-                            break;
                         case 8:
-                            alt1.overLaySetGroup('Necrosis');
-                            alt1.overLayImage(gauges.necromancy.position.x +
-                                gauges.necromancy.stacks.necrosis.position.active_orientation
-                                    .x, gauges.necromancy.position.y +
-                                gauges.necromancy.stacks.necrosis.position.active_orientation
-                                    .y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(necrosisImages.necrosis_8.toDrawableData()), necrosisImages.necrosis_8.width, 1000);
-                            if (gauges.necromancy.stacks.necrosis.dupeRow) {
-                                alt1.overLaySetGroup('Necrosis_Row2');
-                                alt1.overLayImage(gauges.necromancy.position.x +
-                                    gauges.necromancy.stacks.necrosis.position.active_orientation
-                                        .x, gauges.necromancy.position.y +
-                                    gauges.necromancy.stacks.necrosis.position.active_orientation
-                                        .y + necrosisImages.necrosis_0.height, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(necrosisImages.necrosis_8.toDrawableData()), necrosisImages.necrosis_8.width, 1000);
-                            }
-                            break;
                         case 10:
-                            alt1.overLaySetGroup('Necrosis');
-                            alt1.overLayImage(gauges.necromancy.position.x +
-                                gauges.necromancy.stacks.necrosis.position.active_orientation
-                                    .x, gauges.necromancy.position.y +
-                                gauges.necromancy.stacks.necrosis.position.active_orientation
-                                    .y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(necrosisImages.necrosis_10.toDrawableData()), necrosisImages.necrosis_10.width, 1000);
-                            if (gauges.necromancy.stacks.necrosis.dupeRow) {
-                                alt1.overLaySetGroup('Necrosis_Row2');
-                                alt1.overLayImage(gauges.necromancy.position.x +
-                                    gauges.necromancy.stacks.necrosis.position.active_orientation
-                                        .x, gauges.necromancy.position.y +
-                                    gauges.necromancy.stacks.necrosis.position.active_orientation
-                                        .y + necrosisImages.necrosis_0.height, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(necrosisImages.necrosis_10.toDrawableData()), necrosisImages.necrosis_10.width, 1000);
-                            }
-                            break;
                         case 12:
-                            alt1.overLaySetGroup('Necrosis');
-                            alt1.overLayImage(gauges.necromancy.position.x +
-                                gauges.necromancy.stacks.necrosis.position.active_orientation
-                                    .x, gauges.necromancy.position.y +
-                                gauges.necromancy.stacks.necrosis.position.active_orientation
-                                    .y, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(necrosisImages.necrosis_12.toDrawableData()), necrosisImages.necrosis_12.width, 1000);
-                            if (gauges.necromancy.stacks.necrosis.dupeRow) {
-                                alt1.overLaySetGroup('Necrosis_Row2');
-                                alt1.overLayImage(gauges.necromancy.position.x +
-                                    gauges.necromancy.stacks.necrosis.position.active_orientation
-                                        .x, gauges.necromancy.position.y +
-                                    gauges.necromancy.stacks.necrosis.position.active_orientation
-                                        .y + necrosisImages.necrosis_0.height, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(necrosisImages.necrosis_12.toDrawableData()), necrosisImages.necrosis_12.width, 1000);
-                            }
+                            displayNecrosisImage(count);
                             break;
+                    }
+                    if (dupeRow) {
+                        alt1.overLaySetGroup('Necrosis_Row2');
+                        alt1.overLayImage(gauges.necromancy.position.x + x, gauges.necromancy.position.y + y + necrosisImages.necrosis_0.height, alt1__WEBPACK_IMPORTED_MODULE_0__.encodeImageString(necrosisImages["necrosis_".concat(count)].toDrawableData()), necrosisImages["necrosis_".concat(count)].width, 1000);
                     }
                     return [2 /*return*/];
             }
@@ -7351,7 +7261,7 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
 
 
 var necromancy_gauge = (__webpack_require__(/*! ./data/necromancy_job_gauge */ "./data/necromancy_job_gauge.ts").necromancy_gauge);
@@ -7480,6 +7390,9 @@ function startApp() {
             if (_a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('showNecrosis') !== undefined) {
                 gauges.necromancy.stacks.necrosis.visible = _a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('showNecrosis');
             }
+            if (_a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('dupeRow') !== undefined) {
+                gauges.necromancy.stacks.necrosis.dupeRow = _a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('dupeRow');
+            }
             if (_a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('showBloat') !== undefined) {
                 gauges.necromancy.bloat.visible = _a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('showBloat');
             }
@@ -7553,7 +7466,8 @@ var settingsObject = {
     showSplitSoul: _a1sauce__WEBPACK_IMPORTED_MODULE_0__.createCheckboxSetting('showSplitSoul', 'Show Split Soul', (_j = _a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('showSplitSoul')) !== null && _j !== void 0 ? _j : true),
     showSouls: _a1sauce__WEBPACK_IMPORTED_MODULE_0__.createCheckboxSetting('showSouls', 'Show Residual Souls', (_k = _a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('showSouls')) !== null && _k !== void 0 ? _k : true),
     showNecrosis: _a1sauce__WEBPACK_IMPORTED_MODULE_0__.createCheckboxSetting('showNecrosis', 'Show Necrosis', (_l = _a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('showNecrosis')) !== null && _l !== void 0 ? _l : true),
-    showBloat: _a1sauce__WEBPACK_IMPORTED_MODULE_0__.createCheckboxSetting('showBloat', 'Show Bloat', (_m = _a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('showBloat')) !== null && _m !== void 0 ? _m : true),
+    dupeRow: _a1sauce__WEBPACK_IMPORTED_MODULE_0__.createCheckboxSetting('dupeRow', 'Show 2nd row of Necrosis stacks', (_m = _a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('dupeRow')) !== null && _m !== void 0 ? _m : false),
+    showBloat: _a1sauce__WEBPACK_IMPORTED_MODULE_0__.createCheckboxSetting('showBloat', 'Show Bloat', (_o = _a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('showBloat')) !== null && _o !== void 0 ? _o : true),
 };
 settingsObject.orientationSelection.addEventListener('change', function () {
     updateActiveOrientationFromLocalStorage();
@@ -7561,7 +7475,9 @@ settingsObject.orientationSelection.addEventListener('change', function () {
 settingsObject.repositionOverlay.addEventListener('click', setOverlayPosition);
 settingsObject.sizeSelection.addEventListener('change', function (e) {
     gauges.size = _a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('overlaySize');
-    console.log(gauges);
+});
+settingsObject.showNecrosis.addEventListener('change', function (e) {
+    gauges.necromancy.necrosis.dupeRow = _a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('dupeRow');
 });
 var updatingOverlayPosition = false;
 function setOverlayPosition() {

@@ -11,232 +11,53 @@ var necrosisImages = a1lib.webpackImages({
 });
 
 export async function necrosisOverlay(gauges) {
+	const { necrosis } = gauges.necromancy.stacks;
+
 	await necrosisImages.promise;
-	if (!gauges.necromancy.stacks.necrosis.visible) {
+
+	if (!necrosis.visible) {
 		return;
 	}
-	switch (gauges.necromancy.stacks.necrosis.count) {
+
+	const { position, dupeRow, count } = necrosis;
+	const { x, y } = position.active_orientation;
+
+	alt1.overLaySetGroup('Necrosis');
+
+	switch (count) {
 		case 0:
-			alt1.overLaySetGroup('Necrosis');
-			alt1.overLayImage(
-				gauges.necromancy.position.x +
-					gauges.necromancy.stacks.necrosis.position
-						.active_orientation.x,
-				gauges.necromancy.position.y +
-					gauges.necromancy.stacks.necrosis.position
-						.active_orientation.y,
-				a1lib.encodeImageString(
-					necrosisImages.necrosis_0.toDrawableData()
-				),
-				necrosisImages.necrosis_0.width,
-				1000
-			);
-			if (gauges.necromancy.stacks.necrosis.dupeRow) {
-				alt1.overLaySetGroup('Necrosis_Row2');
-				alt1.overLayImage(
-				gauges.necromancy.position.x +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.x,
-				gauges.necromancy.position.y +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.y + necrosisImages.necrosis_0.height,
-					a1lib.encodeImageString(
-						necrosisImages.necrosis_0.toDrawableData()
-					),
-					necrosisImages.necrosis_0.width,
-					1000
-				);
-			}
-			break;
 		case 2:
-			alt1.overLaySetGroup('Necrosis');
-			alt1.overLayImage(
-				gauges.necromancy.position.x +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.x,
-				gauges.necromancy.position.y +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.y,
-				a1lib.encodeImageString(
-					necrosisImages.necrosis_2.toDrawableData()
-				),
-				necrosisImages.necrosis_2.width,
-				1000
-			);
-			if (gauges.necromancy.stacks.necrosis.dupeRow) {
-				alt1.overLaySetGroup('Necrosis_Row2');
-				alt1.overLayImage(
-				gauges.necromancy.position.x +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.x,
-				gauges.necromancy.position.y +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.y + necrosisImages.necrosis_0.height,
-					a1lib.encodeImageString(
-						necrosisImages.necrosis_2.toDrawableData()
-					),
-					necrosisImages.necrosis_2.width,
-					1000
-				);
-			}
-			break;
 		case 4:
-			alt1.overLaySetGroup('Necrosis');
-			alt1.overLayImage(
-				gauges.necromancy.position.x +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.x,
-				gauges.necromancy.position.y +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.y,
-				a1lib.encodeImageString(
-					necrosisImages.necrosis_4.toDrawableData()
-				),
-				necrosisImages.necrosis_4.width,
-				1000
-			);
-			if (gauges.necromancy.stacks.necrosis.dupeRow) {
-				alt1.overLaySetGroup('Necrosis_Row2');
-				alt1.overLayImage(
-				gauges.necromancy.position.x +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.x,
-				gauges.necromancy.position.y +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.y + necrosisImages.necrosis_0.height,
-					a1lib.encodeImageString(
-						necrosisImages.necrosis_4.toDrawableData()
-					),
-					necrosisImages.necrosis_4.width,
-					1000
-				);
-			}
-			break;
 		case 6:
-			alt1.overLaySetGroup('Necrosis');
-			alt1.overLayImage(
-				gauges.necromancy.position.x +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.x,
-				gauges.necromancy.position.y +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.y,
-				a1lib.encodeImageString(
-					necrosisImages.necrosis_6.toDrawableData()
-				),
-				necrosisImages.necrosis_6.width,
-				1000
-			);
-			if (gauges.necromancy.stacks.necrosis.dupeRow) {
-				alt1.overLaySetGroup('Necrosis_Row2');
-				alt1.overLayImage(
-				gauges.necromancy.position.x +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.x,
-				gauges.necromancy.position.y +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.y + necrosisImages.necrosis_0.height,
-					a1lib.encodeImageString(
-						necrosisImages.necrosis_6.toDrawableData()
-					),
-					necrosisImages.necrosis_6.width,
-					1000
-				);
-			}
-			break;
 		case 8:
-			alt1.overLaySetGroup('Necrosis');
-			alt1.overLayImage(
-				gauges.necromancy.position.x +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.x,
-				gauges.necromancy.position.y +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.y,
-				a1lib.encodeImageString(necrosisImages.necrosis_8.toDrawableData()),
-				necrosisImages.necrosis_8.width,
-				1000
-			);
-			if (gauges.necromancy.stacks.necrosis.dupeRow) {
-				alt1.overLaySetGroup('Necrosis_Row2');
-				alt1.overLayImage(
-				gauges.necromancy.position.x +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.x,
-				gauges.necromancy.position.y +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.y + necrosisImages.necrosis_0.height,
-					a1lib.encodeImageString(
-						necrosisImages.necrosis_8.toDrawableData()
-					),
-					necrosisImages.necrosis_8.width,
-					1000
-				);
-			}
-			break;
 		case 10:
-			alt1.overLaySetGroup('Necrosis');
-			alt1.overLayImage(
-				gauges.necromancy.position.x +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.x,
-				gauges.necromancy.position.y +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.y,
-				a1lib.encodeImageString(
-					necrosisImages.necrosis_10.toDrawableData()
-				),
-				necrosisImages.necrosis_10.width,
-				1000
-			);
-			if (gauges.necromancy.stacks.necrosis.dupeRow) {
-				alt1.overLaySetGroup('Necrosis_Row2');
-				alt1.overLayImage(
-				gauges.necromancy.position.x +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.x,
-				gauges.necromancy.position.y +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.y + necrosisImages.necrosis_0.height,
-					a1lib.encodeImageString(
-						necrosisImages.necrosis_10.toDrawableData()
-					),
-					necrosisImages.necrosis_10.width,
-					1000
-				);
-			}
-			break;
 		case 12:
-			alt1.overLaySetGroup('Necrosis');
-			alt1.overLayImage(
-				gauges.necromancy.position.x +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.x,
-				gauges.necromancy.position.y +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.y,
-				a1lib.encodeImageString(
-					necrosisImages.necrosis_12.toDrawableData()
-				),
-				necrosisImages.necrosis_12.width,
-				1000
-			);
-			if (gauges.necromancy.stacks.necrosis.dupeRow) {
-				alt1.overLaySetGroup('Necrosis_Row2');
-				alt1.overLayImage(
-				gauges.necromancy.position.x +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.x,
-				gauges.necromancy.position.y +
-					gauges.necromancy.stacks.necrosis.position.active_orientation
-						.y + necrosisImages.necrosis_0.height,
-					a1lib.encodeImageString(
-						necrosisImages.necrosis_12.toDrawableData()
-					),
-					necrosisImages.necrosis_12.width,
-					1000
-				);
-			}
+			displayNecrosisImage(count);
 			break;
+	}
+
+	if (dupeRow) {
+		alt1.overLaySetGroup('Necrosis_Row2');
+		alt1.overLayImage(
+			gauges.necromancy.position.x + x,
+			gauges.necromancy.position.y + y + necrosisImages.necrosis_0.height,
+			a1lib.encodeImageString(
+				necrosisImages[`necrosis_${count}`].toDrawableData()
+			),
+			necrosisImages[`necrosis_${count}`].width,
+			1000
+		);
+	}
+
+	function displayNecrosisImage(count) {
+		alt1.overLayImage(
+			gauges.necromancy.position.x + x,
+			gauges.necromancy.position.y + y,
+			a1lib.encodeImageString(
+				necrosisImages[`necrosis_${count}`].toDrawableData()
+			),
+			necrosisImages[`necrosis_${count}`].width,
+			1000
+		);
 	}
 }
