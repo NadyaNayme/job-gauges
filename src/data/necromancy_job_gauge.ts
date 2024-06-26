@@ -193,6 +193,7 @@ const necromancy_gauge = {
 		visiblie: true,
 		active: false,
 		time: 0,
+		onCooldown: false,
 		cooldown: 60,
 		position: {
 			active_orientation: {

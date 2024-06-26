@@ -11,3 +11,9 @@ export async function forceClearOverlay(overlay: string) {
 	console.log('Force cleared: ' + overlay);
 	return;
 }
+
+export async function updateCoordinates(component, coordinates: {x: number, y: number}) {
+	component.activePosition.x = coordinates.x;
+	component.activePosition.y = coordinates.y;
+	return
+}
