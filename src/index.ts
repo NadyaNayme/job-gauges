@@ -198,18 +198,6 @@ const settingsObject = {
 			max: 300,
 		}
 	),
-	sizeHeader: sauce.createHeading('h3', 'Overlay Size'),
-	sizeSelection: sauce.createDropdownSetting(
-		'overlaySize',
-		'Select size of overlay. Currently not implemented but the setting needs to exist.',
-		sauce.getSetting('overlaySize') ?? 'lg',
-		[
-			{ value: 'sm', name: 'Small' },
-			{ value: 'md', name: 'Medium' },
-			{ value: 'lg', name: 'Large' },
-			{ value: 'xlg', name: 'Extra Large' },
-		]
-	),
 	orientationReset: sauce.createSeperator(),
 	orientationHeader: sauce.createHeading('h3', 'Incantation Placement'),
 	orientationSelection: sauce.createDropdownSetting(
@@ -292,10 +280,6 @@ settingsObject.orientationSelection.addEventListener('change', () => {
 });
 
 settingsObject.repositionOverlay.addEventListener('click', setOverlayPosition);
-
-settingsObject.sizeSelection.addEventListener('change', (e) => {
-	gauges.size = sauce.getSetting('overlaySize');
-})
 
 settingsObject.showNecrosis.addEventListener('change', (e) => {
 	gauges.necromancy.necrosis.dupeRow = sauce.getSetting('dupeRow');

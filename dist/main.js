@@ -7409,7 +7409,7 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
 
 
 
@@ -7594,16 +7594,9 @@ var settingsObject = {
         min: 50,
         max: 300,
     }),
-    sizeHeader: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createHeading('h3', 'Overlay Size'),
-    sizeSelection: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createDropdownSetting('overlaySize', 'Select size of overlay. Currently not implemented but the setting needs to exist.', (_a = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('overlaySize')) !== null && _a !== void 0 ? _a : 'lg', [
-        { value: 'sm', name: 'Small' },
-        { value: 'md', name: 'Medium' },
-        { value: 'lg', name: 'Large' },
-        { value: 'xlg', name: 'Extra Large' },
-    ]),
     orientationReset: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createSeperator(),
     orientationHeader: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createHeading('h3', 'Incantation Placement'),
-    orientationSelection: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createDropdownSetting('selectedOrientation', 'Select how to group Incantations', (_b = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('selectedOrientation')) !== null && _b !== void 0 ? _b : 'reverse_split_orientation', [
+    orientationSelection: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createDropdownSetting('selectedOrientation', 'Select how to group Incantations', (_a = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('selectedOrientation')) !== null && _a !== void 0 ? _a : 'reverse_split_orientation', [
         { value: 'grouped_orientation', name: 'Grouped' },
         { value: 'split_orientation', name: 'Split' },
         { value: 'reverse_split_orientation', name: 'Reverse Split' },
@@ -7612,25 +7605,22 @@ var settingsObject = {
     visibleComponentsHeader: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createHeading('h3', 'Visible Components'),
     visibleComponentsText: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createText('Select which components of the overlay you wish to see.'),
     visibleComponentsSmallText: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createSmallText('Give it a few seconds to update.'),
-    showConjures: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showConjures', 'Show Conjures', (_c = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showConjures')) !== null && _c !== void 0 ? _c : true),
-    showLivingDeath: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showLivingDeath', 'Show Living Death', (_d = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showLivingDeath')) !== null && _d !== void 0 ? _d : true),
-    showIncantations: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showIncantations', 'Show Incantations', (_e = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showIncantations')) !== null && _e !== void 0 ? _e : true),
-    showInvokeDeath: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showInvokeDeath', 'Show Invoke Death', (_f = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showInvokeDeath')) !== null && _f !== void 0 ? _f : true),
-    showDarkness: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showDarkness', 'Show Darkness', (_g = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showDarkness')) !== null && _g !== void 0 ? _g : true),
-    showThreads: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showThreads', 'Show Threads of Fate', (_h = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showThreads')) !== null && _h !== void 0 ? _h : true),
-    showSplitSoul: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showSplitSoul', 'Show Split Soul', (_j = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showSplitSoul')) !== null && _j !== void 0 ? _j : true),
-    showSouls: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showSouls', 'Show Residual Souls', (_k = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showSouls')) !== null && _k !== void 0 ? _k : true),
-    showNecrosis: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showNecrosis', 'Show Necrosis', (_l = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showNecrosis')) !== null && _l !== void 0 ? _l : true),
-    dupeRow: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('dupeRow', 'Show 2nd row of Necrosis stacks', (_m = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('dupeRow')) !== null && _m !== void 0 ? _m : false),
-    showBloat: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showBloat', 'Show Bloat', (_o = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showBloat')) !== null && _o !== void 0 ? _o : true),
+    showConjures: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showConjures', 'Show Conjures', (_b = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showConjures')) !== null && _b !== void 0 ? _b : true),
+    showLivingDeath: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showLivingDeath', 'Show Living Death', (_c = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showLivingDeath')) !== null && _c !== void 0 ? _c : true),
+    showIncantations: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showIncantations', 'Show Incantations', (_d = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showIncantations')) !== null && _d !== void 0 ? _d : true),
+    showInvokeDeath: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showInvokeDeath', 'Show Invoke Death', (_e = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showInvokeDeath')) !== null && _e !== void 0 ? _e : true),
+    showDarkness: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showDarkness', 'Show Darkness', (_f = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showDarkness')) !== null && _f !== void 0 ? _f : true),
+    showThreads: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showThreads', 'Show Threads of Fate', (_g = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showThreads')) !== null && _g !== void 0 ? _g : true),
+    showSplitSoul: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showSplitSoul', 'Show Split Soul', (_h = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showSplitSoul')) !== null && _h !== void 0 ? _h : true),
+    showSouls: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showSouls', 'Show Residual Souls', (_j = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showSouls')) !== null && _j !== void 0 ? _j : true),
+    showNecrosis: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showNecrosis', 'Show Necrosis', (_k = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showNecrosis')) !== null && _k !== void 0 ? _k : true),
+    dupeRow: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('dupeRow', 'Show 2nd row of Necrosis stacks', (_l = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('dupeRow')) !== null && _l !== void 0 ? _l : false),
+    showBloat: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showBloat', 'Show Bloat', (_m = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showBloat')) !== null && _m !== void 0 ? _m : true),
 };
 settingsObject.orientationSelection.addEventListener('change', function () {
     updateActiveOrientationFromLocalStorage();
 });
 settingsObject.repositionOverlay.addEventListener('click', setOverlayPosition);
-settingsObject.sizeSelection.addEventListener('change', function (e) {
-    gauges.size = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('overlaySize');
-});
 settingsObject.showNecrosis.addEventListener('change', function (e) {
     gauges.necromancy.necrosis.dupeRow = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('dupeRow');
 });
