@@ -1,5 +1,6 @@
 import * as a1lib from 'alt1';
 import * as TargetMob from 'alt1/targetmob';
+import * as utility from './lib/utility';
 import * as sauce from './a1sauce';
 
 const { necromancy_gauge } = require('./data/necromancy_job_gauge');
@@ -168,7 +169,7 @@ function updateActiveOrientationFromLocalStorage() {
 	updateActiveOrientation(necromancy_gauge);
 }
 
-const version = '0.0.2';
+const version = '0.0.3';
 const settingsObject = {
 	appName: sauce.createHeading('h2', 'Job Gauges - v' + version),
 	settingDiscord: sauce.createText(
@@ -187,6 +188,16 @@ const settingsObject = {
 		{ classes: ['nisbutton'] }
 	),
 	sizeReset: sauce.createSeperator(),
+	ScaleHeader: sauce.createHeading('h3', 'Scale'),
+	UIScale: sauce.createRangeSetting(
+		'scale',
+		'Adjusts the size of the overlay. You must reload and reposition the overlay after scaling.',
+		{
+			defaultValue: '100',
+			min: 50,
+			max: 300,
+		}
+	),
 	sizeHeader: sauce.createHeading('h3', 'Overlay Size'),
 	sizeSelection: sauce.createDropdownSetting(
 		'overlaySize',
@@ -292,6 +303,7 @@ settingsObject.showNecrosis.addEventListener('change', (e) => {
 
 let updatingOverlayPosition = false;
 async function setOverlayPosition() {
+	let scaleFactor = sauce.getSetting('scale') / 100;
 	updatingOverlayPosition = true;
 	a1lib.once('alt1pressed', updateLocation);
 	alt1.setTooltip(
@@ -301,8 +313,10 @@ async function setOverlayPosition() {
 		alt1.clearTooltip();
 	}, 3000);
 	while (updatingOverlayPosition) {
-		gauges.necromancy.position.x = a1lib.getMousePosition().x;
-		gauges.necromancy.position.y = a1lib.getMousePosition().y;
+		gauges.necromancy.position.x =
+			utility.adjustPositionWithoutScale(a1lib.getMousePosition().x, scaleFactor);
+		gauges.necromancy.position.y =
+			utility.adjustPositionWithoutScale(a1lib.getMousePosition().y, scaleFactor);
 		await new Promise((done) => setTimeout(done, 20));
 	}
 }

@@ -82,6 +82,10 @@ export async function readEnemy(gauges) {
 			gauges.necromancy.bloat.time = 0;
 			gauges.necromancy.bloat.active = false;
 		}
+	} else {
+		gauges.necromancy.incantations.active[0] = false;
+		gauges.necromancy.bloat.time = 0;
+		gauges.necromancy.bloat.active = false;
 	}
 }
 

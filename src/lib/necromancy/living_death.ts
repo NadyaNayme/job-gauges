@@ -1,4 +1,5 @@
 import * as a1lib from 'alt1';
+import * as sauce from '../../a1sauce';
 import * as utility from '../utility';
 
 var ultimateImages = a1lib.webpackImages({
@@ -7,6 +8,10 @@ var ultimateImages = a1lib.webpackImages({
 });
 
 let lastValue;
+
+let scaleFactor = sauce.getSetting('scale') / 100;
+let scaledOnce = false;
+
 export async function livingDeathOverlay(gauges) {
 
     const { necromancy } = gauges;
@@ -18,6 +23,17 @@ export async function livingDeathOverlay(gauges) {
 	}
 
 	await ultimateImages.promise;
+
+	if (!scaledOnce) {
+		Object.keys(ultimateImages).forEach(async (key) => {
+			ultimateImages[key] = await utility.resizeImageData(
+				ultimateImages[key],
+				scaleFactor
+			);
+		});
+		scaledOnce = true;
+	}
+
 
 	// If Living Death is not Active and is not on cooldown it should appear as able to be activated
 	if (!livingDeath.active) {
@@ -44,14 +60,14 @@ export async function livingDeathOverlay(gauges) {
 				livingDeath.time.toString(),
 				utility.white,
 				14,
-				necromancy.position.x +
+				utility.adjustPositionForScale(necromancy.position.x +
 					livingDeath.position.active_orientation
 						.x +
-					26,
-				necromancy.position.y +
+					26, scaleFactor),
+				utility.adjustPositionForScale(necromancy.position.y +
 					livingDeath.position.active_orientation
 						.y +
-					26,
+					26, scaleFactor),
 				3000,
 				undefined,
 				true,
@@ -72,10 +88,10 @@ function clearLivingDeathOverlays() {
 function displayActiveLivingDeath(gauges) {
 	alt1.overLaySetGroup('LivingDeath');
 	alt1.overLayImage(
-		gauges.necromancy.position.x +
-			gauges.necromancy.livingDeath.position.active_orientation.x,
-		gauges.necromancy.position.y +
-			gauges.necromancy.livingDeath.position.active_orientation.y,
+		utility.adjustPositionForScale(gauges.necromancy.position.x +
+			gauges.necromancy.livingDeath.position.active_orientation.x, scaleFactor),
+		utility.adjustPositionForScale(gauges.necromancy.position.y +
+			gauges.necromancy.livingDeath.position.active_orientation.y, scaleFactor),
 		a1lib.encodeImageString(ultimateImages.active.toDrawableData()),
 		ultimateImages.active.width,
 		1000
@@ -85,10 +101,10 @@ function displayActiveLivingDeath(gauges) {
 function displayInactiveLivingDeath(gauges) {
 	alt1.overLaySetGroup('LivingDeath');
 	alt1.overLayImage(
-		gauges.necromancy.position.x +
-			gauges.necromancy.livingDeath.position.active_orientation.x,
-		gauges.necromancy.position.y +
-			gauges.necromancy.livingDeath.position.active_orientation.y,
+		utility.adjustPositionForScale(gauges.necromancy.position.x +
+			gauges.necromancy.livingDeath.position.active_orientation.x, scaleFactor),
+		utility.adjustPositionForScale(gauges.necromancy.position.y +
+			gauges.necromancy.livingDeath.position.active_orientation.y, scaleFactor),
 		a1lib.encodeImageString(ultimateImages.inactive.toDrawableData()),
 		ultimateImages.inactive.width,
 		1000

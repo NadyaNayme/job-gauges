@@ -1,4 +1,6 @@
 import * as a1lib from 'alt1';
+import * as sauce from '../../a1sauce';
+import * as utility from '../utility';
 
 var necrosisImages = a1lib.webpackImages({
 	necrosis_0: require('../.././asset/data/necrosis/lg/necrosis_0.data.png'),
@@ -10,6 +12,9 @@ var necrosisImages = a1lib.webpackImages({
 	necrosis_12: require('../.././asset/data/necrosis/lg/necrosis_12.data.png'),
 });
 
+let scaleFactor = sauce.getSetting('scale') / 100;
+let scaledOnce = false;
+
 export async function necrosisOverlay(gauges) {
 	const { necrosis } = gauges.necromancy.stacks;
 
@@ -17,6 +22,16 @@ export async function necrosisOverlay(gauges) {
 
 	if (!necrosis.visible) {
 		return;
+	}
+
+	if (!scaledOnce) {
+		Object.keys(necrosisImages).forEach(async (key) => {
+			necrosisImages[key] = await utility.resizeImageData(
+				necrosisImages[key],
+				scaleFactor
+			);
+		});
+		scaledOnce = true;
 	}
 
 	const { position, dupeRow, count } = necrosis;
@@ -44,8 +59,8 @@ export async function necrosisOverlay(gauges) {
 	if (dupeRow) {
 		alt1.overLaySetGroup('Necrosis_Row2');
 		alt1.overLayImage(
-			gauges.necromancy.position.x + x,
-			gauges.necromancy.position.y + y + necrosisImages.necrosis_0.height + bloatSpace,
+			utility.adjustPositionForScale(gauges.necromancy.position.x + x, scaleFactor),
+			utility.adjustPositionForScale(gauges.necromancy.position.y + y + necrosisImages.necrosis_0.height + bloatSpace, scaleFactor),
 			a1lib.encodeImageString(
 				necrosisImages[`necrosis_${count}`].toDrawableData()
 			),
@@ -56,8 +71,8 @@ export async function necrosisOverlay(gauges) {
 
 	function displayNecrosisImage(count) {
 		alt1.overLayImage(
-			gauges.necromancy.position.x + x,
-			gauges.necromancy.position.y + y + bloatSpace,
+			utility.adjustPositionForScale(gauges.necromancy.position.x + x, scaleFactor),
+			utility.adjustPositionForScale(gauges.necromancy.position.y + y + bloatSpace, scaleFactor),
 			a1lib.encodeImageString(
 				necrosisImages[`necrosis_${count}`].toDrawableData()
 			),

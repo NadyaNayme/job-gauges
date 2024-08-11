@@ -1,4 +1,6 @@
 import * as a1lib from 'alt1';
+import * as sauce from '../../a1sauce';
+import * as utility from '../utility';
 
 var soulImages = a1lib.webpackImages({
 	souls_0: require('../.././asset/data/souls/lg/souls_0.data.png'),
@@ -9,6 +11,9 @@ var soulImages = a1lib.webpackImages({
 	souls_5: require('../.././asset/data/souls/lg/souls_5.data.png'),
 });
 
+let scaleFactor = sauce.getSetting('scale') / 100;
+let scaledOnce = false;
+
 export async function soulsOverlay(gauges) {
 	const { souls } = gauges.necromancy.stacks;
 
@@ -17,6 +22,16 @@ export async function soulsOverlay(gauges) {
 	}
 
 	await soulImages.promise;
+
+	if (!scaledOnce) {
+		Object.keys(soulImages).forEach(async (key) => {
+			soulImages[key] = await utility.resizeImageData(
+				soulImages[key],
+				scaleFactor
+			);
+		});
+		scaledOnce = true;
+	}
 
 	const { position } = souls;
 	const { x, y } = position.active_orientation;
@@ -49,8 +64,8 @@ export async function soulsOverlay(gauges) {
 
 	function displaySoulImage(image: ImageData) {
 		alt1.overLayImage(
-			gauges.necromancy.position.x + x,
-			gauges.necromancy.position.y + y,
+			utility.adjustPositionForScale(gauges.necromancy.position.x + x, scaleFactor),
+			utility.adjustPositionForScale(gauges.necromancy.position.y + y, scaleFactor),
 			a1lib.encodeImageString(image.toDrawableData()),
 			image.width,
 			1000
