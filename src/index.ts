@@ -1,7 +1,7 @@
 import * as a1lib from 'alt1';
 import * as TargetMob from 'alt1/targetmob';
 import * as utility from './lib/utility';
-import { helperItems, getByID } from './lib/utility';
+import { helperItems } from './lib/utility';
 import * as sauce from './a1sauce';
 import { Overlay, NecromancyGauge, MagicGauge, RangedGauge, MeleeGauge } from './types/index';
 
@@ -33,7 +33,7 @@ import './icon.png';
 import './css/styles.css';
 
 const gauges: Overlay = {
-	inCombat: false,
+	isInCombat: false,
 	checkCombatStatus: false,
 	necromancy: necromancy_gauge,
 	magic: magic_gauge,
@@ -43,7 +43,7 @@ const gauges: Overlay = {
 
 async function renderOverlays() {
 	await readEnemy(gauges);
-	if (gauges.inCombat || sauce.getSetting('updatingOverlayPosition')) {
+	if (gauges.isInCombat || sauce.getSetting('updatingOverlayPosition')) {
 		await readBuffs(gauges);
 		await conjureOverlay(gauges);
 		await soulsOverlay(gauges);
@@ -94,7 +94,7 @@ export async function startApp() {
 	});
 }
 
-function loadSettings() {
+function loadSettings(): void {
 	if (sauce.getSetting('overlayPosition') !== undefined) {
 		//TODO: Each gauge should be able to be positioned separately
 		gauges.necromancy.position = sauce.getSetting('overlayPosition');
@@ -108,86 +108,86 @@ function loadSettings() {
 	}
 
 	// Necromancy Components (TODO: Move the check into the components themselves?)
+	updateGaugeData();
+}
 
+//TODO: Clean this tf up
+function updateGaugeData(): void {
 	if (sauce.getSetting('showConjures') !== undefined) {
-		gauges.necromancy.conjures.visible = sauce.getSetting('showConjures');
+		gauges.necromancy.conjures.isActiveOverlay =
+			sauce.getSetting('showConjures');
 	}
 
 	if (sauce.getSetting('showLivingDeath') !== undefined) {
-		gauges.necromancy.livingDeath.visible =
+		gauges.necromancy.livingDeath.isActiveOverlay =
 			sauce.getSetting('showLivingDeath');
 	}
 
 	if (sauce.getSetting('showIncantations') !== undefined) {
-		gauges.necromancy.incantations.visible =
+		gauges.necromancy.incantations.isActiveOverlay =
 			sauce.getSetting('showIncantations');
 	}
 
 	if (sauce.getSetting('showInvokeDeath') !== undefined) {
-		gauges.necromancy.incantations.invokeDeath.visible =
+		gauges.necromancy.incantations.invokeDeath.isActiveOverlay =
 			sauce.getSetting('showInvokeDeath');
 	}
 
 	if (sauce.getSetting('showDarkness') !== undefined) {
-		gauges.necromancy.incantations.darkness.visible =
+		gauges.necromancy.incantations.darkness.isActiveOverlay =
 			sauce.getSetting('showDarkness');
 	}
 
 	if (sauce.getSetting('showThreads') !== undefined) {
-		gauges.necromancy.incantations.threads.visible =
+		gauges.necromancy.incantations.threads.isActiveOverlay =
 			sauce.getSetting('showThreads');
 	}
 
 	if (sauce.getSetting('showSplitSoul') !== undefined) {
-		gauges.necromancy.incantations.splitSoul.visible =
+		gauges.necromancy.incantations.splitSoul.isActiveOverlay =
 			sauce.getSetting('showSplitSoul');
 	}
 
 	if (sauce.getSetting('showSouls') !== undefined) {
-		gauges.necromancy.stacks.souls.visible = sauce.getSetting('showSouls');
+		gauges.necromancy.stacks.souls.isActiveOverlay =
+			sauce.getSetting('showSouls');
 	}
 
 	if (sauce.getSetting('showNecrosis') !== undefined) {
-		gauges.necromancy.stacks.necrosis.visible =
+		gauges.necromancy.stacks.necrosis.isActiveOverlay =
 			sauce.getSetting('showNecrosis');
 	}
 
 	if (sauce.getSetting('dupeRow') !== undefined) {
-		gauges.necromancy.stacks.necrosis.dupeRow = sauce.getSetting('dupeRow');
+		gauges.necromancy.stacks.duplicateNecrosisRow =
+			sauce.getSetting('dupeRow');
 	}
 
 	if (sauce.getSetting('showBloat') !== undefined) {
-		gauges.necromancy.bloat.visible = sauce.getSetting('showBloat');
+		gauges.necromancy.bloat.isActiveOverlay = sauce.getSetting('showBloat');
 	}
 }
 
-function updateActiveOrientationFromLocalStorage() {
+function updateActiveOrientationFromLocalStorage(): void {
 	// Retrieve selected orientation from localStorage
 	let selectedOrientation = sauce.getSetting('selectedOrientation');
 
 	if (!selectedOrientation) {
 		selectedOrientation = 'reverse_split';
-		sauce.updateSetting('selectedOrientation', 'reverse_split');
 	}
 
 	// Handle v0.0.3 values that included '_orientation' in the string
 	// This should only be needed for a few weeks
-	if (selectedOrientation === 'grouped_orientation') {
+	if (selectedOrientation == 'grouped_orientation')
 		selectedOrientation = 'grouped';
-		sauce.updateSetting('selectedOrientation', selectedOrientation);
-	}
-
-	if (selectedOrientation === 'split_orientation') {
-		selectedOrientation = 'split';
-		sauce.updateSetting('selectedOrientation', selectedOrientation);
-	}
-
-	if (selectedOrientation === 'reverse_split_orientation') {
+	if (selectedOrientation == 'split_orientation') selectedOrientation = 'split';
+	if (selectedOrientation == 'reverse_split_orientation')
 		selectedOrientation = 'reverse_split';
-		sauce.updateSetting('selectedOrientation', selectedOrientation);
-	}
 
-	// Function to recursively update orientation in an object
+	sauce.updateSetting('selectedOrientation', selectedOrientation);
+
+
+	// Function to recursively update orientations in an object
 	function updateActiveOrientation(obj: Object) {
 		for (const key in obj) {
 			if (typeof obj[key] === 'object' && obj[key] !== null) {
@@ -206,7 +206,7 @@ function updateActiveOrientationFromLocalStorage() {
 	updateActiveOrientation(necromancy_gauge);
 }
 
-const version = '0.0.4';
+const version = '0.0.5';
 const settingsObject = {
 	appName: sauce.createHeading('h2', 'Job Gauges - v' + version),
 	settingDiscord: sauce.createText(
@@ -251,9 +251,6 @@ const settingsObject = {
 	visibleComponentsHeader: sauce.createHeading('h3', 'Visible Components'),
 	visibleComponentsText: sauce.createText(
 		'Select which components of the overlay you wish to see.'
-	),
-	visibleComponentsSmallText: sauce.createSmallText(
-		'Give it a few seconds to update.'
 	),
 	showConjures: sauce.createCheckboxSetting(
 		'showConjures',
@@ -319,7 +316,7 @@ settingsObject.orientationSelection.addEventListener('change', () => {
 settingsObject.repositionOverlay.addEventListener('click', setOverlayPosition);
 
 settingsObject.showNecrosis.addEventListener('change', (e) => {
-	gauges.necromancy.stacks.necrosis.dupeRow = sauce.getSetting('dupeRow');
+	gauges.necromancy.stacks.duplicateNecrosisRow = sauce.getSetting('dupeRow');
 })
 
 let updatingOverlayPosition = false;
@@ -369,7 +366,7 @@ async function setOverlayPosition() {
 	}
 }
 
-function updateLocation(e) {
+function updateLocation(): void {
 	updatingOverlayPosition = false;
 	sauce.updateSetting('overlayPosition', {
 		x: gauges.necromancy.position.x,
@@ -387,8 +384,9 @@ window.onload = function () {
 			document.querySelector('#Settings .container').before(val);
 		});
 		document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
-			checkbox.addEventListener('click', () => {
-				location.reload();
+			checkbox.addEventListener('change', () => {
+				updateGaugeData();
+				utility.freezeAndContinueOverlays(); // Force an instant redraw
 			});
 		});
 		startApp();

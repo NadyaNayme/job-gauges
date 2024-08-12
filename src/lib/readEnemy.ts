@@ -1,6 +1,7 @@
 import * as a1lib from 'alt1';
 import * as TargetMob from 'alt1/targetmob';
 import * as sauce from '../a1sauce';
+import { Overlay } from '../types';
 
 var targetDisplay = new TargetMob.default();
 
@@ -14,25 +15,25 @@ var enemyDebuffImages = a1lib.webpackImages({
 const bloatInterval = new Map();
 const bloat = 'bloat';
 
-export async function readEnemy(gauges) {
+export async function readEnemy(gauges: Overlay) {
 	//TODO: Store LastPos and detect when to rescan to avoid spamming CHFRS in loop
 	let targetData = targetDisplay.read();
 
 	if (gauges.checkCombatStatus) {
 		if (targetData) {
-			gauges.inCombat = true;
+			gauges.isInCombat = true;
 		} else {
 			setTimeout(() => {
 				if (!targetData) {
-					gauges.inCombat = false;
+					gauges.isInCombat = false;
 				}
 			}, 1200);
 		}
 	} else {
-		gauges.inCombat = true;
+		gauges.isInCombat = true;
 	}
 
-	if (targetData && gauges.inCombat) {
+	if (targetData && gauges.isInCombat) {
 		var target_display_loc = {
 			x: targetDisplay?.lastpos.x - 120,
 			y: targetDisplay?.lastpos.y + 20,
@@ -50,9 +51,9 @@ export async function readEnemy(gauges) {
 			enemyDebuffImages.invokeDeath
 		).length;
 		if (targetIsDeathMarked) {
-			gauges.necromancy.incantations.active[0] = true;
+			gauges.necromancy.incantations.isActiveOverlay[0] = true;
 		} else if (!targetIsDeathMarked) {
-			gauges.necromancy.incantations.active[0] = false;
+			gauges.necromancy.incantations.isActiveOverlay[0] = false;
 		}
 
 		var targetIsBloated = targetDebuffs.findSubimage(
@@ -62,7 +63,7 @@ export async function readEnemy(gauges) {
 			gauges.necromancy.bloat.time = 20.5;
 			gauges.necromancy.bloat.active = true;
 			const intervalId = setInterval(() => {
-				let currentTick = parseFloat(gauges.necromancy.bloat.time);
+				let currentTick = gauges.necromancy.bloat.time;
 
 				if (currentTick > 0) {
 					let nextTick = parseFloat(roundedToFixed(currentTick - 0.6, 1));

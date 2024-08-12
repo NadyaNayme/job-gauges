@@ -21,7 +21,7 @@ let scaleFactor = sauce.getSetting('scale') / 100;
 let scaledOnce = false;
 
 export async function conjureOverlay(gauges: Overlay) {
-	if (!gauges.necromancy.conjures.visible) {
+	if (!gauges.necromancy.conjures.isActiveOverlay) {
 		return
 	}
 

@@ -24,7 +24,7 @@ let scaledOnce = false;
 export async function bloatOverlay(gauges: Overlay) {
 	const { bloat } = gauges.necromancy;
 
-	if (!bloat.visible) {
+	if (!bloat.isActiveOverlay) {
 		return;
 	}
 

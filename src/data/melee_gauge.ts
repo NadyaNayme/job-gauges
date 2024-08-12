@@ -1,17 +1,17 @@
 import { MeleeGauge } from '../types';
 
 export const melee_gauge: MeleeGauge = {
-	inCombat: false,
+	isInCombat: false,
 	position: {
 		x: 0,
 		y: 0,
 	},
 	berserk: {
-		visible: false,
+		isActiveOverlay: false,
 		active: false,
 		time: 0,
-		onCooldown: false,
-		cooldown: 0,
+		isOnCooldown: false,
+		cooldownDuration: 0,
 		position: {
 			active_orientation: {
 				x: 0,

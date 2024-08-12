@@ -1,15 +1,16 @@
 import { NecromancyGauge } from "../types";
 
 export const necromancy_gauge: NecromancyGauge = {
-	inCombat: false,
+	isInCombat: false,
 	position: {
 		x: 50,
 		y: 50,
 	},
 	stacks: {
 		souls: {
-			visible: true,
-			count: 0,
+			isActiveOverlay: true,
+			active: true,
+			stacks: 0,
 			position: {
 				active_orientation: {
 					x: 0,
@@ -30,9 +31,9 @@ export const necromancy_gauge: NecromancyGauge = {
 			},
 		},
 		necrosis: {
-			visible: true,
-			count: 0,
-			dupeRow: false,
+			isActiveOverlay: true,
+			active: true,
+			stacks: 0,
 			position: {
 				active_orientation: {
 					x: 0,
@@ -52,10 +53,11 @@ export const necromancy_gauge: NecromancyGauge = {
 				},
 			},
 		},
+		duplicateNecrosisRow: false,
 	},
 	conjures: {
 		active: false,
-		visible: true,
+		isActiveOverlay: true,
 		position: {
 			active_orientation: {
 				x: 0,
@@ -75,31 +77,32 @@ export const necromancy_gauge: NecromancyGauge = {
 			},
 		},
 		skeleton: {
-			visible: true,
+			isActiveOverlay: true,
 			time: 0,
 			active: false,
 		},
 		zombie: {
-			visible: true,
+			isActiveOverlay: true,
 			time: 0,
 			active: false,
 		},
 		ghost: {
-			visible: true,
+			isActiveOverlay: true,
 			time: 0,
 			active: false,
 		},
 		fourth: {
-			visible: true,
+			isActiveOverlay: true,
 			time: 0,
 			active: false,
 		},
 	},
 	incantations: {
-		active: [0, 0, 1, 1],
-		visible: true,
+		active: [false, false, true, true],
+		isActiveOverlay: true,
 		invokeDeath: {
-			visible: true,
+			isActiveOverlay: true,
+			time: 0,
 			active: false,
 			position: {
 				active_orientation: {
@@ -121,8 +124,9 @@ export const necromancy_gauge: NecromancyGauge = {
 			},
 		},
 		darkness: {
-			visible: true,
+			isActiveOverlay: true,
 			time: 0,
+			active: false,
 			position: {
 				active_orientation: {
 					x: 0,
@@ -143,10 +147,11 @@ export const necromancy_gauge: NecromancyGauge = {
 			},
 		},
 		splitSoul: {
-			visible: true,
+			isActiveOverlay: true,
+			active: false,
 			time: 0,
-			activeCooldown: false,
-			cooldown: 41,
+			isOnCooldown: false,
+			cooldownDuration: 41,
 			position: {
 				active_orientation: {
 					x: 0,
@@ -167,10 +172,11 @@ export const necromancy_gauge: NecromancyGauge = {
 			},
 		},
 		threads: {
-			visible: true,
+			isActiveOverlay: true,
+			active: false,
 			time: 0,
-			activeCooldown: false,
-			cooldown: 40,
+			isOnCooldown: false,
+			cooldownDuration: 40,
 			position: {
 				active_orientation: {
 					x: 0,
@@ -192,11 +198,11 @@ export const necromancy_gauge: NecromancyGauge = {
 		},
 	},
 	livingDeath: {
-		visible: true,
+		isActiveOverlay: true,
 		active: false,
 		time: 0,
-		onCooldown: false,
-		cooldown: 60,
+		isOnCooldown: false,
+		cooldownDuration: 60,
 		position: {
 			active_orientation: {
 				x: 0,
@@ -217,7 +223,8 @@ export const necromancy_gauge: NecromancyGauge = {
 		},
 	},
 	bloat: {
-		visible: true,
+		isActiveOverlay: true,
+		active: false,
 		time: 0,
 		position: {
 			active_orientation: {

@@ -21,7 +21,7 @@ export async function necrosisOverlay(gauges: Overlay) {
 
 	await necrosisImages.promise;
 
-	if (!necrosis.visible) {
+	if (!necrosis.isActiveOverlay) {
 		return;
 	}
 
@@ -35,9 +35,9 @@ export async function necrosisOverlay(gauges: Overlay) {
 		scaledOnce = true;
 	}
 
-	const { position, dupeRow, count } = necrosis;
+	const { position, stacks } = necrosis;
 	const { x, y } = position.active_orientation;
-	const bloatVisible = !gauges.necromancy.bloat.visible;
+	const bloatVisible = !gauges.necromancy.bloat.isActiveOverlay;
 	let bloatSpace = 0;
 	if (bloatVisible) {
 		bloatSpace = -23;
@@ -45,7 +45,7 @@ export async function necrosisOverlay(gauges: Overlay) {
 
 	alt1.overLaySetGroup('Necrosis');
 
-	switch (count) {
+	switch (stacks) {
 		case 0:
 		case 2:
 		case 4:
@@ -53,24 +53,24 @@ export async function necrosisOverlay(gauges: Overlay) {
 		case 8:
 		case 10:
 		case 12:
-			displayNecrosisImage(count);
+			displayNecrosisImage(stacks);
 			break;
 	}
 
-	if (dupeRow) {
+	if (gauges.necromancy.stacks.duplicateNecrosisRow) {
 		alt1.overLaySetGroup('Necrosis_Row2');
 		alt1.overLayImage(
 			utility.adjustPositionForScale(gauges.necromancy.position.x + x, scaleFactor),
 			utility.adjustPositionForScale(gauges.necromancy.position.y + y + necrosisImages.necrosis_0.height + bloatSpace, scaleFactor),
 			a1lib.encodeImageString(
-				necrosisImages[`necrosis_${count}`].toDrawableData()
+				necrosisImages[`necrosis_${stacks}`].toDrawableData()
 			),
-			necrosisImages[`necrosis_${count}`].width,
+			necrosisImages[`necrosis_${stacks}`].width,
 			1000
 		);
 	}
 
-	function displayNecrosisImage(count: number) {
+	function displayNecrosisImage(count: number): void {
 		alt1.overLayImage(
 			utility.adjustPositionForScale(gauges.necromancy.position.x + x, scaleFactor),
 			utility.adjustPositionForScale(gauges.necromancy.position.y + y + bloatSpace, scaleFactor),

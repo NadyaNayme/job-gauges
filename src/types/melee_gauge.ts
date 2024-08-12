@@ -1,10 +1,7 @@
-import { Orientation, UltimateAbility } from './common';
+import { Position, Ability } from './common';
 
 export type MeleeGauge = {
-	inCombat: boolean;
-	position: {
-		x: number;
-		y: number;
-	};
-	berserk: UltimateAbility;
+	isInCombat: boolean;
+	position: Position;
+	berserk: Ability;
 };

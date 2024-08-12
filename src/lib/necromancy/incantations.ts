@@ -22,7 +22,7 @@ export async function incantationsOverlay(gauges: Overlay) {
 	const { incantations } = gauges.necromancy;
 	const { invokeDeath, darkness, threads, splitSoul } = incantations;
 
-	if (!incantations.visible) {
+	if (!incantations.isActiveOverlay) {
 		return;
 	}
 
@@ -40,8 +40,8 @@ export async function incantationsOverlay(gauges: Overlay) {
 
 	if (
 		incantations.active[0] &&
-		invokeDeath.visible &&
-		incantations.visible
+		invokeDeath.isActiveOverlay &&
+		incantations.isActiveOverlay
 	) {
 		alt1.overLaySetGroup('Invoke_Death');
 		alt1.overLayImage(
@@ -61,8 +61,8 @@ export async function incantationsOverlay(gauges: Overlay) {
 			1000
 		);
 	} else if (
-		invokeDeath.visible &&
-		incantations.visible
+		invokeDeath.isActiveOverlay &&
+		incantations.isActiveOverlay
 	) {
 		alt1.overLaySetGroup('Invoke_Death');
 		alt1.overLayImage(
@@ -85,8 +85,8 @@ export async function incantationsOverlay(gauges: Overlay) {
 
 	if (
 		incantations.active[1] &&
-		darkness.visible &&
-		incantations.visible
+		darkness.isActiveOverlay &&
+		incantations.isActiveOverlay
 	) {
 		alt1.overLaySetGroup('Darkness');
 		alt1.overLayImage(
@@ -107,8 +107,8 @@ export async function incantationsOverlay(gauges: Overlay) {
 			1000
 		);
 	} else if (
-		darkness.visible &&
-		incantations.visible
+		darkness.isActiveOverlay &&
+		incantations.isActiveOverlay
 	) {
 		alt1.overLaySetGroup('Darkness');
 		alt1.overLayImage(
@@ -132,8 +132,8 @@ export async function incantationsOverlay(gauges: Overlay) {
 
 	if (
 		incantations.active[2] &&
-		threads.visible &&
-		incantations.visible
+		threads.isActiveOverlay &&
+		incantations.isActiveOverlay
 	) {
 		alt1.overLaySetGroup('Threads');
 		alt1.overLayImage(
@@ -153,8 +153,8 @@ export async function incantationsOverlay(gauges: Overlay) {
 			1000
 		);
 	} else if (
-		threads.visible &&
-		incantations.visible
+		threads.isActiveOverlay &&
+		incantations.isActiveOverlay
 	) {
 		alt1.overLaySetGroup('Threads');
 		alt1.overLayImage(
@@ -175,8 +175,8 @@ export async function incantationsOverlay(gauges: Overlay) {
 
 	if (
 		incantations.active[3] &&
-		splitSoul.visible &&
-		incantations.visible
+		splitSoul.isActiveOverlay &&
+		incantations.isActiveOverlay
 	) {
 		alt1.overLaySetGroup('SplitSoul');
 		alt1.overLayImage(
@@ -197,8 +197,8 @@ export async function incantationsOverlay(gauges: Overlay) {
 			1000
 		);
 	} else if (
-		splitSoul.visible &&
-		incantations.visible
+		splitSoul.isActiveOverlay &&
+		incantations.isActiveOverlay
 	) {
 		alt1.overLaySetGroup('SplitSoul');
 		alt1.overLayImage(

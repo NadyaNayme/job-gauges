@@ -1,10 +1,7 @@
-import { Orientation, UltimateAbility } from './common';
+import { Position, Ability } from './common';
 
 export type MagicGauge = {
-	inCombat: boolean;
-	position: {
-		x: number;
-		y: number;
-	};
-	sunshine: UltimateAbility;
+	isInCombat: boolean;
+	position: Position;
+	sunshine: Ability;
 };

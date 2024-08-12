@@ -18,7 +18,7 @@ let scaledOnce = false;
 export async function soulsOverlay(gauges: Overlay) {
 	const { souls } = gauges.necromancy.stacks;
 
-	if (!souls.visible) {
+	if (!souls.isActiveOverlay) {
 		return;
 	}
 
@@ -39,7 +39,7 @@ export async function soulsOverlay(gauges: Overlay) {
 
 	alt1.overLaySetGroup('Souls');
 
-	switch (souls.count) {
+	switch (souls.stacks) {
 		case 0:
 			displaySoulImage(soulImages.souls_0);
 			break;
@@ -63,7 +63,7 @@ export async function soulsOverlay(gauges: Overlay) {
 			break;
 	}
 
-	function displaySoulImage(image: ImageData) {
+	function displaySoulImage(image: ImageData): void {
 		alt1.overLayImage(
 			utility.adjustPositionForScale(gauges.necromancy.position.x + x, scaleFactor),
 			utility.adjustPositionForScale(gauges.necromancy.position.y + y, scaleFactor),

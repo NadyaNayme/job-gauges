@@ -1886,36 +1886,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   magic_gauge: () => (/* binding */ magic_gauge)
 /* harmony export */ });
 var magic_gauge = {
-    inCombat: false,
+    isInCombat: false,
     position: {
         x: 0,
-        y: 0
+        y: 0,
     },
     sunshine: {
-        visible: false,
+        isActiveOverlay: false,
         active: false,
         time: 0,
-        onCooldown: false,
-        cooldown: 0,
+        isOnCooldown: false,
+        cooldownDuration: 0,
         position: {
             active_orientation: {
                 x: 0,
-                y: 0
+                y: 0,
             },
             grouped: {
                 x: 0,
-                y: 0
+                y: 0,
             },
             split: {
                 x: 0,
-                y: 0
+                y: 0,
             },
             reverse_split: {
                 x: 0,
-                y: 0
-            }
-        }
-    }
+                y: 0,
+            },
+        },
+    },
 };
 
 
@@ -1933,17 +1933,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   melee_gauge: () => (/* binding */ melee_gauge)
 /* harmony export */ });
 var melee_gauge = {
-    inCombat: false,
+    isInCombat: false,
     position: {
         x: 0,
         y: 0,
     },
     berserk: {
-        visible: false,
+        isActiveOverlay: false,
         active: false,
         time: 0,
-        onCooldown: false,
-        cooldown: 0,
+        isOnCooldown: false,
+        cooldownDuration: 0,
         position: {
             active_orientation: {
                 x: 0,
@@ -1980,15 +1980,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   necromancy_gauge: () => (/* binding */ necromancy_gauge)
 /* harmony export */ });
 var necromancy_gauge = {
-    inCombat: false,
+    isInCombat: false,
     position: {
         x: 50,
         y: 50,
     },
     stacks: {
         souls: {
-            visible: true,
-            count: 0,
+            isActiveOverlay: true,
+            active: true,
+            stacks: 0,
             position: {
                 active_orientation: {
                     x: 0,
@@ -2009,9 +2010,9 @@ var necromancy_gauge = {
             },
         },
         necrosis: {
-            visible: true,
-            count: 0,
-            dupeRow: false,
+            isActiveOverlay: true,
+            active: true,
+            stacks: 0,
             position: {
                 active_orientation: {
                     x: 0,
@@ -2031,10 +2032,11 @@ var necromancy_gauge = {
                 },
             },
         },
+        duplicateNecrosisRow: false,
     },
     conjures: {
         active: false,
-        visible: true,
+        isActiveOverlay: true,
         position: {
             active_orientation: {
                 x: 0,
@@ -2054,31 +2056,32 @@ var necromancy_gauge = {
             },
         },
         skeleton: {
-            visible: true,
+            isActiveOverlay: true,
             time: 0,
             active: false,
         },
         zombie: {
-            visible: true,
+            isActiveOverlay: true,
             time: 0,
             active: false,
         },
         ghost: {
-            visible: true,
+            isActiveOverlay: true,
             time: 0,
             active: false,
         },
         fourth: {
-            visible: true,
+            isActiveOverlay: true,
             time: 0,
             active: false,
         },
     },
     incantations: {
-        active: [0, 0, 1, 1],
-        visible: true,
+        active: [false, false, true, true],
+        isActiveOverlay: true,
         invokeDeath: {
-            visible: true,
+            isActiveOverlay: true,
+            time: 0,
             active: false,
             position: {
                 active_orientation: {
@@ -2100,8 +2103,9 @@ var necromancy_gauge = {
             },
         },
         darkness: {
-            visible: true,
+            isActiveOverlay: true,
             time: 0,
+            active: false,
             position: {
                 active_orientation: {
                     x: 0,
@@ -2122,10 +2126,11 @@ var necromancy_gauge = {
             },
         },
         splitSoul: {
-            visible: true,
+            isActiveOverlay: true,
+            active: false,
             time: 0,
-            activeCooldown: false,
-            cooldown: 41,
+            isOnCooldown: false,
+            cooldownDuration: 41,
             position: {
                 active_orientation: {
                     x: 0,
@@ -2146,10 +2151,11 @@ var necromancy_gauge = {
             },
         },
         threads: {
-            visible: true,
+            isActiveOverlay: true,
+            active: false,
             time: 0,
-            activeCooldown: false,
-            cooldown: 40,
+            isOnCooldown: false,
+            cooldownDuration: 40,
             position: {
                 active_orientation: {
                     x: 0,
@@ -2171,11 +2177,11 @@ var necromancy_gauge = {
         },
     },
     livingDeath: {
-        visible: true,
+        isActiveOverlay: true,
         active: false,
         time: 0,
-        onCooldown: false,
-        cooldown: 60,
+        isOnCooldown: false,
+        cooldownDuration: 60,
         position: {
             active_orientation: {
                 x: 0,
@@ -2196,7 +2202,8 @@ var necromancy_gauge = {
         },
     },
     bloat: {
-        visible: true,
+        isActiveOverlay: true,
+        active: false,
         time: 0,
         position: {
             active_orientation: {
@@ -2234,17 +2241,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   ranged_gauge: () => (/* binding */ ranged_gauge)
 /* harmony export */ });
 var ranged_gauge = {
-    inCombat: false,
+    isInCombat: false,
     position: {
         x: 0,
         y: 0,
     },
     deathsSwiftness: {
-        visible: false,
+        isActiveOverlay: false,
         active: false,
         time: 0,
-        onCooldown: false,
-        cooldown: 0,
+        isOnCooldown: false,
+        cooldownDuration: 0,
         position: {
             active_orientation: {
                 x: 0,
@@ -2347,7 +2354,7 @@ function bloatOverlay(gauges) {
             switch (_a.label) {
                 case 0:
                     bloat = gauges.necromancy.bloat;
-                    if (!bloat.visible) {
+                    if (!bloat.isActiveOverlay) {
                         return [2 /*return*/];
                     }
                     return [4 /*yield*/, bloatImages.promise];
@@ -2498,7 +2505,7 @@ function conjureOverlay(gauges) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    if (!gauges.necromancy.conjures.visible) {
+                    if (!gauges.necromancy.conjures.isActiveOverlay) {
                         return [2 /*return*/];
                     }
                     return [4 /*yield*/, conjureImages.promise];
@@ -2635,7 +2642,7 @@ function incantationsOverlay(gauges) {
                 case 0:
                     incantations = gauges.necromancy.incantations;
                     invokeDeath = incantations.invokeDeath, darkness = incantations.darkness, threads = incantations.threads, splitSoul = incantations.splitSoul;
-                    if (!incantations.visible) {
+                    if (!incantations.isActiveOverlay) {
                         return [2 /*return*/];
                     }
                     return [4 /*yield*/, incantationImages.promise];
@@ -2659,56 +2666,56 @@ function incantationsOverlay(gauges) {
                         scaledOnce = true;
                     }
                     if (incantations.active[0] &&
-                        invokeDeath.visible &&
-                        incantations.visible) {
+                        invokeDeath.isActiveOverlay &&
+                        incantations.isActiveOverlay) {
                         alt1.overLaySetGroup('Invoke_Death');
                         alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x +
                             invokeDeath.position.active_orientation.x, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(incantationImages.invoke_death.toDrawableData()), incantationImages.invoke_death.width, 1000);
                     }
-                    else if (invokeDeath.visible &&
-                        incantations.visible) {
+                    else if (invokeDeath.isActiveOverlay &&
+                        incantations.isActiveOverlay) {
                         alt1.overLaySetGroup('Invoke_Death');
                         alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x +
                             invokeDeath.position.active_orientation.x, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(incantationImages.invoke_death_inactive.toDrawableData()), incantationImages.invoke_death_inactive.width, 1000);
                     }
                     if (incantations.active[1] &&
-                        darkness.visible &&
-                        incantations.visible) {
+                        darkness.isActiveOverlay &&
+                        incantations.isActiveOverlay) {
                         alt1.overLaySetGroup('Darkness');
                         alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x +
                             darkness.position.active_orientation.x, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y +
                             darkness.position.active_orientation.y, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(incantationImages.darkness.toDrawableData()), incantationImages.darkness.width, 1000);
                     }
-                    else if (darkness.visible &&
-                        incantations.visible) {
+                    else if (darkness.isActiveOverlay &&
+                        incantations.isActiveOverlay) {
                         alt1.overLaySetGroup('Darkness');
                         alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x +
                             darkness.position.active_orientation.x, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y +
                             darkness.position.active_orientation.y, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(incantationImages.darkness_inactive.toDrawableData()), incantationImages.darkness_inactive.width, 1000);
                     }
                     if (incantations.active[2] &&
-                        threads.visible &&
-                        incantations.visible) {
+                        threads.isActiveOverlay &&
+                        incantations.isActiveOverlay) {
                         alt1.overLaySetGroup('Threads');
                         alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x +
                             threads.position.active_orientation.x * 2, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(incantationImages.threads_inactive.toDrawableData()), incantationImages.threads_inactive.width, 1000);
                     }
-                    else if (threads.visible &&
-                        incantations.visible) {
+                    else if (threads.isActiveOverlay &&
+                        incantations.isActiveOverlay) {
                         alt1.overLaySetGroup('Threads');
                         alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x +
                             threads.position.active_orientation.x * 2, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(incantationImages.threads.toDrawableData()), incantationImages.threads.width, 1000);
                     }
                     if (incantations.active[3] &&
-                        splitSoul.visible &&
-                        incantations.visible) {
+                        splitSoul.isActiveOverlay &&
+                        incantations.isActiveOverlay) {
                         alt1.overLaySetGroup('SplitSoul');
                         alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x +
                             splitSoul.position.active_orientation.x * 2, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y +
                             splitSoul.position.active_orientation.y, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(incantationImages.split_soul_inactive.toDrawableData()), incantationImages.split_soul_inactive.width, 1000);
                     }
-                    else if (splitSoul.visible &&
-                        incantations.visible) {
+                    else if (splitSoul.isActiveOverlay &&
+                        incantations.isActiveOverlay) {
                         alt1.overLaySetGroup('SplitSoul');
                         alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x +
                             splitSoul.position.active_orientation.x * 2, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y +
@@ -2793,7 +2800,7 @@ function livingDeathOverlay(gauges) {
                 case 0:
                     necromancy = gauges.necromancy;
                     livingDeath = necromancy.livingDeath;
-                    if (!livingDeath.visible) {
+                    if (!livingDeath.isActiveOverlay) {
                         clearLivingDeathOverlays();
                         return [2 /*return*/];
                     }
@@ -2819,7 +2826,7 @@ function livingDeathOverlay(gauges) {
                     }
                     // If Living Death is not Active and is not on cooldown it should appear as able to be activated
                     if (!livingDeath.active) {
-                        if (!livingDeath.onCooldown) {
+                        if (!livingDeath.isOnCooldown) {
                             displayActiveLivingDeath(gauges);
                             alt1.overLayRefreshGroup('LivingDeath_Text');
                             alt1.overLayClearGroup('LivingDeath_Text');
@@ -2831,11 +2838,11 @@ function livingDeathOverlay(gauges) {
                         }
                     }
                     else {
-                        livingDeath.onCooldown = false;
+                        livingDeath.isOnCooldown = false;
                         _utility__WEBPACK_IMPORTED_MODULE_1__.forceClearOverlay('LivingDeath_Cooldown_Text');
                         displayActiveLivingDeath(gauges);
                         if (lastValue !== livingDeath.time) {
-                            livingDeath.cooldown = 0;
+                            livingDeath.cooldownDuration = 0;
                             _utility__WEBPACK_IMPORTED_MODULE_1__.forceClearOverlay('LivingDeath_Cooldown_Text');
                             alt1.overLaySetGroup('LivingDeath_Text');
                             alt1.overLayFreezeGroup('LivingDeath_Text');
@@ -2945,7 +2952,7 @@ function necrosisOverlay(gauges) {
         function displayNecrosisImage(count) {
             alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x + x, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y + y + bloatSpace, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(necrosisImages["necrosis_".concat(count)].toDrawableData()), necrosisImages["necrosis_".concat(count)].width, 1000);
         }
-        var necrosis, position, dupeRow, count, _a, x, y, bloatVisible, bloatSpace;
+        var necrosis, position, stacks, _a, x, y, bloatVisible, bloatSpace;
         var _this = this;
         return __generator(this, function (_b) {
             switch (_b.label) {
@@ -2954,7 +2961,7 @@ function necrosisOverlay(gauges) {
                     return [4 /*yield*/, necrosisImages.promise];
                 case 1:
                     _b.sent();
-                    if (!necrosis.visible) {
+                    if (!necrosis.isActiveOverlay) {
                         return [2 /*return*/];
                     }
                     if (!scaledOnce) {
@@ -2974,15 +2981,15 @@ function necrosisOverlay(gauges) {
                         }); });
                         scaledOnce = true;
                     }
-                    position = necrosis.position, dupeRow = necrosis.dupeRow, count = necrosis.count;
+                    position = necrosis.position, stacks = necrosis.stacks;
                     _a = position.active_orientation, x = _a.x, y = _a.y;
-                    bloatVisible = !gauges.necromancy.bloat.visible;
+                    bloatVisible = !gauges.necromancy.bloat.isActiveOverlay;
                     bloatSpace = 0;
                     if (bloatVisible) {
                         bloatSpace = -23;
                     }
                     alt1.overLaySetGroup('Necrosis');
-                    switch (count) {
+                    switch (stacks) {
                         case 0:
                         case 2:
                         case 4:
@@ -2990,12 +2997,12 @@ function necrosisOverlay(gauges) {
                         case 8:
                         case 10:
                         case 12:
-                            displayNecrosisImage(count);
+                            displayNecrosisImage(stacks);
                             break;
                     }
-                    if (dupeRow) {
+                    if (gauges.necromancy.stacks.duplicateNecrosisRow) {
                         alt1.overLaySetGroup('Necrosis_Row2');
-                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x + x, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y + y + necrosisImages.necrosis_0.height + bloatSpace, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(necrosisImages["necrosis_".concat(count)].toDrawableData()), necrosisImages["necrosis_".concat(count)].width, 1000);
+                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x + x, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y + y + necrosisImages.necrosis_0.height + bloatSpace, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(necrosisImages["necrosis_".concat(stacks)].toDrawableData()), necrosisImages["necrosis_".concat(stacks)].width, 1000);
                     }
                     return [2 /*return*/];
             }
@@ -3081,7 +3088,7 @@ function soulsOverlay(gauges) {
             switch (_b.label) {
                 case 0:
                     souls = gauges.necromancy.stacks.souls;
-                    if (!souls.visible) {
+                    if (!souls.isActiveOverlay) {
                         return [2 /*return*/];
                     }
                     return [4 /*yield*/, soulImages.promise];
@@ -3107,7 +3114,7 @@ function soulsOverlay(gauges) {
                     position = souls.position;
                     _a = position.active_orientation, x = _a.x, y = _a.y;
                     alt1.overLaySetGroup('Souls');
-                    switch (souls.count) {
+                    switch (souls.stacks) {
                         case 0:
                             displaySoulImage(soulImages.souls_0);
                             break;
@@ -3263,7 +3270,7 @@ function readBuffs(gauges) {
             if (buffs.pos !== undefined) {
                 updateBuffData(gauges, buffsImages.soul, 200, updateSoulCount);
                 updateBuffData(gauges, buffsImages.necrosis, 200, updateNecrosisCount);
-                if (gauges.necromancy.livingDeath.visible) {
+                if (gauges.necromancy.livingDeath.isActiveOverlay) {
                     updateBuffData(gauges, buffsImages.living_death, 400, updateLivingDeath);
                 }
                 updateConjures(gauges);
@@ -3580,20 +3587,20 @@ function readEnemy(gauges) {
             targetData = targetDisplay.read();
             if (gauges.checkCombatStatus) {
                 if (targetData) {
-                    gauges.inCombat = true;
+                    gauges.isInCombat = true;
                 }
                 else {
                     setTimeout(function () {
                         if (!targetData) {
-                            gauges.inCombat = false;
+                            gauges.isInCombat = false;
                         }
                     }, 1200);
                 }
             }
             else {
-                gauges.inCombat = true;
+                gauges.isInCombat = true;
             }
-            if (targetData && gauges.inCombat) {
+            if (targetData && gauges.isInCombat) {
                 target_display_loc = {
                     x: (targetDisplay === null || targetDisplay === void 0 ? void 0 : targetDisplay.lastpos.x) - 120,
                     y: (targetDisplay === null || targetDisplay === void 0 ? void 0 : targetDisplay.lastpos.y) + 20,
@@ -3603,17 +3610,17 @@ function readEnemy(gauges) {
                 targetDebuffs = alt1__WEBPACK_IMPORTED_MODULE_1__.captureHold(target_display_loc.x, target_display_loc.y, target_display_loc.w, target_display_loc.h);
                 targetIsDeathMarked = targetDebuffs.findSubimage(enemyDebuffImages.invokeDeath).length;
                 if (targetIsDeathMarked) {
-                    gauges.necromancy.incantations.active[0] = true;
+                    gauges.necromancy.incantations.isActiveOverlay[0] = true;
                 }
                 else if (!targetIsDeathMarked) {
-                    gauges.necromancy.incantations.active[0] = false;
+                    gauges.necromancy.incantations.isActiveOverlay[0] = false;
                 }
                 targetIsBloated = targetDebuffs.findSubimage(enemyDebuffImages.bloat).length;
                 if (targetIsBloated && !bloatInterval.has(bloat)) {
                     gauges.necromancy.bloat.time = 20.5;
                     gauges.necromancy.bloat.active = true;
                     intervalId = setInterval(function () {
-                        var currentTick = parseFloat(gauges.necromancy.bloat.time);
+                        var currentTick = gauges.necromancy.bloat.time;
                         if (currentTick > 0) {
                             var nextTick = parseFloat(roundedToFixed(currentTick - 0.6, 1));
                             gauges.necromancy.bloat.time = nextTick;
@@ -3666,6 +3673,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   clearTextOverlays: () => (/* binding */ clearTextOverlays),
 /* harmony export */   continueOverlays: () => (/* binding */ continueOverlays),
 /* harmony export */   forceClearOverlay: () => (/* binding */ forceClearOverlay),
+/* harmony export */   freezeAndContinueOverlays: () => (/* binding */ freezeAndContinueOverlays),
 /* harmony export */   freezeOverlays: () => (/* binding */ freezeOverlays),
 /* harmony export */   getByID: () => (/* binding */ getByID),
 /* harmony export */   helperItems: () => (/* binding */ helperItems),
@@ -3721,16 +3729,11 @@ var helperItems = {
     settings: getByID('Settings'),
 };
 function forceClearOverlay(overlay) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            alt1.overLaySetGroup(overlay);
-            alt1.overLayFreezeGroup(overlay);
-            alt1.overLayClearGroup(overlay);
-            alt1.overLayRefreshGroup(overlay);
-            console.log('Force cleared: ' + overlay);
-            return [2 /*return*/];
-        });
-    });
+    alt1.overLaySetGroup(overlay);
+    alt1.overLayFreezeGroup(overlay);
+    alt1.overLayClearGroup(overlay);
+    alt1.overLayRefreshGroup(overlay);
+    console.log('Force cleared: ' + overlay);
 }
 var overlays = [
     'Bloat',
@@ -3745,39 +3748,28 @@ var overlays = [
     'Souls'
 ];
 function freezeOverlays() {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            overlays.forEach(function (overlay) {
-                alt1.overLayFreezeGroup(overlay);
-                alt1.overLayClearGroup(overlay);
-                alt1.overLayRefreshGroup(overlay);
-            });
-            return [2 /*return*/];
-        });
+    overlays.forEach(function (overlay) {
+        alt1.overLayFreezeGroup(overlay);
+        alt1.overLayClearGroup(overlay);
+        alt1.overLayRefreshGroup(overlay);
     });
 }
 function continueOverlays() {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            overlays.forEach(function (overlay) {
-                alt1.overLayContinueGroup(overlay);
-            });
-            return [2 /*return*/];
-        });
+    overlays.forEach(function (overlay) {
+        alt1.overLayContinueGroup(overlay);
     });
 }
+function freezeAndContinueOverlays() {
+    freezeOverlays();
+    continueOverlays();
+}
 function clearTextOverlays() {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            alt1.overLaySetGroup('Undead_Army_Text');
-            alt1.overLayClearGroup('Undead_Army_Text');
-            alt1.overLayRefreshGroup('Undead_Army_Text');
-            alt1.overLaySetGroup('LivingDeath_Text');
-            alt1.overLayClearGroup('LivingDeath_Text');
-            alt1.overLayRefreshGroup('LivingDeath_Text');
-            return [2 /*return*/];
-        });
-    });
+    alt1.overLaySetGroup('Undead_Army_Text');
+    alt1.overLayClearGroup('Undead_Army_Text');
+    alt1.overLayRefreshGroup('Undead_Army_Text');
+    alt1.overLaySetGroup('LivingDeath_Text');
+    alt1.overLayClearGroup('LivingDeath_Text');
+    alt1.overLayRefreshGroup('LivingDeath_Text');
 }
 function adjustPositionForScale(position, scaleFactor) {
     return parseInt(roundedToFixed(position * scaleFactor, 1), 10);
@@ -3786,13 +3778,8 @@ function adjustPositionWithoutScale(position, scaleFactor) {
     return parseInt(roundedToFixed(position * ((1 / scaleFactor)), 1), 10);
 }
 function updateCoordinates(component, position) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            component.activePosition.x = position.x;
-            component.activePosition.y = position.y;
-            return [2 /*return*/];
-        });
-    });
+    component.activePosition.x = position.x;
+    component.activePosition.y = position.y;
 }
 function roundedToFixed(input, digits) {
     var rounder = Math.pow(10, digits);
@@ -7678,7 +7665,7 @@ var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
 
 
 var gauges = {
-    inCombat: false,
+    isInCombat: false,
     checkCombatStatus: false,
     necromancy: _data_necromancy_gauge__WEBPACK_IMPORTED_MODULE_4__.necromancy_gauge,
     magic: _data_magic_gauge__WEBPACK_IMPORTED_MODULE_11__.magic_gauge,
@@ -7692,7 +7679,7 @@ function renderOverlays() {
                 case 0: return [4 /*yield*/, (0,_lib_readEnemy__WEBPACK_IMPORTED_MODULE_3__.readEnemy)(gauges)];
                 case 1:
                     _a.sent();
-                    if (!(gauges.inCombat || _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('updatingOverlayPosition'))) return [3 /*break*/, 9];
+                    if (!(gauges.isInCombat || _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('updatingOverlayPosition'))) return [3 /*break*/, 9];
                     return [4 /*yield*/, (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_2__.readBuffs)(gauges)];
                 case 2:
                     _a.sent();
@@ -7770,45 +7757,52 @@ function loadSettings() {
         gauges.checkCombatStatus = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('hideOutsideCombat');
     }
     // Necromancy Components (TODO: Move the check into the components themselves?)
+    updateGaugeData();
+}
+//TODO: Clean this tf up
+function updateGaugeData() {
     if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showConjures') !== undefined) {
-        gauges.necromancy.conjures.visible = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showConjures');
+        gauges.necromancy.conjures.isActiveOverlay =
+            _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showConjures');
     }
     if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showLivingDeath') !== undefined) {
-        gauges.necromancy.livingDeath.visible =
+        gauges.necromancy.livingDeath.isActiveOverlay =
             _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showLivingDeath');
     }
     if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showIncantations') !== undefined) {
-        gauges.necromancy.incantations.visible =
+        gauges.necromancy.incantations.isActiveOverlay =
             _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showIncantations');
     }
     if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showInvokeDeath') !== undefined) {
-        gauges.necromancy.incantations.invokeDeath.visible =
+        gauges.necromancy.incantations.invokeDeath.isActiveOverlay =
             _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showInvokeDeath');
     }
     if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showDarkness') !== undefined) {
-        gauges.necromancy.incantations.darkness.visible =
+        gauges.necromancy.incantations.darkness.isActiveOverlay =
             _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showDarkness');
     }
     if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showThreads') !== undefined) {
-        gauges.necromancy.incantations.threads.visible =
+        gauges.necromancy.incantations.threads.isActiveOverlay =
             _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showThreads');
     }
     if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showSplitSoul') !== undefined) {
-        gauges.necromancy.incantations.splitSoul.visible =
+        gauges.necromancy.incantations.splitSoul.isActiveOverlay =
             _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showSplitSoul');
     }
     if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showSouls') !== undefined) {
-        gauges.necromancy.stacks.souls.visible = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showSouls');
+        gauges.necromancy.stacks.souls.isActiveOverlay =
+            _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showSouls');
     }
     if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showNecrosis') !== undefined) {
-        gauges.necromancy.stacks.necrosis.visible =
+        gauges.necromancy.stacks.necrosis.isActiveOverlay =
             _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showNecrosis');
     }
     if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('dupeRow') !== undefined) {
-        gauges.necromancy.stacks.necrosis.dupeRow = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('dupeRow');
+        gauges.necromancy.stacks.duplicateNecrosisRow =
+            _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('dupeRow');
     }
     if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showBloat') !== undefined) {
-        gauges.necromancy.bloat.visible = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showBloat');
+        gauges.necromancy.bloat.isActiveOverlay = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showBloat');
     }
 }
 function updateActiveOrientationFromLocalStorage() {
@@ -7816,9 +7810,17 @@ function updateActiveOrientationFromLocalStorage() {
     var selectedOrientation = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('selectedOrientation');
     if (!selectedOrientation) {
         selectedOrientation = 'reverse_split';
-        _a1sauce__WEBPACK_IMPORTED_MODULE_1__.updateSetting('selectedOrientation', 'reverse_split');
     }
-    // Function to recursively update orientation in an object
+    // Handle v0.0.3 values that included '_orientation' in the string
+    // This should only be needed for a few weeks
+    if (selectedOrientation == 'grouped_orientation')
+        selectedOrientation = 'grouped';
+    if (selectedOrientation == 'split_orientation')
+        selectedOrientation = 'split';
+    if (selectedOrientation == 'reverse_split_orientation')
+        selectedOrientation = 'reverse_split';
+    _a1sauce__WEBPACK_IMPORTED_MODULE_1__.updateSetting('selectedOrientation', selectedOrientation);
+    // Function to recursively update orientations in an object
     function updateActiveOrientation(obj) {
         for (var key in obj) {
             if (typeof obj[key] === 'object' && obj[key] !== null) {
@@ -7837,7 +7839,7 @@ function updateActiveOrientationFromLocalStorage() {
     }
     updateActiveOrientation(_data_necromancy_gauge__WEBPACK_IMPORTED_MODULE_4__.necromancy_gauge);
 }
-var version = '0.0.4';
+var version = '0.0.5';
 var settingsObject = {
     appName: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createHeading('h2', 'Job Gauges - v' + version),
     settingDiscord: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createText("Please <a href=\"https://discord.gg/KJ2SgWyJFF\" target=\"_blank\" rel=\"nofollow\">join the Discord</a> for any suggestions or support"),
@@ -7862,7 +7864,6 @@ var settingsObject = {
     visibleReset: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createSeperator(),
     visibleComponentsHeader: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createHeading('h3', 'Visible Components'),
     visibleComponentsText: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createText('Select which components of the overlay you wish to see.'),
-    visibleComponentsSmallText: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createSmallText('Give it a few seconds to update.'),
     showConjures: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showConjures', 'Show Conjures', (_b = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showConjures')) !== null && _b !== void 0 ? _b : true),
     showLivingDeath: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showLivingDeath', 'Show Living Death', (_c = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showLivingDeath')) !== null && _c !== void 0 ? _c : true),
     showIncantations: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showIncantations', 'Show Incantations', (_d = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showIncantations')) !== null && _d !== void 0 ? _d : true),
@@ -7880,7 +7881,7 @@ settingsObject.orientationSelection.addEventListener('change', function () {
 });
 settingsObject.repositionOverlay.addEventListener('click', setOverlayPosition);
 settingsObject.showNecrosis.addEventListener('change', function (e) {
-    gauges.necromancy.stacks.necrosis.dupeRow = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('dupeRow');
+    gauges.necromancy.stacks.duplicateNecrosisRow = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('dupeRow');
 });
 var updatingOverlayPosition = false;
 function setOverlayPosition() {
@@ -7925,7 +7926,7 @@ function setOverlayPosition() {
         });
     });
 }
-function updateLocation(e) {
+function updateLocation() {
     updatingOverlayPosition = false;
     _a1sauce__WEBPACK_IMPORTED_MODULE_1__.updateSetting('overlayPosition', {
         x: gauges.necromancy.position.x,
@@ -7942,8 +7943,9 @@ window.onload = function () {
             document.querySelector('#Settings .container').before(val);
         });
         document.querySelectorAll('input[type="checkbox"]').forEach(function (checkbox) {
-            checkbox.addEventListener('click', function () {
-                location.reload();
+            checkbox.addEventListener('change', function () {
+                updateGaugeData();
+                _lib_utility__WEBPACK_IMPORTED_MODULE_0__.freezeAndContinueOverlays(); // Force an instant redraw
             });
         });
         startApp();

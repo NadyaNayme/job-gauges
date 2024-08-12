@@ -18,7 +18,7 @@ export async function livingDeathOverlay(gauges: Overlay) {
     const { necromancy } = gauges;
 	const { livingDeath } = necromancy;
 
-	if (!livingDeath.visible) {
+	if (!livingDeath.isActiveOverlay) {
 		clearLivingDeathOverlays();
 		return;
 	}
@@ -38,7 +38,7 @@ export async function livingDeathOverlay(gauges: Overlay) {
 
 	// If Living Death is not Active and is not on cooldown it should appear as able to be activated
 	if (!livingDeath.active) {
-		if (!livingDeath.onCooldown) {
+		if (!livingDeath.isOnCooldown) {
 			displayActiveLivingDeath(gauges);
 			alt1.overLayRefreshGroup('LivingDeath_Text');
 			alt1.overLayClearGroup('LivingDeath_Text');
@@ -48,11 +48,11 @@ export async function livingDeathOverlay(gauges: Overlay) {
 			alt1.overLayClearGroup('LivingDeath_Text');
 		}
 	} else {
-		livingDeath.onCooldown = false;
+		livingDeath.isOnCooldown = false;
 		utility.forceClearOverlay('LivingDeath_Cooldown_Text');
 		displayActiveLivingDeath(gauges);
 		if (lastValue !== livingDeath.time) {
-			livingDeath.cooldown = 0;
+			livingDeath.cooldownDuration = 0;
 			utility.forceClearOverlay('LivingDeath_Cooldown_Text');
 			alt1.overLaySetGroup('LivingDeath_Text');
 			alt1.overLayFreezeGroup('LivingDeath_Text');
@@ -84,13 +84,13 @@ export async function livingDeathOverlay(gauges: Overlay) {
 	lastValue = livingDeath.time;
 }
 
-function clearLivingDeathOverlays() {
+function clearLivingDeathOverlays(): void {
 	utility.forceClearOverlay('LivingDeath_Text');
 	utility.forceClearOverlay('LivingDeath_Cooldown_Text');
 	alt1.overLayClearGroup('LivingDeath');
 }
 
-function displayActiveLivingDeath(gauges: Overlay) {
+function displayActiveLivingDeath(gauges: Overlay): void {
 	alt1.overLaySetGroup('LivingDeath');
 	alt1.overLayImage(
 		utility.adjustPositionForScale(
@@ -109,7 +109,7 @@ function displayActiveLivingDeath(gauges: Overlay) {
 	);
 }
 
-function displayInactiveLivingDeath(gauges: Overlay) {
+function displayInactiveLivingDeath(gauges: Overlay): void {
 	alt1.overLaySetGroup('LivingDeath');
 	alt1.overLayImage(
 		utility.adjustPositionForScale(

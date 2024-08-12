@@ -65,7 +65,7 @@ export async function readBuffs(gauges: Overlay) {
 		updateBuffData(gauges, buffsImages.soul, 200, updateSoulCount);
 		updateBuffData(gauges, buffsImages.necrosis, 200, updateNecrosisCount);
 
-		if (gauges.necromancy.livingDeath.visible) {
+		if (gauges.necromancy.livingDeath.isActiveOverlay) {
 			updateBuffData(
 				gauges,
 				buffsImages.living_death,

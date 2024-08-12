@@ -3,7 +3,7 @@ import * as a1lib from 'alt1';
 
 export let white = a1lib.mixColor(255, 255, 255);
 
-export function getByID(id: string) {
+export function getByID(id: string): HTMLElement {
 	return document.getElementById(id);
 }
 
@@ -12,13 +12,12 @@ export let helperItems = {
 	settings: getByID('Settings'),
 };
 
-export async function forceClearOverlay(overlay: string) {
+export function forceClearOverlay(overlay: string): void {
 	alt1.overLaySetGroup(overlay);
 	alt1.overLayFreezeGroup(overlay);
 	alt1.overLayClearGroup(overlay);
 	alt1.overLayRefreshGroup(overlay);
 	console.log('Force cleared: ' + overlay);
-	return;
 }
 
 let overlays = [
@@ -34,7 +33,7 @@ let overlays = [
 	'Souls'
 ]
 
-export async function freezeOverlays() {
+export function freezeOverlays(): void {
 	overlays.forEach((overlay) => {
 		alt1.overLayFreezeGroup(overlay);
 		alt1.overLayClearGroup(overlay);
@@ -42,13 +41,18 @@ export async function freezeOverlays() {
 	});
 }
 
-export async function continueOverlays() {
+export function continueOverlays(): void {
 	overlays.forEach((overlay) => {
 		alt1.overLayContinueGroup(overlay);
 	});
 }
 
-export async function clearTextOverlays() {
+export function freezeAndContinueOverlays(): void {
+	freezeOverlays();
+	continueOverlays();
+}
+
+export function clearTextOverlays(): void {
 	alt1.overLaySetGroup('Undead_Army_Text');
 	alt1.overLayClearGroup('Undead_Army_Text');
 	alt1.overLayRefreshGroup('Undead_Army_Text');
@@ -57,26 +61,25 @@ export async function clearTextOverlays() {
 	alt1.overLayRefreshGroup('LivingDeath_Text');
 }
 
-export function adjustPositionForScale(position, scaleFactor: number) {
+export function adjustPositionForScale(position: number, scaleFactor: number): number {
     return parseInt(roundedToFixed(position * scaleFactor, 1), 10);
 }
 
-export function adjustPositionWithoutScale(position, scaleFactor: number) {
+export function adjustPositionWithoutScale(position: number, scaleFactor: number): number {
 	return parseInt(roundedToFixed(position * ((1 / scaleFactor)), 1), 10);
 }
 
-export async function updateCoordinates(component, position: {x: number, y: number}) {
+export function updateCoordinates(component, position: {x: number, y: number}): void {
 	component.activePosition.x = position.x;
 	component.activePosition.y = position.y;
-	return
 }
 
-function roundedToFixed(input, digits) {
+function roundedToFixed(input: number, digits: number) {
 	var rounder = Math.pow(10, digits);
 	return (Math.round(input * rounder) / rounder).toFixed(digits);
 }
 
-export async function resizeImageData(imageData, scaleFactor: number) {
+export async function resizeImageData(imageData: ImageData, scaleFactor: number) {
 	// Create a new canvas element
 	const canvas = document.createElement('canvas');
 	const context = canvas.getContext('2d');

@@ -1,62 +1,43 @@
-import { ActiveBuff, EnemyDebuff, Orientation, UltimateAbility } from './common';
+import {
+	EnemyDebuff,
+	Position,
+	Orientation,
+	Ability,
+	TimedPlayerBuff,
+	StackingPlayerBuff,
+} from './common';
 
-type Stack = {
-	visible: boolean;
-	count: number;
-	position: Orientation;
-	dupeRow?: boolean;
-};
-
-type Stacks = {
-	souls: Stack;
-	necrosis: Stack;
+type StackingAbilities = {
+	souls: StackingPlayerBuff;
+	necrosis: StackingPlayerBuff;
+	duplicateNecrosisRow: boolean;
 };
 
 type Conjures = {
 	active: boolean;
-	visible: boolean;
+	isActiveOverlay: boolean;
 	position: Orientation;
-	skeleton: ActiveBuff;
-	zombie: ActiveBuff;
-	ghost: ActiveBuff;
-	fourth: ActiveBuff;
-};
-
-type PassiveIncantation = {
-	visible: boolean;
-	position: Orientation;
-	active?: boolean;
-	time?: number;
-};
-
-type ActiveIncantation = {
-	visible: boolean;
-	time: number;
-	activeCooldown: boolean;
-	cooldown: number;
-	position: Orientation;
+	skeleton: TimedPlayerBuff;
+	zombie: TimedPlayerBuff;
+	ghost: TimedPlayerBuff;
+	fourth: TimedPlayerBuff;
 };
 
 type Incantations = {
-	active: number[];
-	visible: boolean;
-	invokeDeath: PassiveIncantation;
-	darkness: PassiveIncantation;
-	splitSoul: ActiveIncantation;
-	threads: ActiveIncantation;
+	active: boolean[];
+	isActiveOverlay: boolean;
+	invokeDeath: EnemyDebuff;
+	darkness: TimedPlayerBuff;
+	splitSoul: Ability;
+	threads: Ability;
 };
 
-type Bloat = EnemyDebuff;
-
 export type NecromancyGauge = {
-	inCombat: boolean;
-	position: {
-		x: number;
-		y: number;
-	};
-	stacks: Stacks;
+	isInCombat: boolean;
+	position: Position;
+	stacks: StackingAbilities;
 	conjures: Conjures;
 	incantations: Incantations;
-	livingDeath: UltimateAbility;
-	bloat: Bloat;
+	livingDeath: Ability;
+	bloat: EnemyDebuff;
 };
