@@ -170,6 +170,23 @@ function updateActiveOrientationFromLocalStorage() {
 		sauce.updateSetting('selectedOrientation', 'reverse_split');
 	}
 
+	// Handle v0.0.3 values that included '_orientation' in the string
+	// This should only be needed for a few weeks
+	if (selectedOrientation === 'grouped_orientation') {
+		selectedOrientation = 'grouped';
+		sauce.updateSetting('selectedOrientation', selectedOrientation);
+	}
+
+	if (selectedOrientation === 'split_orientation') {
+		selectedOrientation = 'split';
+		sauce.updateSetting('selectedOrientation', selectedOrientation);
+	}
+
+	if (selectedOrientation === 'reverse_split_orientation') {
+		selectedOrientation = 'reverse_split';
+		sauce.updateSetting('selectedOrientation', selectedOrientation);
+	}
+
 	// Function to recursively update orientation in an object
 	function updateActiveOrientation(obj: Object) {
 		for (const key in obj) {
