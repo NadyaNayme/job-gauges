@@ -2,6 +2,8 @@ import * as a1lib from 'alt1';
 import * as BuffReader from 'alt1/buffs';
 import * as sauce from '../a1sauce';
 import * as utility from './utility';
+import {helperItems } from './utility';
+import { Overlay } from '../types';
 
 var buffs = new BuffReader.default();
 var debuffs = new BuffReader.default();
@@ -19,13 +21,47 @@ var buffsImages = a1lib.webpackImages({
 	ghost: require('.././asset/data/buffs/vengeful_ghost-top.data.png'),
 });
 
-export async function readBuffs(gauges) {
+async function retryOperation<T>(
+	operation: () => Promise<T>,
+	maxRetries: number,
+	delay: number,
+	attempt: number = 0
+): Promise<T> {
+	try {
+		return await operation();
+	} catch (error) {
+		if (attempt >= maxRetries) {
+			throw error;
+		}
+		await new Promise((resolve) => setTimeout(resolve, delay));
+		return retryOperation(operation, maxRetries, delay, attempt + 1);
+	}
+}
+
+export async function findBuffsBar(): Promise<void> {
+	console.info('Attempting to find buffs bar...');
 	if (buffs.pos == undefined) {
 		buffs.find();
-		console.log('Buffs bar not found - searching again in 5 seconds...');
-		sauce.timeout(5000);
-		readBuffs(gauges);
-	} else {
+		if (buffs.pos == undefined) {
+			throw new Error('BuffsBarSearchError: Failed to find buff bar');
+		} else {
+			return;
+		}
+	}
+}
+
+retryOperation(findBuffsBar, 5, 5000)
+	.then(() => console.info('Found Buffs bar succesfully - starting overlay'))
+	.catch((error) => {
+		helperItems.Output.insertAdjacentHTML(
+			'beforeend',
+			`<p style="text-align:center;margin-top:10px;color:red;">Please make sure you have at least 1 buff on your buffs bar and then reload the app.</p>`
+		);
+		console.warn('Please make sure you have at least 1 buff on your buffs bar and then reload the app.');
+	});
+
+export async function readBuffs(gauges: Overlay) {
+	if (buffs.pos !== undefined) {
 		updateBuffData(gauges, buffsImages.soul, 200, updateSoulCount);
 		updateBuffData(gauges, buffsImages.necrosis, 200, updateNecrosisCount);
 
@@ -51,25 +87,25 @@ export async function readBuffs(gauges) {
 	}
 }
 
-async function updateBuffData(gauges, buffImage, threshold, updateFn) {
+async function updateBuffData(gauges: Overlay, buffImage: ImageData, threshold: number, updateCallbackFn: Function) {
 	let buffsData = buffs.read();
 	let foundBuff = false;
 	for (let [_key, value] of Object.entries(buffsData)) {
 		let buff = value.countMatch(buffImage, false);
 		if (buff.passed > threshold) {
 			foundBuff = true;
-			updateFn(gauges, value.readArg('time').time);
+			updateCallbackFn(gauges, value.readArg('time').time);
 		}
 	}
 	if (!foundBuff) {
-		updateFn(gauges, 0);
+		updateCallbackFn(gauges, 0);
 	}
 	return foundBuff;
 }
 
 // TODO: Figure out a cleaner way to update values.
 // There shouldn't be any reason the below functions can't be done via updateBuffData
-// without passing an updatefn()
+// without passing an updateCallbackfn()
 // Passing data = ['necromancy]['stacks']['souls]['count'] and trying
 // to update gauges.data doesn't work because somehow ['souls'] is undefined?
 async function updateSoulCount(gauges, value) {

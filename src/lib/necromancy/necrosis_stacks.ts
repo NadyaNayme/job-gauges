@@ -1,6 +1,7 @@
 import * as a1lib from 'alt1';
 import * as sauce from '../../a1sauce';
 import * as utility from '../utility';
+import { Overlay } from '../../types';
 
 var necrosisImages = a1lib.webpackImages({
 	necrosis_0: require('../.././asset/data/necrosis/lg/necrosis_0.data.png'),
@@ -15,7 +16,7 @@ var necrosisImages = a1lib.webpackImages({
 let scaleFactor = sauce.getSetting('scale') / 100;
 let scaledOnce = false;
 
-export async function necrosisOverlay(gauges) {
+export async function necrosisOverlay(gauges: Overlay) {
 	const { necrosis } = gauges.necromancy.stacks;
 
 	await necrosisImages.promise;
@@ -69,7 +70,7 @@ export async function necrosisOverlay(gauges) {
 		);
 	}
 
-	function displayNecrosisImage(count) {
+	function displayNecrosisImage(count: number) {
 		alt1.overLayImage(
 			utility.adjustPositionForScale(gauges.necromancy.position.x + x, scaleFactor),
 			utility.adjustPositionForScale(gauges.necromancy.position.y + y + bloatSpace, scaleFactor),

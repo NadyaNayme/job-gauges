@@ -1,37 +1,44 @@
 import * as a1lib from 'alt1';
 import * as TargetMob from 'alt1/targetmob';
 import * as utility from './lib/utility';
+import { helperItems, getByID } from './lib/utility';
 import * as sauce from './a1sauce';
+import { Overlay, NecromancyGauge, MagicGauge, RangedGauge, MeleeGauge } from './types/index';
 
-const { necromancy_gauge } = require('./data/necromancy_job_gauge');
-const { readBuffs } = require('./lib/readBuffs');
-const { conjureOverlay } = require('./lib/necromancy/conjures');
-const { soulsOverlay } = require('./lib/necromancy/soul_stacks');
-const { necrosisOverlay } = require('./lib/necromancy/necrosis_stacks');
-const { incantationsOverlay } = require('./lib/necromancy/incantations');
-const { livingDeathOverlay } = require('./lib/necromancy/living_death');
-const { readEnemy } = require('./lib/readEnemy');
-const { bloatOverlay } = require('./lib/necromancy/bloat');
+// General Purpose
+import { findBuffsBar, readBuffs } from './lib/readBuffs';
+import { readEnemy } from './lib/readEnemy';
+
+// Necromancy Gauge
+import { necromancy_gauge } from './data/necromancy_gauge';
+import { conjureOverlay } from './lib/necromancy/conjures';
+import { soulsOverlay } from './lib/necromancy/soul_stacks';
+import { necrosisOverlay } from './lib/necromancy/necrosis_stacks';
+import { incantationsOverlay } from './lib/necromancy/incantations';
+import { livingDeathOverlay } from './lib/necromancy/living_death';
+import { bloatOverlay } from './lib/necromancy/bloat';
+
+// Magic Gauge
+import { magic_gauge } from './data/magic_gauge';
+
+// Ranged Gauge
+import { ranged_gauge } from './data/ranged_gauge';
+
+// Melee Gauge
+import { melee_gauge } from './data/melee_gauge';
 
 import './index.html';
 import './appconfig.json';
 import './icon.png';
 import './css/styles.css';
 
-function getByID(id: string) {
-	return document.getElementById(id);
-}
-
-let helperItems = {
-	Output: getByID('output'),
-	settings: getByID('Settings'),
-};
-
-const gauges = {
+const gauges: Overlay = {
 	inCombat: false,
 	checkCombatStatus: false,
-	size: 'lg',
 	necromancy: necromancy_gauge,
+	magic: magic_gauge,
+	ranged: ranged_gauge,
+	melee: melee_gauge,
 };
 
 async function renderOverlays() {
@@ -45,17 +52,8 @@ async function renderOverlays() {
 		await livingDeathOverlay(gauges);
 		await bloatOverlay(gauges);
 	} else {
-		await clearTextOverlays();
+		await utility.clearTextOverlays();
 	}
-}
-
-async function clearTextOverlays() {
-	alt1.overLaySetGroup('Undead_Army_Text');
-	alt1.overLayClearGroup('Undead_Army_Text');
-	alt1.overLayRefreshGroup('Undead_Army_Text');
-	alt1.overLaySetGroup('LivingDeath_Text');
-	alt1.overLayClearGroup('LivingDeath_Text');
-	alt1.overLayRefreshGroup('LivingDeath_Text');
 }
 
 export async function startApp() {
@@ -81,40 +79,68 @@ export async function startApp() {
 		return;
 	}
 
+	loadSettings();
+
+	updateActiveOrientationFromLocalStorage();
+
+	// Apparently setting GroupZIndex is a pretty expensive call to do in the loop - so let's only do it once
+	alt1.overLaySetGroupZIndex('Undead_Army_Text', 1);
+	alt1.overLaySetGroupZIndex('LivingDeath_Text', 1);
+
+	await findBuffsBar().then(() => {
+		setInterval(function () {
+			renderOverlays();
+		}, 20);
+	});
+}
+
+function loadSettings() {
 	if (sauce.getSetting('overlayPosition') !== undefined) {
+		//TODO: Each gauge should be able to be positioned separately
 		gauges.necromancy.position = sauce.getSetting('overlayPosition');
+		gauges.magic.position = sauce.getSetting('overlayPosition');
+		gauges.ranged.position = sauce.getSetting('overlayPosition');
+		gauges.melee.position = sauce.getSetting('overlayPosition');
 	}
 
 	if (sauce.getSetting('hideOutsideCombat') !== undefined) {
 		gauges.checkCombatStatus = sauce.getSetting('hideOutsideCombat');
 	}
 
+	// Necromancy Components (TODO: Move the check into the components themselves?)
+
 	if (sauce.getSetting('showConjures') !== undefined) {
 		gauges.necromancy.conjures.visible = sauce.getSetting('showConjures');
 	}
 
 	if (sauce.getSetting('showLivingDeath') !== undefined) {
-		gauges.necromancy.livingDeath.visible = sauce.getSetting('showLivingDeath');
+		gauges.necromancy.livingDeath.visible =
+			sauce.getSetting('showLivingDeath');
 	}
 
 	if (sauce.getSetting('showIncantations') !== undefined) {
-		gauges.necromancy.incantations.visible = sauce.getSetting('showIncantations');
+		gauges.necromancy.incantations.visible =
+			sauce.getSetting('showIncantations');
 	}
 
 	if (sauce.getSetting('showInvokeDeath') !== undefined) {
-		gauges.necromancy.incantations.invokeDeath.visible = sauce.getSetting('showInvokeDeath');
+		gauges.necromancy.incantations.invokeDeath.visible =
+			sauce.getSetting('showInvokeDeath');
 	}
 
 	if (sauce.getSetting('showDarkness') !== undefined) {
-		gauges.necromancy.incantations.darkness.visible = sauce.getSetting('showDarkness');
+		gauges.necromancy.incantations.darkness.visible =
+			sauce.getSetting('showDarkness');
 	}
 
 	if (sauce.getSetting('showThreads') !== undefined) {
-		gauges.necromancy.incantations.threads.visible = sauce.getSetting('showThreads');
+		gauges.necromancy.incantations.threads.visible =
+			sauce.getSetting('showThreads');
 	}
 
 	if (sauce.getSetting('showSplitSoul') !== undefined) {
-		gauges.necromancy.incantations.splitSoul.visible = sauce.getSetting('showSplitSoul');
+		gauges.necromancy.incantations.splitSoul.visible =
+			sauce.getSetting('showSplitSoul');
 	}
 
 	if (sauce.getSetting('showSouls') !== undefined) {
@@ -122,7 +148,8 @@ export async function startApp() {
 	}
 
 	if (sauce.getSetting('showNecrosis') !== undefined) {
-		gauges.necromancy.stacks.necrosis.visible = sauce.getSetting('showNecrosis');
+		gauges.necromancy.stacks.necrosis.visible =
+			sauce.getSetting('showNecrosis');
 	}
 
 	if (sauce.getSetting('dupeRow') !== undefined) {
@@ -132,16 +159,6 @@ export async function startApp() {
 	if (sauce.getSetting('showBloat') !== undefined) {
 		gauges.necromancy.bloat.visible = sauce.getSetting('showBloat');
 	}
-
-	updateActiveOrientationFromLocalStorage();
-
-	// Apparently setting GroupZIndex is a pretty expensive call to do in the loop - so let's only do it once
-	alt1.overLaySetGroupZIndex('Undead_Army_Text', 1);
-	alt1.overLaySetGroupZIndex('LivingDeath_Text', 1);
-
-	setInterval(function () {
-		renderOverlays();
-	}, 20);
 }
 
 function updateActiveOrientationFromLocalStorage() {
@@ -149,15 +166,16 @@ function updateActiveOrientationFromLocalStorage() {
 	let selectedOrientation = sauce.getSetting('selectedOrientation');
 
 	if (!selectedOrientation) {
-		selectedOrientation = 'reverse_split_orientation';
-		sauce.updateSetting('selectedOrientation', 'reverse_split_orientation');
+		selectedOrientation = 'reverse_split';
+		sauce.updateSetting('selectedOrientation', 'reverse_split');
 	}
 
-	// Function to recursively update active_orientation in an object
-	function updateActiveOrientation(obj) {
+	// Function to recursively update orientation in an object
+	function updateActiveOrientation(obj: Object) {
 		for (const key in obj) {
 			if (typeof obj[key] === 'object' && obj[key] !== null) {
 				if (key === 'active_orientation') {
+					console.log(obj);
 					obj[key].x = obj[selectedOrientation].x;
 					obj[key].y = obj[selectedOrientation].y;
 				} else {
@@ -165,11 +183,13 @@ function updateActiveOrientationFromLocalStorage() {
 				}
 			}
 		}
+		utility.freezeOverlays();
+		utility.continueOverlays();
 	}
 	updateActiveOrientation(necromancy_gauge);
 }
 
-const version = '0.0.3';
+const version = '0.0.4';
 const settingsObject = {
 	appName: sauce.createHeading('h2', 'Job Gauges - v' + version),
 	settingDiscord: sauce.createText(
@@ -203,11 +223,11 @@ const settingsObject = {
 	orientationSelection: sauce.createDropdownSetting(
 		'selectedOrientation',
 		'Select how to group Incantations',
-		sauce.getSetting('selectedOrientation') ?? 'reverse_split_orientation',
+		sauce.getSetting('selectedOrientation') ?? 'reverse_split',
 		[
-			{ value: 'grouped_orientation', name: 'Grouped' },
-			{ value: 'split_orientation', name: 'Split' },
-			{ value: 'reverse_split_orientation', name: 'Reverse Split' },
+			{ value: 'grouped', name: 'Grouped' },
+			{ value: 'split', name: 'Split' },
+			{ value: 'reverse_split', name: 'Reverse Split' },
 		]
 	),
 	visibleReset: sauce.createSeperator(),
@@ -282,7 +302,7 @@ settingsObject.orientationSelection.addEventListener('change', () => {
 settingsObject.repositionOverlay.addEventListener('click', setOverlayPosition);
 
 settingsObject.showNecrosis.addEventListener('change', (e) => {
-	gauges.necromancy.necrosis.dupeRow = sauce.getSetting('dupeRow');
+	gauges.necromancy.stacks.necrosis.dupeRow = sauce.getSetting('dupeRow');
 })
 
 let updatingOverlayPosition = false;
@@ -291,17 +311,44 @@ async function setOverlayPosition() {
 	updatingOverlayPosition = true;
 	a1lib.once('alt1pressed', updateLocation);
 	alt1.setTooltip(
-		'Press Alt+1 to save position \n Screen tearing is temporary'
+		'Press Primary Keybind to save position (default keybind is alt+1)'
 	);
 	setTimeout(() => {
 		alt1.clearTooltip();
 	}, 3000);
 	while (updatingOverlayPosition) {
+		let _time = await sauce.timeout(1000);
+		let _freeze = await utility.freezeOverlays();
+		//TODO: Per-gauge repositioning will be needed here as well
 		gauges.necromancy.position.x =
 			utility.adjustPositionWithoutScale(a1lib.getMousePosition().x, scaleFactor);
 		gauges.necromancy.position.y =
 			utility.adjustPositionWithoutScale(a1lib.getMousePosition().y, scaleFactor);
-		await new Promise((done) => setTimeout(done, 20));
+		gauges.magic.position.x = utility.adjustPositionWithoutScale(
+			a1lib.getMousePosition().x,
+			scaleFactor
+		);
+		gauges.magic.position.y = utility.adjustPositionWithoutScale(
+			a1lib.getMousePosition().y,
+			scaleFactor
+		);
+		gauges.ranged.position.x = utility.adjustPositionWithoutScale(
+			a1lib.getMousePosition().x,
+			scaleFactor
+		);
+		gauges.ranged.position.y = utility.adjustPositionWithoutScale(
+			a1lib.getMousePosition().y,
+			scaleFactor
+		);
+		gauges.melee.position.x = utility.adjustPositionWithoutScale(
+			a1lib.getMousePosition().x,
+			scaleFactor
+		);
+		gauges.melee.position.y = utility.adjustPositionWithoutScale(
+			a1lib.getMousePosition().y,
+			scaleFactor
+		);
+		let _continue = await utility.continueOverlays();
 	}
 }
 

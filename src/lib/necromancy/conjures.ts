@@ -1,6 +1,7 @@
 import * as a1lib from 'alt1';
 import * as sauce from '../../a1sauce';
 import * as utility from '../utility';
+import { Overlay } from '../../types';
 
 var conjureImages = a1lib.webpackImages({
 	skeleton_warrior_inactive: require('../.././asset/data/conjures/conjure_skeleton_inactive.data.png'),
@@ -14,12 +15,12 @@ var conjureImages = a1lib.webpackImages({
 });
 
 let white = a1lib.mixColor(255, 255, 255);
-let lastMinValue;
+let lastMinValue: number = 0;
 
 let scaleFactor = sauce.getSetting('scale') / 100;
 let scaledOnce = false;
 
-export async function conjureOverlay(gauges) {
+export async function conjureOverlay(gauges: Overlay) {
 	if (!gauges.necromancy.conjures.visible) {
 		return
 	}
@@ -39,18 +40,32 @@ export async function conjureOverlay(gauges) {
 	alt1.overLaySetGroup('Undead_Army');
 	if (gauges.necromancy.conjures.active) {
 		alt1.overLayImage(
-			utility.adjustPositionForScale(gauges.necromancy.position.x + gauges.necromancy.conjures.position.active_orientation.x, scaleFactor),
-			utility.adjustPositionForScale(gauges.necromancy.position.y + gauges.necromancy.conjures.position.active_orientation.y, scaleFactor),
+			utility.adjustPositionForScale(
+				gauges.necromancy.position.x +
+					gauges.necromancy.conjures.position.active_orientation.x,
+				scaleFactor
+			),
+			utility.adjustPositionForScale(
+				gauges.necromancy.position.y +
+					gauges.necromancy.conjures.position.active_orientation.y,
+				scaleFactor
+			),
 			a1lib.encodeImageString(conjureImages.undead_army.toDrawableData()),
 			conjureImages.undead_army.width,
 			1000
 		);
 	} else {
 		alt1.overLayImage(
-			utility.adjustPositionForScale(gauges.necromancy.position.x +
-				gauges.necromancy.conjures.position.active_orientation.x, scaleFactor),
-			utility.adjustPositionForScale(gauges.necromancy.position.y +
-				gauges.necromancy.conjures.position.active_orientation.y, scaleFactor),
+			utility.adjustPositionForScale(
+				gauges.necromancy.position.x +
+					gauges.necromancy.conjures.position.active_orientation.x,
+				scaleFactor
+			),
+			utility.adjustPositionForScale(
+				gauges.necromancy.position.y +
+					gauges.necromancy.conjures.position.active_orientation.y,
+				scaleFactor
+			),
 			a1lib.encodeImageString(
 				conjureImages.undead_army_inactive.toDrawableData()
 			),
@@ -73,10 +88,16 @@ export async function conjureOverlay(gauges) {
 			minValue.toString(),
 			white,
 			14,
-			utility.adjustPositionForScale(gauges.necromancy.position.x +
-				26 +
-				gauges.necromancy.conjures.position.active_orientation.x, scaleFactor),
-			utility.adjustPositionForScale(gauges.necromancy.position.y + 32, scaleFactor),
+			utility.adjustPositionForScale(
+				gauges.necromancy.position.x +
+					26 +
+					gauges.necromancy.conjures.position.active_orientation.x,
+				scaleFactor
+			),
+			utility.adjustPositionForScale(
+				gauges.necromancy.position.y + 32,
+				scaleFactor
+			),
 			10000,
 			undefined,
 			true,

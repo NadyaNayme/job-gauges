@@ -1,6 +1,7 @@
 import * as a1lib from 'alt1';
 import * as sauce from '../../a1sauce';
 import * as utility from '../utility';
+import { Overlay } from '../../types';
 
 var incantationImages = a1lib.webpackImages({
 	invoke_death_inactive: require('../.././asset/data/incantations/lg/invoke_death_inactive.data.png'),
@@ -16,7 +17,7 @@ var incantationImages = a1lib.webpackImages({
 let scaleFactor = sauce.getSetting('scale') / 100;
 let scaledOnce = false;
 
-export async function incantationsOverlay(gauges) {
+export async function incantationsOverlay(gauges: Overlay) {
 
 	const { incantations } = gauges.necromancy;
 	const { invokeDeath, darkness, threads, splitSoul } = incantations;
@@ -44,10 +45,15 @@ export async function incantationsOverlay(gauges) {
 	) {
 		alt1.overLaySetGroup('Invoke_Death');
 		alt1.overLayImage(
-			utility.adjustPositionForScale(gauges.necromancy.position.x +
-				invokeDeath.position
-					.active_orientation.x, scaleFactor),
-			utility.adjustPositionForScale(gauges.necromancy.position.y, scaleFactor),
+			utility.adjustPositionForScale(
+				gauges.necromancy.position.x +
+					invokeDeath.position.active_orientation.x,
+				scaleFactor
+			),
+			utility.adjustPositionForScale(
+				gauges.necromancy.position.y,
+				scaleFactor
+			),
 			a1lib.encodeImageString(
 				incantationImages.invoke_death.toDrawableData()
 			),
@@ -60,10 +66,15 @@ export async function incantationsOverlay(gauges) {
 	) {
 		alt1.overLaySetGroup('Invoke_Death');
 		alt1.overLayImage(
-			utility.adjustPositionForScale(gauges.necromancy.position.x +
-				invokeDeath.position
-					.active_orientation.x, scaleFactor),
-			utility.adjustPositionForScale(gauges.necromancy.position.y, scaleFactor),
+			utility.adjustPositionForScale(
+				gauges.necromancy.position.x +
+					invokeDeath.position.active_orientation.x,
+				scaleFactor
+			),
+			utility.adjustPositionForScale(
+				gauges.necromancy.position.y,
+				scaleFactor
+			),
 			a1lib.encodeImageString(
 				incantationImages.invoke_death_inactive.toDrawableData()
 			),
@@ -79,12 +90,16 @@ export async function incantationsOverlay(gauges) {
 	) {
 		alt1.overLaySetGroup('Darkness');
 		alt1.overLayImage(
-			utility.adjustPositionForScale(gauges.necromancy.position.x +
-				darkness.position
-					.active_orientation.x, scaleFactor),
-			utility.adjustPositionForScale(gauges.necromancy.position.y +
-				darkness.position
-					.active_orientation.y, scaleFactor),
+			utility.adjustPositionForScale(
+				gauges.necromancy.position.x +
+					darkness.position.active_orientation.x,
+				scaleFactor
+			),
+			utility.adjustPositionForScale(
+				gauges.necromancy.position.y +
+					darkness.position.active_orientation.y,
+				scaleFactor
+			),
 			a1lib.encodeImageString(
 				incantationImages.darkness.toDrawableData()
 			),
@@ -97,12 +112,16 @@ export async function incantationsOverlay(gauges) {
 	) {
 		alt1.overLaySetGroup('Darkness');
 		alt1.overLayImage(
-			utility.adjustPositionForScale(gauges.necromancy.position.x +
-				darkness.position
-					.active_orientation.x, scaleFactor),
-			utility.adjustPositionForScale(gauges.necromancy.position.y +
-				darkness.position
-					.active_orientation.y, scaleFactor),
+			utility.adjustPositionForScale(
+				gauges.necromancy.position.x +
+					darkness.position.active_orientation.x,
+				scaleFactor
+			),
+			utility.adjustPositionForScale(
+				gauges.necromancy.position.y +
+					darkness.position.active_orientation.y,
+				scaleFactor
+			),
 			a1lib.encodeImageString(
 				incantationImages.darkness_inactive.toDrawableData()
 			),
@@ -118,11 +137,15 @@ export async function incantationsOverlay(gauges) {
 	) {
 		alt1.overLaySetGroup('Threads');
 		alt1.overLayImage(
-			utility.adjustPositionForScale(gauges.necromancy.position.x +
-				threads.position
-					.active_orientation.x *
-					2, scaleFactor),
-			utility.adjustPositionForScale(gauges.necromancy.position.y, scaleFactor),
+			utility.adjustPositionForScale(
+				gauges.necromancy.position.x +
+					threads.position.active_orientation.x * 2,
+				scaleFactor
+			),
+			utility.adjustPositionForScale(
+				gauges.necromancy.position.y,
+				scaleFactor
+			),
 			a1lib.encodeImageString(
 				incantationImages.threads_inactive.toDrawableData()
 			),
@@ -135,11 +158,15 @@ export async function incantationsOverlay(gauges) {
 	) {
 		alt1.overLaySetGroup('Threads');
 		alt1.overLayImage(
-			utility.adjustPositionForScale(gauges.necromancy.position.x +
-				threads.position
-					.active_orientation.x *
-					2, scaleFactor),
-			utility.adjustPositionForScale(gauges.necromancy.position.y, scaleFactor),
+			utility.adjustPositionForScale(
+				gauges.necromancy.position.x +
+					threads.position.active_orientation.x * 2,
+				scaleFactor
+			),
+			utility.adjustPositionForScale(
+				gauges.necromancy.position.y,
+				scaleFactor
+			),
 			a1lib.encodeImageString(incantationImages.threads.toDrawableData()),
 			incantationImages.threads.width,
 			1000
@@ -153,13 +180,16 @@ export async function incantationsOverlay(gauges) {
 	) {
 		alt1.overLaySetGroup('SplitSoul');
 		alt1.overLayImage(
-			utility.adjustPositionForScale(gauges.necromancy.position.x +
-				splitSoul.position
-					.active_orientation.x *
-					2, scaleFactor),
-			utility.adjustPositionForScale(gauges.necromancy.position.y +
-				splitSoul.position
-					.active_orientation.y, scaleFactor),
+			utility.adjustPositionForScale(
+				gauges.necromancy.position.x +
+					splitSoul.position.active_orientation.x * 2,
+				scaleFactor
+			),
+			utility.adjustPositionForScale(
+				gauges.necromancy.position.y +
+					splitSoul.position.active_orientation.y,
+				scaleFactor
+			),
 			a1lib.encodeImageString(
 				incantationImages.split_soul_inactive.toDrawableData()
 			),
@@ -172,13 +202,16 @@ export async function incantationsOverlay(gauges) {
 	) {
 		alt1.overLaySetGroup('SplitSoul');
 		alt1.overLayImage(
-			utility.adjustPositionForScale(gauges.necromancy.position.x +
-				splitSoul.position
-					.active_orientation.x *
-					2, scaleFactor),
-			utility.adjustPositionForScale(gauges.necromancy.position.y +
-				splitSoul.position
-					.active_orientation.y, scaleFactor),
+			utility.adjustPositionForScale(
+				gauges.necromancy.position.x +
+					splitSoul.position.active_orientation.x * 2,
+				scaleFactor
+			),
+			utility.adjustPositionForScale(
+				gauges.necromancy.position.y +
+					splitSoul.position.active_orientation.y,
+				scaleFactor
+			),
 			a1lib.encodeImageString(
 				incantationImages.split_soul.toDrawableData()
 			),

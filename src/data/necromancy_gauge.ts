@@ -1,4 +1,6 @@
-const necromancy_gauge = {
+import { NecromancyGauge } from "../types";
+
+export const necromancy_gauge: NecromancyGauge = {
 	inCombat: false,
 	position: {
 		x: 50,
@@ -13,15 +15,15 @@ const necromancy_gauge = {
 					x: 0,
 					y: 0,
 				},
-				grouped_orientation: {
+				grouped: {
 					x: -10,
 					y: 50,
 				},
-				split_orientation: {
+				split: {
 					x: -10,
 					y: 50,
 				},
-				reverse_split_orientation: {
+				reverse_split: {
 					x: -10,
 					y: 50,
 				},
@@ -36,15 +38,15 @@ const necromancy_gauge = {
 					x: 0,
 					y: 0,
 				},
-				grouped_orientation: {
+				grouped: {
 					x: -10,
 					y: 98,
 				},
-				split_orientation: {
+				split: {
 					x: -10,
 					y: 98,
 				},
-				reverse_split_orientation: {
+				reverse_split: {
 					x: -10,
 					y: 98,
 				},
@@ -59,15 +61,15 @@ const necromancy_gauge = {
 				x: 0,
 				y: 0,
 			},
-			grouped_orientation: {
+			grouped: {
 				x: -12,
 				y: 5,
 			},
-			split_orientation: {
+			split: {
 				x: 15,
 				y: 5,
 			},
-			reverse_split_orientation: {
+			reverse_split: {
 				x: -12,
 				y: 5,
 			},
@@ -104,15 +106,15 @@ const necromancy_gauge = {
 					x: 0,
 					y: 0,
 				},
-				grouped_orientation: {
+				grouped: {
 					x: 72,
 					y: 5,
 				},
-				split_orientation: {
+				split: {
 					x: -9,
 					y: 0,
 				},
-				reverse_split_orientation: {
+				reverse_split: {
 					x: 29,
 					y: 0,
 				},
@@ -126,15 +128,15 @@ const necromancy_gauge = {
 					x: 0,
 					y: 0,
 				},
-				grouped_orientation: {
+				grouped: {
 					x: 72,
 					y: 24,
 				},
-				split_orientation: {
+				split: {
 					x: -9,
 					y: 24,
 				},
-				reverse_split_orientation: {
+				reverse_split: {
 					x: 29,
 					y: 24,
 				},
@@ -150,15 +152,15 @@ const necromancy_gauge = {
 					x: 0,
 					y: 0,
 				},
-				grouped_orientation: {
+				grouped: {
 					x: 50,
 					y: 24,
 				},
-				split_orientation: {
+				split: {
 					x: 49,
 					y: 24,
 				},
-				reverse_split_orientation: {
+				reverse_split: {
 					x: 28,
 					y: 24,
 				},
@@ -174,15 +176,15 @@ const necromancy_gauge = {
 					x: 0,
 					y: 0,
 				},
-				grouped_orientation: {
+				grouped: {
 					x: 50,
 					y: 0,
 				},
-				split_orientation: {
+				split: {
 					x: 49,
 					y: 0,
 				},
-				reverse_split_orientation: {
+				reverse_split: {
 					x: 28,
 					y: 0,
 				},
@@ -190,7 +192,7 @@ const necromancy_gauge = {
 		},
 	},
 	livingDeath: {
-		visiblie: true,
+		visible: true,
 		active: false,
 		time: 0,
 		onCooldown: false,
@@ -200,15 +202,15 @@ const necromancy_gauge = {
 				x: 0,
 				y: 0,
 			},
-			grouped_orientation: {
+			grouped: {
 				x: 30,
 				y: 5,
 			},
-			split_orientation: {
+			split: {
 				x: 60,
 				y: 5,
 			},
-			reverse_split_orientation: {
+			reverse_split: {
 				x: 81,
 				y: 5,
 			},
@@ -222,20 +224,18 @@ const necromancy_gauge = {
 				x: 0,
 				y: 0,
 			},
-			grouped_orientation: {
+			grouped: {
 				x: -10,
 				y: 74,
 			},
-			split_orientation: {
+			split: {
 				x: -10,
 				y: 74,
 			},
-			reverse_split_orientation: {
+			reverse_split: {
 				x: -10,
 				y: 74,
 			},
 		},
 	},
 };
-
-exports.necromancy_gauge = necromancy_gauge;

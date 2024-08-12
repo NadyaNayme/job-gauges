@@ -1,6 +1,7 @@
 import * as a1lib from 'alt1';
 import * as sauce from '../../a1sauce';
 import * as utility from '../utility';
+import { Overlay } from '../../types';
 
 var soulImages = a1lib.webpackImages({
 	souls_0: require('../.././asset/data/souls/lg/souls_0.data.png'),
@@ -14,7 +15,7 @@ var soulImages = a1lib.webpackImages({
 let scaleFactor = sauce.getSetting('scale') / 100;
 let scaledOnce = false;
 
-export async function soulsOverlay(gauges) {
+export async function soulsOverlay(gauges: Overlay) {
 	const { souls } = gauges.necromancy.stacks;
 
 	if (!souls.visible) {

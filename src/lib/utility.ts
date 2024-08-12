@@ -3,6 +3,15 @@ import * as a1lib from 'alt1';
 
 export let white = a1lib.mixColor(255, 255, 255);
 
+export function getByID(id: string) {
+	return document.getElementById(id);
+}
+
+export let helperItems = {
+	Output: getByID('output'),
+	settings: getByID('Settings'),
+};
+
 export async function forceClearOverlay(overlay: string) {
 	alt1.overLaySetGroup(overlay);
 	alt1.overLayFreezeGroup(overlay);
@@ -12,11 +21,47 @@ export async function forceClearOverlay(overlay: string) {
 	return;
 }
 
-export function adjustPositionForScale(position, scaleFactor) {
+let overlays = [
+	'Bloat',
+	'Undead_Army',
+	'Invoke_Death',
+	'Darkness',
+	'Threads',
+	'SplitSoul',
+	'LivingDeath',
+	'Necrosis',
+	'Necrosis_Row2',
+	'Souls'
+]
+
+export async function freezeOverlays() {
+	overlays.forEach((overlay) => {
+		alt1.overLayFreezeGroup(overlay);
+		alt1.overLayClearGroup(overlay);
+		alt1.overLayRefreshGroup(overlay);
+	});
+}
+
+export async function continueOverlays() {
+	overlays.forEach((overlay) => {
+		alt1.overLayContinueGroup(overlay);
+	});
+}
+
+export async function clearTextOverlays() {
+	alt1.overLaySetGroup('Undead_Army_Text');
+	alt1.overLayClearGroup('Undead_Army_Text');
+	alt1.overLayRefreshGroup('Undead_Army_Text');
+	alt1.overLaySetGroup('LivingDeath_Text');
+	alt1.overLayClearGroup('LivingDeath_Text');
+	alt1.overLayRefreshGroup('LivingDeath_Text');
+}
+
+export function adjustPositionForScale(position, scaleFactor: number) {
     return parseInt(roundedToFixed(position * scaleFactor, 1), 10);
 }
 
-export function adjustPositionWithoutScale(position, scaleFactor) {
+export function adjustPositionWithoutScale(position, scaleFactor: number) {
 	return parseInt(roundedToFixed(position * ((1 / scaleFactor)), 1), 10);
 }
 
