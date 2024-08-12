@@ -1,9 +1,8 @@
 import * as a1lib from 'alt1';
-import * as TargetMob from 'alt1/targetmob';
 import * as utility from './lib/utility';
 import { helperItems } from './lib/utility';
 import * as sauce from './a1sauce';
-import { Overlay, NecromancyGauge, MagicGauge, RangedGauge, MeleeGauge } from './types/index';
+import { Overlay } from './types/index';
 
 // General Purpose
 import { findBuffsBar, readBuffs } from './lib/readBuffs';
@@ -35,6 +34,7 @@ import './css/styles.css';
 const gauges: Overlay = {
 	isInCombat: false,
 	checkCombatStatus: false,
+	scaleFactor: 1,
 	necromancy: necromancy_gauge,
 	magic: magic_gauge,
 	ranged: ranged_gauge,
@@ -105,6 +105,12 @@ function loadSettings(): void {
 
 	if (sauce.getSetting('hideOutsideCombat') !== undefined) {
 		gauges.checkCombatStatus = sauce.getSetting('hideOutsideCombat');
+	}
+
+	if (sauce.getSetting('scale') !== undefined) {
+		gauges.scaleFactor = sauce.getSetting('scale') / 100;
+	} else {
+		gauges.scaleFactor = 1;
 	}
 
 	// Necromancy Components (TODO: Move the check into the components themselves?)
@@ -188,7 +194,7 @@ function updateActiveOrientationFromLocalStorage(): void {
 
 
 	// Function to recursively update orientations in an object
-	function updateActiveOrientation(obj: Object) {
+	function updateActiveOrientation(obj: object) {
 		for (const key in obj) {
 			if (typeof obj[key] === 'object' && obj[key] !== null) {
 				if (key === 'active_orientation') {
@@ -315,13 +321,16 @@ settingsObject.orientationSelection.addEventListener('change', () => {
 
 settingsObject.repositionOverlay.addEventListener('click', setOverlayPosition);
 
-settingsObject.showNecrosis.addEventListener('change', (e) => {
+settingsObject.showNecrosis.addEventListener('change', () => {
 	gauges.necromancy.stacks.duplicateNecrosisRow = sauce.getSetting('dupeRow');
-})
+});
+
+settingsObject.UIScale.addEventListener('change', () => {
+	location.reload();
+});
 
 let updatingOverlayPosition = false;
 async function setOverlayPosition() {
-	let scaleFactor = sauce.getSetting('scale') / 100;
 	updatingOverlayPosition = true;
 	a1lib.once('alt1pressed', updateLocation);
 	alt1.setTooltip(
@@ -331,38 +340,11 @@ async function setOverlayPosition() {
 		alt1.clearTooltip();
 	}, 3000);
 	while (updatingOverlayPosition) {
-		let _time = await sauce.timeout(1000);
-		let _freeze = await utility.freezeOverlays();
+		await sauce.timeout(1000);
+		utility.freezeOverlays();
 		//TODO: Per-gauge repositioning will be needed here as well
-		gauges.necromancy.position.x =
-			utility.adjustPositionWithoutScale(a1lib.getMousePosition().x, scaleFactor);
-		gauges.necromancy.position.y =
-			utility.adjustPositionWithoutScale(a1lib.getMousePosition().y, scaleFactor);
-		gauges.magic.position.x = utility.adjustPositionWithoutScale(
-			a1lib.getMousePosition().x,
-			scaleFactor
-		);
-		gauges.magic.position.y = utility.adjustPositionWithoutScale(
-			a1lib.getMousePosition().y,
-			scaleFactor
-		);
-		gauges.ranged.position.x = utility.adjustPositionWithoutScale(
-			a1lib.getMousePosition().x,
-			scaleFactor
-		);
-		gauges.ranged.position.y = utility.adjustPositionWithoutScale(
-			a1lib.getMousePosition().y,
-			scaleFactor
-		);
-		gauges.melee.position.x = utility.adjustPositionWithoutScale(
-			a1lib.getMousePosition().x,
-			scaleFactor
-		);
-		gauges.melee.position.y = utility.adjustPositionWithoutScale(
-			a1lib.getMousePosition().y,
-			scaleFactor
-		);
-		let _continue = await utility.continueOverlays();
+		utility.resizeGaugesWithMousePosition(gauges);
+		utility.continueOverlays();
 	}
 }
 
@@ -391,7 +373,7 @@ window.onload = function () {
 		});
 		startApp();
 	} else {
-		let addappurl = `alt1://addapp/${
+		const addappurl = `alt1://addapp/${
 			new URL('./appconfig.json', document.location.href).href
 		}`;
 		helperItems.Output.insertAdjacentHTML(

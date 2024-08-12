@@ -1,15 +1,15 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import * as a1lib from 'alt1';
 import * as BuffReader from 'alt1/buffs';
-import * as sauce from '../a1sauce';
 import * as utility from './utility';
-import {helperItems } from './utility';
+import { helperItems } from './utility';
 import { Overlay } from '../types';
 
-var buffs = new BuffReader.default();
-var debuffs = new BuffReader.default();
+const buffs = new BuffReader.default();
+const debuffs = new BuffReader.default();
 debuffs.debuffs = true;
 
-var buffsImages = a1lib.webpackImages({
+const buffsImages = a1lib.webpackImages({
 	darkness: require('.././asset/data/buffs/Darkness.data.png'),
 	living_death: require('.././asset/data/buffs/Living_Death.data.png'),
 	split_soul: require('.././asset/data/buffs/Split_Soul.data.png'),
@@ -52,12 +52,14 @@ export async function findBuffsBar(): Promise<void> {
 
 retryOperation(findBuffsBar, 5, 5000)
 	.then(() => console.info('Found Buffs bar succesfully - starting overlay'))
-	.catch((error) => {
+	.catch(() => {
 		helperItems.Output.insertAdjacentHTML(
 			'beforeend',
 			`<p style="text-align:center;margin-top:10px;color:red;">Please make sure you have at least 1 buff on your buffs bar and then reload the app.</p>`
 		);
-		console.warn('Please make sure you have at least 1 buff on your buffs bar and then reload the app.');
+		console.warn(
+			'Please make sure you have at least 1 buff on your buffs bar and then reload the app.'
+		);
 	});
 
 export async function readBuffs(gauges: Overlay) {
@@ -81,17 +83,28 @@ export async function readBuffs(gauges: Overlay) {
 			updateBuffData(gauges, buffsImages.threads, 300, updateThreads);
 		}
 		if (!disableSplitCheck) {
-			updateBuffData(gauges, buffsImages.split_soul, 350, updateSplitSoul);
+			updateBuffData(
+				gauges,
+				buffsImages.split_soul,
+				350,
+				updateSplitSoul
+			);
 		}
 		return buffs;
 	}
 }
 
-async function updateBuffData(gauges: Overlay, buffImage: ImageData, threshold: number, updateCallbackFn: Function) {
-	let buffsData = buffs.read();
+async function updateBuffData(
+	gauges: Overlay,
+	buffImage: ImageData,
+	threshold: number,
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+	updateCallbackFn: Function
+): Promise<boolean> {
+	const buffsData = buffs.read();
 	let foundBuff = false;
-	for (let [_key, value] of Object.entries(buffsData)) {
-		let buff = value.countMatch(buffImage, false);
+	for (const value of Object.values(buffsData)) {
+		const buff = value.countMatch(buffImage, false);
 		if (buff.passed > threshold) {
 			foundBuff = true;
 			updateCallbackFn(gauges, value.readArg('time').time);
@@ -108,22 +121,22 @@ async function updateBuffData(gauges: Overlay, buffImage: ImageData, threshold: 
 // without passing an updateCallbackfn()
 // Passing data = ['necromancy]['stacks']['souls]['count'] and trying
 // to update gauges.data doesn't work because somehow ['souls'] is undefined?
-async function updateSoulCount(gauges, value) {
-	gauges.necromancy.stacks.souls.count = value;
+async function updateSoulCount(gauges: Overlay, value: number) {
+	gauges.necromancy.stacks.souls.stacks = value;
 }
 
-async function updateNecrosisCount(gauges, value) {
-	gauges.necromancy.stacks.necrosis.count = value;
+async function updateNecrosisCount(gauges: Overlay, value: number) {
+	gauges.necromancy.stacks.necrosis.stacks = value;
 }
 
-async function updateLivingDeath(gauges, value) {
+async function updateLivingDeath(gauges: Overlay, value: number) {
 	// If Living Death has an active buff and a timer:
 	//   - it cannot be on cooldown
 	//   - it must be active
 	//   - The remaining time is its timer
 	if (value > 1) {
-		gauges.necromancy.livingDeath.onCooldown = false;
-		gauges.necromancy.livingDeath.cooldown = '';
+		gauges.necromancy.livingDeath.isOnCooldown = false;
+		gauges.necromancy.livingDeath.cooldownDuration = 0;
 		gauges.necromancy.livingDeath.active = true;
 		gauges.necromancy.livingDeath.time = value;
 	}
@@ -137,23 +150,21 @@ async function updateLivingDeath(gauges, value) {
 		//  - Clear the timer
 		//  - LD is now on Cooldown so is not active
 		setTimeout(() => {
-			gauges.necromancy.livingDeath.time = '';
+			gauges.necromancy.livingDeath.time = 0;
 			gauges.necromancy.livingDeath.active = false;
-			gauges.necromancy.livingDeath.onCooldown = true;
+			gauges.necromancy.livingDeath.isOnCooldown = true;
 			startLivingDeathCooldown(gauges);
 		}, 1050);
 	}
 }
 
-async function startLivingDeathCooldown(gauges) {
-	if (!gauges.necromancy.livingDeath.visible) {
+async function startLivingDeathCooldown(gauges: Overlay) {
+	if (!gauges.necromancy.livingDeath.isActiveOverlay) {
 		return;
 	}
 
 	// If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
-	if (
-		gauges.necromancy.livingDeath.active
-	) {
+	if (gauges.necromancy.livingDeath.active) {
 		endLivingDeathCooldown(gauges);
 		return;
 	}
@@ -162,7 +173,7 @@ async function startLivingDeathCooldown(gauges) {
 	utility.forceClearOverlay('LivingDeath_Text');
 	alt1.overLaySetGroupZIndex('LivingDeath_Cooldown_Text', 1);
 	let cooldown = 59;
-	let timer = setInterval(() => {
+	const timer = setInterval(() => {
 		// During our interval if the buff ever becomes active - kill the timer
 		if (gauges.necromancy.livingDeath.active) {
 			clearInterval(timer);
@@ -198,33 +209,33 @@ async function startLivingDeathCooldown(gauges) {
 	}, 1000);
 }
 
-async function endLivingDeathCooldown(gauges) {
-	gauges.necromancy.livingDeath.onCooldown = false;
-	gauges.necromancy.livingDeath.cooldown = '';
+async function endLivingDeathCooldown(gauges: Overlay) {
+	gauges.necromancy.livingDeath.isOnCooldown = false;
+	gauges.necromancy.livingDeath.cooldownDuration = 0;
 	utility.forceClearOverlay('LivingDeath_Cooldown_Text');
 }
 
-async function updateSkeleton(gauges, value) {
+async function updateSkeleton(gauges: Overlay, value: number) {
 	gauges.necromancy.conjures.skeleton.time = value;
 	gauges.necromancy.conjures.skeleton.active = Boolean(value);
 }
 
-async function updateZombie(gauges, value) {
+async function updateZombie(gauges: Overlay, value: number) {
 	gauges.necromancy.conjures.zombie.time = value;
 	gauges.necromancy.conjures.zombie.active = Boolean(value);
 }
 
-async function updateGhost(gauges, value) {
+async function updateGhost(gauges: Overlay, value: number) {
 	gauges.necromancy.conjures.ghost.time = value;
 	gauges.necromancy.conjures.ghost.active = Boolean(value);
 }
 
-async function updateDarkness(gauges, value) {
+async function updateDarkness(gauges: Overlay, value: number) {
 	gauges.necromancy.incantations.active[1] = Boolean(value);
 }
 
 let disableThreadsCheck = false;
-async function updateThreads(gauges, value) {
+async function updateThreads(gauges: Overlay, value: number) {
 	gauges.necromancy.incantations.active[2] = false;
 	if (value > 1) {
 		gauges.necromancy.incantations.active[2] = true;
@@ -235,12 +246,12 @@ async function updateThreads(gauges, value) {
 		setTimeout(() => {
 			gauges.necromancy.incantations.active[2] = false;
 			disableThreadsCheck = false;
-		}, gauges.necromancy.incantations.threads.cooldown * 1000);
+		}, gauges.necromancy.incantations.threads.cooldownDuration * 1000);
 	}
 }
 
 let disableSplitCheck = false;
-async function updateSplitSoul(gauges, value) {
+async function updateSplitSoul(gauges: Overlay, value: number) {
 	gauges.necromancy.incantations.active[3] = false;
 	if (value > 1) {
 		gauges.necromancy.incantations.active[3] = true;
@@ -251,19 +262,24 @@ async function updateSplitSoul(gauges, value) {
 		setTimeout(() => {
 			gauges.necromancy.incantations.active[3] = false;
 			disableSplitCheck = false;
-		}, gauges.necromancy.incantations.splitSoul.cooldown * 1000);
+		}, gauges.necromancy.incantations.splitSoul.cooldownDuration * 1000);
 	}
 }
 
-async function updateConjures(gauges) {
-	let hasSkeleton = await updateBuffData(gauges, buffsImages.skeleton, 150, updateSkeleton);
-	let hasZombie = await updateBuffData(
+async function updateConjures(gauges: Overlay) {
+	const hasSkeleton = await updateBuffData(
+		gauges,
+		buffsImages.skeleton,
+		150,
+		updateSkeleton
+	);
+	const hasZombie = await updateBuffData(
 		gauges,
 		buffsImages.zombie,
 		150,
 		updateZombie
 	);
-	let hasGhost = await updateBuffData(
+	const hasGhost = await updateBuffData(
 		gauges,
 		buffsImages.ghost,
 		200,

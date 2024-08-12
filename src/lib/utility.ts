@@ -1,13 +1,14 @@
 import * as a1lib from 'alt1';
+import { Overlay } from '../types';
 
 
-export let white = a1lib.mixColor(255, 255, 255);
+export const white = a1lib.mixColor(255, 255, 255);
 
 export function getByID(id: string): HTMLElement {
 	return document.getElementById(id);
 }
 
-export let helperItems = {
+export const helperItems = {
 	Output: getByID('output'),
 	settings: getByID('Settings'),
 };
@@ -20,7 +21,7 @@ export function forceClearOverlay(overlay: string): void {
 	console.log('Force cleared: ' + overlay);
 }
 
-let overlays = [
+const overlays = [
 	'Bloat',
 	'Undead_Army',
 	'Invoke_Death',
@@ -69,13 +70,49 @@ export function adjustPositionWithoutScale(position: number, scaleFactor: number
 	return parseInt(roundedToFixed(position * ((1 / scaleFactor)), 1), 10);
 }
 
+// TODO: Use future overlays[] to iterate over active overlays
+export function resizeGaugesWithMousePosition(gauges: Overlay) {
+		gauges.necromancy.position.x = adjustPositionWithoutScale(
+			a1lib.getMousePosition().x,
+			gauges.scaleFactor
+		);
+		gauges.necromancy.position.y = adjustPositionWithoutScale(
+			a1lib.getMousePosition().y,
+			gauges.scaleFactor
+		);
+		gauges.magic.position.x = adjustPositionWithoutScale(
+			a1lib.getMousePosition().x,
+			gauges.scaleFactor
+		);
+		gauges.magic.position.y = adjustPositionWithoutScale(
+			a1lib.getMousePosition().y,
+			gauges.scaleFactor
+		);
+		gauges.ranged.position.x = adjustPositionWithoutScale(
+			a1lib.getMousePosition().x,
+			gauges.scaleFactor
+		);
+		gauges.ranged.position.y = adjustPositionWithoutScale(
+			a1lib.getMousePosition().y,
+			gauges.scaleFactor
+		);
+		gauges.melee.position.x = adjustPositionWithoutScale(
+			a1lib.getMousePosition().x,
+			gauges.scaleFactor
+		);
+		gauges.melee.position.y = adjustPositionWithoutScale(
+			a1lib.getMousePosition().y,
+			gauges.scaleFactor
+		);
+}
+
 export function updateCoordinates(component, position: {x: number, y: number}): void {
 	component.activePosition.x = position.x;
 	component.activePosition.y = position.y;
 }
 
-function roundedToFixed(input: number, digits: number) {
-	var rounder = Math.pow(10, digits);
+export function roundedToFixed(input: number, digits: number): string {
+	const rounder = Math.pow(10, digits);
 	return (Math.round(input * rounder) / rounder).toFixed(digits);
 }
 

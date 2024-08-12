@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import * as a1lib from 'alt1';
-import * as sauce from '../../a1sauce';
 import * as utility from '../utility';
 import { Overlay } from '../../types';
 
-var bloatImages = a1lib.webpackImages({
+const bloatImages = a1lib.webpackImages({
 	bloat_100: require('../.././asset/data/bloat/lg/bloat_100.data.png'),
 	bloat_90: require('../.././asset/data/bloat/lg/bloat_90.data.png'),
 	bloat_80: require('../.././asset/data/bloat/lg/bloat_80.data.png'),
@@ -18,7 +18,6 @@ var bloatImages = a1lib.webpackImages({
 	bloat_expired: require('../.././asset/data/bloat/lg/bloat_expired.data.png'),
 });
 
-let scaleFactor = sauce.getSetting('scale') / 100;
 let scaledOnce = false;
 
 export async function bloatOverlay(gauges: Overlay) {
@@ -32,12 +31,15 @@ export async function bloatOverlay(gauges: Overlay) {
 
 	if (!scaledOnce) {
 		Object.keys(bloatImages).forEach(async (key) => {
-			bloatImages[key] = await utility.resizeImageData(bloatImages[key], scaleFactor);
+			bloatImages[key] = await utility.resizeImageData(
+				bloatImages[key],
+				gauges.scaleFactor
+			);
 		});
 		scaledOnce = true;
 	}
 
-	let value = bloat.time;
+	const value = bloat.time;
 	let imageKey: string = 'bloat_expired';
 
 	if (bloat.active) {
@@ -69,16 +71,16 @@ export async function bloatOverlay(gauges: Overlay) {
 	}
 
 	alt1.overLaySetGroup('Bloat');
-	let image = bloatImages[imageKey];
+	const image = bloatImages[imageKey];
 
 	alt1.overLayImage(
 		utility.adjustPositionForScale(
 			gauges.necromancy.position.x + bloat.position.active_orientation.x,
-			scaleFactor
+			gauges.scaleFactor
 		),
 		utility.adjustPositionForScale(
 			gauges.necromancy.position.y + bloat.position.active_orientation.y,
-			scaleFactor
+			gauges.scaleFactor
 		),
 		a1lib.encodeImageString(image),
 		image.width,

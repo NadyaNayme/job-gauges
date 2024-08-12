@@ -1470,9 +1470,7 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var config = __webpack_require__(/*! ./appconfig.json */ "./appconfig.json");
-var appName = config.appName;
-appName = 'job-gauges';
+var appName = 'job-gauges';
 function createHeading(size, content) {
     var header = document.createElement(size);
     header.innerHTML = content;
@@ -1491,13 +1489,15 @@ function createSmallText(content) {
 function createSeperator() {
     return document.createElement('hr');
 }
-function createButton(content, fn, options) {
+function createButton(content, 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+fn, options) {
     var _a = options.classes, classes = _a === void 0 ? options.classes : _a;
     var button = document.createElement('button');
     button.innerHTML = content;
-    if (options.classes.length) {
-        for (var i = options.classes.length; i--; i >= 0) {
-            button.classList.add(options.classes[i]);
+    if (classes.length) {
+        for (var i = classes.length; i--; i >= 0) {
+            button.classList.add(classes[i]);
         }
     }
     button.addEventListener('click', function () {
@@ -1720,7 +1720,7 @@ function createInput(type, name, defaultValue) {
     input.id = name;
     input.type = type;
     input.dataset.setting = name;
-    input.dataset.defaultValue = defaultValue;
+    input.dataset.defaultValue = defaultValue.toString();
     input.value = input.dataset.defaultValue;
     if (getSetting(name)) {
         input.value = (_a = getSetting(name)) !== null && _a !== void 0 ? _a : input.dataset.defaultValue;
@@ -1743,8 +1743,8 @@ function createCheckboxInput(name, defaultValue) {
     input.id = name;
     input.type = 'checkbox';
     input.dataset.setting = name;
-    input.dataset.defaultValue = defaultValue;
-    input.checked = defaultValue;
+    input.dataset.defaultValue = defaultValue.toString();
+    input.checked = Boolean(defaultValue);
     if (getSetting(name)) {
         input.checked = getSetting(name);
     }
@@ -1760,8 +1760,8 @@ function createDropdown(name, defaultValue, options) {
     var select = document.createElement('select');
     select.id = name;
     select.dataset.setting = name;
-    select.dataset.defaultValue = defaultValue;
-    select.value = defaultValue;
+    select.dataset.defaultValue = defaultValue.toString();
+    select.value = defaultValue.toString();
     if (getSetting(name)) {
         select.value = getSetting(name);
     }
@@ -2287,10 +2287,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   bloatOverlay: () => (/* binding */ bloatOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _a1sauce__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../a1sauce */ "./a1sauce.ts");
-/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -2327,10 +2326,10 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+/* eslint-disable @typescript-eslint/no-require-imports */
 
 
-
-var bloatImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
+var bloatImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     bloat_100: __webpack_require__(/*! ../.././asset/data/bloat/lg/bloat_100.data.png */ "./asset/data/bloat/lg/bloat_100.data.png"),
     bloat_90: __webpack_require__(/*! ../.././asset/data/bloat/lg/bloat_90.data.png */ "./asset/data/bloat/lg/bloat_90.data.png"),
     bloat_80: __webpack_require__(/*! ../.././asset/data/bloat/lg/bloat_80.data.png */ "./asset/data/bloat/lg/bloat_80.data.png"),
@@ -2344,7 +2343,6 @@ var bloatImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
     bloat_0: __webpack_require__(/*! ../.././asset/data/bloat/lg/bloat_0.data.png */ "./asset/data/bloat/lg/bloat_0.data.png"),
     bloat_expired: __webpack_require__(/*! ../.././asset/data/bloat/lg/bloat_expired.data.png */ "./asset/data/bloat/lg/bloat_expired.data.png"),
 });
-var scaleFactor = _a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('scale') / 100;
 var scaledOnce = false;
 function bloatOverlay(gauges) {
     return __awaiter(this, void 0, void 0, function () {
@@ -2368,7 +2366,7 @@ function bloatOverlay(gauges) {
                                     case 0:
                                         _a = bloatImages;
                                         _b = key;
-                                        return [4 /*yield*/, _utility__WEBPACK_IMPORTED_MODULE_1__.resizeImageData(bloatImages[key], scaleFactor)];
+                                        return [4 /*yield*/, _utility__WEBPACK_IMPORTED_MODULE_0__.resizeImageData(bloatImages[key], gauges.scaleFactor)];
                                     case 1:
                                         _a[_b] = _c.sent();
                                         return [2 /*return*/];
@@ -2419,7 +2417,7 @@ function bloatOverlay(gauges) {
                     }
                     alt1.overLaySetGroup('Bloat');
                     image = bloatImages[imageKey];
-                    alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x + bloat.position.active_orientation.x, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y + bloat.position.active_orientation.y, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(image), image.width, 1000);
+                    alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x + bloat.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y + bloat.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(image), image.width, 1000);
                     alt1.overLayRefreshGroup('Bloat');
                     return [2 /*return*/];
             }
@@ -2441,10 +2439,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   conjureOverlay: () => (/* binding */ conjureOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _a1sauce__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../a1sauce */ "./a1sauce.ts");
-/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -2481,10 +2478,10 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+/* eslint-disable @typescript-eslint/no-require-imports */
 
 
-
-var conjureImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
+var conjureImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     skeleton_warrior_inactive: __webpack_require__(/*! ../.././asset/data/conjures/conjure_skeleton_inactive.data.png */ "./asset/data/conjures/conjure_skeleton_inactive.data.png"),
     skeleton_warrior: __webpack_require__(/*! ../.././asset/data/conjures/conjure_skeleton.data.png */ "./asset/data/conjures/conjure_skeleton.data.png"),
     putrid_zombie_inactive: __webpack_require__(/*! ../.././asset/data/conjures/conjure_zombie_inactive.data.png */ "./asset/data/conjures/conjure_zombie_inactive.data.png"),
@@ -2494,9 +2491,8 @@ var conjureImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
     undead_army_inactive: __webpack_require__(/*! ../.././asset/data/conjures/lg/conjure_undead_army_inactive.data.png */ "./asset/data/conjures/lg/conjure_undead_army_inactive.data.png"),
     undead_army: __webpack_require__(/*! ../.././asset/data/conjures/lg/conjure_undead_army.data.png */ "./asset/data/conjures/lg/conjure_undead_army.data.png"),
 });
-var white = alt1__WEBPACK_IMPORTED_MODULE_2__.mixColor(255, 255, 255);
+var white = alt1__WEBPACK_IMPORTED_MODULE_1__.mixColor(255, 255, 255);
 var lastMinValue = 0;
-var scaleFactor = _a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('scale') / 100;
 var scaledOnce = false;
 function conjureOverlay(gauges) {
     return __awaiter(this, void 0, void 0, function () {
@@ -2519,7 +2515,7 @@ function conjureOverlay(gauges) {
                                     case 0:
                                         _a = conjureImages;
                                         _b = key;
-                                        return [4 /*yield*/, _utility__WEBPACK_IMPORTED_MODULE_1__.resizeImageData(conjureImages[key], scaleFactor)];
+                                        return [4 /*yield*/, _utility__WEBPACK_IMPORTED_MODULE_0__.resizeImageData(conjureImages[key], gauges.scaleFactor)];
                                     case 1:
                                         _a[_b] = _c.sent();
                                         return [2 /*return*/];
@@ -2530,28 +2526,28 @@ function conjureOverlay(gauges) {
                     }
                     alt1.overLaySetGroup('Undead_Army');
                     if (gauges.necromancy.conjures.active) {
-                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x +
-                            gauges.necromancy.conjures.position.active_orientation.x, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y +
-                            gauges.necromancy.conjures.position.active_orientation.y, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(conjureImages.undead_army.toDrawableData()), conjureImages.undead_army.width, 1000);
+                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
+                            gauges.necromancy.conjures.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
+                            gauges.necromancy.conjures.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(conjureImages.undead_army.toDrawableData()), conjureImages.undead_army.width, 1000);
                     }
                     else {
-                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x +
-                            gauges.necromancy.conjures.position.active_orientation.x, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y +
-                            gauges.necromancy.conjures.position.active_orientation.y, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(conjureImages.undead_army_inactive.toDrawableData()), conjureImages.undead_army_inactive.width, 1000);
+                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
+                            gauges.necromancy.conjures.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
+                            gauges.necromancy.conjures.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(conjureImages.undead_army_inactive.toDrawableData()), conjureImages.undead_army_inactive.width, 1000);
                     }
                     earliest_conjure = [
                         gauges.necromancy.conjures.skeleton.time,
                         gauges.necromancy.conjures.zombie.time,
-                        gauges.necromancy.conjures.ghost.time
+                        gauges.necromancy.conjures.ghost.time,
                     ];
                     minValue = Math.min.apply(null, earliest_conjure.filter(Boolean));
                     if (minValue !== Infinity && minValue !== lastMinValue) {
                         alt1.overLaySetGroup('Undead_Army_Text');
                         alt1.overLayFreezeGroup('Undead_Army_Text');
                         alt1.overLayClearGroup('Undead_Army_Text');
-                        alt1.overLayTextEx(minValue.toString(), white, 14, _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x +
+                        alt1.overLayTextEx(minValue.toString(), white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
                             26 +
-                            gauges.necromancy.conjures.position.active_orientation.x, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y + 32, scaleFactor), 10000, undefined, true, true);
+                            gauges.necromancy.conjures.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y + 32, gauges.scaleFactor), 10000, undefined, true, true);
                         alt1.overLayRefreshGroup('Undead_Army_Text');
                         lastMinValue = minValue;
                     }
@@ -2578,10 +2574,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   incantationsOverlay: () => (/* binding */ incantationsOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _a1sauce__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../a1sauce */ "./a1sauce.ts");
-/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -2618,10 +2613,10 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+/* eslint-disable @typescript-eslint/no-require-imports */
 
 
-
-var incantationImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
+var incantationImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     invoke_death_inactive: __webpack_require__(/*! ../.././asset/data/incantations/lg/invoke_death_inactive.data.png */ "./asset/data/incantations/lg/invoke_death_inactive.data.png"),
     invoke_death: __webpack_require__(/*! ../.././asset/data/incantations/lg/invoke_death.data.png */ "./asset/data/incantations/lg/invoke_death.data.png"),
     darkness_inactive: __webpack_require__(/*! ../.././asset/data/incantations/lg/darkness_inactive.data.png */ "./asset/data/incantations/lg/darkness_inactive.data.png"),
@@ -2631,7 +2626,6 @@ var incantationImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
     split_soul_inactive: __webpack_require__(/*! ../.././asset/data/incantations/lg/splitsoul_inactive.data.png */ "./asset/data/incantations/lg/splitsoul_inactive.data.png"),
     split_soul: __webpack_require__(/*! ../.././asset/data/incantations/lg/splitsoul.data.png */ "./asset/data/incantations/lg/splitsoul.data.png"),
 });
-var scaleFactor = _a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('scale') / 100;
 var scaledOnce = false;
 function incantationsOverlay(gauges) {
     return __awaiter(this, void 0, void 0, function () {
@@ -2656,7 +2650,7 @@ function incantationsOverlay(gauges) {
                                     case 0:
                                         _a = incantationImages;
                                         _b = key;
-                                        return [4 /*yield*/, _utility__WEBPACK_IMPORTED_MODULE_1__.resizeImageData(incantationImages[key], scaleFactor)];
+                                        return [4 /*yield*/, _utility__WEBPACK_IMPORTED_MODULE_0__.resizeImageData(incantationImages[key], gauges.scaleFactor)];
                                     case 1:
                                         _a[_b] = _c.sent();
                                         return [2 /*return*/];
@@ -2669,57 +2663,53 @@ function incantationsOverlay(gauges) {
                         invokeDeath.isActiveOverlay &&
                         incantations.isActiveOverlay) {
                         alt1.overLaySetGroup('Invoke_Death');
-                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x +
-                            invokeDeath.position.active_orientation.x, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(incantationImages.invoke_death.toDrawableData()), incantationImages.invoke_death.width, 1000);
+                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
+                            invokeDeath.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(incantationImages.invoke_death.toDrawableData()), incantationImages.invoke_death.width, 1000);
                     }
-                    else if (invokeDeath.isActiveOverlay &&
-                        incantations.isActiveOverlay) {
+                    else if (invokeDeath.isActiveOverlay && incantations.isActiveOverlay) {
                         alt1.overLaySetGroup('Invoke_Death');
-                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x +
-                            invokeDeath.position.active_orientation.x, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(incantationImages.invoke_death_inactive.toDrawableData()), incantationImages.invoke_death_inactive.width, 1000);
+                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
+                            invokeDeath.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(incantationImages.invoke_death_inactive.toDrawableData()), incantationImages.invoke_death_inactive.width, 1000);
                     }
                     if (incantations.active[1] &&
                         darkness.isActiveOverlay &&
                         incantations.isActiveOverlay) {
                         alt1.overLaySetGroup('Darkness');
-                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x +
-                            darkness.position.active_orientation.x, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y +
-                            darkness.position.active_orientation.y, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(incantationImages.darkness.toDrawableData()), incantationImages.darkness.width, 1000);
+                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
+                            darkness.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
+                            darkness.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(incantationImages.darkness.toDrawableData()), incantationImages.darkness.width, 1000);
                     }
-                    else if (darkness.isActiveOverlay &&
-                        incantations.isActiveOverlay) {
+                    else if (darkness.isActiveOverlay && incantations.isActiveOverlay) {
                         alt1.overLaySetGroup('Darkness');
-                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x +
-                            darkness.position.active_orientation.x, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y +
-                            darkness.position.active_orientation.y, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(incantationImages.darkness_inactive.toDrawableData()), incantationImages.darkness_inactive.width, 1000);
+                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
+                            darkness.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
+                            darkness.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(incantationImages.darkness_inactive.toDrawableData()), incantationImages.darkness_inactive.width, 1000);
                     }
                     if (incantations.active[2] &&
                         threads.isActiveOverlay &&
                         incantations.isActiveOverlay) {
                         alt1.overLaySetGroup('Threads');
-                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x +
-                            threads.position.active_orientation.x * 2, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(incantationImages.threads_inactive.toDrawableData()), incantationImages.threads_inactive.width, 1000);
+                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
+                            threads.position.active_orientation.x * 2, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(incantationImages.threads_inactive.toDrawableData()), incantationImages.threads_inactive.width, 1000);
                     }
-                    else if (threads.isActiveOverlay &&
-                        incantations.isActiveOverlay) {
+                    else if (threads.isActiveOverlay && incantations.isActiveOverlay) {
                         alt1.overLaySetGroup('Threads');
-                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x +
-                            threads.position.active_orientation.x * 2, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(incantationImages.threads.toDrawableData()), incantationImages.threads.width, 1000);
+                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
+                            threads.position.active_orientation.x * 2, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(incantationImages.threads.toDrawableData()), incantationImages.threads.width, 1000);
                     }
                     if (incantations.active[3] &&
                         splitSoul.isActiveOverlay &&
                         incantations.isActiveOverlay) {
                         alt1.overLaySetGroup('SplitSoul');
-                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x +
-                            splitSoul.position.active_orientation.x * 2, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y +
-                            splitSoul.position.active_orientation.y, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(incantationImages.split_soul_inactive.toDrawableData()), incantationImages.split_soul_inactive.width, 1000);
+                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
+                            splitSoul.position.active_orientation.x * 2, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
+                            splitSoul.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(incantationImages.split_soul_inactive.toDrawableData()), incantationImages.split_soul_inactive.width, 1000);
                     }
-                    else if (splitSoul.isActiveOverlay &&
-                        incantations.isActiveOverlay) {
+                    else if (splitSoul.isActiveOverlay && incantations.isActiveOverlay) {
                         alt1.overLaySetGroup('SplitSoul');
-                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x +
-                            splitSoul.position.active_orientation.x * 2, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y +
-                            splitSoul.position.active_orientation.y, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(incantationImages.split_soul.toDrawableData()), incantationImages.split_soul.width, 1000);
+                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
+                            splitSoul.position.active_orientation.x * 2, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
+                            splitSoul.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(incantationImages.split_soul.toDrawableData()), incantationImages.split_soul.width, 1000);
                     }
                     return [2 /*return*/];
             }
@@ -2741,10 +2731,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   livingDeathOverlay: () => (/* binding */ livingDeathOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _a1sauce__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../a1sauce */ "./a1sauce.ts");
-/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -2781,15 +2770,14 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+/* eslint-disable @typescript-eslint/no-require-imports */
 
 
-
-var ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
+var ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     inactive: __webpack_require__(/*! ../.././asset/data/living_death/lg/living_death_inactive.data.png */ "./asset/data/living_death/lg/living_death_inactive.data.png"),
     active: __webpack_require__(/*! ../.././asset/data/living_death/lg/living_death.data.png */ "./asset/data/living_death/lg/living_death.data.png"),
 });
 var lastValue;
-var scaleFactor = _a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('scale') / 100;
 var scaledOnce = false;
 function livingDeathOverlay(gauges) {
     return __awaiter(this, void 0, void 0, function () {
@@ -2815,7 +2803,7 @@ function livingDeathOverlay(gauges) {
                                     case 0:
                                         _a = ultimateImages;
                                         _b = key;
-                                        return [4 /*yield*/, _utility__WEBPACK_IMPORTED_MODULE_1__.resizeImageData(ultimateImages[key], scaleFactor)];
+                                        return [4 /*yield*/, _utility__WEBPACK_IMPORTED_MODULE_0__.resizeImageData(ultimateImages[key], gauges.scaleFactor)];
                                     case 1:
                                         _a[_b] = _c.sent();
                                         return [2 /*return*/];
@@ -2839,19 +2827,19 @@ function livingDeathOverlay(gauges) {
                     }
                     else {
                         livingDeath.isOnCooldown = false;
-                        _utility__WEBPACK_IMPORTED_MODULE_1__.forceClearOverlay('LivingDeath_Cooldown_Text');
+                        _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('LivingDeath_Cooldown_Text');
                         displayActiveLivingDeath(gauges);
                         if (lastValue !== livingDeath.time) {
                             livingDeath.cooldownDuration = 0;
-                            _utility__WEBPACK_IMPORTED_MODULE_1__.forceClearOverlay('LivingDeath_Cooldown_Text');
+                            _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('LivingDeath_Cooldown_Text');
                             alt1.overLaySetGroup('LivingDeath_Text');
                             alt1.overLayFreezeGroup('LivingDeath_Text');
                             alt1.overLayClearGroup('LivingDeath_Text');
-                            alt1.overLayTextEx(livingDeath.time.toString(), _utility__WEBPACK_IMPORTED_MODULE_1__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(necromancy.position.x +
+                            alt1.overLayTextEx(livingDeath.time.toString(), _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(necromancy.position.x +
                                 livingDeath.position.active_orientation.x +
-                                26, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(necromancy.position.y +
+                                26, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(necromancy.position.y +
                                 livingDeath.position.active_orientation.y +
-                                26, scaleFactor), 3000, undefined, true, true);
+                                26, gauges.scaleFactor), 3000, undefined, true, true);
                             alt1.overLayRefreshGroup('LivingDeath_Text');
                         }
                     }
@@ -2862,21 +2850,21 @@ function livingDeathOverlay(gauges) {
     });
 }
 function clearLivingDeathOverlays() {
-    _utility__WEBPACK_IMPORTED_MODULE_1__.forceClearOverlay('LivingDeath_Text');
-    _utility__WEBPACK_IMPORTED_MODULE_1__.forceClearOverlay('LivingDeath_Cooldown_Text');
+    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('LivingDeath_Text');
+    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('LivingDeath_Cooldown_Text');
     alt1.overLayClearGroup('LivingDeath');
 }
 function displayActiveLivingDeath(gauges) {
     alt1.overLaySetGroup('LivingDeath');
-    alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x +
-        gauges.necromancy.livingDeath.position.active_orientation.x, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y +
-        gauges.necromancy.livingDeath.position.active_orientation.y, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(ultimateImages.active.toDrawableData()), ultimateImages.active.width, 1000);
+    alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
+        gauges.necromancy.livingDeath.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
+        gauges.necromancy.livingDeath.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(ultimateImages.active.toDrawableData()), ultimateImages.active.width, 1000);
 }
 function displayInactiveLivingDeath(gauges) {
     alt1.overLaySetGroup('LivingDeath');
-    alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x +
-        gauges.necromancy.livingDeath.position.active_orientation.x, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y +
-        gauges.necromancy.livingDeath.position.active_orientation.y, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(ultimateImages.inactive.toDrawableData()), ultimateImages.inactive.width, 1000);
+    alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
+        gauges.necromancy.livingDeath.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
+        gauges.necromancy.livingDeath.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(ultimateImages.inactive.toDrawableData()), ultimateImages.inactive.width, 1000);
 }
 
 
@@ -2893,10 +2881,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   necrosisOverlay: () => (/* binding */ necrosisOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _a1sauce__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../a1sauce */ "./a1sauce.ts");
-/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -2933,10 +2920,10 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+/* eslint-disable @typescript-eslint/no-require-imports */
 
 
-
-var necrosisImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
+var necrosisImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     necrosis_0: __webpack_require__(/*! ../.././asset/data/necrosis/lg/necrosis_0.data.png */ "./asset/data/necrosis/lg/necrosis_0.data.png"),
     necrosis_2: __webpack_require__(/*! ../.././asset/data/necrosis/lg/necrosis_2.data.png */ "./asset/data/necrosis/lg/necrosis_2.data.png"),
     necrosis_4: __webpack_require__(/*! ../.././asset/data/necrosis/lg/necrosis_4.data.png */ "./asset/data/necrosis/lg/necrosis_4.data.png"),
@@ -2945,12 +2932,11 @@ var necrosisImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
     necrosis_10: __webpack_require__(/*! ../.././asset/data/necrosis/lg/necrosis_10.data.png */ "./asset/data/necrosis/lg/necrosis_10.data.png"),
     necrosis_12: __webpack_require__(/*! ../.././asset/data/necrosis/lg/necrosis_12.data.png */ "./asset/data/necrosis/lg/necrosis_12.data.png"),
 });
-var scaleFactor = _a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('scale') / 100;
 var scaledOnce = false;
 function necrosisOverlay(gauges) {
     return __awaiter(this, void 0, void 0, function () {
-        function displayNecrosisImage(count) {
-            alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x + x, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y + y + bloatSpace, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(necrosisImages["necrosis_".concat(count)].toDrawableData()), necrosisImages["necrosis_".concat(count)].width, 1000);
+        function displayNecrosisImage(stacks) {
+            alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x + x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y + y + bloatSpace, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(necrosisImages["necrosis_".concat(stacks)].toDrawableData()), necrosisImages["necrosis_".concat(stacks)].width, 1000);
         }
         var necrosis, position, stacks, _a, x, y, bloatVisible, bloatSpace;
         var _this = this;
@@ -2972,7 +2958,7 @@ function necrosisOverlay(gauges) {
                                     case 0:
                                         _a = necrosisImages;
                                         _b = key;
-                                        return [4 /*yield*/, _utility__WEBPACK_IMPORTED_MODULE_1__.resizeImageData(necrosisImages[key], scaleFactor)];
+                                        return [4 /*yield*/, _utility__WEBPACK_IMPORTED_MODULE_0__.resizeImageData(necrosisImages[key], gauges.scaleFactor)];
                                     case 1:
                                         _a[_b] = _c.sent();
                                         return [2 /*return*/];
@@ -2982,6 +2968,7 @@ function necrosisOverlay(gauges) {
                         scaledOnce = true;
                     }
                     position = necrosis.position, stacks = necrosis.stacks;
+                    console.log(stacks);
                     _a = position.active_orientation, x = _a.x, y = _a.y;
                     bloatVisible = !gauges.necromancy.bloat.isActiveOverlay;
                     bloatSpace = 0;
@@ -3002,7 +2989,10 @@ function necrosisOverlay(gauges) {
                     }
                     if (gauges.necromancy.stacks.duplicateNecrosisRow) {
                         alt1.overLaySetGroup('Necrosis_Row2');
-                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x + x, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y + y + necrosisImages.necrosis_0.height + bloatSpace, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(necrosisImages["necrosis_".concat(stacks)].toDrawableData()), necrosisImages["necrosis_".concat(stacks)].width, 1000);
+                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x + x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
+                            y +
+                            necrosisImages.necrosis_0.height +
+                            bloatSpace, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(necrosisImages["necrosis_".concat(stacks)].toDrawableData()), necrosisImages["necrosis_".concat(stacks)].width, 1000);
                     }
                     return [2 /*return*/];
             }
@@ -3024,10 +3014,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   soulsOverlay: () => (/* binding */ soulsOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _a1sauce__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../a1sauce */ "./a1sauce.ts");
-/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -3064,10 +3053,10 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+/* eslint-disable @typescript-eslint/no-require-imports */
 
 
-
-var soulImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
+var soulImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     souls_0: __webpack_require__(/*! ../.././asset/data/souls/lg/souls_0.data.png */ "./asset/data/souls/lg/souls_0.data.png"),
     souls_1: __webpack_require__(/*! ../.././asset/data/souls/lg/souls_1.data.png */ "./asset/data/souls/lg/souls_1.data.png"),
     souls_2: __webpack_require__(/*! ../.././asset/data/souls/lg/souls_2.data.png */ "./asset/data/souls/lg/souls_2.data.png"),
@@ -3075,12 +3064,11 @@ var soulImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
     souls_4: __webpack_require__(/*! ../.././asset/data/souls/lg/souls_4.data.png */ "./asset/data/souls/lg/souls_4.data.png"),
     souls_5: __webpack_require__(/*! ../.././asset/data/souls/lg/souls_5.data.png */ "./asset/data/souls/lg/souls_5.data.png"),
 });
-var scaleFactor = _a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('scale') / 100;
 var scaledOnce = false;
 function soulsOverlay(gauges) {
     return __awaiter(this, void 0, void 0, function () {
         function displaySoulImage(image) {
-            alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.x + x, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale(gauges.necromancy.position.y + y, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(image.toDrawableData()), image.width, 1000);
+            alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x + x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y + y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(image.toDrawableData()), image.width, 1000);
         }
         var souls, position, _a, x, y;
         var _this = this;
@@ -3102,7 +3090,7 @@ function soulsOverlay(gauges) {
                                     case 0:
                                         _a = soulImages;
                                         _b = key;
-                                        return [4 /*yield*/, _utility__WEBPACK_IMPORTED_MODULE_1__.resizeImageData(soulImages[key], scaleFactor)];
+                                        return [4 /*yield*/, _utility__WEBPACK_IMPORTED_MODULE_0__.resizeImageData(soulImages[key], gauges.scaleFactor)];
                                     case 1:
                                         _a[_b] = _c.sent();
                                         return [2 /*return*/];
@@ -3199,6 +3187,7 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+/* eslint-disable @typescript-eslint/no-require-imports */
 
 
 
@@ -3260,7 +3249,7 @@ function findBuffsBar() {
 }
 retryOperation(findBuffsBar, 5, 5000)
     .then(function () { return console.info('Found Buffs bar succesfully - starting overlay'); })
-    .catch(function (error) {
+    .catch(function () {
     _utility__WEBPACK_IMPORTED_MODULE_0__.helperItems.Output.insertAdjacentHTML('beforeend', "<p style=\"text-align:center;margin-top:10px;color:red;\">Please make sure you have at least 1 buff on your buffs bar and then reload the app.</p>");
     console.warn('Please make sure you have at least 1 buff on your buffs bar and then reload the app.');
 });
@@ -3287,14 +3276,16 @@ function readBuffs(gauges) {
         });
     });
 }
-function updateBuffData(gauges, buffImage, threshold, updateCallbackFn) {
+function updateBuffData(gauges, buffImage, threshold, 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+updateCallbackFn) {
     return __awaiter(this, void 0, void 0, function () {
-        var buffsData, foundBuff, _i, _a, _b, _key, value, buff;
-        return __generator(this, function (_c) {
+        var buffsData, foundBuff, _i, _a, value, buff;
+        return __generator(this, function (_b) {
             buffsData = buffs.read();
             foundBuff = false;
-            for (_i = 0, _a = Object.entries(buffsData); _i < _a.length; _i++) {
-                _b = _a[_i], _key = _b[0], value = _b[1];
+            for (_i = 0, _a = Object.values(buffsData); _i < _a.length; _i++) {
+                value = _a[_i];
                 buff = value.countMatch(buffImage, false);
                 if (buff.passed > threshold) {
                     foundBuff = true;
@@ -3316,7 +3307,7 @@ function updateBuffData(gauges, buffImage, threshold, updateCallbackFn) {
 function updateSoulCount(gauges, value) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
-            gauges.necromancy.stacks.souls.count = value;
+            gauges.necromancy.stacks.souls.stacks = value;
             return [2 /*return*/];
         });
     });
@@ -3324,7 +3315,7 @@ function updateSoulCount(gauges, value) {
 function updateNecrosisCount(gauges, value) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
-            gauges.necromancy.stacks.necrosis.count = value;
+            gauges.necromancy.stacks.necrosis.stacks = value;
             return [2 /*return*/];
         });
     });
@@ -3337,8 +3328,8 @@ function updateLivingDeath(gauges, value) {
             //   - it must be active
             //   - The remaining time is its timer
             if (value > 1) {
-                gauges.necromancy.livingDeath.onCooldown = false;
-                gauges.necromancy.livingDeath.cooldown = '';
+                gauges.necromancy.livingDeath.isOnCooldown = false;
+                gauges.necromancy.livingDeath.cooldownDuration = 0;
                 gauges.necromancy.livingDeath.active = true;
                 gauges.necromancy.livingDeath.time = value;
             }
@@ -3350,9 +3341,9 @@ function updateLivingDeath(gauges, value) {
                 //  - Clear the timer
                 //  - LD is now on Cooldown so is not active
                 setTimeout(function () {
-                    gauges.necromancy.livingDeath.time = '';
+                    gauges.necromancy.livingDeath.time = 0;
                     gauges.necromancy.livingDeath.active = false;
-                    gauges.necromancy.livingDeath.onCooldown = true;
+                    gauges.necromancy.livingDeath.isOnCooldown = true;
                     startLivingDeathCooldown(gauges);
                 }, 1050);
             }
@@ -3364,7 +3355,7 @@ function startLivingDeathCooldown(gauges) {
     return __awaiter(this, void 0, void 0, function () {
         var cooldown, timer;
         return __generator(this, function (_a) {
-            if (!gauges.necromancy.livingDeath.visible) {
+            if (!gauges.necromancy.livingDeath.isActiveOverlay) {
                 return [2 /*return*/];
             }
             // If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
@@ -3408,8 +3399,8 @@ function startLivingDeathCooldown(gauges) {
 function endLivingDeathCooldown(gauges) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
-            gauges.necromancy.livingDeath.onCooldown = false;
-            gauges.necromancy.livingDeath.cooldown = '';
+            gauges.necromancy.livingDeath.isOnCooldown = false;
+            gauges.necromancy.livingDeath.cooldownDuration = 0;
             _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('LivingDeath_Cooldown_Text');
             return [2 /*return*/];
         });
@@ -3464,7 +3455,7 @@ function updateThreads(gauges, value) {
                 setTimeout(function () {
                     gauges.necromancy.incantations.active[2] = false;
                     disableThreadsCheck = false;
-                }, gauges.necromancy.incantations.threads.cooldown * 1000);
+                }, gauges.necromancy.incantations.threads.cooldownDuration * 1000);
             }
             return [2 /*return*/];
         });
@@ -3484,7 +3475,7 @@ function updateSplitSoul(gauges, value) {
                 setTimeout(function () {
                     gauges.necromancy.incantations.active[3] = false;
                     disableSplitCheck = false;
-                }, gauges.necromancy.incantations.splitSoul.cooldown * 1000);
+                }, gauges.necromancy.incantations.splitSoul.cooldownDuration * 1000);
             }
             return [2 /*return*/];
         });
@@ -3530,10 +3521,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   readEnemy: () => (/* binding */ readEnemy)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var alt1_targetmob__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alt1/targetmob */ "../node_modules/alt1/dist/targetmob/index.js");
-/* harmony import */ var alt1_targetmob__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alt1_targetmob__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var alt1_targetmob__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1/targetmob */ "../node_modules/alt1/dist/targetmob/index.js");
+/* harmony import */ var alt1_targetmob__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1_targetmob__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utility */ "./lib/utility.ts");
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -3570,10 +3562,12 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+/* eslint-disable @typescript-eslint/no-require-imports */
 
 
-var targetDisplay = new (alt1_targetmob__WEBPACK_IMPORTED_MODULE_0___default())();
-var enemyDebuffImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
+
+var targetDisplay = new (alt1_targetmob__WEBPACK_IMPORTED_MODULE_1___default())();
+var enemyDebuffImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
     invokeDeath: __webpack_require__(/*! .././asset/data/enemyDebuffs/Death_Mark.data.png */ "./asset/data/enemyDebuffs/Death_Mark.data.png"),
     bloat: __webpack_require__(/*! .././asset/data/enemyDebuffs/bloated.data.png */ "./asset/data/enemyDebuffs/bloated.data.png"),
 });
@@ -3607,13 +3601,13 @@ function readEnemy(gauges) {
                     w: 150,
                     h: 60,
                 };
-                targetDebuffs = alt1__WEBPACK_IMPORTED_MODULE_1__.captureHold(target_display_loc.x, target_display_loc.y, target_display_loc.w, target_display_loc.h);
+                targetDebuffs = alt1__WEBPACK_IMPORTED_MODULE_2__.captureHold(target_display_loc.x, target_display_loc.y, target_display_loc.w, target_display_loc.h);
                 targetIsDeathMarked = targetDebuffs.findSubimage(enemyDebuffImages.invokeDeath).length;
                 if (targetIsDeathMarked) {
-                    gauges.necromancy.incantations.isActiveOverlay[0] = true;
+                    gauges.necromancy.incantations.active[0] = true;
                 }
                 else if (!targetIsDeathMarked) {
-                    gauges.necromancy.incantations.isActiveOverlay[0] = false;
+                    gauges.necromancy.incantations.active[0] = false;
                 }
                 targetIsBloated = targetDebuffs.findSubimage(enemyDebuffImages.bloat).length;
                 if (targetIsBloated && !bloatInterval.has(bloat)) {
@@ -3622,7 +3616,7 @@ function readEnemy(gauges) {
                     intervalId = setInterval(function () {
                         var currentTick = gauges.necromancy.bloat.time;
                         if (currentTick > 0) {
-                            var nextTick = parseFloat(roundedToFixed(currentTick - 0.6, 1));
+                            var nextTick = parseFloat((0,_utility__WEBPACK_IMPORTED_MODULE_0__.roundedToFixed)(currentTick - 0.6, 1));
                             gauges.necromancy.bloat.time = nextTick;
                         }
                         else {
@@ -3651,10 +3645,6 @@ function readEnemy(gauges) {
         });
     });
 }
-function roundedToFixed(input, digits) {
-    var rounder = Math.pow(10, digits);
-    return (Math.round(input * rounder) / rounder).toFixed(digits);
-}
 
 
 /***/ }),
@@ -3677,7 +3667,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   freezeOverlays: () => (/* binding */ freezeOverlays),
 /* harmony export */   getByID: () => (/* binding */ getByID),
 /* harmony export */   helperItems: () => (/* binding */ helperItems),
+/* harmony export */   resizeGaugesWithMousePosition: () => (/* binding */ resizeGaugesWithMousePosition),
 /* harmony export */   resizeImageData: () => (/* binding */ resizeImageData),
+/* harmony export */   roundedToFixed: () => (/* binding */ roundedToFixed),
 /* harmony export */   updateCoordinates: () => (/* binding */ updateCoordinates),
 /* harmony export */   white: () => (/* binding */ white)
 /* harmony export */ });
@@ -3776,6 +3768,17 @@ function adjustPositionForScale(position, scaleFactor) {
 }
 function adjustPositionWithoutScale(position, scaleFactor) {
     return parseInt(roundedToFixed(position * ((1 / scaleFactor)), 1), 10);
+}
+// TODO: Use future overlays[] to iterate over active overlays
+function resizeGaugesWithMousePosition(gauges) {
+    gauges.necromancy.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_0__.getMousePosition().x, gauges.scaleFactor);
+    gauges.necromancy.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_0__.getMousePosition().y, gauges.scaleFactor);
+    gauges.magic.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_0__.getMousePosition().x, gauges.scaleFactor);
+    gauges.magic.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_0__.getMousePosition().y, gauges.scaleFactor);
+    gauges.ranged.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_0__.getMousePosition().x, gauges.scaleFactor);
+    gauges.ranged.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_0__.getMousePosition().y, gauges.scaleFactor);
+    gauges.melee.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_0__.getMousePosition().x, gauges.scaleFactor);
+    gauges.melee.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_0__.getMousePosition().y, gauges.scaleFactor);
 }
 function updateCoordinates(component, position) {
     component.activePosition.x = position.x;
@@ -7667,6 +7670,7 @@ var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
 var gauges = {
     isInCombat: false,
     checkCombatStatus: false,
+    scaleFactor: 1,
     necromancy: _data_necromancy_gauge__WEBPACK_IMPORTED_MODULE_4__.necromancy_gauge,
     magic: _data_magic_gauge__WEBPACK_IMPORTED_MODULE_11__.magic_gauge,
     ranged: _data_ranged_gauge__WEBPACK_IMPORTED_MODULE_12__.ranged_gauge,
@@ -7755,6 +7759,12 @@ function loadSettings() {
     }
     if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('hideOutsideCombat') !== undefined) {
         gauges.checkCombatStatus = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('hideOutsideCombat');
+    }
+    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('scale') !== undefined) {
+        gauges.scaleFactor = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('scale') / 100;
+    }
+    else {
+        gauges.scaleFactor = 1;
     }
     // Necromancy Components (TODO: Move the check into the components themselves?)
     updateGaugeData();
@@ -7880,17 +7890,18 @@ settingsObject.orientationSelection.addEventListener('change', function () {
     updateActiveOrientationFromLocalStorage();
 });
 settingsObject.repositionOverlay.addEventListener('click', setOverlayPosition);
-settingsObject.showNecrosis.addEventListener('change', function (e) {
+settingsObject.showNecrosis.addEventListener('change', function () {
     gauges.necromancy.stacks.duplicateNecrosisRow = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('dupeRow');
+});
+settingsObject.UIScale.addEventListener('change', function () {
+    location.reload();
 });
 var updatingOverlayPosition = false;
 function setOverlayPosition() {
     return __awaiter(this, void 0, void 0, function () {
-        var scaleFactor, _time, _freeze, _continue;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    scaleFactor = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('scale') / 100;
                     updatingOverlayPosition = true;
                     alt1__WEBPACK_IMPORTED_MODULE_18__.once('alt1pressed', updateLocation);
                     alt1.setTooltip('Press Primary Keybind to save position (default keybind is alt+1)');
@@ -7899,29 +7910,16 @@ function setOverlayPosition() {
                     }, 3000);
                     _a.label = 1;
                 case 1:
-                    if (!updatingOverlayPosition) return [3 /*break*/, 5];
+                    if (!updatingOverlayPosition) return [3 /*break*/, 3];
                     return [4 /*yield*/, _a1sauce__WEBPACK_IMPORTED_MODULE_1__.timeout(1000)];
                 case 2:
-                    _time = _a.sent();
-                    return [4 /*yield*/, _lib_utility__WEBPACK_IMPORTED_MODULE_0__.freezeOverlays()];
-                case 3:
-                    _freeze = _a.sent();
+                    _a.sent();
+                    _lib_utility__WEBPACK_IMPORTED_MODULE_0__.freezeOverlays();
                     //TODO: Per-gauge repositioning will be needed here as well
-                    gauges.necromancy.position.x =
-                        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_18__.getMousePosition().x, scaleFactor);
-                    gauges.necromancy.position.y =
-                        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_18__.getMousePosition().y, scaleFactor);
-                    gauges.magic.position.x = _lib_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_18__.getMousePosition().x, scaleFactor);
-                    gauges.magic.position.y = _lib_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_18__.getMousePosition().y, scaleFactor);
-                    gauges.ranged.position.x = _lib_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_18__.getMousePosition().x, scaleFactor);
-                    gauges.ranged.position.y = _lib_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_18__.getMousePosition().y, scaleFactor);
-                    gauges.melee.position.x = _lib_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_18__.getMousePosition().x, scaleFactor);
-                    gauges.melee.position.y = _lib_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_18__.getMousePosition().y, scaleFactor);
-                    return [4 /*yield*/, _lib_utility__WEBPACK_IMPORTED_MODULE_0__.continueOverlays()];
-                case 4:
-                    _continue = _a.sent();
+                    _lib_utility__WEBPACK_IMPORTED_MODULE_0__.resizeGaugesWithMousePosition(gauges);
+                    _lib_utility__WEBPACK_IMPORTED_MODULE_0__.continueOverlays();
                     return [3 /*break*/, 1];
-                case 5: return [2 /*return*/];
+                case 3: return [2 /*return*/];
             }
         });
     });

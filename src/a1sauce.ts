@@ -1,21 +1,20 @@
-var config = require('./appconfig.json');
-var appName = config.appName;
-appName = 'job-gauges';
+
+const appName = 'job-gauges';
 
 export function createHeading(size: string, content: string): HTMLElement {
-	let header = document.createElement(size);
+	const header = document.createElement(size);
 	header.innerHTML = content;
 	return header;
 }
 
 export function createText(content: string): HTMLElement {
-	let text = document.createElement('p');
+	const text = document.createElement('p');
 	text.innerHTML = content;
 	return text;
 }
 
 export function createSmallText(content: string): HTMLElement {
-	let text = document.createElement('small');
+	const text = document.createElement('small');
 	text.innerHTML = content;
 	return text;
 }
@@ -26,15 +25,16 @@ export function createSeperator(): HTMLElement {
 
 export function createButton(
 	content: string,
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 	fn: Function,
 	options: { classes: Array<string> }
 ): HTMLButtonElement {
-	let { classes = options.classes } = options;
+	const { classes = options.classes } = options;
 	const button = document.createElement('button');
 	button.innerHTML = content;
-	if (options.classes.length) {
-		for (let i = options.classes.length; i--; i >= 0) {
-			button.classList.add(options.classes[i]);
+	if (classes.length) {
+		for (let i = classes.length; i--; i >= 0) {
+			button.classList.add(classes[i]);
 		}
 	}
 	button.addEventListener('click', () => {
@@ -46,12 +46,12 @@ export function createButton(
 export function createDropdownSetting(
 	name: string,
 	description: string,
-	defaultValue: any,
+	defaultValue: unknown,
 	options: DropdownOption[]
 ): HTMLElement {
-	let select = createDropdown(name, defaultValue, options);
-	let label = createLabel(name, description);
-	let container = createFlexContainer('reverse-setting');
+	const select = createDropdown(name, defaultValue, options);
+	const label = createLabel(name, description);
+	const container = createFlexContainer('reverse-setting');
 	container.appendChild(select);
 	container.appendChild(label);
 	return container;
@@ -60,12 +60,12 @@ export function createDropdownSetting(
 export function createTextSetting(
 	name: string,
 	description: string,
-	defaultValue: any
+	defaultValue: string
 ): HTMLElement {
-	let input = createInput('text', name, defaultValue);
-	let label = createLabel(name, description);
+	const input = createInput('text', name, defaultValue);
+	const label = createLabel(name, description);
 	label.setAttribute('for', name);
-	let container = createFlexContainer();
+	const container = createFlexContainer();
 	container.appendChild(input);
 	container.appendChild(label);
 	return container;
@@ -74,14 +74,14 @@ export function createTextSetting(
 export function createCheckboxSetting(
 	name: string,
 	description: string,
-	defaultValue: any
+	defaultValue: unknown
 ): HTMLElement {
-	let input = createCheckboxInput(name, defaultValue);
-	let label = createLabel(name, description);
-	let checkboxLabel = createLabel(name, '');
-	let checkbox = document.createElement('span');
+	const input = createCheckboxInput(name, defaultValue);
+	const label = createLabel(name, description);
+	const checkboxLabel = createLabel(name, '');
+	const checkbox = document.createElement('span');
 	checkbox.classList.add('checkbox');
-	let container = createFlexContainer('reverse-setting');
+	const container = createFlexContainer('reverse-setting');
 	checkboxLabel.appendChild(input);
 	checkboxLabel.appendChild(checkbox);
 	container.appendChild(checkboxLabel);
@@ -105,16 +105,16 @@ export function createNumberSetting(
 		max?: number;
 	} = {}
 ): HTMLElement {
-	let {
+	const {
 		defaultValue = options.defaultValue ?? 10,
 		min = options.min ?? 1,
 		max = options.max ?? 20,
 	} = options;
-	let input = createInput('number', name, defaultValue);
+	const input = createInput('number', name, defaultValue);
 	input.setAttribute('min', min.toString());
 	input.setAttribute('max', max.toString());
-	let label = createLabel(name, description);
-	let container = createFlexContainer('reverse-setting');
+	const label = createLabel(name, description);
+	const container = createFlexContainer('reverse-setting');
 	container.appendChild(input);
 	container.appendChild(label);
 	return container;
@@ -131,27 +131,27 @@ export function createRangeSetting(
 		unit?: string;
 	} = {}
 ): HTMLElement {
-	let {
+	const {
 		classes = options.classes ?? '',
 		defaultValue = options.defaultValue ?? '100',
 		min = options.min ?? 0,
 		max = options.max ?? 100,
 		unit = options.unit ?? '%',
 	} = options;
-	let input = createInput('range', name, defaultValue);
+	const input = createInput('range', name, defaultValue);
 	input.setAttribute('min', min.toString());
 	input.setAttribute('max', max.toString());
-	let label = createLabel(name, description);
+	const label = createLabel(name, description);
 	label.classList.add('full');
 	if (getSetting(name) != undefined) {
 		input.value = getSetting(name);
 	}
-	let output = createOutput();
+	const output = createOutput();
 	output.setAttribute('id', `${name}Output`);
 	output.setAttribute('for', name);
 	output.innerHTML = input.value + unit;
 	output.after(unit);
-	let container = createFlexContainer();
+	const container = createFlexContainer();
 	if (classes.length) {
 		for (let i = classes.length; i--; i >= 0) {
 			container.classList.add(classes[i]);
@@ -169,15 +169,15 @@ export function createRangeSetting(
 
 export function createProfileManager(): HTMLElement {
 	function saveProfile(): void {
-		let profileNameInput: HTMLInputElement =
+		const profileNameInput: HTMLInputElement =
 			container.querySelector('#ProfileName');
-		let profileName = profileNameInput.value;
+		const profileName = profileNameInput.value;
 		if (profileName.indexOf('|') > -1) {
 			console.log('Pipe character is not allowed in profile names.');
 			return;
 		}
 		let profiles = localStorage.getItem('bbb_profiles');
-		let profilesArray = localStorage
+		const profilesArray = localStorage
 			.getItem('bbb_profiles')
 			.split('|')
 			.filter((str) => str !== '');
@@ -194,7 +194,7 @@ export function createProfileManager(): HTMLElement {
 		}
 
 		// Create and update or store any data
-		let data = {};
+		const data = {};
 		data['Buffs'] = localStorage['Buffs'];
 		data['Buffs2'] = localStorage['Buffs2'];
 		data['Buffs3'] = localStorage['Buffs3'];
@@ -211,8 +211,9 @@ export function createProfileManager(): HTMLElement {
 	}
 
 	function deleteProfile(): void {
-		let index = container.querySelector('select').selectedIndex;
-		let profileName = container.querySelector('select').options[index].text;
+		const index = container.querySelector('select').selectedIndex;
+		const profileName =
+			container.querySelector('select').options[index].text;
 		console.log(`Deleting: ${profileName} profile`);
 		let profiles = localStorage
 			.getItem('bbb_profiles')
@@ -225,14 +226,14 @@ export function createProfileManager(): HTMLElement {
 	}
 
 	function loadProfile(): void {
-		let index = container.querySelector('select').selectedIndex;
+		const index = container.querySelector('select').selectedIndex;
 		if (index !== 0) {
-			let profiles = localStorage
+			const profiles = localStorage
 				.getItem('bbb_profiles')
 				.split('|')
 				.filter((str) => str !== '');
-			let storageName = profiles[index - 1];
-			let data = JSON.parse(
+			const storageName = profiles[index - 1];
+			const data = JSON.parse(
 				localStorage.getItem(`bbb_profile_${storageName}`)
 			);
 			if (data['Buffs'] !== undefined && data['Buffs'] !== '') {
@@ -257,7 +258,7 @@ export function createProfileManager(): HTMLElement {
 		location.reload();
 	}
 
-	let profileOptions = [{ value: '0', name: 'Select Profile' }];
+	const profileOptions = [{ value: '0', name: 'Select Profile' }];
 	let profiles;
 	if (localStorage.getItem('bbb_profiles')) {
 		profiles = localStorage
@@ -271,16 +272,16 @@ export function createProfileManager(): HTMLElement {
 		profiles = '|';
 	}
 
-	var profileHeader = createHeading('h3', 'Profiles');
-	var profileText = createText(
+	const profileHeader = createHeading('h3', 'Profiles');
+	const profileText = createText(
 		'Select a profile to load or delete. To save a new profile, give it a name in the field below and then click Save. To update an existing profile save a profile using the same name.'
 	);
-	var saveButton = createButton('Save', saveProfile, {
+	const saveButton = createButton('Save', saveProfile, {
 		classes: ['nisbutton'],
 	});
-	var profileName = createInput('text', 'ProfileName', '');
+	const profileName = createInput('text', 'ProfileName', '');
 	profileName.classList.add('profile-name');
-	var loadOptions = createDropdownSetting(
+	const loadOptions = createDropdownSetting(
 		'Profile',
 		'',
 		'Add',
@@ -288,16 +289,16 @@ export function createProfileManager(): HTMLElement {
 	);
 	loadOptions.classList.add('profile-list');
 	loadOptions.querySelector('select').selectedIndex = 0;
-	var loadButton = createButton('Load', loadProfile, {
+	const loadButton = createButton('Load', loadProfile, {
 		classes: ['nisbutton'],
 	});
 	loadButton.classList.add('load-btn');
-	var deleteButton = createButton('Delete', deleteProfile, {
+	const deleteButton = createButton('Delete', deleteProfile, {
 		classes: ['nisbutton', 'delete'],
 	});
-	var container = createFlexContainer();
+	const container = createFlexContainer();
 	container.classList.remove('flex');
-	var endSeperator = createSeperator();
+	const endSeperator = createSeperator();
 	container.classList.add('flex-wrap');
 	container.appendChild(profileHeader);
 	container.appendChild(profileText);
@@ -313,18 +314,22 @@ export function createProfileManager(): HTMLElement {
 }
 
 function createLabel(name: string, description: string): HTMLLabelElement {
-	let label = document.createElement('label');
+	const label = document.createElement('label');
 	label.setAttribute('for', name);
 	label.innerHTML = description;
 	return label;
 }
 
-function createInput(type: string, name: string, defaultValue: any): HTMLInputElement {
-	let input = document.createElement('input');
+function createInput(
+	type: string,
+	name: string,
+	defaultValue: unknown
+): HTMLInputElement {
+	const input = document.createElement('input');
 	input.id = name;
 	input.type = type;
 	input.dataset.setting = name;
-	input.dataset.defaultValue = defaultValue;
+	input.dataset.defaultValue = defaultValue.toString();
 	input.value = input.dataset.defaultValue;
 	if (getSetting(name)) {
 		input.value = getSetting(name) ?? input.dataset.defaultValue;
@@ -341,13 +346,16 @@ function createInput(type: string, name: string, defaultValue: any): HTMLInputEl
 	return input;
 }
 
-function createCheckboxInput(name: string, defaultValue: any): HTMLInputElement {
-	let input = document.createElement('input');
+function createCheckboxInput(
+	name: string,
+	defaultValue: unknown
+): HTMLInputElement {
+	const input = document.createElement('input');
 	input.id = name;
 	input.type = 'checkbox';
 	input.dataset.setting = name;
-	input.dataset.defaultValue = defaultValue;
-	input.checked = defaultValue;
+	input.dataset.defaultValue = defaultValue.toString();
+	input.checked = Boolean(defaultValue);
 	if (getSetting(name)) {
 		input.checked = getSetting(name);
 	} else {
@@ -366,19 +374,19 @@ type DropdownOption = {
 
 function createDropdown(
 	name: string,
-	defaultValue: any,
+	defaultValue: unknown,
 	options: DropdownOption[]
 ): HTMLSelectElement {
-	let select = document.createElement('select');
+	const select = document.createElement('select');
 	select.id = name;
 	select.dataset.setting = name;
-	select.dataset.defaultValue = defaultValue;
-	select.value = defaultValue;
+	select.dataset.defaultValue = defaultValue.toString();
+	select.value = defaultValue.toString();
 	if (getSetting(name)) {
 		select.value = getSetting(name);
 	}
-	for (var i = 0; i < options.length; i++) {
-		let option = document.createElement('option');
+	for (let i = 0; i < options.length; i++) {
+		const option = document.createElement('option');
 		option.value = options[i].value;
 		option.text = options[i].name;
 		select.appendChild(option);
@@ -395,12 +403,12 @@ function createDropdown(
 }
 
 function createOutput(): HTMLOutputElement {
-	let output = document.createElement('output');
+	const output = document.createElement('output');
 	return output;
 }
 
 function createFlexContainer(classes?): HTMLElement {
-	let container = document.createElement('div');
+	const container = document.createElement('div');
 	container.classList.add('flex');
 	container.classList.add('setting');
 	if (classes) {
@@ -410,8 +418,8 @@ function createFlexContainer(classes?): HTMLElement {
 }
 
 export function setDefaultSettings(): void {
-	let settings = document.querySelectorAll('[data-setting]');
-	settings.forEach((setting: any) => {
+	const settings = document.querySelectorAll('[data-setting]');
+	settings.forEach((setting: HTMLInputElement) => {
 		switch (setting.type) {
 			case 'number':
 			case 'range':
@@ -437,8 +445,8 @@ export function setDefaultSettings(): void {
 }
 
 export function loadSettings(): void {
-	let settings = document.querySelectorAll('[data-setting]');
-	settings.forEach((setting: any) => {
+	const settings = document.querySelectorAll('[data-setting]');
+	settings.forEach((setting: HTMLInputElement) => {
 		switch (setting.type) {
 			case 'number':
 			case 'range':
@@ -475,16 +483,16 @@ export function getSetting(setting: string) {
 	return JSON.parse(localStorage[appName])[setting];
 }
 
-export function updateSetting(setting: string, value: any) {
+export function updateSetting(setting: string, value: unknown) {
 	if (!localStorage.getItem(appName)) {
 		localStorage.setItem(appName, JSON.stringify({}));
 	}
-	var save_data = JSON.parse(localStorage[appName]);
+	const save_data = JSON.parse(localStorage[appName]);
 	save_data[setting] = value;
 	localStorage.setItem(appName, JSON.stringify(save_data));
 }
 
-export async function timeout(millis: number): Promise<Function> {
+export async function timeout(millis: number): Promise<unknown> {
 	return new Promise(function (resolve) {
 		setTimeout(resolve, millis);
 	});

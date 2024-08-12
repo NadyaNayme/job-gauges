@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import * as a1lib from 'alt1';
-import * as sauce from '../../a1sauce';
 import * as utility from '../utility';
 import { Overlay } from '../../types';
 
-var incantationImages = a1lib.webpackImages({
+const incantationImages = a1lib.webpackImages({
 	invoke_death_inactive: require('../.././asset/data/incantations/lg/invoke_death_inactive.data.png'),
 	invoke_death: require('../.././asset/data/incantations/lg/invoke_death.data.png'),
 	darkness_inactive: require('../.././asset/data/incantations/lg/darkness_inactive.data.png'),
@@ -14,11 +14,9 @@ var incantationImages = a1lib.webpackImages({
 	split_soul: require('../.././asset/data/incantations/lg/splitsoul.data.png'),
 });
 
-let scaleFactor = sauce.getSetting('scale') / 100;
 let scaledOnce = false;
 
 export async function incantationsOverlay(gauges: Overlay) {
-
 	const { incantations } = gauges.necromancy;
 	const { invokeDeath, darkness, threads, splitSoul } = incantations;
 
@@ -32,7 +30,7 @@ export async function incantationsOverlay(gauges: Overlay) {
 		Object.keys(incantationImages).forEach(async (key) => {
 			incantationImages[key] = await utility.resizeImageData(
 				incantationImages[key],
-				scaleFactor
+				gauges.scaleFactor
 			);
 		});
 		scaledOnce = true;
@@ -48,11 +46,11 @@ export async function incantationsOverlay(gauges: Overlay) {
 			utility.adjustPositionForScale(
 				gauges.necromancy.position.x +
 					invokeDeath.position.active_orientation.x,
-				scaleFactor
+				gauges.scaleFactor
 			),
 			utility.adjustPositionForScale(
 				gauges.necromancy.position.y,
-				scaleFactor
+				gauges.scaleFactor
 			),
 			a1lib.encodeImageString(
 				incantationImages.invoke_death.toDrawableData()
@@ -60,20 +58,17 @@ export async function incantationsOverlay(gauges: Overlay) {
 			incantationImages.invoke_death.width,
 			1000
 		);
-	} else if (
-		invokeDeath.isActiveOverlay &&
-		incantations.isActiveOverlay
-	) {
+	} else if (invokeDeath.isActiveOverlay && incantations.isActiveOverlay) {
 		alt1.overLaySetGroup('Invoke_Death');
 		alt1.overLayImage(
 			utility.adjustPositionForScale(
 				gauges.necromancy.position.x +
 					invokeDeath.position.active_orientation.x,
-				scaleFactor
+				gauges.scaleFactor
 			),
 			utility.adjustPositionForScale(
 				gauges.necromancy.position.y,
-				scaleFactor
+				gauges.scaleFactor
 			),
 			a1lib.encodeImageString(
 				incantationImages.invoke_death_inactive.toDrawableData()
@@ -93,12 +88,12 @@ export async function incantationsOverlay(gauges: Overlay) {
 			utility.adjustPositionForScale(
 				gauges.necromancy.position.x +
 					darkness.position.active_orientation.x,
-				scaleFactor
+				gauges.scaleFactor
 			),
 			utility.adjustPositionForScale(
 				gauges.necromancy.position.y +
 					darkness.position.active_orientation.y,
-				scaleFactor
+				gauges.scaleFactor
 			),
 			a1lib.encodeImageString(
 				incantationImages.darkness.toDrawableData()
@@ -106,21 +101,18 @@ export async function incantationsOverlay(gauges: Overlay) {
 			incantationImages.darkness.width,
 			1000
 		);
-	} else if (
-		darkness.isActiveOverlay &&
-		incantations.isActiveOverlay
-	) {
+	} else if (darkness.isActiveOverlay && incantations.isActiveOverlay) {
 		alt1.overLaySetGroup('Darkness');
 		alt1.overLayImage(
 			utility.adjustPositionForScale(
 				gauges.necromancy.position.x +
 					darkness.position.active_orientation.x,
-				scaleFactor
+				gauges.scaleFactor
 			),
 			utility.adjustPositionForScale(
 				gauges.necromancy.position.y +
 					darkness.position.active_orientation.y,
-				scaleFactor
+				gauges.scaleFactor
 			),
 			a1lib.encodeImageString(
 				incantationImages.darkness_inactive.toDrawableData()
@@ -140,11 +132,11 @@ export async function incantationsOverlay(gauges: Overlay) {
 			utility.adjustPositionForScale(
 				gauges.necromancy.position.x +
 					threads.position.active_orientation.x * 2,
-				scaleFactor
+				gauges.scaleFactor
 			),
 			utility.adjustPositionForScale(
 				gauges.necromancy.position.y,
-				scaleFactor
+				gauges.scaleFactor
 			),
 			a1lib.encodeImageString(
 				incantationImages.threads_inactive.toDrawableData()
@@ -152,20 +144,17 @@ export async function incantationsOverlay(gauges: Overlay) {
 			incantationImages.threads_inactive.width,
 			1000
 		);
-	} else if (
-		threads.isActiveOverlay &&
-		incantations.isActiveOverlay
-	) {
+	} else if (threads.isActiveOverlay && incantations.isActiveOverlay) {
 		alt1.overLaySetGroup('Threads');
 		alt1.overLayImage(
 			utility.adjustPositionForScale(
 				gauges.necromancy.position.x +
 					threads.position.active_orientation.x * 2,
-				scaleFactor
+				gauges.scaleFactor
 			),
 			utility.adjustPositionForScale(
 				gauges.necromancy.position.y,
-				scaleFactor
+				gauges.scaleFactor
 			),
 			a1lib.encodeImageString(incantationImages.threads.toDrawableData()),
 			incantationImages.threads.width,
@@ -183,12 +172,12 @@ export async function incantationsOverlay(gauges: Overlay) {
 			utility.adjustPositionForScale(
 				gauges.necromancy.position.x +
 					splitSoul.position.active_orientation.x * 2,
-				scaleFactor
+				gauges.scaleFactor
 			),
 			utility.adjustPositionForScale(
 				gauges.necromancy.position.y +
 					splitSoul.position.active_orientation.y,
-				scaleFactor
+				gauges.scaleFactor
 			),
 			a1lib.encodeImageString(
 				incantationImages.split_soul_inactive.toDrawableData()
@@ -196,21 +185,18 @@ export async function incantationsOverlay(gauges: Overlay) {
 			incantationImages.split_soul_inactive.width,
 			1000
 		);
-	} else if (
-		splitSoul.isActiveOverlay &&
-		incantations.isActiveOverlay
-	) {
+	} else if (splitSoul.isActiveOverlay && incantations.isActiveOverlay) {
 		alt1.overLaySetGroup('SplitSoul');
 		alt1.overLayImage(
 			utility.adjustPositionForScale(
 				gauges.necromancy.position.x +
 					splitSoul.position.active_orientation.x * 2,
-				scaleFactor
+				gauges.scaleFactor
 			),
 			utility.adjustPositionForScale(
 				gauges.necromancy.position.y +
 					splitSoul.position.active_orientation.y,
-				scaleFactor
+				gauges.scaleFactor
 			),
 			a1lib.encodeImageString(
 				incantationImages.split_soul.toDrawableData()

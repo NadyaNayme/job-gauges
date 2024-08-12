@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import * as a1lib from 'alt1';
-import * as sauce from '../../a1sauce';
 import * as utility from '../utility';
 import { Overlay } from '../../types';
 
-var conjureImages = a1lib.webpackImages({
+const conjureImages = a1lib.webpackImages({
 	skeleton_warrior_inactive: require('../.././asset/data/conjures/conjure_skeleton_inactive.data.png'),
 	skeleton_warrior: require('../.././asset/data/conjures/conjure_skeleton.data.png'),
 	putrid_zombie_inactive: require('../.././asset/data/conjures/conjure_zombie_inactive.data.png'),
@@ -14,15 +14,14 @@ var conjureImages = a1lib.webpackImages({
 	undead_army: require('../.././asset/data/conjures/lg/conjure_undead_army.data.png'),
 });
 
-let white = a1lib.mixColor(255, 255, 255);
+const white = a1lib.mixColor(255, 255, 255);
 let lastMinValue: number = 0;
 
-let scaleFactor = sauce.getSetting('scale') / 100;
 let scaledOnce = false;
 
 export async function conjureOverlay(gauges: Overlay) {
 	if (!gauges.necromancy.conjures.isActiveOverlay) {
-		return
+		return;
 	}
 
 	await conjureImages.promise;
@@ -31,7 +30,7 @@ export async function conjureOverlay(gauges: Overlay) {
 		Object.keys(conjureImages).forEach(async (key) => {
 			conjureImages[key] = await utility.resizeImageData(
 				conjureImages[key],
-				scaleFactor
+				gauges.scaleFactor
 			);
 		});
 		scaledOnce = true;
@@ -43,12 +42,12 @@ export async function conjureOverlay(gauges: Overlay) {
 			utility.adjustPositionForScale(
 				gauges.necromancy.position.x +
 					gauges.necromancy.conjures.position.active_orientation.x,
-				scaleFactor
+				gauges.scaleFactor
 			),
 			utility.adjustPositionForScale(
 				gauges.necromancy.position.y +
 					gauges.necromancy.conjures.position.active_orientation.y,
-				scaleFactor
+				gauges.scaleFactor
 			),
 			a1lib.encodeImageString(conjureImages.undead_army.toDrawableData()),
 			conjureImages.undead_army.width,
@@ -59,12 +58,12 @@ export async function conjureOverlay(gauges: Overlay) {
 			utility.adjustPositionForScale(
 				gauges.necromancy.position.x +
 					gauges.necromancy.conjures.position.active_orientation.x,
-				scaleFactor
+				gauges.scaleFactor
 			),
 			utility.adjustPositionForScale(
 				gauges.necromancy.position.y +
 					gauges.necromancy.conjures.position.active_orientation.y,
-				scaleFactor
+				gauges.scaleFactor
 			),
 			a1lib.encodeImageString(
 				conjureImages.undead_army_inactive.toDrawableData()
@@ -74,12 +73,12 @@ export async function conjureOverlay(gauges: Overlay) {
 		);
 	}
 
-	let earliest_conjure = [
+	const earliest_conjure = [
 		gauges.necromancy.conjures.skeleton.time,
 		gauges.necromancy.conjures.zombie.time,
-		gauges.necromancy.conjures.ghost.time
+		gauges.necromancy.conjures.ghost.time,
 	];
-	var minValue = Math.min.apply(null, earliest_conjure.filter(Boolean));
+	const minValue = Math.min.apply(null, earliest_conjure.filter(Boolean));
 	if (minValue !== Infinity && minValue !== lastMinValue) {
 		alt1.overLaySetGroup('Undead_Army_Text');
 		alt1.overLayFreezeGroup('Undead_Army_Text');
@@ -92,11 +91,11 @@ export async function conjureOverlay(gauges: Overlay) {
 				gauges.necromancy.position.x +
 					26 +
 					gauges.necromancy.conjures.position.active_orientation.x,
-				scaleFactor
+				gauges.scaleFactor
 			),
 			utility.adjustPositionForScale(
 				gauges.necromancy.position.y + 32,
-				scaleFactor
+				gauges.scaleFactor
 			),
 			10000,
 			undefined,

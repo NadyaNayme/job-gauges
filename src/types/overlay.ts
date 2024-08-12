@@ -6,6 +6,7 @@ import { MeleeGauge } from './melee_gauge';
 export type Overlay = {
 	isInCombat: boolean;
 	checkCombatStatus: boolean;
+	scaleFactor: number;
 	necromancy: NecromancyGauge;
 	magic: MagicGauge;
 	ranged: RangedGauge;

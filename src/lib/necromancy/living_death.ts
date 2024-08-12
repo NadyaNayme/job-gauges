@@ -1,21 +1,19 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import * as a1lib from 'alt1';
-import * as sauce from '../../a1sauce';
 import * as utility from '../utility';
 import { Overlay } from '../../types';
 
-var ultimateImages = a1lib.webpackImages({
+const ultimateImages = a1lib.webpackImages({
 	inactive: require('../.././asset/data/living_death/lg/living_death_inactive.data.png'),
 	active: require('../.././asset/data/living_death/lg/living_death.data.png'),
 });
 
-let lastValue;
+let lastValue: number;
 
-let scaleFactor = sauce.getSetting('scale') / 100;
 let scaledOnce = false;
 
 export async function livingDeathOverlay(gauges: Overlay) {
-
-    const { necromancy } = gauges;
+	const { necromancy } = gauges;
 	const { livingDeath } = necromancy;
 
 	if (!livingDeath.isActiveOverlay) {
@@ -29,12 +27,11 @@ export async function livingDeathOverlay(gauges: Overlay) {
 		Object.keys(ultimateImages).forEach(async (key) => {
 			ultimateImages[key] = await utility.resizeImageData(
 				ultimateImages[key],
-				scaleFactor
+				gauges.scaleFactor
 			);
 		});
 		scaledOnce = true;
 	}
-
 
 	// If Living Death is not Active and is not on cooldown it should appear as able to be activated
 	if (!livingDeath.active) {
@@ -65,13 +62,13 @@ export async function livingDeathOverlay(gauges: Overlay) {
 					necromancy.position.x +
 						livingDeath.position.active_orientation.x +
 						26,
-					scaleFactor
+					gauges.scaleFactor
 				),
 				utility.adjustPositionForScale(
 					necromancy.position.y +
 						livingDeath.position.active_orientation.y +
 						26,
-					scaleFactor
+					gauges.scaleFactor
 				),
 				3000,
 				undefined,
@@ -96,12 +93,12 @@ function displayActiveLivingDeath(gauges: Overlay): void {
 		utility.adjustPositionForScale(
 			gauges.necromancy.position.x +
 				gauges.necromancy.livingDeath.position.active_orientation.x,
-			scaleFactor
+			gauges.scaleFactor
 		),
 		utility.adjustPositionForScale(
 			gauges.necromancy.position.y +
 				gauges.necromancy.livingDeath.position.active_orientation.y,
-			scaleFactor
+			gauges.scaleFactor
 		),
 		a1lib.encodeImageString(ultimateImages.active.toDrawableData()),
 		ultimateImages.active.width,
@@ -115,12 +112,12 @@ function displayInactiveLivingDeath(gauges: Overlay): void {
 		utility.adjustPositionForScale(
 			gauges.necromancy.position.x +
 				gauges.necromancy.livingDeath.position.active_orientation.x,
-			scaleFactor
+			gauges.scaleFactor
 		),
 		utility.adjustPositionForScale(
 			gauges.necromancy.position.y +
 				gauges.necromancy.livingDeath.position.active_orientation.y,
-			scaleFactor
+			gauges.scaleFactor
 		),
 		a1lib.encodeImageString(ultimateImages.inactive.toDrawableData()),
 		ultimateImages.inactive.width,
