@@ -1,4 +1,6 @@
-const path = require("path");
+/* eslint-disable no-undef */
+/* eslint-disable @typescript-eslint/no-require-imports */
+const path = require('path');
 
 /**
  * @type {import("webpack").Configuration}
@@ -9,7 +11,7 @@ module.exports = {
 	entry: {
 		//each entrypoint results in an output file
 		//so this results in an output file called 'main.js' which is built from src/index.ts
-		main: './index.ts'
+		main: './index.ts',
 	},
 	output: {
 		path: path.resolve(__dirname, 'dist'),

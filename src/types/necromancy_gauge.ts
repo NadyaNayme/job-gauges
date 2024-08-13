@@ -5,11 +5,12 @@ import {
 	Ability,
 	TimedPlayerBuff,
 	StackingPlayerBuff,
+	HasAlarm,
 } from './common';
 
 type StackingAbilities = {
-	souls: StackingPlayerBuff;
-	necrosis: StackingPlayerBuff;
+	souls: StackingPlayerBuff & HasAlarm;
+	necrosis: StackingPlayerBuff & HasAlarm;
 	duplicateNecrosisRow: boolean;
 };
 

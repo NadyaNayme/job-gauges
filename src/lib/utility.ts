@@ -1,4 +1,5 @@
 import * as a1lib from 'alt1';
+import * as sauce from '../a1sauce';
 import { Overlay } from '../types';
 
 
@@ -153,4 +154,35 @@ export async function resizeImageData(imageData: ImageData, scaleFactor: number)
 
 	// Extract the new image data from the resized canvas
 	return context.getImageData(0, 0, newWidth, newHeight);
+}
+
+const soulsAlert: HTMLAudioElement = new Audio(
+	sauce.getSetting('alarmSoulsAlertSound')
+);;
+const necrosisAlert: HTMLAudioElement = new Audio(
+	sauce.getSetting('alarmNecrosisAlertSound')
+);
+export function playAlert(type: string) {
+	if (type === 'souls') {
+		soulsAlert.loop = Boolean(sauce.getSetting('alarmSoulsLoop'));
+		soulsAlert.volume = Number(sauce.getSetting('alarmSoulsVolume')) / 100;
+		soulsAlert.play();
+	}
+	if (type == 'necrosis') {
+		necrosisAlert.loop = Boolean(sauce.getSetting('alarmNecrosisLoop'));
+		necrosisAlert.volume =
+			Number(sauce.getSetting('alarmNecrosisVolume')) / 100;
+		necrosisAlert.play();
+	}
+}
+
+export function pauseAlert(type: string) {
+	if (type === 'souls') {
+		soulsAlert.pause();
+		soulsAlert.currentTime = 0;
+	}
+	if (type === 'necrosis') {
+		necrosisAlert.pause();
+		necrosisAlert.currentTime = 0;
+	}
 }

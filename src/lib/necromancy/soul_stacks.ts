@@ -13,6 +13,7 @@ const soulImages = a1lib.webpackImages({
 });
 
 let scaledOnce = false;
+let playingAlert = false;
 
 export async function soulsOverlay(gauges: Overlay) {
 	const { souls } = gauges.necromancy.stacks;
@@ -60,6 +61,15 @@ export async function soulsOverlay(gauges: Overlay) {
 		default:
 			// Handle cases beyond 5 if needed
 			break;
+	}
+	if (souls.stacks >= souls.alarm.threshold && souls.alarm.isActive) {
+		if (!playingAlert) {
+			utility.playAlert('souls');
+			playingAlert = true;
+		}
+	} else if (playingAlert) {
+		utility.pauseAlert('souls');
+		playingAlert = false;
 	}
 
 	function displaySoulImage(image: ImageData): void {

@@ -14,6 +14,7 @@ const necrosisImages = a1lib.webpackImages({
 });
 
 let scaledOnce = false;
+let playingAlert = false;
 
 export async function necrosisOverlay(gauges: Overlay) {
 	const { necrosis } = gauges.necromancy.stacks;
@@ -55,6 +56,16 @@ export async function necrosisOverlay(gauges: Overlay) {
 		case 12:
 			displayNecrosisImage(stacks);
 			break;
+	}
+
+	if (stacks >= necrosis.alarm.threshold && necrosis.alarm.isActive) {
+		if (!playingAlert) {
+			utility.playAlert('necrosis');
+			playingAlert = true;
+		}
+	} else if (playingAlert) {
+		utility.pauseAlert('necrosis');
+		playingAlert = false;
 	}
 
 	if (gauges.necromancy.stacks.duplicateNecrosisRow) {

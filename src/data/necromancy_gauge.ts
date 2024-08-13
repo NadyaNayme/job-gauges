@@ -29,6 +29,13 @@ export const necromancy_gauge: NecromancyGauge = {
 					y: 50,
 				},
 			},
+			alarm: {
+				isActive: false,
+				isLooping: false,
+				volume: 100,
+				sound: './resource/alarms/alarm2.wav',
+				threshold: 5,
+			},
 		},
 		necrosis: {
 			isActiveOverlay: true,
@@ -51,6 +58,13 @@ export const necromancy_gauge: NecromancyGauge = {
 					x: -10,
 					y: 98,
 				},
+			},
+			alarm: {
+				isActive: false,
+				isLooping: false,
+				volume: 100,
+				sound: './resource/alarms/alarm2.wav',
+				threshold: 12,
 			},
 		},
 		duplicateNecrosisRow: false,

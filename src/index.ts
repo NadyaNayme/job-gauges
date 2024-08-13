@@ -172,6 +172,61 @@ function updateGaugeData(): void {
 	if (sauce.getSetting('showBloat') !== undefined) {
 		gauges.necromancy.bloat.isActiveOverlay = sauce.getSetting('showBloat');
 	}
+
+	if (sauce.getSetting('alarmNecrosisActive') !== undefined) {
+		gauges.necromancy.stacks.necrosis.alarm.isActive = sauce.getSetting(
+			'alarmNecrosisActive'
+		);
+	}
+
+	if (sauce.getSetting('showBlalarmNecrosisAlertSoundoat') !== undefined) {
+		gauges.necromancy.stacks.necrosis.alarm.sound = sauce.getSetting(
+			'showBlalarmNecrosisAlertSoundoat'
+		);
+	}
+
+	if (sauce.getSetting('alarmNecrosisLoop') !== undefined) {
+		gauges.necromancy.stacks.necrosis.alarm.isLooping =
+			sauce.getSetting('alarmNecrosisLoop');
+	}
+
+	if (sauce.getSetting('alarmNecrosisThreshold') !== undefined) {
+		gauges.necromancy.stacks.necrosis.alarm.threshold = sauce.getSetting(
+			'alarmNecrosisThreshold'
+		);
+	}
+
+	if (sauce.getSetting('alarmNecrosisVolume') !== undefined) {
+		gauges.necromancy.stacks.necrosis.alarm.volume = sauce.getSetting(
+			'alarmNecrosisVolume'
+		);
+	}
+	if (sauce.getSetting('alarmSoulsActive') !== undefined) {
+		gauges.necromancy.stacks.souls.alarm.isActive =
+			sauce.getSetting('alarmSoulsActive');
+	}
+
+	if (sauce.getSetting('alarmSoulsAlertSound') !== undefined) {
+		gauges.necromancy.stacks.souls.alarm.sound = sauce.getSetting(
+			'alarmSoulsAlertSound'
+		);
+	}
+
+	if (sauce.getSetting('alarmSoulsLoop') !== undefined) {
+		gauges.necromancy.stacks.souls.alarm.isLooping =
+			sauce.getSetting('alarmSoulsLoop');
+	}
+
+	if (sauce.getSetting('alarmSoulsThreshold') !== undefined) {
+		gauges.necromancy.stacks.souls.alarm.threshold = sauce.getSetting(
+			'alarmSoulsThreshold'
+		);
+	}
+
+	if (sauce.getSetting('alarmSoulsVolume') !== undefined) {
+		gauges.necromancy.stacks.souls.alarm.volume =
+			sauce.getSetting('alarmSoulsVolume');
+	}
 }
 
 function updateActiveOrientationFromLocalStorage(): void {
@@ -212,7 +267,7 @@ function updateActiveOrientationFromLocalStorage(): void {
 	updateActiveOrientation(necromancy_gauge);
 }
 
-const version = '0.0.5';
+const version = '1.0.0';
 const settingsObject = {
 	appName: sauce.createHeading('h2', 'Job Gauges - v' + version),
 	settingDiscord: sauce.createText(
@@ -313,6 +368,29 @@ const settingsObject = {
 		'Show Bloat',
 		sauce.getSetting('showBloat') ?? true
 	),
+	alarmsSeperator: sauce.createSeperator(),
+	alarmSoulsHeader: sauce.createHeading('h3', 'Residual Souls Alarm'),
+	alarmSoulsThreshold: sauce.createRangeSetting(
+		'alarmSoulsThreshold',
+		'Alert when at or above this many souls',
+		{ defaultValue: '5', min: 2, max: 5, unit: ' souls' }
+	),
+	alarmSouls: sauce.createAlarmSetting(
+		'Residual Souls Alarm',
+		'alarmSouls',
+		''
+	),
+	alarmNecrosisHeader: sauce.createHeading('h3', 'Necrosis Stacks Alarm'),
+	alarmNecrosisThreshold: sauce.createRangeSetting(
+		'alarmNecrosisThreshold',
+		'Alert when at or above this many stacks',
+		{ defaultValue: '12', min: 2, max: 12, unit: ' stacks' }
+	),
+	alarmNecrosis: sauce.createAlarmSetting(
+		'Necrosis Stacks Alarm',
+		'alarmNecrosis',
+		''
+	),
 };
 
 settingsObject.orientationSelection.addEventListener('change', () => {
@@ -365,12 +443,104 @@ window.onload = function () {
 		Object.values(settingsObject).forEach((val) => {
 			document.querySelector('#Settings .container').before(val);
 		});
-		document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
-			checkbox.addEventListener('change', () => {
-				updateGaugeData();
-				utility.freezeAndContinueOverlays(); // Force an instant redraw
+		document
+			.querySelectorAll('input[type="checkbox"]')
+			.forEach((checkbox) => {
+				checkbox.addEventListener('change', () => {
+					updateGaugeData();
+					utility.freezeAndContinueOverlays(); // Force an instant redraw
+				});
 			});
+
+
+		/* Update Alarm Thresholds */
+		utility.getByID('alarmSoulsThreshold').addEventListener('change', (e) => {
+			const target = <HTMLInputElement>e.target;
+			gauges.necromancy.stacks.souls.alarm.threshold = parseInt(target.value, 10);
+			console.log('Souls alarm threshold: ' + target.value);
 		});
+
+		utility
+			.getByID('alarmNecrosisThreshold')
+			.addEventListener('change', (e) => {
+				const target = <HTMLInputElement>e.target;
+				gauges.necromancy.stacks.necrosis.alarm.threshold = parseInt(
+					target.value,
+					10
+				);
+				console.log('Necrosis alarm threshold: ' + target.value);
+			});
+
+		/* Update Active Alarms */
+		utility.getByID('alarmSoulsActive').addEventListener('change', (e) => {
+			const target = <HTMLInputElement>e.target;
+			gauges.necromancy.stacks.souls.alarm.isActive = target.checked;
+			console.log('Souls alarm active: ' + target.checked);
+		});
+
+		utility.getByID('alarmNecrosisActive').addEventListener('change', (e) => {
+			const target = <HTMLInputElement>e.target;
+			gauges.necromancy.stacks.necrosis.alarm.isActive = target.checked;
+			console.log('Necrosis alarm active: ' + target.checked);
+		});
+
+		/* Update Looping Alarms */
+		utility.getByID('alarmNecrosisLoop').addEventListener('change', (e) => {
+			const target = <HTMLInputElement>e.target;
+			gauges.necromancy.stacks.necrosis.alarm.isLooping = target.checked;
+			console.log('Necrosis alarm looping: ' + target.checked);
+		});
+
+		utility
+			.getByID('alarmSoulsLoop')
+			.addEventListener('change', (e) => {
+				const target = <HTMLInputElement>e.target;
+				gauges.necromancy.stacks.souls.alarm.isLooping = target.checked;
+				console.log(
+					'Souls alarm volume looping: ' + target.checked
+				);
+			});
+
+		/* Update Alarm Volumes */
+		utility
+			.getByID('alarmNecrosisVolume')
+			.addEventListener('change', (e) => {
+				const target = <HTMLInputElement>e.target;
+				gauges.necromancy.stacks.necrosis.alarm.volume = parseInt(
+					target.value,
+					10
+				);
+				console.log('Necrosis alarm volume updated to: ' + target.value);
+			});
+
+		utility
+			.getByID('alarmSoulsVolume')
+			.addEventListener('change', (e) => {
+				const target = <HTMLInputElement>e.target;
+				gauges.necromancy.stacks.souls.alarm.volume = parseInt(
+					target.value,
+					10
+				);
+				console.log('Souls alarm volume updated to: ' + target.value);
+			});
+
+		/* Update Alarm Sounds */
+		utility
+			.getByID('alarmNecrosisAlertSound')
+			.addEventListener('change', (e) => {
+				const target = <HTMLInputElement>e.target;
+				gauges.necromancy.stacks.necrosis.alarm.sound = target.value;
+				console.log('Necrosis alarm sound updated to:' + target.value);
+			});
+
+		utility
+			.getByID('alarmSoulsAlertSound')
+			.addEventListener('change', (e) => {
+				const target = <HTMLInputElement>e.target;
+				gauges.necromancy.stacks.souls.alarm.sound = target.value;
+				console.log('Souls alarm sound updated to:' + target.value);
+			});
+
 		startApp();
 	} else {
 		const addappurl = `alt1://addapp/${
@@ -383,4 +553,4 @@ window.onload = function () {
 		`
 		);
 	}
-};
+}

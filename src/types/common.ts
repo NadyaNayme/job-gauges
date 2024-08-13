@@ -23,6 +23,16 @@ interface HasCooldown {
 	cooldownDuration: number;
 }
 
+export interface HasAlarm {
+	alarm: {
+		isActive: boolean,
+		isLooping: boolean,
+		volume: number,
+		sound: string,
+		threshold: number,
+	}
+}
+
 export type Position = {
 	x: number;
 	y: number;

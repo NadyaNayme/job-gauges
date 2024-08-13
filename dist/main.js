@@ -1416,6 +1416,7 @@ module.exports = styleTagTransform;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createAlarmSetting: () => (/* binding */ createAlarmSetting),
 /* harmony export */   createButton: () => (/* binding */ createButton),
 /* harmony export */   createCheckboxSetting: () => (/* binding */ createCheckboxSetting),
 /* harmony export */   createDropdownSetting: () => (/* binding */ createDropdownSetting),
@@ -1585,6 +1586,63 @@ function createRangeSetting(name, description, options) {
     input.addEventListener('input', function () {
         output.innerHTML = input.value + unit;
     });
+    return container;
+}
+var alarms = [
+    { name: 'alarm2', value: './resource/alarms/alarm2.wav' },
+    { name: 'notification1', value: './resource/alarms/notification1.wav' },
+    { name: 'notification2', value: './resource/alarms/notification2.wav' },
+    { name: 'notification3', value: './resource/alarms/notification3.wav' },
+    { name: 'bell', value: './resource/alarms/bell.wav' },
+    { name: 'elevator', value: './resource/alarms/elevator.wav' },
+    { name: 'nuclear', value: './resource/alarms/nuclear.wav' }
+];
+function createAlarmSetting(headerText, name, description, options) {
+    var _a, _b, _c, _d, _e;
+    if (options === void 0) { options = {}; }
+    var _f = options.classes, classes = _f === void 0 ? (_a = options.classes) !== null && _a !== void 0 ? _a : '' : _f, _g = options.defaultValue, defaultValue = _g === void 0 ? (_b = options.defaultValue) !== null && _b !== void 0 ? _b : '100' : _g, _h = options.min, min = _h === void 0 ? (_c = options.min) !== null && _c !== void 0 ? _c : 0 : _h, _j = options.max, max = _j === void 0 ? (_d = options.max) !== null && _d !== void 0 ? _d : 100 : _j, _k = options.unit, unit = _k === void 0 ? (_e = options.unit) !== null && _e !== void 0 ? _e : '%' : _k;
+    var shortDescription = createText(description);
+    var activeCheckbox = createCheckboxSetting(name + 'Active', 'Active', false);
+    activeCheckbox.classList.add('alarm-active');
+    var alertDropdown = createDropdown(name + 'AlertSound', '', alarms);
+    alertDropdown.classList.add('full');
+    alertDropdown.style.marginBottom = '5px';
+    var loopCheckbox = createCheckboxSetting(name + 'Loop', 'Loop', false);
+    loopCheckbox.classList.add('alarm-looping');
+    var volumeSlider = createRangeSetting(name + 'Volume', '', {
+        defaultValue: '100',
+        unit: '%',
+        min: 0,
+        max: 100,
+    });
+    volumeSlider.classList.add('half');
+    volumeSlider.classList.add('alarm-volume');
+    var alarmSoundText = createText('Alarm Sound');
+    alarmSoundText.classList.add('full');
+    alarmSoundText.classList.add('alarm-sound');
+    alarmSoundText.style.paddingTop = '0px';
+    alarmSoundText.style.marginTop = '0px';
+    var volumeText = createText('Volume:');
+    volumeText.style.marginTop = '5px';
+    volumeText.style.marginRight = '15px';
+    volumeText.classList.add('half');
+    volumeText.style.paddingTop = '0px';
+    var container = createFlexContainer('flex-wrap');
+    if (classes.length) {
+        for (var i = classes.length; i--; i >= 0) {
+            container.classList.add(classes[i]);
+        }
+    }
+    container.appendChild(shortDescription);
+    var innerContainer = createFlexContainer('');
+    innerContainer.appendChild(activeCheckbox);
+    innerContainer.appendChild(loopCheckbox);
+    innerContainer.classList.remove('setting');
+    container.appendChild(innerContainer);
+    container.appendChild(alarmSoundText);
+    container.appendChild(alertDropdown);
+    container.appendChild(volumeText);
+    container.appendChild(volumeSlider);
     return container;
 }
 function createProfileManager() {
@@ -2008,6 +2066,13 @@ var necromancy_gauge = {
                     y: 50,
                 },
             },
+            alarm: {
+                isActive: false,
+                isLooping: false,
+                volume: 100,
+                sound: './resource/alarms/alarm2.wav',
+                threshold: 5,
+            },
         },
         necrosis: {
             isActiveOverlay: true,
@@ -2030,6 +2095,13 @@ var necromancy_gauge = {
                     x: -10,
                     y: 98,
                 },
+            },
+            alarm: {
+                isActive: false,
+                isLooping: false,
+                volume: 100,
+                sound: './resource/alarms/alarm2.wav',
+                threshold: 12,
             },
         },
         duplicateNecrosisRow: false,
@@ -2933,6 +3005,7 @@ var necrosisImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     necrosis_12: __webpack_require__(/*! ../.././asset/data/necrosis/lg/necrosis_12.data.png */ "./asset/data/necrosis/lg/necrosis_12.data.png"),
 });
 var scaledOnce = false;
+var playingAlert = false;
 function necrosisOverlay(gauges) {
     return __awaiter(this, void 0, void 0, function () {
         function displayNecrosisImage(stacks) {
@@ -2986,6 +3059,16 @@ function necrosisOverlay(gauges) {
                         case 12:
                             displayNecrosisImage(stacks);
                             break;
+                    }
+                    if (stacks >= necrosis.alarm.threshold && necrosis.alarm.isActive) {
+                        if (!playingAlert) {
+                            _utility__WEBPACK_IMPORTED_MODULE_0__.playAlert('necrosis');
+                            playingAlert = true;
+                        }
+                    }
+                    else if (playingAlert) {
+                        _utility__WEBPACK_IMPORTED_MODULE_0__.pauseAlert('necrosis');
+                        playingAlert = false;
                     }
                     if (gauges.necromancy.stacks.duplicateNecrosisRow) {
                         alt1.overLaySetGroup('Necrosis_Row2');
@@ -3065,6 +3148,7 @@ var soulImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     souls_5: __webpack_require__(/*! ../.././asset/data/souls/lg/souls_5.data.png */ "./asset/data/souls/lg/souls_5.data.png"),
 });
 var scaledOnce = false;
+var playingAlert = false;
 function soulsOverlay(gauges) {
     return __awaiter(this, void 0, void 0, function () {
         function displaySoulImage(image) {
@@ -3124,6 +3208,16 @@ function soulsOverlay(gauges) {
                         default:
                             // Handle cases beyond 5 if needed
                             break;
+                    }
+                    if (souls.stacks >= souls.alarm.threshold && souls.alarm.isActive) {
+                        if (!playingAlert) {
+                            _utility__WEBPACK_IMPORTED_MODULE_0__.playAlert('souls');
+                            playingAlert = true;
+                        }
+                    }
+                    else if (playingAlert) {
+                        _utility__WEBPACK_IMPORTED_MODULE_0__.pauseAlert('souls');
+                        playingAlert = false;
                     }
                     return [2 /*return*/];
             }
@@ -3667,14 +3761,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   freezeOverlays: () => (/* binding */ freezeOverlays),
 /* harmony export */   getByID: () => (/* binding */ getByID),
 /* harmony export */   helperItems: () => (/* binding */ helperItems),
+/* harmony export */   pauseAlert: () => (/* binding */ pauseAlert),
+/* harmony export */   playAlert: () => (/* binding */ playAlert),
 /* harmony export */   resizeGaugesWithMousePosition: () => (/* binding */ resizeGaugesWithMousePosition),
 /* harmony export */   resizeImageData: () => (/* binding */ resizeImageData),
 /* harmony export */   roundedToFixed: () => (/* binding */ roundedToFixed),
 /* harmony export */   updateCoordinates: () => (/* binding */ updateCoordinates),
 /* harmony export */   white: () => (/* binding */ white)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _a1sauce__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../a1sauce */ "./a1sauce.ts");
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -3712,7 +3809,8 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
     }
 };
 
-var white = alt1__WEBPACK_IMPORTED_MODULE_0__.mixColor(255, 255, 255);
+
+var white = alt1__WEBPACK_IMPORTED_MODULE_1__.mixColor(255, 255, 255);
 function getByID(id) {
     return document.getElementById(id);
 }
@@ -3771,14 +3869,14 @@ function adjustPositionWithoutScale(position, scaleFactor) {
 }
 // TODO: Use future overlays[] to iterate over active overlays
 function resizeGaugesWithMousePosition(gauges) {
-    gauges.necromancy.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_0__.getMousePosition().x, gauges.scaleFactor);
-    gauges.necromancy.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_0__.getMousePosition().y, gauges.scaleFactor);
-    gauges.magic.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_0__.getMousePosition().x, gauges.scaleFactor);
-    gauges.magic.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_0__.getMousePosition().y, gauges.scaleFactor);
-    gauges.ranged.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_0__.getMousePosition().x, gauges.scaleFactor);
-    gauges.ranged.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_0__.getMousePosition().y, gauges.scaleFactor);
-    gauges.melee.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_0__.getMousePosition().x, gauges.scaleFactor);
-    gauges.melee.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_0__.getMousePosition().y, gauges.scaleFactor);
+    gauges.necromancy.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_1__.getMousePosition().x, gauges.scaleFactor);
+    gauges.necromancy.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_1__.getMousePosition().y, gauges.scaleFactor);
+    gauges.magic.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_1__.getMousePosition().x, gauges.scaleFactor);
+    gauges.magic.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_1__.getMousePosition().y, gauges.scaleFactor);
+    gauges.ranged.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_1__.getMousePosition().x, gauges.scaleFactor);
+    gauges.ranged.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_1__.getMousePosition().y, gauges.scaleFactor);
+    gauges.melee.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_1__.getMousePosition().x, gauges.scaleFactor);
+    gauges.melee.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_1__.getMousePosition().y, gauges.scaleFactor);
 }
 function updateCoordinates(component, position) {
     component.activePosition.x = position.x;
@@ -3811,6 +3909,32 @@ function resizeImageData(imageData, scaleFactor) {
             return [2 /*return*/, context.getImageData(0, 0, newWidth, newHeight)];
         });
     });
+}
+var soulsAlert = new Audio(_a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('alarmSoulsAlertSound'));
+;
+var necrosisAlert = new Audio(_a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('alarmNecrosisAlertSound'));
+function playAlert(type) {
+    if (type === 'souls') {
+        soulsAlert.loop = Boolean(_a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('alarmSoulsLoop'));
+        soulsAlert.volume = Number(_a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('alarmSoulsVolume')) / 100;
+        soulsAlert.play();
+    }
+    if (type == 'necrosis') {
+        necrosisAlert.loop = Boolean(_a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('alarmNecrosisLoop'));
+        necrosisAlert.volume =
+            Number(_a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('alarmNecrosisVolume')) / 100;
+        necrosisAlert.play();
+    }
+}
+function pauseAlert(type) {
+    if (type === 'souls') {
+        soulsAlert.pause();
+        soulsAlert.currentTime = 0;
+    }
+    if (type === 'necrosis') {
+        necrosisAlert.pause();
+        necrosisAlert.currentTime = 0;
+    }
 }
 
 
@@ -7814,6 +7938,40 @@ function updateGaugeData() {
     if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showBloat') !== undefined) {
         gauges.necromancy.bloat.isActiveOverlay = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showBloat');
     }
+    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmNecrosisActive') !== undefined) {
+        gauges.necromancy.stacks.necrosis.alarm.isActive = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmNecrosisActive');
+    }
+    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showBlalarmNecrosisAlertSoundoat') !== undefined) {
+        gauges.necromancy.stacks.necrosis.alarm.sound = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showBlalarmNecrosisAlertSoundoat');
+    }
+    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmNecrosisLoop') !== undefined) {
+        gauges.necromancy.stacks.necrosis.alarm.isLooping =
+            _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmNecrosisLoop');
+    }
+    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmNecrosisThreshold') !== undefined) {
+        gauges.necromancy.stacks.necrosis.alarm.threshold = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmNecrosisThreshold');
+    }
+    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmNecrosisVolume') !== undefined) {
+        gauges.necromancy.stacks.necrosis.alarm.volume = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmNecrosisVolume');
+    }
+    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmSoulsActive') !== undefined) {
+        gauges.necromancy.stacks.souls.alarm.isActive =
+            _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmSoulsActive');
+    }
+    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmSoulsAlertSound') !== undefined) {
+        gauges.necromancy.stacks.souls.alarm.sound = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmSoulsAlertSound');
+    }
+    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmSoulsLoop') !== undefined) {
+        gauges.necromancy.stacks.souls.alarm.isLooping =
+            _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmSoulsLoop');
+    }
+    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmSoulsThreshold') !== undefined) {
+        gauges.necromancy.stacks.souls.alarm.threshold = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmSoulsThreshold');
+    }
+    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmSoulsVolume') !== undefined) {
+        gauges.necromancy.stacks.souls.alarm.volume =
+            _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmSoulsVolume');
+    }
 }
 function updateActiveOrientationFromLocalStorage() {
     // Retrieve selected orientation from localStorage
@@ -7849,7 +8007,7 @@ function updateActiveOrientationFromLocalStorage() {
     }
     updateActiveOrientation(_data_necromancy_gauge__WEBPACK_IMPORTED_MODULE_4__.necromancy_gauge);
 }
-var version = '0.0.5';
+var version = '1.0.0';
 var settingsObject = {
     appName: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createHeading('h2', 'Job Gauges - v' + version),
     settingDiscord: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createText("Please <a href=\"https://discord.gg/KJ2SgWyJFF\" target=\"_blank\" rel=\"nofollow\">join the Discord</a> for any suggestions or support"),
@@ -7885,6 +8043,13 @@ var settingsObject = {
     showNecrosis: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showNecrosis', 'Show Necrosis', (_k = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showNecrosis')) !== null && _k !== void 0 ? _k : true),
     dupeRow: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('dupeRow', 'Show 2nd row of Necrosis stacks', (_l = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('dupeRow')) !== null && _l !== void 0 ? _l : false),
     showBloat: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showBloat', 'Show Bloat', (_m = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showBloat')) !== null && _m !== void 0 ? _m : true),
+    alarmsSeperator: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createSeperator(),
+    alarmSoulsHeader: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createHeading('h3', 'Residual Souls Alarm'),
+    alarmSoulsThreshold: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createRangeSetting('alarmSoulsThreshold', 'Alert when at or above this many souls', { defaultValue: '5', min: 2, max: 5, unit: ' souls' }),
+    alarmSouls: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createAlarmSetting('Residual Souls Alarm', 'alarmSouls', ''),
+    alarmNecrosisHeader: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createHeading('h3', 'Necrosis Stacks Alarm'),
+    alarmNecrosisThreshold: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createRangeSetting('alarmNecrosisThreshold', 'Alert when at or above this many stacks', { defaultValue: '12', min: 2, max: 12, unit: ' stacks' }),
+    alarmNecrosis: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createAlarmSetting('Necrosis Stacks Alarm', 'alarmNecrosis', ''),
 };
 settingsObject.orientationSelection.addEventListener('change', function () {
     updateActiveOrientationFromLocalStorage();
@@ -7940,11 +8105,74 @@ window.onload = function () {
         Object.values(settingsObject).forEach(function (val) {
             document.querySelector('#Settings .container').before(val);
         });
-        document.querySelectorAll('input[type="checkbox"]').forEach(function (checkbox) {
+        document
+            .querySelectorAll('input[type="checkbox"]')
+            .forEach(function (checkbox) {
             checkbox.addEventListener('change', function () {
                 updateGaugeData();
                 _lib_utility__WEBPACK_IMPORTED_MODULE_0__.freezeAndContinueOverlays(); // Force an instant redraw
             });
+        });
+        /* Update Alarm Thresholds */
+        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.getByID('alarmSoulsThreshold').addEventListener('change', function (e) {
+            var target = e.target;
+            gauges.necromancy.stacks.souls.alarm.threshold = parseInt(target.value, 10);
+            console.log('Souls alarm threshold: ' + target.value);
+        });
+        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.getByID('alarmNecrosisThreshold')
+            .addEventListener('change', function (e) {
+            var target = e.target;
+            gauges.necromancy.stacks.necrosis.alarm.threshold = parseInt(target.value, 10);
+            console.log('Necrosis alarm threshold: ' + target.value);
+        });
+        /* Update Active Alarms */
+        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.getByID('alarmSoulsActive').addEventListener('change', function (e) {
+            var target = e.target;
+            gauges.necromancy.stacks.souls.alarm.isActive = target.checked;
+            console.log('Souls alarm active: ' + target.checked);
+        });
+        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.getByID('alarmNecrosisActive').addEventListener('change', function (e) {
+            var target = e.target;
+            gauges.necromancy.stacks.necrosis.alarm.isActive = target.checked;
+            console.log('Necrosis alarm active: ' + target.checked);
+        });
+        /* Update Looping Alarms */
+        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.getByID('alarmNecrosisLoop').addEventListener('change', function (e) {
+            var target = e.target;
+            gauges.necromancy.stacks.necrosis.alarm.isLooping = target.checked;
+            console.log('Necrosis alarm looping: ' + target.checked);
+        });
+        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.getByID('alarmSoulsLoop')
+            .addEventListener('change', function (e) {
+            var target = e.target;
+            gauges.necromancy.stacks.souls.alarm.isLooping = target.checked;
+            console.log('Souls alarm volume looping: ' + target.checked);
+        });
+        /* Update Alarm Volumes */
+        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.getByID('alarmNecrosisVolume')
+            .addEventListener('change', function (e) {
+            var target = e.target;
+            gauges.necromancy.stacks.necrosis.alarm.volume = parseInt(target.value, 10);
+            console.log('Necrosis alarm volume updated to: ' + target.value);
+        });
+        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.getByID('alarmSoulsVolume')
+            .addEventListener('change', function (e) {
+            var target = e.target;
+            gauges.necromancy.stacks.souls.alarm.volume = parseInt(target.value, 10);
+            console.log('Souls alarm volume updated to: ' + target.value);
+        });
+        /* Update Alarm Sounds */
+        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.getByID('alarmNecrosisAlertSound')
+            .addEventListener('change', function (e) {
+            var target = e.target;
+            gauges.necromancy.stacks.necrosis.alarm.sound = target.value;
+            console.log('Necrosis alarm sound updated to:' + target.value);
+        });
+        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.getByID('alarmSoulsAlertSound')
+            .addEventListener('change', function (e) {
+            var target = e.target;
+            gauges.necromancy.stacks.souls.alarm.sound = target.value;
+            console.log('Souls alarm sound updated to:' + target.value);
         });
         startApp();
     }
