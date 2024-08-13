@@ -1,6 +1,9 @@
 # Job Gauges
  FFXIV-inspired job gauges for Runescape combat styles. Currently only Necromancy is supported.
 
+ ![image](https://github.com/user-attachments/assets/38830cfa-0b29-4d6e-8a0d-1e88eaab5dec)
+
+
  ## How to Install & Required Settings
 
 To install Job Gauges copy & paste this link into Alt1's browser app:
