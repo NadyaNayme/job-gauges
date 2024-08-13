@@ -187,14 +187,14 @@ async function startLivingDeathCooldown(gauges: Overlay) {
 				cooldown.toString(),
 				utility.white,
 				14,
-				gauges.necromancy.position.x +
+				utility.adjustPositionForScale(gauges.necromancy.position.x +
 					gauges.necromancy.livingDeath.position.active_orientation
 						.x +
-					26,
-				gauges.necromancy.position.y +
+					26, gauges.scaleFactor),
+				utility.adjustPositionForScale(gauges.necromancy.position.y +
 					gauges.necromancy.livingDeath.position.active_orientation
 						.y +
-					26,
+					26, gauges.scaleFactor),
 				3000,
 				undefined,
 				true,

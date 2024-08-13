@@ -3471,13 +3471,13 @@ function startLivingDeathCooldown(gauges) {
                 cooldown -= 1;
                 if (cooldown > 0) {
                     _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('LivingDeath_Cooldown_Text');
-                    alt1.overLayTextEx(cooldown.toString(), _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, gauges.necromancy.position.x +
+                    alt1.overLayTextEx(cooldown.toString(), _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
                         gauges.necromancy.livingDeath.position.active_orientation
                             .x +
-                        26, gauges.necromancy.position.y +
+                        26, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
                         gauges.necromancy.livingDeath.position.active_orientation
                             .y +
-                        26, 3000, undefined, true, true);
+                        26, gauges.scaleFactor), 3000, undefined, true, true);
                     alt1.overLayRefreshGroup('LivingDeath_Cooldown_Text');
                 }
                 else {
