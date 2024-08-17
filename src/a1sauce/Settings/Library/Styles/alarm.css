@@ -1,0 +1,26 @@
+#Settings .alarm-setting,
+#Settings .alarm-setting .alarm-volume {
+	background-color: transparent !important;
+}
+
+#Settings .alarm-setting span.checkbox {
+	margin-left: 0.5rem;
+}
+
+#Settings .alarm-setting .alarm-active,
+#Settings .alarm-setting .alarm-looping {
+	background-color: #071820 !important;
+}
+
+#Settings .alarm-setting .alarm-active:hover,
+#Settings .alarm-setting .alarm-looping:hover {
+	background-color: #03282d !important;
+}
+
+#Settings .alarm-setting p {
+    font-family: sans-serif;
+    font-size: 14px;
+    color: #94afbd;
+    text-shadow: 1px 1px #000000;
+	margin-bottom: 3px;
+}

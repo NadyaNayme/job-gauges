@@ -551,6 +551,149 @@ module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/
 
 /***/ }),
 
+/***/ "../node_modules/css-loader/dist/cjs.js!./a1sauce/Settings/Library/Styles/alarm.css":
+/*!******************************************************************************************!*\
+  !*** ../node_modules/css-loader/dist/cjs.js!./a1sauce/Settings/Library/Styles/alarm.css ***!
+  \******************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/noSourceMaps.js */ "../node_modules/css-loader/dist/runtime/noSourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "../node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `#Settings .alarm-setting,
+#Settings .alarm-setting .alarm-volume {
+	background-color: transparent !important;
+}
+
+#Settings .alarm-setting span.checkbox {
+	margin-left: 0.5rem;
+}
+
+#Settings .alarm-setting .alarm-active,
+#Settings .alarm-setting .alarm-looping {
+	background-color: #071820 !important;
+}
+
+#Settings .alarm-setting .alarm-active:hover,
+#Settings .alarm-setting .alarm-looping:hover {
+	background-color: #03282d !important;
+}
+
+#Settings .alarm-setting p {
+    font-family: sans-serif;
+    font-size: 14px;
+    color: #94afbd;
+    text-shadow: 1px 1px #000000;
+	margin-bottom: 3px;
+}
+`, ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "../node_modules/css-loader/dist/cjs.js!./a1sauce/Settings/Library/Styles/range.css":
+/*!******************************************************************************************!*\
+  !*** ../node_modules/css-loader/dist/cjs.js!./a1sauce/Settings/Library/Styles/range.css ***!
+  \******************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/noSourceMaps.js */ "../node_modules/css-loader/dist/runtime/noSourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "../node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/getUrl.js */ "../node_modules/css-loader/dist/runtime/getUrl.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__);
+// Imports
+
+
+
+var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(/*! ./images/range-input-tab.png */ "./a1sauce/Settings/Library/Styles/images/range-input-tab.png"), __webpack_require__.b);
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `#Settings input[type="range"] {
+   -webkit-appearance: none;
+    appearance: none;
+	transition: background 450ms ease-in;
+    cursor: pointer;
+	height: 8px;
+	border: solid 1px #697479;
+	border-radius: 3px;
+	position: relative;
+	margin-right: 5px;
+}
+
+#Settings input[type="range"]::before {
+	position: absolute;
+	display: block;
+	content: '';
+	width: calc(100% - 6px);
+	height: 1px;
+	top: auto;
+	bottom: -3px;
+	background-color: #3e5765;
+	z-index: 5;
+	left: 50%;
+    transform: translate(-50%);
+}
+
+#Settings input[type="range"]::after {
+	position: absolute;
+	display: block;
+	content: '';
+	width: calc(100% - 1px);
+	height: 2px;
+	top: 1px;
+	bottom: auto;
+	background-color: #09141b;
+	z-index: 2;
+	left: 50%;
+    transform: translate(-50%);
+	box-shadow: 0px 19px 0px #09141b;
+}
+
+#Settings input[type="range"]:focus {
+  outline: none;
+}
+
+#Settings input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+   appearance: none;
+
+
+   background-image: url(${___CSS_LOADER_URL_REPLACEMENT_0___});
+   background-position: 50% 50%;
+   background-repeat: no-repeat;
+   width: 9px;
+   height: 20px;
+   position: relative;
+   z-index: 99;
+}
+`, ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "../node_modules/css-loader/dist/cjs.js!./css/styles.css":
 /*!***************************************************************!*\
   !*** ../node_modules/css-loader/dist/cjs.js!./css/styles.css ***!
@@ -1079,6 +1222,116 @@ module.exports = function (i) {
 
 /***/ }),
 
+/***/ "./a1sauce/Settings/Library/Styles/alarm.css":
+/*!***************************************************!*\
+  !*** ./a1sauce/Settings/Library/Styles/alarm.css ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "../node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "../node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "../node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "../node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_alarm_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../../../node_modules/css-loader/dist/cjs.js!./alarm.css */ "../node_modules/css-loader/dist/cjs.js!./a1sauce/Settings/Library/Styles/alarm.css");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+    
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_alarm_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_alarm_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_alarm_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_alarm_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
+/***/ "./a1sauce/Settings/Library/Styles/range.css":
+/*!***************************************************!*\
+  !*** ./a1sauce/Settings/Library/Styles/range.css ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "../node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "../node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "../node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "../node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_range_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../../../node_modules/css-loader/dist/cjs.js!./range.css */ "../node_modules/css-loader/dist/cjs.js!./a1sauce/Settings/Library/Styles/range.css");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+    
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_range_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_range_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_range_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_range_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
 /***/ "./css/styles.css":
 /*!************************!*\
   !*** ./css/styles.css ***!
@@ -1407,209 +1660,206 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
-/***/ "./a1sauce.ts":
-/*!********************!*\
-  !*** ./a1sauce.ts ***!
-  \********************/
+/***/ "./a1sauce/Settings/Components/Builders/container.ts":
+/*!***********************************************************!*\
+  !*** ./a1sauce/Settings/Components/Builders/container.ts ***!
+  \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   createAlarmSetting: () => (/* binding */ createAlarmSetting),
-/* harmony export */   createButton: () => (/* binding */ createButton),
-/* harmony export */   createCheckboxSetting: () => (/* binding */ createCheckboxSetting),
-/* harmony export */   createDropdownSetting: () => (/* binding */ createDropdownSetting),
-/* harmony export */   createHeading: () => (/* binding */ createHeading),
-/* harmony export */   createNumberSetting: () => (/* binding */ createNumberSetting),
-/* harmony export */   createProfileManager: () => (/* binding */ createProfileManager),
-/* harmony export */   createRangeSetting: () => (/* binding */ createRangeSetting),
-/* harmony export */   createSeperator: () => (/* binding */ createSeperator),
-/* harmony export */   createSmallText: () => (/* binding */ createSmallText),
-/* harmony export */   createText: () => (/* binding */ createText),
-/* harmony export */   createTextSetting: () => (/* binding */ createTextSetting),
-/* harmony export */   getSetting: () => (/* binding */ getSetting),
-/* harmony export */   loadSettings: () => (/* binding */ loadSettings),
-/* harmony export */   setDefaultSettings: () => (/* binding */ setDefaultSettings),
-/* harmony export */   settingsExist: () => (/* binding */ settingsExist),
-/* harmony export */   timeout: () => (/* binding */ timeout),
-/* harmony export */   updateSetting: () => (/* binding */ updateSetting)
+/* harmony export */   createFlexContainer: () => (/* binding */ createFlexContainer),
+/* harmony export */   createOutput: () => (/* binding */ createOutput)
 /* harmony export */ });
-var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-var appName = 'job-gauges';
-function createHeading(size, content) {
-    var header = document.createElement(size);
-    header.innerHTML = content;
-    return header;
-}
-function createText(content) {
-    var text = document.createElement('p');
-    text.innerHTML = content;
-    return text;
-}
-function createSmallText(content) {
-    var text = document.createElement('small');
-    text.innerHTML = content;
-    return text;
-}
-function createSeperator() {
-    return document.createElement('hr');
-}
-function createButton(content, 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-fn, options) {
-    var _a = options.classes, classes = _a === void 0 ? options.classes : _a;
-    var button = document.createElement('button');
-    button.innerHTML = content;
-    if (classes.length) {
-        for (var i = classes.length; i--; i >= 0) {
-            button.classList.add(classes[i]);
-        }
-    }
-    button.addEventListener('click', function () {
-        fn();
-    });
-    return button;
-}
-function createDropdownSetting(name, description, defaultValue, options) {
-    var select = createDropdown(name, defaultValue, options);
-    var label = createLabel(name, description);
-    var container = createFlexContainer('reverse-setting');
-    container.appendChild(select);
-    container.appendChild(label);
-    return container;
-}
-function createTextSetting(name, description, defaultValue) {
-    var input = createInput('text', name, defaultValue);
-    var label = createLabel(name, description);
-    label.setAttribute('for', name);
-    var container = createFlexContainer();
-    container.appendChild(input);
-    container.appendChild(label);
-    return container;
-}
-function createCheckboxSetting(name, description, defaultValue) {
-    var input = createCheckboxInput(name, defaultValue);
-    var label = createLabel(name, description);
-    var checkboxLabel = createLabel(name, '');
-    var checkbox = document.createElement('span');
-    checkbox.classList.add('checkbox');
-    var container = createFlexContainer('reverse-setting');
-    checkboxLabel.appendChild(input);
-    checkboxLabel.appendChild(checkbox);
-    container.appendChild(checkboxLabel);
-    container.appendChild(label);
-    container.addEventListener('click', function (e) {
-        if (e.target == container) {
-            input.checked = !input.checked;
-            input.dispatchEvent(new CustomEvent('change', { bubbles: true }));
-            updateSetting(name, input.checked);
-        }
-    });
-    return container;
-}
-function createNumberSetting(name, description, options) {
-    var _a, _b, _c;
-    if (options === void 0) { options = {}; }
-    var _d = options.defaultValue, defaultValue = _d === void 0 ? (_a = options.defaultValue) !== null && _a !== void 0 ? _a : 10 : _d, _e = options.min, min = _e === void 0 ? (_b = options.min) !== null && _b !== void 0 ? _b : 1 : _e, _f = options.max, max = _f === void 0 ? (_c = options.max) !== null && _c !== void 0 ? _c : 20 : _f;
-    var input = createInput('number', name, defaultValue);
-    input.setAttribute('min', min.toString());
-    input.setAttribute('max', max.toString());
-    var label = createLabel(name, description);
-    var container = createFlexContainer('reverse-setting');
-    container.appendChild(input);
-    container.appendChild(label);
-    return container;
-}
-function createRangeSetting(name, description, options) {
-    var _a, _b, _c, _d, _e;
-    if (options === void 0) { options = {}; }
-    var _f = options.classes, classes = _f === void 0 ? (_a = options.classes) !== null && _a !== void 0 ? _a : '' : _f, _g = options.defaultValue, defaultValue = _g === void 0 ? (_b = options.defaultValue) !== null && _b !== void 0 ? _b : '100' : _g, _h = options.min, min = _h === void 0 ? (_c = options.min) !== null && _c !== void 0 ? _c : 0 : _h, _j = options.max, max = _j === void 0 ? (_d = options.max) !== null && _d !== void 0 ? _d : 100 : _j, _k = options.unit, unit = _k === void 0 ? (_e = options.unit) !== null && _e !== void 0 ? _e : '%' : _k;
-    var input = createInput('range', name, defaultValue);
-    input.setAttribute('min', min.toString());
-    input.setAttribute('max', max.toString());
-    var label = createLabel(name, description);
-    label.classList.add('full');
-    if (getSetting(name) != undefined) {
-        input.value = getSetting(name);
-    }
-    var output = createOutput();
-    output.setAttribute('id', "".concat(name, "Output"));
-    output.setAttribute('for', name);
-    output.innerHTML = input.value + unit;
-    output.after(unit);
-    var container = createFlexContainer();
-    if (classes.length) {
-        for (var i = classes.length; i--; i >= 0) {
+const createFlexContainer = (classes) => {
+    const container = document.createElement('div');
+    container.classList.add('flex');
+    container.classList.add('setting');
+    if (classes !== undefined && classes.length) {
+        for (let i = 0; i < classes.length; i++) {
             container.classList.add(classes[i]);
         }
     }
-    container.classList.add('flex-wrap');
-    container.appendChild(label);
-    container.appendChild(input);
-    container.appendChild(output);
-    input.addEventListener('input', function () {
-        output.innerHTML = input.value + unit;
-    });
     return container;
-}
-var alarms = [
+};
+const createOutput = () => {
+    const output = document.createElement('output');
+    return output;
+};
+
+
+/***/ }),
+
+/***/ "./a1sauce/Settings/Components/Builders/input.ts":
+/*!*******************************************************!*\
+  !*** ./a1sauce/Settings/Components/Builders/input.ts ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createCheckboxInput: () => (/* binding */ createCheckboxInput),
+/* harmony export */   createDropdown: () => (/* binding */ createDropdown),
+/* harmony export */   createInput: () => (/* binding */ createInput),
+/* harmony export */   createLabel: () => (/* binding */ createLabel)
+/* harmony export */ });
+/* harmony import */ var _Storage_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Storage/index */ "./a1sauce/Settings/Storage/index.ts");
+
+const createLabel = (name, description) => {
+    const label = document.createElement('label');
+    label.setAttribute('for', name);
+    label.innerHTML = description;
+    return label;
+};
+const createInput = (type, name, defaultValue) => {
+    var _a;
+    const input = document.createElement('input');
+    input.id = name;
+    input.type = type;
+    input.dataset.setting = name;
+    input.dataset.defaultValue = defaultValue === null || defaultValue === void 0 ? void 0 : defaultValue.toString();
+    input.value = String(input.dataset.defaultValue);
+    if (_Storage_index__WEBPACK_IMPORTED_MODULE_0__.getSetting(name)) {
+        input.value = (_a = _Storage_index__WEBPACK_IMPORTED_MODULE_0__.getSetting(name)) !== null && _a !== void 0 ? _a : input.dataset.defaultValue;
+    }
+    else {
+        _Storage_index__WEBPACK_IMPORTED_MODULE_0__.updateSetting(name, input.dataset.defaultValue);
+    }
+    input.addEventListener('change', () => {
+        if (type == 'text') {
+            _Storage_index__WEBPACK_IMPORTED_MODULE_0__.updateSetting(name, input.value);
+        }
+        else if (type == 'number' || type == 'range') {
+            _Storage_index__WEBPACK_IMPORTED_MODULE_0__.updateSetting(name, parseInt(input.value, 10));
+        }
+    });
+    return input;
+};
+const createCheckboxInput = (name, defaultValue) => {
+    const input = document.createElement('input');
+    input.id = name;
+    input.type = 'checkbox';
+    input.dataset.setting = name;
+    input.dataset.defaultValue = defaultValue === null || defaultValue === void 0 ? void 0 : defaultValue.toString();
+    input.checked = Boolean(defaultValue);
+    if (_Storage_index__WEBPACK_IMPORTED_MODULE_0__.getSetting(name)) {
+        input.checked = _Storage_index__WEBPACK_IMPORTED_MODULE_0__.getSetting(name);
+    }
+    else {
+        _Storage_index__WEBPACK_IMPORTED_MODULE_0__.updateSetting(name, input.checked);
+    }
+    input.addEventListener('change', () => {
+        _Storage_index__WEBPACK_IMPORTED_MODULE_0__.updateSetting(name, input.checked);
+    });
+    return input;
+};
+const createDropdown = (name, defaultValue, options) => {
+    const select = document.createElement('select');
+    select.id = name;
+    select.dataset.setting = name;
+    select.dataset.defaultValue = defaultValue === null || defaultValue === void 0 ? void 0 : defaultValue.toString();
+    select.value = String(defaultValue);
+    if (_Storage_index__WEBPACK_IMPORTED_MODULE_0__.getSetting(name)) {
+        select.value = _Storage_index__WEBPACK_IMPORTED_MODULE_0__.getSetting(name);
+    }
+    for (let i = 0; i < options.length; i++) {
+        const option = document.createElement('option');
+        option.value = options[i].value;
+        option.text = options[i].name;
+        select.appendChild(option);
+    }
+    if (_Storage_index__WEBPACK_IMPORTED_MODULE_0__.getSetting(name)) {
+        select.value = _Storage_index__WEBPACK_IMPORTED_MODULE_0__.getSetting(name);
+    }
+    else {
+        _Storage_index__WEBPACK_IMPORTED_MODULE_0__.updateSetting(name, select.value);
+    }
+    select.addEventListener('change', () => {
+        _Storage_index__WEBPACK_IMPORTED_MODULE_0__.updateSetting(name, select.value);
+    });
+    return select;
+};
+
+
+/***/ }),
+
+/***/ "./a1sauce/Settings/Components/index.ts":
+/*!**********************************************!*\
+  !*** ./a1sauce/Settings/Components/index.ts ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createCheckboxInput: () => (/* reexport safe */ _Builders_input__WEBPACK_IMPORTED_MODULE_2__.createCheckboxInput),
+/* harmony export */   createDropdown: () => (/* reexport safe */ _Builders_input__WEBPACK_IMPORTED_MODULE_2__.createDropdown),
+/* harmony export */   createFlexContainer: () => (/* reexport safe */ _Builders_container__WEBPACK_IMPORTED_MODULE_0__.createFlexContainer),
+/* harmony export */   createInput: () => (/* reexport safe */ _Builders_input__WEBPACK_IMPORTED_MODULE_2__.createInput),
+/* harmony export */   createLabel: () => (/* reexport safe */ _Builders_input__WEBPACK_IMPORTED_MODULE_2__.createLabel),
+/* harmony export */   createOutput: () => (/* reexport safe */ _Builders_container__WEBPACK_IMPORTED_MODULE_0__.createOutput),
+/* harmony export */   createSeperator: () => (/* reexport safe */ _Library_Controls_seperator__WEBPACK_IMPORTED_MODULE_1__.createSeperator)
+/* harmony export */ });
+/* harmony import */ var _Builders_container__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Builders/container */ "./a1sauce/Settings/Components/Builders/container.ts");
+/* harmony import */ var _Library_Controls_seperator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Library/Controls/seperator */ "./a1sauce/Settings/Library/Controls/seperator.ts");
+/* harmony import */ var _Builders_input__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Builders/input */ "./a1sauce/Settings/Components/Builders/input.ts");
+/*
+ *
+ * Builders are building blocks used to create Controls in Library/Controls
+ *
+ */
+
+
+
+
+
+/***/ }),
+
+/***/ "./a1sauce/Settings/Library/Controls/alarm.ts":
+/*!****************************************************!*\
+  !*** ./a1sauce/Settings/Library/Controls/alarm.ts ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createAlarmSetting: () => (/* binding */ createAlarmSetting)
+/* harmony export */ });
+/* harmony import */ var _Components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Components */ "./a1sauce/Settings/Components/index.ts");
+/* harmony import */ var _checkbox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./checkbox */ "./a1sauce/Settings/Library/Controls/checkbox.ts");
+/* harmony import */ var _range__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./range */ "./a1sauce/Settings/Library/Controls/range.ts");
+/* harmony import */ var _text__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./text */ "./a1sauce/Settings/Library/Controls/text.ts");
+/* harmony import */ var _Styles_alarm_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Styles/alarm.css */ "./a1sauce/Settings/Library/Styles/alarm.css");
+
+
+
+
+
+const alarms = [
     { name: 'alarm2', value: './resource/alarms/alarm2.wav' },
     { name: 'notification1', value: './resource/alarms/notification1.wav' },
     { name: 'notification2', value: './resource/alarms/notification2.wav' },
     { name: 'notification3', value: './resource/alarms/notification3.wav' },
     { name: 'bell', value: './resource/alarms/bell.wav' },
     { name: 'elevator', value: './resource/alarms/elevator.wav' },
-    { name: 'nuclear', value: './resource/alarms/nuclear.wav' }
+    { name: 'nuclear', value: './resource/alarms/nuclear.wav' },
 ];
-function createAlarmSetting(headerText, name, description, options) {
+const createAlarmSetting = (headerText, name, description, options = {}) => {
     var _a, _b, _c, _d, _e;
-    if (options === void 0) { options = {}; }
-    var _f = options.classes, classes = _f === void 0 ? (_a = options.classes) !== null && _a !== void 0 ? _a : '' : _f, _g = options.defaultValue, defaultValue = _g === void 0 ? (_b = options.defaultValue) !== null && _b !== void 0 ? _b : '100' : _g, _h = options.min, min = _h === void 0 ? (_c = options.min) !== null && _c !== void 0 ? _c : 0 : _h, _j = options.max, max = _j === void 0 ? (_d = options.max) !== null && _d !== void 0 ? _d : 100 : _j, _k = options.unit, unit = _k === void 0 ? (_e = options.unit) !== null && _e !== void 0 ? _e : '%' : _k;
-    var shortDescription = createText(description);
-    var activeCheckbox = createCheckboxSetting(name + 'Active', 'Active', false);
+    const { classes = (_a = options.classes) !== null && _a !== void 0 ? _a : '', defaultValue = (_b = options.defaultValue) !== null && _b !== void 0 ? _b : '100', min = (_c = options.min) !== null && _c !== void 0 ? _c : 0, max = (_d = options.max) !== null && _d !== void 0 ? _d : 100, unit = (_e = options.unit) !== null && _e !== void 0 ? _e : '%', } = options;
+    const shortDescription = (0,_text__WEBPACK_IMPORTED_MODULE_3__.createText)(description);
+    const activeCheckbox = (0,_checkbox__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting)(name + 'Active', 'Active', false);
     activeCheckbox.classList.add('alarm-active');
-    var alertDropdown = createDropdown(name + 'AlertSound', '', alarms);
+    activeCheckbox.style.marginRight = '20px';
+    const alertDropdown = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createDropdown)(name + 'AlertSound', '', alarms);
     alertDropdown.classList.add('full');
     alertDropdown.style.marginBottom = '5px';
-    var loopCheckbox = createCheckboxSetting(name + 'Loop', 'Loop', false);
+    const loopCheckbox = (0,_checkbox__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting)(name + 'Loop', 'Loop', false);
     loopCheckbox.classList.add('alarm-looping');
-    var volumeSlider = createRangeSetting(name + 'Volume', '', {
+    const volumeSlider = (0,_range__WEBPACK_IMPORTED_MODULE_2__.createRangeSetting)(name + 'Volume', '', {
         defaultValue: '100',
         unit: '%',
         min: 0,
@@ -1617,24 +1867,25 @@ function createAlarmSetting(headerText, name, description, options) {
     });
     volumeSlider.classList.add('half');
     volumeSlider.classList.add('alarm-volume');
-    var alarmSoundText = createText('Alarm Sound');
+    const alarmSoundText = (0,_text__WEBPACK_IMPORTED_MODULE_3__.createText)('Alarm Sound');
     alarmSoundText.classList.add('full');
     alarmSoundText.classList.add('alarm-sound');
     alarmSoundText.style.paddingTop = '0px';
     alarmSoundText.style.marginTop = '0px';
-    var volumeText = createText('Volume:');
-    volumeText.style.marginTop = '5px';
-    volumeText.style.marginRight = '15px';
+    const volumeText = (0,_text__WEBPACK_IMPORTED_MODULE_3__.createText)('Volume');
+    volumeText.style.marginTop = '-1px';
+    volumeText.style.marginRight = '5px';
     volumeText.classList.add('half');
     volumeText.style.paddingTop = '0px';
-    var container = createFlexContainer('flex-wrap');
+    const container = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createFlexContainer)(['flex-wrap']);
+    container.classList.add('alarm-setting');
     if (classes.length) {
-        for (var i = classes.length; i--; i >= 0) {
+        for (let i = classes.length; i--; i >= 0) {
             container.classList.add(classes[i]);
         }
     }
     container.appendChild(shortDescription);
-    var innerContainer = createFlexContainer('');
+    const innerContainer = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createFlexContainer)();
     innerContainer.appendChild(activeCheckbox);
     innerContainer.appendChild(loopCheckbox);
     innerContainer.classList.remove('setting');
@@ -1644,221 +1895,360 @@ function createAlarmSetting(headerText, name, description, options) {
     container.appendChild(volumeText);
     container.appendChild(volumeSlider);
     return container;
-}
-function createProfileManager() {
-    function saveProfile() {
-        var profileNameInput = container.querySelector('#ProfileName');
-        var profileName = profileNameInput.value;
-        if (profileName.indexOf('|') > -1) {
-            console.log('Pipe character is not allowed in profile names.');
-            return;
+};
+
+
+/***/ }),
+
+/***/ "./a1sauce/Settings/Library/Controls/button.ts":
+/*!*****************************************************!*\
+  !*** ./a1sauce/Settings/Library/Controls/button.ts ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createButton: () => (/* binding */ createButton)
+/* harmony export */ });
+const createButton = (name, content, 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+fn, options) => {
+    const { classes = options.classes } = options;
+    const button = document.createElement('button');
+    button.id = name;
+    button.innerHTML = content;
+    if (classes.length) {
+        for (let i = classes.length; i--; i >= 0) {
+            button.classList.add(classes[i]);
         }
-        var profiles = localStorage.getItem('bbb_profiles');
-        var profilesArray = localStorage
-            .getItem('bbb_profiles')
-            .split('|')
-            .filter(function (str) { return str !== ''; });
-        // If we do not have profiles set it to be empty
-        if (profiles == undefined) {
-            profiles = '';
-        }
-        // If the profile name doesn't exist in our profiles - add it
-        if (!profilesArray.includes(profileName)) {
-            profiles = profiles + '|' + profileName + '|';
-            localStorage.setItem('bbb_profiles', profiles);
-        }
-        // Create and update or store any data
-        var data = {};
-        data['Buffs'] = localStorage['Buffs'];
-        data['Buffs2'] = localStorage['Buffs2'];
-        data['Buffs3'] = localStorage['Buffs3'];
-        data['UntrackedBuffs'] = localStorage['UntrackedBuffs'];
-        data['Settings'] = JSON.parse(localStorage[appName]);
-        localStorage.setItem("bbb_profile_".concat(profileName), JSON.stringify(data));
-        console.log("".concat(profileName, " added to profiles. Existing profiles: \n ").concat(profiles));
-        location.reload();
     }
-    function deleteProfile() {
-        var index = container.querySelector('select').selectedIndex;
-        var profileName = container.querySelector('select').options[index].text;
-        console.log("Deleting: ".concat(profileName, " profile"));
-        var profiles = localStorage
-            .getItem('bbb_profiles')
-            .split('|')
-            .filter(function (str) { return str !== ''; });
-        profiles = profiles.filter(function (item) { return item !== profileName; });
-        localStorage.setItem('bbb_profiles', profiles.join('|') + '|');
-        localStorage.removeItem("bbb_profile_".concat(profileName));
-        location.reload();
-    }
-    function loadProfile() {
-        var index = container.querySelector('select').selectedIndex;
-        if (index !== 0) {
-            var profiles_1 = localStorage
-                .getItem('bbb_profiles')
-                .split('|')
-                .filter(function (str) { return str !== ''; });
-            var storageName = profiles_1[index - 1];
-            var data = JSON.parse(localStorage.getItem("bbb_profile_".concat(storageName)));
-            if (data['Buffs'] !== undefined && data['Buffs'] !== '') {
-                localStorage.setItem('Buffs', data['Buffs']);
-            }
-            if (data['Buffs2'] !== undefined && data['Buffs2'] !== '') {
-                localStorage.setItem('Buffs2', data['Buffs2']);
-            }
-            if (data['Buffs3'] !== undefined && data['Buffs3'] !== '') {
-                localStorage.setItem('Buffs3', data['Buffs3']);
-            }
-            if (data['UntrackedBuffs'] !== undefined &&
-                data['UntrackedBuffs'] !== '') {
-                localStorage.setItem('UntrackedBuffs', data['UntrackedBuffs']);
-            }
-            Object.entries(data['Settings']).forEach(function (setting) {
-                updateSetting(setting[0], setting[1]);
-            });
-        }
-        location.reload();
-    }
-    var profileOptions = [{ value: '0', name: 'Select Profile' }];
-    var profiles;
-    if (localStorage.getItem('bbb_profiles')) {
-        profiles = localStorage
-            .getItem('bbb_profiles')
-            .split('|')
-            .filter(function (str) { return str !== ''; });
-        profiles.forEach(function (profile, index) {
-            profileOptions.push({ value: index.toString(), name: profile });
-        });
-    }
-    else {
-        profiles = '|';
-    }
-    var profileHeader = createHeading('h3', 'Profiles');
-    var profileText = createText('Select a profile to load or delete. To save a new profile, give it a name in the field below and then click Save. To update an existing profile save a profile using the same name.');
-    var saveButton = createButton('Save', saveProfile, {
-        classes: ['nisbutton'],
+    button.addEventListener('click', () => {
+        fn();
     });
-    var profileName = createInput('text', 'ProfileName', '');
-    profileName.classList.add('profile-name');
-    var loadOptions = createDropdownSetting('Profile', '', 'Add', profileOptions);
-    loadOptions.classList.add('profile-list');
-    loadOptions.querySelector('select').selectedIndex = 0;
-    var loadButton = createButton('Load', loadProfile, {
-        classes: ['nisbutton'],
+    return button;
+};
+
+
+/***/ }),
+
+/***/ "./a1sauce/Settings/Library/Controls/checkbox.ts":
+/*!*******************************************************!*\
+  !*** ./a1sauce/Settings/Library/Controls/checkbox.ts ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createCheckboxSetting: () => (/* binding */ createCheckboxSetting)
+/* harmony export */ });
+/* harmony import */ var _Components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Components */ "./a1sauce/Settings/Components/index.ts");
+/* harmony import */ var _Storage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Storage */ "./a1sauce/Settings/Storage/index.ts");
+
+
+const createCheckboxSetting = (name, description, defaultValue) => {
+    const input = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createCheckboxInput)(name, defaultValue);
+    const label = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createLabel)(name, description);
+    const checkboxLabel = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createLabel)(name, '');
+    const checkbox = document.createElement('span');
+    checkbox.classList.add('checkbox');
+    checkbox.id = name;
+    const container = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createFlexContainer)(['reverse-setting']);
+    checkboxLabel.appendChild(input);
+    checkboxLabel.appendChild(checkbox);
+    container.appendChild(checkboxLabel);
+    container.appendChild(label);
+    container.addEventListener('click', (e) => {
+        if (e.target == container) {
+            input.checked = !input.checked;
+            input.dispatchEvent(new CustomEvent('change', { bubbles: true }));
+            (0,_Storage__WEBPACK_IMPORTED_MODULE_1__.updateSetting)(name, input.checked);
+        }
     });
-    loadButton.classList.add('load-btn');
-    var deleteButton = createButton('Delete', deleteProfile, {
-        classes: ['nisbutton', 'delete'],
-    });
-    var container = createFlexContainer();
-    container.classList.remove('flex');
-    var endSeperator = createSeperator();
-    container.classList.add('flex-wrap');
-    container.appendChild(profileHeader);
-    container.appendChild(profileText);
-    container.appendChild(loadOptions);
-    container.appendChild(document.createElement('br'));
-    container.appendChild(saveButton);
-    container.appendChild(profileName);
-    container.appendChild(loadButton);
-    container.appendChild(deleteButton);
-    //container.appendChild(deleteButton);
-    container.appendChild(endSeperator);
     return container;
-}
-function createLabel(name, description) {
-    var label = document.createElement('label');
-    label.setAttribute('for', name);
-    label.innerHTML = description;
-    return label;
-}
-function createInput(type, name, defaultValue) {
-    var _a;
-    var input = document.createElement('input');
-    input.id = name;
-    input.type = type;
-    input.dataset.setting = name;
-    input.dataset.defaultValue = defaultValue.toString();
-    input.value = input.dataset.defaultValue;
-    if (getSetting(name)) {
-        input.value = (_a = getSetting(name)) !== null && _a !== void 0 ? _a : input.dataset.defaultValue;
-    }
-    else {
-        updateSetting(name, input.dataset.defaultValue);
-    }
-    input.addEventListener('change', function () {
-        if (type == 'text') {
-            updateSetting(name, input.value);
-        }
-        else if (type == 'number' || type == 'range') {
-            updateSetting(name, parseInt(input.value, 10));
-        }
-    });
-    return input;
-}
-function createCheckboxInput(name, defaultValue) {
-    var input = document.createElement('input');
-    input.id = name;
-    input.type = 'checkbox';
-    input.dataset.setting = name;
-    input.dataset.defaultValue = defaultValue.toString();
-    input.checked = Boolean(defaultValue);
-    if (getSetting(name)) {
-        input.checked = getSetting(name);
-    }
-    else {
-        updateSetting(name, input.checked);
-    }
-    input.addEventListener('change', function () {
-        updateSetting(name, input.checked);
-    });
-    return input;
-}
-function createDropdown(name, defaultValue, options) {
-    var select = document.createElement('select');
+};
+
+
+/***/ }),
+
+/***/ "./a1sauce/Settings/Library/Controls/dropdown.ts":
+/*!*******************************************************!*\
+  !*** ./a1sauce/Settings/Library/Controls/dropdown.ts ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createDropdownSetting: () => (/* binding */ createDropdownSetting)
+/* harmony export */ });
+/* harmony import */ var _Components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Components */ "./a1sauce/Settings/Components/index.ts");
+
+const createDropdownSetting = (name, description, defaultValue, options) => {
+    const select = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createDropdown)(name, defaultValue, options);
+    const label = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createLabel)(name, description);
     select.id = name;
-    select.dataset.setting = name;
-    select.dataset.defaultValue = defaultValue.toString();
-    select.value = defaultValue.toString();
-    if (getSetting(name)) {
-        select.value = getSetting(name);
-    }
-    for (var i = 0; i < options.length; i++) {
-        var option = document.createElement('option');
-        option.value = options[i].value;
-        option.text = options[i].name;
-        select.appendChild(option);
-    }
-    if (getSetting(name)) {
-        select.value = getSetting(name);
-    }
-    else {
-        updateSetting(name, select.value);
-    }
-    select.addEventListener('change', function () {
-        updateSetting(name, select.value);
-    });
-    return select;
-}
-function createOutput() {
-    var output = document.createElement('output');
-    return output;
-}
-function createFlexContainer(classes) {
-    var container = document.createElement('div');
-    container.classList.add('flex');
-    container.classList.add('setting');
-    if (classes) {
-        container.classList.add(classes);
-    }
+    const container = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createFlexContainer)(['reverse-setting']);
+    container.appendChild(select);
+    container.appendChild(label);
     return container;
-}
-function setDefaultSettings() {
-    var settings = document.querySelectorAll('[data-setting]');
-    settings.forEach(function (setting) {
+};
+
+
+/***/ }),
+
+/***/ "./a1sauce/Settings/Library/Controls/input.ts":
+/*!****************************************************!*\
+  !*** ./a1sauce/Settings/Library/Controls/input.ts ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createTextSetting: () => (/* binding */ createTextSetting)
+/* harmony export */ });
+/* harmony import */ var _Components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Components */ "./a1sauce/Settings/Components/index.ts");
+
+const createTextSetting = (name, description, defaultValue) => {
+    const input = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createInput)('text', name, defaultValue);
+    input.id = name;
+    const label = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createLabel)(name, description);
+    label.setAttribute('for', name);
+    const container = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createFlexContainer)();
+    container.appendChild(input);
+    container.appendChild(label);
+    return container;
+};
+
+
+/***/ }),
+
+/***/ "./a1sauce/Settings/Library/Controls/number.ts":
+/*!*****************************************************!*\
+  !*** ./a1sauce/Settings/Library/Controls/number.ts ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createNumberSetting: () => (/* binding */ createNumberSetting)
+/* harmony export */ });
+/* harmony import */ var _Components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Components */ "./a1sauce/Settings/Components/index.ts");
+
+const createNumberSetting = (name, description, options = {}) => {
+    var _a, _b, _c;
+    const { defaultValue = (_a = options.defaultValue) !== null && _a !== void 0 ? _a : 10, min = (_b = options.min) !== null && _b !== void 0 ? _b : 1, max = (_c = options.max) !== null && _c !== void 0 ? _c : 20, } = options;
+    const input = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createInput)('number', name, defaultValue);
+    input.id = name;
+    input.setAttribute('min', min.toString());
+    input.setAttribute('max', max.toString());
+    const label = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createLabel)(name, description);
+    const container = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createFlexContainer)(['reverse-setting']);
+    container.appendChild(input);
+    container.appendChild(label);
+    return container;
+};
+
+
+/***/ }),
+
+/***/ "./a1sauce/Settings/Library/Controls/range.ts":
+/*!****************************************************!*\
+  !*** ./a1sauce/Settings/Library/Controls/range.ts ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createRangeSetting: () => (/* binding */ createRangeSetting)
+/* harmony export */ });
+/* harmony import */ var _Components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Components */ "./a1sauce/Settings/Components/index.ts");
+/* harmony import */ var _Storage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Storage */ "./a1sauce/Settings/Storage/index.ts");
+/* harmony import */ var _Styles_range_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Styles/range.css */ "./a1sauce/Settings/Library/Styles/range.css");
+
+
+
+const createRangeSetting = (name, description, options = {}) => {
+    var _a, _b, _c, _d, _e;
+    const { classes = (_a = options.classes) !== null && _a !== void 0 ? _a : '', defaultValue = (_b = options.defaultValue) !== null && _b !== void 0 ? _b : '100', min = (_c = options.min) !== null && _c !== void 0 ? _c : 0, max = (_d = options.max) !== null && _d !== void 0 ? _d : 100, unit = (_e = options.unit) !== null && _e !== void 0 ? _e : '%', } = options;
+    const rangeInput = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createInput)('range', name, defaultValue);
+    rangeInput.setAttribute('min', min.toString());
+    rangeInput.setAttribute('max', max.toString());
+    const value = ((parseInt(rangeInput.value, 10) - parseInt(rangeInput.min, 10)) /
+        (parseInt(rangeInput.max, 10) - parseInt(rangeInput.min))) *
+        100;
+    rangeInput.style.background =
+        'linear-gradient(to right, #3e5765 0%, #3e5765 ' +
+            value +
+            '%, #0d1c24 ' +
+            value +
+            '%, #0d1c24 100%)';
+    rangeInput.oninput = function () {
+        const value = ((parseInt(rangeInput.value, 10) - parseInt(rangeInput.min, 10)) /
+            (parseInt(rangeInput.max, 10) - parseInt(rangeInput.min))) *
+            100;
+        rangeInput.style.background =
+            'linear-gradient(to right, #3e5765 0%, #3e5765 ' +
+                value +
+                '%, #0d1c24 ' +
+                value +
+                '%, #0d1c24 100%)';
+    };
+    const label = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createLabel)(name, description);
+    label.classList.add('full');
+    if ((0,_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)(name) != undefined) {
+        rangeInput.value = (0,_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)(name);
+    }
+    const output = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createOutput)();
+    output.setAttribute('id', `${name}Output`);
+    output.setAttribute('for', name);
+    output.innerHTML = rangeInput.value + unit;
+    output.after(unit);
+    const container = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createFlexContainer)();
+    if (classes.length) {
+        for (let i = classes.length; i--; i >= 0) {
+            container.classList.add(classes[i]);
+        }
+    }
+    container.classList.add('flex-wrap');
+    container.appendChild(label);
+    container.appendChild(rangeInput);
+    container.appendChild(output);
+    rangeInput.addEventListener('rangeInput', () => {
+        output.innerHTML = rangeInput.value + unit;
+    });
+    return container;
+};
+
+
+/***/ }),
+
+/***/ "./a1sauce/Settings/Library/Controls/seperator.ts":
+/*!********************************************************!*\
+  !*** ./a1sauce/Settings/Library/Controls/seperator.ts ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createSeperator: () => (/* binding */ createSeperator)
+/* harmony export */ });
+const createSeperator = () => {
+    return document.createElement('hr');
+};
+
+
+/***/ }),
+
+/***/ "./a1sauce/Settings/Library/Controls/text.ts":
+/*!***************************************************!*\
+  !*** ./a1sauce/Settings/Library/Controls/text.ts ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createHeading: () => (/* binding */ createHeading),
+/* harmony export */   createSmallText: () => (/* binding */ createSmallText),
+/* harmony export */   createText: () => (/* binding */ createText)
+/* harmony export */ });
+const createHeading = (size, content) => {
+    const header = document.createElement(size);
+    header.innerHTML = content;
+    return header;
+};
+const createText = (content) => {
+    const text = document.createElement('p');
+    text.innerHTML = content;
+    return text;
+};
+const createSmallText = (content) => {
+    const text = document.createElement('small');
+    text.innerHTML = content;
+    return text;
+};
+
+
+/***/ }),
+
+/***/ "./a1sauce/Settings/Library/index.ts":
+/*!*******************************************!*\
+  !*** ./a1sauce/Settings/Library/index.ts ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createAlarmSetting: () => (/* reexport safe */ _Controls_alarm__WEBPACK_IMPORTED_MODULE_0__.createAlarmSetting),
+/* harmony export */   createButton: () => (/* reexport safe */ _Controls_button__WEBPACK_IMPORTED_MODULE_1__.createButton),
+/* harmony export */   createCheckboxSetting: () => (/* reexport safe */ _Controls_checkbox__WEBPACK_IMPORTED_MODULE_2__.createCheckboxSetting),
+/* harmony export */   createDropdownSetting: () => (/* reexport safe */ _Controls_dropdown__WEBPACK_IMPORTED_MODULE_3__.createDropdownSetting),
+/* harmony export */   createHeading: () => (/* reexport safe */ _Controls_text__WEBPACK_IMPORTED_MODULE_8__.createHeading),
+/* harmony export */   createNumberSetting: () => (/* reexport safe */ _Controls_number__WEBPACK_IMPORTED_MODULE_5__.createNumberSetting),
+/* harmony export */   createRangeSetting: () => (/* reexport safe */ _Controls_range__WEBPACK_IMPORTED_MODULE_6__.createRangeSetting),
+/* harmony export */   createSeperator: () => (/* reexport safe */ _Controls_seperator__WEBPACK_IMPORTED_MODULE_7__.createSeperator),
+/* harmony export */   createSmallText: () => (/* reexport safe */ _Controls_text__WEBPACK_IMPORTED_MODULE_8__.createSmallText),
+/* harmony export */   createText: () => (/* reexport safe */ _Controls_text__WEBPACK_IMPORTED_MODULE_8__.createText),
+/* harmony export */   createTextSetting: () => (/* reexport safe */ _Controls_input__WEBPACK_IMPORTED_MODULE_4__.createTextSetting)
+/* harmony export */ });
+/* harmony import */ var _Controls_alarm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Controls/alarm */ "./a1sauce/Settings/Library/Controls/alarm.ts");
+/* harmony import */ var _Controls_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Controls/button */ "./a1sauce/Settings/Library/Controls/button.ts");
+/* harmony import */ var _Controls_checkbox__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Controls/checkbox */ "./a1sauce/Settings/Library/Controls/checkbox.ts");
+/* harmony import */ var _Controls_dropdown__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Controls/dropdown */ "./a1sauce/Settings/Library/Controls/dropdown.ts");
+/* harmony import */ var _Controls_input__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Controls/input */ "./a1sauce/Settings/Library/Controls/input.ts");
+/* harmony import */ var _Controls_number__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Controls/number */ "./a1sauce/Settings/Library/Controls/number.ts");
+/* harmony import */ var _Controls_range__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Controls/range */ "./a1sauce/Settings/Library/Controls/range.ts");
+/* harmony import */ var _Controls_seperator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Controls/seperator */ "./a1sauce/Settings/Library/Controls/seperator.ts");
+/* harmony import */ var _Controls_text__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Controls/text */ "./a1sauce/Settings/Library/Controls/text.ts");
+
+
+
+
+
+
+//export * from './Controls/profile';
+
+
+
+
+
+/***/ }),
+
+/***/ "./a1sauce/Settings/Storage/index.ts":
+/*!*******************************************!*\
+  !*** ./a1sauce/Settings/Storage/index.ts ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getSetting: () => (/* binding */ getSetting),
+/* harmony export */   loadSettings: () => (/* binding */ loadSettings),
+/* harmony export */   setDefaultSettings: () => (/* binding */ setDefaultSettings),
+/* harmony export */   settingsExist: () => (/* binding */ settingsExist),
+/* harmony export */   updateSetting: () => (/* binding */ updateSetting)
+/* harmony export */ });
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../index */ "./a1sauce/index.ts");
+
+const sauce = _index__WEBPACK_IMPORTED_MODULE_0__.A1Sauce.instance;
+const setDefaultSettings = () => {
+    const settings = document.querySelectorAll('[data-setting]');
+    settings.forEach((setting) => {
+        if (setting.dataset.setting === undefined)
+            throw Error(`Setting (${setting.id}) is missing a data-setting`);
         switch (setting.type) {
             case 'number':
             case 'range':
+                if (setting.dataset.defaultValue === undefined)
+                    throw Error('Range input value is undefined');
                 updateSetting(setting.dataset.setting, parseInt(setting.dataset.defaultValue, 10));
                 break;
             case 'checkbox':
@@ -1873,11 +2263,13 @@ function setDefaultSettings() {
                 updateSetting(setting.dataset.setting, setting.dataset.defaultValue);
         }
     });
-}
-function loadSettings() {
-    var settings = document.querySelectorAll('[data-setting]');
-    settings.forEach(function (setting) {
+};
+const loadSettings = () => {
+    const settings = document.querySelectorAll('[data-setting]');
+    settings.forEach((setting) => {
         var _a;
+        if (setting.dataset.setting === undefined)
+            throw Error(`Setting (${setting.id}) is missing a data-setting`);
         switch (setting.type) {
             case 'number':
             case 'range':
@@ -1895,39 +2287,303 @@ function loadSettings() {
                         setting.dataset.defaultValue;
         }
     });
-}
-function settingsExist() {
-    if (!localStorage[appName]) {
+};
+const settingsExist = () => {
+    if (!localStorage[sauce.Settings.getName()]) {
         setDefaultSettings();
     }
     else {
         loadSettings();
     }
-}
-function getSetting(setting) {
-    if (!localStorage[appName]) {
-        localStorage.setItem(appName, JSON.stringify({}));
+};
+const getSetting = (setting) => {
+    if (!localStorage[sauce.Settings.getName()]) {
+        localStorage.setItem(sauce.Settings.getName(), JSON.stringify({}));
         setDefaultSettings();
     }
-    return JSON.parse(localStorage[appName])[setting];
-}
-function updateSetting(setting, value) {
-    if (!localStorage.getItem(appName)) {
-        localStorage.setItem(appName, JSON.stringify({}));
+    return JSON.parse(localStorage[sauce.Settings.getName()])[setting];
+};
+const updateSetting = (setting, value) => {
+    if (!localStorage.getItem(sauce.Settings.getName())) {
+        localStorage.setItem(sauce.Settings.getName(), JSON.stringify({}));
     }
-    var save_data = JSON.parse(localStorage[appName]);
+    const save_data = JSON.parse(localStorage[sauce.Settings.getName()]);
     save_data[setting] = value;
-    localStorage.setItem(appName, JSON.stringify(save_data));
+    localStorage.setItem(sauce.Settings.getName(), JSON.stringify(save_data));
+};
+
+
+/***/ }),
+
+/***/ "./a1sauce/Settings/index.ts":
+/*!***********************************!*\
+  !*** ./a1sauce/Settings/index.ts ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Settings: () => (/* binding */ Settings),
+/* harmony export */   SettingsManager: () => (/* binding */ SettingsManager),
+/* harmony export */   SettingsType: () => (/* binding */ SettingsType)
+/* harmony export */ });
+/* harmony import */ var _Library_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Library/index */ "./a1sauce/Settings/Library/index.ts");
+var __classPrivateFieldGet = (undefined && undefined.__classPrivateFieldGet) || function (receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+};
+var __classPrivateFieldSet = (undefined && undefined.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
+};
+var _a, _SettingsManager_instance;
+
+var SettingsType;
+(function (SettingsType) {
+    SettingsType["Alarm"] = "alarm";
+    SettingsType["Button"] = "button";
+    SettingsType["Checkbox"] = "checkbox";
+    SettingsType["Dropdown"] = "dropdown";
+    SettingsType["Input"] = "input";
+    SettingsType["Number"] = "number";
+    SettingsType["Profile"] = "profile";
+    SettingsType["Range"] = "range";
+})(SettingsType || (SettingsType = {}));
+/*
+ *
+ * Settings Manager is your access point to localStorage and building your Settings UI.
+ *
+*/
+class SettingsManager {
+    constructor() {
+        this.name = '';
+        this.majorVersion = 0;
+        this.minorVersion = 0;
+        this.patchVersion = 0;
+        this.settings = [];
+        this.setName = (name) => {
+            this.name = name;
+            return this;
+        };
+        this.getName = () => {
+            return this.name;
+        };
+        this.addAlarmSetting = (headerText, name, description, options) => {
+            var _b;
+            (_b = this.settings) === null || _b === void 0 ? void 0 : _b.push(_Library_index__WEBPACK_IMPORTED_MODULE_0__.createAlarmSetting(headerText, name, description, options));
+            return this;
+        };
+        this.addButton = (name, content, 
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+        fn, options) => {
+            var _b;
+            (_b = this.settings) === null || _b === void 0 ? void 0 : _b.push(_Library_index__WEBPACK_IMPORTED_MODULE_0__.createButton(name, content, fn, options));
+            return this;
+        };
+        this.addCheckboxSetting = (name, description, defaultValue) => {
+            var _b;
+            (_b = this.settings) === null || _b === void 0 ? void 0 : _b.push(_Library_index__WEBPACK_IMPORTED_MODULE_0__.createCheckboxSetting(name, description, defaultValue));
+            return this;
+        };
+        this.addDropdownSetting = (name, description, defaultValue, options) => {
+            var _b;
+            (_b = this.settings) === null || _b === void 0 ? void 0 : _b.push(_Library_index__WEBPACK_IMPORTED_MODULE_0__.createDropdownSetting(name, description, defaultValue, options));
+            return this;
+        };
+        this.addHeader = (size, content) => {
+            var _b;
+            (_b = this.settings) === null || _b === void 0 ? void 0 : _b.push(_Library_index__WEBPACK_IMPORTED_MODULE_0__.createHeading(size, content));
+            console.log(this.settings);
+            return this;
+        };
+        this.addText = (content) => {
+            var _b;
+            (_b = this.settings) === null || _b === void 0 ? void 0 : _b.push(_Library_index__WEBPACK_IMPORTED_MODULE_0__.createText(content));
+            return this;
+        };
+        this.addSmallText = (content) => {
+            var _b;
+            (_b = this.settings) === null || _b === void 0 ? void 0 : _b.push(_Library_index__WEBPACK_IMPORTED_MODULE_0__.createSmallText(content));
+            return this;
+        };
+        this.addSeperator = () => {
+            var _b;
+            (_b = this.settings) === null || _b === void 0 ? void 0 : _b.push(_Library_index__WEBPACK_IMPORTED_MODULE_0__.createSeperator());
+            return this;
+        };
+        this.addTextSetting = (name, description, defaultValue) => {
+            var _b;
+            (_b = this.settings) === null || _b === void 0 ? void 0 : _b.push(_Library_index__WEBPACK_IMPORTED_MODULE_0__.createTextSetting(name, description, defaultValue));
+            return this;
+        };
+        this.addNumberSetting = (name, description, options = {}) => {
+            var _b;
+            (_b = this.settings) === null || _b === void 0 ? void 0 : _b.push(_Library_index__WEBPACK_IMPORTED_MODULE_0__.createNumberSetting(name, description, options));
+            return this;
+        };
+        this.addRangeSetting = (name, description, options = {}) => {
+            var _b;
+            (_b = this.settings) === null || _b === void 0 ? void 0 : _b.push(_Library_index__WEBPACK_IMPORTED_MODULE_0__.createRangeSetting(name, description, options));
+            return this;
+        };
+        this.getSettings = () => {
+            return this.settings;
+        };
+        this.build = () => {
+            const settings = this.getSettings();
+            if (settings === null)
+                throw new Error('Settings are empty - add settings before calling build()');
+            const container = document.createElement('div');
+            container.id = 'Settings';
+            for (let i = 0; i < settings.length; i++) {
+                container.append(settings[i]);
+            }
+            document.body.append(container);
+        };
+    }
+    static get instance() {
+        if (!__classPrivateFieldGet(_a, _a, "f", _SettingsManager_instance)) {
+            __classPrivateFieldSet(_a, _a, new _a(), "f", _SettingsManager_instance);
+        }
+        return __classPrivateFieldGet(_a, _a, "f", _SettingsManager_instance);
+    }
 }
-function timeout(millis) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            return [2 /*return*/, new Promise(function (resolve) {
-                    setTimeout(resolve, millis);
-                })];
-        });
+_a = SettingsManager;
+_SettingsManager_instance = { value: void 0 };
+const Settings = SettingsManager.instance;
+
+
+/***/ }),
+
+/***/ "./a1sauce/Utils/getById.ts":
+/*!**********************************!*\
+  !*** ./a1sauce/Utils/getById.ts ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getById: () => (/* binding */ getById)
+/* harmony export */ });
+const getById = (id) => {
+    let el = document.getElementById(id);
+    if (el)
+        return el;
+    return null;
+};
+
+
+/***/ }),
+
+/***/ "./a1sauce/Utils/timeout.ts":
+/*!**********************************!*\
+  !*** ./a1sauce/Utils/timeout.ts ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   timeout: () => (/* binding */ timeout)
+/* harmony export */ });
+const timeout = async (millis) => {
+    return new Promise(function (resolve) {
+        setTimeout(resolve, millis);
     });
+};
+
+
+/***/ }),
+
+/***/ "./a1sauce/index.ts":
+/*!**************************!*\
+  !*** ./a1sauce/index.ts ***!
+  \**************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A1Sauce: () => (/* binding */ A1Sauce)
+/* harmony export */ });
+/* harmony import */ var _Settings_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Settings/index */ "./a1sauce/Settings/index.ts");
+var __classPrivateFieldGet = (undefined && undefined.__classPrivateFieldGet) || function (receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+};
+var __classPrivateFieldSet = (undefined && undefined.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
+};
+var _a, _A1Sauce_instance;
+
+class A1Sauce {
+    constructor() {
+        this.Settings = _Settings_index__WEBPACK_IMPORTED_MODULE_0__.SettingsManager.instance;
+        this.createSettings = () => {
+            this.Settings = _Settings_index__WEBPACK_IMPORTED_MODULE_0__.SettingsManager.instance;
+            return this.Settings;
+        };
+        this.setName = (name) => {
+            this.Settings.setName(name);
+            return this;
+        };
+        this.getName = () => {
+            return this.Settings.getName();
+        };
+        this.setVersion = (major, minor, patch) => {
+            this.Settings.majorVersion = major;
+            this.Settings.minorVersion = minor;
+            this.Settings.patchVersion = patch;
+            return this;
+        };
+        this.getVersion = () => {
+            const major = this.Settings.majorVersion;
+            const minor = this.Settings.minorVersion;
+            const patch = this.Settings.patchVersion;
+            return `${major}.${minor}.${patch}`;
+        };
+    }
+    static get instance() {
+        if (!__classPrivateFieldGet(_a, _a, "f", _A1Sauce_instance)) {
+            __classPrivateFieldSet(_a, _a, new _a(), "f", _A1Sauce_instance);
+            __classPrivateFieldGet(_a, _a, "f", _A1Sauce_instance).Settings = _Settings_index__WEBPACK_IMPORTED_MODULE_0__.SettingsManager.instance;
+        }
+        return __classPrivateFieldGet(_a, _a, "f", _A1Sauce_instance);
+    }
 }
+_a = A1Sauce;
+_A1Sauce_instance = { value: void 0 };
+
+
+/***/ }),
+
+/***/ "./data/constants.ts":
+/*!***************************!*\
+  !*** ./data/constants.ts ***!
+  \***************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   appName: () => (/* binding */ appName),
+/* harmony export */   majorVersion: () => (/* binding */ majorVersion),
+/* harmony export */   minorversion: () => (/* binding */ minorversion),
+/* harmony export */   patchVersion: () => (/* binding */ patchVersion)
+/* harmony export */ });
+const appName = 'job-gauges';
+const majorVersion = 1;
+const minorversion = 0;
+const patchVersion = 0;
 
 
 /***/ }),
@@ -1943,7 +2599,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   magic_gauge: () => (/* binding */ magic_gauge)
 /* harmony export */ });
-var magic_gauge = {
+const magic_gauge = {
     isInCombat: false,
     position: {
         x: 0,
@@ -1990,7 +2646,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   melee_gauge: () => (/* binding */ melee_gauge)
 /* harmony export */ });
-var melee_gauge = {
+const melee_gauge = {
     isInCombat: false,
     position: {
         x: 0,
@@ -2037,7 +2693,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   necromancy_gauge: () => (/* binding */ necromancy_gauge)
 /* harmony export */ });
-var necromancy_gauge = {
+const necromancy_gauge = {
     isInCombat: false,
     position: {
         x: 50,
@@ -2312,7 +2968,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ranged_gauge: () => (/* binding */ ranged_gauge)
 /* harmony export */ });
-var ranged_gauge = {
+const ranged_gauge = {
     isInCombat: false,
     position: {
         x: 0,
@@ -2362,46 +3018,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
 /* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
-var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
 /* eslint-disable @typescript-eslint/no-require-imports */
 
 
-var bloatImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
+const bloatImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     bloat_100: __webpack_require__(/*! ../.././asset/data/bloat/lg/bloat_100.data.png */ "./asset/data/bloat/lg/bloat_100.data.png"),
     bloat_90: __webpack_require__(/*! ../.././asset/data/bloat/lg/bloat_90.data.png */ "./asset/data/bloat/lg/bloat_90.data.png"),
     bloat_80: __webpack_require__(/*! ../.././asset/data/bloat/lg/bloat_80.data.png */ "./asset/data/bloat/lg/bloat_80.data.png"),
@@ -2415,86 +3035,63 @@ var bloatImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     bloat_0: __webpack_require__(/*! ../.././asset/data/bloat/lg/bloat_0.data.png */ "./asset/data/bloat/lg/bloat_0.data.png"),
     bloat_expired: __webpack_require__(/*! ../.././asset/data/bloat/lg/bloat_expired.data.png */ "./asset/data/bloat/lg/bloat_expired.data.png"),
 });
-var scaledOnce = false;
-function bloatOverlay(gauges) {
-    return __awaiter(this, void 0, void 0, function () {
-        var bloat, value, imageKey, image;
-        var _this = this;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    bloat = gauges.necromancy.bloat;
-                    if (!bloat.isActiveOverlay) {
-                        return [2 /*return*/];
-                    }
-                    return [4 /*yield*/, bloatImages.promise];
-                case 1:
-                    _a.sent();
-                    if (!scaledOnce) {
-                        Object.keys(bloatImages).forEach(function (key) { return __awaiter(_this, void 0, void 0, function () {
-                            var _a, _b;
-                            return __generator(this, function (_c) {
-                                switch (_c.label) {
-                                    case 0:
-                                        _a = bloatImages;
-                                        _b = key;
-                                        return [4 /*yield*/, _utility__WEBPACK_IMPORTED_MODULE_0__.resizeImageData(bloatImages[key], gauges.scaleFactor)];
-                                    case 1:
-                                        _a[_b] = _c.sent();
-                                        return [2 /*return*/];
-                                }
-                            });
-                        }); });
-                        scaledOnce = true;
-                    }
-                    value = bloat.time;
-                    imageKey = 'bloat_expired';
-                    if (bloat.active) {
-                        if (value < 2.4) {
-                            imageKey = 'bloat_0';
-                        }
-                        else if (value < 3.6) {
-                            imageKey = 'bloat_10';
-                        }
-                        else if (value < 5.4) {
-                            imageKey = 'bloat_20';
-                        }
-                        else if (value < 7.2) {
-                            imageKey = 'bloat_30';
-                        }
-                        else if (value < 9.0) {
-                            imageKey = 'bloat_40';
-                        }
-                        else if (value < 10.8) {
-                            imageKey = 'bloat_50';
-                        }
-                        else if (value < 12.6) {
-                            imageKey = 'bloat_60';
-                        }
-                        else if (value < 14.4) {
-                            imageKey = 'bloat_70';
-                        }
-                        else if (value < 16.2) {
-                            imageKey = 'bloat_80';
-                        }
-                        else if (value < 18.0) {
-                            imageKey = 'bloat_90';
-                        }
-                        else {
-                            imageKey = 'bloat_100';
-                        }
-                    }
-                    else {
-                        imageKey = 'bloat_expired';
-                    }
-                    alt1.overLaySetGroup('Bloat');
-                    image = bloatImages[imageKey];
-                    alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x + bloat.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y + bloat.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(image), image.width, 1000);
-                    alt1.overLayRefreshGroup('Bloat');
-                    return [2 /*return*/];
-            }
+let scaledOnce = false;
+async function bloatOverlay(gauges) {
+    const { bloat } = gauges.necromancy;
+    if (!bloat.isActiveOverlay) {
+        return;
+    }
+    await bloatImages.promise;
+    if (!scaledOnce) {
+        Object.keys(bloatImages).forEach(async (key) => {
+            bloatImages[key] = await _utility__WEBPACK_IMPORTED_MODULE_0__.resizeImageData(bloatImages[key], gauges.scaleFactor);
         });
-    });
+        scaledOnce = true;
+    }
+    const value = bloat.time;
+    let imageKey = 'bloat_expired';
+    if (bloat.active) {
+        if (value < 2.4) {
+            imageKey = 'bloat_0';
+        }
+        else if (value < 3.6) {
+            imageKey = 'bloat_10';
+        }
+        else if (value < 5.4) {
+            imageKey = 'bloat_20';
+        }
+        else if (value < 7.2) {
+            imageKey = 'bloat_30';
+        }
+        else if (value < 9.0) {
+            imageKey = 'bloat_40';
+        }
+        else if (value < 10.8) {
+            imageKey = 'bloat_50';
+        }
+        else if (value < 12.6) {
+            imageKey = 'bloat_60';
+        }
+        else if (value < 14.4) {
+            imageKey = 'bloat_70';
+        }
+        else if (value < 16.2) {
+            imageKey = 'bloat_80';
+        }
+        else if (value < 18.0) {
+            imageKey = 'bloat_90';
+        }
+        else {
+            imageKey = 'bloat_100';
+        }
+    }
+    else {
+        imageKey = 'bloat_expired';
+    }
+    alt1.overLaySetGroup('Bloat');
+    const image = bloatImages[imageKey];
+    alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x + bloat.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y + bloat.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(image), image.width, 1000);
+    alt1.overLayRefreshGroup('Bloat');
 }
 
 
@@ -2514,46 +3111,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
 /* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
-var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
 /* eslint-disable @typescript-eslint/no-require-imports */
 
 
-var conjureImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
+const conjureImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     skeleton_warrior_inactive: __webpack_require__(/*! ../.././asset/data/conjures/conjure_skeleton_inactive.data.png */ "./asset/data/conjures/conjure_skeleton_inactive.data.png"),
     skeleton_warrior: __webpack_require__(/*! ../.././asset/data/conjures/conjure_skeleton.data.png */ "./asset/data/conjures/conjure_skeleton.data.png"),
     putrid_zombie_inactive: __webpack_require__(/*! ../.././asset/data/conjures/conjure_zombie_inactive.data.png */ "./asset/data/conjures/conjure_zombie_inactive.data.png"),
@@ -2563,73 +3124,50 @@ var conjureImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     undead_army_inactive: __webpack_require__(/*! ../.././asset/data/conjures/lg/conjure_undead_army_inactive.data.png */ "./asset/data/conjures/lg/conjure_undead_army_inactive.data.png"),
     undead_army: __webpack_require__(/*! ../.././asset/data/conjures/lg/conjure_undead_army.data.png */ "./asset/data/conjures/lg/conjure_undead_army.data.png"),
 });
-var white = alt1__WEBPACK_IMPORTED_MODULE_1__.mixColor(255, 255, 255);
-var lastMinValue = 0;
-var scaledOnce = false;
-function conjureOverlay(gauges) {
-    return __awaiter(this, void 0, void 0, function () {
-        var earliest_conjure, minValue;
-        var _this = this;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    if (!gauges.necromancy.conjures.isActiveOverlay) {
-                        return [2 /*return*/];
-                    }
-                    return [4 /*yield*/, conjureImages.promise];
-                case 1:
-                    _a.sent();
-                    if (!scaledOnce) {
-                        Object.keys(conjureImages).forEach(function (key) { return __awaiter(_this, void 0, void 0, function () {
-                            var _a, _b;
-                            return __generator(this, function (_c) {
-                                switch (_c.label) {
-                                    case 0:
-                                        _a = conjureImages;
-                                        _b = key;
-                                        return [4 /*yield*/, _utility__WEBPACK_IMPORTED_MODULE_0__.resizeImageData(conjureImages[key], gauges.scaleFactor)];
-                                    case 1:
-                                        _a[_b] = _c.sent();
-                                        return [2 /*return*/];
-                                }
-                            });
-                        }); });
-                        scaledOnce = true;
-                    }
-                    alt1.overLaySetGroup('Undead_Army');
-                    if (gauges.necromancy.conjures.active) {
-                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
-                            gauges.necromancy.conjures.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
-                            gauges.necromancy.conjures.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(conjureImages.undead_army.toDrawableData()), conjureImages.undead_army.width, 1000);
-                    }
-                    else {
-                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
-                            gauges.necromancy.conjures.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
-                            gauges.necromancy.conjures.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(conjureImages.undead_army_inactive.toDrawableData()), conjureImages.undead_army_inactive.width, 1000);
-                    }
-                    earliest_conjure = [
-                        gauges.necromancy.conjures.skeleton.time,
-                        gauges.necromancy.conjures.zombie.time,
-                        gauges.necromancy.conjures.ghost.time,
-                    ];
-                    minValue = Math.min.apply(null, earliest_conjure.filter(Boolean));
-                    if (minValue !== Infinity && minValue !== lastMinValue) {
-                        alt1.overLaySetGroup('Undead_Army_Text');
-                        alt1.overLayFreezeGroup('Undead_Army_Text');
-                        alt1.overLayClearGroup('Undead_Army_Text');
-                        alt1.overLayTextEx(minValue.toString(), white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
-                            26 +
-                            gauges.necromancy.conjures.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y + 32, gauges.scaleFactor), 10000, undefined, true, true);
-                        alt1.overLayRefreshGroup('Undead_Army_Text');
-                        lastMinValue = minValue;
-                    }
-                    else {
-                        alt1.overLayClearGroup('Undead_Army_Text');
-                    }
-                    return [2 /*return*/];
-            }
+const white = alt1__WEBPACK_IMPORTED_MODULE_1__.mixColor(255, 255, 255);
+let lastMinValue = 0;
+let scaledOnce = false;
+async function conjureOverlay(gauges) {
+    if (!gauges.necromancy.conjures.isActiveOverlay) {
+        return;
+    }
+    await conjureImages.promise;
+    if (!scaledOnce) {
+        Object.keys(conjureImages).forEach(async (key) => {
+            conjureImages[key] = await _utility__WEBPACK_IMPORTED_MODULE_0__.resizeImageData(conjureImages[key], gauges.scaleFactor);
         });
-    });
+        scaledOnce = true;
+    }
+    alt1.overLaySetGroup('Undead_Army');
+    if (gauges.necromancy.conjures.active) {
+        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
+            gauges.necromancy.conjures.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
+            gauges.necromancy.conjures.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(conjureImages.undead_army.toDrawableData()), conjureImages.undead_army.width, 1000);
+    }
+    else {
+        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
+            gauges.necromancy.conjures.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
+            gauges.necromancy.conjures.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(conjureImages.undead_army_inactive.toDrawableData()), conjureImages.undead_army_inactive.width, 1000);
+    }
+    const earliest_conjure = [
+        gauges.necromancy.conjures.skeleton.time,
+        gauges.necromancy.conjures.zombie.time,
+        gauges.necromancy.conjures.ghost.time,
+    ];
+    const minValue = Math.min.apply(null, earliest_conjure.filter(Boolean));
+    if (minValue !== Infinity && minValue !== lastMinValue) {
+        alt1.overLaySetGroup('Undead_Army_Text');
+        alt1.overLayFreezeGroup('Undead_Army_Text');
+        alt1.overLayClearGroup('Undead_Army_Text');
+        alt1.overLayTextEx(minValue.toString(), white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
+            26 +
+            gauges.necromancy.conjures.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y + 32, gauges.scaleFactor), 10000, undefined, true, true);
+        alt1.overLayRefreshGroup('Undead_Army_Text');
+        lastMinValue = minValue;
+    }
+    else {
+        alt1.overLayClearGroup('Undead_Army_Text');
+    }
 }
 
 
@@ -2649,46 +3187,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
 /* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
-var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
 /* eslint-disable @typescript-eslint/no-require-imports */
 
 
-var incantationImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
+const incantationImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     invoke_death_inactive: __webpack_require__(/*! ../.././asset/data/incantations/lg/invoke_death_inactive.data.png */ "./asset/data/incantations/lg/invoke_death_inactive.data.png"),
     invoke_death: __webpack_require__(/*! ../.././asset/data/incantations/lg/invoke_death.data.png */ "./asset/data/incantations/lg/invoke_death.data.png"),
     darkness_inactive: __webpack_require__(/*! ../.././asset/data/incantations/lg/darkness_inactive.data.png */ "./asset/data/incantations/lg/darkness_inactive.data.png"),
@@ -2698,95 +3200,72 @@ var incantationImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     split_soul_inactive: __webpack_require__(/*! ../.././asset/data/incantations/lg/splitsoul_inactive.data.png */ "./asset/data/incantations/lg/splitsoul_inactive.data.png"),
     split_soul: __webpack_require__(/*! ../.././asset/data/incantations/lg/splitsoul.data.png */ "./asset/data/incantations/lg/splitsoul.data.png"),
 });
-var scaledOnce = false;
-function incantationsOverlay(gauges) {
-    return __awaiter(this, void 0, void 0, function () {
-        var incantations, invokeDeath, darkness, threads, splitSoul;
-        var _this = this;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    incantations = gauges.necromancy.incantations;
-                    invokeDeath = incantations.invokeDeath, darkness = incantations.darkness, threads = incantations.threads, splitSoul = incantations.splitSoul;
-                    if (!incantations.isActiveOverlay) {
-                        return [2 /*return*/];
-                    }
-                    return [4 /*yield*/, incantationImages.promise];
-                case 1:
-                    _a.sent();
-                    if (!scaledOnce) {
-                        Object.keys(incantationImages).forEach(function (key) { return __awaiter(_this, void 0, void 0, function () {
-                            var _a, _b;
-                            return __generator(this, function (_c) {
-                                switch (_c.label) {
-                                    case 0:
-                                        _a = incantationImages;
-                                        _b = key;
-                                        return [4 /*yield*/, _utility__WEBPACK_IMPORTED_MODULE_0__.resizeImageData(incantationImages[key], gauges.scaleFactor)];
-                                    case 1:
-                                        _a[_b] = _c.sent();
-                                        return [2 /*return*/];
-                                }
-                            });
-                        }); });
-                        scaledOnce = true;
-                    }
-                    if (incantations.active[0] &&
-                        invokeDeath.isActiveOverlay &&
-                        incantations.isActiveOverlay) {
-                        alt1.overLaySetGroup('Invoke_Death');
-                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
-                            invokeDeath.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(incantationImages.invoke_death.toDrawableData()), incantationImages.invoke_death.width, 1000);
-                    }
-                    else if (invokeDeath.isActiveOverlay && incantations.isActiveOverlay) {
-                        alt1.overLaySetGroup('Invoke_Death');
-                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
-                            invokeDeath.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(incantationImages.invoke_death_inactive.toDrawableData()), incantationImages.invoke_death_inactive.width, 1000);
-                    }
-                    if (incantations.active[1] &&
-                        darkness.isActiveOverlay &&
-                        incantations.isActiveOverlay) {
-                        alt1.overLaySetGroup('Darkness');
-                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
-                            darkness.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
-                            darkness.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(incantationImages.darkness.toDrawableData()), incantationImages.darkness.width, 1000);
-                    }
-                    else if (darkness.isActiveOverlay && incantations.isActiveOverlay) {
-                        alt1.overLaySetGroup('Darkness');
-                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
-                            darkness.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
-                            darkness.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(incantationImages.darkness_inactive.toDrawableData()), incantationImages.darkness_inactive.width, 1000);
-                    }
-                    if (incantations.active[2] &&
-                        threads.isActiveOverlay &&
-                        incantations.isActiveOverlay) {
-                        alt1.overLaySetGroup('Threads');
-                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
-                            threads.position.active_orientation.x * 2, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(incantationImages.threads_inactive.toDrawableData()), incantationImages.threads_inactive.width, 1000);
-                    }
-                    else if (threads.isActiveOverlay && incantations.isActiveOverlay) {
-                        alt1.overLaySetGroup('Threads');
-                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
-                            threads.position.active_orientation.x * 2, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(incantationImages.threads.toDrawableData()), incantationImages.threads.width, 1000);
-                    }
-                    if (incantations.active[3] &&
-                        splitSoul.isActiveOverlay &&
-                        incantations.isActiveOverlay) {
-                        alt1.overLaySetGroup('SplitSoul');
-                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
-                            splitSoul.position.active_orientation.x * 2, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
-                            splitSoul.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(incantationImages.split_soul_inactive.toDrawableData()), incantationImages.split_soul_inactive.width, 1000);
-                    }
-                    else if (splitSoul.isActiveOverlay && incantations.isActiveOverlay) {
-                        alt1.overLaySetGroup('SplitSoul');
-                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
-                            splitSoul.position.active_orientation.x * 2, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
-                            splitSoul.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(incantationImages.split_soul.toDrawableData()), incantationImages.split_soul.width, 1000);
-                    }
-                    return [2 /*return*/];
-            }
+let scaledOnce = false;
+async function incantationsOverlay(gauges) {
+    const { incantations } = gauges.necromancy;
+    const { invokeDeath, darkness, threads, splitSoul } = incantations;
+    if (!incantations.isActiveOverlay) {
+        return;
+    }
+    await incantationImages.promise;
+    if (!scaledOnce) {
+        Object.keys(incantationImages).forEach(async (key) => {
+            incantationImages[key] = await _utility__WEBPACK_IMPORTED_MODULE_0__.resizeImageData(incantationImages[key], gauges.scaleFactor);
         });
-    });
+        scaledOnce = true;
+    }
+    if (incantations.active[0] &&
+        invokeDeath.isActiveOverlay &&
+        incantations.isActiveOverlay) {
+        alt1.overLaySetGroup('Invoke_Death');
+        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
+            invokeDeath.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(incantationImages.invoke_death.toDrawableData()), incantationImages.invoke_death.width, 1000);
+    }
+    else if (invokeDeath.isActiveOverlay && incantations.isActiveOverlay) {
+        alt1.overLaySetGroup('Invoke_Death');
+        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
+            invokeDeath.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(incantationImages.invoke_death_inactive.toDrawableData()), incantationImages.invoke_death_inactive.width, 1000);
+    }
+    if (incantations.active[1] &&
+        darkness.isActiveOverlay &&
+        incantations.isActiveOverlay) {
+        alt1.overLaySetGroup('Darkness');
+        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
+            darkness.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
+            darkness.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(incantationImages.darkness.toDrawableData()), incantationImages.darkness.width, 1000);
+    }
+    else if (darkness.isActiveOverlay && incantations.isActiveOverlay) {
+        alt1.overLaySetGroup('Darkness');
+        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
+            darkness.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
+            darkness.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(incantationImages.darkness_inactive.toDrawableData()), incantationImages.darkness_inactive.width, 1000);
+    }
+    if (incantations.active[2] &&
+        threads.isActiveOverlay &&
+        incantations.isActiveOverlay) {
+        alt1.overLaySetGroup('Threads');
+        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
+            threads.position.active_orientation.x * 2, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(incantationImages.threads_inactive.toDrawableData()), incantationImages.threads_inactive.width, 1000);
+    }
+    else if (threads.isActiveOverlay && incantations.isActiveOverlay) {
+        alt1.overLaySetGroup('Threads');
+        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
+            threads.position.active_orientation.x * 2, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(incantationImages.threads.toDrawableData()), incantationImages.threads.width, 1000);
+    }
+    if (incantations.active[3] &&
+        splitSoul.isActiveOverlay &&
+        incantations.isActiveOverlay) {
+        alt1.overLaySetGroup('SplitSoul');
+        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
+            splitSoul.position.active_orientation.x * 2, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
+            splitSoul.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(incantationImages.split_soul_inactive.toDrawableData()), incantationImages.split_soul_inactive.width, 1000);
+    }
+    else if (splitSoul.isActiveOverlay && incantations.isActiveOverlay) {
+        alt1.overLaySetGroup('SplitSoul');
+        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
+            splitSoul.position.active_orientation.x * 2, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
+            splitSoul.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(incantationImages.split_soul.toDrawableData()), incantationImages.split_soul.width, 1000);
+    }
 }
 
 
@@ -2806,120 +3285,61 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
 /* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
-var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
 /* eslint-disable @typescript-eslint/no-require-imports */
 
 
-var ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
+const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     inactive: __webpack_require__(/*! ../.././asset/data/living_death/lg/living_death_inactive.data.png */ "./asset/data/living_death/lg/living_death_inactive.data.png"),
     active: __webpack_require__(/*! ../.././asset/data/living_death/lg/living_death.data.png */ "./asset/data/living_death/lg/living_death.data.png"),
 });
-var lastValue;
-var scaledOnce = false;
-function livingDeathOverlay(gauges) {
-    return __awaiter(this, void 0, void 0, function () {
-        var necromancy, livingDeath;
-        var _this = this;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    necromancy = gauges.necromancy;
-                    livingDeath = necromancy.livingDeath;
-                    if (!livingDeath.isActiveOverlay) {
-                        clearLivingDeathOverlays();
-                        return [2 /*return*/];
-                    }
-                    return [4 /*yield*/, ultimateImages.promise];
-                case 1:
-                    _a.sent();
-                    if (!scaledOnce) {
-                        Object.keys(ultimateImages).forEach(function (key) { return __awaiter(_this, void 0, void 0, function () {
-                            var _a, _b;
-                            return __generator(this, function (_c) {
-                                switch (_c.label) {
-                                    case 0:
-                                        _a = ultimateImages;
-                                        _b = key;
-                                        return [4 /*yield*/, _utility__WEBPACK_IMPORTED_MODULE_0__.resizeImageData(ultimateImages[key], gauges.scaleFactor)];
-                                    case 1:
-                                        _a[_b] = _c.sent();
-                                        return [2 /*return*/];
-                                }
-                            });
-                        }); });
-                        scaledOnce = true;
-                    }
-                    // If Living Death is not Active and is not on cooldown it should appear as able to be activated
-                    if (!livingDeath.active) {
-                        if (!livingDeath.isOnCooldown) {
-                            displayActiveLivingDeath(gauges);
-                            alt1.overLayRefreshGroup('LivingDeath_Text');
-                            alt1.overLayClearGroup('LivingDeath_Text');
-                        }
-                        else {
-                            displayInactiveLivingDeath(gauges);
-                            alt1.overLayRefreshGroup('LivingDeath_Text');
-                            alt1.overLayClearGroup('LivingDeath_Text');
-                        }
-                    }
-                    else {
-                        livingDeath.isOnCooldown = false;
-                        _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('LivingDeath_Cooldown_Text');
-                        displayActiveLivingDeath(gauges);
-                        if (lastValue !== livingDeath.time) {
-                            livingDeath.cooldownDuration = 0;
-                            _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('LivingDeath_Cooldown_Text');
-                            alt1.overLaySetGroup('LivingDeath_Text');
-                            alt1.overLayFreezeGroup('LivingDeath_Text');
-                            alt1.overLayClearGroup('LivingDeath_Text');
-                            alt1.overLayTextEx(livingDeath.time.toString(), _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(necromancy.position.x +
-                                livingDeath.position.active_orientation.x +
-                                26, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(necromancy.position.y +
-                                livingDeath.position.active_orientation.y +
-                                26, gauges.scaleFactor), 3000, undefined, true, true);
-                            alt1.overLayRefreshGroup('LivingDeath_Text');
-                        }
-                    }
-                    lastValue = livingDeath.time;
-                    return [2 /*return*/];
-            }
+let lastValue;
+let scaledOnce = false;
+async function livingDeathOverlay(gauges) {
+    const { necromancy } = gauges;
+    const { livingDeath } = necromancy;
+    if (!livingDeath.isActiveOverlay) {
+        clearLivingDeathOverlays();
+        return;
+    }
+    await ultimateImages.promise;
+    if (!scaledOnce) {
+        Object.keys(ultimateImages).forEach(async (key) => {
+            ultimateImages[key] = await _utility__WEBPACK_IMPORTED_MODULE_0__.resizeImageData(ultimateImages[key], gauges.scaleFactor);
         });
-    });
+        scaledOnce = true;
+    }
+    // If Living Death is not Active and is not on cooldown it should appear as able to be activated
+    if (!livingDeath.active) {
+        if (!livingDeath.isOnCooldown) {
+            displayActiveLivingDeath(gauges);
+            alt1.overLayRefreshGroup('LivingDeath_Text');
+            alt1.overLayClearGroup('LivingDeath_Text');
+        }
+        else {
+            displayInactiveLivingDeath(gauges);
+            alt1.overLayRefreshGroup('LivingDeath_Text');
+            alt1.overLayClearGroup('LivingDeath_Text');
+        }
+    }
+    else {
+        livingDeath.isOnCooldown = false;
+        _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('LivingDeath_Cooldown_Text');
+        displayActiveLivingDeath(gauges);
+        if (lastValue !== livingDeath.time) {
+            livingDeath.cooldownDuration = 0;
+            _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('LivingDeath_Cooldown_Text');
+            alt1.overLaySetGroup('LivingDeath_Text');
+            alt1.overLayFreezeGroup('LivingDeath_Text');
+            alt1.overLayClearGroup('LivingDeath_Text');
+            alt1.overLayTextEx(livingDeath.time.toString(), _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(necromancy.position.x +
+                livingDeath.position.active_orientation.x +
+                26, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(necromancy.position.y +
+                livingDeath.position.active_orientation.y +
+                26, gauges.scaleFactor), 3000, undefined, true, true);
+            alt1.overLayRefreshGroup('LivingDeath_Text');
+        }
+    }
+    lastValue = livingDeath.time;
 }
 function clearLivingDeathOverlays() {
     _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('LivingDeath_Text');
@@ -2956,46 +3376,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
 /* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
-var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
 /* eslint-disable @typescript-eslint/no-require-imports */
 
 
-var necrosisImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
+const necrosisImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     necrosis_0: __webpack_require__(/*! ../.././asset/data/necrosis/lg/necrosis_0.data.png */ "./asset/data/necrosis/lg/necrosis_0.data.png"),
     necrosis_2: __webpack_require__(/*! ../.././asset/data/necrosis/lg/necrosis_2.data.png */ "./asset/data/necrosis/lg/necrosis_2.data.png"),
     necrosis_4: __webpack_require__(/*! ../.././asset/data/necrosis/lg/necrosis_4.data.png */ "./asset/data/necrosis/lg/necrosis_4.data.png"),
@@ -3004,83 +3388,60 @@ var necrosisImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     necrosis_10: __webpack_require__(/*! ../.././asset/data/necrosis/lg/necrosis_10.data.png */ "./asset/data/necrosis/lg/necrosis_10.data.png"),
     necrosis_12: __webpack_require__(/*! ../.././asset/data/necrosis/lg/necrosis_12.data.png */ "./asset/data/necrosis/lg/necrosis_12.data.png"),
 });
-var scaledOnce = false;
-var playingAlert = false;
-function necrosisOverlay(gauges) {
-    return __awaiter(this, void 0, void 0, function () {
-        function displayNecrosisImage(stacks) {
-            alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x + x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y + y + bloatSpace, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(necrosisImages["necrosis_".concat(stacks)].toDrawableData()), necrosisImages["necrosis_".concat(stacks)].width, 1000);
-        }
-        var necrosis, position, stacks, _a, x, y, bloatVisible, bloatSpace;
-        var _this = this;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    necrosis = gauges.necromancy.stacks.necrosis;
-                    return [4 /*yield*/, necrosisImages.promise];
-                case 1:
-                    _b.sent();
-                    if (!necrosis.isActiveOverlay) {
-                        return [2 /*return*/];
-                    }
-                    if (!scaledOnce) {
-                        Object.keys(necrosisImages).forEach(function (key) { return __awaiter(_this, void 0, void 0, function () {
-                            var _a, _b;
-                            return __generator(this, function (_c) {
-                                switch (_c.label) {
-                                    case 0:
-                                        _a = necrosisImages;
-                                        _b = key;
-                                        return [4 /*yield*/, _utility__WEBPACK_IMPORTED_MODULE_0__.resizeImageData(necrosisImages[key], gauges.scaleFactor)];
-                                    case 1:
-                                        _a[_b] = _c.sent();
-                                        return [2 /*return*/];
-                                }
-                            });
-                        }); });
-                        scaledOnce = true;
-                    }
-                    position = necrosis.position, stacks = necrosis.stacks;
-                    console.log(stacks);
-                    _a = position.active_orientation, x = _a.x, y = _a.y;
-                    bloatVisible = !gauges.necromancy.bloat.isActiveOverlay;
-                    bloatSpace = 0;
-                    if (bloatVisible) {
-                        bloatSpace = -23;
-                    }
-                    alt1.overLaySetGroup('Necrosis');
-                    switch (stacks) {
-                        case 0:
-                        case 2:
-                        case 4:
-                        case 6:
-                        case 8:
-                        case 10:
-                        case 12:
-                            displayNecrosisImage(stacks);
-                            break;
-                    }
-                    if (stacks >= necrosis.alarm.threshold && necrosis.alarm.isActive) {
-                        if (!playingAlert) {
-                            _utility__WEBPACK_IMPORTED_MODULE_0__.playAlert('necrosis');
-                            playingAlert = true;
-                        }
-                    }
-                    else if (playingAlert) {
-                        _utility__WEBPACK_IMPORTED_MODULE_0__.pauseAlert('necrosis');
-                        playingAlert = false;
-                    }
-                    if (gauges.necromancy.stacks.duplicateNecrosisRow) {
-                        alt1.overLaySetGroup('Necrosis_Row2');
-                        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x + x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
-                            y +
-                            necrosisImages.necrosis_0.height +
-                            bloatSpace, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(necrosisImages["necrosis_".concat(stacks)].toDrawableData()), necrosisImages["necrosis_".concat(stacks)].width, 1000);
-                    }
-                    return [2 /*return*/];
-            }
+let scaledOnce = false;
+let playingAlert = false;
+async function necrosisOverlay(gauges) {
+    const { necrosis } = gauges.necromancy.stacks;
+    await necrosisImages.promise;
+    if (!necrosis.isActiveOverlay) {
+        return;
+    }
+    if (!scaledOnce) {
+        Object.keys(necrosisImages).forEach(async (key) => {
+            necrosisImages[key] = await _utility__WEBPACK_IMPORTED_MODULE_0__.resizeImageData(necrosisImages[key], gauges.scaleFactor);
         });
-    });
+        scaledOnce = true;
+    }
+    const { position, stacks } = necrosis;
+    console.log(stacks);
+    const { x, y } = position.active_orientation;
+    const bloatVisible = !gauges.necromancy.bloat.isActiveOverlay;
+    let bloatSpace = 0;
+    if (bloatVisible) {
+        bloatSpace = -23;
+    }
+    alt1.overLaySetGroup('Necrosis');
+    switch (stacks) {
+        case 0:
+        case 2:
+        case 4:
+        case 6:
+        case 8:
+        case 10:
+        case 12:
+            displayNecrosisImage(stacks);
+            break;
+    }
+    if (stacks >= necrosis.alarm.threshold && necrosis.alarm.isActive) {
+        if (!playingAlert) {
+            _utility__WEBPACK_IMPORTED_MODULE_0__.playAlert('necrosis');
+            playingAlert = true;
+        }
+    }
+    else if (playingAlert) {
+        _utility__WEBPACK_IMPORTED_MODULE_0__.pauseAlert('necrosis');
+        playingAlert = false;
+    }
+    if (gauges.necromancy.stacks.duplicateNecrosisRow) {
+        alt1.overLaySetGroup('Necrosis_Row2');
+        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x + x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
+            y +
+            necrosisImages.necrosis_0.height +
+            bloatSpace, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(necrosisImages[`necrosis_${stacks}`].toDrawableData()), necrosisImages[`necrosis_${stacks}`].width, 1000);
+    }
+    function displayNecrosisImage(stacks) {
+        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x + x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y + y + bloatSpace, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(necrosisImages[`necrosis_${stacks}`].toDrawableData()), necrosisImages[`necrosis_${stacks}`].width, 1000);
+    }
 }
 
 
@@ -3100,46 +3461,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
 /* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
-var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
 /* eslint-disable @typescript-eslint/no-require-imports */
 
 
-var soulImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
+const soulImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     souls_0: __webpack_require__(/*! ../.././asset/data/souls/lg/souls_0.data.png */ "./asset/data/souls/lg/souls_0.data.png"),
     souls_1: __webpack_require__(/*! ../.././asset/data/souls/lg/souls_1.data.png */ "./asset/data/souls/lg/souls_1.data.png"),
     souls_2: __webpack_require__(/*! ../.././asset/data/souls/lg/souls_2.data.png */ "./asset/data/souls/lg/souls_2.data.png"),
@@ -3147,82 +3472,59 @@ var soulImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     souls_4: __webpack_require__(/*! ../.././asset/data/souls/lg/souls_4.data.png */ "./asset/data/souls/lg/souls_4.data.png"),
     souls_5: __webpack_require__(/*! ../.././asset/data/souls/lg/souls_5.data.png */ "./asset/data/souls/lg/souls_5.data.png"),
 });
-var scaledOnce = false;
-var playingAlert = false;
-function soulsOverlay(gauges) {
-    return __awaiter(this, void 0, void 0, function () {
-        function displaySoulImage(image) {
-            alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x + x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y + y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(image.toDrawableData()), image.width, 1000);
-        }
-        var souls, position, _a, x, y;
-        var _this = this;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    souls = gauges.necromancy.stacks.souls;
-                    if (!souls.isActiveOverlay) {
-                        return [2 /*return*/];
-                    }
-                    return [4 /*yield*/, soulImages.promise];
-                case 1:
-                    _b.sent();
-                    if (!scaledOnce) {
-                        Object.keys(soulImages).forEach(function (key) { return __awaiter(_this, void 0, void 0, function () {
-                            var _a, _b;
-                            return __generator(this, function (_c) {
-                                switch (_c.label) {
-                                    case 0:
-                                        _a = soulImages;
-                                        _b = key;
-                                        return [4 /*yield*/, _utility__WEBPACK_IMPORTED_MODULE_0__.resizeImageData(soulImages[key], gauges.scaleFactor)];
-                                    case 1:
-                                        _a[_b] = _c.sent();
-                                        return [2 /*return*/];
-                                }
-                            });
-                        }); });
-                        scaledOnce = true;
-                    }
-                    position = souls.position;
-                    _a = position.active_orientation, x = _a.x, y = _a.y;
-                    alt1.overLaySetGroup('Souls');
-                    switch (souls.stacks) {
-                        case 0:
-                            displaySoulImage(soulImages.souls_0);
-                            break;
-                        case 1:
-                            displaySoulImage(soulImages.souls_1);
-                            break;
-                        case 2:
-                            displaySoulImage(soulImages.souls_2);
-                            break;
-                        case 3:
-                            displaySoulImage(soulImages.souls_3);
-                            break;
-                        case 4:
-                            displaySoulImage(soulImages.souls_4);
-                            break;
-                        case 5:
-                            displaySoulImage(soulImages.souls_5);
-                            break;
-                        default:
-                            // Handle cases beyond 5 if needed
-                            break;
-                    }
-                    if (souls.stacks >= souls.alarm.threshold && souls.alarm.isActive) {
-                        if (!playingAlert) {
-                            _utility__WEBPACK_IMPORTED_MODULE_0__.playAlert('souls');
-                            playingAlert = true;
-                        }
-                    }
-                    else if (playingAlert) {
-                        _utility__WEBPACK_IMPORTED_MODULE_0__.pauseAlert('souls');
-                        playingAlert = false;
-                    }
-                    return [2 /*return*/];
-            }
+let scaledOnce = false;
+let playingAlert = false;
+async function soulsOverlay(gauges) {
+    const { souls } = gauges.necromancy.stacks;
+    if (!souls.isActiveOverlay) {
+        return;
+    }
+    await soulImages.promise;
+    if (!scaledOnce) {
+        Object.keys(soulImages).forEach(async (key) => {
+            soulImages[key] = await _utility__WEBPACK_IMPORTED_MODULE_0__.resizeImageData(soulImages[key], gauges.scaleFactor);
         });
-    });
+        scaledOnce = true;
+    }
+    const { position } = souls;
+    const { x, y } = position.active_orientation;
+    alt1.overLaySetGroup('Souls');
+    switch (souls.stacks) {
+        case 0:
+            displaySoulImage(soulImages.souls_0);
+            break;
+        case 1:
+            displaySoulImage(soulImages.souls_1);
+            break;
+        case 2:
+            displaySoulImage(soulImages.souls_2);
+            break;
+        case 3:
+            displaySoulImage(soulImages.souls_3);
+            break;
+        case 4:
+            displaySoulImage(soulImages.souls_4);
+            break;
+        case 5:
+            displaySoulImage(soulImages.souls_5);
+            break;
+        default:
+            // Handle cases beyond 5 if needed
+            break;
+    }
+    if (souls.stacks >= souls.alarm.threshold && souls.alarm.isActive) {
+        if (!playingAlert) {
+            _utility__WEBPACK_IMPORTED_MODULE_0__.playAlert('souls');
+            playingAlert = true;
+        }
+    }
+    else if (playingAlert) {
+        _utility__WEBPACK_IMPORTED_MODULE_0__.pauseAlert('souls');
+        playingAlert = false;
+    }
+    function displaySoulImage(image) {
+        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x + x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y + y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(image.toDrawableData()), image.width, 1000);
+    }
 }
 
 
@@ -3245,51 +3547,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alt1_buffs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1/buffs */ "../node_modules/alt1/dist/buffs/index.js");
 /* harmony import */ var alt1_buffs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1_buffs__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utility */ "./lib/utility.ts");
-var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
 /* eslint-disable @typescript-eslint/no-require-imports */
 
 
 
 
-var buffs = new (alt1_buffs__WEBPACK_IMPORTED_MODULE_1___default())();
-var debuffs = new (alt1_buffs__WEBPACK_IMPORTED_MODULE_1___default())();
+const buffs = new (alt1_buffs__WEBPACK_IMPORTED_MODULE_1___default())();
+const debuffs = new (alt1_buffs__WEBPACK_IMPORTED_MODULE_1___default())();
 debuffs.debuffs = true;
-var buffsImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
+const buffsImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
     darkness: __webpack_require__(/*! .././asset/data/buffs/Darkness.data.png */ "./asset/data/buffs/Darkness.data.png"),
     living_death: __webpack_require__(/*! .././asset/data/buffs/Living_Death.data.png */ "./asset/data/buffs/Living_Death.data.png"),
     split_soul: __webpack_require__(/*! .././asset/data/buffs/Split_Soul.data.png */ "./asset/data/buffs/Split_Soul.data.png"),
@@ -3300,305 +3566,207 @@ var buffsImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
     zombie: __webpack_require__(/*! .././asset/data/buffs/putrid_zombie-top.data.png */ "./asset/data/buffs/putrid_zombie-top.data.png"),
     ghost: __webpack_require__(/*! .././asset/data/buffs/vengeful_ghost-top.data.png */ "./asset/data/buffs/vengeful_ghost-top.data.png"),
 });
-function retryOperation(operation_1, maxRetries_1, delay_1) {
-    return __awaiter(this, arguments, void 0, function (operation, maxRetries, delay, attempt) {
-        var error_1;
-        if (attempt === void 0) { attempt = 0; }
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    _a.trys.push([0, 2, , 4]);
-                    return [4 /*yield*/, operation()];
-                case 1: return [2 /*return*/, _a.sent()];
-                case 2:
-                    error_1 = _a.sent();
-                    if (attempt >= maxRetries) {
-                        throw error_1;
-                    }
-                    return [4 /*yield*/, new Promise(function (resolve) { return setTimeout(resolve, delay); })];
-                case 3:
-                    _a.sent();
-                    return [2 /*return*/, retryOperation(operation, maxRetries, delay, attempt + 1)];
-                case 4: return [2 /*return*/];
-            }
-        });
-    });
+async function retryOperation(operation, maxRetries, delay, attempt = 0) {
+    try {
+        return await operation();
+    }
+    catch (error) {
+        if (attempt >= maxRetries) {
+            throw error;
+        }
+        await new Promise((resolve) => setTimeout(resolve, delay));
+        return retryOperation(operation, maxRetries, delay, attempt + 1);
+    }
 }
-function findBuffsBar() {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            console.info('Attempting to find buffs bar...');
-            if (buffs.pos == undefined) {
-                buffs.find();
-                if (buffs.pos == undefined) {
-                    throw new Error('BuffsBarSearchError: Failed to find buff bar');
-                }
-                else {
-                    return [2 /*return*/];
-                }
-            }
-            return [2 /*return*/];
-        });
-    });
+async function findBuffsBar() {
+    console.info('Attempting to find buffs bar...');
+    if (buffs.pos == undefined) {
+        buffs.find();
+        if (buffs.pos == undefined) {
+            throw new Error('BuffsBarSearchError: Failed to find buff bar');
+        }
+        else {
+            return;
+        }
+    }
 }
 retryOperation(findBuffsBar, 5, 5000)
-    .then(function () { return console.info('Found Buffs bar succesfully - starting overlay'); })
-    .catch(function () {
-    _utility__WEBPACK_IMPORTED_MODULE_0__.helperItems.Output.insertAdjacentHTML('beforeend', "<p style=\"text-align:center;margin-top:10px;color:red;\">Please make sure you have at least 1 buff on your buffs bar and then reload the app.</p>");
+    .then(() => console.info('Found Buffs bar succesfully - starting overlay'))
+    .catch(() => {
+    _utility__WEBPACK_IMPORTED_MODULE_0__.helperItems.Output.insertAdjacentHTML('beforeend', `<p style="text-align:center;margin-top:10px;color:red;">Please make sure you have at least 1 buff on your buffs bar and then reload the app.</p>`);
     console.warn('Please make sure you have at least 1 buff on your buffs bar and then reload the app.');
 });
-function readBuffs(gauges) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            if (buffs.pos !== undefined) {
-                updateBuffData(gauges, buffsImages.soul, 200, updateSoulCount);
-                updateBuffData(gauges, buffsImages.necrosis, 200, updateNecrosisCount);
-                if (gauges.necromancy.livingDeath.isActiveOverlay) {
-                    updateBuffData(gauges, buffsImages.living_death, 400, updateLivingDeath);
-                }
-                updateConjures(gauges);
-                updateBuffData(gauges, buffsImages.darkness, 300, updateDarkness);
-                if (!disableThreadsCheck) {
-                    updateBuffData(gauges, buffsImages.threads, 300, updateThreads);
-                }
-                if (!disableSplitCheck) {
-                    updateBuffData(gauges, buffsImages.split_soul, 350, updateSplitSoul);
-                }
-                return [2 /*return*/, buffs];
-            }
-            return [2 /*return*/];
-        });
-    });
+async function readBuffs(gauges) {
+    if (buffs.pos !== undefined) {
+        updateBuffData(gauges, buffsImages.soul, 200, updateSoulCount);
+        updateBuffData(gauges, buffsImages.necrosis, 200, updateNecrosisCount);
+        if (gauges.necromancy.livingDeath.isActiveOverlay) {
+            updateBuffData(gauges, buffsImages.living_death, 400, updateLivingDeath);
+        }
+        updateConjures(gauges);
+        updateBuffData(gauges, buffsImages.darkness, 300, updateDarkness);
+        if (!disableThreadsCheck) {
+            updateBuffData(gauges, buffsImages.threads, 300, updateThreads);
+        }
+        if (!disableSplitCheck) {
+            updateBuffData(gauges, buffsImages.split_soul, 350, updateSplitSoul);
+        }
+        return buffs;
+    }
 }
-function updateBuffData(gauges, buffImage, threshold, 
+async function updateBuffData(gauges, buffImage, threshold, 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 updateCallbackFn) {
-    return __awaiter(this, void 0, void 0, function () {
-        var buffsData, foundBuff, _i, _a, value, buff;
-        return __generator(this, function (_b) {
-            buffsData = buffs.read();
-            foundBuff = false;
-            for (_i = 0, _a = Object.values(buffsData); _i < _a.length; _i++) {
-                value = _a[_i];
-                buff = value.countMatch(buffImage, false);
-                if (buff.passed > threshold) {
-                    foundBuff = true;
-                    updateCallbackFn(gauges, value.readArg('time').time);
-                }
-            }
-            if (!foundBuff) {
-                updateCallbackFn(gauges, 0);
-            }
-            return [2 /*return*/, foundBuff];
-        });
-    });
+    const buffsData = buffs.read();
+    let foundBuff = false;
+    for (const value of Object.values(buffsData)) {
+        const buff = value.countMatch(buffImage, false);
+        if (buff.passed > threshold) {
+            foundBuff = true;
+            updateCallbackFn(gauges, value.readArg('time').time);
+        }
+    }
+    if (!foundBuff) {
+        updateCallbackFn(gauges, 0);
+    }
+    return foundBuff;
 }
 // TODO: Figure out a cleaner way to update values.
 // There shouldn't be any reason the below functions can't be done via updateBuffData
 // without passing an updateCallbackfn()
 // Passing data = ['necromancy]['stacks']['souls]['count'] and trying
 // to update gauges.data doesn't work because somehow ['souls'] is undefined?
-function updateSoulCount(gauges, value) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            gauges.necromancy.stacks.souls.stacks = value;
-            return [2 /*return*/];
-        });
-    });
+async function updateSoulCount(gauges, value) {
+    gauges.necromancy.stacks.souls.stacks = value;
 }
-function updateNecrosisCount(gauges, value) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            gauges.necromancy.stacks.necrosis.stacks = value;
-            return [2 /*return*/];
-        });
-    });
+async function updateNecrosisCount(gauges, value) {
+    gauges.necromancy.stacks.necrosis.stacks = value;
 }
-function updateLivingDeath(gauges, value) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            // If Living Death has an active buff and a timer:
-            //   - it cannot be on cooldown
-            //   - it must be active
-            //   - The remaining time is its timer
-            if (value > 1) {
-                gauges.necromancy.livingDeath.isOnCooldown = false;
-                gauges.necromancy.livingDeath.cooldownDuration = 0;
-                gauges.necromancy.livingDeath.active = true;
-                gauges.necromancy.livingDeath.time = value;
-            }
-            // When only 1 second of the buff exists
-            if (value == 1 && gauges.necromancy.livingDeath.active) {
-                // Make sure to update the text one final time
-                gauges.necromancy.livingDeath.time = value;
-                // Then start a timer to wait just past the last second
-                //  - Clear the timer
-                //  - LD is now on Cooldown so is not active
-                setTimeout(function () {
-                    gauges.necromancy.livingDeath.time = 0;
-                    gauges.necromancy.livingDeath.active = false;
-                    gauges.necromancy.livingDeath.isOnCooldown = true;
-                    startLivingDeathCooldown(gauges);
-                }, 1050);
-            }
-            return [2 /*return*/];
-        });
-    });
+async function updateLivingDeath(gauges, value) {
+    // If Living Death has an active buff and a timer:
+    //   - it cannot be on cooldown
+    //   - it must be active
+    //   - The remaining time is its timer
+    if (value > 1) {
+        gauges.necromancy.livingDeath.isOnCooldown = false;
+        gauges.necromancy.livingDeath.cooldownDuration = 0;
+        gauges.necromancy.livingDeath.active = true;
+        gauges.necromancy.livingDeath.time = value;
+    }
+    // When only 1 second of the buff exists
+    if (value == 1 && gauges.necromancy.livingDeath.active) {
+        // Make sure to update the text one final time
+        gauges.necromancy.livingDeath.time = value;
+        // Then start a timer to wait just past the last second
+        //  - Clear the timer
+        //  - LD is now on Cooldown so is not active
+        setTimeout(() => {
+            gauges.necromancy.livingDeath.time = 0;
+            gauges.necromancy.livingDeath.active = false;
+            gauges.necromancy.livingDeath.isOnCooldown = true;
+            startLivingDeathCooldown(gauges);
+        }, 1050);
+    }
 }
-function startLivingDeathCooldown(gauges) {
-    return __awaiter(this, void 0, void 0, function () {
-        var cooldown, timer;
-        return __generator(this, function (_a) {
-            if (!gauges.necromancy.livingDeath.isActiveOverlay) {
-                return [2 /*return*/];
-            }
-            // If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
-            if (gauges.necromancy.livingDeath.active) {
-                endLivingDeathCooldown(gauges);
-                return [2 /*return*/];
-            }
-            // Otherwise cooldown has started and we can clear the Active text
-            _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('LivingDeath_Text');
-            alt1.overLaySetGroupZIndex('LivingDeath_Cooldown_Text', 1);
-            cooldown = 59;
-            timer = setInterval(function () {
-                // During our interval if the buff ever becomes active - kill the timer
-                if (gauges.necromancy.livingDeath.active) {
-                    clearInterval(timer);
-                    endLivingDeathCooldown(gauges);
-                    return;
-                }
-                cooldown -= 1;
-                if (cooldown > 0) {
-                    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('LivingDeath_Cooldown_Text');
-                    alt1.overLayTextEx(cooldown.toString(), _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
-                        gauges.necromancy.livingDeath.position.active_orientation
-                            .x +
-                        26, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
-                        gauges.necromancy.livingDeath.position.active_orientation
-                            .y +
-                        26, gauges.scaleFactor), 3000, undefined, true, true);
-                    alt1.overLayRefreshGroup('LivingDeath_Cooldown_Text');
-                }
-                else {
-                    clearInterval(timer);
-                    endLivingDeathCooldown(gauges);
-                    return;
-                }
-            }, 1000);
-            return [2 /*return*/];
-        });
-    });
-}
-function endLivingDeathCooldown(gauges) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            gauges.necromancy.livingDeath.isOnCooldown = false;
-            gauges.necromancy.livingDeath.cooldownDuration = 0;
+async function startLivingDeathCooldown(gauges) {
+    if (!gauges.necromancy.livingDeath.isActiveOverlay) {
+        return;
+    }
+    // If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
+    if (gauges.necromancy.livingDeath.active) {
+        endLivingDeathCooldown(gauges);
+        return;
+    }
+    // Otherwise cooldown has started and we can clear the Active text
+    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('LivingDeath_Text');
+    alt1.overLaySetGroupZIndex('LivingDeath_Cooldown_Text', 1);
+    let cooldown = 59;
+    const timer = setInterval(() => {
+        // During our interval if the buff ever becomes active - kill the timer
+        if (gauges.necromancy.livingDeath.active) {
+            clearInterval(timer);
+            endLivingDeathCooldown(gauges);
+            return;
+        }
+        cooldown -= 1;
+        if (cooldown > 0) {
             _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('LivingDeath_Cooldown_Text');
-            return [2 /*return*/];
-        });
-    });
+            alt1.overLayTextEx(cooldown.toString(), _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
+                gauges.necromancy.livingDeath.position.active_orientation
+                    .x +
+                26, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
+                gauges.necromancy.livingDeath.position.active_orientation
+                    .y +
+                26, gauges.scaleFactor), 3000, undefined, true, true);
+            alt1.overLayRefreshGroup('LivingDeath_Cooldown_Text');
+        }
+        else {
+            clearInterval(timer);
+            endLivingDeathCooldown(gauges);
+            return;
+        }
+    }, 1000);
 }
-function updateSkeleton(gauges, value) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            gauges.necromancy.conjures.skeleton.time = value;
-            gauges.necromancy.conjures.skeleton.active = Boolean(value);
-            return [2 /*return*/];
-        });
-    });
+async function endLivingDeathCooldown(gauges) {
+    gauges.necromancy.livingDeath.isOnCooldown = false;
+    gauges.necromancy.livingDeath.cooldownDuration = 0;
+    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('LivingDeath_Cooldown_Text');
 }
-function updateZombie(gauges, value) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            gauges.necromancy.conjures.zombie.time = value;
-            gauges.necromancy.conjures.zombie.active = Boolean(value);
-            return [2 /*return*/];
-        });
-    });
+async function updateSkeleton(gauges, value) {
+    gauges.necromancy.conjures.skeleton.time = value;
+    gauges.necromancy.conjures.skeleton.active = Boolean(value);
 }
-function updateGhost(gauges, value) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            gauges.necromancy.conjures.ghost.time = value;
-            gauges.necromancy.conjures.ghost.active = Boolean(value);
-            return [2 /*return*/];
-        });
-    });
+async function updateZombie(gauges, value) {
+    gauges.necromancy.conjures.zombie.time = value;
+    gauges.necromancy.conjures.zombie.active = Boolean(value);
 }
-function updateDarkness(gauges, value) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            gauges.necromancy.incantations.active[1] = Boolean(value);
-            return [2 /*return*/];
-        });
-    });
+async function updateGhost(gauges, value) {
+    gauges.necromancy.conjures.ghost.time = value;
+    gauges.necromancy.conjures.ghost.active = Boolean(value);
 }
-var disableThreadsCheck = false;
-function updateThreads(gauges, value) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
+async function updateDarkness(gauges, value) {
+    gauges.necromancy.incantations.active[1] = Boolean(value);
+}
+let disableThreadsCheck = false;
+async function updateThreads(gauges, value) {
+    gauges.necromancy.incantations.active[2] = false;
+    if (value > 1) {
+        gauges.necromancy.incantations.active[2] = true;
+    }
+    if (value == 1) {
+        gauges.necromancy.incantations.active[2] = true;
+        disableThreadsCheck = true;
+        setTimeout(() => {
             gauges.necromancy.incantations.active[2] = false;
-            if (value > 1) {
-                gauges.necromancy.incantations.active[2] = true;
-            }
-            if (value == 1) {
-                gauges.necromancy.incantations.active[2] = true;
-                disableThreadsCheck = true;
-                setTimeout(function () {
-                    gauges.necromancy.incantations.active[2] = false;
-                    disableThreadsCheck = false;
-                }, gauges.necromancy.incantations.threads.cooldownDuration * 1000);
-            }
-            return [2 /*return*/];
-        });
-    });
+            disableThreadsCheck = false;
+        }, gauges.necromancy.incantations.threads.cooldownDuration * 1000);
+    }
 }
-var disableSplitCheck = false;
-function updateSplitSoul(gauges, value) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
+let disableSplitCheck = false;
+async function updateSplitSoul(gauges, value) {
+    gauges.necromancy.incantations.active[3] = false;
+    if (value > 1) {
+        gauges.necromancy.incantations.active[3] = true;
+    }
+    if (value == 1) {
+        gauges.necromancy.incantations.active[3] = true;
+        disableSplitCheck = true;
+        setTimeout(() => {
             gauges.necromancy.incantations.active[3] = false;
-            if (value > 1) {
-                gauges.necromancy.incantations.active[3] = true;
-            }
-            if (value == 1) {
-                gauges.necromancy.incantations.active[3] = true;
-                disableSplitCheck = true;
-                setTimeout(function () {
-                    gauges.necromancy.incantations.active[3] = false;
-                    disableSplitCheck = false;
-                }, gauges.necromancy.incantations.splitSoul.cooldownDuration * 1000);
-            }
-            return [2 /*return*/];
-        });
-    });
+            disableSplitCheck = false;
+        }, gauges.necromancy.incantations.splitSoul.cooldownDuration * 1000);
+    }
 }
-function updateConjures(gauges) {
-    return __awaiter(this, void 0, void 0, function () {
-        var hasSkeleton, hasZombie, hasGhost;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, updateBuffData(gauges, buffsImages.skeleton, 150, updateSkeleton)];
-                case 1:
-                    hasSkeleton = _a.sent();
-                    return [4 /*yield*/, updateBuffData(gauges, buffsImages.zombie, 150, updateZombie)];
-                case 2:
-                    hasZombie = _a.sent();
-                    return [4 /*yield*/, updateBuffData(gauges, buffsImages.ghost, 200, updateGhost)];
-                case 3:
-                    hasGhost = _a.sent();
-                    if (hasSkeleton || hasZombie || hasGhost) {
-                        gauges.necromancy.conjures.active = true;
-                    }
-                    else {
-                        gauges.necromancy.conjures.active = false;
-                    }
-                    return [2 /*return*/];
-            }
-        });
-    });
+async function updateConjures(gauges) {
+    const hasSkeleton = await updateBuffData(gauges, buffsImages.skeleton, 150, updateSkeleton);
+    const hasZombie = await updateBuffData(gauges, buffsImages.zombie, 150, updateZombie);
+    const hasGhost = await updateBuffData(gauges, buffsImages.ghost, 200, updateGhost);
+    if (hasSkeleton || hasZombie || hasGhost) {
+        gauges.necromancy.conjures.active = true;
+    }
+    else {
+        gauges.necromancy.conjures.active = false;
+    }
 }
 
 
@@ -3620,125 +3788,156 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alt1_targetmob__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1/targetmob */ "../node_modules/alt1/dist/targetmob/index.js");
 /* harmony import */ var alt1_targetmob__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1_targetmob__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utility */ "./lib/utility.ts");
-var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
 /* eslint-disable @typescript-eslint/no-require-imports */
 
 
 
-var targetDisplay = new (alt1_targetmob__WEBPACK_IMPORTED_MODULE_1___default())();
-var enemyDebuffImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
+const targetDisplay = new (alt1_targetmob__WEBPACK_IMPORTED_MODULE_1___default())();
+const enemyDebuffImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
     invokeDeath: __webpack_require__(/*! .././asset/data/enemyDebuffs/Death_Mark.data.png */ "./asset/data/enemyDebuffs/Death_Mark.data.png"),
     bloat: __webpack_require__(/*! .././asset/data/enemyDebuffs/bloated.data.png */ "./asset/data/enemyDebuffs/bloated.data.png"),
 });
 // Thanks to rodultra97 for PR to previous repo
-var bloatInterval = new Map();
-var bloat = 'bloat';
-function readEnemy(gauges) {
-    return __awaiter(this, void 0, void 0, function () {
-        var targetData, target_display_loc, targetDebuffs, targetIsDeathMarked, targetIsBloated, intervalId;
-        return __generator(this, function (_a) {
-            targetData = targetDisplay.read();
-            if (gauges.checkCombatStatus) {
-                if (targetData) {
-                    gauges.isInCombat = true;
+const bloatInterval = new Map();
+const bloat = 'bloat';
+async function readEnemy(gauges) {
+    //TODO: Store LastPos and detect when to rescan to avoid spamming CHFRS in loop
+    const targetData = targetDisplay.read();
+    if (gauges.checkCombatStatus) {
+        if (targetData) {
+            gauges.isInCombat = true;
+        }
+        else {
+            setTimeout(() => {
+                if (!targetData) {
+                    gauges.isInCombat = false;
+                }
+            }, 1200);
+        }
+    }
+    else {
+        gauges.isInCombat = true;
+    }
+    if (targetData && gauges.isInCombat) {
+        const target_display_loc = {
+            x: (targetDisplay === null || targetDisplay === void 0 ? void 0 : targetDisplay.lastpos.x) - 120,
+            y: (targetDisplay === null || targetDisplay === void 0 ? void 0 : targetDisplay.lastpos.y) + 20,
+            w: 150,
+            h: 60,
+        };
+        const targetDebuffs = alt1__WEBPACK_IMPORTED_MODULE_2__.captureHold(target_display_loc.x, target_display_loc.y, target_display_loc.w, target_display_loc.h);
+        const targetIsDeathMarked = targetDebuffs.findSubimage(enemyDebuffImages.invokeDeath).length;
+        if (targetIsDeathMarked) {
+            gauges.necromancy.incantations.active[0] = true;
+        }
+        else if (!targetIsDeathMarked) {
+            gauges.necromancy.incantations.active[0] = false;
+        }
+        const targetIsBloated = targetDebuffs.findSubimage(enemyDebuffImages.bloat).length;
+        if (targetIsBloated && !bloatInterval.has(bloat)) {
+            gauges.necromancy.bloat.time = 20.5;
+            gauges.necromancy.bloat.active = true;
+            const intervalId = setInterval(() => {
+                const currentTick = gauges.necromancy.bloat.time;
+                if (currentTick > 0) {
+                    const nextTick = parseFloat((0,_utility__WEBPACK_IMPORTED_MODULE_0__.roundedToFixed)(currentTick - 0.6, 1));
+                    gauges.necromancy.bloat.time = nextTick;
                 }
                 else {
-                    setTimeout(function () {
-                        if (!targetData) {
-                            gauges.isInCombat = false;
-                        }
-                    }, 1200);
-                }
-            }
-            else {
-                gauges.isInCombat = true;
-            }
-            if (targetData && gauges.isInCombat) {
-                target_display_loc = {
-                    x: (targetDisplay === null || targetDisplay === void 0 ? void 0 : targetDisplay.lastpos.x) - 120,
-                    y: (targetDisplay === null || targetDisplay === void 0 ? void 0 : targetDisplay.lastpos.y) + 20,
-                    w: 150,
-                    h: 60,
-                };
-                targetDebuffs = alt1__WEBPACK_IMPORTED_MODULE_2__.captureHold(target_display_loc.x, target_display_loc.y, target_display_loc.w, target_display_loc.h);
-                targetIsDeathMarked = targetDebuffs.findSubimage(enemyDebuffImages.invokeDeath).length;
-                if (targetIsDeathMarked) {
-                    gauges.necromancy.incantations.active[0] = true;
-                }
-                else if (!targetIsDeathMarked) {
-                    gauges.necromancy.incantations.active[0] = false;
-                }
-                targetIsBloated = targetDebuffs.findSubimage(enemyDebuffImages.bloat).length;
-                if (targetIsBloated && !bloatInterval.has(bloat)) {
-                    gauges.necromancy.bloat.time = 20.5;
-                    gauges.necromancy.bloat.active = true;
-                    intervalId = setInterval(function () {
-                        var currentTick = gauges.necromancy.bloat.time;
-                        if (currentTick > 0) {
-                            var nextTick = parseFloat((0,_utility__WEBPACK_IMPORTED_MODULE_0__.roundedToFixed)(currentTick - 0.6, 1));
-                            gauges.necromancy.bloat.time = nextTick;
-                        }
-                        else {
-                            clearInterval(bloatInterval.get(bloat));
-                            bloatInterval.delete(bloat);
-                            gauges.necromancy.bloat.time = 0;
-                        }
-                    }, 600);
-                    bloatInterval.set(bloat, intervalId);
-                }
-                else if (!targetIsBloated) {
-                    if (bloatInterval.has(bloat)) {
-                        clearInterval(bloatInterval.get(bloat));
-                        bloatInterval.delete(bloat);
-                    }
+                    clearInterval(bloatInterval.get(bloat));
+                    bloatInterval.delete(bloat);
                     gauges.necromancy.bloat.time = 0;
-                    gauges.necromancy.bloat.active = false;
                 }
+            }, 600);
+            bloatInterval.set(bloat, intervalId);
+        }
+        else if (!targetIsBloated) {
+            if (bloatInterval.has(bloat)) {
+                clearInterval(bloatInterval.get(bloat));
+                bloatInterval.delete(bloat);
             }
-            else {
-                gauges.necromancy.incantations.active[0] = false;
-                gauges.necromancy.bloat.time = 0;
-                gauges.necromancy.bloat.active = false;
-            }
-            return [2 /*return*/];
-        });
-    });
+            gauges.necromancy.bloat.time = 0;
+            gauges.necromancy.bloat.active = false;
+        }
+    }
+    else {
+        gauges.necromancy.incantations.active[0] = false;
+        gauges.necromancy.bloat.time = 0;
+        gauges.necromancy.bloat.active = false;
+    }
 }
+
+
+/***/ }),
+
+/***/ "./lib/settings/index.ts":
+/*!*******************************!*\
+  !*** ./lib/settings/index.ts ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   renderSettings: () => (/* binding */ renderSettings)
+/* harmony export */ });
+/* harmony import */ var _a1sauce__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../a1sauce */ "./a1sauce/index.ts");
+/* harmony import */ var _a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../a1sauce/Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
+/* harmony import */ var _data_constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../data/constants */ "./data/constants.ts");
+/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+
+
+
+
+const sauce = _a1sauce__WEBPACK_IMPORTED_MODULE_0__.A1Sauce.instance;
+sauce.setName(_data_constants__WEBPACK_IMPORTED_MODULE_2__.appName);
+sauce.setVersion(_data_constants__WEBPACK_IMPORTED_MODULE_2__.majorVersion, _data_constants__WEBPACK_IMPORTED_MODULE_2__.minorversion, _data_constants__WEBPACK_IMPORTED_MODULE_2__.patchVersion);
+const settings = sauce.createSettings();
+const renderSettings = async (gauges) => {
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+    settings
+        .addHeader('h2', 'Job Gauges - v' + sauce.getVersion())
+        .addText(`Please <a href="https://discord.gg/KJ2SgWyJFF" target="_blank" rel="nofollow">join the Discord</a> for any suggestions or support`)
+        .addSeperator()
+        .addHeader('h3', 'General')
+        .addCheckboxSetting('hideOutsideCombat', 'Hide the overlay while out of combat', false)
+        .addButton('repositionOverlay', 'Reposition Overlay', _utility__WEBPACK_IMPORTED_MODULE_3__.setOverlayPosition, {
+        classes: ['nisbutton'],
+    })
+        .addSeperator()
+        .addHeader('h3', 'Scale')
+        .addRangeSetting('scale', 'Adjusts the size of the overlay. You must reload and reposition the overlay after scaling.', { defaultValue: '100', min: 50, max: 300 })
+        .addSeperator()
+        .addHeader('h3', 'Incantation Placement')
+        .addDropdownSetting('selectedOrientation', 'Select how to group Incantations', (_a = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('selectedOrientation')) !== null && _a !== void 0 ? _a : 'reverse_split', [
+        { value: 'grouped', name: 'Grouped' },
+        { value: 'split', name: 'Split' },
+        { value: 'reverse_split', name: 'Reverse Split' },
+    ])
+        .addSeperator()
+        .addHeader('h3', 'Visible Components')
+        .addText('Select which components of the overlay you wish to see.')
+        .addCheckboxSetting('showConjures', 'Show Conjures', (_b = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showConjures')) !== null && _b !== void 0 ? _b : true)
+        .addCheckboxSetting('showLivingDeath', 'Show Living Death', (_c = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showLivingDeath')) !== null && _c !== void 0 ? _c : true)
+        .addCheckboxSetting('showIncantations', 'Show Incantations', (_d = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showIncantations')) !== null && _d !== void 0 ? _d : true)
+        .addCheckboxSetting('showInvokeDeath', 'Show Invoke Death', (_e = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showInvokeDeath')) !== null && _e !== void 0 ? _e : true)
+        .addCheckboxSetting('showDarkness', 'Show Darkness', (_f = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showDarkness')) !== null && _f !== void 0 ? _f : true)
+        .addCheckboxSetting('showThreads', 'Show Threads of Fate', (_g = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showThreads')) !== null && _g !== void 0 ? _g : true)
+        .addCheckboxSetting('showSplitSoul', 'Show Split Soul', (_h = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showSplitSoul')) !== null && _h !== void 0 ? _h : true)
+        .addCheckboxSetting('showSouls', 'Show Residual Souls', (_j = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showSouls')) !== null && _j !== void 0 ? _j : true)
+        .addCheckboxSetting('showNecrosis', 'Show Necrosis', (_k = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showNecrosis')) !== null && _k !== void 0 ? _k : true)
+        .addCheckboxSetting('dupeRow', 'Show 2nd row of Necrosis stacks', (_l = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('dupeRow')) !== null && _l !== void 0 ? _l : false)
+        .addCheckboxSetting('showBloat', 'Show Bloat', (_m = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showBloat')) !== null && _m !== void 0 ? _m : true)
+        .addSeperator()
+        .addHeader('h3', 'Residual Souls Alarm')
+        .addRangeSetting('alarmSoulsThreshold', 'Alert when at or above this many souls', { defaultValue: '5', min: 2, max: 5, unit: ' souls' })
+        .addAlarmSetting('Residual Souls Alarm', 'alarmSouls', '')
+        .addSeperator()
+        .addHeader('h3', 'Necrosis Stacks Alarm')
+        .addRangeSetting('alarmNecrosisThreshold', 'Alert when at or above this many stacks', { defaultValue: '12', min: 2, max: 12, unit: ' stacks' })
+        .addAlarmSetting('Necrosis Stacks Alarm', 'alarmNecrosis', '')
+        .build();
+};
 
 
 /***/ }),
@@ -3766,58 +3965,52 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   resizeGaugesWithMousePosition: () => (/* binding */ resizeGaugesWithMousePosition),
 /* harmony export */   resizeImageData: () => (/* binding */ resizeImageData),
 /* harmony export */   roundedToFixed: () => (/* binding */ roundedToFixed),
+/* harmony export */   setOverlayPosition: () => (/* binding */ setOverlayPosition),
 /* harmony export */   updateCoordinates: () => (/* binding */ updateCoordinates),
+/* harmony export */   updateLocation: () => (/* binding */ updateLocation),
 /* harmony export */   white: () => (/* binding */ white)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _a1sauce__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../a1sauce */ "./a1sauce.ts");
-var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../a1sauce/Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
+/* harmony import */ var _a1sauce_Utils_timeout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../a1sauce/Utils/timeout */ "./a1sauce/Utils/timeout.ts");
 
 
-var white = alt1__WEBPACK_IMPORTED_MODULE_1__.mixColor(255, 255, 255);
+
+const white = alt1__WEBPACK_IMPORTED_MODULE_2__.mixColor(255, 255, 255);
 function getByID(id) {
     return document.getElementById(id);
 }
-var helperItems = {
+const helperItems = {
     Output: getByID('output'),
     settings: getByID('Settings'),
 };
+let updatingOverlayPosition = false;
+async function setOverlayPosition(gauges, utility) {
+    updatingOverlayPosition = true;
+    alt1__WEBPACK_IMPORTED_MODULE_2__.once('alt1pressed', updateLocation);
+    alt1.setTooltip('Press Primary Keybind to save position (default keybind is alt+1)');
+    setTimeout(() => {
+        alt1.clearTooltip();
+    }, 3000);
+    while (updatingOverlayPosition) {
+        await (0,_a1sauce_Utils_timeout__WEBPACK_IMPORTED_MODULE_1__.timeout)(1000);
+        utility.freezeOverlays();
+        //TODO: Per-gauge repositioning will be needed here as well
+        utility.resizeGaugesWithMousePosition(gauges);
+        utility.continueOverlays();
+    }
+    (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.updateSetting)('overlayPosition', {
+        x: gauges.necromancy.position.x,
+        y: gauges.necromancy.position.y,
+    });
+}
+function updateLocation() {
+    updatingOverlayPosition = false;
+    alt1.overLayClearGroup('overlayPositionHelper');
+    alt1.overLayRefreshGroup('overlayPositionHelper');
+    alt1.clearTooltip();
+}
 function forceClearOverlay(overlay) {
     alt1.overLaySetGroup(overlay);
     alt1.overLayFreezeGroup(overlay);
@@ -3825,7 +4018,8 @@ function forceClearOverlay(overlay) {
     alt1.overLayRefreshGroup(overlay);
     console.log('Force cleared: ' + overlay);
 }
-var overlays = [
+// TODO: Overlays need to be able to add/remove themselves from this list
+const overlays = [
     'Bloat',
     'Undead_Army',
     'Invoke_Death',
@@ -3838,14 +4032,14 @@ var overlays = [
     'Souls'
 ];
 function freezeOverlays() {
-    overlays.forEach(function (overlay) {
+    overlays.forEach((overlay) => {
         alt1.overLayFreezeGroup(overlay);
         alt1.overLayClearGroup(overlay);
         alt1.overLayRefreshGroup(overlay);
     });
 }
 function continueOverlays() {
-    overlays.forEach(function (overlay) {
+    overlays.forEach((overlay) => {
         alt1.overLayContinueGroup(overlay);
     });
 }
@@ -3869,60 +4063,58 @@ function adjustPositionWithoutScale(position, scaleFactor) {
 }
 // TODO: Use future overlays[] to iterate over active overlays
 function resizeGaugesWithMousePosition(gauges) {
-    gauges.necromancy.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_1__.getMousePosition().x, gauges.scaleFactor);
-    gauges.necromancy.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_1__.getMousePosition().y, gauges.scaleFactor);
-    gauges.magic.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_1__.getMousePosition().x, gauges.scaleFactor);
-    gauges.magic.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_1__.getMousePosition().y, gauges.scaleFactor);
-    gauges.ranged.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_1__.getMousePosition().x, gauges.scaleFactor);
-    gauges.ranged.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_1__.getMousePosition().y, gauges.scaleFactor);
-    gauges.melee.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_1__.getMousePosition().x, gauges.scaleFactor);
-    gauges.melee.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_1__.getMousePosition().y, gauges.scaleFactor);
+    gauges.necromancy.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_2__.getMousePosition().x, gauges.scaleFactor);
+    gauges.necromancy.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_2__.getMousePosition().y, gauges.scaleFactor);
+    gauges.magic.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_2__.getMousePosition().x, gauges.scaleFactor);
+    gauges.magic.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_2__.getMousePosition().y, gauges.scaleFactor);
+    gauges.ranged.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_2__.getMousePosition().x, gauges.scaleFactor);
+    gauges.ranged.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_2__.getMousePosition().y, gauges.scaleFactor);
+    gauges.melee.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_2__.getMousePosition().x, gauges.scaleFactor);
+    gauges.melee.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_2__.getMousePosition().y, gauges.scaleFactor);
 }
 function updateCoordinates(component, position) {
     component.activePosition.x = position.x;
     component.activePosition.y = position.y;
 }
 function roundedToFixed(input, digits) {
-    var rounder = Math.pow(10, digits);
+    const rounder = Math.pow(10, digits);
     return (Math.round(input * rounder) / rounder).toFixed(digits);
 }
-function resizeImageData(imageData, scaleFactor) {
-    return __awaiter(this, void 0, void 0, function () {
-        var canvas, context, newWidth, newHeight, tempCanvas, tempContext;
-        return __generator(this, function (_a) {
-            canvas = document.createElement('canvas');
-            context = canvas.getContext('2d');
-            newWidth = Math.round(imageData.width * scaleFactor);
-            newHeight = Math.round(imageData.height * scaleFactor);
-            // Set the canvas dimensions
-            canvas.width = newWidth;
-            canvas.height = newHeight;
-            tempCanvas = document.createElement('canvas');
-            tempContext = tempCanvas.getContext('2d');
-            tempCanvas.width = imageData.width;
-            tempCanvas.height = imageData.height;
-            // Draw the original image data onto the temporary canvas
-            tempContext.putImageData(imageData, 0, 0);
-            // Draw the temporary canvas onto the new canvas with the desired scale
-            context.drawImage(tempCanvas, 0, 0, imageData.width, imageData.height, 0, 0, newWidth, newHeight);
-            // Extract the new image data from the resized canvas
-            return [2 /*return*/, context.getImageData(0, 0, newWidth, newHeight)];
-        });
-    });
+async function resizeImageData(imageData, scaleFactor) {
+    // Create a new canvas element
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    // Calculate the dimensions of the new canvas
+    const newWidth = Math.round(imageData.width * scaleFactor);
+    const newHeight = Math.round(imageData.height * scaleFactor);
+    // Set the canvas dimensions
+    canvas.width = newWidth;
+    canvas.height = newHeight;
+    // Create a temporary canvas to draw the original image data
+    const tempCanvas = document.createElement('canvas');
+    const tempContext = tempCanvas.getContext('2d');
+    tempCanvas.width = imageData.width;
+    tempCanvas.height = imageData.height;
+    // Draw the original image data onto the temporary canvas
+    tempContext.putImageData(imageData, 0, 0);
+    // Draw the temporary canvas onto the new canvas with the desired scale
+    context.drawImage(tempCanvas, 0, 0, imageData.width, imageData.height, 0, 0, newWidth, newHeight);
+    // Extract the new image data from the resized canvas
+    return context.getImageData(0, 0, newWidth, newHeight);
 }
-var soulsAlert = new Audio(_a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('alarmSoulsAlertSound'));
+const soulsAlert = new Audio((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)('alarmSoulsAlertSound'));
 ;
-var necrosisAlert = new Audio(_a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('alarmNecrosisAlertSound'));
+const necrosisAlert = new Audio((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)('alarmNecrosisAlertSound'));
 function playAlert(type) {
     if (type === 'souls') {
-        soulsAlert.loop = Boolean(_a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('alarmSoulsLoop'));
-        soulsAlert.volume = Number(_a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('alarmSoulsVolume')) / 100;
+        soulsAlert.loop = Boolean((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)('alarmSoulsLoop'));
+        soulsAlert.volume = Number((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)('alarmSoulsVolume')) / 100;
         soulsAlert.play();
     }
     if (type == 'necrosis') {
-        necrosisAlert.loop = Boolean(_a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('alarmNecrosisLoop'));
+        necrosisAlert.loop = Boolean((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)('alarmNecrosisLoop'));
         necrosisAlert.volume =
-            Number(_a1sauce__WEBPACK_IMPORTED_MODULE_0__.getSetting('alarmNecrosisVolume')) / 100;
+            Number((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)('alarmNecrosisVolume')) / 100;
         necrosisAlert.play();
     }
 }
@@ -3948,6 +4140,17 @@ function pauseAlert(type) {
 
 "use strict";
 module.exports = "data:font/opentype;base64,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";
+
+/***/ }),
+
+/***/ "./a1sauce/Settings/Library/Styles/images/range-input-tab.png":
+/*!********************************************************************!*\
+  !*** ./a1sauce/Settings/Library/Styles/images/range-input-tab.png ***!
+  \********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+module.exports = __webpack_require__.p + "range-input-tab.png";
 
 /***/ }),
 
@@ -7709,65 +7912,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   startApp: () => (/* binding */ startApp)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _lib_utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib/utility */ "./lib/utility.ts");
-/* harmony import */ var _a1sauce__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./a1sauce */ "./a1sauce.ts");
-/* harmony import */ var _lib_readBuffs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./lib/readBuffs */ "./lib/readBuffs.ts");
-/* harmony import */ var _lib_readEnemy__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./lib/readEnemy */ "./lib/readEnemy.ts");
-/* harmony import */ var _data_necromancy_gauge__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./data/necromancy_gauge */ "./data/necromancy_gauge.ts");
-/* harmony import */ var _lib_necromancy_conjures__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./lib/necromancy/conjures */ "./lib/necromancy/conjures.ts");
-/* harmony import */ var _lib_necromancy_soul_stacks__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./lib/necromancy/soul_stacks */ "./lib/necromancy/soul_stacks.ts");
-/* harmony import */ var _lib_necromancy_necrosis_stacks__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./lib/necromancy/necrosis_stacks */ "./lib/necromancy/necrosis_stacks.ts");
-/* harmony import */ var _lib_necromancy_incantations__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./lib/necromancy/incantations */ "./lib/necromancy/incantations.ts");
-/* harmony import */ var _lib_necromancy_living_death__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./lib/necromancy/living_death */ "./lib/necromancy/living_death.ts");
-/* harmony import */ var _lib_necromancy_bloat__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./lib/necromancy/bloat */ "./lib/necromancy/bloat.ts");
-/* harmony import */ var _data_magic_gauge__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./data/magic_gauge */ "./data/magic_gauge.ts");
-/* harmony import */ var _data_ranged_gauge__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./data/ranged_gauge */ "./data/ranged_gauge.ts");
-/* harmony import */ var _data_melee_gauge__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./data/melee_gauge */ "./data/melee_gauge.ts");
-/* harmony import */ var _index_html__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./index.html */ "./index.html");
-/* harmony import */ var _appconfig_json__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./appconfig.json */ "./appconfig.json");
-/* harmony import */ var _icon_png__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./icon.png */ "./icon.png");
-/* harmony import */ var _css_styles_css__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./css/styles.css */ "./css/styles.css");
-var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
-
-
+/* harmony import */ var _lib_readBuffs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lib/readBuffs */ "./lib/readBuffs.ts");
+/* harmony import */ var _lib_readEnemy__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./lib/readEnemy */ "./lib/readEnemy.ts");
+/* harmony import */ var _data_necromancy_gauge__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./data/necromancy_gauge */ "./data/necromancy_gauge.ts");
+/* harmony import */ var _lib_necromancy_conjures__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./lib/necromancy/conjures */ "./lib/necromancy/conjures.ts");
+/* harmony import */ var _lib_necromancy_soul_stacks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./lib/necromancy/soul_stacks */ "./lib/necromancy/soul_stacks.ts");
+/* harmony import */ var _lib_necromancy_necrosis_stacks__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./lib/necromancy/necrosis_stacks */ "./lib/necromancy/necrosis_stacks.ts");
+/* harmony import */ var _lib_necromancy_incantations__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./lib/necromancy/incantations */ "./lib/necromancy/incantations.ts");
+/* harmony import */ var _lib_necromancy_living_death__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./lib/necromancy/living_death */ "./lib/necromancy/living_death.ts");
+/* harmony import */ var _lib_necromancy_bloat__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./lib/necromancy/bloat */ "./lib/necromancy/bloat.ts");
+/* harmony import */ var _data_magic_gauge__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./data/magic_gauge */ "./data/magic_gauge.ts");
+/* harmony import */ var _data_ranged_gauge__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./data/ranged_gauge */ "./data/ranged_gauge.ts");
+/* harmony import */ var _data_melee_gauge__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./data/melee_gauge */ "./data/melee_gauge.ts");
+/* harmony import */ var _index_html__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./index.html */ "./index.html");
+/* harmony import */ var _appconfig_json__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./appconfig.json */ "./appconfig.json");
+/* harmony import */ var _icon_png__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./icon.png */ "./icon.png");
+/* harmony import */ var _css_styles_css__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./css/styles.css */ "./css/styles.css");
+/* harmony import */ var _a1sauce__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./a1sauce */ "./a1sauce/index.ts");
+/* harmony import */ var _a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./a1sauce/Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
+/* harmony import */ var _a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./a1sauce/Utils/getById */ "./a1sauce/Utils/getById.ts");
+/* harmony import */ var _lib_settings__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./lib/settings */ "./lib/settings/index.ts");
+/* harmony import */ var _data_constants__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./data/constants */ "./data/constants.ts");
 
 
 // General Purpose
@@ -7791,194 +7957,70 @@ var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
 
 
 
-var gauges = {
+
+
+
+
+
+const sauce = _a1sauce__WEBPACK_IMPORTED_MODULE_17__.A1Sauce.instance;
+sauce.setName(_data_constants__WEBPACK_IMPORTED_MODULE_21__.appName);
+sauce.setVersion(_data_constants__WEBPACK_IMPORTED_MODULE_21__.majorVersion, _data_constants__WEBPACK_IMPORTED_MODULE_21__.minorversion, _data_constants__WEBPACK_IMPORTED_MODULE_21__.patchVersion);
+sauce.createSettings();
+const gauges = {
     isInCombat: false,
     checkCombatStatus: false,
     scaleFactor: 1,
-    necromancy: _data_necromancy_gauge__WEBPACK_IMPORTED_MODULE_4__.necromancy_gauge,
-    magic: _data_magic_gauge__WEBPACK_IMPORTED_MODULE_11__.magic_gauge,
-    ranged: _data_ranged_gauge__WEBPACK_IMPORTED_MODULE_12__.ranged_gauge,
-    melee: _data_melee_gauge__WEBPACK_IMPORTED_MODULE_13__.melee_gauge,
+    necromancy: _data_necromancy_gauge__WEBPACK_IMPORTED_MODULE_3__.necromancy_gauge,
+    magic: _data_magic_gauge__WEBPACK_IMPORTED_MODULE_10__.magic_gauge,
+    ranged: _data_ranged_gauge__WEBPACK_IMPORTED_MODULE_11__.ranged_gauge,
+    melee: _data_melee_gauge__WEBPACK_IMPORTED_MODULE_12__.melee_gauge,
 };
-function renderOverlays() {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, (0,_lib_readEnemy__WEBPACK_IMPORTED_MODULE_3__.readEnemy)(gauges)];
-                case 1:
-                    _a.sent();
-                    if (!(gauges.isInCombat || _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('updatingOverlayPosition'))) return [3 /*break*/, 9];
-                    return [4 /*yield*/, (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_2__.readBuffs)(gauges)];
-                case 2:
-                    _a.sent();
-                    return [4 /*yield*/, (0,_lib_necromancy_conjures__WEBPACK_IMPORTED_MODULE_5__.conjureOverlay)(gauges)];
-                case 3:
-                    _a.sent();
-                    return [4 /*yield*/, (0,_lib_necromancy_soul_stacks__WEBPACK_IMPORTED_MODULE_6__.soulsOverlay)(gauges)];
-                case 4:
-                    _a.sent();
-                    return [4 /*yield*/, (0,_lib_necromancy_necrosis_stacks__WEBPACK_IMPORTED_MODULE_7__.necrosisOverlay)(gauges)];
-                case 5:
-                    _a.sent();
-                    return [4 /*yield*/, (0,_lib_necromancy_incantations__WEBPACK_IMPORTED_MODULE_8__.incantationsOverlay)(gauges)];
-                case 6:
-                    _a.sent();
-                    return [4 /*yield*/, (0,_lib_necromancy_living_death__WEBPACK_IMPORTED_MODULE_9__.livingDeathOverlay)(gauges)];
-                case 7:
-                    _a.sent();
-                    return [4 /*yield*/, (0,_lib_necromancy_bloat__WEBPACK_IMPORTED_MODULE_10__.bloatOverlay)(gauges)];
-                case 8:
-                    _a.sent();
-                    return [3 /*break*/, 11];
-                case 9: return [4 /*yield*/, _lib_utility__WEBPACK_IMPORTED_MODULE_0__.clearTextOverlays()];
-                case 10:
-                    _a.sent();
-                    _a.label = 11;
-                case 11: return [2 /*return*/];
-            }
-        });
-    });
-}
-function startApp() {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    if (!window.alt1) {
-                        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.helperItems.Output.insertAdjacentHTML('beforeend', "<div>You need to run this page in alt1 to capture the screen</div>");
-                        return [2 /*return*/];
-                    }
-                    if (!alt1.permissionPixel) {
-                        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.helperItems.Output.insertAdjacentHTML('beforeend', "<div><p>Page is not installed as app or capture permission is not enabled</p></div>");
-                        return [2 /*return*/];
-                    }
-                    if (!alt1.permissionOverlay) {
-                        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.helperItems.Output.insertAdjacentHTML('beforeend', "<div><p>Attempted to use Overlay but app overlay permission is not enabled. Please enable \"Show Overlay\" permission in Alt1 settinsg (wrench icon in corner).</p></div>");
-                        return [2 /*return*/];
-                    }
-                    loadSettings();
-                    updateActiveOrientationFromLocalStorage();
-                    // Apparently setting GroupZIndex is a pretty expensive call to do in the loop - so let's only do it once
-                    alt1.overLaySetGroupZIndex('Undead_Army_Text', 1);
-                    alt1.overLaySetGroupZIndex('LivingDeath_Text', 1);
-                    return [4 /*yield*/, (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_2__.findBuffsBar)().then(function () {
-                            setInterval(function () {
-                                renderOverlays();
-                            }, 20);
-                        })];
-                case 1:
-                    _a.sent();
-                    return [2 /*return*/];
-            }
-        });
-    });
-}
-function loadSettings() {
-    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('overlayPosition') !== undefined) {
-        //TODO: Each gauge should be able to be positioned separately
-        gauges.necromancy.position = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('overlayPosition');
-        gauges.magic.position = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('overlayPosition');
-        gauges.ranged.position = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('overlayPosition');
-        gauges.melee.position = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('overlayPosition');
-    }
-    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('hideOutsideCombat') !== undefined) {
-        gauges.checkCombatStatus = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('hideOutsideCombat');
-    }
-    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('scale') !== undefined) {
-        gauges.scaleFactor = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('scale') / 100;
+async function renderOverlays() {
+    await (0,_lib_readEnemy__WEBPACK_IMPORTED_MODULE_2__.readEnemy)(gauges);
+    if (gauges.isInCombat || (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('updatingOverlayPosition')) {
+        await (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_1__.readBuffs)(gauges);
+        await (0,_lib_necromancy_conjures__WEBPACK_IMPORTED_MODULE_4__.conjureOverlay)(gauges);
+        await (0,_lib_necromancy_soul_stacks__WEBPACK_IMPORTED_MODULE_5__.soulsOverlay)(gauges);
+        await (0,_lib_necromancy_necrosis_stacks__WEBPACK_IMPORTED_MODULE_6__.necrosisOverlay)(gauges);
+        await (0,_lib_necromancy_incantations__WEBPACK_IMPORTED_MODULE_7__.incantationsOverlay)(gauges);
+        await (0,_lib_necromancy_living_death__WEBPACK_IMPORTED_MODULE_8__.livingDeathOverlay)(gauges);
+        await (0,_lib_necromancy_bloat__WEBPACK_IMPORTED_MODULE_9__.bloatOverlay)(gauges);
     }
     else {
-        gauges.scaleFactor = 1;
+        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.clearTextOverlays();
     }
-    // Necromancy Components (TODO: Move the check into the components themselves?)
-    updateGaugeData();
 }
-//TODO: Clean this tf up
-function updateGaugeData() {
-    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showConjures') !== undefined) {
-        gauges.necromancy.conjures.isActiveOverlay =
-            _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showConjures');
+async function startApp() {
+    if (!window.alt1) {
+        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.helperItems.Output.insertAdjacentHTML('beforeend', `<div>You need to run this page in alt1 to capture the screen</div>`);
+        return;
     }
-    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showLivingDeath') !== undefined) {
-        gauges.necromancy.livingDeath.isActiveOverlay =
-            _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showLivingDeath');
+    if (!alt1.permissionPixel) {
+        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.helperItems.Output.insertAdjacentHTML('beforeend', `<div><p>Page is not installed as app or capture permission is not enabled</p></div>`);
+        return;
     }
-    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showIncantations') !== undefined) {
-        gauges.necromancy.incantations.isActiveOverlay =
-            _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showIncantations');
+    if (!alt1.permissionOverlay) {
+        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.helperItems.Output.insertAdjacentHTML('beforeend', `<div><p>Attempted to use Overlay but app overlay permission is not enabled. Please enable "Show Overlay" permission in Alt1 settinsg (wrench icon in corner).</p></div>`);
+        return;
     }
-    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showInvokeDeath') !== undefined) {
-        gauges.necromancy.incantations.invokeDeath.isActiveOverlay =
-            _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showInvokeDeath');
-    }
-    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showDarkness') !== undefined) {
-        gauges.necromancy.incantations.darkness.isActiveOverlay =
-            _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showDarkness');
-    }
-    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showThreads') !== undefined) {
-        gauges.necromancy.incantations.threads.isActiveOverlay =
-            _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showThreads');
-    }
-    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showSplitSoul') !== undefined) {
-        gauges.necromancy.incantations.splitSoul.isActiveOverlay =
-            _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showSplitSoul');
-    }
-    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showSouls') !== undefined) {
-        gauges.necromancy.stacks.souls.isActiveOverlay =
-            _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showSouls');
-    }
-    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showNecrosis') !== undefined) {
-        gauges.necromancy.stacks.necrosis.isActiveOverlay =
-            _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showNecrosis');
-    }
-    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('dupeRow') !== undefined) {
-        gauges.necromancy.stacks.duplicateNecrosisRow =
-            _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('dupeRow');
-    }
-    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showBloat') !== undefined) {
-        gauges.necromancy.bloat.isActiveOverlay = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showBloat');
-    }
-    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmNecrosisActive') !== undefined) {
-        gauges.necromancy.stacks.necrosis.alarm.isActive = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmNecrosisActive');
-    }
-    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showBlalarmNecrosisAlertSoundoat') !== undefined) {
-        gauges.necromancy.stacks.necrosis.alarm.sound = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showBlalarmNecrosisAlertSoundoat');
-    }
-    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmNecrosisLoop') !== undefined) {
-        gauges.necromancy.stacks.necrosis.alarm.isLooping =
-            _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmNecrosisLoop');
-    }
-    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmNecrosisThreshold') !== undefined) {
-        gauges.necromancy.stacks.necrosis.alarm.threshold = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmNecrosisThreshold');
-    }
-    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmNecrosisVolume') !== undefined) {
-        gauges.necromancy.stacks.necrosis.alarm.volume = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmNecrosisVolume');
-    }
-    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmSoulsActive') !== undefined) {
-        gauges.necromancy.stacks.souls.alarm.isActive =
-            _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmSoulsActive');
-    }
-    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmSoulsAlertSound') !== undefined) {
-        gauges.necromancy.stacks.souls.alarm.sound = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmSoulsAlertSound');
-    }
-    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmSoulsLoop') !== undefined) {
-        gauges.necromancy.stacks.souls.alarm.isLooping =
-            _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmSoulsLoop');
-    }
-    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmSoulsThreshold') !== undefined) {
-        gauges.necromancy.stacks.souls.alarm.threshold = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmSoulsThreshold');
-    }
-    if (_a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmSoulsVolume') !== undefined) {
-        gauges.necromancy.stacks.souls.alarm.volume =
-            _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('alarmSoulsVolume');
-    }
+    setNecromancyGaugeData(gauges);
+    updateActiveOrientationFromLocalStorage();
+    // Apparently setting GroupZIndex is a pretty expensive call to do in the loop - so let's only do it once
+    alt1.overLaySetGroupZIndex('Undead_Army_Text', 1);
+    alt1.overLaySetGroupZIndex('LivingDeath_Text', 1);
+    await (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_1__.findBuffsBar)().then(() => {
+        setInterval(function () {
+            renderOverlays();
+        }, 20);
+    });
 }
 function updateActiveOrientationFromLocalStorage() {
     // Retrieve selected orientation from localStorage
-    var selectedOrientation = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('selectedOrientation');
+    let selectedOrientation = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('selectedOrientation');
     if (!selectedOrientation) {
         selectedOrientation = 'reverse_split';
     }
+    // TODO: Get rid of this crap
     // Handle v0.0.3 values that included '_orientation' in the string
     // This should only be needed for a few weeks
     if (selectedOrientation == 'grouped_orientation')
@@ -7987,10 +8029,11 @@ function updateActiveOrientationFromLocalStorage() {
         selectedOrientation = 'split';
     if (selectedOrientation == 'reverse_split_orientation')
         selectedOrientation = 'reverse_split';
-    _a1sauce__WEBPACK_IMPORTED_MODULE_1__.updateSetting('selectedOrientation', selectedOrientation);
+    // END
+    (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.updateSetting)('selectedOrientation', selectedOrientation);
     // Function to recursively update orientations in an object
     function updateActiveOrientation(obj) {
-        for (var key in obj) {
+        for (const key in obj) {
             if (typeof obj[key] === 'object' && obj[key] !== null) {
                 if (key === 'active_orientation') {
                     console.log(obj);
@@ -8005,180 +8048,213 @@ function updateActiveOrientationFromLocalStorage() {
         _lib_utility__WEBPACK_IMPORTED_MODULE_0__.freezeOverlays();
         _lib_utility__WEBPACK_IMPORTED_MODULE_0__.continueOverlays();
     }
-    updateActiveOrientation(_data_necromancy_gauge__WEBPACK_IMPORTED_MODULE_4__.necromancy_gauge);
+    updateActiveOrientation(_data_necromancy_gauge__WEBPACK_IMPORTED_MODULE_3__.necromancy_gauge);
 }
-var version = '1.0.0';
-var settingsObject = {
-    appName: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createHeading('h2', 'Job Gauges - v' + version),
-    settingDiscord: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createText("Please <a href=\"https://discord.gg/KJ2SgWyJFF\" target=\"_blank\" rel=\"nofollow\">join the Discord</a> for any suggestions or support"),
-    generalStart: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createSeperator(),
-    generalHeader: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createHeading('h3', 'General'),
-    hideOutsideCombat: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('hideOutsideCombat', 'Hide the overlay while out of combat', false),
-    repositionOverlay: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createButton('Reposition Overlay', setOverlayPosition, { classes: ['nisbutton'] }),
-    sizeReset: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createSeperator(),
-    ScaleHeader: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createHeading('h3', 'Scale'),
-    UIScale: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createRangeSetting('scale', 'Adjusts the size of the overlay. You must reload and reposition the overlay after scaling.', {
-        defaultValue: '100',
-        min: 50,
-        max: 300,
-    }),
-    orientationReset: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createSeperator(),
-    orientationHeader: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createHeading('h3', 'Incantation Placement'),
-    orientationSelection: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createDropdownSetting('selectedOrientation', 'Select how to group Incantations', (_a = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('selectedOrientation')) !== null && _a !== void 0 ? _a : 'reverse_split', [
-        { value: 'grouped', name: 'Grouped' },
-        { value: 'split', name: 'Split' },
-        { value: 'reverse_split', name: 'Reverse Split' },
-    ]),
-    visibleReset: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createSeperator(),
-    visibleComponentsHeader: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createHeading('h3', 'Visible Components'),
-    visibleComponentsText: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createText('Select which components of the overlay you wish to see.'),
-    showConjures: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showConjures', 'Show Conjures', (_b = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showConjures')) !== null && _b !== void 0 ? _b : true),
-    showLivingDeath: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showLivingDeath', 'Show Living Death', (_c = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showLivingDeath')) !== null && _c !== void 0 ? _c : true),
-    showIncantations: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showIncantations', 'Show Incantations', (_d = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showIncantations')) !== null && _d !== void 0 ? _d : true),
-    showInvokeDeath: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showInvokeDeath', 'Show Invoke Death', (_e = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showInvokeDeath')) !== null && _e !== void 0 ? _e : true),
-    showDarkness: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showDarkness', 'Show Darkness', (_f = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showDarkness')) !== null && _f !== void 0 ? _f : true),
-    showThreads: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showThreads', 'Show Threads of Fate', (_g = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showThreads')) !== null && _g !== void 0 ? _g : true),
-    showSplitSoul: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showSplitSoul', 'Show Split Soul', (_h = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showSplitSoul')) !== null && _h !== void 0 ? _h : true),
-    showSouls: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showSouls', 'Show Residual Souls', (_j = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showSouls')) !== null && _j !== void 0 ? _j : true),
-    showNecrosis: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showNecrosis', 'Show Necrosis', (_k = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showNecrosis')) !== null && _k !== void 0 ? _k : true),
-    dupeRow: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('dupeRow', 'Show 2nd row of Necrosis stacks', (_l = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('dupeRow')) !== null && _l !== void 0 ? _l : false),
-    showBloat: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting('showBloat', 'Show Bloat', (_m = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('showBloat')) !== null && _m !== void 0 ? _m : true),
-    alarmsSeperator: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createSeperator(),
-    alarmSoulsHeader: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createHeading('h3', 'Residual Souls Alarm'),
-    alarmSoulsThreshold: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createRangeSetting('alarmSoulsThreshold', 'Alert when at or above this many souls', { defaultValue: '5', min: 2, max: 5, unit: ' souls' }),
-    alarmSouls: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createAlarmSetting('Residual Souls Alarm', 'alarmSouls', ''),
-    alarmNecrosisHeader: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createHeading('h3', 'Necrosis Stacks Alarm'),
-    alarmNecrosisThreshold: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createRangeSetting('alarmNecrosisThreshold', 'Alert when at or above this many stacks', { defaultValue: '12', min: 2, max: 12, unit: ' stacks' }),
-    alarmNecrosis: _a1sauce__WEBPACK_IMPORTED_MODULE_1__.createAlarmSetting('Necrosis Stacks Alarm', 'alarmNecrosis', ''),
-};
-settingsObject.orientationSelection.addEventListener('change', function () {
-    updateActiveOrientationFromLocalStorage();
-});
-settingsObject.repositionOverlay.addEventListener('click', setOverlayPosition);
-settingsObject.showNecrosis.addEventListener('change', function () {
-    gauges.necromancy.stacks.duplicateNecrosisRow = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.getSetting('dupeRow');
-});
-settingsObject.UIScale.addEventListener('change', function () {
-    location.reload();
-});
-var updatingOverlayPosition = false;
-function setOverlayPosition() {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    updatingOverlayPosition = true;
-                    alt1__WEBPACK_IMPORTED_MODULE_18__.once('alt1pressed', updateLocation);
-                    alt1.setTooltip('Press Primary Keybind to save position (default keybind is alt+1)');
-                    setTimeout(function () {
-                        alt1.clearTooltip();
-                    }, 3000);
-                    _a.label = 1;
-                case 1:
-                    if (!updatingOverlayPosition) return [3 /*break*/, 3];
-                    return [4 /*yield*/, _a1sauce__WEBPACK_IMPORTED_MODULE_1__.timeout(1000)];
-                case 2:
-                    _a.sent();
-                    _lib_utility__WEBPACK_IMPORTED_MODULE_0__.freezeOverlays();
-                    //TODO: Per-gauge repositioning will be needed here as well
-                    _lib_utility__WEBPACK_IMPORTED_MODULE_0__.resizeGaugesWithMousePosition(gauges);
-                    _lib_utility__WEBPACK_IMPORTED_MODULE_0__.continueOverlays();
-                    return [3 /*break*/, 1];
-                case 3: return [2 /*return*/];
-            }
+// TODO: Get rid of this crap
+function addEventListeners() {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('selectedOrientation').addEventListener('change', () => {
+        updateActiveOrientationFromLocalStorage();
+    });
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('repositionOverlay').addEventListener('click', () => {
+        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.setOverlayPosition(gauges, _lib_utility__WEBPACK_IMPORTED_MODULE_0__);
+    });
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('showNecrosis').addEventListener('change', () => {
+        gauges.necromancy.stacks.duplicateNecrosisRow = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('dupeRow');
+    });
+    // For some reason this one calculates incorrectly on load so we override the initial styles here
+    const scaleRange = (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('scale');
+    const value = ((parseInt(scaleRange.value, 10) - parseInt(scaleRange.min, 10)) /
+        (parseInt(scaleRange.max, 10) - parseInt(scaleRange.min))) *
+        100;
+    scaleRange.style.background =
+        'linear-gradient(to right, #3e5765 0%, #3e5765 ' +
+            value +
+            '%, #0d1c24 ' +
+            value +
+            '%, #0d1c24 100%)';
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('scale').addEventListener('change', () => {
+        location.reload();
+    });
+    document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
+        checkbox.addEventListener('change', () => {
+            setNecromancyGaugeData(gauges);
+            _lib_utility__WEBPACK_IMPORTED_MODULE_0__.freezeAndContinueOverlays(); // Force an instant redraw
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.updateSetting)('gaugedata', JSON.stringify(gauges));
         });
     });
-}
-function updateLocation() {
-    updatingOverlayPosition = false;
-    _a1sauce__WEBPACK_IMPORTED_MODULE_1__.updateSetting('overlayPosition', {
-        x: gauges.necromancy.position.x,
-        y: gauges.necromancy.position.y,
+    /* Update Alarm Thresholds */
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('alarmSoulsThreshold').addEventListener('change', (e) => {
+        const target = e.target;
+        gauges.necromancy.stacks.souls.alarm.threshold = parseInt(target.value, 10);
+        console.log('Souls alarm threshold: ' + target.value);
     });
-    alt1.overLayClearGroup('overlayPositionHelper');
-    alt1.overLayRefreshGroup('overlayPositionHelper');
-    alt1.clearTooltip();
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('alarmNecrosisThreshold').addEventListener('change', (e) => {
+        const target = e.target;
+        gauges.necromancy.stacks.necrosis.alarm.threshold = parseInt(target.value, 10);
+        console.log('Necrosis alarm threshold: ' + target.value);
+    });
+    /* Update Active Alarms */
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('alarmSoulsActive').addEventListener('change', (e) => {
+        const target = e.target;
+        gauges.necromancy.stacks.souls.alarm.isActive = target.checked;
+        console.log('Souls alarm active: ' + target.checked);
+    });
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('alarmNecrosisActive').addEventListener('change', (e) => {
+        const target = e.target;
+        gauges.necromancy.stacks.necrosis.alarm.isActive = target.checked;
+        console.log('Necrosis alarm active: ' + target.checked);
+    });
+    /* Update Looping Alarms */
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('alarmNecrosisLoop').addEventListener('change', (e) => {
+        const target = e.target;
+        gauges.necromancy.stacks.necrosis.alarm.isLooping = target.checked;
+        console.log('Necrosis alarm looping: ' + target.checked);
+    });
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('alarmSoulsLoop').addEventListener('change', (e) => {
+        const target = e.target;
+        gauges.necromancy.stacks.souls.alarm.isLooping = target.checked;
+        console.log('Souls alarm volume looping: ' + target.checked);
+    });
+    /* Update Alarm Volumes */
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('alarmNecrosisVolume').addEventListener('change', (e) => {
+        const target = e.target;
+        gauges.necromancy.stacks.necrosis.alarm.volume = parseInt(target.value, 10);
+        console.log('Necrosis alarm volume updated to: ' + target.value);
+    });
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('alarmSoulsVolume').addEventListener('change', (e) => {
+        const target = e.target;
+        gauges.necromancy.stacks.souls.alarm.volume = parseInt(target.value, 10);
+        console.log('Souls alarm volume updated to: ' + target.value);
+    });
+    /* Update Alarm Sounds */
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('alarmNecrosisAlertSound').addEventListener('change', (e) => {
+        const target = e.target;
+        gauges.necromancy.stacks.necrosis.alarm.sound = target.value;
+        console.log('Necrosis alarm sound updated to:' + target.value);
+    });
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('alarmSoulsAlertSound').addEventListener('change', (e) => {
+        const target = e.target;
+        gauges.necromancy.stacks.souls.alarm.sound = target.value;
+        console.log('Souls alarm sound updated to:' + target.value);
+    });
+}
+// TODO: Get rid of this crap
+function setNecromancyGaugeData(gauges) {
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('overlayPosition') !== undefined) {
+        //TODO: Each gauge should be able to be positioned separately
+        gauges.necromancy.position = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('overlayPosition');
+        gauges.magic.position = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('overlayPosition');
+        gauges.ranged.position = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('overlayPosition');
+        gauges.melee.position = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('overlayPosition');
+    }
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('hideOutsideCombat') !== undefined) {
+        gauges.checkCombatStatus = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('hideOutsideCombat');
+        gauges.isInCombat = false;
+    }
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('scale') !== undefined) {
+        gauges.scaleFactor = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('scale') / 100;
+    }
+    else {
+        gauges.scaleFactor = 1;
+    }
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showConjures') !== undefined) {
+        gauges.necromancy.conjures.isActiveOverlay = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showConjures');
+    }
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showLivingDeath') !== undefined) {
+        gauges.necromancy.livingDeath.isActiveOverlay =
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showLivingDeath');
+    }
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showIncantations') !== undefined) {
+        gauges.necromancy.incantations.isActiveOverlay =
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showIncantations');
+    }
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showInvokeDeath') !== undefined) {
+        gauges.necromancy.incantations.invokeDeath.isActiveOverlay =
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showInvokeDeath');
+    }
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showDarkness') !== undefined) {
+        gauges.necromancy.incantations.darkness.isActiveOverlay =
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showDarkness');
+    }
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showThreads') !== undefined) {
+        gauges.necromancy.incantations.threads.isActiveOverlay =
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showThreads');
+    }
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showSplitSoul') !== undefined) {
+        gauges.necromancy.incantations.splitSoul.isActiveOverlay =
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showSplitSoul');
+    }
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showSouls') !== undefined) {
+        gauges.necromancy.stacks.souls.isActiveOverlay =
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showSouls');
+    }
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showNecrosis') !== undefined) {
+        gauges.necromancy.stacks.necrosis.isActiveOverlay =
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showNecrosis');
+    }
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('dupeRow') !== undefined) {
+        gauges.necromancy.stacks.duplicateNecrosisRow = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('dupeRow');
+    }
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showBloat') !== undefined) {
+        gauges.necromancy.bloat.isActiveOverlay = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showBloat');
+    }
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmNecrosisActive') !== undefined) {
+        gauges.necromancy.stacks.necrosis.alarm.isActive = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmNecrosisActive');
+    }
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showBlalarmNecrosisAlertSoundoat') !== undefined) {
+        gauges.necromancy.stacks.necrosis.alarm.sound = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showBlalarmNecrosisAlertSoundoat');
+    }
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmNecrosisLoop') !== undefined) {
+        gauges.necromancy.stacks.necrosis.alarm.isLooping =
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmNecrosisLoop');
+    }
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmNecrosisThreshold') !== undefined) {
+        gauges.necromancy.stacks.necrosis.alarm.threshold = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmNecrosisThreshold');
+    }
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmNecrosisVolume') !== undefined) {
+        gauges.necromancy.stacks.necrosis.alarm.volume = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmNecrosisVolume');
+    }
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmSoulsActive') !== undefined) {
+        gauges.necromancy.stacks.souls.alarm.isActive =
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmSoulsActive');
+    }
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmSoulsAlertSound') !== undefined) {
+        gauges.necromancy.stacks.souls.alarm.sound = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmSoulsAlertSound');
+    }
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmSoulsLoop') !== undefined) {
+        gauges.necromancy.stacks.souls.alarm.isLooping =
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmSoulsLoop');
+    }
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmSoulsThreshold') !== undefined) {
+        gauges.necromancy.stacks.souls.alarm.threshold = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmSoulsThreshold');
+    }
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmSoulsVolume') !== undefined) {
+        gauges.necromancy.stacks.souls.alarm.volume =
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmSoulsVolume');
+    }
+}
+// TODO: For Gauge Settings I should be able to store the entire gauge in localStorage
+// TODO: and recover it instead of setting each property individually from a different setting
+// TODO: Just need to figure out why my earlier attempt with setGaugeData() wasn't saving values properly
+function getGaugeData(gauges) {
+    let gaugeData = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('gaugedata');
+    if (gaugeData !== undefined) {
+        gauges = gaugeData;
+        return JSON.parse(gaugeData);
+    }
 }
 window.onload = function () {
     if (window.alt1) {
         alt1.identifyAppUrl('./appconfig.json');
-        Object.values(settingsObject).forEach(function (val) {
-            document.querySelector('#Settings .container').before(val);
-        });
-        document
-            .querySelectorAll('input[type="checkbox"]')
-            .forEach(function (checkbox) {
-            checkbox.addEventListener('change', function () {
-                updateGaugeData();
-                _lib_utility__WEBPACK_IMPORTED_MODULE_0__.freezeAndContinueOverlays(); // Force an instant redraw
-            });
-        });
-        /* Update Alarm Thresholds */
-        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.getByID('alarmSoulsThreshold').addEventListener('change', function (e) {
-            var target = e.target;
-            gauges.necromancy.stacks.souls.alarm.threshold = parseInt(target.value, 10);
-            console.log('Souls alarm threshold: ' + target.value);
-        });
-        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.getByID('alarmNecrosisThreshold')
-            .addEventListener('change', function (e) {
-            var target = e.target;
-            gauges.necromancy.stacks.necrosis.alarm.threshold = parseInt(target.value, 10);
-            console.log('Necrosis alarm threshold: ' + target.value);
-        });
-        /* Update Active Alarms */
-        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.getByID('alarmSoulsActive').addEventListener('change', function (e) {
-            var target = e.target;
-            gauges.necromancy.stacks.souls.alarm.isActive = target.checked;
-            console.log('Souls alarm active: ' + target.checked);
-        });
-        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.getByID('alarmNecrosisActive').addEventListener('change', function (e) {
-            var target = e.target;
-            gauges.necromancy.stacks.necrosis.alarm.isActive = target.checked;
-            console.log('Necrosis alarm active: ' + target.checked);
-        });
-        /* Update Looping Alarms */
-        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.getByID('alarmNecrosisLoop').addEventListener('change', function (e) {
-            var target = e.target;
-            gauges.necromancy.stacks.necrosis.alarm.isLooping = target.checked;
-            console.log('Necrosis alarm looping: ' + target.checked);
-        });
-        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.getByID('alarmSoulsLoop')
-            .addEventListener('change', function (e) {
-            var target = e.target;
-            gauges.necromancy.stacks.souls.alarm.isLooping = target.checked;
-            console.log('Souls alarm volume looping: ' + target.checked);
-        });
-        /* Update Alarm Volumes */
-        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.getByID('alarmNecrosisVolume')
-            .addEventListener('change', function (e) {
-            var target = e.target;
-            gauges.necromancy.stacks.necrosis.alarm.volume = parseInt(target.value, 10);
-            console.log('Necrosis alarm volume updated to: ' + target.value);
-        });
-        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.getByID('alarmSoulsVolume')
-            .addEventListener('change', function (e) {
-            var target = e.target;
-            gauges.necromancy.stacks.souls.alarm.volume = parseInt(target.value, 10);
-            console.log('Souls alarm volume updated to: ' + target.value);
-        });
-        /* Update Alarm Sounds */
-        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.getByID('alarmNecrosisAlertSound')
-            .addEventListener('change', function (e) {
-            var target = e.target;
-            gauges.necromancy.stacks.necrosis.alarm.sound = target.value;
-            console.log('Necrosis alarm sound updated to:' + target.value);
-        });
-        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.getByID('alarmSoulsAlertSound')
-            .addEventListener('change', function (e) {
-            var target = e.target;
-            gauges.necromancy.stacks.souls.alarm.sound = target.value;
-            console.log('Souls alarm sound updated to:' + target.value);
-        });
+        (0,_lib_settings__WEBPACK_IMPORTED_MODULE_20__.renderSettings)(gauges);
+        addEventListeners();
         startApp();
     }
     else {
-        var addappurl = "alt1://addapp/".concat(new URL('./appconfig.json', document.location.href).href);
-        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.helperItems.Output.insertAdjacentHTML('beforeend', "\n\t\t\tAlt1 not detected, click <a href='".concat(addappurl, "'>here</a> to add this app to Alt1\n\t\t"));
+        const addappurl = `alt1://addapp/${new URL('./appconfig.json', document.location.href).href}`;
+        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.helperItems.Output.insertAdjacentHTML('beforeend', `
+			Alt1 not detected, click <a href='${addappurl}'>here</a> to add this app to Alt1
+		`);
     }
 };
 

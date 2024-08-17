@@ -1,6 +1,7 @@
 import * as a1lib from 'alt1';
-import * as sauce from '../a1sauce';
 import { Overlay } from '../types';
+import { getSetting, updateSetting } from '../a1sauce/Settings/Storage';
+import { timeout } from '../a1sauce/Utils/timeout';
 
 
 export const white = a1lib.mixColor(255, 255, 255);
@@ -14,6 +15,36 @@ export const helperItems = {
 	settings: getByID('Settings'),
 };
 
+let updatingOverlayPosition = false;
+export async function setOverlayPosition(gauges: Overlay, utility) {
+	updatingOverlayPosition = true;
+	a1lib.once('alt1pressed', updateLocation);
+	alt1.setTooltip(
+		'Press Primary Keybind to save position (default keybind is alt+1)'
+	);
+	setTimeout(() => {
+		alt1.clearTooltip();
+	}, 3000);
+	while (updatingOverlayPosition) {
+		await timeout(1000);
+		utility.freezeOverlays();
+		//TODO: Per-gauge repositioning will be needed here as well
+		utility.resizeGaugesWithMousePosition(gauges);
+		utility.continueOverlays();
+	}
+	updateSetting('overlayPosition', {
+		x: gauges.necromancy.position.x,
+		y: gauges.necromancy.position.y,
+	});
+}
+
+export function updateLocation(): void {
+	updatingOverlayPosition = false;
+	alt1.overLayClearGroup('overlayPositionHelper');
+	alt1.overLayRefreshGroup('overlayPositionHelper');
+	alt1.clearTooltip();
+}
+
 export function forceClearOverlay(overlay: string): void {
 	alt1.overLaySetGroup(overlay);
 	alt1.overLayFreezeGroup(overlay);
@@ -22,6 +53,7 @@ export function forceClearOverlay(overlay: string): void {
 	console.log('Force cleared: ' + overlay);
 }
 
+// TODO: Overlays need to be able to add/remove themselves from this list
 const overlays = [
 	'Bloat',
 	'Undead_Army',
@@ -157,21 +189,21 @@ export async function resizeImageData(imageData: ImageData, scaleFactor: number)
 }
 
 const soulsAlert: HTMLAudioElement = new Audio(
-	sauce.getSetting('alarmSoulsAlertSound')
+	getSetting('alarmSoulsAlertSound')
 );;
 const necrosisAlert: HTMLAudioElement = new Audio(
-	sauce.getSetting('alarmNecrosisAlertSound')
+	getSetting('alarmNecrosisAlertSound')
 );
 export function playAlert(type: string) {
 	if (type === 'souls') {
-		soulsAlert.loop = Boolean(sauce.getSetting('alarmSoulsLoop'));
-		soulsAlert.volume = Number(sauce.getSetting('alarmSoulsVolume')) / 100;
+		soulsAlert.loop = Boolean(getSetting('alarmSoulsLoop'));
+		soulsAlert.volume = Number(getSetting('alarmSoulsVolume')) / 100;
 		soulsAlert.play();
 	}
 	if (type == 'necrosis') {
-		necrosisAlert.loop = Boolean(sauce.getSetting('alarmNecrosisLoop'));
+		necrosisAlert.loop = Boolean(getSetting('alarmNecrosisLoop'));
 		necrosisAlert.volume =
-			Number(sauce.getSetting('alarmNecrosisVolume')) / 100;
+			Number(getSetting('alarmNecrosisVolume')) / 100;
 		necrosisAlert.play();
 	}
 }

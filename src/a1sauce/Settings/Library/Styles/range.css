@@ -1,0 +1,58 @@
+#Settings input[type="range"] {
+   -webkit-appearance: none;
+    appearance: none;
+	transition: background 450ms ease-in;
+    cursor: pointer;
+	height: 8px;
+	border: solid 1px #697479;
+	border-radius: 3px;
+	position: relative;
+	margin-right: 5px;
+}
+
+#Settings input[type="range"]::before {
+	position: absolute;
+	display: block;
+	content: '';
+	width: calc(100% - 6px);
+	height: 1px;
+	top: auto;
+	bottom: -3px;
+	background-color: #3e5765;
+	z-index: 5;
+	left: 50%;
+    transform: translate(-50%);
+}
+
+#Settings input[type="range"]::after {
+	position: absolute;
+	display: block;
+	content: '';
+	width: calc(100% - 1px);
+	height: 2px;
+	top: 1px;
+	bottom: auto;
+	background-color: #09141b;
+	z-index: 2;
+	left: 50%;
+    transform: translate(-50%);
+	box-shadow: 0px 19px 0px #09141b;
+}
+
+#Settings input[type="range"]:focus {
+  outline: none;
+}
+
+#Settings input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+   appearance: none;
+
+
+   background-image: url('./images/range-input-tab.png');
+   background-position: 50% 50%;
+   background-repeat: no-repeat;
+   width: 9px;
+   height: 20px;
+   position: relative;
+   z-index: 99;
+}
