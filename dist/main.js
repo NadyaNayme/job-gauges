@@ -4621,7 +4621,10 @@ const notes = [
     // Add patch notes to top
     {
         date: '8/18/2024 - Version Checking v1.0.3',
-        note: [`Added option to periodically check if a new update is available and alert the user to refresh at their convenience to receive the new update.`],
+        note: [
+            `Added option to periodically check if a new update is available and alert the user to refresh at their convenience to receive the new update.`,
+            `Fix Necrosis alarm as it was still broken in v1.0.2`,
+        ],
     },
     {
         date: '8/18/2024 - Alarm Hotfix v1.0.2',
