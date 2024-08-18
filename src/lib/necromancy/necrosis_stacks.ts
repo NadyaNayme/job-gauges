@@ -2,6 +2,7 @@
 import * as a1lib from 'alt1';
 import * as utility from '../utility';
 import { Overlay } from '../../types';
+import { getSetting } from '../../a1sauce/Settings/Storage';
 
 const necrosisImages = a1lib.webpackImages({
 	necrosis_0: require('../.././asset/data/necrosis/lg/necrosis_0.data.png'),
@@ -22,6 +23,9 @@ const necrosisColoredImages = a1lib.webpackImages({
 
 let scaledOnce = false;
 let playingAlert = false;
+
+const necrosisAlert: HTMLAudioElement = new Audio();
+necrosisAlert.id = 'alarmNecrosis';
 
 export async function necrosisOverlay(gauges: Overlay) {
 	const { necrosis } = gauges.necromancy.stacks;
@@ -52,7 +56,6 @@ export async function necrosisOverlay(gauges: Overlay) {
 	}
 
 	const { position, stacks } = necrosis;
-	console.log(stacks);
 	const { x, y } = position.active_orientation;
 	const bloatVisible = !gauges.necromancy.bloat.isActiveOverlay;
 	let bloatSpace = 0;
@@ -75,12 +78,15 @@ export async function necrosisOverlay(gauges: Overlay) {
 	}
 
 	if (stacks >= necrosis.alarm.threshold && necrosis.alarm.isActive) {
+		necrosisAlert.pause();
+		necrosisAlert.src = getSetting('alarmNecrosisAlertSound');
+		necrosisAlert.load();
 		if (!playingAlert) {
-			utility.playAlert('necrosis');
+			utility.playAlert(necrosisAlert);
 			playingAlert = true;
 		}
 	} else if (playingAlert) {
-		utility.pauseAlert('necrosis');
+		utility.pauseAlert(necrosisAlert);
 		playingAlert = false;
 	}
 

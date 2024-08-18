@@ -188,33 +188,27 @@ export async function resizeImageData(imageData: ImageData, scaleFactor: number)
 	return context.getImageData(0, 0, newWidth, newHeight);
 }
 
-const soulsAlert: HTMLAudioElement = new Audio(
-	getSetting('alarmSoulsAlertSound')
-);;
-const necrosisAlert: HTMLAudioElement = new Audio(
-	getSetting('alarmNecrosisAlertSound')
-);
-export function playAlert(type: string) {
-	if (type === 'souls') {
-		soulsAlert.loop = Boolean(getSetting('alarmSoulsLoop'));
-		soulsAlert.volume = Number(getSetting('alarmSoulsVolume')) / 100;
-		soulsAlert.play();
-	}
-	if (type == 'necrosis') {
-		necrosisAlert.loop = Boolean(getSetting('alarmNecrosisLoop'));
-		necrosisAlert.volume =
-			Number(getSetting('alarmNecrosisVolume')) / 100;
-		necrosisAlert.play();
-	}
+export async function playAlert(alarm: HTMLAudioElement) {
+	console.log(`Playing ${alarm.id} - above alarm's threshold`);
+		alarm.loop = Boolean(getSetting(alarm.id + 'Loop'));
+		alarm.volume =
+			Number(getSetting(alarm.id + 'Volume')) / 100;
+		await timeout(20).then(() => {
+			alarm.pause();
+			alarm.src = getSetting(alarm.id + 'AlertSound');
+			alarm.load();
+			alarm.play();
+		});
+		console.log(
+			`Loop: ${alarm.loop} | Volume: ${alarm.volume} | Alert: ${alarm.src}`
+		);
 }
 
-export function pauseAlert(type: string) {
-	if (type === 'souls') {
-		soulsAlert.pause();
-		soulsAlert.currentTime = 0;
-	}
-	if (type === 'necrosis') {
-		necrosisAlert.pause();
-		necrosisAlert.currentTime = 0;
-	}
+export function pauseAlert(alarm: HTMLAudioElement) {
+	console.log(`Resetting ${alarm.id} - below alarm's threshold.`)
+	alarm.volume = 0;
+	alarm.play().then(() => {
+		alarm.currentTime = 0;
+		alarm.pause();
+	});
 }

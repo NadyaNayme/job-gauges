@@ -24,7 +24,7 @@ function capitalizeAppName(str) {
 }
 
 export class Patches {
-	_notes: PatchNote[] = [];
+	_notes = [];
 
 	public checkForNewVersion = () => {
 		// [0] = Major ; [1] = Minor ; [2] = Patch
@@ -36,7 +36,7 @@ export class Patches {
 		return lastKnownVersion !== currentVersion;
 	};
 
-	public setNotes = (notes: PatchNote[]) => {
+	public setNotes = (notes) => {
 		this._notes = notes;
 	};
 
@@ -68,16 +68,17 @@ export class Patches {
 
 			let notes = this.getNotes();
 			for (let i = 0; i < notes.length; i++) {
+				let noteType: PatchNote = notes[i];
 				const noteContainer = document.createElement('div');
 				noteContainer.classList.add('patch-notes');
 				const noteDate = document.createElement('h3');
-				noteDate.innerText = notes[i].date;
+				noteDate.innerText =noteType.date;
 				const notesList = document.createElement('ul');
 				notesList.classList.add('note');
 
-				for (let j = 0; j < notes[i].note.length; j++) {
+				for (let j = 0; j <noteType.note.length; j++) {
 					const noteText = document.createElement('li');
-					noteText.innerText = notes[i].note[j];
+					noteText.innerText =noteType.note[j];
 					notesList.appendChild(noteText);
 				}
 

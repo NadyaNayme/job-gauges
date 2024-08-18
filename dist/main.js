@@ -1955,15 +1955,16 @@ class Patches {
                 container.appendChild(innerContainer);
                 let notes = this.getNotes();
                 for (let i = 0; i < notes.length; i++) {
+                    let noteType = notes[i];
                     const noteContainer = document.createElement('div');
                     noteContainer.classList.add('patch-notes');
                     const noteDate = document.createElement('h3');
-                    noteDate.innerText = notes[i].date;
+                    noteDate.innerText = noteType.date;
                     const notesList = document.createElement('ul');
                     notesList.classList.add('note');
-                    for (let j = 0; j < notes[i].note.length; j++) {
+                    for (let j = 0; j < noteType.note.length; j++) {
                         const noteText = document.createElement('li');
-                        noteText.innerText = notes[i].note[j];
+                        noteText.innerText = noteType.note[j];
                         notesList.appendChild(noteText);
                     }
                     noteContainer.appendChild(noteDate);
@@ -2966,7 +2967,7 @@ __webpack_require__.r(__webpack_exports__);
 const appName = 'job-gauges';
 const majorVersion = 1;
 const minorversion = 0;
-const patchVersion = 1;
+const patchVersion = 2;
 
 
 /***/ }),
@@ -3757,13 +3758,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   necrosisOverlay: () => (/* binding */ necrosisOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+/* harmony import */ var _a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../a1sauce/Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
 /* eslint-disable @typescript-eslint/no-require-imports */
 
 
-const necrosisImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
+
+const necrosisImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
     necrosis_0: __webpack_require__(/*! ../.././asset/data/necrosis/lg/necrosis_0.data.png */ "./asset/data/necrosis/lg/necrosis_0.data.png"),
     necrosis_2: __webpack_require__(/*! ../.././asset/data/necrosis/lg/necrosis_2.data.png */ "./asset/data/necrosis/lg/necrosis_2.data.png"),
     necrosis_4: __webpack_require__(/*! ../.././asset/data/necrosis/lg/necrosis_4.data.png */ "./asset/data/necrosis/lg/necrosis_4.data.png"),
@@ -3772,7 +3775,7 @@ const necrosisImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     necrosis_10: __webpack_require__(/*! ../.././asset/data/necrosis/lg/necrosis_10.data.png */ "./asset/data/necrosis/lg/necrosis_10.data.png"),
     necrosis_12: __webpack_require__(/*! ../.././asset/data/necrosis/lg/necrosis_12.data.png */ "./asset/data/necrosis/lg/necrosis_12.data.png"),
 });
-const necrosisColoredImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
+const necrosisColoredImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
     necrosis_6: __webpack_require__(/*! ../.././asset/data/necrosis/lg/colored/necrosis_6-warning.data.png */ "./asset/data/necrosis/lg/colored/necrosis_6-warning.data.png"),
     necrosis_8: __webpack_require__(/*! ../.././asset/data/necrosis/lg/colored/necrosis_8-warning.data.png */ "./asset/data/necrosis/lg/colored/necrosis_8-warning.data.png"),
     necrosis_10: __webpack_require__(/*! ../.././asset/data/necrosis/lg/colored/necrosis_10-danger.data.png */ "./asset/data/necrosis/lg/colored/necrosis_10-danger.data.png"),
@@ -3780,6 +3783,8 @@ const necrosisColoredImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
 });
 let scaledOnce = false;
 let playingAlert = false;
+const necrosisAlert = new Audio();
+necrosisAlert.id = 'alarmNecrosis';
 async function necrosisOverlay(gauges) {
     const { necrosis } = gauges.necromancy.stacks;
     await necrosisImages.promise;
@@ -3801,7 +3806,6 @@ async function necrosisOverlay(gauges) {
         scaledOnce = true;
     }
     const { position, stacks } = necrosis;
-    console.log(stacks);
     const { x, y } = position.active_orientation;
     const bloatVisible = !gauges.necromancy.bloat.isActiveOverlay;
     let bloatSpace = 0;
@@ -3821,13 +3825,16 @@ async function necrosisOverlay(gauges) {
             break;
     }
     if (stacks >= necrosis.alarm.threshold && necrosis.alarm.isActive) {
+        necrosisAlert.pause();
+        necrosisAlert.src = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('alarmNecrosisAlertSound');
+        necrosisAlert.load();
         if (!playingAlert) {
-            _utility__WEBPACK_IMPORTED_MODULE_0__.playAlert('necrosis');
+            _utility__WEBPACK_IMPORTED_MODULE_0__.playAlert(necrosisAlert);
             playingAlert = true;
         }
     }
     else if (playingAlert) {
-        _utility__WEBPACK_IMPORTED_MODULE_0__.pauseAlert('necrosis');
+        _utility__WEBPACK_IMPORTED_MODULE_0__.pauseAlert(necrosisAlert);
         playingAlert = false;
     }
     if (gauges.necromancy.stacks.duplicateNecrosisRow) {
@@ -3835,10 +3842,10 @@ async function necrosisOverlay(gauges) {
         alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x + x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
             y +
             necrosisImages.necrosis_0.height +
-            bloatSpace, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(necrosisImages[`necrosis_${stacks}`].toDrawableData()), necrosisImages[`necrosis_${stacks}`].width, 1000);
+            bloatSpace, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(necrosisImages[`necrosis_${stacks}`].toDrawableData()), necrosisImages[`necrosis_${stacks}`].width, 1000);
     }
     function displayNecrosisImage(stacks) {
-        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x + x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y + y + bloatSpace, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(necrosisImages[`necrosis_${stacks}`].toDrawableData()), necrosisImages[`necrosis_${stacks}`].width, 1000);
+        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x + x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y + y + bloatSpace, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(necrosisImages[`necrosis_${stacks}`].toDrawableData()), necrosisImages[`necrosis_${stacks}`].width, 1000);
     }
 }
 
@@ -3872,6 +3879,8 @@ const soulImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
 });
 let scaledOnce = false;
 let playingAlert = false;
+const soulsAlert = new Audio();
+soulsAlert.id = 'alarmSouls';
 async function soulsOverlay(gauges) {
     const { souls } = gauges.necromancy.stacks;
     if (!souls.isActiveOverlay) {
@@ -3912,12 +3921,12 @@ async function soulsOverlay(gauges) {
     }
     if (souls.stacks >= souls.alarm.threshold && souls.alarm.isActive) {
         if (!playingAlert) {
-            _utility__WEBPACK_IMPORTED_MODULE_0__.playAlert('souls');
+            _utility__WEBPACK_IMPORTED_MODULE_0__.playAlert(soulsAlert);
             playingAlert = true;
         }
     }
     else if (playingAlert) {
-        _utility__WEBPACK_IMPORTED_MODULE_0__.pauseAlert('souls');
+        _utility__WEBPACK_IMPORTED_MODULE_0__.pauseAlert(soulsAlert);
         playingAlert = false;
     }
     function displaySoulImage(image) {
@@ -4501,31 +4510,26 @@ async function resizeImageData(imageData, scaleFactor) {
     // Extract the new image data from the resized canvas
     return context.getImageData(0, 0, newWidth, newHeight);
 }
-const soulsAlert = new Audio((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)('alarmSoulsAlertSound'));
-;
-const necrosisAlert = new Audio((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)('alarmNecrosisAlertSound'));
-function playAlert(type) {
-    if (type === 'souls') {
-        soulsAlert.loop = Boolean((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)('alarmSoulsLoop'));
-        soulsAlert.volume = Number((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)('alarmSoulsVolume')) / 100;
-        soulsAlert.play();
-    }
-    if (type == 'necrosis') {
-        necrosisAlert.loop = Boolean((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)('alarmNecrosisLoop'));
-        necrosisAlert.volume =
-            Number((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)('alarmNecrosisVolume')) / 100;
-        necrosisAlert.play();
-    }
+async function playAlert(alarm) {
+    console.log(`Playing ${alarm.id} - above alarm's threshold`);
+    alarm.loop = Boolean((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)(alarm.id + 'Loop'));
+    alarm.volume =
+        Number((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)(alarm.id + 'Volume')) / 100;
+    await (0,_a1sauce_Utils_timeout__WEBPACK_IMPORTED_MODULE_1__.timeout)(20).then(() => {
+        alarm.pause();
+        alarm.src = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)(alarm.id + 'AlertSound');
+        alarm.load();
+        alarm.play();
+    });
+    console.log(`Loop: ${alarm.loop} | Volume: ${alarm.volume} | Alert: ${alarm.src}`);
 }
-function pauseAlert(type) {
-    if (type === 'souls') {
-        soulsAlert.pause();
-        soulsAlert.currentTime = 0;
-    }
-    if (type === 'necrosis') {
-        necrosisAlert.pause();
-        necrosisAlert.currentTime = 0;
-    }
+function pauseAlert(alarm) {
+    console.log(`Resetting ${alarm.id} - below alarm's threshold.`);
+    alarm.volume = 0;
+    alarm.play().then(() => {
+        alarm.currentTime = 0;
+        alarm.pause();
+    });
 }
 
 
@@ -4545,6 +4549,10 @@ __webpack_require__.r(__webpack_exports__);
 const notes = [
     // Add patch notes to top
     {
+        date: '8/18/2024 - Alarm Hotfix v1.0.2',
+        note: [`Fixed alarm sounds not...alarming`],
+    },
+    {
         date: '8/17/2024 - Internal Rewrite v1.0.1',
         note: [
             `Added patch notes that will show when the user opens the app for the first time with a new version`,
@@ -4555,7 +4563,7 @@ const notes = [
             `Improved look of range input settings`,
             `Improved look of Alarm settings`,
             `Added -/+ buttons for range settings`,
-        ]
+        ],
     },
 ];
 

@@ -2,6 +2,8 @@
 import * as a1lib from 'alt1';
 import * as utility from '../utility';
 import { Overlay } from '../../types';
+import { getSetting } from '../../a1sauce/Settings/Storage';
+import { timeout } from '../../a1sauce/Utils/timeout';
 
 const soulImages = a1lib.webpackImages({
 	souls_0: require('../.././asset/data/souls/lg/souls_0.data.png'),
@@ -14,6 +16,9 @@ const soulImages = a1lib.webpackImages({
 
 let scaledOnce = false;
 let playingAlert = false;
+
+const soulsAlert: HTMLAudioElement = new Audio();
+soulsAlert.id = 'alarmSouls';
 
 export async function soulsOverlay(gauges: Overlay) {
 	const { souls } = gauges.necromancy.stacks;
@@ -64,11 +69,11 @@ export async function soulsOverlay(gauges: Overlay) {
 	}
 	if (souls.stacks >= souls.alarm.threshold && souls.alarm.isActive) {
 		if (!playingAlert) {
-			utility.playAlert('souls');
+			utility.playAlert(soulsAlert);
 			playingAlert = true;
 		}
 	} else if (playingAlert) {
-		utility.pauseAlert('souls');
+		utility.pauseAlert(soulsAlert);
 		playingAlert = false;
 	}
 
