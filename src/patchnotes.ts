@@ -1,6 +1,17 @@
 export const notes = [
 	// Add patch notes to top
 	{
+		date: '8/18/2024 - Bug Fixes & Testing v1.0.5',
+		note: [
+			`Changes Necrosis stacks threshold to match previous thresholds in NJG. The new thresholds are 0-4 Purple ; 6-10 Orange ; 12 Red`,
+			`In response to feedback the Red Necrosis Stacks have been made brighter and more obvious`,
+			`Fixed positioning of 2nd Necrosis Stacks row when scale was set to a non-100% value`,
+			`Fixed the value of range inputs not saving to settings if the - / + buttons were used to set the final value`,
+			`Began adding tests to A1 Sauce to catch and prevent feature regressions and broken behavior`,
+			`v1.0.4 is being skipped as it was used to test the version checking option from v1.0.3 and had no patch notes`
+		],
+	},
+	{
 		date: '8/18/2024 - Version Checking v1.0.3',
 		note: [
 			`Added option to periodically check if a new update is available and alert the user to refresh at their convenience to receive the new update.`,

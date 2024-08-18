@@ -129,7 +129,7 @@ export const renderSettings = async (gauges) => {
 			'Alert when at or above this many souls',
 			{ defaultValue: '5', min: 2, max: 5, unit: ' souls' }
 		)
-		.addAlarmSetting('Residual Souls Alarm', 'alarmSouls', '')
+		.addAlarmSetting('alarmSouls', '')
 		.addSeperator()
 		.addHeader('h3', 'Necrosis Stacks Alarm')
 		.addRangeSetting(
@@ -137,6 +137,6 @@ export const renderSettings = async (gauges) => {
 			'Alert when at or above this many stacks',
 			{ defaultValue: '12', min: 2, max: 12, unit: ' stacks' }
 		)
-		.addAlarmSetting('Necrosis Stacks Alarm', 'alarmNecrosis', '')
+		.addAlarmSetting('alarmNecrosis', '')
 		.build();
 }

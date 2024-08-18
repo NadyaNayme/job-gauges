@@ -421,13 +421,13 @@ module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/
 
 /***/ }),
 
-/***/ "./asset/data/necrosis/lg/colored/necrosis_10-danger.data.png":
-/*!********************************************************************!*\
-  !*** ./asset/data/necrosis/lg/colored/necrosis_10-danger.data.png ***!
-  \********************************************************************/
+/***/ "./asset/data/necrosis/lg/colored/necrosis_10-warning.data.png":
+/*!*********************************************************************!*\
+  !*** ./asset/data/necrosis/lg/colored/necrosis_10-warning.data.png ***!
+  \*********************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAAIQAAAAUCAMAAAB7/GXWAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAihQTFRFAAAAxHd3v3JyOTk5Nzc3y35+sGNjj0JCwnV1PDw8Ojo6MzMzODg4jkFBp1pawXR0tmlpxnl5QUFBPz8/vnFxVQgIXRAQcSQkjD8/q15ezH9/NjY2FRUVGhoaJSUlNDQ0Pj4+SEhIPT09RQAATQAAUgUFVwoKWg0NaRwcnE9P35KSyn19Dg4OEBAQExMTFhYWGRkZIiIiT09PSgAAPQAAUQQEWAsLYBMTiTw82IuLx3p6ij09DAwMEhISFxcXHR0dNTU1TwICVAcHTgEBaBsbnlFR2o2NyHt7l0pKdCcnbyIiUVFRUFBQQEBAKSkpJCQkUwYGXA8PYxYWYhUVoFNT04aGzYCAmk1NeCsrciUlcCMjbB8fwHNzGBgYKioqQ0NDLS0tJiYmZBcXhzo6uWxs5JeXn1JSfC8vcyYmbiEhah0dTExMVlZWRUVFLi4uJycnIyMjICAgxXh4ZhkZdSgokURE7qGh0oWFhDc3bCAgHh4eWlpaRkZGKysrKCgoISEhhTg4m05O3pGR86am4pWVrWBgfzIyiDs7ey4uREREV1dXXV1dXFxcTU1NMjIyMTExyXx8pllZ9qmp+q2t14uLuGtrmUxMX19fY2NjZGRkUlJSU1NTpVhY8KOj/7Oz8aSk/7W1656eOzs7R0dHaWlpaGhoZmZma2trZWVleSwsgzY2k0ZGo1ZWt2pq45aWLCwsYWFhWFhYdikpfjExgjU1246OLy8vei0tDJsehAAAAiRJREFUeJzNlk1IFGEYx5//zhquirsjAyFbbH50KErtWgaBB4vERUVYwz5E7JMovAYF0bkPOkWebI/SFiLkMUkPouiigpd0WLBbO86urkm7bfOxu8x+HN7nEj2nmd/7ex/+zPu+MwP6DwqOS/ypMC4MmbqEdIUQVQB+larikKl7DLhXFgJ1BoZWrIpDpi5VZ6txkCoJocAq+uFUxSFT99sQW0UhFG8OY8MxXxgydb9sEa0hrjpCKAGD2O5yYfnEIVP3y75dM0aCop69QgjlLLKuZL0tz+u5+cKQqfsbkCU5qZ8y4Uw6F8LVO98JpGrzDy5MLEg83X2a2mMU0HYaje0Sj62lrRDD+yQfao3A1CAQ6SckwhxolbjuHqJYouPDHahNNnybNkOMI3qyFhk3vreqeiDSFTh8yYFWietS54VUfO5Mu+77dhF65FzHi4y1HOMHR+0D04LPva6v+gKxIPF0qWf1vgmfPX/TFIx636dyG/P1lys7x7Arz21oT/Dot91WHDJ1j8f7wNgmSbUNn5qn1fzpoO4T6yOzl7Ffh7GJm/m24pCpTy5NvNs8br5Iw9dDVAhB3a5b5iNaXLnb72grDJn65NTIY+na6qVWBMkRgs77sveAtbarzrbikKnXKH1aaPPpqzEqCkFySK8PjpZ8EMQhU6+5/bErM/OTSkKQfKRve7asrTBk6tLD7YEb+RvHT41MFT7P4pCpS5QpXKN8+N/XXyAIeSQkh8KnAAAAAElFTkSuQmCC")
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAAIQAAAAUCAMAAAB7/GXWAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAk9QTFRFAAAAvZAMt4oGOTk5Nzc3w5YSpHsAeVoAuo0JPDw8Ojo6MzMzODg4vI8Ld1kAmXIAuYwIrYEAvpENQUFBPz8/t4oFKR8ANSgAUDwAdFcAn3YAxJcTNjY2FRUVGhoaJSUlNDQ0Pj4+SEhIPT09tokFHBUAIBgAJhwALCEAMCQARDMAimcA2KsnwpURDg4OEBAQExMTFhYWGRkZIiIiT09PHhYAGRIAJRsALiIAOSsAcFQA0KMfv5IOclUADAwMEhISFxcXHR0dNTU1IhkAIRkAjWkA0qUhwJMPg2IAVD8ATTkAUVFRUFBQQEBAKSkpJCQkKB4AKh8ANCcAPS4APC0Aj2sAzJ8axZgUh2UAWkMAUTwATjoASTcAuIsHGBgYKioqQ0NDLS0tJiYmMyYAPi4AblIAsYQA3K8rjmoAX0cAUj4ATzsATDkATDgARjUATExMVlZWRUVFLi4uJycnIyMjICAgQTAASzgAVkAAfFwA5rk1yp0ZkGsAak8AWUIAUz4AUj0ASjcAHh4eWlpaRkZGKysrKCgoISEhiWYA1qkl67462q0poXgAbVIAY0oAb1MAXkYAREREV1dXXV1dXFxcTU1NMjIyMTExwZQQmHEA7sE988ZBsIMAhmQAX19fY2NjZGRkUlJSU1NTX0YAcVQAlnAAy54a6Ls3+MtH8sVB6r05+s1JxJcS47YyOzs7R0dHaWlpaGhoZmZma2trZWVlW0QAaE4Afl4AlG4Ar4IA264qLCwsYWFhWFhYVD4AYUgAaE0A06YiLy8vv5EOXEQAyDPE0gAAAhdJREFUeJxjZBgEgBGJyfgPizzRgiQqZ2b8g8URrIyMjD/QlRIvSKJyTqDgFwxH8DKCwDtUpcQLkqicmeM/J+O3b2iOEAUrZWR4iqyUeEESlctABBnvojhChREGLiOUEi9IonIZIUjoCL+9j+QIFUHG9xAJxtPw6CNekETlMkICHwSBIp8YznN+gTtCRf6yLuOXT9Jgxcc+QPUTLUiichlhxv8Mgp8/aIAEt/6BOoLJD8T9ygMLuMUMJAkykKacRYdB7zGD3Lvn4sDk8vbJxT9gR8SyMTD+eAd07eowiNr3i0kRBAPilbNEMTz+pL8om/GOKiPjmlAGxv4/IEcwlm7xZWTsqIQofM0g1vCfFEFI0iJaObOd46fXh7TN34rsc2Z8u8bAouYvODoYswW5oQG2OoTp/d4jDCQJMpCmnNnnYiFIpLyrSyn0lND0b9CEOWND4EMFxvcbZa69a2TM+A0xlnhBEpVzcvEXcQHLyzuGjCvVNtyH5Q4G9xhGOAiGGUu8IInK1x2ZsfSKDCiTzsj0YYA7gsGdKQek7tDpEjckY4kWJFH5ugW5qcyJJzw0GJ0ZkBzBYCOfvMud8byRPbKxxAuSqJxLNORN8pWyaXEMKI5gOLzyv6hLOFqFQLwgicq5slY7/936hgHNEQxCkaLHd6IbS7wgicqZC2/HB8E4SI0aIQYs1TPxgiQqZ2b4C2czYkrTHwAAW4lHJCu1ZgYAAAAASUVORK5CYII=")
 
 /***/ }),
 
@@ -437,7 +437,7 @@ module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/
   \********************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAAIQAAAAUCAMAAAB7/GXWAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAUpQTFRFAAAAxHd3v3Jyy35+sGNjj0JCwnV1jkFBp1pawXR0tmlpxnl5vnFxVQgIXRAQcSQkjD8/q15ezH9/RQAATQAAUgUFVwoKWg0NaRwcnE9P35KSyn19SgAAPQAAUQQEWAsLYBMTiTw82IuLx3p6ij09TwICVAcHTgEBaBsbnlFR2o2NyHt7l0pKdCcnbyIiUwYGXA8PYxYWYhUVoFNT04aGzYCAmk1NeCsrciUlcCMjbB8fwHNzZBcXhzo6uWxs5JeXn1JSfC8vcyYmbiEhah0dxXh4ZhkZdSgokURE7qGh0oWFhDc3bCAghTg4m05O3pGR86am4pWVrWBgfzIyiDs7ey4uyXx8pllZ9qmp+q2t14uLuGtrmUxMpVhY8KOj/7Oz8aSk/7W1656eeSwsgzY2k0ZGo1ZWt2pq45aWdikpfjExgjU1246Oei0tDM/07AAAAWNJREFUeJzNlj1Lw1AUhu8bQ0ubQAWxKI7dGlz8QlHcOvgHXP1TDk4OgvgjnLuZ0Q8oirQoFMWh2EQrTU1uPnpJMpzLAfFM4bmHh5d7b3IC8Q8KyiOCknUyZDjmIRYATPKtdMhxZCFQCTHGubhkyHKkIWzIEh9qKx3yHEkIu4qkXpRWMmQ64hD2Ijwrxv3spOiQ65Ah7FXMjK9azHt+0kqGmu1FGIUw1p9awE8l3aOu0IJCr70EhiH2x8IOPhvAzTbgbgn4XR0oi+cIQ3TQXzMxNTFcefeW3fbS97UOlMVzRMfRCepyY96acDeMB+9RaEGh114C5cU8vnNGDfj13qt/hKtprKVDzfYijF9RpznYu29jUsXFyXmqpUOuI/lYOcZOtEWD58MzRUuGTEf62W5ZswOEl+VU1dIhz5ENMGvXqzmXuYFAhyzHfJRb5ubwtqAlQ45D+amxRMl4pkOGA8Xlv69fNJluJNpwZG0AAAAASUVORK5CYII=")
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAAIQAAAAUCAMAAAB7/GXWAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAU1QTFRFAAAA5m1t42ho63R02VlZwjk55Wtrwjg401BQ42pq3V9f529v4mdnlQAAnQgIrRsbwDY21lRU63V1dwAAgQAAjgAAmAICmgUFphISzEZG94iI6nJyfAAAbwAAiwAAmQMDnwsLvjMz84GB6HBwvzQ0hQAAlAAAgwAAzUhI9IOD6XFxyEFBrx4eqxkZ42lpkQAAlgAAnAcHog4OoQ0NzkpK8Hx87HZ2ykREsiIirRwcqRYWnAYGog8PvTEx32Ji+o2NzklJtSYmrh0drBoaqhgYpxQU525upBERqRcXsB8fxDs7/5iY73t7uy4uy0VF9oeH/5+f+YuL11ZWtykpvjIytCUl6XJy0k9P/5eX/6Oj/6mp8oCA6nNz3mFhyUND0k5O/5ub/7Gx/52d/7S0/pSUsyMjui0txT090E1N3mBgsCAgtigouSws9YSEsyQkZCWXHgAAAWBJREFUeJzNlr9Lw0AYhu9N/dmL0KnSWRCpVURx6NKxi7u7f5Org4PObg7+DTpYsA5SEEWoFFyMrRVNvNwl6ZFk+I4PxG9qnnt5eEmuuUD8g4H1E2HJOhkyHLMSFQBf+SgdchxZCSwojI9cXTJkOdISPvSINztKhzxHUsJfRDIvVpQMmQ5Twq9hLA1+yp4UHXIduoTfQOR9TmtmoZdEydAxXoRxCW8rvpouaRisBDpMh8ItXgJVie1KFeG7Kna9r3cLXnsuUA/PoUp0cbsDfM9j2BgFdYiJf+UC9fAc8ePohsv63ozquNn17icD4QSFW7wE6o15eNdSdCwf1i8PcP5jtHToGC9C8xdtrj52+pvxbjk9Okm1dMh1JC+rpteOb9HzYOPC0pIh05G+tteqUQdqsxzbWjrkObIDTLajqHWWOxDokOWYHeVybm/YL2jJkOOwPmqkKDme6ZDhQHH57+cX6BVcJC/EZ2sAAAAASUVORK5CYII=")
 
 /***/ }),
 
@@ -1898,78 +1898,83 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   Patches: () => (/* binding */ Patches)
 /* harmony export */ });
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! .. */ "./a1sauce/index.ts");
-/* harmony import */ var _data_constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../data/constants */ "./data/constants.ts");
-/* harmony import */ var _Settings_Storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
-/* harmony import */ var _Utils_timeout__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Utils/timeout */ "./a1sauce/Utils/timeout.ts");
-/* harmony import */ var _Style_style_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Style/style.css */ "./a1sauce/Patches/Style/style.css");
-
+/* harmony import */ var _Settings_Storage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
+/* harmony import */ var _Utils_tempTooltip__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Utils/tempTooltip */ "./a1sauce/Utils/tempTooltip.ts");
+/* harmony import */ var _Style_style_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Style/style.css */ "./a1sauce/Patches/Style/style.css");
 
 
 
 
 const sauce = ___WEBPACK_IMPORTED_MODULE_0__.A1Sauce.instance;
-sauce.setName(_data_constants__WEBPACK_IMPORTED_MODULE_1__.appName);
 class Patches {
     constructor() {
         this._notes = [];
         this.checkForNewVersion = () => {
             // [0] = Major ; [1] = Minor ; [2] = Patch
-            const lastKnownVersion = (0,_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('lastKnownVersion');
+            const lastKnownVersion = (0,_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('lastKnownVersion');
             const currentVersion = sauce.getVersion();
-            (0,_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.updateSetting)('lastKnownVersion', currentVersion);
+            (0,_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.updateSetting)('lastKnownVersion', currentVersion);
             console.log(lastKnownVersion);
             console.log(currentVersion);
             return lastKnownVersion !== currentVersion;
         };
         this.setNotes = (notes) => {
             this._notes = notes;
+            return this;
         };
         this.getNotes = () => {
             return this._notes;
         };
+        this.createPatchContainer = () => {
+            const container = document.createElement('div');
+            container.id = 'PatchNotes';
+            return container;
+        };
+        this.createPatchHeader = () => {
+            const headerContainer = document.createElement('div');
+            headerContainer.classList.add('title-row');
+            let header = document.createElement('h2');
+            header.innerText = 'Patch Notes';
+            let closeButton = document.createElement('button');
+            closeButton.innerText = 'Close Patch Notes';
+            closeButton.title = 'Close patch notes';
+            closeButton.classList.add('nisbutton');
+            closeButton.classList.add('close-button');
+            headerContainer.appendChild(header);
+            headerContainer.appendChild(closeButton);
+            return headerContainer;
+        };
+        this.addNotesToContainer = (notes, container) => {
+            for (let i = 0; i < notes.length; i++) {
+                let noteType = notes[i];
+                const noteContainer = document.createElement('div');
+                noteContainer.classList.add('patch-notes');
+                const noteDate = document.createElement('h3');
+                noteDate.innerText = noteType.date;
+                const notesList = document.createElement('ul');
+                notesList.classList.add('note');
+                for (let j = 0; j < noteType.note.length; j++) {
+                    const noteText = document.createElement('li');
+                    noteText.innerText = noteType.note[j];
+                    notesList.appendChild(noteText);
+                }
+                noteContainer.appendChild(noteDate);
+                noteContainer.appendChild(notesList);
+                container.appendChild(noteContainer);
+            }
+        };
         this.showPatchNotes = async () => {
             if (this.checkForNewVersion()) {
-                const container = document.createElement('div');
-                container.id = 'PatchNotes';
-                const innerContainer = document.createElement('div');
-                innerContainer.classList.add('title-row');
-                let header = document.createElement('h2');
-                header.innerText = 'Patch Notes';
-                let closeButton = document.createElement('button');
-                closeButton.innerText = 'Close Patch Notes';
-                closeButton.title = 'Close patch notes';
-                closeButton.classList.add('nisbutton');
-                closeButton.classList.add('close-button');
-                closeButton.addEventListener('click', () => {
+                const container = this.createPatchContainer();
+                const headerContainer = this.createPatchHeader();
+                headerContainer.querySelector('.close-button').addEventListener('click', () => {
                     container.remove();
                 });
-                innerContainer.appendChild(header);
-                innerContainer.appendChild(closeButton);
-                container.appendChild(innerContainer);
+                container.appendChild(headerContainer);
                 let notes = this.getNotes();
-                for (let i = 0; i < notes.length; i++) {
-                    let noteType = notes[i];
-                    const noteContainer = document.createElement('div');
-                    noteContainer.classList.add('patch-notes');
-                    const noteDate = document.createElement('h3');
-                    noteDate.innerText = noteType.date;
-                    const notesList = document.createElement('ul');
-                    notesList.classList.add('note');
-                    for (let j = 0; j < noteType.note.length; j++) {
-                        const noteText = document.createElement('li');
-                        noteText.innerText = noteType.note[j];
-                        notesList.appendChild(noteText);
-                    }
-                    noteContainer.appendChild(noteDate);
-                    noteContainer.appendChild(notesList);
-                    container.appendChild(noteContainer);
-                }
-                //container.style.height = window.innerHeight.toString();
+                this.addNotesToContainer(notes, container);
                 document.body.appendChild(container);
-                alt1.setTooltip(`New update! See ${sauce.getPublicName()} window for patch notes.`);
-                await (0,_Utils_timeout__WEBPACK_IMPORTED_MODULE_3__.timeout)(5000).then(() => {
-                    alt1.clearTooltip();
-                });
+                (0,_Utils_tempTooltip__WEBPACK_IMPORTED_MODULE_2__.tempTooltip)(`New update! See ${sauce.getPublicName()} window for patch notes.`, 5000);
             }
         };
     }
@@ -1987,16 +1992,16 @@ class Patches {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   checkVersion: () => (/* binding */ checkVersion),
-/* harmony export */   startVersionChecking: () => (/* binding */ startVersionChecking)
+/* harmony export */   getVersion: () => (/* binding */ getVersion),
+/* harmony export */   startVersionChecking: () => (/* binding */ startVersionChecking),
+/* harmony export */   updateTooltip: () => (/* binding */ updateTooltip)
 /* harmony export */ });
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! .. */ "./a1sauce/index.ts");
-/* harmony import */ var _Utils_timeout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Utils/timeout */ "./a1sauce/Utils/timeout.ts");
+/* harmony import */ var _Utils_tempTooltip__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Utils/tempTooltip */ "./a1sauce/Utils/tempTooltip.ts");
 
 
-const sauce = ___WEBPACK_IMPORTED_MODULE_0__.A1Sauce.instance;
-const checkVersion = async (version) => {
-    fetch('./version.json', {
+const getVersion = async (versionUrl) => {
+    let latest = await fetch(versionUrl, {
         method: 'GET',
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
@@ -2007,22 +2012,23 @@ const checkVersion = async (version) => {
         return latestVersion;
     })
         .then((latestVersion) => {
-        if (version != latestVersion.version) {
-            alt1.setTooltip(`A new update for ${sauce.getPublicName()} is available! Reload ${sauce.getPublicName()} for update.`);
-            (0,_Utils_timeout__WEBPACK_IMPORTED_MODULE_1__.timeout)(3000).then(() => {
-                alt1.clearTooltip();
-            });
-        }
-        else {
-            console.log(`App is running latest version. Expected version: ${latestVersion.version} ; found: ${version}`);
-        }
+        return latestVersion;
     });
+    return latest;
 };
-const startVersionChecking = () => {
-    checkVersion(sauce.getVersion());
-    setInterval(() => {
-        checkVersion(sauce.getVersion());
+const startVersionChecking = async (versionUrl) => {
+    let version = await getVersion(versionUrl);
+    updateTooltip(version);
+    setInterval(async () => {
+        let version = await getVersion(versionUrl);
+        updateTooltip(version);
     }, 1000 * 60 * 15);
+};
+const updateTooltip = (version) => {
+    const sauce = ___WEBPACK_IMPORTED_MODULE_0__.A1Sauce.instance;
+    if (version === sauce.getVersion()) {
+        (0,_Utils_tempTooltip__WEBPACK_IMPORTED_MODULE_1__.tempTooltip)(`A new update for ${sauce.getPublicName()} is available! Reload ${sauce.getPublicName()} for update.`, 3000);
+    }
 };
 
 
@@ -2215,9 +2221,9 @@ const alarms = [
     { name: 'elevator', value: './resource/alarms/elevator.wav' },
     { name: 'nuclear', value: './resource/alarms/nuclear.wav' },
 ];
-const createAlarmSetting = (headerText, name, description, options = {}) => {
-    var _a, _b, _c, _d, _e;
-    const { classes = (_a = options.classes) !== null && _a !== void 0 ? _a : '', defaultValue = (_b = options.defaultValue) !== null && _b !== void 0 ? _b : '100', min = (_c = options.min) !== null && _c !== void 0 ? _c : 0, max = (_d = options.max) !== null && _d !== void 0 ? _d : 100, unit = (_e = options.unit) !== null && _e !== void 0 ? _e : '%', } = options;
+const createAlarmSetting = (name, description, options = {}) => {
+    var _a;
+    const { classes = (_a = options.classes) !== null && _a !== void 0 ? _a : '', } = options;
     const shortDescription = (0,_text__WEBPACK_IMPORTED_MODULE_3__.createText)(description);
     const activeCheckbox = (0,_checkbox__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting)(name + 'Active', 'Active', false);
     activeCheckbox.classList.add('alarm-active');
@@ -2451,6 +2457,7 @@ async function updateRangeValue(e, rangeInput, add) {
         rangeInput.value = String(parseInt(rangeInput.value, 10) - 1);
     }
     rangeInput.dispatchEvent(new Event('input', { bubbles: true }));
+    (0,_Storage__WEBPACK_IMPORTED_MODULE_2__.updateSetting)(rangeInput.id, rangeInput.value);
     await (0,_Utils_timeout__WEBPACK_IMPORTED_MODULE_0__.timeout)(50);
     if (isMouseDown)
         updateRangeValue(e, rangeInput, add);
@@ -2665,7 +2672,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../index */ "./a1sauce/index.ts");
 
-const sauce = _index__WEBPACK_IMPORTED_MODULE_0__.A1Sauce.instance;
 const setDefaultSettings = () => {
     const settings = document.querySelectorAll('[data-setting]');
     settings.forEach((setting) => {
@@ -2716,7 +2722,8 @@ const loadSettings = () => {
     });
 };
 const settingsExist = () => {
-    if (!localStorage[sauce.Settings.getName()]) {
+    const sauce = _index__WEBPACK_IMPORTED_MODULE_0__.A1Sauce.instance;
+    if (!localStorage[sauce.getName()]) {
         setDefaultSettings();
     }
     else {
@@ -2724,19 +2731,21 @@ const settingsExist = () => {
     }
 };
 const getSetting = (setting) => {
-    if (!localStorage[sauce.Settings.getName()]) {
-        localStorage.setItem(sauce.Settings.getName(), JSON.stringify({}));
+    const sauce = _index__WEBPACK_IMPORTED_MODULE_0__.A1Sauce.instance;
+    if (!localStorage[sauce.getName()]) {
+        localStorage.setItem(sauce.getName(), JSON.stringify({}));
         setDefaultSettings();
     }
-    return JSON.parse(localStorage[sauce.Settings.getName()])[setting];
+    return JSON.parse(localStorage[sauce.getName()])[setting];
 };
 const updateSetting = (setting, value) => {
-    if (!localStorage.getItem(sauce.Settings.getName())) {
-        localStorage.setItem(sauce.Settings.getName(), JSON.stringify({}));
+    const sauce = _index__WEBPACK_IMPORTED_MODULE_0__.A1Sauce.instance;
+    if (!localStorage.getItem(sauce.getName())) {
+        localStorage.setItem(sauce.getName(), JSON.stringify({}));
     }
-    const save_data = JSON.parse(localStorage[sauce.Settings.getName()]);
+    const save_data = JSON.parse(localStorage[sauce.getName()]);
     save_data[setting] = value;
-    localStorage.setItem(sauce.Settings.getName(), JSON.stringify(save_data));
+    localStorage.setItem(sauce.getName(), JSON.stringify(save_data));
 };
 
 
@@ -2799,9 +2808,9 @@ class SettingsManager {
         this.getName = () => {
             return this.name;
         };
-        this.addAlarmSetting = (headerText, name, description, options) => {
+        this.addAlarmSetting = (name, description, options) => {
             var _b;
-            (_b = this.settings) === null || _b === void 0 ? void 0 : _b.push(_Library_index__WEBPACK_IMPORTED_MODULE_0__.createAlarmSetting(headerText, name, description, options));
+            (_b = this.settings) === null || _b === void 0 ? void 0 : _b.push(_Library_index__WEBPACK_IMPORTED_MODULE_0__.createAlarmSetting(name, description, options));
             return this;
         };
         this.addButton = (name, content, 
@@ -2898,11 +2907,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   capitalizeAppName: () => (/* binding */ capitalizeAppName)
 /* harmony export */ });
 const capitalizeAppName = (str) => {
-    str = str.split('-');
-    for (var i = 0, x = str.length; i < x; i++) {
-        str[i] = str[i][0].toUpperCase() + str[i].substr(1);
+    let split_str = [];
+    if (str.includes('-') && str.includes(')')) {
+        throw new Error('AppName must use either a hyphen or underscore as seperator - not both!');
     }
-    return str.join(' ');
+    if (str.includes('-')) {
+        // 'job-gauges'
+        split_str = str.split('-');
+    }
+    // 'job_gauges'
+    else if (str.includes('_')) {
+        split_str = str.split('_');
+    }
+    // 'JobGauges'
+    else {
+        split_str = str.split(/(?=[A-Z])/);
+    }
+    for (let i = 0; i < split_str.length; i++) {
+        split_str[i] = split_str[i][0].toUpperCase() + split_str[i].substr(1);
+    }
+    return split_str.join(' ');
 };
 
 
@@ -2924,6 +2948,32 @@ const getById = (id) => {
     if (el)
         return el;
     return null;
+};
+
+
+/***/ }),
+
+/***/ "./a1sauce/Utils/tempTooltip.ts":
+/*!**************************************!*\
+  !*** ./a1sauce/Utils/tempTooltip.ts ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   tempTooltip: () => (/* binding */ tempTooltip)
+/* harmony export */ });
+/* harmony import */ var _timeout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./timeout */ "./a1sauce/Utils/timeout.ts");
+
+/* Must only be called after `window.onload` checks for `window.alt1` */
+const tempTooltip = (msg, time) => {
+    if (window.alt1 === undefined)
+        throw new Error('Alt1 not detected in window object');
+    alt1.setTooltip(msg);
+    (0,_timeout__WEBPACK_IMPORTED_MODULE_0__.timeout)(time).then(() => {
+        alt1.clearTooltip();
+    });
 };
 
 
@@ -3037,12 +3087,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   appName: () => (/* binding */ appName),
 /* harmony export */   majorVersion: () => (/* binding */ majorVersion),
 /* harmony export */   minorVersion: () => (/* binding */ minorVersion),
-/* harmony export */   patchVersion: () => (/* binding */ patchVersion)
+/* harmony export */   patchVersion: () => (/* binding */ patchVersion),
+/* harmony export */   versionUrl: () => (/* binding */ versionUrl)
 /* harmony export */ });
 const appName = 'job-gauges';
+const versionUrl = 'https://raw.githubusercontent.com/NadyaNayme/job-gauges/master/dist/version.json';
 const majorVersion = 1;
 const minorVersion = 0;
-const patchVersion = 3;
+const patchVersion = 5;
 
 
 /***/ }),
@@ -3851,7 +3903,7 @@ const necrosisImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
 const necrosisColoredImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     necrosis_6: __webpack_require__(/*! ../.././asset/data/necrosis/lg/colored/necrosis_6-warning.data.png */ "./asset/data/necrosis/lg/colored/necrosis_6-warning.data.png"),
     necrosis_8: __webpack_require__(/*! ../.././asset/data/necrosis/lg/colored/necrosis_8-warning.data.png */ "./asset/data/necrosis/lg/colored/necrosis_8-warning.data.png"),
-    necrosis_10: __webpack_require__(/*! ../.././asset/data/necrosis/lg/colored/necrosis_10-danger.data.png */ "./asset/data/necrosis/lg/colored/necrosis_10-danger.data.png"),
+    necrosis_10: __webpack_require__(/*! ../.././asset/data/necrosis/lg/colored/necrosis_10-warning.data.png */ "./asset/data/necrosis/lg/colored/necrosis_10-warning.data.png"),
     necrosis_12: __webpack_require__(/*! ../.././asset/data/necrosis/lg/colored/necrosis_12-danger.data.png */ "./asset/data/necrosis/lg/colored/necrosis_12-danger.data.png"),
 });
 let scaledOnce = false;
@@ -3909,10 +3961,7 @@ async function necrosisOverlay(gauges) {
     }
     if (gauges.necromancy.stacks.duplicateNecrosisRow) {
         alt1.overLaySetGroup('Necrosis_Row2');
-        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x + x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
-            y +
-            necrosisImages.necrosis_0.height +
-            bloatSpace, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(necrosisImages[`necrosis_${stacks}`].toDrawableData()), necrosisImages[`necrosis_${stacks}`].width, 1000);
+        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x + x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y + y + bloatSpace, gauges.scaleFactor) + necrosisImages.necrosis_0.height, alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(necrosisImages[`necrosis_${stacks}`].toDrawableData()), necrosisImages[`necrosis_${stacks}`].width, 1000);
     }
     function displayNecrosisImage(stacks) {
         alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x + x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y + y + bloatSpace, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(necrosisImages[`necrosis_${stacks}`].toDrawableData()), necrosisImages[`necrosis_${stacks}`].width, 1000);
@@ -4410,11 +4459,11 @@ const renderSettings = async (gauges) => {
         .addSeperator()
         .addHeader('h3', 'Residual Souls Alarm')
         .addRangeSetting('alarmSoulsThreshold', 'Alert when at or above this many souls', { defaultValue: '5', min: 2, max: 5, unit: ' souls' })
-        .addAlarmSetting('Residual Souls Alarm', 'alarmSouls', '')
+        .addAlarmSetting('alarmSouls', '')
         .addSeperator()
         .addHeader('h3', 'Necrosis Stacks Alarm')
         .addRangeSetting('alarmNecrosisThreshold', 'Alert when at or above this many stacks', { defaultValue: '12', min: 2, max: 12, unit: ' stacks' })
-        .addAlarmSetting('Necrosis Stacks Alarm', 'alarmNecrosis', '')
+        .addAlarmSetting('alarmNecrosis', '')
         .build();
 };
 
@@ -4619,6 +4668,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 const notes = [
     // Add patch notes to top
+    {
+        date: '8/18/2024 - Bug Fixes & Testing v1.0.5',
+        note: [
+            `Changes Necrosis stacks threshold to match previous thresholds in NJG. The new thresholds are 0-4 Purple ; 6-10 Orange ; 12 Red`,
+            `In response to feedback the Red Necrosis Stacks have been made brighter and more obvious`,
+            `Fixed positioning of 2nd Necrosis Stacks row when scale was set to a non-100% value`,
+            `Fixed the value of range inputs not saving to settings if the - / + buttons were used to set the final value`,
+            `Began adding tests to A1 Sauce to catch and prevent feature regressions and broken behavior`,
+            `v1.0.4 is being skipped as it was used to test the version checking option from v1.0.3 and had no patch notes`
+        ],
+    },
     {
         date: '8/18/2024 - Version Checking v1.0.3',
         note: [
@@ -8821,7 +8881,7 @@ window.onload = function () {
     if (window.alt1) {
         alt1.identifyAppUrl('./appconfig.json');
         if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('checkForUpdates'))
-            (0,_a1sauce_Patches_serverCheck__WEBPACK_IMPORTED_MODULE_25__.startVersionChecking)();
+            (0,_a1sauce_Patches_serverCheck__WEBPACK_IMPORTED_MODULE_25__.startVersionChecking)(_data_constants__WEBPACK_IMPORTED_MODULE_22__.versionUrl);
         (0,_lib_settings__WEBPACK_IMPORTED_MODULE_21__.renderSettings)(gauges);
         addEventListeners();
         startApp();

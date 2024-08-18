@@ -16,23 +16,14 @@ const alarms: DropdownOption[] = [
 ];
 
 export const createAlarmSetting = (
-	headerText: string,
 	name: string,
 	description: string,
 	options: {
 		classes?: Array<string>;
-		defaultValue?: string;
-		min?: number;
-		max?: number;
-		unit?: string;
 	} = {}
 ): HTMLElement => {
 	const {
 		classes = options.classes ?? '',
-		defaultValue = options.defaultValue ?? '100',
-		min = options.min ?? 0,
-		max = options.max ?? 100,
-		unit = options.unit ?? '%',
 	} = options;
 
 	const shortDescription = createText(description);

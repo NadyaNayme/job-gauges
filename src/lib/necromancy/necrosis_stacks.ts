@@ -16,7 +16,7 @@ const necrosisImages = a1lib.webpackImages({
 const necrosisColoredImages = a1lib.webpackImages({
 	necrosis_6: require('../.././asset/data/necrosis/lg/colored/necrosis_6-warning.data.png'),
 	necrosis_8: require('../.././asset/data/necrosis/lg/colored/necrosis_8-warning.data.png'),
-	necrosis_10: require('../.././asset/data/necrosis/lg/colored/necrosis_10-danger.data.png'),
+	necrosis_10: require('../.././asset/data/necrosis/lg/colored/necrosis_10-warning.data.png'),
 	necrosis_12: require('../.././asset/data/necrosis/lg/colored/necrosis_12-danger.data.png'),
 });
 
@@ -94,12 +94,9 @@ export async function necrosisOverlay(gauges: Overlay) {
 				gauges.scaleFactor
 			),
 			utility.adjustPositionForScale(
-				gauges.necromancy.position.y +
-					y +
-					necrosisImages.necrosis_0.height +
-					bloatSpace,
+				gauges.necromancy.position.y + y + bloatSpace,
 				gauges.scaleFactor
-			),
+			) + necrosisImages.necrosis_0.height,
 			a1lib.encodeImageString(
 				necrosisImages[`necrosis_${stacks}`].toDrawableData()
 			),

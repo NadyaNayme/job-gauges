@@ -38,6 +38,7 @@ import {
 	majorVersion,
 	minorVersion,
 	patchVersion,
+	versionUrl,
 } from './data/constants';
 import { Patches } from './a1sauce/Patches/patchNotes';
 import { notes } from './patchnotes';
@@ -418,7 +419,7 @@ function getGaugeData(gauges: Overlay) {
 window.onload = function () {
 	if (window.alt1) {
 		alt1.identifyAppUrl('./appconfig.json');
-		if (getSetting('checkForUpdates')) startVersionChecking();
+		if (getSetting('checkForUpdates')) startVersionChecking(versionUrl);
 		renderSettings(gauges);
 		addEventListeners();
 		startApp();

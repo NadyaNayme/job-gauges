@@ -5,7 +5,7 @@ import {
 	createLabel,
 	createOutput,
 } from '../../Components';
-import { getSetting } from '../../Storage';
+import { getSetting, updateSetting } from '../../Storage';
 
 import '../Styles/range.css';
 
@@ -17,6 +17,7 @@ async function updateRangeValue(e: Event, rangeInput: HTMLInputElement, add: boo
 		rangeInput.value = String(parseInt(rangeInput.value, 10) - 1);
 	}
 	rangeInput.dispatchEvent(new Event('input', { bubbles: true }));
+	updateSetting(rangeInput.id, rangeInput.value);
 	await timeout(50);
 	if (isMouseDown) updateRangeValue(e, rangeInput, add);
 }
