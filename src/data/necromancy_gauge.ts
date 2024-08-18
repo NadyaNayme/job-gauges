@@ -68,6 +68,7 @@ export const necromancy_gauge: NecromancyGauge = {
 			},
 		},
 		duplicateNecrosisRow: false,
+		useColoredNecrosis: false,
 	},
 	conjures: {
 		active: false,

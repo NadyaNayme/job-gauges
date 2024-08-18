@@ -11,6 +11,7 @@ import {
 type StackingAbilities = {
 	souls: StackingPlayerBuff & HasAlarm;
 	necrosis: StackingPlayerBuff & HasAlarm;
+	useColoredNecrosis: boolean;
 	duplicateNecrosisRow: boolean;
 };
 

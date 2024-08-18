@@ -38,6 +38,8 @@ import {
 	minorversion,
 	patchVersion,
 } from './data/constants';
+import { Patches } from './a1sauce/Patches/patchNotes';
+import { notes } from './patchnotes';
 
 const sauce = A1Sauce.instance;
 sauce.setName(appName);
@@ -91,6 +93,10 @@ export async function startApp() {
 		);
 		return;
 	}
+
+	let patchCheck = new Patches();
+	patchCheck.setNotes(notes);
+	patchCheck.showPatchNotes();
 
 	setNecromancyGaugeData(gauges);
 
@@ -326,6 +332,10 @@ function setNecromancyGaugeData(gauges: Overlay) {
 	if (getSetting('showNecrosis') !== undefined) {
 		gauges.necromancy.stacks.necrosis.isActiveOverlay =
 			getSetting('showNecrosis');
+	}
+
+	if (getSetting('useColoredNecrosis') !== undefined) {
+		gauges.necromancy.stacks.useColoredNecrosis = getSetting('useColoredNecrosis');
 	}
 
 	if (getSetting('dupeRow') !== undefined) {

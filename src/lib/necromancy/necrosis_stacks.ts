@@ -13,6 +13,13 @@ const necrosisImages = a1lib.webpackImages({
 	necrosis_12: require('../.././asset/data/necrosis/lg/necrosis_12.data.png'),
 });
 
+const necrosisColoredImages = a1lib.webpackImages({
+	necrosis_6: require('../.././asset/data/necrosis/lg/colored/necrosis_6-warning.data.png'),
+	necrosis_8: require('../.././asset/data/necrosis/lg/colored/necrosis_8-warning.data.png'),
+	necrosis_10: require('../.././asset/data/necrosis/lg/colored/necrosis_10-danger.data.png'),
+	necrosis_12: require('../.././asset/data/necrosis/lg/colored/necrosis_12-danger.data.png'),
+});
+
 let scaledOnce = false;
 let playingAlert = false;
 
@@ -23,6 +30,15 @@ export async function necrosisOverlay(gauges: Overlay) {
 
 	if (!necrosis.isActiveOverlay) {
 		return;
+	}
+
+	if (gauges.necromancy.stacks.useColoredNecrosis && !scaledOnce) {
+		console.log('Recoloring image assets');
+		await necrosisColoredImages.promise;
+		necrosisImages.necrosis_6 = necrosisColoredImages.necrosis_6;
+		necrosisImages.necrosis_8 = necrosisColoredImages.necrosis_8;
+		necrosisImages.necrosis_10 = necrosisColoredImages.necrosis_10;
+		necrosisImages.necrosis_12 = necrosisColoredImages.necrosis_12;
 	}
 
 	if (!scaledOnce) {

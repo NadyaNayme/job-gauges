@@ -1,3 +1,4 @@
+import { timeout } from '../../../Utils/timeout';
 import {
 	createFlexContainer,
 	createInput,
@@ -7,6 +8,18 @@ import {
 import { getSetting } from '../../Storage';
 
 import '../Styles/range.css';
+
+let isMouseDown = false;
+async function updateRangeValue(e: Event, rangeInput: HTMLInputElement, add: boolean) {
+	if (add) {
+		rangeInput.value = String(parseInt(rangeInput.value, 10) + 1);
+	} else {
+		rangeInput.value = String(parseInt(rangeInput.value, 10) - 1);
+	}
+	rangeInput.dispatchEvent(new Event('input', { bubbles: true }));
+	await timeout(50);
+	if (isMouseDown) updateRangeValue(e, rangeInput, add);
+}
 
 export const createRangeSetting = (
 	name: string,
@@ -53,6 +66,56 @@ export const createRangeSetting = (
 			'%, #0d1c24 100%)';
 	};
 
+	const minusButton = document.createElement('div');
+	minusButton.classList.add('minus-btn');
+	minusButton.classList.add('nis-btn');
+	minusButton.addEventListener('mousedown', (e) => {
+		isMouseDown = true;
+		updateRangeValue(e, rangeInput, false);
+	});
+
+	const plusButton = document.createElement('div');
+	plusButton.classList.add('plus-btn');
+	plusButton.classList.add('nis-btn');
+	plusButton.addEventListener('mousedown', (e) => {
+		isMouseDown = true;
+		updateRangeValue(e, rangeInput, true);
+	});
+
+	minusButton.addEventListener('mouseleave', () => {
+		isMouseDown = false;
+		console.log('Mouse is now up: minus leave');
+	});
+
+	plusButton.addEventListener('mouseleave', () => {
+		isMouseDown = false;
+		console.log('Mouse is now up: plus leave');
+	});
+
+	document.addEventListener('mouseleave', () => {
+		isMouseDown = false;
+		console.log('Mouse is now up: document leave');
+	});
+
+	minusButton.onmouseup = () => {
+		isMouseDown = false;
+		console.log('Mouse is now up: minus up');
+	};
+
+	plusButton.onmouseup = () => {
+		isMouseDown = false;
+		console.log('Mouse is now up: plus up');
+	};
+
+	document.addEventListener('mouseup', () => {
+		isMouseDown = false;
+		console.log('Mouse is now up: document up');
+	});
+
+	const flexcontainer = document.createElement('div');
+	flexcontainer.classList.add('flex');
+	flexcontainer.classList.add('flex-between-center');
+
 	const label = createLabel(name, description);
 	label.classList.add('full');
 	if (getSetting(name) != undefined) {
@@ -71,9 +134,12 @@ export const createRangeSetting = (
 	}
 	container.classList.add('flex-wrap');
 	container.appendChild(label);
-	container.appendChild(rangeInput);
+	flexcontainer.appendChild(minusButton);
+	flexcontainer.appendChild(rangeInput);
+	flexcontainer.appendChild(plusButton);
+	container.appendChild(flexcontainer);
 	container.appendChild(output);
-	rangeInput.addEventListener('rangeInput', () => {
+	rangeInput.addEventListener('input', () => {
 		output.innerHTML = rangeInput.value + unit;
 	});
 	return container;

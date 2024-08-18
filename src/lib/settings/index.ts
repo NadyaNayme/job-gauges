@@ -103,6 +103,11 @@ export const renderSettings = async (gauges) => {
 			getSetting('dupeRow') ?? false
 		)
 		.addCheckboxSetting(
+			'useColoredNecrosis',
+			'Use orange and red Necrosis Stacks when above certain thresholds',
+			getSetting('useColoredNecrosis') ?? false
+		)
+		.addCheckboxSetting(
 			'showBloat',
 			'Show Bloat',
 			getSetting('showBloat') ?? true

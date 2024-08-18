@@ -1,0 +1,72 @@
+body:has(#PatchNotes) {
+	overflow: hidden !important;
+}
+
+body:has(#PatchNotes)::before {
+    content: '';
+    display: block;
+    width: 500vh;
+    height: 500vh;
+    z-index: 95;
+    background-color: rgba(0,0,0,.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#PatchNotes {
+	position: fixed;
+	z-index: 99;
+	top: 2rem;
+	left: 5%;
+	width: 100vw;
+	max-width: 80%;
+	background-image: url("../../NIS/images/nis-bg.png");
+	padding: 2rem;
+	border: solid 2px #ffcb05;
+}
+
+#PatchNotes .title-row {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	position: sticky;
+	top: 0;
+	background-image: url("../../NIS/images/nis-bg.png");
+	border-bottom: solid 2px #ffcb05;
+}
+
+#PatchNotes .patch-notes {
+	max-height: 80vh;
+	overflow-y: auto;
+	margin-top: 2rem;
+}
+
+#PatchNotes .note {
+	max-width: 90%;
+}
+
+#PatchNotes h2, #PatchNotes h3 {
+	color: #ffcb05;
+    text-shadow: 1px 1px #000000;
+	letter-spacing: 1px;
+}
+
+#PatchNotes .close-button {
+	white-space: nowrap;
+	margin-left: 3rem;
+	/* width: 16px;
+	height: 16px;
+	background-image: url('../../NIS/images/nis-close-button.png');
+	background-position: 0px 0px; */
+}
+
+#PatchNotes .close-button:hover {
+	cursor: pointer;
+	/* background-position: 16px 0px; */
+}
+
+#PatchNotes li {
+	margin-bottom: .35rem;
+	max-width: 80vw;
+}

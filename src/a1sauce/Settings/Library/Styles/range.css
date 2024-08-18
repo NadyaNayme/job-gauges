@@ -7,7 +7,6 @@
 	border: solid 1px #697479;
 	border-radius: 3px;
 	position: relative;
-	margin-right: 5px;
 }
 
 #Settings input[type="range"]::before {
@@ -48,11 +47,39 @@
    appearance: none;
 
 
-   background-image: url('./images/range-input-tab.png');
+   background-image: url('../../../Nis/images/range-input-tab.png');
    background-position: 50% 50%;
    background-repeat: no-repeat;
    width: 9px;
    height: 20px;
    position: relative;
-   z-index: 99;
+   z-index: 6;
+}
+
+#Settings .flex-between-middle {
+	display: flex;
+	align-items: center;
+	justify-content: space-between
+}
+
+#Settings .minus-btn {
+	width: 16px;
+	height: 16px;
+	background-image: url('../../../Nis/images/nis-range-minus.png');
+	background-position: 0px 0px;
+	margin-top: 2px;
+}
+
+#Settings .plus-btn {
+	width: 16px;
+	height: 16px;
+	background-image: url('../../../Nis/images/nis-range-plus.png');
+	background-position: 0px 0px;
+	margin-top: 2px;
+	margin-right: 5px;
+}
+#Settings .minus-btn:hover,
+#Settings .plus-btn:hover {
+	cursor: pointer;
+	background-position: 16px 0px;
 }
