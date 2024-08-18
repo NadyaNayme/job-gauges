@@ -1992,12 +1992,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   checkVersion: () => (/* binding */ checkVersion),
 /* harmony export */   startVersionChecking: () => (/* binding */ startVersionChecking)
 /* harmony export */ });
-/* harmony import */ var _data_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../data/constants */ "./data/constants.ts");
-/* harmony import */ var _Utils_capitalizeName__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Utils/capitalizeName */ "./a1sauce/Utils/capitalizeName.ts");
-/* harmony import */ var _Utils_timeout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Utils/timeout */ "./a1sauce/Utils/timeout.ts");
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! .. */ "./a1sauce/index.ts");
+/* harmony import */ var _Utils_timeout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Utils/timeout */ "./a1sauce/Utils/timeout.ts");
 
 
-
+const sauce = ___WEBPACK_IMPORTED_MODULE_0__.A1Sauce.instance;
 const checkVersion = async (version) => {
     fetch('./version.json', {
         method: 'GET',
@@ -2011,8 +2010,8 @@ const checkVersion = async (version) => {
     })
         .then((latestVersion) => {
         if (version != latestVersion.version) {
-            alt1.setTooltip(`A new update for ${(0,_Utils_capitalizeName__WEBPACK_IMPORTED_MODULE_1__.capitalizeAppName)(_data_constants__WEBPACK_IMPORTED_MODULE_0__.appName)} is available! Reload ${(0,_Utils_capitalizeName__WEBPACK_IMPORTED_MODULE_1__.capitalizeAppName)(_data_constants__WEBPACK_IMPORTED_MODULE_0__.appName)} for update.`);
-            (0,_Utils_timeout__WEBPACK_IMPORTED_MODULE_2__.timeout)(3000).then(() => {
+            alt1.setTooltip(`A new update for ${sauce.getPublicName()} is available! Reload ${sauce.getPublicName()} for update.`);
+            (0,_Utils_timeout__WEBPACK_IMPORTED_MODULE_1__.timeout)(3000).then(() => {
                 alt1.clearTooltip();
             });
         }
@@ -2022,9 +2021,9 @@ const checkVersion = async (version) => {
     });
 };
 const startVersionChecking = () => {
-    checkVersion(`${_data_constants__WEBPACK_IMPORTED_MODULE_0__.majorVersion}.${_data_constants__WEBPACK_IMPORTED_MODULE_0__.minorVersion}.${_data_constants__WEBPACK_IMPORTED_MODULE_0__.patchVersion}`);
+    checkVersion(sauce.getVersion());
     setInterval(() => {
-        checkVersion(`${_data_constants__WEBPACK_IMPORTED_MODULE_0__.majorVersion}.${_data_constants__WEBPACK_IMPORTED_MODULE_0__.minorVersion}.${_data_constants__WEBPACK_IMPORTED_MODULE_0__.patchVersion}`);
+        checkVersion(sauce.getVersion());
     }, 1000 * 60 * 15);
 };
 
@@ -2964,6 +2963,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   A1Sauce: () => (/* binding */ A1Sauce)
 /* harmony export */ });
 /* harmony import */ var _Settings_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Settings/index */ "./a1sauce/Settings/index.ts");
+/* harmony import */ var _Utils_capitalizeName__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Utils/capitalizeName */ "./a1sauce/Utils/capitalizeName.ts");
 var __classPrivateFieldGet = (undefined && undefined.__classPrivateFieldGet) || function (receiver, state, kind, f) {
     if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
@@ -2977,6 +2977,7 @@ var __classPrivateFieldSet = (undefined && undefined.__classPrivateFieldSet) || 
 };
 var _a, _A1Sauce_instance;
 
+
 class A1Sauce {
     constructor() {
         this.Settings = _Settings_index__WEBPACK_IMPORTED_MODULE_0__.SettingsManager.instance;
@@ -2986,10 +2987,18 @@ class A1Sauce {
         };
         this.setName = (name) => {
             this.Settings.setName(name);
+            this.setPublicName(name);
+            return this;
+        };
+        this.setPublicName = (name) => {
+            this.publicName = (0,_Utils_capitalizeName__WEBPACK_IMPORTED_MODULE_1__.capitalizeAppName)(name);
             return this;
         };
         this.getName = () => {
             return this.Settings.getName();
+        };
+        this.getPublicName = () => {
+            return this.publicName;
         };
         this.setVersion = (major, minor, patch) => {
             this.Settings.majorVersion = major;

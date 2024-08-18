@@ -1,6 +1,9 @@
+import { A1Sauce } from "..";
 import { appName, majorVersion, minorVersion, patchVersion } from "../../data/constants";
 import { capitalizeAppName } from "../Utils/capitalizeName";
 import { timeout } from "../Utils/timeout";
+
+const sauce = A1Sauce.instance;
 
 export const checkVersion = async (version: string) => {
 	fetch('./version.json', {
@@ -16,11 +19,7 @@ export const checkVersion = async (version: string) => {
 		.then((latestVersion) => {
 			if (version != latestVersion.version) {
 				alt1.setTooltip(
-					`A new update for ${capitalizeAppName(
-						appName
-					)} is available! Reload ${capitalizeAppName(
-						appName
-					)} for update.`
+					`A new update for ${sauce.getPublicName()} is available! Reload ${sauce.getPublicName()} for update.`
 				);
 				timeout(3000).then(() => {
 					alt1.clearTooltip();
@@ -34,8 +33,8 @@ export const checkVersion = async (version: string) => {
 }
 
 export const startVersionChecking = () => {
-	checkVersion(`${majorVersion}.${minorVersion}.${patchVersion}`);
+	checkVersion(sauce.getVersion());
 	setInterval(() => {
-		checkVersion(`${majorVersion}.${minorVersion}.${patchVersion}`);
+		checkVersion(sauce.getVersion());
 	}, 1000 * 60 * 15);
 }

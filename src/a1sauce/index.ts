@@ -1,8 +1,10 @@
 import { SettingsManager } from './Settings/index';
+import { capitalizeAppName } from './Utils/capitalizeName';
 
 export class A1Sauce {
 	static #instance: A1Sauce;
 	Settings: SettingsManager = SettingsManager.instance;
+	publicName: string;
 
 	private constructor() {}
 
@@ -21,11 +23,21 @@ export class A1Sauce {
 
 	public setName = (name: string): A1Sauce => {
 		this.Settings.setName(name);
+		this.setPublicName(name);
+		return this;
+	}
+
+	setPublicName = (name: string): A1Sauce => {
+		this.publicName = capitalizeAppName(name);
 		return this;
 	}
 
 	public getName = (): string => {
 		return this.Settings.getName();
+	}
+
+	public getPublicName = (): string => {
+		return this.publicName;
 	}
 
 	public setVersion = (major: number, minor: number, patch: number) => {
