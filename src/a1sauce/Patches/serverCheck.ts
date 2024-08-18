@@ -1,6 +1,4 @@
 import { A1Sauce } from "..";
-import { appName, majorVersion, minorVersion, patchVersion } from "../../data/constants";
-import { capitalizeAppName } from "../Utils/capitalizeName";
 import { timeout } from "../Utils/timeout";
 
 const sauce = A1Sauce.instance;

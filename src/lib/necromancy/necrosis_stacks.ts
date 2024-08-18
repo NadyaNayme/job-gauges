@@ -2,7 +2,6 @@
 import * as a1lib from 'alt1';
 import * as utility from '../utility';
 import { Overlay } from '../../types';
-import { getSetting } from '../../a1sauce/Settings/Storage';
 
 const necrosisImages = a1lib.webpackImages({
 	necrosis_0: require('../.././asset/data/necrosis/lg/necrosis_0.data.png'),

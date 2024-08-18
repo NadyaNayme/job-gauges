@@ -1,7 +1,6 @@
 import { A1Sauce } from '..';
 import { appName } from '../../data/constants';
 import { getSetting, updateSetting } from '../Settings/Storage';
-import { capitalizeAppName } from '../Utils/capitalizeName';
 import { timeout } from '../Utils/timeout';
 
 import './Style/style.css';

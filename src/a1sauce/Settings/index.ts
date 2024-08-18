@@ -1,6 +1,5 @@
 import { DropdownOption } from './Components';
 import * as Library from './Library/index';
-import * as Storage from './Storage/index';
 
 export enum SettingsType {
 	Alarm = 'alarm',
