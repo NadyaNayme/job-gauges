@@ -4664,6 +4664,12 @@ __webpack_require__.r(__webpack_exports__);
 const notes = [
     // Add patch notes to top
     {
+        date: '08/18/2024 - Hotfix v.1.0.6',
+        note: [
+            `Fixed patch notes styling`,
+        ],
+    },
+    {
         date: '8/18/2024 - Bug Fixes & Testing v1.0.5',
         note: [
             `Changes Necrosis stacks threshold to match previous thresholds in NJG. The new thresholds are 0-4 Purple ; 6-10 Orange ; 12 Red`,
