@@ -3833,15 +3833,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   necrosisOverlay: () => (/* binding */ necrosisOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
-/* harmony import */ var _a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../a1sauce/Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
 /* eslint-disable @typescript-eslint/no-require-imports */
 
 
-
-const necrosisImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
+const necrosisImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     necrosis_0: __webpack_require__(/*! ../.././asset/data/necrosis/lg/necrosis_0.data.png */ "./asset/data/necrosis/lg/necrosis_0.data.png"),
     necrosis_2: __webpack_require__(/*! ../.././asset/data/necrosis/lg/necrosis_2.data.png */ "./asset/data/necrosis/lg/necrosis_2.data.png"),
     necrosis_4: __webpack_require__(/*! ../.././asset/data/necrosis/lg/necrosis_4.data.png */ "./asset/data/necrosis/lg/necrosis_4.data.png"),
@@ -3850,7 +3848,7 @@ const necrosisImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
     necrosis_10: __webpack_require__(/*! ../.././asset/data/necrosis/lg/necrosis_10.data.png */ "./asset/data/necrosis/lg/necrosis_10.data.png"),
     necrosis_12: __webpack_require__(/*! ../.././asset/data/necrosis/lg/necrosis_12.data.png */ "./asset/data/necrosis/lg/necrosis_12.data.png"),
 });
-const necrosisColoredImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
+const necrosisColoredImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     necrosis_6: __webpack_require__(/*! ../.././asset/data/necrosis/lg/colored/necrosis_6-warning.data.png */ "./asset/data/necrosis/lg/colored/necrosis_6-warning.data.png"),
     necrosis_8: __webpack_require__(/*! ../.././asset/data/necrosis/lg/colored/necrosis_8-warning.data.png */ "./asset/data/necrosis/lg/colored/necrosis_8-warning.data.png"),
     necrosis_10: __webpack_require__(/*! ../.././asset/data/necrosis/lg/colored/necrosis_10-danger.data.png */ "./asset/data/necrosis/lg/colored/necrosis_10-danger.data.png"),
@@ -3900,9 +3898,6 @@ async function necrosisOverlay(gauges) {
             break;
     }
     if (stacks >= necrosis.alarm.threshold && necrosis.alarm.isActive) {
-        necrosisAlert.pause();
-        necrosisAlert.src = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('alarmNecrosisAlertSound');
-        necrosisAlert.load();
         if (!playingAlert) {
             _utility__WEBPACK_IMPORTED_MODULE_0__.playAlert(necrosisAlert);
             playingAlert = true;
@@ -3917,10 +3912,10 @@ async function necrosisOverlay(gauges) {
         alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x + x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
             y +
             necrosisImages.necrosis_0.height +
-            bloatSpace, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(necrosisImages[`necrosis_${stacks}`].toDrawableData()), necrosisImages[`necrosis_${stacks}`].width, 1000);
+            bloatSpace, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(necrosisImages[`necrosis_${stacks}`].toDrawableData()), necrosisImages[`necrosis_${stacks}`].width, 1000);
     }
     function displayNecrosisImage(stacks) {
-        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x + x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y + y + bloatSpace, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(necrosisImages[`necrosis_${stacks}`].toDrawableData()), necrosisImages[`necrosis_${stacks}`].width, 1000);
+        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x + x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y + y + bloatSpace, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(necrosisImages[`necrosis_${stacks}`].toDrawableData()), necrosisImages[`necrosis_${stacks}`].width, 1000);
     }
 }
 

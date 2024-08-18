@@ -78,9 +78,6 @@ export async function necrosisOverlay(gauges: Overlay) {
 	}
 
 	if (stacks >= necrosis.alarm.threshold && necrosis.alarm.isActive) {
-		necrosisAlert.pause();
-		necrosisAlert.src = getSetting('alarmNecrosisAlertSound');
-		necrosisAlert.load();
 		if (!playingAlert) {
 			utility.playAlert(necrosisAlert);
 			playingAlert = true;
