@@ -35,15 +35,16 @@ import { renderSettings } from './lib/settings';
 import {
 	appName,
 	majorVersion,
-	minorversion,
+	minorVersion,
 	patchVersion,
 } from './data/constants';
 import { Patches } from './a1sauce/Patches/patchNotes';
 import { notes } from './patchnotes';
+import { startVersionChecking } from './a1sauce/Patches/serverCheck';
 
 const sauce = A1Sauce.instance;
 sauce.setName(appName);
-sauce.setVersion(majorVersion, minorversion, patchVersion);
+sauce.setVersion(majorVersion, minorVersion, patchVersion);
 sauce.createSettings();
 
 const gauges: Overlay = {
@@ -416,7 +417,7 @@ function getGaugeData(gauges: Overlay) {
 window.onload = function () {
 	if (window.alt1) {
 		alt1.identifyAppUrl('./appconfig.json');
-
+		if (getSetting('checkForUpdates')) startVersionChecking();
 		renderSettings(gauges);
 		addEventListeners();
 		startApp();

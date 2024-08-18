@@ -1900,8 +1900,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! .. */ "./a1sauce/index.ts");
 /* harmony import */ var _data_constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../data/constants */ "./data/constants.ts");
 /* harmony import */ var _Settings_Storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
-/* harmony import */ var _Utils_timeout__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Utils/timeout */ "./a1sauce/Utils/timeout.ts");
-/* harmony import */ var _Style_style_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Style/style.css */ "./a1sauce/Patches/Style/style.css");
+/* harmony import */ var _Utils_capitalizeName__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Utils/capitalizeName */ "./a1sauce/Utils/capitalizeName.ts");
+/* harmony import */ var _Utils_timeout__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Utils/timeout */ "./a1sauce/Utils/timeout.ts");
+/* harmony import */ var _Style_style_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Style/style.css */ "./a1sauce/Patches/Style/style.css");
+
 
 
 
@@ -1909,13 +1911,6 @@ __webpack_require__.r(__webpack_exports__);
 
 const sauce = ___WEBPACK_IMPORTED_MODULE_0__.A1Sauce.instance;
 sauce.setName(_data_constants__WEBPACK_IMPORTED_MODULE_1__.appName);
-function capitalizeAppName(str) {
-    str = str.split('-');
-    for (var i = 0, x = str.length; i < x; i++) {
-        str[i] = str[i][0].toUpperCase() + str[i].substr(1);
-    }
-    return str.join(' ');
-}
 class Patches {
     constructor() {
         this._notes = [];
@@ -1973,14 +1968,65 @@ class Patches {
                 }
                 //container.style.height = window.innerHeight.toString();
                 document.body.appendChild(container);
-                alt1.setTooltip(`New update! See ${capitalizeAppName(_data_constants__WEBPACK_IMPORTED_MODULE_1__.appName)} window for patch notes.`);
-                await (0,_Utils_timeout__WEBPACK_IMPORTED_MODULE_3__.timeout)(5000).then(() => {
+                alt1.setTooltip(`New update! See ${(0,_Utils_capitalizeName__WEBPACK_IMPORTED_MODULE_3__.capitalizeAppName)(_data_constants__WEBPACK_IMPORTED_MODULE_1__.appName)} window for patch notes.`);
+                await (0,_Utils_timeout__WEBPACK_IMPORTED_MODULE_4__.timeout)(5000).then(() => {
                     alt1.clearTooltip();
                 });
             }
         };
     }
 }
+
+
+/***/ }),
+
+/***/ "./a1sauce/Patches/serverCheck.ts":
+/*!****************************************!*\
+  !*** ./a1sauce/Patches/serverCheck.ts ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   checkVersion: () => (/* binding */ checkVersion),
+/* harmony export */   startVersionChecking: () => (/* binding */ startVersionChecking)
+/* harmony export */ });
+/* harmony import */ var _data_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../data/constants */ "./data/constants.ts");
+/* harmony import */ var _Utils_capitalizeName__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Utils/capitalizeName */ "./a1sauce/Utils/capitalizeName.ts");
+/* harmony import */ var _Utils_timeout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Utils/timeout */ "./a1sauce/Utils/timeout.ts");
+
+
+
+const checkVersion = async (version) => {
+    fetch('./version.json', {
+        method: 'GET',
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+    })
+        .then((res) => {
+        let latestVersion = res.json();
+        return latestVersion;
+    })
+        .then((latestVersion) => {
+        if (version != latestVersion.version) {
+            alt1.setTooltip(`A new update for ${(0,_Utils_capitalizeName__WEBPACK_IMPORTED_MODULE_1__.capitalizeAppName)(_data_constants__WEBPACK_IMPORTED_MODULE_0__.appName)} is available! Reload ${(0,_Utils_capitalizeName__WEBPACK_IMPORTED_MODULE_1__.capitalizeAppName)(_data_constants__WEBPACK_IMPORTED_MODULE_0__.appName)} for update.`);
+            (0,_Utils_timeout__WEBPACK_IMPORTED_MODULE_2__.timeout)(3000).then(() => {
+                alt1.clearTooltip();
+            });
+        }
+        else {
+            console.log(`App is running latest version. Expected version: ${latestVersion.version} ; found: ${version}`);
+        }
+    });
+};
+const startVersionChecking = () => {
+    checkVersion(`${_data_constants__WEBPACK_IMPORTED_MODULE_0__.majorVersion}.${_data_constants__WEBPACK_IMPORTED_MODULE_0__.minorVersion}.${_data_constants__WEBPACK_IMPORTED_MODULE_0__.patchVersion}`);
+    setInterval(() => {
+        checkVersion(`${_data_constants__WEBPACK_IMPORTED_MODULE_0__.majorVersion}.${_data_constants__WEBPACK_IMPORTED_MODULE_0__.minorVersion}.${_data_constants__WEBPACK_IMPORTED_MODULE_0__.patchVersion}`);
+    }, 1000 * 60 * 15);
+};
 
 
 /***/ }),
@@ -2843,6 +2889,28 @@ const Settings = SettingsManager.instance;
 
 /***/ }),
 
+/***/ "./a1sauce/Utils/capitalizeName.ts":
+/*!*****************************************!*\
+  !*** ./a1sauce/Utils/capitalizeName.ts ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   capitalizeAppName: () => (/* binding */ capitalizeAppName)
+/* harmony export */ });
+const capitalizeAppName = (str) => {
+    str = str.split('-');
+    for (var i = 0, x = str.length; i < x; i++) {
+        str[i] = str[i][0].toUpperCase() + str[i].substr(1);
+    }
+    return str.join(' ');
+};
+
+
+/***/ }),
+
 /***/ "./a1sauce/Utils/getById.ts":
 /*!**********************************!*\
   !*** ./a1sauce/Utils/getById.ts ***!
@@ -2961,12 +3029,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   appName: () => (/* binding */ appName),
 /* harmony export */   majorVersion: () => (/* binding */ majorVersion),
-/* harmony export */   minorversion: () => (/* binding */ minorversion),
+/* harmony export */   minorVersion: () => (/* binding */ minorVersion),
 /* harmony export */   patchVersion: () => (/* binding */ patchVersion)
 /* harmony export */ });
 const appName = 'job-gauges';
 const majorVersion = 1;
-const minorversion = 0;
+const minorVersion = 0;
 const patchVersion = 2;
 
 
@@ -4298,7 +4366,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const sauce = _a1sauce__WEBPACK_IMPORTED_MODULE_0__.A1Sauce.instance;
 sauce.setName(_data_constants__WEBPACK_IMPORTED_MODULE_2__.appName);
-sauce.setVersion(_data_constants__WEBPACK_IMPORTED_MODULE_2__.majorVersion, _data_constants__WEBPACK_IMPORTED_MODULE_2__.minorversion, _data_constants__WEBPACK_IMPORTED_MODULE_2__.patchVersion);
+sauce.setVersion(_data_constants__WEBPACK_IMPORTED_MODULE_2__.majorVersion, _data_constants__WEBPACK_IMPORTED_MODULE_2__.minorVersion, _data_constants__WEBPACK_IMPORTED_MODULE_2__.patchVersion);
 const settings = sauce.createSettings();
 const renderSettings = async (gauges) => {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
@@ -4307,6 +4375,7 @@ const renderSettings = async (gauges) => {
         .addText(`Please <a href="https://discord.gg/KJ2SgWyJFF" target="_blank" rel="nofollow">join the Discord</a> for any suggestions or support`)
         .addSeperator()
         .addHeader('h3', 'General')
+        .addCheckboxSetting('checkForUpdates', 'Periodically check if a new update is available', false)
         .addCheckboxSetting('hideOutsideCombat', 'Hide the overlay while out of combat', false)
         .addButton('repositionOverlay', 'Reposition Overlay', _utility__WEBPACK_IMPORTED_MODULE_3__.setOverlayPosition, {
         classes: ['nisbutton'],
@@ -8407,6 +8476,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _data_constants__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./data/constants */ "./data/constants.ts");
 /* harmony import */ var _a1sauce_Patches_patchNotes__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./a1sauce/Patches/patchNotes */ "./a1sauce/Patches/patchNotes.ts");
 /* harmony import */ var _patchnotes__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./patchnotes */ "./patchnotes.ts");
+/* harmony import */ var _a1sauce_Patches_serverCheck__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./a1sauce/Patches/serverCheck */ "./a1sauce/Patches/serverCheck.ts");
 
 
 // General Purpose
@@ -8437,9 +8507,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 const sauce = _a1sauce__WEBPACK_IMPORTED_MODULE_17__.A1Sauce.instance;
 sauce.setName(_data_constants__WEBPACK_IMPORTED_MODULE_21__.appName);
-sauce.setVersion(_data_constants__WEBPACK_IMPORTED_MODULE_21__.majorVersion, _data_constants__WEBPACK_IMPORTED_MODULE_21__.minorversion, _data_constants__WEBPACK_IMPORTED_MODULE_21__.patchVersion);
+sauce.setVersion(_data_constants__WEBPACK_IMPORTED_MODULE_21__.majorVersion, _data_constants__WEBPACK_IMPORTED_MODULE_21__.minorVersion, _data_constants__WEBPACK_IMPORTED_MODULE_21__.patchVersion);
 sauce.createSettings();
 const gauges = {
     isInCombat: false,
@@ -8727,6 +8798,8 @@ function getGaugeData(gauges) {
 window.onload = function () {
     if (window.alt1) {
         alt1.identifyAppUrl('./appconfig.json');
+        if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('checkForUpdates'))
+            (0,_a1sauce_Patches_serverCheck__WEBPACK_IMPORTED_MODULE_24__.startVersionChecking)();
         (0,_lib_settings__WEBPACK_IMPORTED_MODULE_20__.renderSettings)(gauges);
         addEventListeners();
         startApp();

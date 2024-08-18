@@ -1,12 +1,17 @@
 
 import { A1Sauce } from "../../a1sauce";
 import { getSetting } from "../../a1sauce/Settings/Storage";
-import { appName, majorVersion, minorversion, patchVersion } from "../../data/constants";
+import {
+	appName,
+	majorVersion,
+	minorVersion,
+	patchVersion,
+} from '../../data/constants';
 import { setOverlayPosition } from "../utility";
 
 const sauce = A1Sauce.instance;
 sauce.setName(appName);
-sauce.setVersion(majorVersion,minorversion,patchVersion);
+sauce.setVersion(majorVersion, minorVersion, patchVersion);
 const settings = sauce.createSettings();
 
 export const renderSettings = async (gauges) => {
@@ -17,6 +22,11 @@ export const renderSettings = async (gauges) => {
 		)
 		.addSeperator()
 		.addHeader('h3', 'General')
+		.addCheckboxSetting(
+			'checkForUpdates',
+			'Periodically check if a new update is available',
+			false
+		)
 		.addCheckboxSetting(
 			'hideOutsideCombat',
 			'Hide the overlay while out of combat',

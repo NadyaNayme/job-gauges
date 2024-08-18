@@ -1,6 +1,7 @@
 import { A1Sauce } from '..';
 import { appName } from '../../data/constants';
 import { getSetting, updateSetting } from '../Settings/Storage';
+import { capitalizeAppName } from '../Utils/capitalizeName';
 import { timeout } from '../Utils/timeout';
 
 import './Style/style.css';
@@ -12,16 +13,6 @@ type PatchNote = {
 	date: string;
 	note: string[];
 };
-
-function capitalizeAppName(str) {
-	str = str.split('-');
-
-	for (var i = 0, x = str.length; i < x; i++) {
-		str[i] = str[i][0].toUpperCase() + str[i].substr(1);
-	}
-
-	return str.join(' ');
-}
 
 export class Patches {
 	_notes = [];
