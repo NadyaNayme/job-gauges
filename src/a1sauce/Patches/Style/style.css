@@ -55,15 +55,10 @@ body:has(#PatchNotes)::before {
 #PatchNotes .close-button {
 	white-space: nowrap;
 	margin-left: 3rem;
-	/* width: 16px;
-	height: 16px;
-	background-image: url('../../NIS/images/nis-close-button.png');
-	background-position: 0px 0px; */
 }
 
 #PatchNotes .close-button:hover {
 	cursor: pointer;
-	/* background-position: 16px 0px; */
 }
 
 #PatchNotes li {

@@ -673,15 +673,10 @@ body:has(#PatchNotes)::before {
 #PatchNotes .close-button {
 	white-space: nowrap;
 	margin-left: 3rem;
-	/* width: 16px;
-	height: 16px;
-	background-image: url('../../NIS/images/nis-close-button.png');
-	background-position: 0px 0px; */
 }
 
 #PatchNotes .close-button:hover {
 	cursor: pointer;
-	/* background-position: 16px 0px; */
 }
 
 #PatchNotes li {
@@ -1945,10 +1940,10 @@ class Patches {
             return headerContainer;
         };
         this.addNotesToContainer = (notes, container) => {
+            const noteContainer = document.createElement('div');
+            noteContainer.classList.add('patch-notes');
             for (let i = 0; i < notes.length; i++) {
                 let noteType = notes[i];
-                const noteContainer = document.createElement('div');
-                noteContainer.classList.add('patch-notes');
                 const noteDate = document.createElement('h3');
                 noteDate.innerText = noteType.date;
                 const notesList = document.createElement('ul');
@@ -3094,7 +3089,7 @@ const appName = 'job-gauges';
 const versionUrl = 'https://raw.githubusercontent.com/NadyaNayme/job-gauges/master/dist/version.json';
 const majorVersion = 1;
 const minorVersion = 0;
-const patchVersion = 5;
+const patchVersion = 6;
 
 
 /***/ }),

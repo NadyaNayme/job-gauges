@@ -55,10 +55,10 @@ export class Patches {
 	}
 
 	private addNotesToContainer = (notes: any[], container: HTMLElement): void => {
+			const noteContainer = document.createElement('div');
+			noteContainer.classList.add('patch-notes');
 			for (let i = 0; i < notes.length; i++) {
 				let noteType: PatchNote = notes[i];
-				const noteContainer = document.createElement('div');
-				noteContainer.classList.add('patch-notes');
 				const noteDate = document.createElement('h3');
 				noteDate.innerText = noteType.date;
 				const notesList = document.createElement('ul');
