@@ -4802,6 +4802,17 @@ module.exports = __webpack_require__.p + "index.html";
 
 /***/ }),
 
+/***/ "./version.json":
+/*!**********************!*\
+  !*** ./version.json ***!
+  \**********************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+module.exports = __webpack_require__.p + "version.json";
+
+/***/ }),
+
 /***/ "canvas":
 /*!*************************!*\
   !*** external "canvas" ***!
@@ -8476,16 +8487,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _data_melee_gauge__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./data/melee_gauge */ "./data/melee_gauge.ts");
 /* harmony import */ var _index_html__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./index.html */ "./index.html");
 /* harmony import */ var _appconfig_json__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./appconfig.json */ "./appconfig.json");
-/* harmony import */ var _icon_png__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./icon.png */ "./icon.png");
-/* harmony import */ var _css_styles_css__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./css/styles.css */ "./css/styles.css");
-/* harmony import */ var _a1sauce__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./a1sauce */ "./a1sauce/index.ts");
-/* harmony import */ var _a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./a1sauce/Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
-/* harmony import */ var _a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./a1sauce/Utils/getById */ "./a1sauce/Utils/getById.ts");
-/* harmony import */ var _lib_settings__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./lib/settings */ "./lib/settings/index.ts");
-/* harmony import */ var _data_constants__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./data/constants */ "./data/constants.ts");
-/* harmony import */ var _a1sauce_Patches_patchNotes__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./a1sauce/Patches/patchNotes */ "./a1sauce/Patches/patchNotes.ts");
-/* harmony import */ var _patchnotes__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./patchnotes */ "./patchnotes.ts");
-/* harmony import */ var _a1sauce_Patches_serverCheck__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./a1sauce/Patches/serverCheck */ "./a1sauce/Patches/serverCheck.ts");
+/* harmony import */ var _version_json__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./version.json */ "./version.json");
+/* harmony import */ var _icon_png__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./icon.png */ "./icon.png");
+/* harmony import */ var _css_styles_css__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./css/styles.css */ "./css/styles.css");
+/* harmony import */ var _a1sauce__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./a1sauce */ "./a1sauce/index.ts");
+/* harmony import */ var _a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./a1sauce/Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
+/* harmony import */ var _a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./a1sauce/Utils/getById */ "./a1sauce/Utils/getById.ts");
+/* harmony import */ var _lib_settings__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./lib/settings */ "./lib/settings/index.ts");
+/* harmony import */ var _data_constants__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./data/constants */ "./data/constants.ts");
+/* harmony import */ var _a1sauce_Patches_patchNotes__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./a1sauce/Patches/patchNotes */ "./a1sauce/Patches/patchNotes.ts");
+/* harmony import */ var _patchnotes__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./patchnotes */ "./patchnotes.ts");
+/* harmony import */ var _a1sauce_Patches_serverCheck__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./a1sauce/Patches/serverCheck */ "./a1sauce/Patches/serverCheck.ts");
 
 
 // General Purpose
@@ -8517,9 +8529,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const sauce = _a1sauce__WEBPACK_IMPORTED_MODULE_17__.A1Sauce.instance;
-sauce.setName(_data_constants__WEBPACK_IMPORTED_MODULE_21__.appName);
-sauce.setVersion(_data_constants__WEBPACK_IMPORTED_MODULE_21__.majorVersion, _data_constants__WEBPACK_IMPORTED_MODULE_21__.minorVersion, _data_constants__WEBPACK_IMPORTED_MODULE_21__.patchVersion);
+
+const sauce = _a1sauce__WEBPACK_IMPORTED_MODULE_18__.A1Sauce.instance;
+sauce.setName(_data_constants__WEBPACK_IMPORTED_MODULE_22__.appName);
+sauce.setVersion(_data_constants__WEBPACK_IMPORTED_MODULE_22__.majorVersion, _data_constants__WEBPACK_IMPORTED_MODULE_22__.minorVersion, _data_constants__WEBPACK_IMPORTED_MODULE_22__.patchVersion);
 sauce.createSettings();
 const gauges = {
     isInCombat: false,
@@ -8532,7 +8545,7 @@ const gauges = {
 };
 async function renderOverlays() {
     await (0,_lib_readEnemy__WEBPACK_IMPORTED_MODULE_2__.readEnemy)(gauges);
-    if (gauges.isInCombat || (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('updatingOverlayPosition')) {
+    if (gauges.isInCombat || (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('updatingOverlayPosition')) {
         await (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_1__.readBuffs)(gauges);
         await (0,_lib_necromancy_conjures__WEBPACK_IMPORTED_MODULE_4__.conjureOverlay)(gauges);
         await (0,_lib_necromancy_soul_stacks__WEBPACK_IMPORTED_MODULE_5__.soulsOverlay)(gauges);
@@ -8558,8 +8571,8 @@ async function startApp() {
         _lib_utility__WEBPACK_IMPORTED_MODULE_0__.helperItems.Output.insertAdjacentHTML('beforeend', `<div><p>Attempted to use Overlay but app overlay permission is not enabled. Please enable "Show Overlay" permission in Alt1 settinsg (wrench icon in corner).</p></div>`);
         return;
     }
-    let patchCheck = new _a1sauce_Patches_patchNotes__WEBPACK_IMPORTED_MODULE_22__.Patches();
-    patchCheck.setNotes(_patchnotes__WEBPACK_IMPORTED_MODULE_23__.notes);
+    let patchCheck = new _a1sauce_Patches_patchNotes__WEBPACK_IMPORTED_MODULE_23__.Patches();
+    patchCheck.setNotes(_patchnotes__WEBPACK_IMPORTED_MODULE_24__.notes);
     patchCheck.showPatchNotes();
     setNecromancyGaugeData(gauges);
     updateActiveOrientationFromLocalStorage();
@@ -8574,7 +8587,7 @@ async function startApp() {
 }
 function updateActiveOrientationFromLocalStorage() {
     // Retrieve selected orientation from localStorage
-    let selectedOrientation = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('selectedOrientation');
+    let selectedOrientation = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('selectedOrientation');
     if (!selectedOrientation) {
         selectedOrientation = 'reverse_split';
     }
@@ -8588,7 +8601,7 @@ function updateActiveOrientationFromLocalStorage() {
     if (selectedOrientation == 'reverse_split_orientation')
         selectedOrientation = 'reverse_split';
     // END
-    (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.updateSetting)('selectedOrientation', selectedOrientation);
+    (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.updateSetting)('selectedOrientation', selectedOrientation);
     // Function to recursively update orientations in an object
     function updateActiveOrientation(obj) {
         for (const key in obj) {
@@ -8610,17 +8623,17 @@ function updateActiveOrientationFromLocalStorage() {
 }
 // TODO: Get rid of this crap
 function addEventListeners() {
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('selectedOrientation').addEventListener('change', () => {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('selectedOrientation').addEventListener('change', () => {
         updateActiveOrientationFromLocalStorage();
     });
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('repositionOverlay').addEventListener('click', () => {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('repositionOverlay').addEventListener('click', () => {
         _lib_utility__WEBPACK_IMPORTED_MODULE_0__.setOverlayPosition(gauges, _lib_utility__WEBPACK_IMPORTED_MODULE_0__);
     });
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('showNecrosis').addEventListener('change', () => {
-        gauges.necromancy.stacks.duplicateNecrosisRow = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('dupeRow');
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('showNecrosis').addEventListener('change', () => {
+        gauges.necromancy.stacks.duplicateNecrosisRow = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('dupeRow');
     });
     // For some reason this one calculates incorrectly on load so we override the initial styles here
-    const scaleRange = (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('scale');
+    const scaleRange = (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('scale');
     const value = ((parseInt(scaleRange.value, 10) - parseInt(scaleRange.min, 10)) /
         (parseInt(scaleRange.max, 10) - parseInt(scaleRange.min))) *
         100;
@@ -8630,67 +8643,67 @@ function addEventListeners() {
             '%, #0d1c24 ' +
             value +
             '%, #0d1c24 100%)';
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('scale').addEventListener('change', () => {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('scale').addEventListener('change', () => {
         location.reload();
     });
     document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
         checkbox.addEventListener('change', () => {
             setNecromancyGaugeData(gauges);
             _lib_utility__WEBPACK_IMPORTED_MODULE_0__.freezeAndContinueOverlays(); // Force an instant redraw
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.updateSetting)('gaugedata', JSON.stringify(gauges));
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.updateSetting)('gaugedata', JSON.stringify(gauges));
         });
     });
     /* Update Alarm Thresholds */
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('alarmSoulsThreshold').addEventListener('change', (e) => {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('alarmSoulsThreshold').addEventListener('change', (e) => {
         const target = e.target;
         gauges.necromancy.stacks.souls.alarm.threshold = parseInt(target.value, 10);
         console.log('Souls alarm threshold: ' + target.value);
     });
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('alarmNecrosisThreshold').addEventListener('change', (e) => {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('alarmNecrosisThreshold').addEventListener('change', (e) => {
         const target = e.target;
         gauges.necromancy.stacks.necrosis.alarm.threshold = parseInt(target.value, 10);
         console.log('Necrosis alarm threshold: ' + target.value);
     });
     /* Update Active Alarms */
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('alarmSoulsActive').addEventListener('change', (e) => {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('alarmSoulsActive').addEventListener('change', (e) => {
         const target = e.target;
         gauges.necromancy.stacks.souls.alarm.isActive = target.checked;
         console.log('Souls alarm active: ' + target.checked);
     });
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('alarmNecrosisActive').addEventListener('change', (e) => {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('alarmNecrosisActive').addEventListener('change', (e) => {
         const target = e.target;
         gauges.necromancy.stacks.necrosis.alarm.isActive = target.checked;
         console.log('Necrosis alarm active: ' + target.checked);
     });
     /* Update Looping Alarms */
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('alarmNecrosisLoop').addEventListener('change', (e) => {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('alarmNecrosisLoop').addEventListener('change', (e) => {
         const target = e.target;
         gauges.necromancy.stacks.necrosis.alarm.isLooping = target.checked;
         console.log('Necrosis alarm looping: ' + target.checked);
     });
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('alarmSoulsLoop').addEventListener('change', (e) => {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('alarmSoulsLoop').addEventListener('change', (e) => {
         const target = e.target;
         gauges.necromancy.stacks.souls.alarm.isLooping = target.checked;
         console.log('Souls alarm volume looping: ' + target.checked);
     });
     /* Update Alarm Volumes */
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('alarmNecrosisVolume').addEventListener('change', (e) => {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('alarmNecrosisVolume').addEventListener('change', (e) => {
         const target = e.target;
         gauges.necromancy.stacks.necrosis.alarm.volume = parseInt(target.value, 10);
         console.log('Necrosis alarm volume updated to: ' + target.value);
     });
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('alarmSoulsVolume').addEventListener('change', (e) => {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('alarmSoulsVolume').addEventListener('change', (e) => {
         const target = e.target;
         gauges.necromancy.stacks.souls.alarm.volume = parseInt(target.value, 10);
         console.log('Souls alarm volume updated to: ' + target.value);
     });
     /* Update Alarm Sounds */
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('alarmNecrosisAlertSound').addEventListener('change', (e) => {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('alarmNecrosisAlertSound').addEventListener('change', (e) => {
         const target = e.target;
         gauges.necromancy.stacks.necrosis.alarm.sound = target.value;
         console.log('Necrosis alarm sound updated to:' + target.value);
     });
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_19__.getById)('alarmSoulsAlertSound').addEventListener('change', (e) => {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('alarmSoulsAlertSound').addEventListener('change', (e) => {
         const target = e.target;
         gauges.necromancy.stacks.souls.alarm.sound = target.value;
         console.log('Souls alarm sound updated to:' + target.value);
@@ -8698,107 +8711,107 @@ function addEventListeners() {
 }
 // TODO: Get rid of this crap
 function setNecromancyGaugeData(gauges) {
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('overlayPosition') !== undefined) {
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('overlayPosition') !== undefined) {
         //TODO: Each gauge should be able to be positioned separately
-        gauges.necromancy.position = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('overlayPosition');
-        gauges.magic.position = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('overlayPosition');
-        gauges.ranged.position = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('overlayPosition');
-        gauges.melee.position = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('overlayPosition');
+        gauges.necromancy.position = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('overlayPosition');
+        gauges.magic.position = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('overlayPosition');
+        gauges.ranged.position = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('overlayPosition');
+        gauges.melee.position = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('overlayPosition');
     }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('hideOutsideCombat') !== undefined) {
-        gauges.checkCombatStatus = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('hideOutsideCombat');
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('hideOutsideCombat') !== undefined) {
+        gauges.checkCombatStatus = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('hideOutsideCombat');
         gauges.isInCombat = false;
     }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('scale') !== undefined) {
-        gauges.scaleFactor = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('scale') / 100;
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('scale') !== undefined) {
+        gauges.scaleFactor = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('scale') / 100;
     }
     else {
         gauges.scaleFactor = 1;
     }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showConjures') !== undefined) {
-        gauges.necromancy.conjures.isActiveOverlay = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showConjures');
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showConjures') !== undefined) {
+        gauges.necromancy.conjures.isActiveOverlay = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showConjures');
     }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showLivingDeath') !== undefined) {
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showLivingDeath') !== undefined) {
         gauges.necromancy.livingDeath.isActiveOverlay =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showLivingDeath');
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showLivingDeath');
     }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showIncantations') !== undefined) {
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showIncantations') !== undefined) {
         gauges.necromancy.incantations.isActiveOverlay =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showIncantations');
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showIncantations');
     }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showInvokeDeath') !== undefined) {
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showInvokeDeath') !== undefined) {
         gauges.necromancy.incantations.invokeDeath.isActiveOverlay =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showInvokeDeath');
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showInvokeDeath');
     }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showDarkness') !== undefined) {
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showDarkness') !== undefined) {
         gauges.necromancy.incantations.darkness.isActiveOverlay =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showDarkness');
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showDarkness');
     }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showThreads') !== undefined) {
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showThreads') !== undefined) {
         gauges.necromancy.incantations.threads.isActiveOverlay =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showThreads');
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showThreads');
     }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showSplitSoul') !== undefined) {
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showSplitSoul') !== undefined) {
         gauges.necromancy.incantations.splitSoul.isActiveOverlay =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showSplitSoul');
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showSplitSoul');
     }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showSouls') !== undefined) {
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showSouls') !== undefined) {
         gauges.necromancy.stacks.souls.isActiveOverlay =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showSouls');
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showSouls');
     }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showNecrosis') !== undefined) {
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showNecrosis') !== undefined) {
         gauges.necromancy.stacks.necrosis.isActiveOverlay =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showNecrosis');
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showNecrosis');
     }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('useColoredNecrosis') !== undefined) {
-        gauges.necromancy.stacks.useColoredNecrosis = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('useColoredNecrosis');
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('useColoredNecrosis') !== undefined) {
+        gauges.necromancy.stacks.useColoredNecrosis = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('useColoredNecrosis');
     }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('dupeRow') !== undefined) {
-        gauges.necromancy.stacks.duplicateNecrosisRow = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('dupeRow');
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('dupeRow') !== undefined) {
+        gauges.necromancy.stacks.duplicateNecrosisRow = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('dupeRow');
     }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showBloat') !== undefined) {
-        gauges.necromancy.bloat.isActiveOverlay = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showBloat');
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showBloat') !== undefined) {
+        gauges.necromancy.bloat.isActiveOverlay = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showBloat');
     }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmNecrosisActive') !== undefined) {
-        gauges.necromancy.stacks.necrosis.alarm.isActive = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmNecrosisActive');
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('alarmNecrosisActive') !== undefined) {
+        gauges.necromancy.stacks.necrosis.alarm.isActive = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('alarmNecrosisActive');
     }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showBlalarmNecrosisAlertSoundoat') !== undefined) {
-        gauges.necromancy.stacks.necrosis.alarm.sound = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('showBlalarmNecrosisAlertSoundoat');
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showBlalarmNecrosisAlertSoundoat') !== undefined) {
+        gauges.necromancy.stacks.necrosis.alarm.sound = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showBlalarmNecrosisAlertSoundoat');
     }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmNecrosisLoop') !== undefined) {
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('alarmNecrosisLoop') !== undefined) {
         gauges.necromancy.stacks.necrosis.alarm.isLooping =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmNecrosisLoop');
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('alarmNecrosisLoop');
     }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmNecrosisThreshold') !== undefined) {
-        gauges.necromancy.stacks.necrosis.alarm.threshold = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmNecrosisThreshold');
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('alarmNecrosisThreshold') !== undefined) {
+        gauges.necromancy.stacks.necrosis.alarm.threshold = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('alarmNecrosisThreshold');
     }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmNecrosisVolume') !== undefined) {
-        gauges.necromancy.stacks.necrosis.alarm.volume = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmNecrosisVolume');
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('alarmNecrosisVolume') !== undefined) {
+        gauges.necromancy.stacks.necrosis.alarm.volume = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('alarmNecrosisVolume');
     }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmSoulsActive') !== undefined) {
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('alarmSoulsActive') !== undefined) {
         gauges.necromancy.stacks.souls.alarm.isActive =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmSoulsActive');
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('alarmSoulsActive');
     }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmSoulsAlertSound') !== undefined) {
-        gauges.necromancy.stacks.souls.alarm.sound = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmSoulsAlertSound');
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('alarmSoulsAlertSound') !== undefined) {
+        gauges.necromancy.stacks.souls.alarm.sound = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('alarmSoulsAlertSound');
     }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmSoulsLoop') !== undefined) {
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('alarmSoulsLoop') !== undefined) {
         gauges.necromancy.stacks.souls.alarm.isLooping =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmSoulsLoop');
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('alarmSoulsLoop');
     }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmSoulsThreshold') !== undefined) {
-        gauges.necromancy.stacks.souls.alarm.threshold = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmSoulsThreshold');
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('alarmSoulsThreshold') !== undefined) {
+        gauges.necromancy.stacks.souls.alarm.threshold = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('alarmSoulsThreshold');
     }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmSoulsVolume') !== undefined) {
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('alarmSoulsVolume') !== undefined) {
         gauges.necromancy.stacks.souls.alarm.volume =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('alarmSoulsVolume');
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('alarmSoulsVolume');
     }
 }
 // TODO: For Gauge Settings I should be able to store the entire gauge in localStorage
 // TODO: and recover it instead of setting each property individually from a different setting
 // TODO: Just need to figure out why my earlier attempt with setGaugeData() wasn't saving values properly
 function getGaugeData(gauges) {
-    let gaugeData = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('gaugedata');
+    let gaugeData = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('gaugedata');
     if (gaugeData !== undefined) {
         gauges = gaugeData;
         return JSON.parse(gaugeData);
@@ -8807,9 +8820,9 @@ function getGaugeData(gauges) {
 window.onload = function () {
     if (window.alt1) {
         alt1.identifyAppUrl('./appconfig.json');
-        if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_18__.getSetting)('checkForUpdates'))
-            (0,_a1sauce_Patches_serverCheck__WEBPACK_IMPORTED_MODULE_24__.startVersionChecking)();
-        (0,_lib_settings__WEBPACK_IMPORTED_MODULE_20__.renderSettings)(gauges);
+        if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('checkForUpdates'))
+            (0,_a1sauce_Patches_serverCheck__WEBPACK_IMPORTED_MODULE_25__.startVersionChecking)();
+        (0,_lib_settings__WEBPACK_IMPORTED_MODULE_21__.renderSettings)(gauges);
         addEventListeners();
         startApp();
     }

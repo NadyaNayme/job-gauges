@@ -26,6 +26,7 @@ import { melee_gauge } from './data/melee_gauge';
 
 import './index.html';
 import './appconfig.json';
+import './version.json';
 import './icon.png';
 import './css/styles.css';
 import { A1Sauce } from './a1sauce';
