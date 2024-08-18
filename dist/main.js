@@ -1900,10 +1900,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! .. */ "./a1sauce/index.ts");
 /* harmony import */ var _data_constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../data/constants */ "./data/constants.ts");
 /* harmony import */ var _Settings_Storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
-/* harmony import */ var _Utils_capitalizeName__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Utils/capitalizeName */ "./a1sauce/Utils/capitalizeName.ts");
-/* harmony import */ var _Utils_timeout__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Utils/timeout */ "./a1sauce/Utils/timeout.ts");
-/* harmony import */ var _Style_style_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Style/style.css */ "./a1sauce/Patches/Style/style.css");
-
+/* harmony import */ var _Utils_timeout__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Utils/timeout */ "./a1sauce/Utils/timeout.ts");
+/* harmony import */ var _Style_style_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Style/style.css */ "./a1sauce/Patches/Style/style.css");
 
 
 
@@ -1968,8 +1966,8 @@ class Patches {
                 }
                 //container.style.height = window.innerHeight.toString();
                 document.body.appendChild(container);
-                alt1.setTooltip(`New update! See ${(0,_Utils_capitalizeName__WEBPACK_IMPORTED_MODULE_3__.capitalizeAppName)(_data_constants__WEBPACK_IMPORTED_MODULE_1__.appName)} window for patch notes.`);
-                await (0,_Utils_timeout__WEBPACK_IMPORTED_MODULE_4__.timeout)(5000).then(() => {
+                alt1.setTooltip(`New update! See ${sauce.getPublicName()} window for patch notes.`);
+                await (0,_Utils_timeout__WEBPACK_IMPORTED_MODULE_3__.timeout)(5000).then(() => {
                     alt1.clearTooltip();
                 });
             }
@@ -3044,7 +3042,7 @@ __webpack_require__.r(__webpack_exports__);
 const appName = 'job-gauges';
 const majorVersion = 1;
 const minorVersion = 0;
-const patchVersion = 2;
+const patchVersion = 3;
 
 
 /***/ }),

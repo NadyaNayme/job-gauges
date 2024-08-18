@@ -81,9 +81,7 @@ export class Patches {
 			//container.style.height = window.innerHeight.toString();
 			document.body.appendChild(container);
 			alt1.setTooltip(
-				`New update! See ${capitalizeAppName(
-					appName
-				)} window for patch notes.`
+				`New update! See ${sauce.getPublicName()} window for patch notes.`
 			);
 			await timeout(5000).then(() => {
 				alt1.clearTooltip();
