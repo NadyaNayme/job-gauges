@@ -1,16 +1,16 @@
 import { DropdownOption } from './Components';
 import * as Library from './Library/index';
 
-export enum SettingsType {
-	Alarm = 'alarm',
-	Button = 'button',
-	Checkbox = 'checkbox',
-	Dropdown = 'dropdown',
-	Input = 'input',
-	Number = 'number',
-	Profile = 'profile',
-	Range = 'range',
-}
+export const SettingsType = {
+	Alarm: 'alarm',
+	Button: 'button',
+	Checkbox: 'checkbox',
+	Dropdown: 'dropdown',
+	Input: 'input',
+	Number: 'number',
+	Profile: 'profile',
+	Range: 'range',
+} as const;
 
 /*
  *

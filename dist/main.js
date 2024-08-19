@@ -2786,17 +2786,16 @@ var __classPrivateFieldSet = (undefined && undefined.__classPrivateFieldSet) || 
 };
 var _a, _SettingsManager_instance;
 
-var SettingsType;
-(function (SettingsType) {
-    SettingsType["Alarm"] = "alarm";
-    SettingsType["Button"] = "button";
-    SettingsType["Checkbox"] = "checkbox";
-    SettingsType["Dropdown"] = "dropdown";
-    SettingsType["Input"] = "input";
-    SettingsType["Number"] = "number";
-    SettingsType["Profile"] = "profile";
-    SettingsType["Range"] = "range";
-})(SettingsType || (SettingsType = {}));
+const SettingsType = {
+    Alarm: 'alarm',
+    Button: 'button',
+    Checkbox: 'checkbox',
+    Dropdown: 'dropdown',
+    Input: 'input',
+    Number: 'number',
+    Profile: 'profile',
+    Range: 'range',
+};
 /*
  *
  * Settings Manager is your access point to localStorage and building your Settings UI.
