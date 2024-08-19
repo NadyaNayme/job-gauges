@@ -2445,7 +2445,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let isMouseDown = false;
-async function updateRangeValue(e, rangeInput, add) {
+async function updateRangeValue(rangeInput, add) {
     if (add) {
         rangeInput.value = String(parseInt(rangeInput.value, 10) + 1);
     }
@@ -2456,7 +2456,7 @@ async function updateRangeValue(e, rangeInput, add) {
     (0,_Storage__WEBPACK_IMPORTED_MODULE_2__.updateSetting)(rangeInput.id, rangeInput.value);
     await (0,_Utils_timeout__WEBPACK_IMPORTED_MODULE_0__.timeout)(50);
     if (isMouseDown)
-        updateRangeValue(e, rangeInput, add);
+        updateRangeValue(rangeInput, add);
 }
 const createRangeSetting = (name, description, options = {}) => {
     var _a, _b, _c, _d, _e;
@@ -2487,16 +2487,16 @@ const createRangeSetting = (name, description, options = {}) => {
     const minusButton = document.createElement('div');
     minusButton.classList.add('minus-btn');
     minusButton.classList.add('nis-btn');
-    minusButton.addEventListener('mousedown', (e) => {
+    minusButton.addEventListener('mousedown', () => {
         isMouseDown = true;
-        updateRangeValue(e, rangeInput, false);
+        updateRangeValue(rangeInput, false);
     });
     const plusButton = document.createElement('div');
     plusButton.classList.add('plus-btn');
     plusButton.classList.add('nis-btn');
-    plusButton.addEventListener('mousedown', (e) => {
+    plusButton.addEventListener('mousedown', () => {
         isMouseDown = true;
-        updateRangeValue(e, rangeInput, true);
+        updateRangeValue(rangeInput, true);
     });
     minusButton.addEventListener('mouseleave', () => {
         isMouseDown = false;

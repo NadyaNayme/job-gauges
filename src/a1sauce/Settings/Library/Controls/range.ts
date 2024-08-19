@@ -10,7 +10,7 @@ import { getSetting, updateSetting } from '../../Storage';
 import '../Styles/range.css';
 
 let isMouseDown = false;
-async function updateRangeValue(e: Event, rangeInput: HTMLInputElement, add: boolean) {
+async function updateRangeValue(rangeInput: HTMLInputElement, add: boolean) {
 	if (add) {
 		rangeInput.value = String(parseInt(rangeInput.value, 10) + 1);
 	} else {
@@ -19,7 +19,7 @@ async function updateRangeValue(e: Event, rangeInput: HTMLInputElement, add: boo
 	rangeInput.dispatchEvent(new Event('input', { bubbles: true }));
 	updateSetting(rangeInput.id, rangeInput.value);
 	await timeout(50);
-	if (isMouseDown) updateRangeValue(e, rangeInput, add);
+	if (isMouseDown) updateRangeValue(rangeInput, add);
 }
 
 export const createRangeSetting = (
@@ -70,17 +70,17 @@ export const createRangeSetting = (
 	const minusButton = document.createElement('div');
 	minusButton.classList.add('minus-btn');
 	minusButton.classList.add('nis-btn');
-	minusButton.addEventListener('mousedown', (e) => {
+	minusButton.addEventListener('mousedown', () => {
 		isMouseDown = true;
-		updateRangeValue(e, rangeInput, false);
+		updateRangeValue(rangeInput, false);
 	});
 
 	const plusButton = document.createElement('div');
 	plusButton.classList.add('plus-btn');
 	plusButton.classList.add('nis-btn');
-	plusButton.addEventListener('mousedown', (e) => {
+	plusButton.addEventListener('mousedown', () => {
 		isMouseDown = true;
-		updateRangeValue(e, rangeInput, true);
+		updateRangeValue(rangeInput, true);
 	});
 
 	minusButton.addEventListener('mouseleave', () => {
