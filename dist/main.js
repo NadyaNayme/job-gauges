@@ -4684,9 +4684,7 @@ const notes = [
     // Add patch notes to top
     {
         date: '08/18/2024 - Hotfix v.1.0.6',
-        note: [
-            `Fixed patch notes styling`,
-        ],
+        note: [`Fixed patch notes styling`],
     },
     {
         date: '8/18/2024 - Bug Fixes & Testing v1.0.5',
@@ -4696,7 +4694,7 @@ const notes = [
             `Fixed positioning of 2nd Necrosis Stacks row when scale was set to a non-100% value`,
             `Fixed the value of range inputs not saving to settings if the - / + buttons were used to set the final value`,
             `Began adding tests to A1 Sauce to catch and prevent feature regressions and broken behavior`,
-            `v1.0.4 is being skipped as it was used to test the version checking option from v1.0.3 and had no patch notes`
+            `v1.0.4 is being skipped as it was used to test the version checking option from v1.0.3 and had no patch notes`,
         ],
     },
     {

@@ -8,6 +8,10 @@ const testNumber = <HTMLInputElement>(
 	createNumberSetting('testNumber', 'This is a test dropdown', {defaultValue: 50, min: 0, max: 100})
 );
 
+const testNumberNoOptions = <HTMLInputElement>(
+	createNumberSetting('testNumber2', 'This is a test dropdown')
+);
+
 describe('Library.Controls.createNumberSetting()', () => {
 	test('Should create an element', () => {
 		expect(testNumber).toBeTruthy();
@@ -33,6 +37,12 @@ describe('Library.Controls.createNumberSetting()', () => {
 
 	test('Should have a default value matching the passed `defaultValue` option', () => {
 		expect(testNumber.querySelector('input').value).toEqual('50');
+	});
+
+	test('Should have default values for min, max, and defaultValue if no options are passed', () => {
+		expect(testNumberNoOptions.querySelector('input').getAttribute('min')).toEqual('1');
+		expect(testNumberNoOptions.querySelector('input').getAttribute('max')).toEqual('20');
+		expect(testNumberNoOptions.querySelector('input').value).toEqual('10');
 	});
 
 	test('Should be invalid if value is below minimum', () => {
