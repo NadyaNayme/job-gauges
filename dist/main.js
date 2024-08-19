@@ -2358,6 +2358,7 @@ const createDropdownSetting = (name, description, defaultValue, options) => {
     const select = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createDropdown)(name, defaultValue, options);
     const label = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createLabel)(name, description);
     select.id = name;
+    select.selectedIndex = defaultValue;
     const container = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createFlexContainer)(['reverse-setting']);
     container.appendChild(select);
     container.appendChild(label);
@@ -2661,6 +2662,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   getSetting: () => (/* binding */ getSetting),
 /* harmony export */   loadSettings: () => (/* binding */ loadSettings),
+/* harmony export */   setDefaultCheckbox: () => (/* binding */ setDefaultCheckbox),
+/* harmony export */   setDefaultNumberOrRange: () => (/* binding */ setDefaultNumberOrRange),
+/* harmony export */   setDefaultOther: () => (/* binding */ setDefaultOther),
 /* harmony export */   setDefaultSettings: () => (/* binding */ setDefaultSettings),
 /* harmony export */   settingsExist: () => (/* binding */ settingsExist),
 /* harmony export */   updateSetting: () => (/* binding */ updateSetting)
@@ -2675,22 +2679,31 @@ const setDefaultSettings = () => {
         switch (setting.type) {
             case 'number':
             case 'range':
-                if (setting.dataset.defaultValue === undefined)
-                    throw Error('Range input value is undefined');
-                updateSetting(setting.dataset.setting, parseInt(setting.dataset.defaultValue, 10));
+                setDefaultNumberOrRange(setting);
                 break;
             case 'checkbox':
-                if (setting.dataset.defaultValue == 'false') {
-                    updateSetting(setting.dataset.setting, false);
-                }
-                else {
-                    updateSetting(setting.dataset.setting, true);
-                }
+                setDefaultCheckbox(setting);
                 break;
             default:
-                updateSetting(setting.dataset.setting, setting.dataset.defaultValue);
+                setDefaultOther(setting);
         }
     });
+};
+const setDefaultNumberOrRange = (setting) => {
+    if (setting.dataset.defaultValue === undefined)
+        throw Error('Range input value is undefined');
+    updateSetting(setting.dataset.setting, parseInt(setting.dataset.defaultValue, 10));
+};
+const setDefaultCheckbox = (setting) => {
+    if (setting.dataset.defaultValue == 'false') {
+        updateSetting(setting.dataset.setting, false);
+    }
+    else {
+        updateSetting(setting.dataset.setting, true);
+    }
+};
+const setDefaultOther = (setting) => {
+    updateSetting(setting.dataset.setting, setting.dataset.defaultValue);
 };
 const loadSettings = () => {
     const settings = document.querySelectorAll('[data-setting]');
@@ -2965,10 +2978,16 @@ __webpack_require__.r(__webpack_exports__);
 const tempTooltip = (msg, time) => {
     if (window.alt1 === undefined)
         throw new Error('Alt1 not detected in window object');
+    /*
+     * It isn't possible to mock the alt1 call and since window.alt1 must exist
+     * for apps to work the below code is guaranteed to work if we get past the above check
+     */
+    /* c8 ignore start */
     alt1.setTooltip(msg);
     (0,_timeout__WEBPACK_IMPORTED_MODULE_0__.timeout)(time).then(() => {
         alt1.clearTooltip();
     });
+    /* c8 ignore end */
 };
 
 

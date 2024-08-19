@@ -86,7 +86,7 @@ export class SettingsManager {
 	public addDropdownSetting = (
 		name: string,
 		description: string,
-		defaultValue: unknown,
+		defaultValue: number,
 		options: DropdownOption[]
 	): SettingsManager => {
 		this.settings?.push(

@@ -7,27 +7,37 @@ export const setDefaultSettings = (): void => {
 		switch (setting.type) {
 			case 'number':
 			case 'range':
-				if (setting.dataset.defaultValue === undefined) throw Error('Range input value is undefined');
-				updateSetting(
-					setting.dataset.setting,
-					parseInt(setting.dataset.defaultValue, 10)
-				);
+					setDefaultNumberOrRange(setting);
 				break;
 			case 'checkbox':
-				if (setting.dataset.defaultValue == 'false') {
-					updateSetting(setting.dataset.setting, false);
-				} else {
-					updateSetting(setting.dataset.setting, true);
-				}
+				setDefaultCheckbox(setting);
 				break;
 			default:
-				updateSetting(
-					setting.dataset.setting,
-					setting.dataset.defaultValue
-				);
+				setDefaultOther(setting);
 		}
 	});
 }
+
+export const setDefaultNumberOrRange = (setting: HTMLElement) => {
+	if (setting.dataset.defaultValue === undefined)
+		throw Error('Range input value is undefined');
+	updateSetting(
+		setting.dataset.setting,
+		parseInt(setting.dataset.defaultValue, 10)
+	);
+}
+
+export const setDefaultCheckbox = (setting: HTMLElement) => {
+	if (setting.dataset.defaultValue == 'false') {
+		updateSetting(setting.dataset.setting, false);
+	} else {
+		updateSetting(setting.dataset.setting, true);
+	}
+};
+
+export const setDefaultOther = (setting: HTMLElement) => {
+	updateSetting(setting.dataset.setting, setting.dataset.defaultValue);
+};
 
 export const loadSettings = (): void => {
 	const settings = document.querySelectorAll('[data-setting]');
