@@ -7,7 +7,7 @@
 		"start": "http-server"
 	},
 	"dependencies": {
-		"alt1": "^0.0.4",
+		"alt1": "^0.0.7",
 		"lodash": "^4.17.21",
 		"luxon": "^3.4.3",
 		"npm": "^10.8.2"
