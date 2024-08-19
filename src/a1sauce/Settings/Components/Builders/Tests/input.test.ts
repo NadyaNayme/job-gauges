@@ -8,6 +8,8 @@ import {
 	createInput,
 	createLabel,
 } from '../input';
+import { getSetting, updateSetting } from '../../../Storage';
+import { A1Sauce } from '../../../..';
 
 const testLabel = createLabel('LabelID', 'Description text');
 const testTextInput = createInput('text', 'TextInputID', 'Unicorn');
@@ -88,6 +90,13 @@ describe('Components.Builders.createCheckboxInput()', () => {
 	test('Should be an <HTMLElement>', () => {
 		expectTypeOf(testCheckbox).toMatchTypeOf<HTMLElement>();
 	});
+
+	test('Should update setting after change event', () => {
+		testCheckbox.checked = true;
+		testCheckbox.dispatchEvent(new Event('change'));
+		let name = testCheckbox.id;
+		expect(getSetting(name)).toEqual(true);
+	});
 });
 
 describe('Components.Builders.createDropdown()', () => {
@@ -97,5 +106,12 @@ describe('Components.Builders.createDropdown()', () => {
 
 	test('Should be an <HTMLElement>', () => {
 		expectTypeOf(testDropdown).toMatchTypeOf<HTMLElement>();
+	});
+
+	test('Should update setting after change event', () => {
+		testDropdown.selectedIndex = 1;
+		testDropdown.dispatchEvent(new Event('change'));
+		updateSetting(testDropdown.id, testDropdown.value);
+		expect(getSetting(testDropdown.id)).toEqual('test2');
 	});
 });
