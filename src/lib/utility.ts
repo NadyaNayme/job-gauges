@@ -5,6 +5,10 @@ import { timeout } from '../a1sauce/Utils/timeout';
 
 
 export const white = a1lib.mixColor(255, 255, 255);
+export const red = a1lib.mixColor(255, 0, 0);
+export const green = a1lib.mixColor(0, 255, 0);
+export const blue = a1lib.mixColor(0, 0, 255);
+export const black = a1lib.mixColor(1, 1, 1);
 
 export function getByID(id: string): HTMLElement {
 	return document.getElementById(id);
@@ -50,7 +54,6 @@ export function forceClearOverlay(overlay: string): void {
 	alt1.overLayFreezeGroup(overlay);
 	alt1.overLayClearGroup(overlay);
 	alt1.overLayRefreshGroup(overlay);
-	console.log('Force cleared: ' + overlay);
 }
 
 // TODO: Overlays need to be able to add/remove themselves from this list
@@ -64,8 +67,11 @@ const overlays = [
 	'LivingDeath',
 	'Necrosis',
 	'Necrosis_Row2',
-	'Souls'
-]
+	'Souls',
+	'Sunshine',
+	'Instability',
+	'Tsunami',
+];
 
 export function freezeOverlays(): void {
 	overlays.forEach((overlay) => {
@@ -86,13 +92,44 @@ export function freezeAndContinueOverlays(): void {
 	continueOverlays();
 }
 
+export function forceClearOverlays(): void {
+	overlays.forEach((overlay) => {
+		alt1.overLaySetGroup(overlay);
+		alt1.overLayFreezeGroup(overlay);
+		alt1.overLayClearGroup(overlay);
+		alt1.overLayRefreshGroup(overlay);
+		alt1.overLayContinueGroup(overlay);
+		clearTextOverlays();
+		console.log('Force cleared: ' + overlay);
+	});
+}
+
 export function clearTextOverlays(): void {
-	alt1.overLaySetGroup('Undead_Army_Text');
 	alt1.overLayClearGroup('Undead_Army_Text');
 	alt1.overLayRefreshGroup('Undead_Army_Text');
-	alt1.overLaySetGroup('LivingDeath_Text');
+
 	alt1.overLayClearGroup('LivingDeath_Text');
 	alt1.overLayRefreshGroup('LivingDeath_Text');
+	alt1.overLayClearGroup('LivingDeath_Cooldown_Text');
+	alt1.overLayRefreshGroup('LivingDeath_Cooldown_Text');
+
+	alt1.overLayClearGroup('Sunshine_Text');
+	alt1.overLayRefreshGroup('Sunshine_Text');
+	alt1.overLayClearGroup('Sunshine_Cooldown_Text');
+	alt1.overLayRefreshGroup('Sunshine_Cooldown_Text');
+
+	alt1.overLayClearGroup('Instability_Text');
+	alt1.overLayRefreshGroup('Instability_Text');
+	alt1.overLayClearGroup('Instability_Cooldown_Text');
+	alt1.overLayRefreshGroup('Instability_Cooldown_Text');
+
+	alt1.overLayClearGroup('Tsunami_Text');
+	alt1.overLayRefreshGroup('Tsunami_Text');
+	alt1.overLayClearGroup('Tsunami_Cooldown_Text');
+	alt1.overLayRefreshGroup('Tsunami_Cooldown_Text');
+
+	alt1.overLayClearGroup('Spell_Text');
+	alt1.overLayRefreshGroup('Spell_Text');
 }
 
 export function adjustPositionForScale(position: number, scaleFactor: number): number {

@@ -1,6 +1,17 @@
 export const notes = [
 	// Add patch notes to top
 	{
+		date: '08/25/2024 - Magic Gauge & Better Errors v.1.0.7',
+		note: [
+			`Magic Gauge has been added! It currently tracks Sunshine, Tsunami, Instability (FSOA Spec), Blood Tithe (Exsanguinate) stacks, and Glacial Embrace (Incite Fear) stacks`,
+			`The Magic Gauge is quite barebones! More functionality will be added over time. If there is something you'd like to see please join the Discord and let me know!`,
+			`Gauge will automatically swap when an Ultimate is used (Sunshine for Magic, Living Death for Necromancy)`,
+			`Settings to disable the automatic swapping and to select a default combat style have been added`,
+			`A new setting to adjust how many seconds to wait before considering the player to be "Out of Combat" has been added`,
+			`Added better error messages if Buff Size is set to Medium or Large as those sizes are not supported by Alt1`
+		],
+	},
+	{
 		date: '08/18/2024 - Hotfix v.1.0.6',
 		note: [`Fixed patch notes styling`],
 	},

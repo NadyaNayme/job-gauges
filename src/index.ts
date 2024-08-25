@@ -43,6 +43,10 @@ import {
 import { Patches } from './a1sauce/Patches/patchNotes';
 import { notes } from './patchnotes';
 import { startVersionChecking } from './a1sauce/Patches/serverCheck';
+import { sunshineOverlay } from './lib/magic/sunshine';
+import { spellsOverlay } from './lib/magic/active_spell';
+import { fsoaOverlay } from './lib/magic/instability';
+import { tsunamiOverlay } from './lib/magic/tsunami';
 
 const sauce = A1Sauce.instance;
 sauce.setName(appName);
@@ -53,6 +57,8 @@ const gauges: Overlay = {
 	isInCombat: false,
 	checkCombatStatus: false,
 	scaleFactor: 1,
+	combatStyle: 3,
+	automaticSwapping: false,
 	necromancy: necromancy_gauge,
 	magic: magic_gauge,
 	ranged: ranged_gauge,
@@ -63,12 +69,26 @@ async function renderOverlays() {
 	await readEnemy(gauges);
 	if (gauges.isInCombat || getSetting('updatingOverlayPosition')) {
 		await readBuffs(gauges);
-		await conjureOverlay(gauges);
-		await soulsOverlay(gauges);
-		await necrosisOverlay(gauges);
-		await incantationsOverlay(gauges);
-		await livingDeathOverlay(gauges);
-		await bloatOverlay(gauges);
+		switch (gauges.combatStyle) {
+			case 4:
+				await livingDeathOverlay(gauges);
+				await conjureOverlay(gauges);
+				await soulsOverlay(gauges);
+				await necrosisOverlay(gauges);
+				await incantationsOverlay(gauges);
+				await bloatOverlay(gauges);
+				break;
+			case 3:
+				await sunshineOverlay(gauges);
+				await spellsOverlay(gauges);
+				await fsoaOverlay(gauges);
+				await tsunamiOverlay(gauges);
+				break;
+			case 2:
+				break;
+			case 1:
+				break;
+		}
 	} else {
 		utility.clearTextOverlays();
 	}
@@ -108,6 +128,13 @@ export async function startApp() {
 	// Apparently setting GroupZIndex is a pretty expensive call to do in the loop - so let's only do it once
 	alt1.overLaySetGroupZIndex('Undead_Army_Text', 1);
 	alt1.overLaySetGroupZIndex('LivingDeath_Text', 1);
+	alt1.overLaySetGroupZIndex('LivingDeath_Cooldown_Text', 1);
+	alt1.overLaySetGroupZIndex('Sunshine_Text', 1);
+	alt1.overLaySetGroupZIndex('Sunshine_Cooldown_Text', 1);
+	alt1.overLaySetGroupZIndex('Instability_Text', 1);
+	alt1.overLaySetGroupZIndex('Instability_Cooldown_Text', 1);
+	alt1.overLaySetGroupZIndex('Tsunami_Text', 1);
+	alt1.overLaySetGroupZIndex('Tsunami_Cooldown_Text', 1);
 
 	await findBuffsBar().then(() => {
 		setInterval(function () {
@@ -152,7 +179,7 @@ function updateActiveOrientationFromLocalStorage(): void {
 		utility.freezeOverlays();
 		utility.continueOverlays();
 	}
-	updateActiveOrientation(necromancy_gauge);
+	updateActiveOrientation(gauges);
 }
 
 // TODO: Get rid of this crap
@@ -167,6 +194,11 @@ function addEventListeners() {
 
 	getById('showNecrosis').addEventListener('change', () => {
 		gauges.necromancy.stacks.duplicateNecrosisRow = getSetting('dupeRow');
+	});
+
+	getById('defaultCombatStyle').addEventListener('change', () => {
+		gauges.combatStyle =
+			parseInt(getSetting('defaultCombatStyle'), 10);
 	});
 
 	// For some reason this one calculates incorrectly on load so we override the initial styles here
@@ -402,6 +434,18 @@ function setNecromancyGaugeData(gauges: Overlay) {
 	if (getSetting('alarmSoulsVolume') !== undefined) {
 		gauges.necromancy.stacks.souls.alarm.volume =
 			getSetting('alarmSoulsVolume');
+	}
+
+	if (getSetting('automaticSwapping') !== undefined) {
+		gauges.automaticSwapping =
+			getSetting('automaticSwapping');
+	}
+
+	if (getSetting('defaultCombatStyle') !== undefined) {
+		let input = <HTMLSelectElement>document.getElementById('defaultCombatStyle');
+		input.value = getSetting('defaultCombatStyle');
+		gauges.combatStyle =
+			parseInt(getSetting('defaultCombatStyle'), 10);
 	}
 }
 

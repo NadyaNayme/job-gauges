@@ -1,7 +1,17 @@
-import { Position, Ability } from './common';
+import { Position, Ability, StackingPlayerBuff } from './common';
+
+export type Spells = {
+	isActiveOverlay: boolean;
+	activeSpell: number;
+	bloodTithe: StackingPlayerBuff;
+	glacialEmbrace: StackingPlayerBuff;
+};
 
 export type MagicGauge = {
 	isInCombat: boolean;
 	position: Position;
+	spells: Spells;
+	instability: Ability;
+	tsunami: Ability;
 	sunshine: Ability;
 };

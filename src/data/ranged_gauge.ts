@@ -3,8 +3,8 @@ import { RangedGauge } from '../types';
 export const ranged_gauge: RangedGauge = {
 	isInCombat: false,
 	position: {
-		x: 0,
-		y: 0,
+		x: 50,
+		y: 50,
 	},
 	deathsSwiftness: {
 		isActiveOverlay: false,

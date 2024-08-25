@@ -3,6 +3,7 @@ import * as a1lib from 'alt1';
 import * as TargetMob from 'alt1/targetmob';
 import { roundedToFixed } from './utility';
 import { Overlay } from '../types';
+import { getSetting } from '../a1sauce/Settings/Storage';
 
 const targetDisplay = new TargetMob.default();
 
@@ -14,20 +15,26 @@ const enemyDebuffImages = a1lib.webpackImages({
 // Thanks to rodultra97 for PR to previous repo
 const bloatInterval = new Map();
 const bloat = 'bloat';
+let combatTimer = undefined;
 
 export async function readEnemy(gauges: Overlay) {
 	//TODO: Store LastPos and detect when to rescan to avoid spamming CHFRS in loop
 	const targetData = targetDisplay.read();
+
+	if (combatTimer === undefined) {
+		combatTimer = getSetting('combatTimer');
+	}
 
 	if (gauges.checkCombatStatus) {
 		if (targetData) {
 			gauges.isInCombat = true;
 		} else {
 			setTimeout(() => {
+				console.log(combatTimer);
 				if (!targetData) {
 					gauges.isInCombat = false;
 				}
-			}, 1200);
+			}, combatTimer * 1000);
 		}
 	} else {
 		gauges.isInCombat = true;

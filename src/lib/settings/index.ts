@@ -27,11 +27,31 @@ export const renderSettings = async (gauges) => {
 			'Periodically check if a new update is available',
 			false
 		)
+		.addDropdownSetting(
+			'defaultCombatStyle',
+			'Select default combat style',
+			getSetting('defaultCombatStyle').toString() ?? '4',
+			[
+				{ value: '3', name: 'Magic' },
+				{ value: '4', name: 'Necromancy' },
+			]
+		)
+		.addCheckboxSetting(
+			'automaticSwapping',
+			'Swap gauge automatically based on last used Ultimate Ability',
+			false
+		)
 		.addCheckboxSetting(
 			'hideOutsideCombat',
 			'Hide the overlay while out of combat',
 			false
 		)
+		.addRangeSetting(
+			'combatTimer',
+			'How long - in seconds - before the player is considered "Out of Combat"',
+			{ defaultValue: '5', min: 1, max: 30, unit: 's' }
+		)
+		.addSeperator()
 		.addButton(
 			'repositionOverlay',
 			'Reposition Overlay',

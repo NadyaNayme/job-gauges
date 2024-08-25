@@ -7,6 +7,8 @@ export type Overlay = {
 	isInCombat: boolean;
 	checkCombatStatus: boolean;
 	scaleFactor: number;
+	combatStyle: number;
+	automaticSwapping: boolean;
 	necromancy: NecromancyGauge;
 	magic: MagicGauge;
 	ranged: RangedGauge;

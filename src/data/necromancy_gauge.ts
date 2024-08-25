@@ -8,6 +8,7 @@ export const necromancy_gauge: NecromancyGauge = {
 	},
 	stacks: {
 		souls: {
+			name: 'Residual_Souls',
 			isActiveOverlay: true,
 			active: true,
 			stacks: 0,
@@ -38,6 +39,7 @@ export const necromancy_gauge: NecromancyGauge = {
 			},
 		},
 		necrosis: {
+			name: 'Necrosis_Stacks',
 			isActiveOverlay: true,
 			active: true,
 			stacks: 0,
@@ -48,15 +50,15 @@ export const necromancy_gauge: NecromancyGauge = {
 				},
 				grouped: {
 					x: -10,
-					y: 98,
+					y: 97,
 				},
 				split: {
 					x: -10,
-					y: 98,
+					y: 97,
 				},
 				reverse_split: {
 					x: -10,
-					y: 98,
+					y: 97,
 				},
 			},
 			alarm: {
@@ -92,21 +94,25 @@ export const necromancy_gauge: NecromancyGauge = {
 			},
 		},
 		skeleton: {
+			name: 'Skeleton_Warrior',
 			isActiveOverlay: true,
 			time: 0,
 			active: false,
 		},
 		zombie: {
+			name: 'Putrid_Zombie',
 			isActiveOverlay: true,
 			time: 0,
 			active: false,
 		},
 		ghost: {
+			name: 'Vengeful_Ghost',
 			isActiveOverlay: true,
 			time: 0,
 			active: false,
 		},
 		fourth: {
+			name: '4th_Conjure',
 			isActiveOverlay: true,
 			time: 0,
 			active: false,
@@ -139,6 +145,7 @@ export const necromancy_gauge: NecromancyGauge = {
 			},
 		},
 		darkness: {
+			name: 'Darkness',
 			isActiveOverlay: true,
 			time: 0,
 			active: false,

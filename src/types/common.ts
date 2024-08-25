@@ -23,6 +23,10 @@ interface HasCooldown {
 	cooldownDuration: number;
 }
 
+export interface HasName {
+	name: string;
+}
+
 export interface HasAlarm {
 	alarm: {
 		isActive: boolean,
@@ -59,17 +63,17 @@ export type PlayerBuff = HasOverlay & HasOrientation & HasActiveState;
 /**
  * A TimedPlayerBuff is an overlay that tracks a buff which has a duration of time that it lasts for. The Remaining Duration of the buff is displayed over the buff's icon.
  */
-export type TimedPlayerBuff = PlayerBuff & HasTime;
+export type TimedPlayerBuff = PlayerBuff & HasTime & HasName;
 
 /**
  * A StackingPlayerBuff is an overlay that tracks a buff which does not have a duration but instead tracks the number of stacks the buff has. e.g. Necrosis Stacks, Residual Souls, and Perfect Equilibrium stacks.
  */
-export type StackingPlayerBuff = PlayerBuff & HasStacks;
+export type StackingPlayerBuff = PlayerBuff & HasStacks & HasName;
 
 /**
  * A StackingTimedPlayerBuff is an overlay which tracks a buff that has both a Duration of Time and a Stack Count. eg. Incense Sticks
  */
-export type StackingTimedPlayerBuff = PlayerBuff & HasTime & HasStacks;
+export type StackingTimedPlayerBuff = PlayerBuff & HasTime & HasStacks & HasName;
 
 /**
  *  A PlayerDebuff is an overlay that tracks debuffs from the player's debuffs bar. This is primarily used to track cooldowns of Weapon Special Attacks - as the cooldown appears as a debuff on the player.

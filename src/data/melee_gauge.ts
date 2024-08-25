@@ -3,8 +3,8 @@ import { MeleeGauge } from '../types';
 export const melee_gauge: MeleeGauge = {
 	isInCombat: false,
 	position: {
-		x: 0,
-		y: 0,
+		x: 50,
+		y: 50,
 	},
 	berserk: {
 		isActiveOverlay: false,

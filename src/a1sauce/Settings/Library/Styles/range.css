@@ -62,6 +62,11 @@
 	justify-content: space-between
 }
 
+#Settings .flex-between-center:has(input[type="range"]),
+#Settings output {
+	margin-top: 5px;
+}
+
 #Settings .minus-btn {
 	width: 16px;
 	height: 16px;

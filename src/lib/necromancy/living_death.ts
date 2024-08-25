@@ -2,6 +2,7 @@
 import * as a1lib from 'alt1';
 import * as utility from '../utility';
 import { Overlay } from '../../types';
+import { getSetting } from '../../a1sauce/Settings/Storage';
 
 const ultimateImages = a1lib.webpackImages({
 	inactive: require('../.././asset/data/living_death/lg/living_death_inactive.data.png'),
@@ -47,6 +48,9 @@ export async function livingDeathOverlay(gauges: Overlay) {
 	} else {
 		livingDeath.isOnCooldown = false;
 		utility.forceClearOverlay('LivingDeath_Cooldown_Text');
+		if (gauges.automaticSwapping) {
+			gauges.combatStyle = 4;
+		}
 		displayActiveLivingDeath(gauges);
 		if (lastValue !== livingDeath.time) {
 			livingDeath.cooldownDuration = 0;
