@@ -30,7 +30,7 @@ export const renderSettings = async (gauges) => {
 		.addDropdownSetting(
 			'defaultCombatStyle',
 			'Select default combat style',
-			getSetting('defaultCombatStyle').toString() ?? '4',
+			getSetting('defaultCombatStyle') ?? '4',
 			[
 				{ value: '3', name: 'Magic' },
 				{ value: '4', name: 'Necromancy' },

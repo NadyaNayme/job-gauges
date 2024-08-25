@@ -22669,7 +22669,7 @@ const renderSettings = async (gauges) => {
         .addSeperator()
         .addHeader('h3', 'General')
         .addCheckboxSetting('checkForUpdates', 'Periodically check if a new update is available', false)
-        .addDropdownSetting('defaultCombatStyle', 'Select default combat style', (_a = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('defaultCombatStyle').toString()) !== null && _a !== void 0 ? _a : '4', [
+        .addDropdownSetting('defaultCombatStyle', 'Select default combat style', (_a = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('defaultCombatStyle')) !== null && _a !== void 0 ? _a : '4', [
         { value: '3', name: 'Magic' },
         { value: '4', name: 'Necromancy' },
     ])
