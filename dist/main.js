@@ -35033,7 +35033,9 @@ async function loadAlarm(alarm) {
             console.log(doc);
             const reader = new FileReader();
             // @ts-ignore
-            let blob = new Blob(doc._attachments.filename.data);
+            let blob = new Blob(doc._attachments.filename.data, {
+                type: doc._attachments.filename.content_type,
+            });
             reader.addEventListener('load', () => {
                 alarm.src = reader.result.toString();
             }, false);
