@@ -35025,7 +35025,7 @@ async function playAlert(alarm) {
                 .then((doc) => {
                 const reader = new FileReader();
                 // @ts-ignore
-                alarm.src = reader.readAsDataURL(URL.createObjectURL(doc._attachments.filename.data));
+                alarm.src = reader.readAsDataURL(doc._attachments.filename.data);
             })
                 .catch((err) => {
                 console.log(err);
@@ -35067,8 +35067,7 @@ const notes = [
     {
         date: '08/25/2024 - Custom Alarm Sounds v.1.0.8',
         note: [
-            `You can now upload Custom Alarms. These save locally to an IndexDB within your Alt1 Chromium Browser. IndexDB has limited storage space.`,
-            ``
+            `You can now upload Custom Alarms. These save locally to an IndexDB within your Alt1 Chromium Browser. IndexDB has limited storage space.`
         ],
     },
     {
