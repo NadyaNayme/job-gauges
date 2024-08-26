@@ -49,7 +49,7 @@ export const renderSettings = async (gauges) => {
 		.addRangeSetting(
 			'combatTimer',
 			'How long - in seconds - before the player is considered "Out of Combat"',
-			{ defaultValue: '5', min: 1, max: 30, unit: 's' }
+			{ defaultValue: '5', min: 1, max: 600, unit: 's' }
 		)
 		.addSeperator()
 		.addButton(

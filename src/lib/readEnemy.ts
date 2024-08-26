@@ -22,15 +22,17 @@ export async function readEnemy(gauges: Overlay) {
 	const targetData = targetDisplay.read();
 
 	if (combatTimer === undefined) {
-		combatTimer = getSetting('combatTimer');
+		combatTimer = parseInt(getSetting('combatTimer'), 10);
 	}
+
+	let setOutOfCombat: NodeJS.Timeout;
 
 	if (gauges.checkCombatStatus) {
 		if (targetData) {
 			gauges.isInCombat = true;
+			clearTimeout(setOutOfCombat);
 		} else {
-			setTimeout(() => {
-				console.log(combatTimer);
+			setOutOfCombat = setTimeout(() => {
 				if (!targetData) {
 					gauges.isInCombat = false;
 				}

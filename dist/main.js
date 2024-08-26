@@ -22568,15 +22568,16 @@ async function readEnemy(gauges) {
     //TODO: Store LastPos and detect when to rescan to avoid spamming CHFRS in loop
     const targetData = targetDisplay.read();
     if (combatTimer === undefined) {
-        combatTimer = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('combatTimer');
+        combatTimer = parseInt((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('combatTimer'), 10);
     }
+    let setOutOfCombat;
     if (gauges.checkCombatStatus) {
         if (targetData) {
             gauges.isInCombat = true;
+            clearTimeout(setOutOfCombat);
         }
         else {
-            setTimeout(() => {
-                console.log(combatTimer);
+            setOutOfCombat = setTimeout(() => {
                 if (!targetData) {
                     gauges.isInCombat = false;
                 }
@@ -22675,7 +22676,7 @@ const renderSettings = async (gauges) => {
     ])
         .addCheckboxSetting('automaticSwapping', 'Swap gauge automatically based on last used Ultimate Ability', false)
         .addCheckboxSetting('hideOutsideCombat', 'Hide the overlay while out of combat', false)
-        .addRangeSetting('combatTimer', 'How long - in seconds - before the player is considered "Out of Combat"', { defaultValue: '5', min: 1, max: 30, unit: 's' })
+        .addRangeSetting('combatTimer', 'How long - in seconds - before the player is considered "Out of Combat"', { defaultValue: '5', min: 1, max: 600, unit: 's' })
         .addSeperator()
         .addButton('repositionOverlay', 'Reposition Overlay', _utility__WEBPACK_IMPORTED_MODULE_3__.setOverlayPosition, {
         classes: ['nisbutton'],
