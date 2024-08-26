@@ -35032,10 +35032,7 @@ async function loadAlarm(alarm) {
             .then((doc) => {
             console.log(doc._attachments.filename);
             // @ts-ignore
-            let blob = new Blob(doc._attachments.filename.data, {
-                type: doc._attachments.filename.content_type,
-            });
-            alarm.src = window.URL.createObjectURL(blob);
+            alarm.src = `data:${doc._attachments.filename.content_type};base64,${doc._attachments.filename.data}`;
         })
             .catch((err) => {
             console.log(err);

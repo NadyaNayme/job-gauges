@@ -260,16 +260,12 @@ export async function playAlert(alarm: HTMLAudioElement) {
 async function loadAlarm(alarm: HTMLAudioElement) {
 	if (alarm.src.startsWith('custom:') || alarm.src.startsWith('Custom:')) {
 		let customAudio = getSetting(alarm.id + 'AlertSound').substring(7);
-		db.get(customAudio, { attachments: true, binary: true })
+		db.get(customAudio, { attachments: true })
 			.then((doc) => {
 				console.log(doc._attachments.filename);
 
 				// @ts-ignore
-				let blob = new Blob(doc._attachments.filename.data, {
-					type: doc._attachments.filename.content_type,
-				});
-
-				alarm.src = window.URL.createObjectURL(blob);
+				alarm.src = `data:${doc._attachments.filename.content_type};base64,${doc._attachments.filename.data}`;
 			})
 			.catch((err) => {
 				console.log(err);
