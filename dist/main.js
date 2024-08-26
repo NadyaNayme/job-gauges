@@ -35025,7 +35025,11 @@ async function playAlert(alarm) {
                 .then((doc) => {
                 const reader = new FileReader();
                 // @ts-ignore
-                alarm.src = reader.readAsDataURL(doc._attachments.filename.data);
+                let blob = doc._attachments.filename.data;
+                reader.readAsDataURL(blob);
+                reader.addEventListener('load', () => {
+                    alarm.src = reader.result.toString();
+                }, false);
             })
                 .catch((err) => {
                 console.log(err);
