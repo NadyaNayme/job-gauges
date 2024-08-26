@@ -257,15 +257,15 @@ export async function playAlert(alarm: HTMLAudioElement) {
 					const reader = new FileReader();
 					// @ts-ignore
 					let blob = doc._attachments.filename.data;
-					reader.readAsDataURL(blob);
 
 					reader.addEventListener(
-							'load',
-							() => {
-								alarm.src = reader.result.toString();
-							},
-							false
-						);
+						'load',
+						() => {
+							alarm.src = reader.result.toString();
+						},
+						false
+					);
+					reader.readAsDataURL(blob);
 				})
 				.catch((err) => {
 					console.log(err);
