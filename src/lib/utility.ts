@@ -243,12 +243,12 @@ export async function resizeImageData(
 
 export async function playAlert(alarm: HTMLAudioElement) {
 	console.log(`Playing ${alarm.id} - above alarm's threshold`);
-	await loadAlarm(alarm);
+	loadAlarm(alarm);
 	alarm.loop = Boolean(getSetting(alarm.id + 'Loop'));
 	alarm.volume = Number(getSetting(alarm.id + 'Volume')) / 100;
-	await timeout(20).then(async () => {
+	await timeout(20).then(() => {
 		alarm.pause();
-		await loadAlarm(alarm);
+		loadAlarm(alarm);
 		alarm.play();
 	});
 	console.log(
@@ -256,7 +256,7 @@ export async function playAlert(alarm: HTMLAudioElement) {
 	);
 }
 
-async function loadAlarm(alarm: HTMLAudioElement) {
+function loadAlarm(alarm: HTMLAudioElement) {
 	if (alarm.src.startsWith('custom:') || alarm.src.startsWith('Custom:')) {
 		let customAudio = getSetting(alarm.id + 'AlertSound').substring(7);
 		db.get(customAudio, { attachments: true })

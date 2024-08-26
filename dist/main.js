@@ -35014,17 +35014,17 @@ async function resizeImageData(imageData, scaleFactor) {
 }
 async function playAlert(alarm) {
     console.log(`Playing ${alarm.id} - above alarm's threshold`);
-    await loadAlarm(alarm);
+    loadAlarm(alarm);
     alarm.loop = Boolean((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)(alarm.id + 'Loop'));
     alarm.volume = Number((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)(alarm.id + 'Volume')) / 100;
-    await (0,_a1sauce_Utils_timeout__WEBPACK_IMPORTED_MODULE_1__.timeout)(20).then(async () => {
+    await (0,_a1sauce_Utils_timeout__WEBPACK_IMPORTED_MODULE_1__.timeout)(20).then(() => {
         alarm.pause();
-        await loadAlarm(alarm);
+        loadAlarm(alarm);
         alarm.play();
     });
     console.log(`Loop: ${alarm.loop} | Volume: ${alarm.volume} | Alert: ${alarm.src}`);
 }
-async function loadAlarm(alarm) {
+function loadAlarm(alarm) {
     if (alarm.src.startsWith('custom:') || alarm.src.startsWith('Custom:')) {
         let customAudio = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)(alarm.id + 'AlertSound').substring(7);
         db.get(customAudio, { attachments: true })
