@@ -32572,7 +32572,7 @@ const appName = 'job-gauges';
 const versionUrl = 'https://raw.githubusercontent.com/NadyaNayme/job-gauges/master/dist/version.json';
 const majorVersion = 1;
 const minorVersion = 0;
-const patchVersion = 7;
+const patchVersion = 8;
 
 
 /***/ }),
@@ -35025,7 +35025,7 @@ async function playAlert(alarm) {
                 .then((doc) => {
                 console.log(doc);
                 // @ts-ignore
-                alarm.src = `blob:${doc._attachments.filename.data}`;
+                alarm.src = URL.createObjectURL(doc._attachments.filename.data);
             })
                 .catch((err) => {
                 console.log(err);
@@ -35065,6 +35065,13 @@ __webpack_require__.r(__webpack_exports__);
 const notes = [
     // Add patch notes to top
     {
+        date: '08/25/2024 - Custom Alarm Sounds v.1.0.8',
+        note: [
+            `You can now upload Custom Alarms. These save locally to an IndexDB within your Alt1 Chromium Browser. IndexDB has limited storage space.`,
+            ``
+        ],
+    },
+    {
         date: '08/25/2024 - Magic Gauge & Better Errors v.1.0.7',
         note: [
             `Magic Gauge has been added! It currently tracks Sunshine, Tsunami, Instability (FSOA Spec), Blood Tithe (Exsanguinate) stacks, and Glacial Embrace (Incite Fear) stacks`,
@@ -35072,7 +35079,7 @@ const notes = [
             `Gauge will automatically swap when an Ultimate is used (Sunshine for Magic, Living Death for Necromancy)`,
             `Settings to disable the automatic swapping and to select a default combat style have been added`,
             `A new setting to adjust how many seconds to wait before considering the player to be "Out of Combat" has been added`,
-            `Added better error messages if Buff Size is set to Medium or Large as those sizes are not supported by Alt1`
+            `Added better error messages if Buff Size is set to Medium or Large as those sizes are not supported by Alt1`,
         ],
     },
     {

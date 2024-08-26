@@ -256,7 +256,7 @@ export async function playAlert(alarm: HTMLAudioElement) {
 				.then((doc) => {
 					console.log(doc);
 					// @ts-ignore
-					alarm.src = `blob:${doc._attachments.filename.data}`;
+					alarm.src = URL.createObjectURL(doc._attachments.filename.data);
 				})
 				.catch((err) => {
 					console.log(err);
