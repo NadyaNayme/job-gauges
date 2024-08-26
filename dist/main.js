@@ -35020,7 +35020,6 @@ async function playAlert(alarm) {
     await (0,_a1sauce_Utils_timeout__WEBPACK_IMPORTED_MODULE_1__.timeout)(20).then(async () => {
         alarm.pause();
         await loadAlarm(alarm);
-        alarm.load();
         alarm.play();
     });
     console.log(`Loop: ${alarm.loop} | Volume: ${alarm.volume} | Alert: ${alarm.src}`);
@@ -35033,6 +35032,7 @@ async function loadAlarm(alarm) {
             console.log(doc._attachments.filename);
             // @ts-ignore
             alarm.src = `data:${doc._attachments.filename.content_type};base64,${doc._attachments.filename.data}`;
+            alarm.load();
         })
             .catch((err) => {
             console.log(err);
@@ -35040,6 +35040,7 @@ async function loadAlarm(alarm) {
     }
     else {
         alarm.src = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)(alarm.id + 'AlertSound');
+        alarm.load();
     }
 }
 function pauseAlert(alarm) {

@@ -249,7 +249,6 @@ export async function playAlert(alarm: HTMLAudioElement) {
 	await timeout(20).then(async () => {
 		alarm.pause();
 		await loadAlarm(alarm);
-		alarm.load();
 		alarm.play();
 	});
 	console.log(
@@ -266,12 +265,14 @@ async function loadAlarm(alarm: HTMLAudioElement) {
 
 				// @ts-ignore
 				alarm.src = `data:${doc._attachments.filename.content_type};base64,${doc._attachments.filename.data}`;
+				alarm.load();
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	} else {
 		alarm.src = getSetting(alarm.id + 'AlertSound');
+		alarm.load();
 	}
 }
 
