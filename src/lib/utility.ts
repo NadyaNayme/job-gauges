@@ -243,42 +243,44 @@ export async function resizeImageData(
 
 export async function playAlert(alarm: HTMLAudioElement) {
 	console.log(`Playing ${alarm.id} - above alarm's threshold`);
+	await loadAlarm(alarm);
 	alarm.loop = Boolean(getSetting(alarm.id + 'Loop'));
 	alarm.volume = Number(getSetting(alarm.id + 'Volume')) / 100;
-	await timeout(20).then(() => {
+	await timeout(20).then(async () => {
 		alarm.pause();
-		if (
-			alarm.src.startsWith('custom:') ||
-			alarm.src.startsWith('Custom:')
-		) {
-			let customAudio = getSetting(alarm.id + 'AlertSound').substring(7);
-			db.get(customAudio, { attachments: true })
-				.then((doc) => {
-					const reader = new FileReader();
-					// @ts-ignore
-					let blob = doc._attachments.filename.data;
-
-					reader.addEventListener(
-						'load',
-						() => {
-							alarm.src = reader.result.toString();
-						},
-						false
-					);
-					reader.readAsDataURL(blob);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
-		} else {
-			alarm.src = getSetting(alarm.id + 'AlertSound');
-		}
+		await loadAlarm(alarm);
 		alarm.load();
 		alarm.play();
 	});
 	console.log(
 		`Loop: ${alarm.loop} | Volume: ${alarm.volume} | Alert: ${alarm.src}`
 	);
+}
+
+async function loadAlarm(alarm: HTMLAudioElement) {
+	if (alarm.src.startsWith('custom:') || alarm.src.startsWith('Custom:')) {
+		let customAudio = getSetting(alarm.id + 'AlertSound').substring(7);
+		db.get(customAudio, { attachments: true })
+			.then((doc) => {
+				const reader = new FileReader();
+				// @ts-ignore
+				let blob = <Blob>doc._attachments.filename.data;
+
+				reader.addEventListener(
+					'load',
+					() => {
+						alarm.src = reader.result.toString();
+					},
+					false
+				);
+				reader.readAsDataURL(blob);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	} else {
+		alarm.src = getSetting(alarm.id + 'AlertSound');
+	}
 }
 
 export function pauseAlert(alarm: HTMLAudioElement) {
