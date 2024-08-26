@@ -36,6 +36,8 @@ export async function readEnemy(gauges: Overlay) {
 				if (!targetData) {
 					gauges.isInCombat = false;
 				}
+				// TODO: REMOVE THIS HACK AND USE A PROPER TIMER LIKE BLOAT
+				location.reload();
 			}, combatTimer * 1000);
 		}
 	} else {

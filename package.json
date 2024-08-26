@@ -7,10 +7,13 @@
 		"start": "http-server"
 	},
 	"dependencies": {
+		"@types/pouchdb": "^6.4.2",
 		"alt1": "^0.0.7",
 		"lodash": "^4.17.21",
 		"luxon": "^3.4.3",
-		"npm": "^10.8.2"
+		"nanoid": "^5.0.7",
+		"npm": "^10.8.2",
+		"pouchdb": "^9.0.0"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.9.0",
