@@ -35030,12 +35030,14 @@ async function loadAlarm(alarm) {
         let customAudio = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)(alarm.id + 'AlertSound').substring(7);
         db.get(customAudio, { attachments: true })
             .then((doc) => {
+            console.log(doc);
             const reader = new FileReader();
             // @ts-ignore
             let blob = doc._attachments.filename.data;
             reader.addEventListener('load', () => {
                 alarm.src = reader.result.toString();
             }, false);
+            // @ts-ignore
             reader.readAsDataURL(blob);
         })
             .catch((err) => {
