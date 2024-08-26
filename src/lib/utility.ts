@@ -262,7 +262,7 @@ async function loadAlarm(alarm: HTMLAudioElement) {
 		let customAudio = getSetting(alarm.id + 'AlertSound').substring(7);
 		db.get(customAudio, { attachments: true })
 			.then((doc) => {
-				console.log(doc);
+				console.log(doc._attachments.filename);
 				const reader = new FileReader();
 				// @ts-ignore
 				let blob = new Blob(doc._attachments.filename.data, {
