@@ -35040,7 +35040,7 @@ function loadAlarm(alarm) {
             console.log(err);
         });
     }
-    else {
+    else if (!alarm.src.startsWith('data')) {
         alarm.src = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)(alarm.id + 'AlertSound');
         alarm.load();
     }

@@ -271,7 +271,7 @@ function loadAlarm(alarm: HTMLAudioElement) {
 			.catch((err) => {
 				console.log(err);
 			});
-	} else {
+	} else if (!alarm.src.startsWith('data')) {
 		alarm.src = getSetting(alarm.id + 'AlertSound');
 		alarm.load();
 	}
