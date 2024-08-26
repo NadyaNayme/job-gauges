@@ -256,7 +256,7 @@ export async function playAlert(alarm: HTMLAudioElement) {
 				.then((doc) => {
 					const reader = new FileReader();
 					// @ts-ignore
-					alarm.src = reader.readAsDataURL(window.URL.createObjectURL(doc._attachments.filename.data));
+					alarm.src = reader.readAsDataURL(<Blob>doc._attachments.filename.data);
 				})
 				.catch((err) => {
 					console.log(err);

@@ -35025,7 +35025,7 @@ async function playAlert(alarm) {
                 .then((doc) => {
                 const reader = new FileReader();
                 // @ts-ignore
-                alarm.src = reader.readAsDataURL(window.URL.createObjectURL(doc._attachments.filename.data));
+                alarm.src = reader.readAsDataURL(doc._attachments.filename.data);
             })
                 .catch((err) => {
                 console.log(err);
