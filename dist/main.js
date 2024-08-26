@@ -35030,8 +35030,10 @@ function loadAlarm(alarm) {
         db.get(customAudio, { attachments: true })
             .then((doc) => {
             console.log(doc._attachments.filename);
+            let source = document.createElement('source');
             // @ts-ignore
-            alarm.src = `data:${doc._attachments.filename.content_type};base64,${doc._attachments.filename.data}`;
+            source.src = `data:${doc._attachments.filename.content_type};base64,${doc._attachments.filename.data}`;
+            alarm.appendChild(source);
             alarm.load();
         })
             .catch((err) => {
