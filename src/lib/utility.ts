@@ -260,7 +260,7 @@ export async function playAlert(alarm: HTMLAudioElement) {
 async function loadAlarm(alarm: HTMLAudioElement) {
 	if (alarm.src.startsWith('custom:') || alarm.src.startsWith('Custom:')) {
 		let customAudio = getSetting(alarm.id + 'AlertSound').substring(7);
-		db.get(customAudio, { attachments: true })
+		db.get(customAudio, { attachments: true, binary: true })
 			.then((doc) => {
 				console.log(doc._attachments.filename);
 
