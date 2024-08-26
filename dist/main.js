@@ -32569,7 +32569,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   versionUrl: () => (/* binding */ versionUrl)
 /* harmony export */ });
 const appName = 'job-gauges';
-const versionUrl = 'https://raw.githubusercontent.com/NadyaNayme/job-gauges/master/dist/version.json';
+const versionUrl = 'https://nadyanayme.github.io/job-gauges/dist/version.json';
 const majorVersion = 1;
 const minorVersion = 0;
 const patchVersion = 8;
