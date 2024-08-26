@@ -254,9 +254,9 @@ export async function playAlert(alarm: HTMLAudioElement) {
 			let customAudio = getSetting(alarm.id + 'AlertSound').substring(7);
 			db.get(customAudio, { attachments: true })
 				.then((doc) => {
-					console.log(doc);
+					const reader = new FileReader();
 					// @ts-ignore
-					alarm.src = URL.createObjectURL(doc._attachments.filename.data);
+					alarm.src = reader.readAsDataURL(URL.createObjectURL(doc._attachments.filename.data));
 				})
 				.catch((err) => {
 					console.log(err);

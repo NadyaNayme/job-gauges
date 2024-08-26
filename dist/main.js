@@ -35023,9 +35023,9 @@ async function playAlert(alarm) {
             let customAudio = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)(alarm.id + 'AlertSound').substring(7);
             db.get(customAudio, { attachments: true })
                 .then((doc) => {
-                console.log(doc);
+                const reader = new FileReader();
                 // @ts-ignore
-                alarm.src = URL.createObjectURL(doc._attachments.filename.data);
+                alarm.src = reader.readAsDataURL(URL.createObjectURL(doc._attachments.filename.data));
             })
                 .catch((err) => {
                 console.log(err);
