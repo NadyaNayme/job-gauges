@@ -35033,6 +35033,7 @@ function loadAlarm(alarm) {
             let source = document.createElement('source');
             // @ts-ignore
             source.src = `data:${doc._attachments.filename.content_type};base64,${doc._attachments.filename.data}`;
+            alarm.removeAttribute('src');
             alarm.appendChild(source);
             alarm.load();
         })
