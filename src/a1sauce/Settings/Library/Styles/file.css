@@ -1,0 +1,11 @@
+#Settings .upload-alarm {
+	flex-wrap: wrap;
+}
+
+#Settings .upload-alarm label {
+	margin-bottom: 5px;
+}
+
+#Settings .upload-alarm div {
+	width: 100%;
+}

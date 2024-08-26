@@ -3,9 +3,14 @@ import { createCheckboxSetting } from "./checkbox";
 import { createRangeSetting } from "./range";
 import { createText } from "./text";
 
+import { appName } from '../../../../data/constants';
+
 import '../Styles/alarm.css';
 
-const alarms: DropdownOption[] = [
+import PouchDB from 'pouchdb';
+const db = new PouchDB(appName);
+
+let alarms: DropdownOption[] = [
 	{ name: 'alarm2', value: './resource/alarms/alarm2.wav' },
 	{ name: 'notification1', value: './resource/alarms/notification1.wav' },
 	{ name: 'notification2', value: './resource/alarms/notification2.wav' },
@@ -34,7 +39,9 @@ export const createAlarmSetting = (
 	);
 	activeCheckbox.classList.add('alarm-active');
 	activeCheckbox.style.marginRight = '20px';
+
 	const alertDropdown = createDropdown(name + 'AlertSound', '', alarms);
+	alertDropdown.classList.add('alarm-dropdown');
 	alertDropdown.classList.add('full');
 	alertDropdown.style.marginBottom = '5px';
 	const loopCheckbox = createCheckboxSetting(name + 'Loop', 'Loop', false);

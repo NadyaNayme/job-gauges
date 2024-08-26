@@ -17,6 +17,7 @@ let playingAlert = false;
 
 const soulsAlert: HTMLAudioElement = new Audio();
 soulsAlert.id = 'alarmSouls';
+document.body.appendChild(soulsAlert);
 
 export async function soulsOverlay(gauges: Overlay) {
 	const { souls } = gauges.necromancy.stacks;

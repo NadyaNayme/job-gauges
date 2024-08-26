@@ -1,6 +1,6 @@
 
 import { A1Sauce } from "../../a1sauce";
-import { getSetting } from "../../a1sauce/Settings/Storage";
+import { getSetting, updateSetting } from "../../a1sauce/Settings/Storage";
 import {
 	appName,
 	majorVersion,
@@ -9,10 +9,14 @@ import {
 } from '../../data/constants';
 import { setOverlayPosition } from "../utility";
 
+import PouchDB from 'pouchdb';
+
 const sauce = A1Sauce.instance;
 sauce.setName(appName);
 sauce.setVersion(majorVersion, minorVersion, patchVersion);
 const settings = sauce.createSettings();
+
+const db = new PouchDB(appName);
 
 export const renderSettings = async (gauges) => {
 	settings
@@ -143,6 +147,8 @@ export const renderSettings = async (gauges) => {
 			getSetting('showBloat') ?? true
 		)
 		.addSeperator()
+		.addHeader('h2', 'Alarms')
+		.addFileSetting('customAlarms', 'Upload a custom alarm', '')
 		.addHeader('h3', 'Residual Souls Alarm')
 		.addRangeSetting(
 			'alarmSoulsThreshold',
@@ -159,4 +165,31 @@ export const renderSettings = async (gauges) => {
 		)
 		.addAlarmSetting('alarmNecrosis', '')
 		.build();
+
+	db.allDocs({ include_docs: true, attachments: true, binary: true }).then(
+		(result) => {
+			result.rows.forEach((row) => {
+				let alarmDropdowns = document.querySelectorAll('.alarm-dropdown');
+				for (let i = 0; i < alarmDropdowns.length; i++) {
+					let option = document.createElement('option');
+					// @ts-ignore
+					option.value = `Custom:${row.doc._id}`;
+					// @ts-ignore
+					option.innerText = `${row.doc.name}`;
+					alarmDropdowns[i].appendChild(option);
+				}
+			});
+		}
+	).then(() => {
+		let alarmDropdowns = document.querySelectorAll('.alarm-dropdown');
+		alarmDropdowns.forEach((dropdown) => {
+			dropdown.addEventListener('change', (e) => {
+				let target = <HTMLSelectElement>e.target;
+				let settingName = target.id;
+				updateSetting(settingName, target.value);
+			});
+			let dd = <HTMLSelectElement>dropdown;
+			dd.value = getSetting(dropdown.id);
+		});
+	});
 }

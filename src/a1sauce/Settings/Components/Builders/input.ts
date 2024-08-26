@@ -1,3 +1,4 @@
+import { appName } from '../../../../data/constants';
 import * as Storage from '../../Storage/index';
 
 export type DropdownOption = {
@@ -5,12 +6,15 @@ export type DropdownOption = {
 	value: string;
 };
 
-export const createLabel = (name: string, description: string): HTMLLabelElement => {
+export const createLabel = (
+	name: string,
+	description: string
+): HTMLLabelElement => {
 	const label = document.createElement('label');
 	label.setAttribute('for', name);
 	label.innerHTML = description;
 	return label;
-}
+};
 
 export const createInput = (
 	type: string,
@@ -36,7 +40,7 @@ export const createInput = (
 		}
 	});
 	return input;
-}
+};
 
 export const createCheckboxInput = (
 	name: string,
@@ -57,7 +61,7 @@ export const createCheckboxInput = (
 		Storage.updateSetting(name, input.checked);
 	});
 	return input;
-}
+};
 
 export const createDropdown = (
 	name: string,
@@ -87,4 +91,4 @@ export const createDropdown = (
 		Storage.updateSetting(name, select.value);
 	});
 	return select;
-}
+};

@@ -132,6 +132,17 @@ export class SettingsManager {
 		return this;
 	};
 
+	public addFileSetting = (
+		name: string,
+		description: string,
+		defaultValue: string
+	): SettingsManager => {
+		this.settings?.push(
+			Library.createFileSetting(name, description, defaultValue)
+		);
+		return this;
+	};
+
 	public addNumberSetting = (
 		name: string,
 		description: string,
@@ -171,7 +182,7 @@ export class SettingsManager {
 	public build = (): void => {
 		const settings = this.getSettings();
 		if (settings === null)
-			throw new Error (
+			throw new Error(
 				'Settings are empty - add settings before calling build()'
 			);
 		const container = document.createElement('div');

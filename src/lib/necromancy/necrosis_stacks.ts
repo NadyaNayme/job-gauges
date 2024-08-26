@@ -25,6 +25,7 @@ let playingAlert = false;
 
 const necrosisAlert: HTMLAudioElement = new Audio();
 necrosisAlert.id = 'alarmNecrosis';
+document.body.appendChild(necrosisAlert);
 
 export async function necrosisOverlay(gauges: Overlay) {
 	const { necrosis } = gauges.necromancy.stacks;

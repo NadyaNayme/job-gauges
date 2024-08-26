@@ -3,6 +3,10 @@ import { Overlay } from '../types';
 import { getSetting, updateSetting } from '../a1sauce/Settings/Storage';
 import { timeout } from '../a1sauce/Utils/timeout';
 
+import PouchDB from 'pouchdb';
+import { appName } from '../data/constants';
+
+const db = new PouchDB(appName);
 
 export const white = a1lib.mixColor(255, 255, 255);
 export const red = a1lib.mixColor(255, 0, 0);
@@ -132,51 +136,60 @@ export function clearTextOverlays(): void {
 	alt1.overLayRefreshGroup('Spell_Text');
 }
 
-export function adjustPositionForScale(position: number, scaleFactor: number): number {
-    return parseInt(roundedToFixed(position * scaleFactor, 1), 10);
+export function adjustPositionForScale(
+	position: number,
+	scaleFactor: number
+): number {
+	return parseInt(roundedToFixed(position * scaleFactor, 1), 10);
 }
 
-export function adjustPositionWithoutScale(position: number, scaleFactor: number): number {
-	return parseInt(roundedToFixed(position * ((1 / scaleFactor)), 1), 10);
+export function adjustPositionWithoutScale(
+	position: number,
+	scaleFactor: number
+): number {
+	return parseInt(roundedToFixed(position * (1 / scaleFactor), 1), 10);
 }
 
 // TODO: Use future overlays[] to iterate over active overlays
 export function resizeGaugesWithMousePosition(gauges: Overlay) {
-		gauges.necromancy.position.x = adjustPositionWithoutScale(
-			a1lib.getMousePosition().x,
-			gauges.scaleFactor
-		);
-		gauges.necromancy.position.y = adjustPositionWithoutScale(
-			a1lib.getMousePosition().y,
-			gauges.scaleFactor
-		);
-		gauges.magic.position.x = adjustPositionWithoutScale(
-			a1lib.getMousePosition().x,
-			gauges.scaleFactor
-		);
-		gauges.magic.position.y = adjustPositionWithoutScale(
-			a1lib.getMousePosition().y,
-			gauges.scaleFactor
-		);
-		gauges.ranged.position.x = adjustPositionWithoutScale(
-			a1lib.getMousePosition().x,
-			gauges.scaleFactor
-		);
-		gauges.ranged.position.y = adjustPositionWithoutScale(
-			a1lib.getMousePosition().y,
-			gauges.scaleFactor
-		);
-		gauges.melee.position.x = adjustPositionWithoutScale(
-			a1lib.getMousePosition().x,
-			gauges.scaleFactor
-		);
-		gauges.melee.position.y = adjustPositionWithoutScale(
-			a1lib.getMousePosition().y,
-			gauges.scaleFactor
-		);
+	gauges.necromancy.position.x = adjustPositionWithoutScale(
+		a1lib.getMousePosition().x,
+		gauges.scaleFactor
+	);
+	gauges.necromancy.position.y = adjustPositionWithoutScale(
+		a1lib.getMousePosition().y,
+		gauges.scaleFactor
+	);
+	gauges.magic.position.x = adjustPositionWithoutScale(
+		a1lib.getMousePosition().x,
+		gauges.scaleFactor
+	);
+	gauges.magic.position.y = adjustPositionWithoutScale(
+		a1lib.getMousePosition().y,
+		gauges.scaleFactor
+	);
+	gauges.ranged.position.x = adjustPositionWithoutScale(
+		a1lib.getMousePosition().x,
+		gauges.scaleFactor
+	);
+	gauges.ranged.position.y = adjustPositionWithoutScale(
+		a1lib.getMousePosition().y,
+		gauges.scaleFactor
+	);
+	gauges.melee.position.x = adjustPositionWithoutScale(
+		a1lib.getMousePosition().x,
+		gauges.scaleFactor
+	);
+	gauges.melee.position.y = adjustPositionWithoutScale(
+		a1lib.getMousePosition().y,
+		gauges.scaleFactor
+	);
 }
 
-export function updateCoordinates(component, position: {x: number, y: number}): void {
+export function updateCoordinates(
+	component,
+	position: { x: number; y: number }
+): void {
 	component.activePosition.x = position.x;
 	component.activePosition.y = position.y;
 }
@@ -186,7 +199,10 @@ export function roundedToFixed(input: number, digits: number): string {
 	return (Math.round(input * rounder) / rounder).toFixed(digits);
 }
 
-export async function resizeImageData(imageData: ImageData, scaleFactor: number) {
+export async function resizeImageData(
+	imageData: ImageData,
+	scaleFactor: number
+) {
 	// Create a new canvas element
 	const canvas = document.createElement('canvas');
 	const context = canvas.getContext('2d');
@@ -227,22 +243,37 @@ export async function resizeImageData(imageData: ImageData, scaleFactor: number)
 
 export async function playAlert(alarm: HTMLAudioElement) {
 	console.log(`Playing ${alarm.id} - above alarm's threshold`);
-		alarm.loop = Boolean(getSetting(alarm.id + 'Loop'));
-		alarm.volume =
-			Number(getSetting(alarm.id + 'Volume')) / 100;
-		await timeout(20).then(() => {
-			alarm.pause();
+	alarm.loop = Boolean(getSetting(alarm.id + 'Loop'));
+	alarm.volume = Number(getSetting(alarm.id + 'Volume')) / 100;
+	await timeout(20).then(() => {
+		alarm.pause();
+		if (
+			alarm.src.startsWith('custom:') ||
+			alarm.src.startsWith('Custom:')
+		) {
+			let customAudio = getSetting(alarm.id + 'AlertSound').substring(7);
+			db.get(customAudio, { attachments: true })
+				.then((doc) => {
+					console.log(doc);
+					// @ts-ignore
+					alarm.src = `blob:${doc._attachments.filename.data}`;
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		} else {
 			alarm.src = getSetting(alarm.id + 'AlertSound');
-			alarm.load();
-			alarm.play();
-		});
-		console.log(
-			`Loop: ${alarm.loop} | Volume: ${alarm.volume} | Alert: ${alarm.src}`
-		);
+		}
+		alarm.load();
+		alarm.play();
+	});
+	console.log(
+		`Loop: ${alarm.loop} | Volume: ${alarm.volume} | Alert: ${alarm.src}`
+	);
 }
 
 export function pauseAlert(alarm: HTMLAudioElement) {
-	console.log(`Resetting ${alarm.id} - below alarm's threshold.`)
+	console.log(`Resetting ${alarm.id} - below alarm's threshold.`);
 	alarm.volume = 0;
 	alarm.play().then(() => {
 		alarm.currentTime = 0;
