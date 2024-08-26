@@ -35033,11 +35033,10 @@ async function loadAlarm(alarm) {
             console.log(doc);
             const reader = new FileReader();
             // @ts-ignore
-            let blob = doc._attachments.filename.data;
+            let blob = new Blob(doc._attachments.filename.data);
             reader.addEventListener('load', () => {
                 alarm.src = reader.result.toString();
             }, false);
-            // @ts-ignore
             reader.readAsDataURL(blob);
         })
             .catch((err) => {

@@ -265,7 +265,7 @@ async function loadAlarm(alarm: HTMLAudioElement) {
 				console.log(doc);
 				const reader = new FileReader();
 				// @ts-ignore
-				let blob = <Blob>doc._attachments.filename.data;
+				let blob = new Blob(doc._attachments.filename.data);
 
 				reader.addEventListener(
 					'load',
@@ -274,7 +274,6 @@ async function loadAlarm(alarm: HTMLAudioElement) {
 					},
 					false
 				);
-				// @ts-ignore
 				reader.readAsDataURL(blob);
 			})
 			.catch((err) => {
