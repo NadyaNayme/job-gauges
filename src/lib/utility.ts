@@ -263,20 +263,13 @@ async function loadAlarm(alarm: HTMLAudioElement) {
 		db.get(customAudio, { attachments: true })
 			.then((doc) => {
 				console.log(doc._attachments.filename);
-				const reader = new FileReader();
+
 				// @ts-ignore
 				let blob = new Blob(doc._attachments.filename.data, {
 					type: doc._attachments.filename.content_type,
 				});
 
-				reader.addEventListener(
-					'load',
-					() => {
-						alarm.src = reader.result.toString();
-					},
-					false
-				);
-				reader.readAsDataURL(blob);
+				alarm.src = window.URL.createObjectURL(blob);
 			})
 			.catch((err) => {
 				console.log(err);
