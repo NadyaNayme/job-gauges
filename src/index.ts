@@ -56,6 +56,7 @@ sauce.createSettings();
 const gauges: Overlay = {
 	isInCombat: false,
 	checkCombatStatus: false,
+	hasBeenOutOfCombat: 10,
 	scaleFactor: 1,
 	combatStyle: 3,
 	automaticSwapping: false,

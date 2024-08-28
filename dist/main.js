@@ -34623,31 +34623,46 @@ const enemyDebuffImages = alt1__WEBPACK_IMPORTED_MODULE_3__.webpackImages({
 // Thanks to rodultra97 for PR to previous repo
 const bloatInterval = new Map();
 const bloat = 'bloat';
+const combatInterval = new Map();
 let combatTimer = undefined;
+const outOfCombat = 'isInCombat';
 async function readEnemy(gauges) {
     //TODO: Store LastPos and detect when to rescan to avoid spamming CHFRS in loop
     const targetData = targetDisplay.read();
     if (combatTimer === undefined) {
         combatTimer = parseInt((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('combatTimer'), 10);
     }
-    let setOutOfCombat;
     if (gauges.checkCombatStatus) {
         if (targetData) {
             gauges.isInCombat = true;
-            clearTimeout(setOutOfCombat);
+            if (combatInterval.has(outOfCombat)) {
+                clearInterval(combatInterval.get(outOfCombat));
+                combatInterval.delete(outOfCombat);
+            }
         }
-        else {
-            setOutOfCombat = setTimeout(() => {
-                if (!targetData) {
-                    gauges.isInCombat = false;
+        else if (!targetData && !combatInterval.has(outOfCombat)) {
+            const intervalId = setInterval(() => {
+                const currentTick = combatTimer;
+                if (currentTick > 0) {
+                    const nextTick = currentTick - 1;
+                    combatTimer = nextTick;
                 }
-                // TODO: REMOVE THIS HACK AND USE A PROPER TIMER LIKE BLOAT
-                location.reload();
-            }, combatTimer * 1000);
+                else {
+                    if (!targetData) {
+                        gauges.isInCombat = false;
+                        combatTimer = parseInt((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('combatTimer'), 10);
+                    }
+                }
+            }, 1000);
+            combatInterval.set(outOfCombat, intervalId);
         }
     }
     else {
         gauges.isInCombat = true;
+        if (combatInterval.has(outOfCombat)) {
+            clearInterval(combatInterval.get(outOfCombat));
+            combatInterval.delete(outOfCombat);
+        }
     }
     if (targetData && gauges.isInCombat) {
         const target_display_loc = {
@@ -40445,6 +40460,7 @@ sauce.createSettings();
 const gauges = {
     isInCombat: false,
     checkCombatStatus: false,
+    hasBeenOutOfCombat: 10,
     scaleFactor: 1,
     combatStyle: 3,
     automaticSwapping: false,

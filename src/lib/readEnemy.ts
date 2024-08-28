@@ -15,7 +15,10 @@ const enemyDebuffImages = a1lib.webpackImages({
 // Thanks to rodultra97 for PR to previous repo
 const bloatInterval = new Map();
 const bloat = 'bloat';
+
+const combatInterval = new Map();
 let combatTimer = undefined;
+const outOfCombat = 'isInCombat';
 
 export async function readEnemy(gauges: Overlay) {
 	//TODO: Store LastPos and detect when to rescan to avoid spamming CHFRS in loop
@@ -25,23 +28,35 @@ export async function readEnemy(gauges: Overlay) {
 		combatTimer = parseInt(getSetting('combatTimer'), 10);
 	}
 
-	let setOutOfCombat: NodeJS.Timeout;
-
 	if (gauges.checkCombatStatus) {
 		if (targetData) {
 			gauges.isInCombat = true;
-			clearTimeout(setOutOfCombat);
-		} else {
-			setOutOfCombat = setTimeout(() => {
-				if (!targetData) {
-					gauges.isInCombat = false;
+			if (combatInterval.has(outOfCombat)) {
+				clearInterval(combatInterval.get(outOfCombat));
+				combatInterval.delete(outOfCombat);
+			}
+		} else if (!targetData && !combatInterval.has(outOfCombat)) {
+			const intervalId = setInterval(() => {
+				const currentTick = combatTimer;
+
+				if (currentTick > 0) {
+					const nextTick = currentTick - 1;
+					combatTimer = nextTick;
+				} else {
+					if (!targetData) {
+						gauges.isInCombat = false;
+						combatTimer = parseInt(getSetting('combatTimer'), 10);
+					}
 				}
-				// TODO: REMOVE THIS HACK AND USE A PROPER TIMER LIKE BLOAT
-				location.reload();
-			}, combatTimer * 1000);
+			}, 1000);
+			combatInterval.set(outOfCombat, intervalId);
 		}
 	} else {
 		gauges.isInCombat = true;
+		if (combatInterval.has(outOfCombat)) {
+			clearInterval(combatInterval.get(outOfCombat));
+			combatInterval.delete(outOfCombat);
+		}
 	}
 
 	if (targetData && gauges.isInCombat) {
