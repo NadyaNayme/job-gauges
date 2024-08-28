@@ -34153,7 +34153,7 @@ function testBuffSizes() {
     }
     return false;
 }
-retryOperation(findBuffsBar, 3, 5000)
+retryOperation(findBuffsBar, 5, 6000)
     .then(() => console.info('Found Buffs bar succesfully - starting overlay'))
     .catch(() => {
     let wrongBuffSize = testBuffSizes();
