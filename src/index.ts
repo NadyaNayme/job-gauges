@@ -388,9 +388,9 @@ function setNecromancyGaugeData(gauges: Overlay) {
 		);
 	}
 
-	if (getSetting('showBlalarmNecrosisAlertSoundoat') !== undefined) {
+	if (getSetting('alarmNecrosisAlertSound') !== undefined) {
 		gauges.necromancy.stacks.necrosis.alarm.sound = getSetting(
-			'showBlalarmNecrosisAlertSoundoat'
+			'alarmNecrosisAlertSound'
 		);
 	}
 

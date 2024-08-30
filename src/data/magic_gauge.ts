@@ -95,11 +95,11 @@ export const magic_gauge: MagicGauge = {
 				y: 0,
 			},
 			grouped: {
-				x: 30,
+				x: 81,
 				y: 55,
 			},
 			split: {
-				x: 60,
+				x: 81,
 				y: 55,
 			},
 			reverse_split: {
@@ -120,11 +120,11 @@ export const magic_gauge: MagicGauge = {
 				y: 0,
 			},
 			grouped: {
-				x: 30,
+				x: 81,
 				y: 5,
 			},
 			split: {
-				x: 60,
+				x: 81,
 				y: 5,
 			},
 			reverse_split: {

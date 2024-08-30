@@ -32572,7 +32572,7 @@ const appName = 'job-gauges';
 const versionUrl = 'https://nadyanayme.github.io/job-gauges/dist/version.json';
 const majorVersion = 1;
 const minorVersion = 0;
-const patchVersion = 8;
+const patchVersion = 9;
 
 
 /***/ }),
@@ -32683,11 +32683,11 @@ const magic_gauge = {
                 y: 0,
             },
             grouped: {
-                x: 30,
+                x: 81,
                 y: 55,
             },
             split: {
-                x: 60,
+                x: 81,
                 y: 55,
             },
             reverse_split: {
@@ -32708,11 +32708,11 @@ const magic_gauge = {
                 y: 0,
             },
             grouped: {
-                x: 30,
+                x: 81,
                 y: 5,
             },
             split: {
-                x: 60,
+                x: 81,
                 y: 5,
             },
             reverse_split: {
@@ -33144,8 +33144,11 @@ chat.readargs = {
 };
 const SPELL_TEXT = {
     'Main-hand spell set to: Exsanguinate.': 'Exsanguinate',
+    'Main-hand and Off-hand spell set to: Exsanguinate.': 'Exsanguinate',
     'Main-hand spell set to: Incite Fear.': 'Incite Fear',
+    'Main-hand and Off-hand spell set to: Incite Fear.': 'Incite Fear',
     'Main-hand spell set to: Ice Barrage.': 'Ice Barrage',
+    'Main-hand and Off-hand spell set to: Ice Barrage.': 'Ice Barrage',
 };
 const getChat = () => {
     if (chat) {
@@ -35086,9 +35089,19 @@ __webpack_require__.r(__webpack_exports__);
 const notes = [
     // Add patch notes to top
     {
+        date: '08/30/2024 - Magic Gauge Fixes v.1.0.9',
+        note: [
+            `Spell is now tracked when Dual Wield weapons are used`,
+            `Necromancy Incantation Placement no longer messes with Magic Gauge positioning`,
+            `The Out of Combat timer is now tracked properly and should be more reliable and properly respect the setting for how long to wait to consider the player out of combat`,
+            `Possibly fixed a bug with Custom Sound Necrosis Alamrm not triggering - although I wasn't able to replicate the issue so I am not 100% sure I fixed it`,
+            `Several minor code improvements`,
+        ],
+    },
+    {
         date: '08/25/2024 - Custom Alarm Sounds v.1.0.8',
         note: [
-            `You can now upload Custom Alarms. These save locally to an IndexDB within your Alt1 Chromium Browser. IndexDB has limited storage space.`
+            `You can now upload Custom Alarms. These save locally to an IndexDB within your Alt1 Chromium Browser. IndexDB has limited storage space.`,
         ],
     },
     {
@@ -40726,8 +40739,8 @@ function setNecromancyGaugeData(gauges) {
     if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('alarmNecrosisActive') !== undefined) {
         gauges.necromancy.stacks.necrosis.alarm.isActive = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('alarmNecrosisActive');
     }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showBlalarmNecrosisAlertSoundoat') !== undefined) {
-        gauges.necromancy.stacks.necrosis.alarm.sound = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showBlalarmNecrosisAlertSoundoat');
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('alarmNecrosisAlertSound') !== undefined) {
+        gauges.necromancy.stacks.necrosis.alarm.sound = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('alarmNecrosisAlertSound');
     }
     if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('alarmNecrosisLoop') !== undefined) {
         gauges.necromancy.stacks.necrosis.alarm.isLooping =

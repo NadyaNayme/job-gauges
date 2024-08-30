@@ -1,9 +1,19 @@
 export const notes = [
 	// Add patch notes to top
 	{
+		date: '08/30/2024 - Magic Gauge Fixes v.1.0.9',
+		note: [
+			`Spell is now tracked when Dual Wield weapons are used`,
+			`Necromancy Incantation Placement no longer messes with Magic Gauge positioning`,
+			`The Out of Combat timer is now tracked properly and should be more reliable and properly respect the setting for how long to wait to consider the player out of combat`,
+			`Possibly fixed a bug with Custom Sound Necrosis Alamrm not triggering - although I wasn't able to replicate the issue so I am not 100% sure I fixed it`,
+			`Several minor code improvements`,
+		],
+	},
+	{
 		date: '08/25/2024 - Custom Alarm Sounds v.1.0.8',
 		note: [
-			`You can now upload Custom Alarms. These save locally to an IndexDB within your Alt1 Chromium Browser. IndexDB has limited storage space.`
+			`You can now upload Custom Alarms. These save locally to an IndexDB within your Alt1 Chromium Browser. IndexDB has limited storage space.`,
 		],
 	},
 	{
