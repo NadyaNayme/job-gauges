@@ -24,6 +24,12 @@ export const helperItems = {
 };
 
 let updatingOverlayPosition = false;
+
+export async function resetBuffPositions() {
+	updateSetting('buffsPosition', undefined)
+	updateSetting('debuffsPosition', undefined);
+}
+
 export async function setOverlayPosition(gauges: Overlay, utility) {
 	updatingOverlayPosition = true;
 	a1lib.once('alt1pressed', updateLocation);

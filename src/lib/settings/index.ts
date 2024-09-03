@@ -7,7 +7,7 @@ import {
 	minorVersion,
 	patchVersion,
 } from '../../data/constants';
-import { setOverlayPosition } from "../utility";
+import { resetBuffPositions, setOverlayPosition } from "../utility";
 
 import PouchDB from 'pouchdb';
 
@@ -165,6 +165,9 @@ export const renderSettings = async (gauges) => {
 			{ defaultValue: '12', min: 2, max: 12, unit: ' stacks' }
 		)
 		.addAlarmSetting('alarmNecrosis', '')
+		.addSeperator()
+		.addText('Use the below button if you have adjusted your screen in any way and Job Gauges is no longer working.')
+		.addButton('resetPositons', 'Reset Buff and Debuff positions', resetBuffPositions, {classes: ['nisbutton']})
 		.build();
 
 	db.allDocs({ include_docs: true, attachments: true, binary: true }).then(

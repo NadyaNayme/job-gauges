@@ -34912,8 +34912,8 @@ async function retryOperation(operation, maxRetries, delay, attempt = 0) {
 }
 async function findBuffsBar() {
     console.info('Attempting to find buffs bar...');
-    const { x, y, maxhor, maxver } = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_4__.getSetting)('buffsPosition');
-    if (x !== undefined) {
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_4__.getSetting)('buffsPosition')) {
+        const { x, y, maxhor, maxver } = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_4__.getSetting)('buffsPosition');
         buffs.pos = { x, y, maxhor, maxver };
         console.info('Loaded previous buffs location!');
     }
@@ -34934,8 +34934,8 @@ async function findBuffsBar() {
 }
 async function findDebuffsBar() {
     console.info('Attempting to find debuffs bar...');
-    const { x, y, maxhor, maxver } = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_4__.getSetting)('debuffsPosition');
-    if (x !== undefined) {
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_4__.getSetting)('debuffsPosition')) {
+        const { x, y, maxhor, maxver } = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_4__.getSetting)('debuffsPosition');
         debuffs.pos = { x, y, maxhor, maxver };
         console.info('Loaded previous debuffs location!');
     }
@@ -35863,6 +35863,9 @@ const renderSettings = async (gauges) => {
         .addHeader('h3', 'Necrosis Stacks Alarm')
         .addRangeSetting('alarmNecrosisThreshold', 'Alert when at or above this many stacks', { defaultValue: '12', min: 2, max: 12, unit: ' stacks' })
         .addAlarmSetting('alarmNecrosis', '')
+        .addSeperator()
+        .addText('Use the below button if you have adjusted your screen in any way and Job Gauges is no longer working.')
+        .addButton('resetPositons', 'Reset Buff and Debuff positions', _utility__WEBPACK_IMPORTED_MODULE_3__.resetBuffPositions, { classes: ['nisbutton'] })
         .build();
     db.allDocs({ include_docs: true, attachments: true, binary: true }).then((result) => {
         result.rows.forEach((row) => {
@@ -35918,6 +35921,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   pauseAlert: () => (/* binding */ pauseAlert),
 /* harmony export */   playAlert: () => (/* binding */ playAlert),
 /* harmony export */   red: () => (/* binding */ red),
+/* harmony export */   resetBuffPositions: () => (/* binding */ resetBuffPositions),
 /* harmony export */   resizeGaugesWithMousePosition: () => (/* binding */ resizeGaugesWithMousePosition),
 /* harmony export */   resizeImageData: () => (/* binding */ resizeImageData),
 /* harmony export */   roundedToFixed: () => (/* binding */ roundedToFixed),
@@ -35951,6 +35955,10 @@ const helperItems = {
     settings: getByID('Settings'),
 };
 let updatingOverlayPosition = false;
+async function resetBuffPositions() {
+    (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.updateSetting)('buffsPosition', undefined);
+    (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.updateSetting)('debuffsPosition', undefined);
+}
 async function setOverlayPosition(gauges, utility) {
     updatingOverlayPosition = true;
     alt1__WEBPACK_IMPORTED_MODULE_4__.once('alt1pressed', updateLocation);
