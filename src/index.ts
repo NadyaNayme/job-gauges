@@ -51,6 +51,7 @@ import { deathsSwiftnessOverlay } from './lib/ranged/deathsSwiftness';
 import { crystalRainOverlay } from './lib/ranged/crystalRain';
 import { peOverlay } from './lib/ranged/perfectEquilibrium';
 import { odeToDeceitOverlay } from './lib/magic/ode_to_deceit';
+import { rangedSplitSoulOverlay } from './lib/ranged/splitSoul';
 
 const sauce = A1Sauce.instance;
 sauce.setName(appName);
@@ -94,6 +95,7 @@ async function renderOverlays() {
 				await deathsSwiftnessOverlay(gauges);
 				await crystalRainOverlay(gauges);
 				await peOverlay(gauges);
+				await rangedSplitSoulOverlay(gauges);
 				break;
 			case 1:
 				break;
@@ -161,6 +163,7 @@ export async function startApp() {
 	alt1.overLaySetGroupZIndex('CrystalRain_Cooldown_Text', 1);
 
 	alt1.overLaySetGroupZIndex('PerfectEquilibrium_Text', 1);
+	alt1.overLaySetGroupZIndex('SplitSoul_Text', 1);
 
 	await findBuffsBar().then(() => {
 		findDebuffsBar().then(() => {

@@ -951,6 +951,36 @@ module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/
 
 /***/ }),
 
+/***/ "./asset/data/ranged/split_soul-buff.data.png":
+/*!****************************************************!*\
+  !*** ./asset/data/ranged/split_soul-buff.data.png ***!
+  \****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("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")
+
+/***/ }),
+
+/***/ "./asset/data/ranged/split_soul-inactive.data.png":
+/*!********************************************************!*\
+  !*** ./asset/data/ranged/split_soul-inactive.data.png ***!
+  \********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("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")
+
+/***/ }),
+
+/***/ "./asset/data/ranged/split_soul.data.png":
+/*!***********************************************!*\
+  !*** ./asset/data/ranged/split_soul.data.png ***!
+  \***********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("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")
+
+/***/ }),
+
 /***/ "./asset/data/souls/lg/souls_0.data.png":
 /*!**********************************************!*\
   !*** ./asset/data/souls/lg/souls_0.data.png ***!
@@ -33405,7 +33435,7 @@ const ranged_gauge = {
     },
     splitSoul: {
         isActiveOverlay: true,
-        active: true,
+        active: false,
         time: 0,
         isOnCooldown: false,
         cooldownDuration: 0,
@@ -34859,6 +34889,91 @@ async function peOverlay(gauges) {
 
 /***/ }),
 
+/***/ "./lib/ranged/splitSoul.ts":
+/*!*********************************!*\
+  !*** ./lib/ranged/splitSoul.ts ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   rangedSplitSoulOverlay: () => (/* binding */ rangedSplitSoulOverlay)
+/* harmony export */ });
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+/* eslint-disable @typescript-eslint/no-require-imports */
+
+
+const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
+    inactive: __webpack_require__(/*! ../.././asset/data/ranged/split_soul-inactive.data.png */ "./asset/data/ranged/split_soul-inactive.data.png"),
+    active: __webpack_require__(/*! ../.././asset/data/ranged/split_soul.data.png */ "./asset/data/ranged/split_soul.data.png"),
+});
+let lastValue;
+let scaledOnce = false;
+async function rangedSplitSoulOverlay(gauges) {
+    const { ranged } = gauges;
+    const { splitSoul } = ranged;
+    const { x, y } = ranged.splitSoul.position.active_orientation;
+    if (!splitSoul.isActiveOverlay) {
+        clearRangedSplitSoulOverlay();
+        return;
+    }
+    await ultimateImages.promise;
+    if (!scaledOnce) {
+        Object.keys(ultimateImages).forEach(async (key) => {
+            ultimateImages[key] = await _utility__WEBPACK_IMPORTED_MODULE_0__.resizeImageData(ultimateImages[key], gauges.scaleFactor);
+        });
+        scaledOnce = true;
+    }
+    // If Split Soul is not Active and is not on cooldown it should appear as able to be activated
+    if (!splitSoul.active) {
+        displayInactiveRangedSplitSoul(gauges);
+        alt1.overLayRefreshGroup('SplitSoul_Text');
+        alt1.overLayClearGroup('SplitSoul_Text');
+    }
+    else {
+        splitSoul.isOnCooldown = false;
+        _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('SplitSoul_Cooldown_Text');
+        displayActiveRangedSplitSoul(gauges);
+        if (lastValue !== splitSoul.time) {
+            splitSoul.cooldownDuration = 0;
+            _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('SplitSoul_Cooldown_Text');
+            alt1.overLaySetGroup('SplitSoul_Text');
+            alt1.overLayFreezeGroup('SplitSoul_Text');
+            alt1.overLayClearGroup('SplitSoul_Text');
+            alt1.overLayTextEx(splitSoul.time === 0 ? '' : splitSoul.time.toString(), _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(ranged.position.x +
+                splitSoul.position.active_orientation.x +
+                26, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(ranged.position.y +
+                splitSoul.position.active_orientation.y +
+                26, gauges.scaleFactor), 3000, undefined, true, true);
+            alt1.overLayRefreshGroup('SplitSoul_Text');
+        }
+    }
+    lastValue = splitSoul.time;
+}
+function clearRangedSplitSoulOverlay() {
+    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('SplitSoul_Text');
+    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('SplitSoul_Cooldown_Text');
+    alt1.overLayClearGroup('SplitSoul');
+}
+function displayActiveRangedSplitSoul(gauges) {
+    alt1.overLaySetGroup('SplitSoul');
+    alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.x +
+        gauges.ranged.splitSoul.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.y +
+        gauges.ranged.splitSoul.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(ultimateImages.active.toDrawableData()), ultimateImages.active.width, 1000);
+}
+function displayInactiveRangedSplitSoul(gauges) {
+    alt1.overLaySetGroup('SplitSoul');
+    alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.x +
+        gauges.ranged.splitSoul.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.y +
+        gauges.ranged.splitSoul.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(ultimateImages.inactive.toDrawableData()), ultimateImages.inactive.width, 1000);
+}
+
+
+/***/ }),
+
 /***/ "./lib/readBuffs.ts":
 /*!**************************!*\
   !*** ./lib/readBuffs.ts ***!
@@ -34922,6 +35037,7 @@ const buffsImages = alt1__WEBPACK_IMPORTED_MODULE_6__.webpackImages({
     crystalRain: __webpack_require__(/*! .././asset/data/buffs/WeaponSpecials/crystalRainBuff.data.png */ "./asset/data/buffs/WeaponSpecials/crystalRainBuff.data.png"),
     perfectEquilibrium: __webpack_require__(/*! .././asset/data/buffs/Perfect_Equilibrium-noborder.data.png */ "./asset/data/buffs/Perfect_Equilibrium-noborder.data.png"),
     balanaceByForce: __webpack_require__(/*! .././asset/data/ranged/balance_by_force-beta.data.png */ "./asset/data/ranged/balance_by_force-beta.data.png"),
+    rangedSplitSoul: __webpack_require__(/*! .././asset/data/ranged/split_soul-buff.data.png */ "./asset/data/ranged/split_soul-buff.data.png"),
     /* Troubleshooting */
     mediumBuffs: __webpack_require__(/*! .././asset/data/errorhandling/medium_buffs.data.png */ "./asset/data/errorhandling/medium_buffs.data.png"),
     largeBuffs: __webpack_require__(/*! .././asset/data/errorhandling/large_buffs.data.png */ "./asset/data/errorhandling/large_buffs.data.png"),
@@ -35050,6 +35166,7 @@ async function readBuffs(gauges) {
                 (0,_ranged_active_ammo__WEBPACK_IMPORTED_MODULE_1__.findAmmo)(gauges, buffs.read());
                 updateSimpleStackData(gauges, buffsImages.perfectEquilibrium, 300, updatePeCount);
                 updateBuffData(buffs, gauges, buffsImages.balanaceByForce, 20, updateBalanceByForce);
+                updateBuffData(buffs, gauges, buffsImages.rangedSplitSoul, 300, updateRangedSplitSoul);
                 break;
             case 1:
                 break;
@@ -35687,6 +35804,50 @@ async function endOdeToDeceitCooldown(gauges) {
 async function updateBalanceByForce(gauges, value) {
     gauges.ranged.balanceByForce = Boolean(value);
 }
+async function updateRangedSplitSoul(gauges, value) {
+    // If Split Soul has an active buff and a timer:
+    //   - it cannot be on cooldown
+    //   - it must be active
+    //   - The remaining time is its timer
+    if (value > 1) {
+        gauges.ranged.splitSoul.isOnCooldown = false;
+        gauges.ranged.splitSoul.cooldownDuration = 0;
+        gauges.ranged.splitSoul.active = true;
+        gauges.ranged.splitSoul.time = value;
+        changeCombatStyles(gauges, 2);
+    }
+    // When only 1 second of the buff exists
+    if (value == 1 && gauges.ranged.splitSoul.active) {
+        // Make sure to update the text one final time
+        gauges.ranged.splitSoul.time = value;
+        // Then start a timer to wait just past the last second
+        //  - Clear the timer
+        //  - DS is now on Cooldown so is not active
+        setTimeout(() => {
+            gauges.ranged.splitSoul.time = 0;
+            gauges.ranged.splitSoul.active = false;
+            gauges.ranged.splitSoul.isOnCooldown = true;
+            startRangedSplitSoul(gauges);
+        }, 1050);
+    }
+}
+async function startRangedSplitSoul(gauges) {
+    if (!gauges.ranged.splitSoul.isActiveOverlay) {
+        return;
+    }
+    // If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
+    if (gauges.ranged.splitSoul.active) {
+        endRangedSoulSplit(gauges);
+        return;
+    }
+    // Otherwise cooldown has started and we can clear the Active text
+    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('SplitSoul_Text');
+}
+async function endRangedSoulSplit(gauges) {
+    gauges.ranged.splitSoul.isOnCooldown = false;
+    gauges.ranged.splitSoul.cooldownDuration = 0;
+    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('SplitSoul_Text');
+}
 
 
 /***/ }),
@@ -36041,6 +36202,7 @@ const overlays = [
     'DeathsSwiftness',
     'CrystalRain',
     'PerfectEquilibrium',
+    'SplitSoul',
 ];
 function freezeOverlays() {
     overlays.forEach((overlay) => {
@@ -36102,6 +36264,8 @@ function clearTextOverlays() {
     alt1.overLayRefreshGroup('CrystalRain_Text');
     alt1.overLayClearGroup('CrystalRain_Cooldown_Text');
     alt1.overLayRefreshGroup('CrystalRain_Cooldown_Text');
+    alt1.overLayClearGroup('SplitSoul_Text');
+    alt1.overLayRefreshGroup('SplitSoul_Text');
     alt1.overLayClearGroup('Ammo_Text');
     alt1.overLayRefreshGroup('Ammo_Text');
 }
@@ -41566,6 +41730,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_ranged_crystalRain__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./lib/ranged/crystalRain */ "./lib/ranged/crystalRain.ts");
 /* harmony import */ var _lib_ranged_perfectEquilibrium__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./lib/ranged/perfectEquilibrium */ "./lib/ranged/perfectEquilibrium.ts");
 /* harmony import */ var _lib_magic_ode_to_deceit__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./lib/magic/ode_to_deceit */ "./lib/magic/ode_to_deceit.ts");
+/* harmony import */ var _lib_ranged_splitSoul__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./lib/ranged/splitSoul */ "./lib/ranged/splitSoul.ts");
 
 
 // General Purpose
@@ -41584,6 +41749,7 @@ __webpack_require__.r(__webpack_exports__);
 // Ranged Gauge
 
 // Melee Gauge
+
 
 
 
@@ -41646,6 +41812,7 @@ async function renderOverlays() {
                 await (0,_lib_ranged_deathsSwiftness__WEBPACK_IMPORTED_MODULE_30__.deathsSwiftnessOverlay)(gauges);
                 await (0,_lib_ranged_crystalRain__WEBPACK_IMPORTED_MODULE_31__.crystalRainOverlay)(gauges);
                 await (0,_lib_ranged_perfectEquilibrium__WEBPACK_IMPORTED_MODULE_32__.peOverlay)(gauges);
+                await (0,_lib_ranged_splitSoul__WEBPACK_IMPORTED_MODULE_34__.rangedSplitSoulOverlay)(gauges);
                 break;
             case 1:
                 break;
@@ -41693,6 +41860,7 @@ async function startApp() {
     alt1.overLaySetGroupZIndex('CrystalRain_Text', 1);
     alt1.overLaySetGroupZIndex('CrystalRain_Cooldown_Text', 1);
     alt1.overLaySetGroupZIndex('PerfectEquilibrium_Text', 1);
+    alt1.overLaySetGroupZIndex('SplitSoul_Text', 1);
     await (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_1__.findBuffsBar)().then(() => {
         (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_1__.findDebuffsBar)().then(() => {
             setInterval(function () {

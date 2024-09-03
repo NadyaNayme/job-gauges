@@ -45,6 +45,7 @@ const buffsImages = a1lib.webpackImages({
 	crystalRain: require('.././asset/data/buffs/WeaponSpecials/crystalRainBuff.data.png'),
 	perfectEquilibrium: require('.././asset/data/buffs/Perfect_Equilibrium-noborder.data.png'),
 	balanaceByForce: require('.././asset/data/ranged/balance_by_force-beta.data.png'),
+	rangedSplitSoul: require('.././asset/data/ranged/split_soul-buff.data.png'),
 
 	/* Troubleshooting */
 	mediumBuffs: require('.././asset/data/errorhandling/medium_buffs.data.png'),
@@ -299,6 +300,13 @@ export async function readBuffs(gauges: Overlay) {
 					updatePeCount
 				);
 				updateBuffData(buffs, gauges, buffsImages.balanaceByForce, 20, updateBalanceByForce);
+				updateBuffData(
+					buffs,
+					gauges,
+					buffsImages.rangedSplitSoul,
+					300,
+					updateRangedSplitSoul
+				);
 				break;
 			case 1:
 				break;
@@ -1153,4 +1161,55 @@ async function endOdeToDeceitCooldown(gauges: Overlay) {
 
 async function updateBalanceByForce(gauges: Overlay, value: number) {
 	gauges.ranged.balanceByForce = Boolean(value);
+}
+
+async function updateRangedSplitSoul(gauges: Overlay, value: number) {
+	// If Split Soul has an active buff and a timer:
+	//   - it cannot be on cooldown
+	//   - it must be active
+	//   - The remaining time is its timer
+	if (value > 1) {
+		gauges.ranged.splitSoul.isOnCooldown = false;
+		gauges.ranged.splitSoul.cooldownDuration = 0;
+		gauges.ranged.splitSoul.active = true;
+		gauges.ranged.splitSoul.time = value;
+		changeCombatStyles(gauges, 2);
+	}
+
+	// When only 1 second of the buff exists
+	if (value == 1 && gauges.ranged.splitSoul.active) {
+		// Make sure to update the text one final time
+		gauges.ranged.splitSoul.time = value;
+
+		// Then start a timer to wait just past the last second
+		//  - Clear the timer
+		//  - DS is now on Cooldown so is not active
+		setTimeout(() => {
+			gauges.ranged.splitSoul.time = 0;
+			gauges.ranged.splitSoul.active = false;
+			gauges.ranged.splitSoul.isOnCooldown = true;
+			startRangedSplitSoul(gauges);
+		}, 1050);
+	}
+}
+
+async function startRangedSplitSoul(gauges: Overlay) {
+	if (!gauges.ranged.splitSoul.isActiveOverlay) {
+		return;
+	}
+
+	// If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
+	if (gauges.ranged.splitSoul.active) {
+		endRangedSoulSplit(gauges);
+		return;
+	}
+
+	// Otherwise cooldown has started and we can clear the Active text
+	utility.forceClearOverlay('SplitSoul_Text');
+}
+
+async function endRangedSoulSplit(gauges: Overlay) {
+	gauges.ranged.splitSoul.isOnCooldown = false;
+	gauges.ranged.splitSoul.cooldownDuration = 0;
+	utility.forceClearOverlay('SplitSoul_Text');
 }

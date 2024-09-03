@@ -85,6 +85,7 @@ const overlays = [
 	'DeathsSwiftness',
 	'CrystalRain',
 	'PerfectEquilibrium',
+	'SplitSoul',
 ];
 
 export function freezeOverlays(): void {
@@ -159,6 +160,9 @@ export function clearTextOverlays(): void {
 	alt1.overLayRefreshGroup('CrystalRain_Text');
 	alt1.overLayClearGroup('CrystalRain_Cooldown_Text');
 	alt1.overLayRefreshGroup('CrystalRain_Cooldown_Text');
+
+	alt1.overLayClearGroup('SplitSoul_Text');
+	alt1.overLayRefreshGroup('SplitSoul_Text');
 
 	alt1.overLayClearGroup('Ammo_Text');
 	alt1.overLayRefreshGroup('Ammo_Text');

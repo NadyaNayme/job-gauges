@@ -63,7 +63,7 @@ export const ranged_gauge: RangedGauge = {
 	},
 	splitSoul: {
 		isActiveOverlay: true,
-		active: true,
+		active: false,
 		time: 0,
 		isOnCooldown: false,
 		cooldownDuration: 0,
