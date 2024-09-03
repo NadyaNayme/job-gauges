@@ -11,6 +11,7 @@ export type MagicGauge = {
 	isInCombat: boolean;
 	position: Position;
 	spells: Spells;
+	odeToDeceit: Ability;
 	instability: Ability;
 	tsunami: Ability;
 	sunshine: Ability;

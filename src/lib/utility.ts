@@ -74,7 +74,11 @@ const overlays = [
 	'Souls',
 	'Sunshine',
 	'Instability',
+	'OdeToDeceit',
 	'Tsunami',
+	'DeathsSwiftness',
+	'CrystalRain',
+	'PerfectEquilibrium',
 ];
 
 export function freezeOverlays(): void {
@@ -127,6 +131,11 @@ export function clearTextOverlays(): void {
 	alt1.overLayClearGroup('Instability_Cooldown_Text');
 	alt1.overLayRefreshGroup('Instability_Cooldown_Text');
 
+	alt1.overLayClearGroup('OdeToDeceit_Text');
+	alt1.overLayRefreshGroup('OdeToDeceit_Text');
+	alt1.overLayClearGroup('OdeToDeceit_Cooldown_Text');
+	alt1.overLayRefreshGroup('OdeToDeceit_Cooldown_Text');
+
 	alt1.overLayClearGroup('Tsunami_Text');
 	alt1.overLayRefreshGroup('Tsunami_Text');
 	alt1.overLayClearGroup('Tsunami_Cooldown_Text');
@@ -134,6 +143,19 @@ export function clearTextOverlays(): void {
 
 	alt1.overLayClearGroup('Spell_Text');
 	alt1.overLayRefreshGroup('Spell_Text');
+
+	alt1.overLayClearGroup('DeathsSwifness_Text');
+	alt1.overLayRefreshGroup('DeathsSwifness_Text');
+	alt1.overLayClearGroup('DeathsSwifness_Cooldown_Text');
+	alt1.overLayRefreshGroup('DeathsSwifness_Cooldown_Text');
+
+	alt1.overLayClearGroup('CrystalRain_Text');
+	alt1.overLayRefreshGroup('CrystalRain_Text');
+	alt1.overLayClearGroup('CrystalRain_Cooldown_Text');
+	alt1.overLayRefreshGroup('CrystalRain_Cooldown_Text');
+
+	alt1.overLayClearGroup('Ammo_Text');
+	alt1.overLayRefreshGroup('Ammo_Text');
 }
 
 export function adjustPositionForScale(

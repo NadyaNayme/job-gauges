@@ -22,7 +22,7 @@ type Conjures = {
 	skeleton: TimedPlayerBuff;
 	zombie: TimedPlayerBuff;
 	ghost: TimedPlayerBuff;
-	fourth: TimedPlayerBuff;
+	phantom: TimedPlayerBuff;
 };
 
 type Incantations = {

@@ -77,6 +77,7 @@ export async function conjureOverlay(gauges: Overlay) {
 		gauges.necromancy.conjures.skeleton.time,
 		gauges.necromancy.conjures.zombie.time,
 		gauges.necromancy.conjures.ghost.time,
+		gauges.necromancy.conjures.phantom.time,
 	];
 	const minValue = Math.min.apply(null, earliest_conjure.filter(Boolean));
 	if (minValue !== Infinity && minValue !== lastMinValue) {

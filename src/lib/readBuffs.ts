@@ -4,6 +4,14 @@ import * as BuffReader from 'alt1/buffs';
 import * as utility from './utility';
 import { helperItems } from './utility';
 import { Overlay } from '../types';
+import { crystalRainOverlay } from './ranged/crystalRain';
+import { findAmmo } from './ranged/active_ammo';
+import { A1Sauce } from '../a1sauce';
+import { appName } from '../data/constants';
+import { getSetting, updateSetting } from '../a1sauce/Settings/Storage';
+
+const sauce = A1Sauce.instance;
+sauce.setName(appName);
 
 const buffs = new BuffReader.default();
 const debuffs = new BuffReader.default();
@@ -20,6 +28,7 @@ const buffsImages = a1lib.webpackImages({
 	skeleton: require('.././asset/data/buffs/Necromancy/skeleton_warrior-top.data.png'),
 	zombie: require('.././asset/data/buffs/Necromancy/putrid_zombie-top.data.png'),
 	ghost: require('.././asset/data/buffs/Necromancy/vengeful_ghost-top.data.png'),
+	phantom: require('.././asset/data/buffs/Necromancy/Phantom_guardian-top.data.png'),
 
 	/* Magic */
 	sunshine: require('.././asset/data/buffs/Ultimates/Sunshine.data.png'),
@@ -27,7 +36,14 @@ const buffsImages = a1lib.webpackImages({
 	bloodTithe: require('.././asset/data/buffs/blood_tithe.data.png'),
 	glacialEmbrace: require('.././asset/data/buffs/glacial_embrace.data.png'),
 	instability: require('.././asset/data/buffs/WeaponSpecials/Fsoa_Spec.data.png'),
+	odeToDeceit: require('.././asset/data/buffs/WeaponSpecials/OdeToDeceit.data.png'),
 	tsunami: require('.././asset/data/buffs/critical_strike.data.png'),
+
+	/* Ranged */
+	deathsSwiftness: require(".././asset/data/buffs/Ultimates/Death's_Swiftness.data.png"),
+	greaterDeathsSwiftness: require(".././asset/data/buffs/Ultimates/Greater_Death's_Swiftness.data.png"),
+	crystalRain: require('.././asset/data/buffs/WeaponSpecials/crystalRainBuff.data.png'),
+	perfectEquilibrium: require('.././asset/data/buffs/Perfect_Equilibrium-noborder.data.png'),
 
 	/* Troubleshooting */
 	mediumBuffs: require('.././asset/data/errorhandling/medium_buffs.data.png'),
@@ -53,11 +69,43 @@ async function retryOperation<T>(
 
 export async function findBuffsBar(): Promise<void> {
 	console.info('Attempting to find buffs bar...');
+	const { x, y, maxhor, maxver } = getSetting('buffsPosition');
+	if (x !== undefined) {
+		buffs.pos = {x, y, maxhor, maxver };
+		console.info('Loaded previous buffs location!');
+	}
 	if (buffs.pos == undefined) {
 		buffs.find();
 		if (buffs.pos == undefined) {
 			throw new Error('BuffsBarSearchError: Failed to find buff bar');
 		} else {
+			alt1.setTooltip('[JG] Found buffs!');
+			setTimeout(() => {
+				alt1.clearTooltip();
+			}, 2000);
+			updateSetting('buffsPosition', buffs.pos);
+			return;
+		}
+	}
+}
+
+export async function findDebuffsBar(): Promise<void> {
+	console.info('Attempting to find debuffs bar...');
+	const { x, y, maxhor, maxver } = getSetting('debuffsPosition');
+	if (x !== undefined) {
+		debuffs.pos = { x, y, maxhor, maxver };
+		console.info('Loaded previous debuffs location!');
+	}
+	if (debuffs.pos == undefined) {
+		debuffs.find();
+		if (debuffs.pos == undefined) {
+			throw new Error('BuffsBarSearchError: Failed to find debuff bar');
+		} else {
+			alt1.setTooltip('[JG] Found debuffs!');
+			setTimeout(() => {
+				alt1.clearTooltip();
+			}, 2000);
+			updateSetting('debuffsPosition', debuffs.pos);
 			return;
 		}
 	}
@@ -86,24 +134,60 @@ export function testBuffSizes(): boolean {
 }
 
 retryOperation(findBuffsBar, 5, 6000)
-	.then(() => console.info('Found Buffs bar succesfully - starting overlay'))
+	.then(() => console.info('Found Buffs bar succesfully'))
 	.catch(() => {
 		let wrongBuffSize = testBuffSizes();
 		if (!wrongBuffSize) {
 			helperItems.Output.insertAdjacentHTML(
 				'beforeend',
-				`<p style="text-align:center;margin-top:10px;color:red;">Please make sure you have at least 1 buff on your buffs bar and then reload the app.</p>`
+				`<p style="text-align:center;margin-top:10px;color:red;">Please make sure you have at least 1 buff on your buffs bar and then reload the app. The easiest way is to use a Defensive ability (Freedom, Anticipate) or toggle on Bone Shield.</p>`
 			);
 			console.warn(
-				'Please make sure you have at least 1 buff on your buffs bar and then reload the app.'
+				'Please make sure you have at least 1 buff on your buffs bar and then reload the app. The easiest way is to use a Defensive ability (Freedom, Anticipate) or toggle on Bone Shield.'
+			);
+		}
+	});
+
+retryOperation(findDebuffsBar, 5, 6000)
+	.then(() => console.info('Found Debuffs bar succesfully'))
+	.catch(() => {
+		let wrongBuffSize = testBuffSizes();
+		if (!wrongBuffSize) {
+			helperItems.Output.insertAdjacentHTML(
+				'beforeend',
+				`<p style="text-align:center;margin-top:10px;color:red;">Please make sure you have at least 1 debuff on your debuffs bar and then reload the app. The easiest way is to toggle a Prayer on.</p>`
+			);
+			console.warn(
+				'Please make sure you have at least 1 debuff on your debuffs bar and then reload the app. The easiest way is to toggle a Prayer on.'
 			);
 		}
 	});
 
 export async function readBuffs(gauges: Overlay) {
 	if (buffs.pos !== undefined) {
-		updateBuffData(gauges, buffsImages.sunshine, 300, updateSunshine);
 		updateBuffData(
+			buffs,
+			gauges,
+			buffsImages.deathsSwiftness,
+			300,
+			updateDeathsSwiftness
+		);
+		updateBuffData(
+			buffs,
+			gauges,
+			buffsImages.greaterDeathsSwiftness,
+			300,
+			updateDeathsSwiftness
+		);
+		updateBuffData(
+			buffs,
+			gauges,
+			buffsImages.sunshine,
+			300,
+			updateSunshine
+		);
+		updateBuffData(
+			buffs,
 			gauges,
 			buffsImages.greaterSunshine,
 			100,
@@ -111,6 +195,7 @@ export async function readBuffs(gauges: Overlay) {
 		);
 		if (gauges.necromancy.livingDeath.isActiveOverlay) {
 			updateBuffData(
+				buffs,
 				gauges,
 				buffsImages.living_death,
 				400,
@@ -119,8 +204,15 @@ export async function readBuffs(gauges: Overlay) {
 		}
 		switch (gauges.combatStyle) {
 			case 4:
-				updateBuffData(gauges, buffsImages.soul, 200, updateSoulCount);
 				updateBuffData(
+					buffs,
+					gauges,
+					buffsImages.soul,
+					200,
+					updateSoulCount
+				);
+				updateBuffData(
+					buffs,
 					gauges,
 					buffsImages.necrosis,
 					200,
@@ -129,6 +221,7 @@ export async function readBuffs(gauges: Overlay) {
 				updateConjures(gauges);
 
 				updateBuffData(
+					buffs,
 					gauges,
 					buffsImages.darkness,
 					300,
@@ -137,6 +230,7 @@ export async function readBuffs(gauges: Overlay) {
 
 				if (!disableThreadsCheck) {
 					updateBuffData(
+						buffs,
 						gauges,
 						buffsImages.threads,
 						300,
@@ -145,6 +239,7 @@ export async function readBuffs(gauges: Overlay) {
 				}
 				if (!disableSplitCheck) {
 					updateBuffData(
+						buffs,
 						gauges,
 						buffsImages.split_soul,
 						350,
@@ -153,8 +248,20 @@ export async function readBuffs(gauges: Overlay) {
 				}
 				break;
 			case 3:
-				updateBuffData(gauges, buffsImages.instability, 60, updateFsoa);
-				updateBuffData(gauges, buffsImages.tsunami, 200, updateTsunami);
+				updateBuffData(
+					buffs,
+					gauges,
+					buffsImages.instability,
+					60,
+					updateFsoa
+				);
+				updateBuffData(
+					buffs,
+					gauges,
+					buffsImages.tsunami,
+					200,
+					updateTsunami
+				);
 				updateStackData(
 					gauges,
 					buffsImages.bloodTithe,
@@ -167,8 +274,29 @@ export async function readBuffs(gauges: Overlay) {
 					30,
 					updateGlacialEmbrace
 				);
+				updateBuffData(
+					debuffs,
+					gauges,
+					buffsImages.odeToDeceit,
+					12,
+					updateOdeToDeceit
+				);
 				break;
 			case 2:
+				updateBuffData(
+					debuffs,
+					gauges,
+					buffsImages.crystalRain,
+					60,
+					updateCrystalRain
+				);
+				findAmmo(gauges, buffs.read());
+				updateSimpleStackData(
+					gauges,
+					buffsImages.perfectEquilibrium,
+					300,
+					updatePeCount
+				);
 				break;
 			case 1:
 				break;
@@ -179,13 +307,14 @@ export async function readBuffs(gauges: Overlay) {
 }
 
 async function updateBuffData(
+	buffsreader: BuffReader.default,
 	gauges: Overlay,
 	buffImage: ImageData,
 	threshold: number,
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 	updateCallbackFn: Function
 ): Promise<boolean> {
-	const buffsData = buffs.read();
+	const buffsData = buffsreader.read();
 	let foundBuff = false;
 	for (const value of Object.values(buffsData)) {
 		const buff = value.countMatch(buffImage, false);
@@ -225,6 +354,28 @@ async function updateStackData(
 					10
 				)
 			);
+		}
+	}
+	if (!foundBuff) {
+		updateCallbackFn(gauges, 0);
+	}
+	return foundBuff;
+}
+
+async function updateSimpleStackData(
+	gauges: Overlay,
+	buffImage: ImageData,
+	threshold: number,
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+	updateCallbackFn: Function
+): Promise<boolean> {
+	const buffsData = buffs.read();
+	let foundBuff = false;
+	for (const value of Object.values(buffsData)) {
+		const buff = value.countMatch(buffImage, false);
+		if (buff.passed > threshold) {
+			foundBuff = true;
+			updateCallbackFn(gauges, value.readTime());
 		}
 	}
 	if (!foundBuff) {
@@ -354,6 +505,11 @@ async function updateGhost(gauges: Overlay, value: number) {
 	gauges.necromancy.conjures.ghost.active = Boolean(value);
 }
 
+async function updatePhantom(gauges: Overlay, value: number) {
+	gauges.necromancy.conjures.phantom.time = value;
+	gauges.necromancy.conjures.phantom.active = Boolean(value);
+}
+
 async function updateDarkness(gauges: Overlay, value: number) {
 	gauges.necromancy.incantations.active[1] = Boolean(value);
 }
@@ -392,24 +548,34 @@ async function updateSplitSoul(gauges: Overlay, value: number) {
 
 async function updateConjures(gauges: Overlay) {
 	const hasSkeleton = await updateBuffData(
+		buffs,
 		gauges,
 		buffsImages.skeleton,
 		150,
 		updateSkeleton
 	);
 	const hasZombie = await updateBuffData(
+		buffs,
 		gauges,
 		buffsImages.zombie,
 		150,
 		updateZombie
 	);
 	const hasGhost = await updateBuffData(
+		buffs,
 		gauges,
 		buffsImages.ghost,
 		200,
 		updateGhost
 	);
-	if (hasSkeleton || hasZombie || hasGhost) {
+	const hasPhantom = await updateBuffData(
+		buffs,
+		gauges,
+		buffsImages.phantom,
+		200,
+		updatePhantom
+	);
+	if (hasSkeleton || hasZombie || hasGhost || hasPhantom) {
 		gauges.necromancy.conjures.active = true;
 	} else {
 		gauges.necromancy.conjures.active = false;
@@ -702,4 +868,283 @@ async function changeCombatStyles(gauges: Overlay, style: number) {
 		gauges.combatStyle = style;
 		utility.forceClearOverlays();
 	}
+}
+
+async function updateDeathsSwiftness(gauges: Overlay, value: number) {
+	// If Death Swiftness has an active buff and a timer:
+	//   - it cannot be on cooldown
+	//   - it must be active
+	//   - The remaining time is its timer
+	if (value > 1) {
+		gauges.ranged.deathsSwiftness.isOnCooldown = false;
+		gauges.ranged.deathsSwiftness.cooldownDuration = 0;
+		gauges.ranged.deathsSwiftness.active = true;
+		gauges.ranged.deathsSwiftness.time = value;
+		changeCombatStyles(gauges, 2);
+	}
+
+	// When only 1 second of the buff exists
+	if (value == 1 && gauges.ranged.deathsSwiftness.active) {
+		// Make sure to update the text one final time
+		gauges.ranged.deathsSwiftness.time = value;
+
+		// Then start a timer to wait just past the last second
+		//  - Clear the timer
+		//  - DS is now on Cooldown so is not active
+		setTimeout(() => {
+			gauges.ranged.deathsSwiftness.time = 0;
+			gauges.ranged.deathsSwiftness.active = false;
+			gauges.ranged.deathsSwiftness.isOnCooldown = true;
+			startDeathsSwiftnessCooldown(gauges);
+		}, 1050);
+	}
+}
+
+async function startDeathsSwiftnessCooldown(gauges: Overlay) {
+	if (!gauges.ranged.deathsSwiftness.isActiveOverlay) {
+		return;
+	}
+
+	// If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
+	if (gauges.ranged.deathsSwiftness.active) {
+		endDeathsSwiftnessCooldown(gauges);
+		return;
+	}
+
+	// Otherwise cooldown has started and we can clear the Active text
+	utility.forceClearOverlay('DeathsSwiftness_Text');
+	alt1.overLaySetGroupZIndex('DeathsSwiftnessCooldown_Text', 1);
+	let cooldown = 29;
+	const timer = setInterval(() => {
+		// During our interval if the buff ever becomes active - kill the timer
+		if (gauges.ranged.deathsSwiftness.active) {
+			clearInterval(timer);
+			endDeathsSwiftnessCooldown(gauges);
+			return;
+		}
+		cooldown -= 1;
+		if (cooldown > 0) {
+			utility.forceClearOverlay('DeathsSwiftnessCooldown_Text');
+			alt1.overLayTextEx(
+				cooldown.toString(),
+				utility.white,
+				14,
+				utility.adjustPositionForScale(
+					gauges.ranged.position.x +
+						gauges.ranged.deathsSwiftness.position
+							.active_orientation.x +
+						26,
+					gauges.scaleFactor
+				),
+				utility.adjustPositionForScale(
+					gauges.ranged.position.y +
+						gauges.ranged.deathsSwiftness.position
+							.active_orientation.y +
+						26,
+					gauges.scaleFactor
+				),
+				3000,
+				undefined,
+				true,
+				true
+			);
+			alt1.overLayRefreshGroup('DeathsSwiftnessCooldown_Text');
+		} else {
+			clearInterval(timer);
+			endDeathsSwiftnessCooldown(gauges);
+			return;
+		}
+	}, 1000);
+}
+
+async function endDeathsSwiftnessCooldown(gauges: Overlay) {
+	gauges.ranged.deathsSwiftness.isOnCooldown = false;
+	gauges.ranged.deathsSwiftness.cooldownDuration = 0;
+	utility.forceClearOverlay('DeathsSwiftness_Text');
+}
+
+async function updateCrystalRain(gauges: Overlay, value: number) {
+	// If Crystal Rain has an active buff and a timer:
+	//   - it is on cooldown
+	//   - The remaining time is its timer
+	if (value > 1) {
+		gauges.ranged.crystalRain.isOnCooldown = true;
+		gauges.ranged.crystalRain.active = true;
+		gauges.ranged.crystalRain.time = value;
+	}
+
+	// When only 1 second of the buff exists
+	if (value == 1 && gauges.ranged.crystalRain.active) {
+		// Make sure to update the text one final time
+		gauges.ranged.crystalRain.time = value;
+
+		// Then start a timer to wait just past the last second
+		//  - Clear the timer
+		//  - CR is now available again
+		setTimeout(() => {
+			gauges.ranged.crystalRain.time = 0;
+			gauges.ranged.crystalRain.active = false;
+			gauges.ranged.crystalRain.isOnCooldown = false;
+			startCrystalRain(gauges);
+		}, 1050);
+	}
+}
+
+async function startCrystalRain(gauges: Overlay) {
+	if (!gauges.ranged.crystalRain.isActiveOverlay) {
+		return;
+	}
+
+	// If the buff is not active then clear the text early and return
+	if (!gauges.ranged.crystalRain.active) {
+		endCrystalRainCooldown(gauges);
+		return;
+	}
+
+	// Otherwise cooldown has started
+	utility.forceClearOverlay('CrystalRain_Text');
+	alt1.overLaySetGroupZIndex('CrystalRain_Cooldown_Text', 1);
+	let cooldown = 29;
+	const timer = setInterval(() => {
+		// During our interval if the buff ever becomes inactive - kill the timer
+		if (!gauges.ranged.crystalRain.active) {
+			clearInterval(timer);
+			endCrystalRainCooldown(gauges);
+			return;
+		}
+		// If we have a more accurate cooldown time use it
+		cooldown = gauges.ranged.crystalRain.time;
+		cooldown -= 1;
+		if (cooldown > 0) {
+			utility.forceClearOverlay('CrystalRain_Cooldown_Text');
+			alt1.overLayTextEx(
+				cooldown.toString(),
+				utility.white,
+				14,
+				utility.adjustPositionForScale(
+					gauges.ranged.position.x +
+						gauges.ranged.crystalRain.position.active_orientation
+							.x +
+						26,
+					gauges.scaleFactor
+				),
+				utility.adjustPositionForScale(
+					gauges.ranged.position.y +
+						gauges.ranged.crystalRain.position.active_orientation
+							.y +
+						26,
+					gauges.scaleFactor
+				),
+				3000,
+				undefined,
+				true,
+				true
+			);
+			alt1.overLayRefreshGroup('CrystalRain_Cooldown_Text');
+		} else {
+			clearInterval(timer);
+			endCrystalRainCooldown(gauges);
+			return;
+		}
+	}, 1000);
+}
+
+async function endCrystalRainCooldown(gauges: Overlay) {
+	gauges.ranged.crystalRain.isOnCooldown = false;
+	gauges.ranged.crystalRain.cooldownDuration = 0;
+	utility.forceClearOverlay('CrystalRain_Cooldown_Text');
+}
+
+async function updatePeCount(gauges: Overlay, value: number) {
+	gauges.ranged.perfectEquilibrium.stacks = value;
+}
+
+async function updateOdeToDeceit(gauges: Overlay, value: number) {
+	// If Ode to Deceit has an active buff and a timer:
+	//   - it is on cooldown
+	//   - The remaining time is its timer
+	if (value > 1) {
+		gauges.magic.odeToDeceit.isOnCooldown = true;
+		gauges.magic.odeToDeceit.active = true;
+		gauges.magic.odeToDeceit.time = value;
+	}
+
+	// When only 1 second of the buff exists
+	if (value == 1 && gauges.magic.odeToDeceit.active) {
+		// Make sure to update the text one final time
+		gauges.magic.odeToDeceit.time = value;
+
+		// Then start a timer to wait just past the last second
+		//  - Clear the timer
+		//  - CR is now available again
+		setTimeout(() => {
+			gauges.magic.odeToDeceit.time = 0;
+			gauges.magic.odeToDeceit.active = false;
+			gauges.magic.odeToDeceit.isOnCooldown = false;
+			startOdeToDeceit(gauges);
+		}, 1050);
+	}
+}
+
+async function startOdeToDeceit(gauges: Overlay) {
+	if (!gauges.magic.odeToDeceit.isActiveOverlay) {
+		return;
+	}
+
+	// If the buff is not active then clear the text early and return
+	if (!gauges.magic.odeToDeceit.active) {
+		endOdeToDeceitCooldown(gauges);
+		return;
+	}
+
+	// Otherwise cooldown has started
+	utility.forceClearOverlay('OdeToDeceit_Text');
+	alt1.overLaySetGroupZIndex('OdeToDeceit_Cooldown_Text', 1);
+	let cooldown = 29;
+	const timer = setInterval(() => {
+		// During our interval if the buff ever becomes inactive - kill the timer
+		if (!gauges.magic.odeToDeceit.active) {
+			clearInterval(timer);
+			endOdeToDeceitCooldown(gauges);
+			return;
+		}
+		// If we have a more accurate cooldown time use it
+		cooldown = gauges.magic.odeToDeceit.time;
+		cooldown -= 1;
+		if (cooldown > 0) {
+			utility.forceClearOverlay('OdeToDeceit_Cooldown_Text');
+			alt1.overLayTextEx(
+				cooldown.toString(),
+				utility.white,
+				14,
+				utility.adjustPositionForScale(
+					gauges.magic.position.x +
+						gauges.magic.odeToDeceit.position.active_orientation.x +
+						26,
+					gauges.scaleFactor
+				),
+				utility.adjustPositionForScale(
+					gauges.magic.position.y +
+						gauges.magic.odeToDeceit.position.active_orientation.y +
+						26,
+					gauges.scaleFactor
+				),
+				3000,
+				undefined,
+				true,
+				true
+			);
+			alt1.overLayRefreshGroup('OdeToDeceit_Cooldown_Text');
+		} else {
+			clearInterval(timer);
+			endOdeToDeceitCooldown(gauges);
+			return;
+		}
+	}, 1000);
+}
+
+async function endOdeToDeceitCooldown(gauges: Overlay) {
+	gauges.magic.odeToDeceit.isOnCooldown = false;
+	gauges.magic.odeToDeceit.cooldownDuration = 0;
+	utility.forceClearOverlay('OdeToDeceit_Cooldown_Text');
 }

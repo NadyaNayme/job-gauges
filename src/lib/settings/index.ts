@@ -36,6 +36,7 @@ export const renderSettings = async (gauges) => {
 			'Select default combat style',
 			getSetting('defaultCombatStyle') ?? '4',
 			[
+				{ value: '2', name: 'Ranged' },
 				{ value: '3', name: 'Magic' },
 				{ value: '4', name: 'Necromancy' },
 			]

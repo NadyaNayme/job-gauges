@@ -111,8 +111,8 @@ export const necromancy_gauge: NecromancyGauge = {
 			time: 0,
 			active: false,
 		},
-		fourth: {
-			name: '4th_Conjure',
+		phantom: {
+			name: 'Phantom_Guardian',
 			isActiveOverlay: true,
 			time: 0,
 			active: false,

@@ -151,6 +151,16 @@ module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/
 
 /***/ }),
 
+/***/ "./asset/data/buffs/Necromancy/Phantom_guardian-top.data.png":
+/*!*******************************************************************!*\
+  !*** ./asset/data/buffs/Necromancy/Phantom_guardian-top.data.png ***!
+  \*******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAABkAAAANCAYAAABcrsXuAAAAAW5vUEUAYtdMlAAAAARub1BFAAAAAEEgjiIAAAAJbm9QRQAAAAAAAAAAAKGKctUAAAQESURBVDhPLZTpU1NnFMbvv9Bpp9YkZCMhJBCyAAkhIBBR0rrBRAsBLPsaI0sNS9gdEeiECrKqaK20TnWKuMwUy3Ta+q1fO+1My/jH/HrupR+e+9733Oec8zznfecquboYLn09efo4bkMLHkMHBUYVLeRnXZW1Fa/svcZefKZ++oY3cMs3j7Ht/3iPBk9WB3mGJkEjLkNcW/P1stc3ojj1n0uxpuMGWe1ags+UwGuSRCniM3XjN/VR0zDA0t4Bawe/MvnNM4n3SPwaheYB/Jbrwu/CndUmaNWginWr0LeguA1fHDcwdkoDKWhOUmQZotAyiM/cL2uCWHKSqSd73PrhDZmXh2wd/k5lrJOA5QYB6wjF1mHNpSpMreETUV7Ze8R9gaENRQ16jF0aodCcoMg8RFASg9YxKZDCX3OZ4fXHjDx4ytTuC2afvsLhC2N3BykNt1GaPaXxi82DkjtAkUlgGT4WqTXqQPFbBqR4UrMekA9q4ZBtgjLbLGF7mtapZZJf3ye1vUtd3xj5wQj+8nO4gxWczMqm3H5LGk1QYh2lxCIQcUHruLgTgSLaa+pEKRbLxaJELR6U95AkhG1znMpZ4mLtNInFDbrn17nUfYPgmcuUnInhL4viLi5Hn2XFaY8K/6YmqtQ2o+WGbNNaPU28uQ8loCrInhTClGa9zC4JjgWqHMtEGnqJ35gXNxnMTj/u9iQFAxN8sriG/mMdOoMZo80lgr6iPGeRChF2StYyaaS6CsjY1BEqqr1S+4yQ5oW0oJEiuRkirhUi4RFi16bJ8Yaw5QXwJEY06OYy6D46gU5nxmYvo9q5QlWu8HNXqXRkRKg6whlC1rSMbhRFnWfYPkelqIk4VqgWYnXuXaKuTc5eGOJ8+xCuokrMDi/+RApvcpSTt1bQn9BjNRZTnbcq3G1qBGedm9LojuaoqW5TG506QiUsj/Kc21SI+mrnGp+6tojmbfNZ/g5n4teINieouNSKKTufov4UnoE0H2a20cuoaj3fc8H9Lefdjzjn3pG8e0zO/cjOq0NmMzs0X1yVizGPUm5f0DqfFgU1or7+9EM2nr/BkR/AYLBSVdsmh32FUHyc5vm/qF3/kw8e7qOTQ4/5nlPnfUadNBsbesn2/lse7b0llc7Q0p1mJH1XG7+i2uvpusfth8+Y29plZuM7xpd3sMiB6vRGbDYv4cE1ri7+TcvCP9RtHNFY9JomQX3hHrP3n/L4p994fvCO8ZlVrqeWCEdq5fZV0TuonvMSSiy6ypdLWwzOr5G8uULf9DIX471UdLwm/OCI6IP3NNw9om3xX9oXjqhff0+y7hfuv/iZ/Xd/8ER+NbOL9xidvkPl2Ss0d6ZpbB+j+nwzV7sm5EJk+A/744X0XACaYAAAAABJRU5ErkJggg==")
+
+/***/ }),
+
 /***/ "./asset/data/buffs/Necromancy/Residual_Soul.data.png":
 /*!************************************************************!*\
   !*** ./asset/data/buffs/Necromancy/Residual_Soul.data.png ***!
@@ -211,6 +221,136 @@ module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/
 
 /***/ }),
 
+/***/ "./asset/data/buffs/Perfect_Equilibrium-noborder.data.png":
+/*!****************************************************************!*\
+  !*** ./asset/data/buffs/Perfect_Equilibrium-noborder.data.png ***!
+  \****************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("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")
+
+/***/ }),
+
+/***/ "./asset/data/buffs/RangedAmmo/bik_arrows.data.png":
+/*!*********************************************************!*\
+  !*** ./asset/data/buffs/RangedAmmo/bik_arrows.data.png ***!
+  \*********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAMAAADzN3VRAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAFpQTFRFAAAAMFcQKUoMEScAMVcQKUcQK04PCA8EL1MQJ0YQL1QRLVAQNV4XHTMMMlsQCxUEEB0ABAgACRUAFSIAAAMBAgYBFCIAFiMACA4AFCEACRgAEx8AChEABxMA5a7YgAAAAB50Uk5TAP//////////////////////////////////////9DgaNwAAAFpJREFUeJytjTcOwDAMxC69997+/80EgafAHAyEkBZR0kkGT4jPKmBlI4xQxYnSDG3uEFKgKSvVbNU4hDjRsur+S+nRDG9ZGaeZPy7rd7Lx8i4ddnM+ffGh4QaJHgHSZWJtwAAAAABJRU5ErkJggg==")
+
+/***/ }),
+
+/***/ "./asset/data/buffs/RangedAmmo/blackstone_arrows.data.png":
+/*!****************************************************************!*\
+  !*** ./asset/data/buffs/RangedAmmo/blackstone_arrows.data.png ***!
+  \****************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAMAAADzN3VRAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAJxQTFRFAAAAKxMvFgYZBgMMUD4iAAACFgUXEggSJRAoHg0gWUclAAABJRAkGw0bJhEpHRIUEAgTJBEhGQ0cDQsKGRETRUAzDAoHQD44BQQEHhYfBgUHBQQGMCglIx0hMCYULygzY08sFxIZBAMFKCMoRDlLGhUcFhIUTz8xGRQVHRcTIBwhXUkoJB0lFxUdEA4SPzMiGBMbIx8mZFAwGxgfZiWCgAAAADR0Uk5TAP///////////////////////////////////////////////////////////////////wcEN2IAAACCSURBVHictc7HEoJAEATQNqAioKAosGBCDASV8P//Ru1ynJ3yon3oPryqqQG+ZsTKeMLJ1JA9m+tsYQJLSye2I3ulkbUr29tQ2ar2KeyG2XMvBhz8NyEHkVATE0gOAkfgJIicL+kVyG7ae3fg8QRyKgVQVni9CXxqNQ2VIW3HwC/SAxE8BZFmHjlyAAAAAElFTkSuQmCC")
+
+/***/ }),
+
+/***/ "./asset/data/buffs/RangedAmmo/deathspore_arrows-quiver.data.png":
+/*!***********************************************************************!*\
+  !*** ./asset/data/buffs/RangedAmmo/deathspore_arrows-quiver.data.png ***!
+  \***********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAMAAADzN3VRAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAEtQTFRFAAAAVVtdMzY4bnd4TlVWPDUphpCTTlNUVFxcXWVmICIjAwIDV2ZPJSEbRVE+QEs5Z3hcHiMbXWtTXl5HXGtSTFpFS047U2FLWFQ/J3XJ4AAAABl0Uk5TAP///////////////////////////////zBTSd0AAABPSURBVHicY2CgEWDEIc5EsknMLDilWLELs5FsBwM7BycXN4LLgyTFi6qSD7ch/NiFBRgYBIWwSwkT5TgUIIJdWBSIxbBLieM2TIJ0+2kFAFDIAS1Y11HCAAAAAElFTkSuQmCC")
+
+/***/ }),
+
+/***/ "./asset/data/buffs/RangedAmmo/diamond_bak_bolts.data.png":
+/*!****************************************************************!*\
+  !*** ./asset/data/buffs/RangedAmmo/diamond_bak_bolts.data.png ***!
+  \****************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAMAAADzN3VRAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAgdQTFRFAAAAmo6NU01MCgoLh319Pzo5CAcIc2ppRD8/CQkJi4GBWVJSIR4efnV0MC0thXt7c2lpPzk5CQgJeW9vbmZlSUREHhsbb2dmIiAgT0pKRkBAUEpJU01OODQ0gnh3TEZGGhkZSRgWNCoqa2Jil4yLQj08FxYVX1hXJg0MKCUlfnRzYFhYNTExDQwNgnd4QDw6b2ZmFQQEQhUTgHZ1R0FBY1tbaGBgPDc3enFwUElJBQECVzo6LSYmi4CAXVZWKygomo6OODU1OBEPDQkJaWJhVU1NKigmhXx7W1VUNDEvHQgJAAABcmhohXp6Y1paKiYmbGRjUkxMEhESJQoKOxISFRMTY1hXCAAAJAkJEgwMEQMDFhgTJSUiHxcUDgoJOxQSISEdJyMgHxsYHx8aGRAPGxIQEBAOIQoKFxEOFAYGHxsaGxkYFRUSCgEBDw8NDgEBERIFGBoYHBwYGRkVCAgIAQECGxMSBAICFRUVDw8PAwMCDg4PCgoKAAAAExMTJiUjGQ8OIyAeAgICBwcFFRUTJSQhHBMRIR8cKCglJiYjGhoYDQAADwwMFhYTCwsLGRkZAwMDBgMCFAcGExMSEhIRDg4MBQUEFQcGJCQhHBwZEgUFEBAPKyklJCUhHh4cKysnIyMgFxcSBAQEGxIRExYTGRkWGxsYFxcUFRUUHx8dDQ0NBwcHAwMERIvk+AAAAK10Uk5TAP/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////KvguUAAABRElEQVR4nGNgAAFGJmYgycLKxoAO2Dk4GRi4uHkYePlQJfgFBIUYhEVExRjEJdD0SEqxMbBLy8jKyStgmMfAoKikrMKrqqaOKaPBoKmlraOrpw/iGEAFDYHYCIiNJU1MzcyBDAtLqIwVlLa2kbW1s2dgcBB3RDPQydmF19WNgcHdwxNNxsvbx9fPn4EhIDAILhYMIkJARCgQh5kgVIeDiAgQEQljAEFUdExsHExJPEJ1QmJSckpqGoybjpDJyIxJyMrOgXFzETJ5+QWFRcUlpQxl5WguZaiorKquqa2rb2hEl2Foaq71rm1pbWtHdicMAGU6OruAjG4g7kHV2NvXXzKBgWEiA8OkyWhmTplaOy1h+oyZsyYlYNjnPTthztx58xcsnIAhtShh8ZKly5bXeGPKrFjJ2bdq9SIMCRBYxbmmFsoEAKeTRnPJmktzAAAAAElFTkSuQmCC")
+
+/***/ }),
+
+/***/ "./asset/data/buffs/RangedAmmo/ful_arrows.data.png":
+/*!*********************************************************!*\
+  !*** ./asset/data/buffs/RangedAmmo/ful_arrows.data.png ***!
+  \*********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAABkAAAAZBAMAAAA2x5hQAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAA9QTFRFAAAAAAAAGwkAAAABBQIBhZLXkAAAAAV0Uk5TAP////8c0CZSAAAAP0lEQVR4nGNgAAIBBmTAiMJjUGDAARhRtQmj8VF5uMQF0XSx4LKNKNMYcagioE0ARR+zIapaQZyWCaDwsFgOAOhnAUcqUHS3AAAAAElFTkSuQmCC")
+
+/***/ }),
+
+/***/ "./asset/data/buffs/RangedAmmo/hydrix_bak_bolts.data.png":
+/*!***************************************************************!*\
+  !*** ./asset/data/buffs/RangedAmmo/hydrix_bak_bolts.data.png ***!
+  \***************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAMAAADzN3VRAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAhBQTFRFAAAAyZs+aFEgDQoFsYc4RDQVBwUDlHItUD4ZCggEsYk3cVcjKSANjm0sNysTclgjj28sRDQWBwYDeV4ljW0sWUUcHRYKjWwrW0YeNikUXUcdXkkfZ1AfMCQPoXwxXEceFhEISRgWJhkDSzkYqoI0pH00TjwaExAIUz4YJg0MHhcKg2Qod1wnQTMTCwgEqYE1PS4RkXAtFQQEQhUTcFYjXEYbQTMWZU0ggGIoZ1AgBQECTCoYJBcEKSAOmXUvdVslLCEQtos4Pi8VOBEPCwUBYUsfnXgxaVEgJBsNrYU2dFkkMCYSHQgJAAABTTwZf2Inel8mIxsNY0wgZ08iJQoKOxISGhIHVT4bNCgRCAAAJAkJEgMDEQMDFhgTJSUiHxcUDgoJOxQSISEdJyMgHxsYHx8aGRAPGxIQEBAOIQoKFxEOFAYGHxsaGxkYFRUSCgEBDw8NDgEBERIFGBoYHBwYGRkVCAgIAQECGxMSBAICFRUVDw8PAwMCDg4PCgoKAAAAExMTJiUjGQ8OIyAeAgICBwcFFRUTJSQhHBMRIR8cKCglJiYjGhoYDQAADwwLFhYTCwsLGRkZAwMDBgMCFAcGExMSEhIRDg4MBQUEFQcGJCQhHBwZEgUFEBAPKyklJCUhHh4cKysnIyMgFxcSBAQEGxIRExYTGRkWGxsYFxcUFBQUHx8dCQkJDQ0NBwcHAwMEznoh6AAAALB0Uk5TAP/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////KyKimAAABRElEQVR4nGNgAAFGJmYgycLKxoAO2Dk4GRi4uHkYePlQJfgFBIUYhEVExRjExdD0SEiyMUhJy8jKyStgmMfAoKikrKKqpq6BKaPJoKWto6unbwDiGEIFjYDYGIhNTM3MLdSADBFLqIwVlLa2sbWzd2BgcOR1QjPQ2cXVzd2DgcHTyxtNxsfXzz8gkIEhKBjhxBAQEQoiwoA4PAKhOhJERIGIaBgDCGJi4+ITYEoSEaqTklNS09IzYNxMhExWdlxSTm4ejJuPkCkoLCouKS0rZ6ioRHMpQ1V1TW1dfUNjUzO6DENLa71vfVt7RyeyO2EAKNPV3QNk9AJxH6rG/gkTyyYxMExmYJgyFc3MadPrZyTNnDV7zpQkDPt85ybNm79g4aLFkzCkliQtXbZ8xco6X0yZVavXTFi7bgmGBAisXbO+HsoEAF2RSSdLzUoGAAAAAElFTkSuQmCC")
+
+/***/ }),
+
+/***/ "./asset/data/buffs/RangedAmmo/jas_dragonbane.data.png":
+/*!*************************************************************!*\
+  !*** ./asset/data/buffs/RangedAmmo/jas_dragonbane.data.png ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAMAAADzN3VRAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAFRQTFRFAAAAZmdvWltia2x0ZWduXF1kWFlgVlZdSDshFBAHamtzYmJqbG52PCYEOCUAHhUAOycAPSgAMiEAHRMAOyYAOicAIRYAPSkAPCYANiQAKhsGEA4CxFLivgAAABx0Uk5TAP///////////////////////////////////6l3rVEAAABZSURBVHicrY1JEoAgDARHcV9wV9T//9MTF2FSSNmn1HSSASxJCoai5jMZkHNbhD9SJVVVjaaltgvv+I+eGj1405iSEZj8ZgaW9R1udtid/UPsMdSc1y1eSjxH/QGM9BKC8gAAAABJRU5ErkJggg==")
+
+/***/ }),
+
+/***/ "./asset/data/buffs/RangedAmmo/onyx_bak_bolts.data.png":
+/*!*************************************************************!*\
+  !*** ./asset/data/buffs/RangedAmmo/onyx_bak_bolts.data.png ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAMAAADzN3VRAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAblQTFRFAAAALysrEBAQAgIDKSYmCAgIAAABGhgYJyMjExISCAQFFxUVBgYHGhYWDgwMGRcXDg0NAwAAHRsbAAAADw8PAQEBCQkJEg0NHBsbDg4OSRgWCQMDHhsbIRwcDQ0NJg0MDgsLExERDQsLKCUlAwMDGhoaFQQEQhUTDAoKDwoKCAAADAsMFRUVFhUVDAwMBQECJw8PBQICFRQUFBQUJCAgHRoaOBEPBAEBDgQEGhcXEhERIiEhFBMTHQgJAQAADwwMBAQEExAQBAMDJQoKOxISBQQEBgICJAkJEQMDFhgTJSUiHxcUDgoJOxQSISEdJyMgHxsYHx8aGRAPGxIQEBAOIQoKFxEOFAYGHxsaGxkYFRUSCgEBDw8NDgEBERIFGBoYHBwYGRkVAQECGxMSBAICAwMCDg4PCgoKExMTJiUjGQ8OIyAeAgICBwcFFRUTJSQhHBMRIR8cKCglJiYjGhoYDQAADwwLFhYTCwsLGRkZBgMCFAcGExMSEhIRDg4MBQUEFQcGJCQhHBwZEgUFEBAPKyklJCUhHh4cKysnIyMgFxcSGxIRExYTGRkWGxsYFxcUHx8dBwcHAwME+R2AsgAAAJN0Uk5TAP//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////MnztaAAAATZJREFUeJxjYAABRiZmIMnCysaADthBYhycXAzcPKgSrLxAGT5+AUEGIWE0PSKibAxiIuLCEpLoMiAgJS0sIysnLIopI8/ApqCoxKasAuKoQgXVgFgdiDU0tbR1WIEMXT2ojD6UNjAUNjIG2mRiqoJmoJm5haUVUMbaBl3Gls3OHiTj4OgEF3MGES4gwhWI3ZDcrgUi3EGENIwBBB6eXt4+MCW+CNV+/gGBQcEhMG4oQiYs3MsvIjIKxo1GyMTExsUnJLImMSSnoLmUQUckNS1dOCMzKxtdhiEnV5hNOC+/oBDZnTAAlCkqLgEySoG4DFVjeUUlKzBIqhgYqmvQzKytE673a2hsaq72w7CPrcWvta29o7MLPTiBAenX3dPb15+OmYIcjCeIVchNdMCQAAE5sUmwcAYAl0MyP/v4af8AAAAASUVORK5CYII=")
+
+/***/ }),
+
+/***/ "./asset/data/buffs/RangedAmmo/ruby_bak_bolts.data.png":
+/*!*************************************************************!*\
+  !*** ./asset/data/buffs/RangedAmmo/ruby_bak_bolts.data.png ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAMAAADzN3VRAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAhBQTFRFAAAAcTMvJxIKBAIBZC0rGggIAwABOhoYHQgIBAABXiwmKxMSDwgFUCMgHg4KMBUTNRcWGQgILxYUOBkXIA4NDAMASB8dIA8EFgEBKRERIhERJBINFgoHSSAeIw4OCQAASRgWFgMDHxEQYSwnTCIdHQ0NCAAAJA4OJg0MDQYGNhgVKxISFwsABQICZC4rHQ8FVSYiFQQEQhUTLRMSHgwMGgEBNRkVNRgXKA4OQyAbMhQSBQECNhMSEAMDEgQDSyIeLxUVEAAAaDAqQR4dFQMDOBEPBwEBKhMTQB0ZJhIRDQAAUSMiLBQUEwMDHQgJAAABHxAQMBQULBERKRYOIxAJCAMDJQoKOxISCQQEKBINFgAAJAkJCQMDEQMDFhgTJSUiHxcUDgoJOxQSISEdJyMgHxsYHx8aGRAPGxIQEBAOIQoKFxEOFAYGHxsaGxkYFRUSCgEBDw8NDgEBERIFGBoYHBwYGRkVCAgIAQECGxMSBAICFRUVDw8PAwMCDg4PCgoKAAAAExMTJiUjGQ8OIyAeAgICBwcFFRUTJSQhHBMRIR8cKCglJiYjGhoYDwwLFhYTCwsLGRkZAwMDBgMCFAcGExMSEhIRDg4MBQUEFQcGJCQhHBwZEgUFEBAPKyklJCUhHh4cKysnIyMgFxcSBAQEGxIRExYTGRkWGxsYFxcUFBQUHx8dCQkJDQ0NBwcHAwMEQ68RfAAAALB0Uk5TAP/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////KyKimAAABRElEQVR4nGNgAAFGJmYgycLKxoAO2Dk4GRi4uHkYePlQJfgFBNkYhIRFRBnERNH0iEuwMUhKScvIysljmMfAoKCopKyiqqaOKaPBoKmlraOrpw/iGEAFDYHYCIiNTUzNzC2ADEsrqIw1lLaxtbN3cGRgcHJ2QTPQ1c3dw9OLgcHbxxdNxs8/IDAIKBMcEgoXCwMR4SAiAogjoxCq1UBENIiIgTGAIDYuPiERpiQJoTo5JTUtPSMTxs1CyGTnxCfn5uXDuAUImcKi4pLSsvIKhsoqNJcyVNfU1tU3NDY1t6DLMLS2Nfg3tHd0diG7EwaAMt09vUAG0JsMfaga+ydMLJ/EwDCZgWHKVDQzp01vmJE8c9bsOVOSMezzn5s8b/6ChYsWT8KQWpK8dNnyFSvr/TFlVq1eM2HtuiUYEiCwds36BigTAPb4SWPfXOF4AAAAAElFTkSuQmCC")
+
+/***/ }),
+
+/***/ "./asset/data/buffs/RangedAmmo/wen_arrows.data.png":
+/*!*********************************************************!*\
+  !*** ./asset/data/buffs/RangedAmmo/wen_arrows.data.png ***!
+  \*********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAMAAADzN3VRAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAFpQTFRFAAAAPKO9MoyhCyY5PKS+MIOYNJGoChsgOZqzMIOXOZ63N5euQbHNI2BvPqjDNpWtDCEpAB0jAAgWABUYACQpAAQFAAYHACIoACUrAA4RABgeACAjABEUABMYs3vDEAAAAB50Uk5TAP//////////////////////////////////////9DgaNwAAAFxJREFUeJytjUcOgDAMBJfeCQm9/f+bIJQT8iJZYmRfPLYX8ASghFxFXEnECVVphrygtlSEVNTUDVrDDztFiArLlfsvpadmeEpknGb+cVnfk4/lDdhlc9x98kPPBZbzAd9oXrk7AAAAAElFTkSuQmCC")
+
+/***/ }),
+
+/***/ "./asset/data/buffs/Ultimates/Death's_Swiftness.data.png":
+/*!***************************************************************!*\
+  !*** ./asset/data/buffs/Ultimates/Death's_Swiftness.data.png ***!
+  \***************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("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")
+
+/***/ }),
+
+/***/ "./asset/data/buffs/Ultimates/Greater_Death's_Swiftness.data.png":
+/*!***********************************************************************!*\
+  !*** ./asset/data/buffs/Ultimates/Greater_Death's_Swiftness.data.png ***!
+  \***********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("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")
+
+/***/ }),
+
 /***/ "./asset/data/buffs/Ultimates/Greater_Sunshine.data.png":
 /*!**************************************************************!*\
   !*** ./asset/data/buffs/Ultimates/Greater_Sunshine.data.png ***!
@@ -248,6 +388,46 @@ module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAACIklEQVR4nMWUXW/SYBiGyzAGVRgbSlgKK0BZS+k3A7oW2PgsGwOQCBiXzRiNzARxfmbxFP01Ro899L8Yf4GHHtwCRpMlnjDaeCXv4XNfvd8nbwliCTxDHcmvY3CfHiL05SmcDQHL5F2gb7ZwNRtG5SSJ0yGH8UiA8USFw3vdOokh6UjLNAb9GB4/YsBIt+EzAiA2iLkkUauikruzvJBXt6Ad8aBe50FcWwGRvgLCICAneGTPNBDrNxaX8BHpwlAlJ+LegMZqjwXR9oKouHByGse7cxX1SQneSQvfPv6kFxbdNQ/+ivJ5Cey0iTM73UPXB1fTgwdDBm/fyKi9L8P9oQ0mxC/ehg4H0SsN5oOyQONwn4N6TMGl+7E/TOLFmTiXmJMinF3l8juJUiQUnoGW4tHvZKbBCsolEvX7HF6epzB6pWJzZMDhu7nc4tNiAvVdDc1aBs+fKRiPZITjQZAhNzaCbhB+z3KCFM+iWkiDi1MoG9toVXMoaKJ174ONUYhRJIKBdagiA01JopCVQZGkdRJ+KwJN5VHcUSBxcejyjnXhf5h99baUQIIOWx8+w8zr4GnOnvDfAgO+tVV7BN8//1BEJgo2FrWvQbtYQ1FP2SeY0SzvISNI9krqu3mw1CV+cv9i2D2eB3WKTRwd9NAo5dA1TQT8PmtbGGkSncMo1rwuOBwr82OpYIZgbOKWGbfv/ht7GlICjVIhYp9ESFp89/+DX5nr3Kxd0jHZAAAAAElFTkSuQmCC")
+
+/***/ }),
+
+/***/ "./asset/data/buffs/WeaponSpecials/OdeToDeceit.data.png":
+/*!**************************************************************!*\
+  !*** ./asset/data/buffs/WeaponSpecials/OdeToDeceit.data.png ***!
+  \**************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAABsAAAAbCAMAAAC6CgRnAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAN5QTFRFAAAAPzFOQiw+GBIfGhMgNiAqEA0RSiQhJx4tIxYdViYkAAAAWjdBQSk6MicyLiAQTCAfAAABIhsoVzRDNSU3DwwHMysSGhYbVEcqZC4uMx8sNR8nSCozHhMeMBkZGhUfX0RmVzE/PSYxUSw1NiItKBYcGRUfYjhHUS49TSs0RiczOiQxFRAYRi9DSCgzRy09EwkLDQoRQTRRIhwqBAIEAwMFTz9iLyY6PjBMHRcjQTRQFhEcIBooLSM2NixDDAsQQDJQIBsmSDhTIBonLSM3GRUcNipCDAkPTz9bHhkgP3lzoAAAAEp0Uk5TAP////////////////////////////////////////////////////////////////////////////////////////////////94qDulAAAAmUlEQVR4nGNkwA0YsQj9xynHxAgEv7DLsYPkvmKV42EEg3fY5ITBUi+w6pOE6HuIRU4BInULmz51sNQVrH7QBUmdx+o/I6DMaRgHVc6M8SQSD1XOgvE4LjkrxqMMuORsjjDgkrM9zIBLzo7xIC45B8b9DDjknBj3MuCSc2HcjUvOjXEnuhS29IIm57EDtxyD53bccnjMJF0OANzmFhzbhbUPAAAAAElFTkSuQmCC")
+
+/***/ }),
+
+/***/ "./asset/data/buffs/WeaponSpecials/crystalRain.data.png":
+/*!**************************************************************!*\
+  !*** ./asset/data/buffs/WeaponSpecials/crystalRain.data.png ***!
+  \**************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAbZQTFRFAAAAAAACZHOCYZG8fIGHkpefYpK+YY+6IFBrIE1nMDdJVn+mYI24NVaAPF1xLUdsUWWAYWFpXmR7JFRxN0RWlqCjFyAwHCQ1ipKXYXeYN1drV2uHUGF8HEdeHEZdUWR+PlZ1S2ePTVNiSVFePGCOQFBmJEdzQEBTFz5RIDA+PFRcLUBXS22OUHWZKkZpe3WBJCcwf3lhJEZZPF1yTmV7Vm+HQGaXJCQtUV5qWWZ0EBAwcISRN1eDYHaXPpOWRHaEWVRGJ059n5emJyo1KmVnSa6yV4Gn1srcRHajRlZsKio6jodtJ15hOomM2crcMlBhUE5UKmJl1MXXR0RZICcqMHByV3qpXYCyS2+QdHWXIFNvKjxTQpyfTbe7UcHFN0BXHElhJFl2AAAALWFtWYOqUL7CHEliRlRsKktnXIewRqSnQJaYfoB1qqqcIEtkNUlkSVxzUGx/WoWtAAAXUGJ9aoOmPlR0SWJzWm+MaoOnIEtlj5ecVGeEMj5OgIWKkJicQlx+WnSNUGJ+hZCRS2+RR1dwQF58Wm+NXnqUZZbCb4KPFyAtWXOLJzdLUGZ8IC1Ab3R5QE1iEBtb2QAAAJJ0Uk5TAP////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+r6/v1AAABm0lEQVR4nNXTTygEURwH8N83RUQuUsrBouSiHHBAueHCwUE50CYHB8WWw661/qy1W2gdHBxMkYNy4OCyuSkccFAO/hSbg3JZRZRWed57zOzsztsxR97pNe8zvz9vfgNyuPA3IYg5ggA+ybBKCCajgXKAD6aEklBukvLwzgXygTemgCh8pSLIlRCvlIjdI7NAMFAZ8FDOj++JKp5eXHGiyjuWAVF1S9XATQ2uakWoC3LFmSwnHfJ4DHXAOdVzdcafSGfpGg2nxFM3nojimjg9NrsURPMRtRy2Agd6RQwmZ45Ibd/97pvPVbAdsU4B9+whupIxXmI3sEsqmYIdBTviLnp4zG2F1CF6gS3ZRh+Xm1ZpwH5gXeSEm8M1GzgkxmpVyGG+WbFIA46IhqP8sgc1D7CYDWJgg8aR0Bh3DO5SRDKlDr1h8s1PhJgcAfgRzALFRARmp2aMcc6SWgz2NBBQfhMTRHCSYc6v/CLpMARf2GvHjNQR4FqzlT9wAZf2TodL8Ng74x6Lnx3C6JgzSFgedVIj6X+vA/jb+g/wCxOegCm28N82AAAAAElFTkSuQmCC")
+
+/***/ }),
+
+/***/ "./asset/data/buffs/WeaponSpecials/crystalRainBuff.data.png":
+/*!******************************************************************!*\
+  !*** ./asset/data/buffs/WeaponSpecials/crystalRainBuff.data.png ***!
+  \******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAMAAADzN3VRAAAA/FBMVEUAAABhb4AdMUEiLT9VaX9LYXo+T2gbLTonSmFGXXkeKTg4PUsODxIRFRozS2s8QlgECg4cNUcGCg04UVw7VnFNcJI+Qk9aVkcsRlVPZHksN0YTFxsQEAoKCQofJDE6RE9NWnM2fYFPgY10cn40V3kyO0xofGw3e4K9vc4dHA45SF0UExQ7WV22tMMNDQc3OksrXWBUf6lUZIQcRV0hKS0+jZVQsr0eR2AvTWY8g45YlJ5XYFspSGJHWnFPc5I5TFx4iJsRExFAV3NRco9OX3lNW2oTJC92fYApM0JjaGpveIEzPEpfhKVATVRDXG1PaYA/W3gQFx8UGiYtNT8Ek0krAAAAAXRSTlMAQObYZgAAAJxJREFUeF6tyTUSwzAABdHvMDMzMzMzM9z/Lhk5TSxLhWeyxTYPyhJYoCJTa6Sg1ekNRhMRs8X6Cza7w+lye7yAD1R+IBAMhSOQFSWLxSlIIJlKg1Emi1y+UGRICShXqjWG1MkaTTm02uSdbk8m/QFIw9GYlsl0JtJ8QctytYbYZiuFHfYHfDuC6gReZyjscr1x5P54gtMLvN74Vx8VUg2fj0CU2AAAAABJRU5ErkJggg==")
+
+/***/ }),
+
+/***/ "./asset/data/buffs/WeaponSpecials/crystalRain_inactive.data.png":
+/*!***********************************************************************!*\
+  !*** ./asset/data/buffs/WeaponSpecials/crystalRain_inactive.data.png ***!
+  \***********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAARpQTFRFAAAAAAAAcHBwh4eHgICAl5eXiIiIhoaGQkJCQEBAODg4d3d3hISEUVFRVFRUREREYmJiY2NjZmZmR0dHnZ2dICAgJCQkkJCQdnZ2Tk5OaWlpYGBgOjo6U1NTZGRkUFBQW1tbMjIyLCwsTExMPT09bm5ue3t7KCgoPDw8ampqYWFhJiYmFhYWf39/dXV1cXFxZWVlSEhIn5+fKysrhYWFeXl51dXVbGxsLS0tSUlJ2NjY09PTSkpKJSUlV1dXfX19Z2dnfHx8OTk5eHh4jIyMlJSUQUFBT09PkpKSQ0NDfn5+dHR0qKioPz8/RkZGWVlZBQUFgYGBUlJSbW1tlZWVlpaWWFhYb29vaGhoVlZWi4uLHx8fNTU1c3NzIz3+hwAAAF50Uk5TAP///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////4+ZFeoAAAGoSURBVHic1dPfKwRRFAfw882vlNnN8rCFpc22kV8P4kXJA6Et+bF+lD/PA/mRB5TiRX6UjRJZ2rJhbHnB7lhZy173TmZ2mNkxj9yammY+c86595wBOVz4mxDEHEEAOdKtJQRTo4GKgCyzhCqh0jcqwysXKAfSzAKi4pkkiJXOiE+qxO09M0EwkBdI1NCzJBPVJVOSQuS7YT8g6q/J+1iWakDcj4eq2wxJClPL+Q55PIYA5BcKJiTXBX+iOtOu0RQlnrr5XBRXn3PhzOjyELUytZ624UrRKmIwOGNE6hD7ACLG91awK6p0v5c8VR7YQ3iyCi/RV+zdJyuZh1LbnjiLHhx17lhIDaIXxyl1G328GVtmqcP+m+o9kRM0EPdv2sAgpVvkMyGHsDm4bpI6DAHXbl4cArGRSNdqIYjgJY0el8Z4D/lFYzmT1GBojcaX20+YOgIIyukCUEzExFJ4UR/nAqnFYE/uNm1b9sQAMbXAMD1v2ZHvMPyxMrxhx/TUM3e1kZit/IKN3Yf2ToNuT9ze6efoTjqEs3POIMF/5aRG0v5eB/C39R/gJ58smykmrvPBAAAAAElFTkSuQmCC")
 
 /***/ }),
 
@@ -501,6 +681,16 @@ module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/
 
 /***/ }),
 
+/***/ "./asset/data/magic/WeaponSpecs/OdeToDeceit_inactive.data.png":
+/*!********************************************************************!*\
+  !*** ./asset/data/magic/WeaponSpecs/OdeToDeceit_inactive.data.png ***!
+  \********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAK5QTFRFAAAAAAAATU1NMjIyWVlZQEBAKioqLCwsSUlJKSkpRkZGIyMjNDQ0T09PPz8/NjY2ICAgR0dHUlJSPj4+NTU1JycnRUVFBgYGLS0tTk5ODQ0NGxsbSEhIJiYmHBwcFRUVJSUlX19fMzMzGRkZGhoaOTk5Nzc3Hh4eODg4Ly8vLi4uW1tbKysrTExMIiIiHx8fVlZWPT09QUFBREREMDAwS0tLOjo6VFRUPDw8HR0d2mclfQAAADp0Uk5TAP///////////////////////////////////////////////////////////////////////////53JphUAAAEYSURBVHic1dTBS8MwFMfxfN1cnGzYHnRVEQQPggx0Iv7/R0G8KB4cikyG4KBQJ9V261rnwXZt0rTX/Y7hw8t7eRBEzbDeEJHUgQiIRWbLIA2Yi9YslaVQErTBr4J0iBt8Wl56eRm0+cvCFb2PxAgdP5ztNuFrWlHx8Geb2N0jeTNCjr2F9I6Wbb6Yh8FuBj1G+3JY8Y7I1kEcyfA1240W0nE2o40nsbpDHVy6YJxTesjZ8PQxUU41sB9uPdSA2Fb3XnEq5Nx/FqrTwIvJu8YpkEGk9qeBXE7GWleAWN8zvctD+vKuxOUgztwtc6sQp+trBy5AOGnrBy5Ca2dU7lKIuOLW4P4h13BjcllFKae1YOFLMsCqrAP8BahHXCmBn+D5AAAAAElFTkSuQmCC")
+
+/***/ }),
+
 /***/ "./asset/data/magic/WeaponSpecs/fsoa.data.png":
 /*!****************************************************!*\
   !*** ./asset/data/magic/WeaponSpecs/fsoa.data.png ***!
@@ -518,6 +708,16 @@ module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAASBQTFRFAAAAAAAAgYGBeHh4eXl5e3t7a2trkpKSjIyM9PT08/Pz39/fyMjIWFhYOTk5NDQ0aWlpYGBgXl5eYmJizs7ORkZGUlJSX19fZGRkLi4uAQEBQkJCT09PUVFRWVlZaGhod3d3hoaGSkpKEhISKCgoqampWlpacHBwdnZ2enp6UFBQYWFhZmZmW1tbbW1tdHR0h4eHR0dHOzs7VFRUioqKgoKCb29vqKioKysrKioqc3NzSEhIcXFxp6enXFxcGxsbICAgPj4+JCQkQEBAcnJyZ2dnGRkZPz8/bm5uvr6+mZmZREREampqHBwcQUFBMTExSUlJPDw8FxcXJycnJSUlMjIyRUVFNjY2IiIiQ0NDS0tLKSkpLy8vU1NTuLi4TExMJ9+HbgAAAGB0Uk5TAP//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////NrNwFAAAAYlJREFUeJzN0kFLAkEUB/D5BxpqKwRusRBBSVF2SYMModSgTnaog0F9vKKiLoGHSIqQIIzIpIsWERGSYVLSUm5qTbsriunM6rE5zc78eO/NvgfS4cJ/hPoNbQ+hr3KdciCIuSohUyMIu0rUO5RkCmoEHXmHltj8TNUtZUMtAiQta8UEPAy9FdgQw/eadFadUhLoLS+ilKUEwgC5GwFoF1DUJaNGTCYp3Hjpy4uPle9RFLjQe07IjJKxiSZkstPAKQ/O4WYMuC5bXbm0n75fcGrUZHelICI1rliO5+O+Ay4kWIjPflqRS8vaF/+HIxQL0FcHfiK1tnBq9PfuL0OxxCZiJHhiMBQIpdyHU+KeltQ4ohCQzdGGUeRA2P2RpQhtOW45cLoa38CFCBdbozEgVrHDdE0QdnOe7f5ChL+s2x1AuK/CuxxXg6DqZjEa7OdUWINY2wpeegRbOslz9YjrHz2bhDS3gwFXbBt81JDaaxk8ejKUOoQkJXxnHUSEJ8FqLyt1G0WY8/jv4C+np4wpIzAPgQAAAABJRU5ErkJggg==")
+
+/***/ }),
+
+/***/ "./asset/data/magic/WeaponSpecs/odeToDeceit.data.png":
+/*!***********************************************************!*\
+  !*** ./asset/data/magic/WeaponSpecs/odeToDeceit.data.png ***!
+  \***********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAUFQTFRFAAAAAAACTTxeMic+WUZtQDJOKiA1LCM2AAAASTpaPhwXRjZWIxwsTyMfXlAnYConTiQgNipDLxcQbDAsUUBlXSonNCpBJh8xUkUjDwAAUSMjLSQ4TjxfXyonUUUjDw8AGxYeVUkiNipCbi8sXikmJhsvGxYjbTArKCIyFg8aOBoVFQ8aX0pzay8sPjFOOhsWYisoMig/JR4tJw8PGhUhUUFlaC8pQDBNOStGNytDQx4aHhokbzEsViUiVCUiTyIeLyQ6Myc/Tz5iOitGLiU5OCpFTz5hJR8uWkdwQDBOKyI1SzxeNytEIhsoMyg/HhsoVkNrPTBKGhYiQTNPIhooRDRVJR4vRzdZKyI3TDtdLyU8TT1gNCpCNypDGhUiTT1fOS1HIhoqRzdYJB4tSzpcOi1IZFQoSDweHhUkVkkkQDca+bbj7wAAAGt0Uk5TAP////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////9H/20fAAABDElEQVR4nNXUrUuDURTH8fOdslkMc2DQtmpd0mQQwaKIiCwMhgj+RzIQEURERAQRBDGYBIPValOxaDHMsT36DB+fl3vuS90vHj6cw70HDhIYRhsiUQhEYCCptUHGoCdlupEPTjCIrQ8yyW8+pr66yXAbrDHMq8y8RE44yzvTMX32dKzzlycnZC5xj+7H0Biqz+q95x9Z6JVjeZfuRoUswnflVrI71CBL/fGbnNIhy3AdGVUFrsBVAKQ2z6XhTMjq24OYToFrXCjOgKxzrrkiZIMz1RUgm5zqLg/Z4sTicpAmxzaXhTRLHAVAWnBodVnY5sDu/iGyzb7DJZAd6Lhc2nGXvSBYOEkO6MsowB85z0Yp4QqU9gAAAABJRU5ErkJggg==")
 
 /***/ }),
 
@@ -698,6 +898,36 @@ module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAAIQAAAAUCAMAAAB7/GXWAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAutQTFRFAAAAh4bRfYPLOTk5Nzc3ipDSll3HkSnGg4TQPDw8Ojo6MzMzODg4hobRkCfIm0vOonLQo1/TiobUQUFBPz8/e4PLMgKEQAaYZw+xliDLpkvWsXvfkI3XNjY2FRUVGhoaJSUlNDQ0Pj4+SEhIPT09eoPHJgJLKQJcLQJ6MwKUOgGjWga3sSnhvZTpk4faDg4OEBAQExMTFhYWGRkZIiIiT09PeoPIJgZDJAI6LQJyNQKcSAKzmxbXv4bpx2TvoxDrgITXDAwMEhISFxcXHR0dNTU1KQZUMAhmKQJkNQKbVAi8qzDgw4frymTvvRjuXw/lTQ/ifYTUUVFRUFBQQEBAKSkpJCQke4TLMAZpMAhuNQmcPgnDQAbHbwnWsi7nwX3rx27vxxjvdAvmVBDlShLiRRDafYTRGBgYKioqQ0NDLS0tJiYmfYTSNQmYNQmWPgu9Rg/dVAvlmw/rx03vypTvymHvyCDveA/nWg/lTRLjRhLiRhLdRRDIfYTQTExMVlZWRUVFLi4uJycnIyMjICAghIbgPg+8QA/KSg/gYg/muhDvyl/vz6Lv0nHvzCDvkw/paQ/oWhDmVBLlTRLgRhLRhIbbHh4eWlpaRkZGKysrKCgoISEhhIbfTQ/fkRDqyhjvzofv06nw14rv1zDvowvpigvpjRjpkBjpgw/ndBDmVxLkh4bmREREV1dXXV1dXFxcTU1NMjIyMTExjYbovRjvzinw0qDw1qzv27Hw3qPv3XXv1WfvzWftzmrt20Hv1g/tk4brX19fY2NjZGRkUlJSU1NTiobpdw/nqwvryinu3G7v3p7v4bfv4q3v4Z/v47nvzmrl4pPwOzs7R0dHaWlpaGhoZmZma2trZWVlbw/njw/osRjqyybs2EHu4Grv5nXv0JDmLCwsYWFhWFhYh4boTRDjVxLlYhDldxLnhxLooA/px4bvLy8vh4bjRhLfTRLiVBLjXxjllobrh4bfRhjXShjeioboh4beh4bg16AadQAAAelJREFUeJxjZBgEgBGJyfgPizzRgrhlmBn/4BdEOIKVkZHxB7pS4gVxy3ACBb/gFYQ7gpcRBN6hKiVeELcMM8d/TsZv3/AJwhwhyggBT5CVEi+IW0YWKngHjyDUEaqMMHAJoZR4QdwyskKQ0BF+ew+3IMQRZiARqAkHYEqJF8QtIyskBBb8wHCO8wtOQbAjzAQY/zPB/bEeaijRgrhlZIUZ/zMIf/ygBxJb9weXIMgR4YyoYBYDSYIMOGVYdBnM7jKovHkoK87I+PrehT84BIGOyGFEB82kCIIBVhmWZIa7H8xnVjFe0WVknJfMwNjwB7sg0BGtKJqfSzEyZpMiCAZYZZgdg94+3WXo8kJybQjji3lmrhl/sQuComMOmidCGUgSZMApwxx8uhvEiVlaoJK7Q6LjGw5BcMLcjKLfAWIs8YK4ZTi5BHqA2fHNBVfGXr1F93AJQrLoMST9+jBjiRfELXNpfefJI9qgYqG6TQOnILSwOtbZBdWvgGQs0YK4ZS419zgwl+yOMWaUxS0IK7afQPWLIhtLvCBuGS6xpGctR6N3WuMRhFdgb8H6+VCNJV4QtwxX5Vzvv2ve4BNEVOWfgfq50I0lXhC3DHPD5Ro9vIJIjZrvjByYxhIviFuGmeEvfkFGTGn6AwBjTugVhA9vXwAAAABJRU5ErkJggg==")
+
+/***/ }),
+
+/***/ "./asset/data/ranged/deathsswiftness.data.png":
+/*!****************************************************!*\
+  !*** ./asset/data/ranged/deathsswiftness.data.png ***!
+  \****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("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")
+
+/***/ }),
+
+/***/ "./asset/data/ranged/deathsswiftness_inactive.data.png":
+/*!*************************************************************!*\
+  !*** ./asset/data/ranged/deathsswiftness_inactive.data.png ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("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")
+
+/***/ }),
+
+/***/ "./asset/data/ranged/perfectEquilibrium.data.png":
+/*!*******************************************************!*\
+  !*** ./asset/data/ranged/perfectEquilibrium.data.png ***!
+  \*******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAABsAAAAbCAIAAAACtmMCAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAABUlJREFUeJytlUtz01YUx/kGRJIfsi0/Esf2vXpcScG2/LYTQmJLfsUJE5OExgm0dPoRmH4Alu10pjNt2HYH3ZVuoEy7g2mgq3bbBSUzwAYamIQ6qOfKdsiDJTPXdzS6Rz+fex7/c2blW9/HXWfgR9Qw0cPquaB2Lqgng7oR1DN0qfkItjK4lpJKE3I2KJUmsWmI9Qy81xwDapmkX8G3RA8REh4RAecc6Glqp+UELS9oRUGZl3AzqRT8oSfu8I479I9bKQVw21DmJDilNjmB2qdHUG1EHHo3wIFdQdDKgl4J4G5enovEnnHx5270wpN47oEHuRqF93oFbAJD7ntoaEg8xOkFQQejiqDP+PVZP1ovkJog/8tqu5y+61J3OQLLCqJeCU71mQC1PA4dEmnsKC5IZuPSkoFXC+KlFGlF8ZW80gil/uOye1xun8vscek+pzQj6EqBtKNgI64VxKUMOR/X8g4hdUgEB3MCmYnhblmy4kotLHdieCOHrhbkTnzqpmf6gJ0+4GCf2vJISxhdKeKNrNKZJLWwZCXQclmZjmtZATgjIuDzgriQkWsJ9IuLXnObA+/QalpcVtSG17LZps2ZNgvPuEvEtSSpC9pjl7zLgr1Yw7iVHmTpCLEg4OUimY+IL9nkay67zyTvuIklyItxte67bLPXbBZ21fLJSwnVCiR/dufA5jUnvXTJ1XF0sUhzcEikDhcFcTEtNePKA87YY8t9Zu4dk73lUau8VuU/77M3bOZan4FntcZnb3vgtNRnjD1GeciJLYw7aSDoWWHkIzhcCpBqFJIrtyZVkzceuVo2+5nNWve8aiO4/ofvB5uBXW0ItbueT222YbPGNqdaXrkdg9TDt1pJAM4xoj4bIK0J1MvhlSmlNQHWrQfub2zm+o7X+hH9Zp+1bqMvn/LwpvXQTa/fjuK1JCRQbUXhW0rMnyCe92kmr9X8SjuKPjHAmrTH1Qa/tc9t22f/ssd+t8/e3Oe0ppd0wCCNexnSngB73eT1WR8lHCOWwUeeEp3AabWA2FUAqpoCWYhs3sd/22Ob95G6EIIg4MtpaZloVmBoTIn8KSK9teOj6ScLjo8rOmmGtQb/3T4L3v3p+Pg99ZEH3/HaObxuUB+rfu3DPjpxhIjgXhZf0khjXDW9jYeur+2x6zs8RPBXiOOtxPWn/Fc204Q4mrzSHIeIQxyB++E4khrkOu/khDe2R7m+61XrQs/JNeyqJZhOrls2l9l2EZprWiHDXL8njupRbsagHtN7TLHPXHjH5KAe530QqS/63A0o8j6rzfNq1Zdz6rFM65ElUI9NhBdP1OOoZ5S5CH7JTr1hs/tjyTsuxQrJHegQ3zrtGW7VZlTTJy8ipR5M/uTKvh1LvnFJrzh5/nTPOLIotjOSiRL3nL5+DH0dRqsp8aJCGl5z1NfE6Wu0llLqIe0Rp0Bf33dJJsbtNBCO9PVQe+JouSLWkWxGpMVEYrOQ2CjKCzF9y1M5YGYO2EqfmdpyS4sIXS2ijZzUicu1sFjHaHn6lPakBuodBKjYMdBQHyfwZo7ABd+ymT3W0Ud2pI80gWI3hVbyuGOADFJ9dGbOMQ0f3F0vOso8E9Av+HEPNDwIQVB3qYyDhoN8ESuEekWq4dMDDQ8MdEw/quGHc0bLCA4UWkjQpwWxW4Cox565Es9huRMv3HTO1CZxt+DMGccy/x6nHhJhMA6g2mDawH86A4fOwlaalALBJ+7Qjht2pRzECxmYhXS8FKjYHMXBTD0yr7UPzGstH4HpjCxDLseV/LhUiaN6DiY4zGt6enJeh4EzJH7c9T+eaE2KsaC/lwAAAABJRU5ErkJggg==")
 
 /***/ }),
 
@@ -32571,8 +32801,8 @@ __webpack_require__.r(__webpack_exports__);
 const appName = 'job-gauges';
 const versionUrl = 'https://nadyanayme.github.io/job-gauges/dist/version.json';
 const majorVersion = 1;
-const minorVersion = 0;
-const patchVersion = 9;
+const minorVersion = 1;
+const patchVersion = 0;
 
 
 /***/ }),
@@ -32667,6 +32897,31 @@ const magic_gauge = {
             },
             reverse_split: {
                 x: 30,
+                y: 5,
+            },
+        },
+    },
+    odeToDeceit: {
+        isActiveOverlay: true,
+        active: false,
+        time: 0,
+        isOnCooldown: false,
+        cooldownDuration: 0,
+        position: {
+            active_orientation: {
+                x: 0,
+                y: 0,
+            },
+            grouped: {
+                x: 0,
+                y: 5,
+            },
+            split: {
+                x: 0,
+                y: 5,
+            },
+            reverse_split: {
+                x: 0,
                 y: 5,
             },
         },
@@ -32895,8 +33150,8 @@ const necromancy_gauge = {
             time: 0,
             active: false,
         },
-        fourth: {
-            name: '4th_Conjure',
+        phantom: {
+            name: 'Phantom_Guardian',
             isActiveOverlay: true,
             time: 0,
             active: false,
@@ -33073,8 +33328,37 @@ const ranged_gauge = {
         x: 50,
         y: 50,
     },
+    ammo: {
+        isActiveOverlay: true,
+        activeAmmo: '',
+    },
     deathsSwiftness: {
-        isActiveOverlay: false,
+        isActiveOverlay: true,
+        active: true,
+        time: 0,
+        isOnCooldown: false,
+        cooldownDuration: 0,
+        position: {
+            active_orientation: {
+                x: 0,
+                y: 0,
+            },
+            grouped: {
+                x: 81,
+                y: 5,
+            },
+            split: {
+                x: 81,
+                y: 5,
+            },
+            reverse_split: {
+                x: 81,
+                y: 5,
+            },
+        },
+    },
+    crystalRain: {
+        isActiveOverlay: true,
         active: false,
         time: 0,
         isOnCooldown: false,
@@ -33085,16 +33369,65 @@ const ranged_gauge = {
                 y: 0,
             },
             grouped: {
-                x: 0,
-                y: 0,
+                x: 35,
+                y: 60,
             },
             split: {
+                x: 35,
+                y: 60,
+            },
+            reverse_split: {
+                x: 35,
+                y: 60,
+            },
+        },
+    },
+    splitSoul: {
+        isActiveOverlay: true,
+        active: true,
+        time: 0,
+        isOnCooldown: false,
+        cooldownDuration: 0,
+        position: {
+            active_orientation: {
                 x: 0,
                 y: 0,
             },
+            grouped: {
+                x: 81,
+                y: 55,
+            },
+            split: {
+                x: 81,
+                y: 55,
+            },
             reverse_split: {
+                x: 81,
+                y: 55,
+            },
+        },
+    },
+    perfectEquilibrium: {
+        name: 'Perfect_Equilibrium',
+        isActiveOverlay: true,
+        active: true,
+        stacks: 0,
+        position: {
+            active_orientation: {
                 x: 0,
                 y: 0,
+            },
+            grouped: {
+                x: 40,
+                y: 11,
+            },
+            split: {
+                x: 40,
+                y: 11,
+            },
+            reverse_split: {
+                x: 40,
+                y: 11,
             },
         },
     },
@@ -33331,6 +33664,90 @@ function displayInactiveInstability(gauges) {
     alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.magic.position.x +
         gauges.magic.instability.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.magic.position.y +
         gauges.magic.instability.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(ultimateImages.inactive.toDrawableData()), ultimateImages.inactive.width, 1000);
+}
+
+
+/***/ }),
+
+/***/ "./lib/magic/ode_to_deceit.ts":
+/*!************************************!*\
+  !*** ./lib/magic/ode_to_deceit.ts ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   odeToDeceitOverlay: () => (/* binding */ odeToDeceitOverlay)
+/* harmony export */ });
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+/* eslint-disable @typescript-eslint/no-require-imports */
+
+
+const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
+    inactive: __webpack_require__(/*! ../../asset/data/magic/WeaponSpecs/OdeToDeceit_inactive.data.png */ "./asset/data/magic/WeaponSpecs/OdeToDeceit_inactive.data.png"),
+    active: __webpack_require__(/*! ../../asset/data/magic/WeaponSpecs/odeToDeceit.data.png */ "./asset/data/magic/WeaponSpecs/odeToDeceit.data.png"),
+});
+let lastValue;
+let scaledOnce = false;
+async function odeToDeceitOverlay(gauges) {
+    const { magic } = gauges;
+    const { odeToDeceit } = magic;
+    if (!odeToDeceit.isActiveOverlay) {
+        clearOdetoDeceitOverlay();
+        return;
+    }
+    await ultimateImages.promise;
+    if (!scaledOnce) {
+        Object.keys(ultimateImages).forEach(async (key) => {
+            ultimateImages[key] = await _utility__WEBPACK_IMPORTED_MODULE_0__.resizeImageData(ultimateImages[key], gauges.scaleFactor);
+        });
+        scaledOnce = true;
+    }
+    // If Crystal Rain Debuff is not active then it is available
+    if (!odeToDeceit.active) {
+        displayActiveCrystalRain(gauges);
+        alt1.overLayRefreshGroup('OdeToDeceit_Text');
+        alt1.overLayClearGroup('OdeToDeceit_Text');
+    }
+    else {
+        odeToDeceit.isOnCooldown = false;
+        _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('OdeToDeceit_Cooldown_Text');
+        displayInactiveOdeToDeceit(gauges);
+        if (lastValue !== odeToDeceit.time) {
+            odeToDeceit.cooldownDuration = 0;
+            _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('OdeToDeceit_Cooldown_Text');
+            alt1.overLaySetGroup('OdeToDeceit_Text');
+            alt1.overLayFreezeGroup('OdeToDeceit_Text');
+            alt1.overLayClearGroup('OdeToDeceit_Text');
+            alt1.overLayTextEx(odeToDeceit.time === 0 ? '' : odeToDeceit.time.toString(), _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(magic.position.x +
+                odeToDeceit.position.active_orientation.x +
+                26, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(magic.position.y +
+                odeToDeceit.position.active_orientation.y +
+                26, gauges.scaleFactor), 3000, undefined, true, true);
+            alt1.overLayRefreshGroup('OdeToDeceit_Text');
+        }
+    }
+    lastValue = odeToDeceit.time;
+}
+function clearOdetoDeceitOverlay() {
+    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('OdeToDeceit_Text');
+    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('OdeToDeceit_Cooldown_Text');
+    alt1.overLayClearGroup('OdeToDeceit');
+}
+function displayActiveCrystalRain(gauges) {
+    alt1.overLaySetGroup('OdeToDeceit');
+    alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.magic.position.x +
+        gauges.magic.odeToDeceit.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.magic.position.y +
+        gauges.magic.odeToDeceit.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(ultimateImages.active.toDrawableData()), ultimateImages.active.width, 1000);
+}
+function displayInactiveOdeToDeceit(gauges) {
+    alt1.overLaySetGroup('OdeToDeceit');
+    alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.magic.position.x +
+        gauges.magic.odeToDeceit.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.magic.position.y +
+        gauges.magic.odeToDeceit.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(ultimateImages.inactive.toDrawableData()), ultimateImages.inactive.width, 1000);
 }
 
 
@@ -33672,6 +34089,7 @@ async function conjureOverlay(gauges) {
         gauges.necromancy.conjures.skeleton.time,
         gauges.necromancy.conjures.zombie.time,
         gauges.necromancy.conjures.ghost.time,
+        gauges.necromancy.conjures.phantom.time,
     ];
     const minValue = Math.min.apply(null, earliest_conjure.filter(Boolean));
     if (minValue !== Infinity && minValue !== lastMinValue) {
@@ -34068,6 +34486,352 @@ async function soulsOverlay(gauges) {
 
 /***/ }),
 
+/***/ "./lib/ranged/active_ammo.ts":
+/*!***********************************!*\
+  !*** ./lib/ranged/active_ammo.ts ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   findAmmo: () => (/* binding */ findAmmo)
+/* harmony export */ });
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+/* eslint-disable @typescript-eslint/no-require-imports */
+
+
+var quiverImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
+    bik: __webpack_require__(/*! ../../asset/data/buffs/RangedAmmo/bik_arrows.data.png */ "./asset/data/buffs/RangedAmmo/bik_arrows.data.png"),
+    ful: __webpack_require__(/*! ../../asset/data/buffs/RangedAmmo/ful_arrows.data.png */ "./asset/data/buffs/RangedAmmo/ful_arrows.data.png"),
+    jas_dragonbane: __webpack_require__(/*! ../../asset/data/buffs/RangedAmmo/jas_dragonbane.data.png */ "./asset/data/buffs/RangedAmmo/jas_dragonbane.data.png"),
+    wen: __webpack_require__(/*! ../../asset/data/buffs/RangedAmmo/wen_arrows.data.png */ "./asset/data/buffs/RangedAmmo/wen_arrows.data.png"),
+    blackstone: __webpack_require__(/*! ../../asset/data/buffs/RangedAmmo/blackstone_arrows.data.png */ "./asset/data/buffs/RangedAmmo/blackstone_arrows.data.png"),
+    deathspore: __webpack_require__(/*! ../../asset/data/buffs/RangedAmmo/deathspore_arrows-quiver.data.png */ "./asset/data/buffs/RangedAmmo/deathspore_arrows-quiver.data.png"),
+    diamond_bak: __webpack_require__(/*! ../../asset/data/buffs/RangedAmmo/diamond_bak_bolts.data.png */ "./asset/data/buffs/RangedAmmo/diamond_bak_bolts.data.png"),
+    hydrix_bak: __webpack_require__(/*! ../../asset/data/buffs/RangedAmmo/hydrix_bak_bolts.data.png */ "./asset/data/buffs/RangedAmmo/hydrix_bak_bolts.data.png"),
+    ruby_bak: __webpack_require__(/*! ../../asset/data/buffs/RangedAmmo/ruby_bak_bolts.data.png */ "./asset/data/buffs/RangedAmmo/ruby_bak_bolts.data.png"),
+    onyx_bak: __webpack_require__(/*! ../../asset/data/buffs/RangedAmmo/onyx_bak_bolts.data.png */ "./asset/data/buffs/RangedAmmo/onyx_bak_bolts.data.png"),
+});
+let lastAmmo;
+async function findAmmo(gauges, buffs) {
+    if (!buffs) {
+        return;
+    }
+    let ammmoActive = 0;
+    let currentAmmo = '';
+    for (let [_key, value] of Object.entries(buffs)) {
+        let checkBik = value.countMatch(quiverImages.bik, false);
+        let checkFul = value.countMatch(quiverImages.ful, false);
+        let checkWen = value.countMatch(quiverImages.wen, false);
+        let checkJas = value.countMatch(quiverImages.jas_dragonbane, false);
+        let checkBlackstone = value.countMatch(quiverImages.blackstone, false);
+        let checkDeathspores = value.countMatch(quiverImages.deathspore, false);
+        let checkDiamond = value.countMatch(quiverImages.diamond_bak, false);
+        let checkHydrix = value.countMatch(quiverImages.hydrix_bak, false);
+        let checkRuby = value.countMatch(quiverImages.ruby_bak, false);
+        let checkOnyx = value.countMatch(quiverImages.onyx_bak, false);
+        if (checkBik.failed == 0 || checkBik.passed > 28) {
+            currentAmmo = 'BIK';
+            ammmoActive++;
+        }
+        if (checkFul.failed == 0 || checkFul.passed > 28) {
+            currentAmmo = 'FUL';
+            ammmoActive++;
+        }
+        if (checkWen.failed == 0 || checkWen.passed > 28) {
+            currentAmmo = 'WEN';
+            ammmoActive++;
+        }
+        if (checkJas.failed == 0 || checkJas.passed > 28) {
+            currentAmmo = 'JAS';
+            ammmoActive++;
+        }
+        if (checkBlackstone.failed == 0 || checkBlackstone.passed > 28) {
+            currentAmmo = 'BSD';
+            ammmoActive++;
+        }
+        if (checkDeathspores.failed == 0 || checkDeathspores.passed > 28) {
+            currentAmmo = 'DSP';
+            ammmoActive++;
+        }
+        if (checkDiamond.failed == 0 || checkDiamond.passed > 180) {
+            currentAmmo = 'BAK (D)';
+            ammmoActive++;
+        }
+        if (checkHydrix.failed == 0 || checkHydrix.passed > 180) {
+            currentAmmo = 'BAK (H)';
+            ammmoActive++;
+        }
+        if (checkRuby.failed == 0 || checkRuby.passed > 180) {
+            currentAmmo = 'BAK (R)';
+            ammmoActive++;
+        }
+        if (checkOnyx.failed == 0 || checkOnyx.passed > 180) {
+            currentAmmo = 'BAK (O)';
+            ammmoActive++;
+        }
+    }
+    if (ammmoActive === 0) {
+        gauges.ranged.ammo.activeAmmo = '';
+    }
+    else {
+        gauges.ranged.ammo.activeAmmo = currentAmmo;
+        if (lastAmmo !== currentAmmo) {
+            lastAmmo = currentAmmo;
+        }
+    }
+    displayAmmoName(gauges, currentAmmo);
+}
+function displayAmmoName(gauges, ammo) {
+    alt1.overLaySetGroup(`Ammo_Text`);
+    alt1.overLayFreezeGroup(`Ammo_Text`);
+    alt1.overLayClearGroup(`Ammo_Text`);
+    alt1.overLayTextEx(gauges.ranged.ammo.activeAmmo, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.y + 80, gauges.scaleFactor), 3000, undefined, true, true);
+    alt1.overLayRefreshGroup('Ammo_Text');
+}
+
+
+/***/ }),
+
+/***/ "./lib/ranged/crystalRain.ts":
+/*!***********************************!*\
+  !*** ./lib/ranged/crystalRain.ts ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   crystalRainOverlay: () => (/* binding */ crystalRainOverlay)
+/* harmony export */ });
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+/* eslint-disable @typescript-eslint/no-require-imports */
+
+
+const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
+    inactive: __webpack_require__(/*! ../../asset/data/buffs/WeaponSpecials/crystalRain_inactive.data.png */ "./asset/data/buffs/WeaponSpecials/crystalRain_inactive.data.png"),
+    active: __webpack_require__(/*! ../../asset/data/buffs/WeaponSpecials/crystalRain.data.png */ "./asset/data/buffs/WeaponSpecials/crystalRain.data.png"),
+});
+let lastValue;
+let scaledOnce = false;
+async function crystalRainOverlay(gauges) {
+    const { ranged } = gauges;
+    const { crystalRain } = ranged;
+    if (!crystalRain.isActiveOverlay) {
+        clearCrystalRainOverlay();
+        return;
+    }
+    await ultimateImages.promise;
+    if (!scaledOnce) {
+        Object.keys(ultimateImages).forEach(async (key) => {
+            ultimateImages[key] = await _utility__WEBPACK_IMPORTED_MODULE_0__.resizeImageData(ultimateImages[key], gauges.scaleFactor);
+        });
+        scaledOnce = true;
+    }
+    // If Crystal Rain Debuff is not active then it is available
+    if (!crystalRain.active) {
+        displayActiveCrystalRain(gauges);
+        alt1.overLayRefreshGroup('CrystalRain_Text');
+        alt1.overLayClearGroup('CrystalRain_Text');
+    }
+    else {
+        crystalRain.isOnCooldown = false;
+        _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('CrystalRain_Cooldown_Text');
+        displayInactiveCrystalRain(gauges);
+        if (lastValue !== crystalRain.time) {
+            crystalRain.cooldownDuration = 0;
+            _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('CrystalRain_Cooldown_Text');
+            alt1.overLaySetGroup('CrystalRain_Text');
+            alt1.overLayFreezeGroup('CrystalRain_Text');
+            alt1.overLayClearGroup('CrystalRain_Text');
+            alt1.overLayTextEx(crystalRain.time === 0 ? '' : crystalRain.time.toString(), _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(ranged.position.x +
+                crystalRain.position.active_orientation.x +
+                26, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(ranged.position.y +
+                crystalRain.position.active_orientation.y +
+                26, gauges.scaleFactor), 3000, undefined, true, true);
+            alt1.overLayRefreshGroup('CrystalRain_Text');
+        }
+    }
+    lastValue = crystalRain.time;
+}
+function clearCrystalRainOverlay() {
+    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('CrystalRain_Text');
+    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('CrystalRain_Cooldown_Text');
+    alt1.overLayClearGroup('CrystalRain');
+}
+function displayActiveCrystalRain(gauges) {
+    alt1.overLaySetGroup('CrystalRain');
+    alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.x +
+        gauges.ranged.crystalRain.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.y +
+        gauges.ranged.crystalRain.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(ultimateImages.active.toDrawableData()), ultimateImages.active.width, 1000);
+}
+function displayInactiveCrystalRain(gauges) {
+    alt1.overLaySetGroup('CrystalRain');
+    alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.x +
+        gauges.ranged.crystalRain.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.y +
+        gauges.ranged.crystalRain.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(ultimateImages.inactive.toDrawableData()), ultimateImages.inactive.width, 1000);
+}
+
+
+/***/ }),
+
+/***/ "./lib/ranged/deathsSwiftness.ts":
+/*!***************************************!*\
+  !*** ./lib/ranged/deathsSwiftness.ts ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   deathsSwiftnessOverlay: () => (/* binding */ deathsSwiftnessOverlay)
+/* harmony export */ });
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+/* eslint-disable @typescript-eslint/no-require-imports */
+
+
+const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
+    inactive: __webpack_require__(/*! ../.././asset/data/ranged/deathsswiftness_inactive.data.png */ "./asset/data/ranged/deathsswiftness_inactive.data.png"),
+    active: __webpack_require__(/*! ../.././asset/data/ranged/deathsswiftness.data.png */ "./asset/data/ranged/deathsswiftness.data.png"),
+});
+let lastValue;
+let scaledOnce = false;
+async function deathsSwiftnessOverlay(gauges) {
+    const { ranged } = gauges;
+    const { deathsSwiftness } = ranged;
+    const { x, y } = ranged.deathsSwiftness.position.active_orientation;
+    if (!deathsSwiftness.isActiveOverlay) {
+        clearDeathsSwiftnessOverlays();
+        return;
+    }
+    await ultimateImages.promise;
+    if (!scaledOnce) {
+        Object.keys(ultimateImages).forEach(async (key) => {
+            ultimateImages[key] = await _utility__WEBPACK_IMPORTED_MODULE_0__.resizeImageData(ultimateImages[key], gauges.scaleFactor);
+        });
+        scaledOnce = true;
+    }
+    // If DeathsSwiftness is not Active and is not on cooldown it should appear as able to be activated
+    if (!deathsSwiftness.active) {
+        if (!deathsSwiftness.isOnCooldown) {
+            displayActiveDeathsSwiftness(gauges);
+            alt1.overLayRefreshGroup('DeathsSwiftness_Text');
+            alt1.overLayClearGroup('DeathsSwiftness_Text');
+        }
+        else {
+            displayInactiveDeathsSwiftness(gauges);
+            alt1.overLayRefreshGroup('DeathsSwiftness_Text');
+            alt1.overLayClearGroup('DeathsSwiftness_Text');
+        }
+    }
+    else {
+        deathsSwiftness.isOnCooldown = false;
+        _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('DeathsSwiftness_Cooldown_Text');
+        displayActiveDeathsSwiftness(gauges);
+        if (lastValue !== deathsSwiftness.time) {
+            deathsSwiftness.cooldownDuration = 0;
+            _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('DeathsSwiftness_Cooldown_Text');
+            alt1.overLaySetGroup('DeathsSwiftness_Text');
+            alt1.overLayFreezeGroup('DeathsSwiftness_Text');
+            alt1.overLayClearGroup('DeathsSwiftness_Text');
+            alt1.overLayTextEx(deathsSwiftness.time === 0
+                ? ''
+                : deathsSwiftness.time.toString(), _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(ranged.position.x +
+                deathsSwiftness.position.active_orientation.x +
+                26, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(ranged.position.y +
+                deathsSwiftness.position.active_orientation.y +
+                26, gauges.scaleFactor), 3000, undefined, true, true);
+            alt1.overLayRefreshGroup('DeathsSwiftness_Text');
+        }
+    }
+    lastValue = deathsSwiftness.time;
+}
+function clearDeathsSwiftnessOverlays() {
+    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('DeathsSwiftness_Text');
+    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('DeathsSwiftness_Cooldown_Text');
+    alt1.overLayClearGroup('DeathsSwiftness');
+}
+function displayActiveDeathsSwiftness(gauges) {
+    alt1.overLaySetGroup('DeathsSwiftness');
+    alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.x +
+        gauges.ranged.deathsSwiftness.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.y +
+        gauges.ranged.deathsSwiftness.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(ultimateImages.active.toDrawableData()), ultimateImages.active.width, 1000);
+}
+function displayInactiveDeathsSwiftness(gauges) {
+    alt1.overLaySetGroup('DeathsSwiftness');
+    alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.x +
+        gauges.ranged.deathsSwiftness.position.active_orientation.x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.y +
+        gauges.ranged.deathsSwiftness.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(ultimateImages.inactive.toDrawableData()), ultimateImages.inactive.width, 1000);
+}
+
+
+/***/ }),
+
+/***/ "./lib/ranged/perfectEquilibrium.ts":
+/*!******************************************!*\
+  !*** ./lib/ranged/perfectEquilibrium.ts ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   peOverlay: () => (/* binding */ peOverlay)
+/* harmony export */ });
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+/* eslint-disable @typescript-eslint/no-require-imports */
+
+
+const bolgImage = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
+    perfectEquilibrium: __webpack_require__(/*! ../.././asset/data/ranged/perfectEquilibrium.data.png */ "./asset/data/ranged/perfectEquilibrium.data.png"),
+});
+let scaledOnce = false;
+let lastStacks = 0;
+async function peOverlay(gauges) {
+    const { perfectEquilibrium } = gauges.ranged;
+    const { stacks } = gauges.ranged.perfectEquilibrium;
+    if (!perfectEquilibrium.isActiveOverlay) {
+        return;
+    }
+    await bolgImage.promise;
+    if (!scaledOnce) {
+        Object.keys(bolgImage).forEach(async (key) => {
+            bolgImage[key] = await _utility__WEBPACK_IMPORTED_MODULE_0__.resizeImageData(bolgImage[key], gauges.scaleFactor);
+        });
+        scaledOnce = true;
+    }
+    const { position } = perfectEquilibrium;
+    const { x, y } = position.active_orientation;
+    alt1.overLaySetGroup('PerfectEquilibrium');
+    displayBuffImage(bolgImage.perfectEquilibrium);
+    if (stacks !== lastStacks) {
+        displayStacks(stacks);
+        lastStacks = stacks;
+    }
+    function displayBuffImage(image) {
+        alt1.overLayImage(_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.x + x, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.y + y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(image.toDrawableData()), image.width, 1000);
+    }
+    function displayStacks(stacks) {
+        alt1.overLaySetGroup(`PerfectEquilibrium_Text`);
+        alt1.overLayFreezeGroup(`PerfectEquilibrium_Text`);
+        alt1.overLayClearGroup(`PerfectEquilibrium_Text`);
+        alt1.overLayTextEx(stacks === 0 ? '0' : stacks.toString(), _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.x + x + 26, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.y + y + 26, gauges.scaleFactor), 30000, undefined, true, true);
+        alt1.overLayRefreshGroup('PerfectEquilibrium_Text');
+    }
+}
+
+
+/***/ }),
+
 /***/ "./lib/readBuffs.ts":
 /*!**************************!*\
   !*** ./lib/readBuffs.ts ***!
@@ -34078,23 +34842,34 @@ async function soulsOverlay(gauges) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   findBuffsBar: () => (/* binding */ findBuffsBar),
+/* harmony export */   findDebuffsBar: () => (/* binding */ findDebuffsBar),
 /* harmony export */   readBuffs: () => (/* binding */ readBuffs),
 /* harmony export */   testBuffSizes: () => (/* binding */ testBuffSizes)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var alt1_buffs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1/buffs */ "../node_modules/alt1/dist/buffs/index.js");
-/* harmony import */ var alt1_buffs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1_buffs__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var alt1_buffs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! alt1/buffs */ "../node_modules/alt1/dist/buffs/index.js");
+/* harmony import */ var alt1_buffs__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(alt1_buffs__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utility */ "./lib/utility.ts");
+/* harmony import */ var _ranged_active_ammo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ranged/active_ammo */ "./lib/ranged/active_ammo.ts");
+/* harmony import */ var _a1sauce__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../a1sauce */ "./a1sauce/index.ts");
+/* harmony import */ var _data_constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../data/constants */ "./data/constants.ts");
+/* harmony import */ var _a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../a1sauce/Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
 /* eslint-disable @typescript-eslint/no-require-imports */
 
 
 
 
-const buffs = new (alt1_buffs__WEBPACK_IMPORTED_MODULE_1___default())();
-const debuffs = new (alt1_buffs__WEBPACK_IMPORTED_MODULE_1___default())();
+
+
+
+
+const sauce = _a1sauce__WEBPACK_IMPORTED_MODULE_2__.A1Sauce.instance;
+sauce.setName(_data_constants__WEBPACK_IMPORTED_MODULE_3__.appName);
+const buffs = new (alt1_buffs__WEBPACK_IMPORTED_MODULE_5___default())();
+const debuffs = new (alt1_buffs__WEBPACK_IMPORTED_MODULE_5___default())();
 debuffs.debuffs = true;
-const buffsImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
+const buffsImages = alt1__WEBPACK_IMPORTED_MODULE_6__.webpackImages({
     /* Necromancy */
     darkness: __webpack_require__(/*! .././asset/data/buffs/Necromancy/Darkness.data.png */ "./asset/data/buffs/Necromancy/Darkness.data.png"),
     living_death: __webpack_require__(/*! .././asset/data/buffs/Ultimates/Living_Death.data.png */ "./asset/data/buffs/Ultimates/Living_Death.data.png"),
@@ -34105,13 +34880,20 @@ const buffsImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
     skeleton: __webpack_require__(/*! .././asset/data/buffs/Necromancy/skeleton_warrior-top.data.png */ "./asset/data/buffs/Necromancy/skeleton_warrior-top.data.png"),
     zombie: __webpack_require__(/*! .././asset/data/buffs/Necromancy/putrid_zombie-top.data.png */ "./asset/data/buffs/Necromancy/putrid_zombie-top.data.png"),
     ghost: __webpack_require__(/*! .././asset/data/buffs/Necromancy/vengeful_ghost-top.data.png */ "./asset/data/buffs/Necromancy/vengeful_ghost-top.data.png"),
+    phantom: __webpack_require__(/*! .././asset/data/buffs/Necromancy/Phantom_guardian-top.data.png */ "./asset/data/buffs/Necromancy/Phantom_guardian-top.data.png"),
     /* Magic */
     sunshine: __webpack_require__(/*! .././asset/data/buffs/Ultimates/Sunshine.data.png */ "./asset/data/buffs/Ultimates/Sunshine.data.png"),
     greaterSunshine: __webpack_require__(/*! .././asset/data/buffs/Ultimates/Greater_Sunshine.data.png */ "./asset/data/buffs/Ultimates/Greater_Sunshine.data.png"),
     bloodTithe: __webpack_require__(/*! .././asset/data/buffs/blood_tithe.data.png */ "./asset/data/buffs/blood_tithe.data.png"),
     glacialEmbrace: __webpack_require__(/*! .././asset/data/buffs/glacial_embrace.data.png */ "./asset/data/buffs/glacial_embrace.data.png"),
     instability: __webpack_require__(/*! .././asset/data/buffs/WeaponSpecials/Fsoa_Spec.data.png */ "./asset/data/buffs/WeaponSpecials/Fsoa_Spec.data.png"),
+    odeToDeceit: __webpack_require__(/*! .././asset/data/buffs/WeaponSpecials/OdeToDeceit.data.png */ "./asset/data/buffs/WeaponSpecials/OdeToDeceit.data.png"),
     tsunami: __webpack_require__(/*! .././asset/data/buffs/critical_strike.data.png */ "./asset/data/buffs/critical_strike.data.png"),
+    /* Ranged */
+    deathsSwiftness: __webpack_require__(/*! .././asset/data/buffs/Ultimates/Death's_Swiftness.data.png */ "./asset/data/buffs/Ultimates/Death's_Swiftness.data.png"),
+    greaterDeathsSwiftness: __webpack_require__(/*! .././asset/data/buffs/Ultimates/Greater_Death's_Swiftness.data.png */ "./asset/data/buffs/Ultimates/Greater_Death's_Swiftness.data.png"),
+    crystalRain: __webpack_require__(/*! .././asset/data/buffs/WeaponSpecials/crystalRainBuff.data.png */ "./asset/data/buffs/WeaponSpecials/crystalRainBuff.data.png"),
+    perfectEquilibrium: __webpack_require__(/*! .././asset/data/buffs/Perfect_Equilibrium-noborder.data.png */ "./asset/data/buffs/Perfect_Equilibrium-noborder.data.png"),
     /* Troubleshooting */
     mediumBuffs: __webpack_require__(/*! .././asset/data/errorhandling/medium_buffs.data.png */ "./asset/data/errorhandling/medium_buffs.data.png"),
     largeBuffs: __webpack_require__(/*! .././asset/data/errorhandling/large_buffs.data.png */ "./asset/data/errorhandling/large_buffs.data.png"),
@@ -34130,12 +34912,44 @@ async function retryOperation(operation, maxRetries, delay, attempt = 0) {
 }
 async function findBuffsBar() {
     console.info('Attempting to find buffs bar...');
+    const { x, y, maxhor, maxver } = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_4__.getSetting)('buffsPosition');
+    if (x !== undefined) {
+        buffs.pos = { x, y, maxhor, maxver };
+        console.info('Loaded previous buffs location!');
+    }
     if (buffs.pos == undefined) {
         buffs.find();
         if (buffs.pos == undefined) {
             throw new Error('BuffsBarSearchError: Failed to find buff bar');
         }
         else {
+            alt1.setTooltip('[JG] Found buffs!');
+            setTimeout(() => {
+                alt1.clearTooltip();
+            }, 2000);
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_4__.updateSetting)('buffsPosition', buffs.pos);
+            return;
+        }
+    }
+}
+async function findDebuffsBar() {
+    console.info('Attempting to find debuffs bar...');
+    const { x, y, maxhor, maxver } = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_4__.getSetting)('debuffsPosition');
+    if (x !== undefined) {
+        debuffs.pos = { x, y, maxhor, maxver };
+        console.info('Loaded previous debuffs location!');
+    }
+    if (debuffs.pos == undefined) {
+        debuffs.find();
+        if (debuffs.pos == undefined) {
+            throw new Error('BuffsBarSearchError: Failed to find debuff bar');
+        }
+        else {
+            alt1.setTooltip('[JG] Found debuffs!');
+            setTimeout(() => {
+                alt1.clearTooltip();
+            }, 2000);
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_4__.updateSetting)('debuffsPosition', debuffs.pos);
             return;
         }
     }
@@ -34143,7 +34957,7 @@ async function findBuffsBar() {
 function testBuffSizes() {
     var _a, _b;
     console.info('Checking to see if Buffs are set to "Medium" or "Large"');
-    let screen = alt1__WEBPACK_IMPORTED_MODULE_2__.captureHoldFullRs();
+    let screen = alt1__WEBPACK_IMPORTED_MODULE_6__.captureHoldFullRs();
     let pos = screen.findSubimage(buffsImages.mediumBuffs);
     let pos2 = screen.findSubimage(buffsImages.largeBuffs);
     if (((_a = pos[0]) === null || _a === void 0 ? void 0 : _a.x) !== undefined) {
@@ -34157,41 +34971,56 @@ function testBuffSizes() {
     return false;
 }
 retryOperation(findBuffsBar, 5, 6000)
-    .then(() => console.info('Found Buffs bar succesfully - starting overlay'))
+    .then(() => console.info('Found Buffs bar succesfully'))
     .catch(() => {
     let wrongBuffSize = testBuffSizes();
     if (!wrongBuffSize) {
-        _utility__WEBPACK_IMPORTED_MODULE_0__.helperItems.Output.insertAdjacentHTML('beforeend', `<p style="text-align:center;margin-top:10px;color:red;">Please make sure you have at least 1 buff on your buffs bar and then reload the app.</p>`);
-        console.warn('Please make sure you have at least 1 buff on your buffs bar and then reload the app.');
+        _utility__WEBPACK_IMPORTED_MODULE_0__.helperItems.Output.insertAdjacentHTML('beforeend', `<p style="text-align:center;margin-top:10px;color:red;">Please make sure you have at least 1 buff on your buffs bar and then reload the app. The easiest way is to use a Defensive ability (Freedom, Anticipate) or toggle on Bone Shield.</p>`);
+        console.warn('Please make sure you have at least 1 buff on your buffs bar and then reload the app. The easiest way is to use a Defensive ability (Freedom, Anticipate) or toggle on Bone Shield.');
+    }
+});
+retryOperation(findDebuffsBar, 5, 6000)
+    .then(() => console.info('Found Debuffs bar succesfully'))
+    .catch(() => {
+    let wrongBuffSize = testBuffSizes();
+    if (!wrongBuffSize) {
+        _utility__WEBPACK_IMPORTED_MODULE_0__.helperItems.Output.insertAdjacentHTML('beforeend', `<p style="text-align:center;margin-top:10px;color:red;">Please make sure you have at least 1 debuff on your debuffs bar and then reload the app. The easiest way is to toggle a Prayer on.</p>`);
+        console.warn('Please make sure you have at least 1 debuff on your debuffs bar and then reload the app. The easiest way is to toggle a Prayer on.');
     }
 });
 async function readBuffs(gauges) {
     if (buffs.pos !== undefined) {
-        updateBuffData(gauges, buffsImages.sunshine, 300, updateSunshine);
-        updateBuffData(gauges, buffsImages.greaterSunshine, 100, updateSunshine);
+        updateBuffData(buffs, gauges, buffsImages.deathsSwiftness, 300, updateDeathsSwiftness);
+        updateBuffData(buffs, gauges, buffsImages.greaterDeathsSwiftness, 300, updateDeathsSwiftness);
+        updateBuffData(buffs, gauges, buffsImages.sunshine, 300, updateSunshine);
+        updateBuffData(buffs, gauges, buffsImages.greaterSunshine, 100, updateSunshine);
         if (gauges.necromancy.livingDeath.isActiveOverlay) {
-            updateBuffData(gauges, buffsImages.living_death, 400, updateLivingDeath);
+            updateBuffData(buffs, gauges, buffsImages.living_death, 400, updateLivingDeath);
         }
         switch (gauges.combatStyle) {
             case 4:
-                updateBuffData(gauges, buffsImages.soul, 200, updateSoulCount);
-                updateBuffData(gauges, buffsImages.necrosis, 200, updateNecrosisCount);
+                updateBuffData(buffs, gauges, buffsImages.soul, 200, updateSoulCount);
+                updateBuffData(buffs, gauges, buffsImages.necrosis, 200, updateNecrosisCount);
                 updateConjures(gauges);
-                updateBuffData(gauges, buffsImages.darkness, 300, updateDarkness);
+                updateBuffData(buffs, gauges, buffsImages.darkness, 300, updateDarkness);
                 if (!disableThreadsCheck) {
-                    updateBuffData(gauges, buffsImages.threads, 300, updateThreads);
+                    updateBuffData(buffs, gauges, buffsImages.threads, 300, updateThreads);
                 }
                 if (!disableSplitCheck) {
-                    updateBuffData(gauges, buffsImages.split_soul, 350, updateSplitSoul);
+                    updateBuffData(buffs, gauges, buffsImages.split_soul, 350, updateSplitSoul);
                 }
                 break;
             case 3:
-                updateBuffData(gauges, buffsImages.instability, 60, updateFsoa);
-                updateBuffData(gauges, buffsImages.tsunami, 200, updateTsunami);
+                updateBuffData(buffs, gauges, buffsImages.instability, 60, updateFsoa);
+                updateBuffData(buffs, gauges, buffsImages.tsunami, 200, updateTsunami);
                 updateStackData(gauges, buffsImages.bloodTithe, 30, updateBloodTithe);
                 updateStackData(gauges, buffsImages.glacialEmbrace, 30, updateGlacialEmbrace);
+                updateBuffData(debuffs, gauges, buffsImages.odeToDeceit, 12, updateOdeToDeceit);
                 break;
             case 2:
+                updateBuffData(debuffs, gauges, buffsImages.crystalRain, 60, updateCrystalRain);
+                (0,_ranged_active_ammo__WEBPACK_IMPORTED_MODULE_1__.findAmmo)(gauges, buffs.read());
+                updateSimpleStackData(gauges, buffsImages.perfectEquilibrium, 300, updatePeCount);
                 break;
             case 1:
                 break;
@@ -34199,10 +35028,10 @@ async function readBuffs(gauges) {
         return buffs;
     }
 }
-async function updateBuffData(gauges, buffImage, threshold, 
+async function updateBuffData(buffsreader, gauges, buffImage, threshold, 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 updateCallbackFn) {
-    const buffsData = buffs.read();
+    const buffsData = buffsreader.read();
     let foundBuff = false;
     for (const value of Object.values(buffsData)) {
         const buff = value.countMatch(buffImage, false);
@@ -34228,6 +35057,23 @@ updateCallbackFn) {
             updateCallbackFn(gauges, parseInt(value
                 .readArg('timearg')
                 .arg.substring(1, value.readArg('timearg').arg.length - 1), 10));
+        }
+    }
+    if (!foundBuff) {
+        updateCallbackFn(gauges, 0);
+    }
+    return foundBuff;
+}
+async function updateSimpleStackData(gauges, buffImage, threshold, 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+updateCallbackFn) {
+    const buffsData = buffs.read();
+    let foundBuff = false;
+    for (const value of Object.values(buffsData)) {
+        const buff = value.countMatch(buffImage, false);
+        if (buff.passed > threshold) {
+            foundBuff = true;
+            updateCallbackFn(gauges, value.readTime());
         }
     }
     if (!foundBuff) {
@@ -34329,6 +35175,10 @@ async function updateGhost(gauges, value) {
     gauges.necromancy.conjures.ghost.time = value;
     gauges.necromancy.conjures.ghost.active = Boolean(value);
 }
+async function updatePhantom(gauges, value) {
+    gauges.necromancy.conjures.phantom.time = value;
+    gauges.necromancy.conjures.phantom.active = Boolean(value);
+}
 async function updateDarkness(gauges, value) {
     gauges.necromancy.incantations.active[1] = Boolean(value);
 }
@@ -34363,10 +35213,11 @@ async function updateSplitSoul(gauges, value) {
     }
 }
 async function updateConjures(gauges) {
-    const hasSkeleton = await updateBuffData(gauges, buffsImages.skeleton, 150, updateSkeleton);
-    const hasZombie = await updateBuffData(gauges, buffsImages.zombie, 150, updateZombie);
-    const hasGhost = await updateBuffData(gauges, buffsImages.ghost, 200, updateGhost);
-    if (hasSkeleton || hasZombie || hasGhost) {
+    const hasSkeleton = await updateBuffData(buffs, gauges, buffsImages.skeleton, 150, updateSkeleton);
+    const hasZombie = await updateBuffData(buffs, gauges, buffsImages.zombie, 150, updateZombie);
+    const hasGhost = await updateBuffData(buffs, gauges, buffsImages.ghost, 200, updateGhost);
+    const hasPhantom = await updateBuffData(buffs, gauges, buffsImages.phantom, 200, updatePhantom);
+    if (hasSkeleton || hasZombie || hasGhost || hasPhantom) {
         gauges.necromancy.conjures.active = true;
     }
     else {
@@ -34592,6 +35443,218 @@ async function changeCombatStyles(gauges, style) {
         _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlays();
     }
 }
+async function updateDeathsSwiftness(gauges, value) {
+    // If Death Swiftness has an active buff and a timer:
+    //   - it cannot be on cooldown
+    //   - it must be active
+    //   - The remaining time is its timer
+    if (value > 1) {
+        gauges.ranged.deathsSwiftness.isOnCooldown = false;
+        gauges.ranged.deathsSwiftness.cooldownDuration = 0;
+        gauges.ranged.deathsSwiftness.active = true;
+        gauges.ranged.deathsSwiftness.time = value;
+        changeCombatStyles(gauges, 2);
+    }
+    // When only 1 second of the buff exists
+    if (value == 1 && gauges.ranged.deathsSwiftness.active) {
+        // Make sure to update the text one final time
+        gauges.ranged.deathsSwiftness.time = value;
+        // Then start a timer to wait just past the last second
+        //  - Clear the timer
+        //  - DS is now on Cooldown so is not active
+        setTimeout(() => {
+            gauges.ranged.deathsSwiftness.time = 0;
+            gauges.ranged.deathsSwiftness.active = false;
+            gauges.ranged.deathsSwiftness.isOnCooldown = true;
+            startDeathsSwiftnessCooldown(gauges);
+        }, 1050);
+    }
+}
+async function startDeathsSwiftnessCooldown(gauges) {
+    if (!gauges.ranged.deathsSwiftness.isActiveOverlay) {
+        return;
+    }
+    // If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
+    if (gauges.ranged.deathsSwiftness.active) {
+        endDeathsSwiftnessCooldown(gauges);
+        return;
+    }
+    // Otherwise cooldown has started and we can clear the Active text
+    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('DeathsSwiftness_Text');
+    alt1.overLaySetGroupZIndex('DeathsSwiftnessCooldown_Text', 1);
+    let cooldown = 29;
+    const timer = setInterval(() => {
+        // During our interval if the buff ever becomes active - kill the timer
+        if (gauges.ranged.deathsSwiftness.active) {
+            clearInterval(timer);
+            endDeathsSwiftnessCooldown(gauges);
+            return;
+        }
+        cooldown -= 1;
+        if (cooldown > 0) {
+            _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('DeathsSwiftnessCooldown_Text');
+            alt1.overLayTextEx(cooldown.toString(), _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.x +
+                gauges.ranged.deathsSwiftness.position
+                    .active_orientation.x +
+                26, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.y +
+                gauges.ranged.deathsSwiftness.position
+                    .active_orientation.y +
+                26, gauges.scaleFactor), 3000, undefined, true, true);
+            alt1.overLayRefreshGroup('DeathsSwiftnessCooldown_Text');
+        }
+        else {
+            clearInterval(timer);
+            endDeathsSwiftnessCooldown(gauges);
+            return;
+        }
+    }, 1000);
+}
+async function endDeathsSwiftnessCooldown(gauges) {
+    gauges.ranged.deathsSwiftness.isOnCooldown = false;
+    gauges.ranged.deathsSwiftness.cooldownDuration = 0;
+    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('DeathsSwiftness_Text');
+}
+async function updateCrystalRain(gauges, value) {
+    // If Crystal Rain has an active buff and a timer:
+    //   - it is on cooldown
+    //   - The remaining time is its timer
+    if (value > 1) {
+        gauges.ranged.crystalRain.isOnCooldown = true;
+        gauges.ranged.crystalRain.active = true;
+        gauges.ranged.crystalRain.time = value;
+    }
+    // When only 1 second of the buff exists
+    if (value == 1 && gauges.ranged.crystalRain.active) {
+        // Make sure to update the text one final time
+        gauges.ranged.crystalRain.time = value;
+        // Then start a timer to wait just past the last second
+        //  - Clear the timer
+        //  - CR is now available again
+        setTimeout(() => {
+            gauges.ranged.crystalRain.time = 0;
+            gauges.ranged.crystalRain.active = false;
+            gauges.ranged.crystalRain.isOnCooldown = false;
+            startCrystalRain(gauges);
+        }, 1050);
+    }
+}
+async function startCrystalRain(gauges) {
+    if (!gauges.ranged.crystalRain.isActiveOverlay) {
+        return;
+    }
+    // If the buff is not active then clear the text early and return
+    if (!gauges.ranged.crystalRain.active) {
+        endCrystalRainCooldown(gauges);
+        return;
+    }
+    // Otherwise cooldown has started
+    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('CrystalRain_Text');
+    alt1.overLaySetGroupZIndex('CrystalRain_Cooldown_Text', 1);
+    let cooldown = 29;
+    const timer = setInterval(() => {
+        // During our interval if the buff ever becomes inactive - kill the timer
+        if (!gauges.ranged.crystalRain.active) {
+            clearInterval(timer);
+            endCrystalRainCooldown(gauges);
+            return;
+        }
+        // If we have a more accurate cooldown time use it
+        cooldown = gauges.ranged.crystalRain.time;
+        cooldown -= 1;
+        if (cooldown > 0) {
+            _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('CrystalRain_Cooldown_Text');
+            alt1.overLayTextEx(cooldown.toString(), _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.x +
+                gauges.ranged.crystalRain.position.active_orientation
+                    .x +
+                26, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.y +
+                gauges.ranged.crystalRain.position.active_orientation
+                    .y +
+                26, gauges.scaleFactor), 3000, undefined, true, true);
+            alt1.overLayRefreshGroup('CrystalRain_Cooldown_Text');
+        }
+        else {
+            clearInterval(timer);
+            endCrystalRainCooldown(gauges);
+            return;
+        }
+    }, 1000);
+}
+async function endCrystalRainCooldown(gauges) {
+    gauges.ranged.crystalRain.isOnCooldown = false;
+    gauges.ranged.crystalRain.cooldownDuration = 0;
+    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('CrystalRain_Cooldown_Text');
+}
+async function updatePeCount(gauges, value) {
+    gauges.ranged.perfectEquilibrium.stacks = value;
+}
+async function updateOdeToDeceit(gauges, value) {
+    // If Ode to Deceit has an active buff and a timer:
+    //   - it is on cooldown
+    //   - The remaining time is its timer
+    if (value > 1) {
+        gauges.magic.odeToDeceit.isOnCooldown = true;
+        gauges.magic.odeToDeceit.active = true;
+        gauges.magic.odeToDeceit.time = value;
+    }
+    // When only 1 second of the buff exists
+    if (value == 1 && gauges.magic.odeToDeceit.active) {
+        // Make sure to update the text one final time
+        gauges.magic.odeToDeceit.time = value;
+        // Then start a timer to wait just past the last second
+        //  - Clear the timer
+        //  - CR is now available again
+        setTimeout(() => {
+            gauges.magic.odeToDeceit.time = 0;
+            gauges.magic.odeToDeceit.active = false;
+            gauges.magic.odeToDeceit.isOnCooldown = false;
+            startOdeToDeceit(gauges);
+        }, 1050);
+    }
+}
+async function startOdeToDeceit(gauges) {
+    if (!gauges.magic.odeToDeceit.isActiveOverlay) {
+        return;
+    }
+    // If the buff is not active then clear the text early and return
+    if (!gauges.magic.odeToDeceit.active) {
+        endOdeToDeceitCooldown(gauges);
+        return;
+    }
+    // Otherwise cooldown has started
+    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('OdeToDeceit_Text');
+    alt1.overLaySetGroupZIndex('OdeToDeceit_Cooldown_Text', 1);
+    let cooldown = 29;
+    const timer = setInterval(() => {
+        // During our interval if the buff ever becomes inactive - kill the timer
+        if (!gauges.magic.odeToDeceit.active) {
+            clearInterval(timer);
+            endOdeToDeceitCooldown(gauges);
+            return;
+        }
+        // If we have a more accurate cooldown time use it
+        cooldown = gauges.magic.odeToDeceit.time;
+        cooldown -= 1;
+        if (cooldown > 0) {
+            _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('OdeToDeceit_Cooldown_Text');
+            alt1.overLayTextEx(cooldown.toString(), _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.magic.position.x +
+                gauges.magic.odeToDeceit.position.active_orientation.x +
+                26, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.magic.position.y +
+                gauges.magic.odeToDeceit.position.active_orientation.y +
+                26, gauges.scaleFactor), 3000, undefined, true, true);
+            alt1.overLayRefreshGroup('OdeToDeceit_Cooldown_Text');
+        }
+        else {
+            clearInterval(timer);
+            endOdeToDeceitCooldown(gauges);
+            return;
+        }
+    }, 1000);
+}
+async function endOdeToDeceitCooldown(gauges) {
+    gauges.magic.odeToDeceit.isOnCooldown = false;
+    gauges.magic.odeToDeceit.cooldownDuration = 0;
+    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('OdeToDeceit_Cooldown_Text');
+}
 
 
 /***/ }),
@@ -34754,6 +35817,7 @@ const renderSettings = async (gauges) => {
         .addHeader('h3', 'General')
         .addCheckboxSetting('checkForUpdates', 'Periodically check if a new update is available', false)
         .addDropdownSetting('defaultCombatStyle', 'Select default combat style', (_a = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('defaultCombatStyle')) !== null && _a !== void 0 ? _a : '4', [
+        { value: '2', name: 'Ranged' },
         { value: '3', name: 'Magic' },
         { value: '4', name: 'Necromancy' },
     ])
@@ -34932,7 +35996,11 @@ const overlays = [
     'Souls',
     'Sunshine',
     'Instability',
+    'OdeToDeceit',
     'Tsunami',
+    'DeathsSwiftness',
+    'CrystalRain',
+    'PerfectEquilibrium',
 ];
 function freezeOverlays() {
     overlays.forEach((overlay) => {
@@ -34976,12 +36044,26 @@ function clearTextOverlays() {
     alt1.overLayRefreshGroup('Instability_Text');
     alt1.overLayClearGroup('Instability_Cooldown_Text');
     alt1.overLayRefreshGroup('Instability_Cooldown_Text');
+    alt1.overLayClearGroup('OdeToDeceit_Text');
+    alt1.overLayRefreshGroup('OdeToDeceit_Text');
+    alt1.overLayClearGroup('OdeToDeceit_Cooldown_Text');
+    alt1.overLayRefreshGroup('OdeToDeceit_Cooldown_Text');
     alt1.overLayClearGroup('Tsunami_Text');
     alt1.overLayRefreshGroup('Tsunami_Text');
     alt1.overLayClearGroup('Tsunami_Cooldown_Text');
     alt1.overLayRefreshGroup('Tsunami_Cooldown_Text');
     alt1.overLayClearGroup('Spell_Text');
     alt1.overLayRefreshGroup('Spell_Text');
+    alt1.overLayClearGroup('DeathsSwifness_Text');
+    alt1.overLayRefreshGroup('DeathsSwifness_Text');
+    alt1.overLayClearGroup('DeathsSwifness_Cooldown_Text');
+    alt1.overLayRefreshGroup('DeathsSwifness_Cooldown_Text');
+    alt1.overLayClearGroup('CrystalRain_Text');
+    alt1.overLayRefreshGroup('CrystalRain_Text');
+    alt1.overLayClearGroup('CrystalRain_Cooldown_Text');
+    alt1.overLayRefreshGroup('CrystalRain_Cooldown_Text');
+    alt1.overLayClearGroup('Ammo_Text');
+    alt1.overLayRefreshGroup('Ammo_Text');
 }
 function adjustPositionForScale(position, scaleFactor) {
     return parseInt(roundedToFixed(position * scaleFactor, 1), 10);
@@ -35088,6 +36170,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 const notes = [
     // Add patch notes to top
+    {
+        date: '09/03/2024 - Ranged Gauge & Ode To Deceit v.1.1.0',
+        note: [
+            `Similar to the barebones Magic Gauge - a Ranged Gauge has been added. The Ranged Gauge tracks your active ammo (must be in quiver, not all types are tracked only the most "meta" options), Perfect Eqilibruim stacks, Death's Swiftness, and Seren Godbow's Crystal Rain special attack. Eldritch Crossbow's Split Soul tracking is expected to be added soon.`,
+            `Ode to Deceit tracking has been added to the Magic Gauge`,
+            `Crystal Rain and Ode to Deceit are tracked using the Debuffs bar - and in order to succesfully be tracked Job Gauges must know where your debuffs are located. When loading the app it is recommended to use a defensive ability and activate your prayer for a brief period of time so that Job Gauges can find your buffs & debuffs bars.`,
+            `Phantom Guardian duration tracking has been added to Conjure Undead Army - Phantom's Valour stacks may be added in a future update`,
+            `Future updates will add visibility toggles for each individual ranged/magic overlay similar to the Necromancy overlays.`,
+        ],
+    },
     {
         date: '08/30/2024 - Magic Gauge Fixes v.1.0.9',
         note: [
@@ -40430,6 +41522,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_magic_active_spell__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./lib/magic/active_spell */ "./lib/magic/active_spell.ts");
 /* harmony import */ var _lib_magic_instability__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./lib/magic/instability */ "./lib/magic/instability.ts");
 /* harmony import */ var _lib_magic_tsunami__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./lib/magic/tsunami */ "./lib/magic/tsunami.ts");
+/* harmony import */ var _lib_ranged_deathsSwiftness__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./lib/ranged/deathsSwiftness */ "./lib/ranged/deathsSwiftness.ts");
+/* harmony import */ var _lib_ranged_crystalRain__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./lib/ranged/crystalRain */ "./lib/ranged/crystalRain.ts");
+/* harmony import */ var _lib_ranged_perfectEquilibrium__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./lib/ranged/perfectEquilibrium */ "./lib/ranged/perfectEquilibrium.ts");
+/* harmony import */ var _lib_magic_ode_to_deceit__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./lib/magic/ode_to_deceit */ "./lib/magic/ode_to_deceit.ts");
 
 
 // General Purpose
@@ -40448,6 +41544,10 @@ __webpack_require__.r(__webpack_exports__);
 // Ranged Gauge
 
 // Melee Gauge
+
+
+
+
 
 
 
@@ -40500,8 +41600,12 @@ async function renderOverlays() {
                 await (0,_lib_magic_active_spell__WEBPACK_IMPORTED_MODULE_27__.spellsOverlay)(gauges);
                 await (0,_lib_magic_instability__WEBPACK_IMPORTED_MODULE_28__.fsoaOverlay)(gauges);
                 await (0,_lib_magic_tsunami__WEBPACK_IMPORTED_MODULE_29__.tsunamiOverlay)(gauges);
+                await (0,_lib_magic_ode_to_deceit__WEBPACK_IMPORTED_MODULE_33__.odeToDeceitOverlay)(gauges);
                 break;
             case 2:
+                await (0,_lib_ranged_deathsSwiftness__WEBPACK_IMPORTED_MODULE_30__.deathsSwiftnessOverlay)(gauges);
+                await (0,_lib_ranged_crystalRain__WEBPACK_IMPORTED_MODULE_31__.crystalRainOverlay)(gauges);
+                await (0,_lib_ranged_perfectEquilibrium__WEBPACK_IMPORTED_MODULE_32__.peOverlay)(gauges);
                 break;
             case 1:
                 break;
@@ -40527,6 +41631,9 @@ async function startApp() {
     let patchCheck = new _a1sauce_Patches_patchNotes__WEBPACK_IMPORTED_MODULE_23__.Patches();
     patchCheck.setNotes(_patchnotes__WEBPACK_IMPORTED_MODULE_24__.notes);
     patchCheck.showPatchNotes();
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('buffsPosition') == undefined) {
+        calibrationWarning();
+    }
     setNecromancyGaugeData(gauges);
     updateActiveOrientationFromLocalStorage();
     // Apparently setting GroupZIndex is a pretty expensive call to do in the loop - so let's only do it once
@@ -40539,11 +41646,34 @@ async function startApp() {
     alt1.overLaySetGroupZIndex('Instability_Cooldown_Text', 1);
     alt1.overLaySetGroupZIndex('Tsunami_Text', 1);
     alt1.overLaySetGroupZIndex('Tsunami_Cooldown_Text', 1);
+    alt1.overLaySetGroupZIndex('OdeToDeceit_Text', 1);
+    alt1.overLaySetGroupZIndex('OdeToDeceit_Cooldown_Text', 1);
+    alt1.overLaySetGroupZIndex('DeathsSwiftness_Text', 1);
+    alt1.overLaySetGroupZIndex('DeathsSwiftness_Cooldown_Text', 1);
+    alt1.overLaySetGroupZIndex('CrystalRain_Text', 1);
+    alt1.overLaySetGroupZIndex('CrystalRain_Cooldown_Text', 1);
+    alt1.overLaySetGroupZIndex('PerfectEquilibrium_Text', 1);
     await (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_1__.findBuffsBar)().then(() => {
-        setInterval(function () {
-            renderOverlays();
-        }, 20);
+        (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_1__.findDebuffsBar)().then(() => {
+            setInterval(function () {
+                renderOverlays();
+            }, 20);
+        });
     });
+}
+function calibrationWarning() {
+    alt1.setTooltip('[JG] Use a Defensive ability such as Freedom or Anticipate to capture buffs location.');
+    setTimeout(() => {
+        alt1.clearTooltip();
+        (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_1__.findBuffsBar)();
+    }, 3000);
+    setTimeout(() => {
+        alt1.setTooltip('[JG] Toggle Prayer on for a few seconds to capture debuffs location.');
+    }, 4000);
+    setTimeout(() => {
+        alt1.clearTooltip();
+        (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_1__.findDebuffsBar)();
+    }, 8000);
 }
 function updateActiveOrientationFromLocalStorage() {
     // Retrieve selected orientation from localStorage

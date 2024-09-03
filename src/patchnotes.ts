@@ -1,6 +1,16 @@
 export const notes = [
 	// Add patch notes to top
 	{
+		date: '09/03/2024 - Ranged Gauge & Ode To Deceit v.1.1.0',
+		note: [
+			`Similar to the barebones Magic Gauge - a Ranged Gauge has been added. The Ranged Gauge tracks your active ammo (must be in quiver, not all types are tracked only the most "meta" options), Perfect Eqilibruim stacks, Death's Swiftness, and Seren Godbow's Crystal Rain special attack. Eldritch Crossbow's Split Soul tracking is expected to be added soon.`,
+			`Ode to Deceit tracking has been added to the Magic Gauge`,
+			`Crystal Rain and Ode to Deceit are tracked using the Debuffs bar - and in order to succesfully be tracked Job Gauges must know where your debuffs are located. When loading the app it is recommended to use a defensive ability and activate your prayer for a brief period of time so that Job Gauges can find your buffs & debuffs bars.`,
+			`Phantom Guardian duration tracking has been added to Conjure Undead Army - Phantom's Valour stacks may be added in a future update`,
+			`Future updates will add visibility toggles for each individual ranged/magic overlay similar to the Necromancy overlays.`,
+		],
+	},
+	{
 		date: '08/30/2024 - Magic Gauge Fixes v.1.0.9',
 		note: [
 			`Spell is now tracked when Dual Wield weapons are used`,

@@ -3,7 +3,7 @@ import { helperItems } from './lib/utility';
 import { Overlay } from './types/index';
 
 // General Purpose
-import { findBuffsBar, readBuffs } from './lib/readBuffs';
+import { findBuffsBar, findDebuffsBar, readBuffs } from './lib/readBuffs';
 import { readEnemy } from './lib/readEnemy';
 
 // Necromancy Gauge
@@ -47,6 +47,10 @@ import { sunshineOverlay } from './lib/magic/sunshine';
 import { spellsOverlay } from './lib/magic/active_spell';
 import { fsoaOverlay } from './lib/magic/instability';
 import { tsunamiOverlay } from './lib/magic/tsunami';
+import { deathsSwiftnessOverlay } from './lib/ranged/deathsSwiftness';
+import { crystalRainOverlay } from './lib/ranged/crystalRain';
+import { peOverlay } from './lib/ranged/perfectEquilibrium';
+import { odeToDeceitOverlay } from './lib/magic/ode_to_deceit';
 
 const sauce = A1Sauce.instance;
 sauce.setName(appName);
@@ -84,8 +88,12 @@ async function renderOverlays() {
 				await spellsOverlay(gauges);
 				await fsoaOverlay(gauges);
 				await tsunamiOverlay(gauges);
+				await odeToDeceitOverlay(gauges);
 				break;
 			case 2:
+				await deathsSwiftnessOverlay(gauges);
+				await crystalRainOverlay(gauges);
+				await peOverlay(gauges);
 				break;
 			case 1:
 				break;
@@ -122,6 +130,12 @@ export async function startApp() {
 	patchCheck.setNotes(notes);
 	patchCheck.showPatchNotes();
 
+	if (
+		getSetting('buffsPosition') == undefined
+	) {
+		calibrationWarning();
+	}
+
 	setNecromancyGaugeData(gauges);
 
 	updateActiveOrientationFromLocalStorage();
@@ -130,19 +144,50 @@ export async function startApp() {
 	alt1.overLaySetGroupZIndex('Undead_Army_Text', 1);
 	alt1.overLaySetGroupZIndex('LivingDeath_Text', 1);
 	alt1.overLaySetGroupZIndex('LivingDeath_Cooldown_Text', 1);
+
 	alt1.overLaySetGroupZIndex('Sunshine_Text', 1);
 	alt1.overLaySetGroupZIndex('Sunshine_Cooldown_Text', 1);
 	alt1.overLaySetGroupZIndex('Instability_Text', 1);
 	alt1.overLaySetGroupZIndex('Instability_Cooldown_Text', 1);
 	alt1.overLaySetGroupZIndex('Tsunami_Text', 1);
 	alt1.overLaySetGroupZIndex('Tsunami_Cooldown_Text', 1);
+	alt1.overLaySetGroupZIndex('OdeToDeceit_Text', 1);
+	alt1.overLaySetGroupZIndex('OdeToDeceit_Cooldown_Text', 1);
+
+	alt1.overLaySetGroupZIndex('DeathsSwiftness_Text', 1);
+	alt1.overLaySetGroupZIndex('DeathsSwiftness_Cooldown_Text', 1);
+
+	alt1.overLaySetGroupZIndex('CrystalRain_Text', 1);
+	alt1.overLaySetGroupZIndex('CrystalRain_Cooldown_Text', 1);
+
+	alt1.overLaySetGroupZIndex('PerfectEquilibrium_Text', 1);
 
 	await findBuffsBar().then(() => {
-		setInterval(function () {
-			renderOverlays();
-		}, 20);
+		findDebuffsBar().then(() => {
+			setInterval(function () {
+				renderOverlays();
+			}, 20);
+		});
 	});
 }
+
+function calibrationWarning(): void {
+	alt1.setTooltip('[JG] Use a Defensive ability such as Freedom or Anticipate to capture buffs location.');
+	setTimeout(() => {
+		alt1.clearTooltip();
+		findBuffsBar();
+	}, 3000);
+	setTimeout(() => {
+		alt1.setTooltip(
+			'[JG] Toggle Prayer on for a few seconds to capture debuffs location.'
+		);
+	}, 4000);
+	setTimeout(() => {
+		alt1.clearTooltip();
+		findDebuffsBar();
+	}, 8000);
+}
+
 function updateActiveOrientationFromLocalStorage(): void {
 	// Retrieve selected orientation from localStorage
 	let selectedOrientation = getSetting('selectedOrientation');
