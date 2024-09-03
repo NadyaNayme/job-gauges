@@ -8,6 +8,7 @@ export type Ammo = {
 export type RangedGauge = {
 	isInCombat: boolean;
 	position: Position;
+	balanceByForce: boolean;
 	ammo: Ammo;
 	crystalRain: Ability;
 	deathsSwiftness: Ability;

@@ -4,7 +4,8 @@ import * as utility from '../utility';
 import { Overlay } from '../../types';
 
 const bolgImage = a1lib.webpackImages({
-	perfectEquilibrium: require('../.././asset/data/ranged/perfectEquilibrium.data.png'),
+	active: require('../.././asset/data/ranged/perfectEquilibrium.data.png'),
+	inactive: require('../.././asset/data/ranged/perfectEquilibrium-inactive.data.png'),
 });
 
 let scaledOnce = false;
@@ -35,7 +36,12 @@ export async function peOverlay(gauges: Overlay) {
 
 	alt1.overLaySetGroup('PerfectEquilibrium');
 
-	displayBuffImage(bolgImage.perfectEquilibrium);
+	if (gauges.ranged.balanceByForce) {
+		displayBuffImage(bolgImage.active);
+	} else {
+		displayBuffImage(bolgImage.inactive);
+	}
+
 	if (stacks !== lastStacks) {
 		displayStacks(stacks);
 		lastStacks = stacks;

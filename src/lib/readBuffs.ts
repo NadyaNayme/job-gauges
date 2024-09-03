@@ -44,6 +44,7 @@ const buffsImages = a1lib.webpackImages({
 	greaterDeathsSwiftness: require(".././asset/data/buffs/Ultimates/Greater_Death's_Swiftness.data.png"),
 	crystalRain: require('.././asset/data/buffs/WeaponSpecials/crystalRainBuff.data.png'),
 	perfectEquilibrium: require('.././asset/data/buffs/Perfect_Equilibrium-noborder.data.png'),
+	balanaceByForce: require('.././asset/data/ranged/balance_by_force-beta.data.png'),
 
 	/* Troubleshooting */
 	mediumBuffs: require('.././asset/data/errorhandling/medium_buffs.data.png'),
@@ -297,6 +298,7 @@ export async function readBuffs(gauges: Overlay) {
 					300,
 					updatePeCount
 				);
+				updateBuffData(buffs, gauges, buffsImages.balanaceByForce, 20, updateBalanceByForce);
 				break;
 			case 1:
 				break;
@@ -1147,4 +1149,8 @@ async function endOdeToDeceitCooldown(gauges: Overlay) {
 	gauges.magic.odeToDeceit.isOnCooldown = false;
 	gauges.magic.odeToDeceit.cooldownDuration = 0;
 	utility.forceClearOverlay('OdeToDeceit_Cooldown_Text');
+}
+
+async function updateBalanceByForce(gauges: Overlay, value: number) {
+	gauges.ranged.balanceByForce = Boolean(value);
 }

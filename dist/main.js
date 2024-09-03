@@ -901,6 +901,16 @@ module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/
 
 /***/ }),
 
+/***/ "./asset/data/ranged/balance_by_force-beta.data.png":
+/*!**********************************************************!*\
+  !*** ./asset/data/ranged/balance_by_force-beta.data.png ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAMAAADzN3VRAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAALFQTFRFAAAAAAsMCiokG1U5F1E/HlM7FVA+G1M+EWRCFE07DSEWGXRUFUA2CRIQEW9JEDcoCA4METorEzAnFicdEi4lFTErFlRGCycbCBEPDz82EjsvDxUREFAwAwwIHE03G086EV9BFDwyETEqCA8OEB4aEygiFzAoABMNEUsuFD4uFkAvF0MxFDYnBREMBQ8LDzsnE2lGEG9KEVI1GlpEEDkuE0MxF0g1EEMyEDwvG003AB8ew29rlgAAADt0Uk5TAP////////////////////////////////////////////////////////////////////////////+SQC1NAAAAdklEQVR4nGNgoDJgZMIjyYxLgoUVlwwbOy4ZDk4uHDLcPLw4ZPj4BXAZJyiES0ZYRFQMu4y4hKSUNFYZGVyGMcjilIEAOXkFHDKKSso4ZFRU1bCKq2toamnrYNejq6dvYGhkjF3SxNTM3MLcEp87cQErcjQBAQCReQbnR1+wMwAAAABJRU5ErkJggg==")
+
+/***/ }),
+
 /***/ "./asset/data/ranged/deathsswiftness.data.png":
 /*!****************************************************!*\
   !*** ./asset/data/ranged/deathsswiftness.data.png ***!
@@ -918,6 +928,16 @@ module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("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")
+
+/***/ }),
+
+/***/ "./asset/data/ranged/perfectEquilibrium-inactive.data.png":
+/*!****************************************************************!*\
+  !*** ./asset/data/ranged/perfectEquilibrium-inactive.data.png ***!
+  \****************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAABsAAAAbCAMAAAC6CgRnAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAQhQTFRFxMTEFhYWGhoaHBwcGxsbIiIiJSUlLi4uREREOjo6LS0tOzs7Q0NDRkZGJiYmExMTHh4eICAgKioqLCwsMDAwTk5OUVFRMzMz////Nzc3UFBQTExMISEhGBgYNjY2XFxcS0tLNTU1HR0dLy8vODg4Pz8/ampqVFRURUVFWlpaYmJiaWlpXl5edXV1WVlZW1tbdHR0YGBgZGRkKSkpQEBAVlZWZmZmc3NzdnZ2aGhobW1tcnJyZWVlT09PKCgoKysrUlJSa2trcHBwVVVVV1dXbGxsSUlJTU1NY2NjJycnMjIyNDQ0b29vX19fPT09YWFh/v7+8vLySkpKWFhYbm5uQUFBOTk5QkJCS8f6BwAAAhZJREFUeJx9kttPE1EQh2f2QrfdbimivSwtgZo2FQuYaKL4wLvRf9YnX8UHARNIsFSUYmvshVJI2rq7Zbvd7nFmK77pSTYzc749M2fObxD+vRCQlpDYhi56EVcEKIQxQpAStuHEw20ExhMh7FRPmC0EGQ3HsNO063IiSRWyJaaJ3moDQTEcJYudHA5kZotCtFfEkKBP52RldZ6xzyzNFf1G4MeGCEsFKnGTI9ZkVkAqPpoYseoAYWHnbOMrQGoZrRZAfgG0GpmOa3vElJcXfItyF0cAwfaJREFR/uQT2+3o8iVn00qfAbbwhP0nfrP0DuFpetbU43XayLfmH0hJf13pHTGrR9YAj4K7pwruZxx3XLL3mCmT02cW6L0WvDiA/CzqUDexosMsc14QUMvp03uHO/tZJQ3HFcDGnKXrheMHGbg0a5yxEu2Dt+78ZbF4ZOmDfFev+HPz2rP/1LM07ZCbWuT+2Cn36Z7MXp3rwQ3/vwXUn7McqvG86XB/9C6JjxQ+Hn+nM8Wr1VMKtifhuyTUjQiFqTQIMpXb7JCNX7U81qGwF9VMdN0uZ3s00IfX0akZ6pAcK69/mBeIWivUL1i7ytqjL9NgxrrP1CR23nTqc93NtgAxsHXLD+eFYPmbngkVKA8GoOb2dUvQOQkx0988y/5SFQ9g972qtStVQjSIgLluOJ+KvFLy+w/fCqHd8nwKgf+Z698aUescEg7pDwAAAABJRU5ErkJggg==")
 
 /***/ }),
 
@@ -33332,6 +33352,7 @@ const ranged_gauge = {
         isActiveOverlay: true,
         activeAmmo: '',
     },
+    balanceByForce: false,
     deathsSwiftness: {
         isActiveOverlay: true,
         active: true,
@@ -34792,7 +34813,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const bolgImage = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
-    perfectEquilibrium: __webpack_require__(/*! ../.././asset/data/ranged/perfectEquilibrium.data.png */ "./asset/data/ranged/perfectEquilibrium.data.png"),
+    active: __webpack_require__(/*! ../.././asset/data/ranged/perfectEquilibrium.data.png */ "./asset/data/ranged/perfectEquilibrium.data.png"),
+    inactive: __webpack_require__(/*! ../.././asset/data/ranged/perfectEquilibrium-inactive.data.png */ "./asset/data/ranged/perfectEquilibrium-inactive.data.png"),
 });
 let scaledOnce = false;
 let lastStacks = 0;
@@ -34812,7 +34834,12 @@ async function peOverlay(gauges) {
     const { position } = perfectEquilibrium;
     const { x, y } = position.active_orientation;
     alt1.overLaySetGroup('PerfectEquilibrium');
-    displayBuffImage(bolgImage.perfectEquilibrium);
+    if (gauges.ranged.balanceByForce) {
+        displayBuffImage(bolgImage.active);
+    }
+    else {
+        displayBuffImage(bolgImage.inactive);
+    }
     if (stacks !== lastStacks) {
         displayStacks(stacks);
         lastStacks = stacks;
@@ -34894,6 +34921,7 @@ const buffsImages = alt1__WEBPACK_IMPORTED_MODULE_6__.webpackImages({
     greaterDeathsSwiftness: __webpack_require__(/*! .././asset/data/buffs/Ultimates/Greater_Death's_Swiftness.data.png */ "./asset/data/buffs/Ultimates/Greater_Death's_Swiftness.data.png"),
     crystalRain: __webpack_require__(/*! .././asset/data/buffs/WeaponSpecials/crystalRainBuff.data.png */ "./asset/data/buffs/WeaponSpecials/crystalRainBuff.data.png"),
     perfectEquilibrium: __webpack_require__(/*! .././asset/data/buffs/Perfect_Equilibrium-noborder.data.png */ "./asset/data/buffs/Perfect_Equilibrium-noborder.data.png"),
+    balanaceByForce: __webpack_require__(/*! .././asset/data/ranged/balance_by_force-beta.data.png */ "./asset/data/ranged/balance_by_force-beta.data.png"),
     /* Troubleshooting */
     mediumBuffs: __webpack_require__(/*! .././asset/data/errorhandling/medium_buffs.data.png */ "./asset/data/errorhandling/medium_buffs.data.png"),
     largeBuffs: __webpack_require__(/*! .././asset/data/errorhandling/large_buffs.data.png */ "./asset/data/errorhandling/large_buffs.data.png"),
@@ -35021,6 +35049,7 @@ async function readBuffs(gauges) {
                 updateBuffData(debuffs, gauges, buffsImages.crystalRain, 60, updateCrystalRain);
                 (0,_ranged_active_ammo__WEBPACK_IMPORTED_MODULE_1__.findAmmo)(gauges, buffs.read());
                 updateSimpleStackData(gauges, buffsImages.perfectEquilibrium, 300, updatePeCount);
+                updateBuffData(buffs, gauges, buffsImages.balanaceByForce, 20, updateBalanceByForce);
                 break;
             case 1:
                 break;
@@ -35654,6 +35683,9 @@ async function endOdeToDeceitCooldown(gauges) {
     gauges.magic.odeToDeceit.isOnCooldown = false;
     gauges.magic.odeToDeceit.cooldownDuration = 0;
     _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('OdeToDeceit_Cooldown_Text');
+}
+async function updateBalanceByForce(gauges, value) {
+    gauges.ranged.balanceByForce = Boolean(value);
 }
 
 

@@ -10,6 +10,7 @@ export const ranged_gauge: RangedGauge = {
 		isActiveOverlay: true,
 		activeAmmo: '',
 	},
+	balanceByForce: false,
 	deathsSwiftness: {
 		isActiveOverlay: true,
 		active: true,
