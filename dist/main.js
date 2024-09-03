@@ -35159,7 +35159,7 @@ async function readBuffs(gauges) {
                 updateBuffData(buffs, gauges, buffsImages.tsunami, 200, updateTsunami);
                 updateStackData(gauges, buffsImages.bloodTithe, 30, updateBloodTithe);
                 updateStackData(gauges, buffsImages.glacialEmbrace, 30, updateGlacialEmbrace);
-                updateBuffData(debuffs, gauges, buffsImages.odeToDeceit, 12, updateOdeToDeceit);
+                updateBuffData(debuffs, gauges, buffsImages.odeToDeceit, 22, updateOdeToDeceit);
                 break;
             case 2:
                 updateBuffData(debuffs, gauges, buffsImages.crystalRain, 60, updateCrystalRain);

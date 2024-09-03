@@ -280,7 +280,7 @@ export async function readBuffs(gauges: Overlay) {
 					debuffs,
 					gauges,
 					buffsImages.odeToDeceit,
-					12,
+					22,
 					updateOdeToDeceit
 				);
 				break;
