@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: lts/*
       - run: npm install
-      - run: npm run build
+      - run: npm run build --force
         env:
           NODE_ENV: production
       - run: |
