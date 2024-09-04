@@ -4,18 +4,18 @@ import * as utility from '../utility';
 import { Overlay } from '../../types';
 
 const bloatImages = a1lib.webpackImages({
-	bloat_100: require('../.././asset/data/bloat/lg/bloat_100.data.png'),
-	bloat_90: require('../.././asset/data/bloat/lg/bloat_90.data.png'),
-	bloat_80: require('../.././asset/data/bloat/lg/bloat_80.data.png'),
-	bloat_70: require('../.././asset/data/bloat/lg/bloat_70.data.png'),
-	bloat_60: require('../.././asset/data/bloat/lg/bloat_60.data.png'),
-	bloat_50: require('../.././asset/data/bloat/lg/bloat_50.data.png'),
-	bloat_40: require('../.././asset/data/bloat/lg/bloat_40.data.png'),
-	bloat_30: require('../.././asset/data/bloat/lg/bloat_30.data.png'),
-	bloat_20: require('../.././asset/data/bloat/lg/bloat_20.data.png'),
-	bloat_10: require('../.././asset/data/bloat/lg/bloat_10.data.png'),
-	bloat_0: require('../.././asset/data/bloat/lg/bloat_0.data.png'),
-	bloat_expired: require('../.././asset/data/bloat/lg/bloat_expired.data.png'),
+	bloat_100: require('../../asset/gauge-ui/necromancy/bloat/100.data.png'),
+	bloat_90: require('../../asset/gauge-ui/necromancy/bloat/90.data.png'),
+	bloat_80: require('../../asset/gauge-ui/necromancy/bloat/80.data.png'),
+	bloat_70: require('../../asset/gauge-ui/necromancy/bloat/70.data.png'),
+	bloat_60: require('../../asset/gauge-ui/necromancy/bloat/60.data.png'),
+	bloat_50: require('../../asset/gauge-ui/necromancy/bloat/50.data.png'),
+	bloat_40: require('../../asset/gauge-ui/necromancy/bloat/40.data.png'),
+	bloat_30: require('../../asset/gauge-ui/necromancy/bloat/30.data.png'),
+	bloat_20: require('../../asset/gauge-ui/necromancy/bloat/20.data.png'),
+	bloat_10: require('../../asset/gauge-ui/necromancy/bloat/10.data.png'),
+	bloat_0: require('../../asset/gauge-ui/necromancy/bloat/0.data.png'),
+	bloat_expired: require('../../asset/gauge-ui/necromancy/bloat/expired.data.png'),
 });
 
 let scaledOnce = false;

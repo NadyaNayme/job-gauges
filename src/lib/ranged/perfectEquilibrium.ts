@@ -4,8 +4,8 @@ import * as utility from '../utility';
 import { Overlay } from '../../types';
 
 const bolgImage = a1lib.webpackImages({
-	active: require('../.././asset/data/ranged/perfectEquilibrium.data.png'),
-	inactive: require('../.././asset/data/ranged/perfectEquilibrium-inactive.data.png'),
+	active: require('../../asset/gauge-ui/ranged/perfect-equilibrium/active.data.png'),
+	inactive: require('../../asset/gauge-ui/ranged/perfect-equilibrium/inactive.data.png'),
 });
 
 let scaledOnce = false;

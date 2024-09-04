@@ -2,12 +2,10 @@
 import * as a1lib from 'alt1';
 import * as utility from '../utility';
 import { Overlay } from '../../types';
-import { StackingPlayerBuff } from '../../types/common';
 
 const ultimateImages = a1lib.webpackImages({
-	inactive: require('../.././asset/data/magic/tsunami_inactive.data.png'),
-	active: require('../.././asset/data/magic/tsunami.data.png'),
-	discounted: require('../.././asset/data/magic/tsunami_discounted.data.png'),
+	active: require('../.././asset/gauge-ui/magic/tsunami/active.data.png'),
+	inactive: require('../.././asset/gauge-ui/magic/tsunami/inactive.data.png'),
 });
 
 let lastValue: number;

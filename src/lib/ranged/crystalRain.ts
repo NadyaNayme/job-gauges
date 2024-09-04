@@ -4,8 +4,8 @@ import * as utility from '../utility';
 import { Overlay } from '../../types';
 
 const ultimateImages = a1lib.webpackImages({
-	inactive: require('../../asset/data/buffs/WeaponSpecials/crystalRain_inactive.data.png'),
-	active: require('../../asset/data/buffs/WeaponSpecials/crystalRain.data.png'),
+	active: require('../../asset/gauge-ui/ranged/crystal-rain/active.data.png'),
+	inactive: require('../../asset/gauge-ui/ranged/crystal-rain/inactive.data.png'),
 });
 
 let lastValue: number;

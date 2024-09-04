@@ -6,7 +6,7 @@ body {
   display: block;
   padding: 0 .5rem;
   background-color: #0F0F0F;
-  background-image: url("/asset/nis/bg.png");
+  background-image: url("../a1sauce/NIS/images/nis-bg.png");
   color: #FFFFFF;
   overflow-x: hidden;
   overflow-y: auto;
@@ -177,7 +177,7 @@ input[type="checkbox"]:checked ~ span.checkbox::after {
   top: 50%;
   right: 2px;
   transform: translateY(-50%);
-  background-image: url('/asset/nis/checkmark.png');
+  background-image: url('../a1sauce/NIS/images/checkmark.png');
   z-index: 2;
 }
 
@@ -210,7 +210,7 @@ small {
     height: 20px;
     border: 3px solid #212B2D;
     box-sizing: border-box;
-    border-image: url('/asset/nis/imgbutton.png') 3 fill;
+    border-image: url('../a1sauce/NIS/images/imgbutton.png') 3 fill;
     cursor: pointer;
 }
 
@@ -231,35 +231,35 @@ body *:not(.normalscroll)::-webkit-scrollbar
 
 body::-webkit-scrollbar-button:start:vertical,
 body *:not(.normalscroll)::-webkit-scrollbar-button:start:vertical
-{background-image:url('/asset/nis/scroll.png'); background-position:0px 0px; height:15px;}
+{background-image:url('../a1sauce/NIS/images/scroll.png'); background-position:0px 0px; height:15px;}
 
 body::-webkit-scrollbar-button:end:vertical,
 body *:not(.normalscroll)::-webkit-scrollbar-button:end:vertical
-{background-image:url('/asset/nis/scroll.png'); background-position:-45px 0px; height:15px;}
+{background-image:url('../a1sauce/NIS/images/scroll.png'); background-position:-45px 0px; height:15px;}
 
 body::-webkit-scrollbar-track:vertical,
 body *:not(.normalscroll)::-webkit-scrollbar-track:vertical
-{background-image:url('/asset/nis/scroll.png'); background-position:-15px 0px;}
+{background-image:url('../a1sauce/NIS/images/scroll.png'); background-position:-15px 0px;}
 
 body::-webkit-scrollbar-thumb:vertical,
 body *:not(.normalscroll)::-webkit-scrollbar-thumb:vertical
-{background-image:url('/asset/nis/scroll.png'); background-position:-30px 0px; border-radius:5px;}
+{background-image:url('../a1sauce/NIS/images/scroll.png'); background-position:-30px 0px; border-radius:5px;}
 
 body::-webkit-scrollbar-button:start:horizontal,
 body *:not(.normalscroll)::-webkit-scrollbar-button:start:horizontal
-{background-image:url('/asset/nis/scrollhor.png'); background-position:0px 0px; width:15px;}
+{background-image:url('../a1sauce/NIS/images/scrollhor.png'); background-position:0px 0px; width:15px;}
 
 body::-webkit-scrollbar-button:end:horizontal,
 body *:not(.normalscroll)::-webkit-scrollbar-button:end:horizontal
-{background-image:url('/asset/nis/scrollhor.png'); background-position:0px -45px; width:15px;}
+{background-image:url('../a1sauce/NIS/images/scrollhor.png'); background-position:0px -45px; width:15px;}
 
 body::-webkit-scrollbar-track:horizontal,
 body *:not(.normalscroll)::-webkit-scrollbar-track:horizontal
-{background-image:url('/asset/nis/scrollhor.png'); background-position:0px -15px;}
+{background-image:url('../a1sauce/NIS/images/scrollhor.png'); background-position:0px -15px;}
 
 body::-webkit-scrollbar-thumb:horizontal,
 body *:not(.normalscroll)::-webkit-scrollbar-thumb:horizontal
-{background-image:url('/asset/nis/scrollhor.png'); background-position:0px -30px; border-radius:5px;}
+{background-image:url('../a1sauce/NIS/images/scrollhor.png'); background-position:0px -30px; border-radius:5px;}
 
 body::-webkit-scrollbar-corner,
 body *:not(.normalscroll)::-webkit-scrollbar-corner
@@ -281,7 +281,7 @@ hr {
 .nisbutton {
     height: 32px;
     position: relative;
-    background: url('/asset/nis/button.png') 0px -100%/24px 400% repeat content-box;
+    background: url('../a1sauce/NIS/images/button.png') 0px -100%/24px 400% repeat content-box;
     cursor: pointer;
     text-align: center;
     color: #000;
@@ -302,7 +302,7 @@ hr {
     position: absolute;
     top: 0px;
     left: 0px;
-    background: url('/asset/nis/button.png') 0px 0px / 24px 400%;
+    background: url('../a1sauce/NIS/images/button.png') 0px 0px / 24px 400%;
 }
 
 .nisbutton::after {
@@ -312,7 +312,7 @@ hr {
     position: absolute;
     top: 0px;
     right: 0px;
-    background: url('/asset/nis/button.png') -12px 0px / 24px 400%;
+    background: url('../a1sauce/NIS/images/button.png') -12px 0px / 24px 400%;
 }
 
 .nisbutton:not([disabled]):hover {

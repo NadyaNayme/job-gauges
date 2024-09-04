@@ -7,22 +7,22 @@ import { findBuffsBar, findDebuffsBar, readBuffs } from './lib/readBuffs';
 import { readEnemy } from './lib/readEnemy';
 
 // Necromancy Gauge
-import { necromancy_gauge } from './data/necromancy_gauge';
+import { necromancy_gauge } from './data/necromancyGauge';
 import { conjureOverlay } from './lib/necromancy/conjures';
-import { soulsOverlay } from './lib/necromancy/soul_stacks';
-import { necrosisOverlay } from './lib/necromancy/necrosis_stacks';
+import { soulsOverlay } from './lib/necromancy/soul';
+import { necrosisOverlay } from './lib/necromancy/necrosis';
 import { incantationsOverlay } from './lib/necromancy/incantations';
-import { livingDeathOverlay } from './lib/necromancy/living_death';
+import { livingDeathOverlay } from './lib/necromancy/livingDeath';
 import { bloatOverlay } from './lib/necromancy/bloat';
 
 // Magic Gauge
-import { magic_gauge } from './data/magic_gauge';
+import { magic_gauge } from './data/magicGauge';
 
 // Ranged Gauge
-import { ranged_gauge } from './data/ranged_gauge';
+import { ranged_gauge } from './data/rangedGauge';
 
 // Melee Gauge
-import { melee_gauge } from './data/melee_gauge';
+import { melee_gauge } from './data/meleeGauge';
 
 import './index.html';
 import './appconfig.json';
@@ -44,13 +44,13 @@ import { Patches } from './a1sauce/Patches/patchNotes';
 import { notes } from './patchnotes';
 import { startVersionChecking } from './a1sauce/Patches/serverCheck';
 import { sunshineOverlay } from './lib/magic/sunshine';
-import { spellsOverlay } from './lib/magic/active_spell';
+import { spellsOverlay } from './lib/magic/activeSpell';
 import { fsoaOverlay } from './lib/magic/instability';
 import { tsunamiOverlay } from './lib/magic/tsunami';
 import { deathsSwiftnessOverlay } from './lib/ranged/deathsSwiftness';
 import { crystalRainOverlay } from './lib/ranged/crystalRain';
 import { peOverlay } from './lib/ranged/perfectEquilibrium';
-import { odeToDeceitOverlay } from './lib/magic/ode_to_deceit';
+import { odeToDeceitOverlay } from './lib/magic/odeToDeceit';
 import { rangedSplitSoulOverlay } from './lib/ranged/splitSoul';
 
 const sauce = A1Sauce.instance;

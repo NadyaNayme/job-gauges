@@ -4,7 +4,7 @@ import * as BuffReader from 'alt1/buffs';
 import * as utility from './utility';
 import { helperItems } from './utility';
 import { Overlay } from '../types';
-import { findAmmo } from './ranged/active_ammo';
+import { findAmmo } from './ranged/activeAmmo';
 import { A1Sauce } from '../a1sauce';
 import { appName } from '../data/constants';
 import { getSetting, updateSetting } from '../a1sauce/Settings/Storage';
@@ -18,37 +18,38 @@ debuffs.debuffs = true;
 
 const buffsImages = a1lib.webpackImages({
 	/* Necromancy */
-	darkness: require('.././asset/data/buffs/Necromancy/Darkness.data.png'),
-	living_death: require('.././asset/data/buffs/Ultimates/Living_Death.data.png'),
-	split_soul: require('.././asset/data/buffs/Necromancy/Split_Soul.data.png'),
-	threads: require('.././asset/data/buffs/Necromancy/Threads_of_Fate.data.png'),
-	necrosis: require('.././asset/data/buffs/Necromancy/Necrosis.data.png'),
-	soul: require('.././asset/data/buffs/Necromancy/Residual_Soul.data.png'),
-	skeleton: require('.././asset/data/buffs/Necromancy/skeleton_warrior-top.data.png'),
-	zombie: require('.././asset/data/buffs/Necromancy/putrid_zombie-top.data.png'),
-	ghost: require('.././asset/data/buffs/Necromancy/vengeful_ghost-top.data.png'),
-	phantom: require('.././asset/data/buffs/Necromancy/Phantom_guardian-top.data.png'),
+	darkness: require('../asset/data/buffs/necromancy/darkness.data.png'),
+	living_death: require('../asset/data/buffs/necromancy/living-death.data.png'),
+	split_soul: require('../asset/data/buffs/necromancy/split-soul.data.png'),
+	threads: require('../asset/data/buffs/necromancy/threads-of-date.data.png'),
+	necrosis: require('../asset/data/buffs/necromancy/necrosis.data.png'),
+	soul: require('../asset/data/buffs/necromancy/residual-soul.data.png'),
+	skeleton: require('../asset/data/buffs/necromancy/skeleton-warrior.data.png'),
+	zombie: require('../asset/data/buffs/necromancy/putrid-zombie.data.png'),
+	ghost: require('../asset/data/buffs/necromancy/vengeful-ghost.data.png'),
+	phantom: require('../asset/data/buffs/necromancy/phantom-guardian.data.png'),
 
 	/* Magic */
-	sunshine: require('.././asset/data/buffs/Ultimates/Sunshine.data.png'),
-	greaterSunshine: require('.././asset/data/buffs/Ultimates/Greater_Sunshine.data.png'),
-	bloodTithe: require('.././asset/data/buffs/blood_tithe.data.png'),
-	glacialEmbrace: require('.././asset/data/buffs/glacial_embrace.data.png'),
-	instability: require('.././asset/data/buffs/WeaponSpecials/Fsoa_Spec.data.png'),
-	odeToDeceit: require('.././asset/data/buffs/WeaponSpecials/OdePixelMatched.data.png'),
-	tsunami: require('.././asset/data/buffs/critical_strike.data.png'),
+	sunshine: require('../asset/data/buffs/magic/sunshine.data.png'),
+	greaterSunshine: require('../asset/data/buffs/magic/greater-sunshine.data.png'),
+	bloodTithe: require('../asset/data/buffs/magic/blood-tithe.data.png'),
+	glacialEmbrace: require('../asset/data/buffs/magic/glacial-embrace.data.png'),
+	instability: require('../asset/data/buffs/magic/instability.data.png'),
+	odeToDeceit: require('../asset/data/debuffs/ode-to-deceit.data.png'),
+	tsunami: require('../asset/data/buffs/magic/critical-strike.data.png'),
 
 	/* Ranged */
-	deathsSwiftness: require(".././asset/data/buffs/Ultimates/Death's_Swiftness.data.png"),
-	greaterDeathsSwiftness: require(".././asset/data/buffs/Ultimates/Greater_Death's_Swiftness.data.png"),
-	crystalRain: require('.././asset/data/buffs/WeaponSpecials/crystalRainBuff.data.png'),
-	perfectEquilibrium: require('.././asset/data/buffs/Perfect_Equilibrium-noborder.data.png'),
-	balanaceByForce: require('.././asset/data/ranged/balance_by_force-beta.data.png'),
-	rangedSplitSoul: require('.././asset/data/ranged/split_soul-buff.data.png'),
+	deathsSwiftness: require("../asset/data/buffs/ranged/deaths-swiftness.data.png"),
+	greaterDeathsSwiftness: require("../asset/data/buffs/ranged/greater-deaths-swiftness.data.png"),
+	crystalRain: require('../asset/data/debuffs/crystal-rain.data.png'),
+	perfectEquilibrium: require('../asset/data/buffs/ranged/perfect-equilibrium.data.png'),
+	balanaceByForce: require('../asset/data/buffs/ranged/balance-by-force.data.png'),
+	rangedSplitSoul: require('../asset/data/buffs/ranged/split-soul.data.png'),
 
+	// TODO: Move this into A1 Sauce properly
 	/* Troubleshooting */
-	mediumBuffs: require('.././asset/data/errorhandling/medium_buffs.data.png'),
-	largeBuffs: require('.././asset/data/errorhandling/large_buffs.data.png'),
+	mediumBuffs: require('../a1sauce/dataImages/ErrorHandling/medium_buffs.data.png'),
+	largeBuffs: require('../a1sauce/dataImages/ErrorHandling/large_buffs.data.png'),
 });
 
 async function retryOperation<T>(

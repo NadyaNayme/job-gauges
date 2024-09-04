@@ -4,8 +4,8 @@ import * as utility from '../utility';
 import { Overlay } from '../../types';
 
 const ultimateImages = a1lib.webpackImages({
-	inactive: require('../.././asset/data/sunshine/sunshine_inactive.data.png'),
-	active: require('../.././asset/data/sunshine/sunshine.data.png'),
+	active: require('../../asset/gauge-ui/magic/sunshine/active.data.png'),
+	inactive: require('../../asset/gauge-ui/magic/sunshine/inactive.data.png'),
 });
 
 let lastValue: number;

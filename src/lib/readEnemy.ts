@@ -8,8 +8,8 @@ import { getSetting } from '../a1sauce/Settings/Storage';
 const targetDisplay = new TargetMob.default();
 
 const enemyDebuffImages = a1lib.webpackImages({
-	invokeDeath: require('.././asset/data/enemyDebuffs/Death_Mark.data.png'),
-	bloat: require('.././asset/data/enemyDebuffs/bloated.data.png'),
+	invokeDeath: require('../asset/data/enemyDebuffs/death-mark.data.png'),
+	bloat: require('../asset/data/enemyDebuffs/bloated.data.png'),
 });
 
 // Thanks to rodultra97 for PR to previous repo

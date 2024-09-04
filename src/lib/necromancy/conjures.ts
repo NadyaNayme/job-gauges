@@ -4,14 +4,8 @@ import * as utility from '../utility';
 import { Overlay } from '../../types';
 
 const conjureImages = a1lib.webpackImages({
-	skeleton_warrior_inactive: require('../.././asset/data/conjures/conjure_skeleton_inactive.data.png'),
-	skeleton_warrior: require('../.././asset/data/conjures/conjure_skeleton.data.png'),
-	putrid_zombie_inactive: require('../.././asset/data/conjures/conjure_zombie_inactive.data.png'),
-	putrid_zombie: require('../.././asset/data/conjures/conjure_zombie.data.png'),
-	vengeful_ghost_inactive: require('../.././asset/data/conjures/conjure_ghost_inactive.data.png'),
-	vengeful_ghost: require('../.././asset/data/conjures/conjure_ghost.data.png'),
-	undead_army_inactive: require('../.././asset/data/conjures/lg/conjure_undead_army_inactive.data.png'),
-	undead_army: require('../.././asset/data/conjures/lg/conjure_undead_army.data.png'),
+	active: require('../../asset/gauge-ui/necromancy/conjure-undead-army/active.data.png'),
+	inactive: require('../../asset/gauge-ui/necromancy/conjure-undead-army/inactive.data.png'),
 });
 
 const white = a1lib.mixColor(255, 255, 255);
@@ -49,8 +43,8 @@ export async function conjureOverlay(gauges: Overlay) {
 					gauges.necromancy.conjures.position.active_orientation.y,
 				gauges.scaleFactor
 			),
-			a1lib.encodeImageString(conjureImages.undead_army.toDrawableData()),
-			conjureImages.undead_army.width,
+			a1lib.encodeImageString(conjureImages.active.toDrawableData()),
+			conjureImages.active.width,
 			1000
 		);
 	} else {
@@ -66,9 +60,9 @@ export async function conjureOverlay(gauges: Overlay) {
 				gauges.scaleFactor
 			),
 			a1lib.encodeImageString(
-				conjureImages.undead_army_inactive.toDrawableData()
+				conjureImages.inactive.toDrawableData()
 			),
-			conjureImages.undead_army_inactive.width,
+			conjureImages.inactive.width,
 			1000
 		);
 	}

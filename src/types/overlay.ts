@@ -1,7 +1,7 @@
-import { NecromancyGauge } from './necromancy_gauge';
-import { MagicGauge } from './magic_gauge';
-import { RangedGauge } from './ranged_gauge';
-import { MeleeGauge } from './melee_gauge';
+import { NecromancyGauge } from './necromancyGauge';
+import { MagicGauge } from './magicGauge';
+import { RangedGauge } from './rangedGauge';
+import { MeleeGauge } from './meleeGauge';
 
 export type Overlay = {
 	isInCombat: boolean;

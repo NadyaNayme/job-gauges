@@ -4,14 +4,14 @@ import * as utility from '../utility';
 import { Overlay } from '../../types';
 
 const incantationImages = a1lib.webpackImages({
-	invoke_death_inactive: require('../.././asset/data/incantations/lg/invoke_death_inactive.data.png'),
-	invoke_death: require('../.././asset/data/incantations/lg/invoke_death.data.png'),
-	darkness_inactive: require('../.././asset/data/incantations/lg/darkness_inactive.data.png'),
-	darkness: require('../.././asset/data/incantations/lg/darkness.data.png'),
-	threads_inactive: require('../.././asset/data/incantations/lg/threads_inactive.data.png'),
-	threads: require('../.././asset/data/incantations/lg/threads.data.png'),
-	split_soul_inactive: require('../.././asset/data/incantations/lg/splitsoul_inactive.data.png'),
-	split_soul: require('../.././asset/data/incantations/lg/splitsoul.data.png'),
+	invoke_death: require('../.././asset/gauge-ui/necromancy/incantations/invoke-death/active.data.png'),
+	invoke_death_inactive: require('../.././asset/gauge-ui/necromancy/incantations/invoke-death/inactive.data.png'),
+	darkness: require('../.././asset/gauge-ui/necromancy/incantations/darkness/active.data.png'),
+	darkness_inactive: require('../.././asset/gauge-ui/necromancy/incantations/darkness/inactive.data.png'),
+	threads: require('../.././asset/gauge-ui/necromancy/incantations/threads-of-fate/active.data.png'),
+	threads_inactive: require('../.././asset/gauge-ui/necromancy/incantations/threads-of-fate/inactive.data.png'),
+	split_soul: require('../.././asset/gauge-ui/necromancy/incantations/split-soul/active.data.png'),
+	split_soul_inactive: require('../.././asset/gauge-ui/necromancy/incantations/split-soul/inactive.data.png'),
 });
 
 let scaledOnce = false;
