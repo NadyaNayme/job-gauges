@@ -3,7 +3,8 @@
 
  ![image](https://github.com/user-attachments/assets/8d71b449-ea19-46fd-9818-ab5b49f851c8)
  ![image](https://github.com/user-attachments/assets/53332356-ecf7-48a7-bf99-f76b1bfed3c9)
- ![image](https://github.com/user-attachments/assets/8e708882-7a5a-4970-8bcd-c4b3412c9e3f)
+ ![image](https://github.com/user-attachments/assets/981fb55e-9f2b-4757-8563-601b70aaf110)
+
 
  ## How to Install & Required Settings
 
