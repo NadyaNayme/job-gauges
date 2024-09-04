@@ -101,11 +101,11 @@ function displayAmmoName(gauges: Overlay, ammo: string): void {
 		utility.white,
 		14,
 		utility.adjustPositionForScale(
-			gauges.ranged.position.x,
+			gauges.ranged.position.x + 96,
 			gauges.scaleFactor
 		),
 		utility.adjustPositionForScale(
-			gauges.ranged.position.y + 80,
+			gauges.ranged.position.y + 24,
 			gauges.scaleFactor
 		),
 		3000,

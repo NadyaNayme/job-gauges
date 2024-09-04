@@ -23,16 +23,16 @@ export const ranged_gauge: RangedGauge = {
 				y: 0,
 			},
 			grouped: {
-				x: 81,
-				y: 5,
+				x: 10,
+				y: 45,
 			},
 			split: {
-				x: 81,
-				y: 5,
+				x: 10,
+				y: 45,
 			},
 			reverse_split: {
-				x: 81,
-				y: 5,
+				x: 10,
+				y: 45,
 			},
 		},
 	},
@@ -49,15 +49,15 @@ export const ranged_gauge: RangedGauge = {
 			},
 			grouped: {
 				x: 35,
-				y: 60,
+				y: 5,
 			},
 			split: {
 				x: 35,
-				y: 60,
+				y: 5,
 			},
 			reverse_split: {
 				x: 35,
-				y: 60,
+				y: 5,
 			},
 		},
 	},
@@ -73,16 +73,16 @@ export const ranged_gauge: RangedGauge = {
 				y: 0,
 			},
 			grouped: {
-				x: 81,
-				y: 55,
+				x: -3,
+				y: 5,
 			},
 			split: {
-				x: 81,
-				y: 55,
+				x: -3,
+				y: 5,
 			},
 			reverse_split: {
-				x: 81,
-				y: 55,
+				x: -3,
+				y: 5,
 			},
 		},
 	},
@@ -97,17 +97,16 @@ export const ranged_gauge: RangedGauge = {
 				y: 0,
 			},
 			grouped: {
-				x: 40,
-				y: 11,
+				x: 55,
+				y: 45,
 			},
 			split: {
-				x: 40,
-				y: 11,
+				x: 55,
+				y: 45,
 			},
 			reverse_split: {
-				x: 40,
-				y: 11,
+				x: 55,
+				y: 45,
 			},
-		},
 	},
 };
