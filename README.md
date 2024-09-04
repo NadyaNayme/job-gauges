@@ -1,8 +1,9 @@
 # Job Gauges
- FFXIV-inspired job gauges for Runescape combat styles. Currently only Necromancy is supported.
+ FFXIV-inspired job gauges for Runescape combat styles. Necromancy, Magic, and Ranged (WIP) are supported.
 
  ![image](https://github.com/user-attachments/assets/38830cfa-0b29-4d6e-8a0d-1e88eaab5dec)
-
+ ![image](https://github.com/user-attachments/assets/53332356-ecf7-48a7-bf99-f76b1bfed3c9)
+![image](https://github.com/user-attachments/assets/8e708882-7a5a-4970-8bcd-c4b3412c9e3f)
 
  ## How to Install & Required Settings
 
