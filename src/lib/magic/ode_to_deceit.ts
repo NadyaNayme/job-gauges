@@ -60,7 +60,7 @@ export async function odeToDeceitOverlay(gauges: Overlay) {
 				utility.adjustPositionForScale(
 					magic.position.y +
 						odeToDeceit.position.active_orientation.y +
-						26,
+						30,
 					gauges.scaleFactor
 				),
 				3000,

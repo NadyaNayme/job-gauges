@@ -1,6 +1,15 @@
 export const notes = [
 	// Add patch notes to top
 	{
+		date: '09/03/2024 - Magic Gauge cleanup v.1.1.1',
+		note: [
+			`Positioning of tracked items has been adjusted`,
+			`Dual Wield spell tracking has been fixed (for real this time)`,
+			`Some special handling of Sign of Life being a false positive for Ode of Deceit has been fixed. Unfortunately other false positives may still occur occasionally`,
+			`Circles are out, hexagons are in`,
+		],
+	},
+	{
 		date: '09/03/2024 - Ranged Gauge & Ode To Deceit v.1.1.0',
 		note: [
 			`Similar to the barebones Magic Gauge - a Ranged Gauge has been added. The Ranged Gauge tracks your active ammo (must be in quiver, not all types are tracked only the most "meta" options), Perfect Eqilibruim stacks, Death's Swiftness, and Seren Godbow's Crystal Rain special attack. Eldritch Crossbow's Split Soul tracking is expected to be added soon.`,

@@ -4,7 +4,6 @@ import * as BuffReader from 'alt1/buffs';
 import * as utility from './utility';
 import { helperItems } from './utility';
 import { Overlay } from '../types';
-import { crystalRainOverlay } from './ranged/crystalRain';
 import { findAmmo } from './ranged/active_ammo';
 import { A1Sauce } from '../a1sauce';
 import { appName } from '../data/constants';
@@ -36,7 +35,7 @@ const buffsImages = a1lib.webpackImages({
 	bloodTithe: require('.././asset/data/buffs/blood_tithe.data.png'),
 	glacialEmbrace: require('.././asset/data/buffs/glacial_embrace.data.png'),
 	instability: require('.././asset/data/buffs/WeaponSpecials/Fsoa_Spec.data.png'),
-	odeToDeceit: require('.././asset/data/buffs/WeaponSpecials/OdeToDeceit.data.png'),
+	odeToDeceit: require('.././asset/data/buffs/WeaponSpecials/OdePixelMatched.data.png'),
 	tsunami: require('.././asset/data/buffs/critical_strike.data.png'),
 
 	/* Ranged */
@@ -280,7 +279,7 @@ export async function readBuffs(gauges: Overlay) {
 					debuffs,
 					gauges,
 					buffsImages.odeToDeceit,
-					22,
+					9,
 					updateOdeToDeceit
 				);
 				break;
@@ -328,6 +327,13 @@ async function updateBuffData(
 	let foundBuff = false;
 	for (const value of Object.values(buffsData)) {
 		const buff = value.countMatch(buffImage, false);
+		if (
+			buffImage == buffsImages.odeToDeceit &&
+			value.readArg('timearg').time >= 50
+		) {
+			foundBuff = false;
+			return;
+		}
 		if (buff.passed > threshold) {
 			foundBuff = true;
 			updateCallbackFn(gauges, value.readArg('timearg').time);
@@ -750,7 +756,7 @@ async function startFsoaCooldown(gauges: Overlay) {
 				utility.adjustPositionForScale(
 					gauges.magic.position.y +
 						gauges.magic.instability.position.active_orientation.y +
-						26,
+						30,
 					gauges.scaleFactor
 				),
 				3000,

@@ -26,11 +26,11 @@ chat.readargs = {
 
 const SPELL_TEXT = {
 	'Main-hand spell set to: Exsanguinate.': 'Exsanguinate',
-	'Main-hand and Off-hand spell set to: Exsanguinate.': 'Exsanguinate',
+	'Main-hand and off-hand spells set to: Exsanguinate.': 'Exsanguinate',
 	'Main-hand spell set to: Incite Fear.': 'Incite Fear',
-	'Main-hand and Off-hand spell set to: Incite Fear.': 'Incite Fear',
+	'Main-hand and off-hand spells set to: Incite Fear.': 'Incite Fear',
 	'Main-hand spell set to: Ice Barrage.': 'Ice Barrage',
-	'Main-hand and Off-hand spell set to: Ice Barrage.': 'Ice Barrage',
+	'Main-hand and off-hand spells set to: Ice Barrage.': 'Ice Barrage',
 };
 
 const getChat = () => {
@@ -117,7 +117,7 @@ export async function spellsOverlay(gauges: Overlay) {
 				gauges.scaleFactor
 			),
 			utility.adjustPositionForScale(
-				gauges.magic.position.y + y + 26,
+				gauges.magic.position.y + y + 23,
 				gauges.scaleFactor
 			),
 			3000,

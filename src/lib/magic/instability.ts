@@ -68,7 +68,7 @@ export async function fsoaOverlay(gauges: Overlay) {
 				utility.adjustPositionForScale(
 					magic.position.y +
 						instability.position.active_orientation.y +
-						26,
+						30,
 					gauges.scaleFactor
 				),
 				3000,
