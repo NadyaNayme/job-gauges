@@ -12,6 +12,35 @@ To install Job Gauges copy & paste this link into Alt1's browser app:
 
 If you do not have Alt1 Toolkit installed already you can [download it from runeapps.org](https://runeapps.org/alt1). In order for Job Gauges to work make sure your Runescape settings for buff bar size is set to `small` and that your Game and UI Scale settings are set to `100%` as these settings are required for Alt1 to be able to read your game screen.
 
+ ## Necromancy Gauge
+
+ - Conjures
+ - Living Death
+ - Darkness
+ - Threads of Date
+ - Invoke Death
+ - Split Soul
+ - Residual Souls
+ - Bloat
+ - Necrosis
+
+ ## Magic Gauge
+
+ - Sunshine
+ - Tsunami
+ - Active Spell w/ stack counting for Glacial Embrace and Blood Tithe
+ - Instability (Fractured Staff of Armadyl weapon special)
+ - Ode to Deceit (Roar of Awakening weapon special)
+
+ ## Ranged Gauge
+
+ - Active Ammo (for specific, meta ammo)
+ - Death's Swiftness
+ - Crystal Rain (Seren God Bow weapon special)
+ - Split Soul (Eldritch Crossbow weapon special)
+ - Perfect Equilibrium (Bow of the Last Guardian stacks)
+ - Balance by Force (Bow of the Last Guardian weapon special) -- active/inactive only (grey Perfect Equilibrium = inactive)
+
 ## Known Issues
 
 - I've had reports of the overlay sometimes flickering for 20-50ms when exiting combat. I believe this is a bug with Alt1 v1.5.6. If anyone is willing to manually update to Alt1 v.1.6.0 and lose all their apps/settings to test this I'd appreciate it.
