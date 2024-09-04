@@ -48,12 +48,12 @@ export const renderSettings = async (gauges) => {
 		)
 		.addCheckboxSetting(
 			'hideOutsideCombat',
-			'Hide the overlay while out of combat',
+			'Show gauges only while "In Combat"',
 			false
 		)
 		.addRangeSetting(
 			'combatTimer',
-			'How long - in seconds - before the player is considered "Out of Combat"',
+			'Seconds until Player is no longer "In Combat" after Target Information goes away',
 			{ defaultValue: '5', min: 1, max: 600, unit: 's' }
 		)
 		.addSeperator()

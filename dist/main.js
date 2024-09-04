@@ -35944,8 +35944,8 @@ const renderSettings = async (gauges) => {
         { value: '4', name: 'Necromancy' },
     ])
         .addCheckboxSetting('automaticSwapping', 'Swap gauge automatically based on last used Ultimate Ability', false)
-        .addCheckboxSetting('hideOutsideCombat', 'Hide the overlay while out of combat', false)
-        .addRangeSetting('combatTimer', 'How long - in seconds - before the player is considered "Out of Combat"', { defaultValue: '5', min: 1, max: 600, unit: 's' })
+        .addCheckboxSetting('hideOutsideCombat', 'Show gauges only while "In Combat"', false)
+        .addRangeSetting('combatTimer', 'Seconds until Player is no longer "In Combat" after Target Information goes away', { defaultValue: '5', min: 1, max: 600, unit: 's' })
         .addSeperator()
         .addButton('repositionOverlay', 'Reposition Overlay', _utility__WEBPACK_IMPORTED_MODULE_3__.setOverlayPosition, {
         classes: ['nisbutton'],
