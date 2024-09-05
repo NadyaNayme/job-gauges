@@ -37,7 +37,6 @@ export async function necrosisOverlay(gauges: Overlay) {
 	}
 
 	if (gauges.necromancy.stacks.useColoredNecrosis && !scaledOnce) {
-		console.log('Recoloring image assets');
 		await necrosisColoredImages.promise;
 		necrosisImages.necrosis_6 = necrosisColoredImages.necrosis_6;
 		necrosisImages.necrosis_8 = necrosisColoredImages.necrosis_8;

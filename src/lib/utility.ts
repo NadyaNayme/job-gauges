@@ -115,7 +115,6 @@ export function forceClearOverlays(): void {
 		alt1.overLayRefreshGroup(overlay);
 		alt1.overLayContinueGroup(overlay);
 		clearTextOverlays();
-		console.log('Force cleared: ' + overlay);
 	});
 }
 
@@ -274,7 +273,6 @@ export async function resizeImageData(
 }
 
 export async function playAlert(alarm: HTMLAudioElement) {
-	console.log(`Playing ${alarm.id} - above alarm's threshold`);
 	loadAlarm(alarm);
 	alarm.loop = Boolean(getSetting(alarm.id + 'Loop'));
 	alarm.volume = Number(getSetting(alarm.id + 'Volume')) / 100;
@@ -283,9 +281,7 @@ export async function playAlert(alarm: HTMLAudioElement) {
 		loadAlarm(alarm);
 		alarm.play();
 	});
-	console.log(
-		`Loop: ${alarm.loop} | Volume: ${alarm.volume} | Alert: ${alarm.src}`
-	);
+
 }
 
 function loadAlarm(alarm: HTMLAudioElement) {
@@ -293,7 +289,6 @@ function loadAlarm(alarm: HTMLAudioElement) {
 		let customAudio = getSetting(alarm.id + 'AlertSound').substring(7);
 		db.get(customAudio, { attachments: true })
 			.then((doc) => {
-				console.log(doc._attachments.filename);
 				// @ts-ignore
 				alarm.src = `data:${doc._attachments.filename.content_type};base64,${doc._attachments.filename.data}`;
 			})
@@ -301,7 +296,7 @@ function loadAlarm(alarm: HTMLAudioElement) {
 				alarm.load();
 			})
 			.catch((err) => {
-				console.log(err);
+				console.error(err);
 			});
 	} else if (!alarm.src.startsWith('data')) {
 		alarm.src = getSetting(alarm.id + 'AlertSound');
@@ -310,7 +305,6 @@ function loadAlarm(alarm: HTMLAudioElement) {
 }
 
 export function pauseAlert(alarm: HTMLAudioElement) {
-	console.log(`Resetting ${alarm.id} - below alarm's threshold.`);
 	alarm.volume = 0;
 	alarm.play().then(() => {
 		alarm.currentTime = 0;

@@ -31483,8 +31483,6 @@ class Patches {
             const lastKnownVersion = (0,_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('lastKnownVersion');
             const currentVersion = sauce.getVersion();
             (0,_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.updateSetting)('lastKnownVersion', currentVersion);
-            console.log(lastKnownVersion);
-            console.log(currentVersion);
             return lastKnownVersion !== currentVersion;
         };
         this.setNotes = (notes) => {
@@ -32167,27 +32165,21 @@ const createRangeSetting = (name, description, options = {}) => {
     });
     minusButton.addEventListener('mouseleave', () => {
         isMouseDown = false;
-        console.log('Mouse is now up: minus leave');
     });
     plusButton.addEventListener('mouseleave', () => {
         isMouseDown = false;
-        console.log('Mouse is now up: plus leave');
     });
     document.addEventListener('mouseleave', () => {
         isMouseDown = false;
-        console.log('Mouse is now up: document leave');
     });
     minusButton.onmouseup = () => {
         isMouseDown = false;
-        console.log('Mouse is now up: minus up');
     };
     plusButton.onmouseup = () => {
         isMouseDown = false;
-        console.log('Mouse is now up: plus up');
     };
     document.addEventListener('mouseup', () => {
         isMouseDown = false;
-        console.log('Mouse is now up: document up');
     });
     const flexcontainer = document.createElement('div');
     flexcontainer.classList.add('flex');
@@ -32510,7 +32502,6 @@ class SettingsManager {
         this.addHeader = (size, content) => {
             var _b;
             (_b = this.settings) === null || _b === void 0 ? void 0 : _b.push(_Library_index__WEBPACK_IMPORTED_MODULE_0__.createHeading(size, content));
-            console.log(this.settings);
             return this;
         };
         this.addText = (content) => {
@@ -34320,7 +34311,6 @@ async function necrosisOverlay(gauges) {
         return;
     }
     if (gauges.necromancy.stacks.useColoredNecrosis && !scaledOnce) {
-        console.log('Recoloring image assets');
         await necrosisColoredImages.promise;
         necrosisImages.necrosis_6 = necrosisColoredImages.necrosis_6;
         necrosisImages.necrosis_8 = necrosisColoredImages.necrosis_8;
@@ -35024,7 +35014,7 @@ async function findDebuffsBar() {
 }
 function testBuffSizes() {
     var _a, _b;
-    console.info('Checking to see if Buffs are set to "Medium" or "Large"');
+    console.info('Unable to find buffs. Checking to see if Buffs are set to "Medium" or "Large"');
     let screen = alt1__WEBPACK_IMPORTED_MODULE_6__.captureHoldFullRs();
     let pos = screen.findSubimage(buffsImages.mediumBuffs);
     let pos2 = screen.findSubimage(buffsImages.largeBuffs);
@@ -35039,7 +35029,7 @@ function testBuffSizes() {
     return false;
 }
 retryOperation(findBuffsBar, 5, 6000)
-    .then(() => console.info('Found Buffs bar succesfully'))
+    .then(() => console.info('Success! Found Buffs.'))
     .catch(() => {
     let wrongBuffSize = testBuffSizes();
     if (!wrongBuffSize) {
@@ -35048,7 +35038,7 @@ retryOperation(findBuffsBar, 5, 6000)
     }
 });
 retryOperation(findDebuffsBar, 5, 6000)
-    .then(() => console.info('Found Debuffs bar succesfully'))
+    .then(() => console.info('Success! Found Debuffs.'))
     .catch(() => {
     let wrongBuffSize = testBuffSizes();
     if (!wrongBuffSize) {
@@ -36157,7 +36147,6 @@ function forceClearOverlays() {
         alt1.overLayRefreshGroup(overlay);
         alt1.overLayContinueGroup(overlay);
         clearTextOverlays();
-        console.log('Force cleared: ' + overlay);
     });
 }
 function clearTextOverlays() {
@@ -36246,7 +36235,6 @@ async function resizeImageData(imageData, scaleFactor) {
     return context.getImageData(0, 0, newWidth, newHeight);
 }
 async function playAlert(alarm) {
-    console.log(`Playing ${alarm.id} - above alarm's threshold`);
     loadAlarm(alarm);
     alarm.loop = Boolean((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)(alarm.id + 'Loop'));
     alarm.volume = Number((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)(alarm.id + 'Volume')) / 100;
@@ -36255,14 +36243,12 @@ async function playAlert(alarm) {
         loadAlarm(alarm);
         alarm.play();
     });
-    console.log(`Loop: ${alarm.loop} | Volume: ${alarm.volume} | Alert: ${alarm.src}`);
 }
 function loadAlarm(alarm) {
     if (alarm.src.startsWith('custom:') || alarm.src.startsWith('Custom:')) {
         let customAudio = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)(alarm.id + 'AlertSound').substring(7);
         db.get(customAudio, { attachments: true })
             .then((doc) => {
-            console.log(doc._attachments.filename);
             // @ts-ignore
             alarm.src = `data:${doc._attachments.filename.content_type};base64,${doc._attachments.filename.data}`;
         })
@@ -36270,7 +36256,7 @@ function loadAlarm(alarm) {
             alarm.load();
         })
             .catch((err) => {
-            console.log(err);
+            console.error(err);
         });
     }
     else if (!alarm.src.startsWith('data')) {
@@ -36279,7 +36265,6 @@ function loadAlarm(alarm) {
     }
 }
 function pauseAlert(alarm) {
-    console.log(`Resetting ${alarm.id} - below alarm's threshold.`);
     alarm.volume = 0;
     alarm.play().then(() => {
         alarm.currentTime = 0;
@@ -41832,7 +41817,6 @@ function updateActiveOrientationFromLocalStorage() {
         for (const key in obj) {
             if (typeof obj[key] === 'object' && obj[key] !== null) {
                 if (key === 'active_orientation') {
-                    console.log(obj);
                     obj[key].x = obj[selectedOrientation].x;
                     obj[key].y = obj[selectedOrientation].y;
                 }
@@ -41886,56 +41870,46 @@ function addEventListeners() {
     (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('alarmSoulsThreshold').addEventListener('change', (e) => {
         const target = e.target;
         gauges.necromancy.stacks.souls.alarm.threshold = parseInt(target.value, 10);
-        console.log('Souls alarm threshold: ' + target.value);
     });
     (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('alarmNecrosisThreshold').addEventListener('change', (e) => {
         const target = e.target;
         gauges.necromancy.stacks.necrosis.alarm.threshold = parseInt(target.value, 10);
-        console.log('Necrosis alarm threshold: ' + target.value);
     });
     /* Update Active Alarms */
     (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('alarmSoulsActive').addEventListener('change', (e) => {
         const target = e.target;
         gauges.necromancy.stacks.souls.alarm.isActive = target.checked;
-        console.log('Souls alarm active: ' + target.checked);
     });
     (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('alarmNecrosisActive').addEventListener('change', (e) => {
         const target = e.target;
         gauges.necromancy.stacks.necrosis.alarm.isActive = target.checked;
-        console.log('Necrosis alarm active: ' + target.checked);
     });
     /* Update Looping Alarms */
     (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('alarmNecrosisLoop').addEventListener('change', (e) => {
         const target = e.target;
         gauges.necromancy.stacks.necrosis.alarm.isLooping = target.checked;
-        console.log('Necrosis alarm looping: ' + target.checked);
     });
     (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('alarmSoulsLoop').addEventListener('change', (e) => {
         const target = e.target;
         gauges.necromancy.stacks.souls.alarm.isLooping = target.checked;
-        console.log('Souls alarm volume looping: ' + target.checked);
     });
     /* Update Alarm Volumes */
     (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('alarmNecrosisVolume').addEventListener('change', (e) => {
         const target = e.target;
         gauges.necromancy.stacks.necrosis.alarm.volume = parseInt(target.value, 10);
-        console.log('Necrosis alarm volume updated to: ' + target.value);
     });
     (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('alarmSoulsVolume').addEventListener('change', (e) => {
         const target = e.target;
         gauges.necromancy.stacks.souls.alarm.volume = parseInt(target.value, 10);
-        console.log('Souls alarm volume updated to: ' + target.value);
     });
     /* Update Alarm Sounds */
     (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('alarmNecrosisAlertSound').addEventListener('change', (e) => {
         const target = e.target;
         gauges.necromancy.stacks.necrosis.alarm.sound = target.value;
-        console.log('Necrosis alarm sound updated to:' + target.value);
     });
     (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('alarmSoulsAlertSound').addEventListener('change', (e) => {
         const target = e.target;
         gauges.necromancy.stacks.souls.alarm.sound = target.value;
-        console.log('Souls alarm sound updated to:' + target.value);
     });
 }
 // TODO: Get rid of this crap

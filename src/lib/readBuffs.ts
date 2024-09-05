@@ -114,7 +114,7 @@ export async function findDebuffsBar(): Promise<void> {
 }
 
 export function testBuffSizes(): boolean {
-	console.info('Checking to see if Buffs are set to "Medium" or "Large"');
+	console.info('Unable to find buffs. Checking to see if Buffs are set to "Medium" or "Large"');
 	let screen = a1lib.captureHoldFullRs();
 	let pos = screen.findSubimage(buffsImages.mediumBuffs);
 	let pos2 = screen.findSubimage(buffsImages.largeBuffs);
@@ -136,7 +136,7 @@ export function testBuffSizes(): boolean {
 }
 
 retryOperation(findBuffsBar, 5, 6000)
-	.then(() => console.info('Found Buffs bar succesfully'))
+	.then(() => console.info('Success! Found Buffs.'))
 	.catch(() => {
 		let wrongBuffSize = testBuffSizes();
 		if (!wrongBuffSize) {
@@ -151,7 +151,7 @@ retryOperation(findBuffsBar, 5, 6000)
 	});
 
 retryOperation(findDebuffsBar, 5, 6000)
-	.then(() => console.info('Found Debuffs bar succesfully'))
+	.then(() => console.info('Success! Found Debuffs.'))
 	.catch(() => {
 		let wrongBuffSize = testBuffSizes();
 		if (!wrongBuffSize) {

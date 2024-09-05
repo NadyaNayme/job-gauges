@@ -85,32 +85,26 @@ export const createRangeSetting = (
 
 	minusButton.addEventListener('mouseleave', () => {
 		isMouseDown = false;
-		console.log('Mouse is now up: minus leave');
 	});
 
 	plusButton.addEventListener('mouseleave', () => {
 		isMouseDown = false;
-		console.log('Mouse is now up: plus leave');
 	});
 
 	document.addEventListener('mouseleave', () => {
 		isMouseDown = false;
-		console.log('Mouse is now up: document leave');
 	});
 
 	minusButton.onmouseup = () => {
 		isMouseDown = false;
-		console.log('Mouse is now up: minus up');
 	};
 
 	plusButton.onmouseup = () => {
 		isMouseDown = false;
-		console.log('Mouse is now up: plus up');
 	};
 
 	document.addEventListener('mouseup', () => {
 		isMouseDown = false;
-		console.log('Mouse is now up: document up');
 	});
 
 	const flexcontainer = document.createElement('div');

@@ -102,7 +102,6 @@ export class SettingsManager {
 
 	public addHeader = (size: string, content: string): SettingsManager => {
 		this.settings?.push(Library.createHeading(size, content));
-		console.log(this.settings);
 		return this;
 	};
 

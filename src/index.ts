@@ -217,7 +217,6 @@ function updateActiveOrientationFromLocalStorage(): void {
 		for (const key in obj) {
 			if (typeof obj[key] === 'object' && obj[key] !== null) {
 				if (key === 'active_orientation') {
-					console.log(obj);
 					obj[key].x = obj[selectedOrientation].x;
 					obj[key].y = obj[selectedOrientation].y;
 				} else {
@@ -282,7 +281,6 @@ function addEventListeners() {
 			target.value,
 			10
 		);
-		console.log('Souls alarm threshold: ' + target.value);
 	});
 
 	getById('alarmNecrosisThreshold').addEventListener('change', (e) => {
@@ -291,33 +289,28 @@ function addEventListeners() {
 			target.value,
 			10
 		);
-		console.log('Necrosis alarm threshold: ' + target.value);
 	});
 
 	/* Update Active Alarms */
 	getById('alarmSoulsActive').addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.souls.alarm.isActive = target.checked;
-		console.log('Souls alarm active: ' + target.checked);
 	});
 
 	getById('alarmNecrosisActive').addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.necrosis.alarm.isActive = target.checked;
-		console.log('Necrosis alarm active: ' + target.checked);
 	});
 
 	/* Update Looping Alarms */
 	getById('alarmNecrosisLoop').addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.necrosis.alarm.isLooping = target.checked;
-		console.log('Necrosis alarm looping: ' + target.checked);
 	});
 
 	getById('alarmSoulsLoop').addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.souls.alarm.isLooping = target.checked;
-		console.log('Souls alarm volume looping: ' + target.checked);
 	});
 
 	/* Update Alarm Volumes */
@@ -327,7 +320,6 @@ function addEventListeners() {
 			target.value,
 			10
 		);
-		console.log('Necrosis alarm volume updated to: ' + target.value);
 	});
 
 	getById('alarmSoulsVolume').addEventListener('change', (e) => {
@@ -336,20 +328,17 @@ function addEventListeners() {
 			target.value,
 			10
 		);
-		console.log('Souls alarm volume updated to: ' + target.value);
 	});
 
 	/* Update Alarm Sounds */
 	getById('alarmNecrosisAlertSound').addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.necrosis.alarm.sound = target.value;
-		console.log('Necrosis alarm sound updated to:' + target.value);
 	});
 
 	getById('alarmSoulsAlertSound').addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.souls.alarm.sound = target.value;
-		console.log('Souls alarm sound updated to:' + target.value);
 	});
 }
 

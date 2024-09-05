@@ -19,8 +19,6 @@ export class Patches {
 		const lastKnownVersion = getSetting('lastKnownVersion');
 		const currentVersion = sauce.getVersion();
 		updateSetting('lastKnownVersion', currentVersion);
-		console.log(lastKnownVersion);
-		console.log(currentVersion);
 		return lastKnownVersion !== currentVersion;
 	};
 
