@@ -16,8 +16,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
-      - run: npm install --force
-      - run: npm run build 
+      - run: npm install
+      - run: npm run build
         env:
           NODE_ENV: production
       - run: |
