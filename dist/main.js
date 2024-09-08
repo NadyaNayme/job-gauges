@@ -30946,9 +30946,7 @@ var options = {};
 
 options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
 options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
-
-      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
-    
+options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
 options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
 options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
 
@@ -31001,9 +30999,7 @@ var options = {};
 
 options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
 options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
-
-      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
-    
+options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
 options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
 options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
 
@@ -31056,9 +31052,7 @@ var options = {};
 
 options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
 options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
-
-      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
-    
+options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
 options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
 options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
 
@@ -31111,9 +31105,7 @@ var options = {};
 
 options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
 options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
-
-      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
-    
+options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
 options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
 options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
 
@@ -31166,9 +31158,7 @@ var options = {};
 
 options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
 options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
-
-      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
-    
+options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
 options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
 options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
 
@@ -33060,15 +33050,15 @@ const necromancy_gauge = {
                 },
                 grouped: {
                     x: -10,
-                    y: 97,
+                    y: 99,
                 },
                 split: {
                     x: -10,
-                    y: 97,
+                    y: 99,
                 },
                 reverse_split: {
                     x: -10,
-                    y: 97,
+                    y: 99,
                 },
             },
             alarm: {
@@ -33402,7 +33392,7 @@ const ranged_gauge = {
                 y: 45,
             },
         },
-    }
+    },
 };
 
 
@@ -35048,39 +35038,39 @@ retryOperation(findDebuffsBar, 5, 6000)
 });
 async function readBuffs(gauges) {
     if (buffs.pos !== undefined) {
-        updateBuffData(buffs, gauges, buffsImages.deathsSwiftness, 300, updateDeathsSwiftness);
-        updateBuffData(buffs, gauges, buffsImages.greaterDeathsSwiftness, 300, updateDeathsSwiftness);
-        updateBuffData(buffs, gauges, buffsImages.sunshine, 300, updateSunshine);
-        updateBuffData(buffs, gauges, buffsImages.greaterSunshine, 100, updateSunshine);
+        updateBuffData(buffs, gauges, buffsImages.deathsSwiftness, 300, updateDeathsSwiftness, false);
+        updateBuffData(buffs, gauges, buffsImages.greaterDeathsSwiftness, 300, updateDeathsSwiftness, true);
+        updateBuffData(buffs, gauges, buffsImages.sunshine, 300, updateSunshine, false);
+        updateBuffData(buffs, gauges, buffsImages.greaterSunshine, 100, updateSunshine, true);
         if (gauges.necromancy.livingDeath.isActiveOverlay) {
-            updateBuffData(buffs, gauges, buffsImages.living_death, 400, updateLivingDeath);
+            updateBuffData(buffs, gauges, buffsImages.living_death, 400, updateLivingDeath, false);
         }
         switch (gauges.combatStyle) {
             case 4:
-                updateBuffData(buffs, gauges, buffsImages.soul, 200, updateSoulCount);
-                updateBuffData(buffs, gauges, buffsImages.necrosis, 200, updateNecrosisCount);
+                updateBuffData(buffs, gauges, buffsImages.soul, 200, updateSoulCount, false);
+                updateBuffData(buffs, gauges, buffsImages.necrosis, 200, updateNecrosisCount, false);
                 updateConjures(gauges);
-                updateBuffData(buffs, gauges, buffsImages.darkness, 300, updateDarkness);
+                updateBuffData(buffs, gauges, buffsImages.darkness, 300, updateDarkness, false);
                 if (!disableThreadsCheck) {
-                    updateBuffData(buffs, gauges, buffsImages.threads, 300, updateThreads);
+                    updateBuffData(buffs, gauges, buffsImages.threads, 300, updateThreads, false);
                 }
                 if (!disableSplitCheck) {
-                    updateBuffData(buffs, gauges, buffsImages.split_soul, 350, updateSplitSoul);
+                    updateBuffData(buffs, gauges, buffsImages.split_soul, 350, updateSplitSoul, false);
                 }
                 break;
             case 3:
-                updateBuffData(buffs, gauges, buffsImages.instability, 60, updateFsoa);
-                updateBuffData(buffs, gauges, buffsImages.tsunami, 200, updateTsunami);
+                updateBuffData(buffs, gauges, buffsImages.instability, 60, updateFsoa, false);
+                updateBuffData(buffs, gauges, buffsImages.tsunami, 200, updateTsunami, false);
                 updateStackData(gauges, buffsImages.bloodTithe, 30, updateBloodTithe);
                 updateStackData(gauges, buffsImages.glacialEmbrace, 30, updateGlacialEmbrace);
-                updateBuffData(debuffs, gauges, buffsImages.odeToDeceit, 9, updateOdeToDeceit);
+                updateBuffData(debuffs, gauges, buffsImages.odeToDeceit, 9, updateOdeToDeceit, false);
                 break;
             case 2:
-                updateBuffData(debuffs, gauges, buffsImages.crystalRain, 60, updateCrystalRain);
+                updateBuffData(debuffs, gauges, buffsImages.crystalRain, 60, updateCrystalRain, false);
                 (0,_ranged_activeAmmo__WEBPACK_IMPORTED_MODULE_1__.findAmmo)(gauges, buffs.read());
                 updateSimpleStackData(gauges, buffsImages.perfectEquilibrium, 300, updatePeCount);
-                updateBuffData(buffs, gauges, buffsImages.balanaceByForce, 20, updateBalanceByForce);
-                updateBuffData(buffs, gauges, buffsImages.rangedSplitSoul, 300, updateRangedSplitSoul);
+                updateBuffData(buffs, gauges, buffsImages.balanaceByForce, 20, updateBalanceByForce, false);
+                updateBuffData(buffs, gauges, buffsImages.rangedSplitSoul, 300, updateRangedSplitSoul, false);
                 break;
             case 1:
                 break;
@@ -35090,7 +35080,7 @@ async function readBuffs(gauges) {
 }
 async function updateBuffData(buffsreader, gauges, buffImage, threshold, 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-updateCallbackFn) {
+updateCallbackFn, greater) {
     const buffsData = buffsreader.read();
     let foundBuff = false;
     for (const value of Object.values(buffsData)) {
@@ -35102,11 +35092,11 @@ updateCallbackFn) {
         }
         if (buff.passed > threshold) {
             foundBuff = true;
-            updateCallbackFn(gauges, value.readArg('timearg').time);
+            updateCallbackFn(gauges, value.readArg('timearg').time, greater);
         }
     }
     if (!foundBuff) {
-        updateCallbackFn(gauges, 0);
+        updateCallbackFn(gauges, 0, greater);
     }
     return foundBuff;
 }
@@ -35278,10 +35268,10 @@ async function updateSplitSoul(gauges, value) {
     }
 }
 async function updateConjures(gauges) {
-    const hasSkeleton = await updateBuffData(buffs, gauges, buffsImages.skeleton, 150, updateSkeleton);
-    const hasZombie = await updateBuffData(buffs, gauges, buffsImages.zombie, 150, updateZombie);
-    const hasGhost = await updateBuffData(buffs, gauges, buffsImages.ghost, 200, updateGhost);
-    const hasPhantom = await updateBuffData(buffs, gauges, buffsImages.phantom, 200, updatePhantom);
+    const hasSkeleton = await updateBuffData(buffs, gauges, buffsImages.skeleton, 150, updateSkeleton, false);
+    const hasZombie = await updateBuffData(buffs, gauges, buffsImages.zombie, 150, updateZombie, false);
+    const hasGhost = await updateBuffData(buffs, gauges, buffsImages.ghost, 200, updateGhost, false);
+    const hasPhantom = await updateBuffData(buffs, gauges, buffsImages.phantom, 200, updatePhantom, false);
     if (hasSkeleton || hasZombie || hasGhost || hasPhantom) {
         gauges.necromancy.conjures.active = true;
     }
@@ -35289,7 +35279,7 @@ async function updateConjures(gauges) {
         gauges.necromancy.conjures.active = false;
     }
 }
-async function updateSunshine(gauges, value) {
+async function updateSunshine(gauges, value, greater) {
     // If Sunshine has an active buff and a timer:
     //   - it cannot be on cooldown
     //   - it must be active
@@ -35312,11 +35302,11 @@ async function updateSunshine(gauges, value) {
             gauges.magic.sunshine.time = 0;
             gauges.magic.sunshine.active = false;
             gauges.magic.sunshine.isOnCooldown = true;
-            startSunshineCooldown(gauges);
+            startSunshineCooldown(gauges, greater);
         }, 1050);
     }
 }
-async function startSunshineCooldown(gauges) {
+async function startSunshineCooldown(gauges, greater) {
     if (!gauges.magic.sunshine.isActiveOverlay) {
         return;
     }
@@ -35328,7 +35318,7 @@ async function startSunshineCooldown(gauges) {
     // Otherwise cooldown has started and we can clear the Active text
     _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('Sunshine_Text');
     alt1.overLaySetGroupZIndex('Sunshine_Cooldown_Text', 1);
-    let cooldown = 29;
+    let cooldown = greater ? 22 : 29;
     const timer = setInterval(() => {
         // During our interval if the buff ever becomes active - kill the timer
         if (gauges.magic.sunshine.active) {
@@ -35508,7 +35498,7 @@ async function changeCombatStyles(gauges, style) {
         _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlays();
     }
 }
-async function updateDeathsSwiftness(gauges, value) {
+async function updateDeathsSwiftness(gauges, value, greater) {
     // If Death Swiftness has an active buff and a timer:
     //   - it cannot be on cooldown
     //   - it must be active
@@ -35531,11 +35521,11 @@ async function updateDeathsSwiftness(gauges, value) {
             gauges.ranged.deathsSwiftness.time = 0;
             gauges.ranged.deathsSwiftness.active = false;
             gauges.ranged.deathsSwiftness.isOnCooldown = true;
-            startDeathsSwiftnessCooldown(gauges);
+            startDeathsSwiftnessCooldown(gauges, greater);
         }, 1050);
     }
 }
-async function startDeathsSwiftnessCooldown(gauges) {
+async function startDeathsSwiftnessCooldown(gauges, greater) {
     if (!gauges.ranged.deathsSwiftness.isActiveOverlay) {
         return;
     }
@@ -35547,7 +35537,7 @@ async function startDeathsSwiftnessCooldown(gauges) {
     // Otherwise cooldown has started and we can clear the Active text
     _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('DeathsSwiftness_Text');
     alt1.overLaySetGroupZIndex('DeathsSwiftnessCooldown_Text', 1);
-    let cooldown = 29;
+    let cooldown = greater ? 22 : 29;
     const timer = setInterval(() => {
         // During our interval if the buff ever becomes active - kill the timer
         if (gauges.ranged.deathsSwiftness.active) {
@@ -41548,7 +41538,7 @@ const urlAlphabet =
 /******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
 /******/ 		var document = __webpack_require__.g.document;
 /******/ 		if (!scriptUrl && document) {
-/******/ 			if (document.currentScript)
+/******/ 			if (document.currentScript && document.currentScript.tagName.toUpperCase() === 'SCRIPT')
 /******/ 				scriptUrl = document.currentScript.src;
 /******/ 			if (!scriptUrl) {
 /******/ 				var scripts = document.getElementsByTagName("script");

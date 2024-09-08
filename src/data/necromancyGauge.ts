@@ -50,15 +50,15 @@ export const necromancy_gauge: NecromancyGauge = {
 				},
 				grouped: {
 					x: -10,
-					y: 97,
+					y: 99,
 				},
 				split: {
 					x: -10,
-					y: 97,
+					y: 99,
 				},
 				reverse_split: {
 					x: -10,
-					y: 97,
+					y: 99,
 				},
 			},
 			alarm: {

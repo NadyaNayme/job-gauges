@@ -108,5 +108,6 @@ export const ranged_gauge: RangedGauge = {
 				x: 55,
 				y: 45,
 			},
+		},
 	},
 };
