@@ -39,8 +39,8 @@ const buffsImages = a1lib.webpackImages({
 	tsunami: require('../asset/data/buffs/magic/critical-strike.data.png'),
 
 	/* Ranged */
-	deathsSwiftness: require("../asset/data/buffs/ranged/deaths-swiftness.data.png"),
-	greaterDeathsSwiftness: require("../asset/data/buffs/ranged/greater-deaths-swiftness.data.png"),
+	deathsSwiftness: require('../asset/data/buffs/ranged/deaths-swiftness.data.png'),
+	greaterDeathsSwiftness: require('../asset/data/buffs/ranged/greater-deaths-swiftness.data.png'),
 	crystalRain: require('../asset/data/debuffs/crystal-rain.data.png'),
 	perfectEquilibrium: require('../asset/data/buffs/ranged/perfect-equilibrium.data.png'),
 	balanaceByForce: require('../asset/data/buffs/ranged/balance-by-force.data.png'),
@@ -73,7 +73,7 @@ export async function findBuffsBar(): Promise<void> {
 	console.info('Attempting to find buffs bar...');
 	if (getSetting('buffsPosition')) {
 		const { x, y, maxhor, maxver } = getSetting('buffsPosition');
-		buffs.pos = {x, y, maxhor, maxver };
+		buffs.pos = { x, y, maxhor, maxver };
 		console.info('Loaded previous buffs location!');
 	}
 	if (buffs.pos == undefined) {
@@ -114,7 +114,9 @@ export async function findDebuffsBar(): Promise<void> {
 }
 
 export function testBuffSizes(): boolean {
-	console.info('Unable to find buffs. Checking to see if Buffs are set to "Medium" or "Large"');
+	console.info(
+		'Unable to find buffs. Checking to see if Buffs are set to "Medium" or "Large"'
+	);
 	let screen = a1lib.captureHoldFullRs();
 	let pos = screen.findSubimage(buffsImages.mediumBuffs);
 	let pos2 = screen.findSubimage(buffsImages.largeBuffs);
@@ -172,28 +174,32 @@ export async function readBuffs(gauges: Overlay) {
 			gauges,
 			buffsImages.deathsSwiftness,
 			300,
-			updateDeathsSwiftness
+			updateDeathsSwiftness,
+			false
 		);
 		updateBuffData(
 			buffs,
 			gauges,
 			buffsImages.greaterDeathsSwiftness,
 			300,
-			updateDeathsSwiftness
+			updateDeathsSwiftness,
+			true
 		);
 		updateBuffData(
 			buffs,
 			gauges,
 			buffsImages.sunshine,
 			300,
-			updateSunshine
+			updateSunshine,
+			false
 		);
 		updateBuffData(
 			buffs,
 			gauges,
 			buffsImages.greaterSunshine,
 			100,
-			updateSunshine
+			updateSunshine,
+			true
 		);
 		if (gauges.necromancy.livingDeath.isActiveOverlay) {
 			updateBuffData(
@@ -201,7 +207,8 @@ export async function readBuffs(gauges: Overlay) {
 				gauges,
 				buffsImages.living_death,
 				400,
-				updateLivingDeath
+				updateLivingDeath,
+				false
 			);
 		}
 		switch (gauges.combatStyle) {
@@ -211,14 +218,16 @@ export async function readBuffs(gauges: Overlay) {
 					gauges,
 					buffsImages.soul,
 					200,
-					updateSoulCount
+					updateSoulCount,
+					false
 				);
 				updateBuffData(
 					buffs,
 					gauges,
 					buffsImages.necrosis,
 					200,
-					updateNecrosisCount
+					updateNecrosisCount,
+					false
 				);
 				updateConjures(gauges);
 
@@ -227,7 +236,8 @@ export async function readBuffs(gauges: Overlay) {
 					gauges,
 					buffsImages.darkness,
 					300,
-					updateDarkness
+					updateDarkness,
+					false
 				);
 
 				if (!disableThreadsCheck) {
@@ -236,7 +246,8 @@ export async function readBuffs(gauges: Overlay) {
 						gauges,
 						buffsImages.threads,
 						300,
-						updateThreads
+						updateThreads,
+						false
 					);
 				}
 				if (!disableSplitCheck) {
@@ -245,7 +256,8 @@ export async function readBuffs(gauges: Overlay) {
 						gauges,
 						buffsImages.split_soul,
 						350,
-						updateSplitSoul
+						updateSplitSoul,
+						false
 					);
 				}
 				break;
@@ -255,14 +267,16 @@ export async function readBuffs(gauges: Overlay) {
 					gauges,
 					buffsImages.instability,
 					60,
-					updateFsoa
+					updateFsoa,
+					false
 				);
 				updateBuffData(
 					buffs,
 					gauges,
 					buffsImages.tsunami,
 					200,
-					updateTsunami
+					updateTsunami,
+					false
 				);
 				updateStackData(
 					gauges,
@@ -281,7 +295,8 @@ export async function readBuffs(gauges: Overlay) {
 					gauges,
 					buffsImages.odeToDeceit,
 					9,
-					updateOdeToDeceit
+					updateOdeToDeceit,
+					false
 				);
 				break;
 			case 2:
@@ -290,7 +305,8 @@ export async function readBuffs(gauges: Overlay) {
 					gauges,
 					buffsImages.crystalRain,
 					60,
-					updateCrystalRain
+					updateCrystalRain,
+					false
 				);
 				findAmmo(gauges, buffs.read());
 				updateSimpleStackData(
@@ -299,13 +315,21 @@ export async function readBuffs(gauges: Overlay) {
 					300,
 					updatePeCount
 				);
-				updateBuffData(buffs, gauges, buffsImages.balanaceByForce, 20, updateBalanceByForce);
+				updateBuffData(
+					buffs,
+					gauges,
+					buffsImages.balanaceByForce,
+					20,
+					updateBalanceByForce,
+					false
+				);
 				updateBuffData(
 					buffs,
 					gauges,
 					buffsImages.rangedSplitSoul,
 					300,
-					updateRangedSplitSoul
+					updateRangedSplitSoul,
+					false
 				);
 				break;
 			case 1:
@@ -322,7 +346,8 @@ async function updateBuffData(
 	buffImage: ImageData,
 	threshold: number,
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-	updateCallbackFn: Function
+	updateCallbackFn: Function,
+	greater: boolean
 ): Promise<boolean> {
 	const buffsData = buffsreader.read();
 	let foundBuff = false;
@@ -337,11 +362,11 @@ async function updateBuffData(
 		}
 		if (buff.passed > threshold) {
 			foundBuff = true;
-			updateCallbackFn(gauges, value.readArg('timearg').time);
+			updateCallbackFn(gauges, value.readArg('timearg').time, greater);
 		}
 	}
 	if (!foundBuff) {
-		updateCallbackFn(gauges, 0);
+		updateCallbackFn(gauges, 0, greater);
 	}
 	return foundBuff;
 }
@@ -569,28 +594,32 @@ async function updateConjures(gauges: Overlay) {
 		gauges,
 		buffsImages.skeleton,
 		150,
-		updateSkeleton
+		updateSkeleton,
+		false
 	);
 	const hasZombie = await updateBuffData(
 		buffs,
 		gauges,
 		buffsImages.zombie,
 		150,
-		updateZombie
+		updateZombie,
+		false
 	);
 	const hasGhost = await updateBuffData(
 		buffs,
 		gauges,
 		buffsImages.ghost,
 		200,
-		updateGhost
+		updateGhost,
+		false
 	);
 	const hasPhantom = await updateBuffData(
 		buffs,
 		gauges,
 		buffsImages.phantom,
 		200,
-		updatePhantom
+		updatePhantom,
+		false
 	);
 	if (hasSkeleton || hasZombie || hasGhost || hasPhantom) {
 		gauges.necromancy.conjures.active = true;
@@ -599,7 +628,11 @@ async function updateConjures(gauges: Overlay) {
 	}
 }
 
-async function updateSunshine(gauges: Overlay, value: number) {
+async function updateSunshine(
+	gauges: Overlay,
+	value: number,
+	greater: boolean
+) {
 	// If Sunshine has an active buff and a timer:
 	//   - it cannot be on cooldown
 	//   - it must be active
@@ -624,12 +657,12 @@ async function updateSunshine(gauges: Overlay, value: number) {
 			gauges.magic.sunshine.time = 0;
 			gauges.magic.sunshine.active = false;
 			gauges.magic.sunshine.isOnCooldown = true;
-			startSunshineCooldown(gauges);
+			startSunshineCooldown(gauges, greater);
 		}, 1050);
 	}
 }
 
-async function startSunshineCooldown(gauges: Overlay) {
+async function startSunshineCooldown(gauges: Overlay, greater: boolean) {
 	if (!gauges.magic.sunshine.isActiveOverlay) {
 		return;
 	}
@@ -643,7 +676,7 @@ async function startSunshineCooldown(gauges: Overlay) {
 	// Otherwise cooldown has started and we can clear the Active text
 	utility.forceClearOverlay('Sunshine_Text');
 	alt1.overLaySetGroupZIndex('Sunshine_Cooldown_Text', 1);
-	let cooldown = 29;
+	let cooldown = greater ? 22 : 29;
 	const timer = setInterval(() => {
 		// During our interval if the buff ever becomes active - kill the timer
 		if (gauges.magic.sunshine.active) {
@@ -887,7 +920,11 @@ async function changeCombatStyles(gauges: Overlay, style: number) {
 	}
 }
 
-async function updateDeathsSwiftness(gauges: Overlay, value: number) {
+async function updateDeathsSwiftness(
+	gauges: Overlay,
+	value: number,
+	greater: boolean
+) {
 	// If Death Swiftness has an active buff and a timer:
 	//   - it cannot be on cooldown
 	//   - it must be active
@@ -912,12 +949,12 @@ async function updateDeathsSwiftness(gauges: Overlay, value: number) {
 			gauges.ranged.deathsSwiftness.time = 0;
 			gauges.ranged.deathsSwiftness.active = false;
 			gauges.ranged.deathsSwiftness.isOnCooldown = true;
-			startDeathsSwiftnessCooldown(gauges);
+			startDeathsSwiftnessCooldown(gauges, greater);
 		}, 1050);
 	}
 }
 
-async function startDeathsSwiftnessCooldown(gauges: Overlay) {
+async function startDeathsSwiftnessCooldown(gauges: Overlay, greater: boolean) {
 	if (!gauges.ranged.deathsSwiftness.isActiveOverlay) {
 		return;
 	}
@@ -931,7 +968,7 @@ async function startDeathsSwiftnessCooldown(gauges: Overlay) {
 	// Otherwise cooldown has started and we can clear the Active text
 	utility.forceClearOverlay('DeathsSwiftness_Text');
 	alt1.overLaySetGroupZIndex('DeathsSwiftnessCooldown_Text', 1);
-	let cooldown = 29;
+	let cooldown = greater ? 22 : 29;
 	const timer = setInterval(() => {
 		// During our interval if the buff ever becomes active - kill the timer
 		if (gauges.ranged.deathsSwiftness.active) {
