@@ -128,6 +128,11 @@ export const renderSettings = async (gauges) => {
 			getSetting('showSouls') ?? true
 		)
 		.addCheckboxSetting(
+			'pre95Souls',
+			'Only show 3 Residual Souls / No Soulbound Lantern',
+			getSetting('pre95Souls') ?? false
+		)
+		.addCheckboxSetting(
 			'showNecrosis',
 			'Show Necrosis',
 			getSetting('showNecrosis') ?? true
@@ -166,8 +171,15 @@ export const renderSettings = async (gauges) => {
 		)
 		.addAlarmSetting('alarmNecrosis', '')
 		.addSeperator()
-		.addText('Use the below button if you have adjusted your screen in any way and Job Gauges is no longer working.')
-		.addButton('resetPositons', 'Reset Buff and Debuff positions', resetBuffPositions, {classes: ['nisbutton']})
+		.addText(
+			'Use the below button if you have adjusted your screen in any way and Job Gauges is no longer working.'
+		)
+		.addButton(
+			'resetPositons',
+			'Reset Buff and Debuff positions',
+			resetBuffPositions,
+			{ classes: ['nisbutton'] }
+		)
 		.build();
 
 	db.allDocs({ include_docs: true, attachments: true, binary: true }).then(

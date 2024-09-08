@@ -69,6 +69,7 @@ export const necromancy_gauge: NecromancyGauge = {
 				threshold: 12,
 			},
 		},
+		pre95Souls: false,
 		duplicateNecrosisRow: false,
 		useColoredNecrosis: false,
 	},

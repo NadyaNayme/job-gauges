@@ -911,6 +911,46 @@ module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/
 
 /***/ }),
 
+/***/ "./asset/gauge-ui/necromancy/residual-souls/pre95/0.data.png":
+/*!*******************************************************************!*\
+  !*** ./asset/gauge-ui/necromancy/residual-souls/pre95/0.data.png ***!
+  \*******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAAIQAAAAYCAMAAAAMPqWtAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAN5QTFRFAAAAFRUVFhYWFBQUFxcXGhoaGBgYGRkZHR0dGxsbHh4eIyMjIiIiJiYmKSkpLS0tJSUlISEhHBwcKCgoLi4uMjIyNTU1Nzc3NjY2MzMzKioqExMTOzs7RkZGRUVFPT09OTk5NDQ0MDAwSEhIYGBgUFBQRERELCwsICAgHx8fUlJSR0dHEhISPDw8T09PVFRUTExMX19fTk5OLy8vOjo6SkpKVVVVVlZWWVlZJCQkV1dXXV1dWFhYSUlJMTExJycnS0tLU1NTQUFBKysrQkJCTU1NPj4+Q0NDODg4QEBAMdzkoAAAAb9JREFUeJzNlltPGzEQRj32xLubhCoIREIToBVqq6KC+P8/AvWSCPJGEQlVIIDYBHbXl6kB9aEtDzAGifHjGX06I8sXEK+g4JFNQNI9H3q6BIQeCU5QWM+Cni6hPEgJXhHZ0O3iEUNCkZSEFGYCCxYNxSKGRJgIFUi4rTKdE3kXh1gShE26TwO4THM0Ng4xJLrjWrN6Y0DfxU2VsW5lFIM4EooSlTXktF6/HWlxopYPS4pBDIkw0mZZlVULjdAaJte9s5XhVp+PWBInSZJ6XAK4bngFs2myOizaIz7iSGSEn4CO3kG4evx5Y0a1yxtLN3zEkWhuDxrJfMPWT+tNIJMMqaP1wQUfcSQkIu7C/hbYXEtx1YFvcl45z0cciS+DVKJTO/my/ylr3YOyrQfV6oiPOBJC4fvx28WFfe3ER1+Y1teZtZ/7EYgj0T1JE9NrH24e945xKftelOWf14iHOBJCaSFpvZ31t38Yv7NXGEdxiCPRPSWxUKzlRrn1VkjzwschjoRQyiLV8MM4O7OG/krjIY5EeAgIkHBjkpP/55fEQxyJEBgGARW29f//Ig9xJMIei18EnQdPOg9xJF66fgOAwQ03jKp2OQAAAABJRU5ErkJggg==")
+
+/***/ }),
+
+/***/ "./asset/gauge-ui/necromancy/residual-souls/pre95/1.data.png":
+/*!*******************************************************************!*\
+  !*** ./asset/gauge-ui/necromancy/residual-souls/pre95/1.data.png ***!
+  \*******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("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")
+
+/***/ }),
+
+/***/ "./asset/gauge-ui/necromancy/residual-souls/pre95/2.data.png":
+/*!*******************************************************************!*\
+  !*** ./asset/gauge-ui/necromancy/residual-souls/pre95/2.data.png ***!
+  \*******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("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")
+
+/***/ }),
+
+/***/ "./asset/gauge-ui/necromancy/residual-souls/pre95/3.data.png":
+/*!*******************************************************************!*\
+  !*** ./asset/gauge-ui/necromancy/residual-souls/pre95/3.data.png ***!
+  \*******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAAIQAAAAYCAIAAAC0gsLIAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAABMpJREFUeJztmstvG0Ucx2dmZ99rr9de22mSNmloi0CqKtTAhYcq2oo/AnGhAtpyAIm/BMQBgYpAiAPX3lAoRFTADUQFCFSapEntJPZ6X97X7GvYnBGCxt7IW/HRaE/2x/vTd2Z2ZscY/M/MgI/yx1ZWrwPEUAgQyyZZmoG898P7j7bwoTiiMB5bfRMyLEVFlQgixAlCRkIK6PzzbxcF799+79ETHoLSw1g5fw1hDBFb9DiIi4aLxskiQZDmWZ6niGadi++keWJ+858Knn3hoSk3jJXzVxHmEGYBZhHHIZ6DLC6uYk2OirKzFKRJksQgS1iW1y6/Za29W3XhJJQYxvL5NyDmiiIBz2NJYiWJrx00lud5RaKm4HleFBGQxJSQLE+5RkO7eNW69UF1hRNS5shA+KC78Txbk0VVVTotuVnnFJETeMxz9cVOTMhgf9Df7jEsk8cEYgCVerWFk1FWGMdXrwIWA47FNUVsaep8uz7XZESu3lC63XZGwcgZ+yRuiUwMc8uwBAgCfwwh1V68Yn19o4rCySltZDAMYHAx9iW9uXTudK2rDneNyPTiPFlc6Dy31PzVVjdcd7wVMrKQmWDh1NLO3Y0UUor/4ZZmXzgxpXiPPf06ZRjIspxam39yWV1ojfaMMCbHz57Rj+lORNY3hy+cbMdyEyhckMSMMUryrD7fifu7Kcs1Lrxsr39eLeFUKCfkotNhBsuypDdkve4645Fhr6w+cfL0iTrLBJkcR9HPTnS6KbhUPHH21GBnjySJrKuWbQKWhczf7mr2hdOgFGmjrbO8KKhaa7HLy6K12dfm9M7JeZUrNre0gaDACWExKyOgcYwlC9pcK/JDtaN5jps6i9STKyecCqWEoelNzImcqoo1KaeUl0RlromKnsgAK87rkCoCkyFAiuUMAgACuS5jjMW6JKs1oreIIlROOBVKCWPj/jYriFKgBwJTp9mwP5hrSl1IHQrsIIgQyDhFYtCYgjEAju3u7g1YgQOOu7PTizfvUWtQOeFUKCWMiPhFn4IkdD0PR9I4CHjDivLMTBLT80GeuZQqjRoDoJNmqsC1FztSq9bf3o2GQ2AZ1B9XTjgVSgnD/u5D7cJ1khRPwSgKozhJRntDY2gWD0BBVfr3e4Y75h252Fs9U2ysiok4T/f3hr2NB8AyQRxRmlVOOBXKWjLTvKg0JISM9g3EM77n/3L7xzPPPiXIgt7Vk4SwGC8e0/9wxnumbVn2vTt/xlv3gWsX37TXv6iicHLKCsP+9oZ26VpEGlGaFJtbEobmYPTb9z8tn3vcE3lREUa+v3HHCLzAMexhb4/2d6E1Allirn1aUeHklPhuiqZhFrhAEM2tbaooFDNSQ+7d3VS7uuiLQRhFcRyMfePBLu31oGvDmAAMKy2ckBLDsNc/0S5dgUwbkBgmUUbE7d9pe3khjmLEoITEY8sx721RYwA9r/hAsagf3fyo0sIJKfc8w/rqhvbSa5DlgRdBEoDQHxoDQ+CZViuzTBr4IAxhHIGiTgxHN//97dvsCyeh9JM+68uDrqRdfhXm8UFJAQKYpVEAXAekCchTkKUPNQvPvvDQHNEZuLX2cXHVLr4CE0gRojSloQ9Abq599qgKD8GR/jvEujXlwmZf+FD8BVDsfeaKj3//AAAAAElFTkSuQmCC")
+
+/***/ }),
+
 /***/ "./asset/gauge-ui/ranged/crystal-rain/active.data.png":
 /*!************************************************************!*\
   !*** ./asset/gauge-ui/ranged/crystal-rain/active.data.png ***!
@@ -32763,7 +32803,7 @@ const appName = 'job-gauges';
 const versionUrl = 'https://nadyanayme.github.io/job-gauges/dist/version.json';
 const majorVersion = 1;
 const minorVersion = 1;
-const patchVersion = 1;
+const patchVersion = 2;
 
 
 /***/ }),
@@ -33069,6 +33109,7 @@ const necromancy_gauge = {
                 threshold: 12,
             },
         },
+        pre95Souls: false,
         duplicateNecrosisRow: false,
         useColoredNecrosis: false,
     },
@@ -34296,10 +34337,10 @@ necrosisAlert.id = 'alarmNecrosis';
 document.body.appendChild(necrosisAlert);
 async function necrosisOverlay(gauges) {
     const { necrosis } = gauges.necromancy.stacks;
-    await necrosisImages.promise;
     if (!necrosis.isActiveOverlay) {
         return;
     }
+    await necrosisImages.promise;
     if (gauges.necromancy.stacks.useColoredNecrosis && !scaledOnce) {
         await necrosisColoredImages.promise;
         necrosisImages.necrosis_6 = necrosisColoredImages.necrosis_6;
@@ -34379,6 +34420,12 @@ const soulImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     souls_4: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/residual-souls/4.data.png */ "./asset/gauge-ui/necromancy/residual-souls/4.data.png"),
     souls_5: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/residual-souls/5.data.png */ "./asset/gauge-ui/necromancy/residual-souls/5.data.png"),
 });
+const pre95SoulImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
+    souls_0: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/residual-souls/pre95/0.data.png */ "./asset/gauge-ui/necromancy/residual-souls/pre95/0.data.png"),
+    souls_1: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/residual-souls/pre95/1.data.png */ "./asset/gauge-ui/necromancy/residual-souls/pre95/1.data.png"),
+    souls_2: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/residual-souls/pre95/2.data.png */ "./asset/gauge-ui/necromancy/residual-souls/pre95/2.data.png"),
+    souls_3: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/residual-souls/pre95/3.data.png */ "./asset/gauge-ui/necromancy/residual-souls/pre95/3.data.png"),
+});
 let scaledOnce = false;
 let playingAlert = false;
 const soulsAlert = new Audio();
@@ -34390,6 +34437,13 @@ async function soulsOverlay(gauges) {
         return;
     }
     await soulImages.promise;
+    if (gauges.necromancy.stacks.pre95Souls && !scaledOnce) {
+        await pre95SoulImages.promise;
+        soulImages.souls_0 = pre95SoulImages.souls_0;
+        soulImages.souls_1 = pre95SoulImages.souls_1;
+        soulImages.souls_2 = pre95SoulImages.souls_2;
+        soulImages.souls_3 = pre95SoulImages.souls_3;
+    }
     if (!scaledOnce) {
         Object.keys(soulImages).forEach(async (key) => {
             soulImages[key] = await _utility__WEBPACK_IMPORTED_MODULE_0__.resizeImageData(soulImages[key], gauges.scaleFactor);
@@ -34960,7 +35014,8 @@ async function retryOperation(operation, maxRetries, delay, attempt = 0) {
 }
 async function findBuffsBar() {
     console.info('Attempting to find buffs bar...');
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_4__.getSetting)('buffsPosition')) {
+    buffs.find();
+    if (buffs.pos == undefined && (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_4__.getSetting)('buffsPosition')) {
         const { x, y, maxhor, maxver } = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_4__.getSetting)('buffsPosition');
         buffs.pos = { x, y, maxhor, maxver };
         console.info('Loaded previous buffs location!');
@@ -34982,7 +35037,8 @@ async function findBuffsBar() {
 }
 async function findDebuffsBar() {
     console.info('Attempting to find debuffs bar...');
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_4__.getSetting)('debuffsPosition')) {
+    debuffs.find();
+    if (debuffs.pos == undefined && (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_4__.getSetting)('debuffsPosition')) {
         const { x, y, maxhor, maxver } = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_4__.getSetting)('debuffsPosition');
         debuffs.pos = { x, y, maxhor, maxver };
         console.info('Loaded previous debuffs location!');
@@ -35912,7 +35968,7 @@ sauce.setVersion(_data_constants__WEBPACK_IMPORTED_MODULE_2__.majorVersion, _dat
 const settings = sauce.createSettings();
 const db = new pouchdb__WEBPACK_IMPORTED_MODULE_4__["default"](_data_constants__WEBPACK_IMPORTED_MODULE_2__.appName);
 const renderSettings = async (gauges) => {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
     settings
         .addHeader('h2', 'Job Gauges - v' + sauce.getVersion())
         .addText(`Please <a href="https://discord.gg/KJ2SgWyJFF" target="_blank" rel="nofollow">join the Discord</a> for any suggestions or support`)
@@ -35952,10 +36008,11 @@ const renderSettings = async (gauges) => {
         .addCheckboxSetting('showThreads', 'Show Threads of Fate', (_h = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showThreads')) !== null && _h !== void 0 ? _h : true)
         .addCheckboxSetting('showSplitSoul', 'Show Split Soul', (_j = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showSplitSoul')) !== null && _j !== void 0 ? _j : true)
         .addCheckboxSetting('showSouls', 'Show Residual Souls', (_k = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showSouls')) !== null && _k !== void 0 ? _k : true)
-        .addCheckboxSetting('showNecrosis', 'Show Necrosis', (_l = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showNecrosis')) !== null && _l !== void 0 ? _l : true)
-        .addCheckboxSetting('dupeRow', 'Show 2nd row of Necrosis stacks', (_m = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('dupeRow')) !== null && _m !== void 0 ? _m : false)
-        .addCheckboxSetting('useColoredNecrosis', 'Use orange and red Necrosis Stacks when above certain thresholds', (_o = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('useColoredNecrosis')) !== null && _o !== void 0 ? _o : false)
-        .addCheckboxSetting('showBloat', 'Show Bloat', (_p = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showBloat')) !== null && _p !== void 0 ? _p : true)
+        .addCheckboxSetting('pre95Souls', 'Only show 3 Residual Souls / No Soulbound Lantern', (_l = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('pre95Souls')) !== null && _l !== void 0 ? _l : false)
+        .addCheckboxSetting('showNecrosis', 'Show Necrosis', (_m = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showNecrosis')) !== null && _m !== void 0 ? _m : true)
+        .addCheckboxSetting('dupeRow', 'Show 2nd row of Necrosis stacks', (_o = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('dupeRow')) !== null && _o !== void 0 ? _o : false)
+        .addCheckboxSetting('useColoredNecrosis', 'Use orange and red Necrosis Stacks when above certain thresholds', (_p = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('useColoredNecrosis')) !== null && _p !== void 0 ? _p : false)
+        .addCheckboxSetting('showBloat', 'Show Bloat', (_q = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showBloat')) !== null && _q !== void 0 ? _q : true)
         .addSeperator()
         .addHeader('h2', 'Alarms')
         .addFileSetting('customAlarms', 'Upload a custom alarm', '')
@@ -36279,6 +36336,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 const notes = [
     // Add patch notes to top
+    {
+        date: '09/08/2024 - Various Fixes v1.1.2',
+        note: [
+            `There is now an option to display 3 residual soul stacks for users who do not have a Soulbound Lantern. The setting is found under the visibility settings`,
+            `The Ranged Gauge has been updated to match the Magic gauge aesthetic. None of the functionality was adjusted.`,
+            `Any text overlays are now cleared when the gauge changes combat styles`,
+            `Greater variants of Death's Swiftness and Sunshine should now have a more appropriate cooldown timer. Sorry, no Planted Feet support (yet)`,
+            `Buff/Debuff Bar locations are now scanned for once before loading the last known position. This should reduce the need to reset locations after adjusting your interface.`,
+            `Speaking of the "Reset Buffs and Debuffs Positions" please use that button if you move your buffs/debuffs or if Job Gauges seems to not be reading your buffs/debuffs then reload the app`,
+            `Wording has been adjusted for some settings to be more clear as to what the setting does`,
+            `Some old debug logging has been removed`,
+            `The styles for the out of combat range slider have been fixed on initial load if you had set a value above 100`,
+        ],
+    },
     {
         date: '09/03/2024 - Magic Gauge cleanup v.1.1.1',
         note: [
@@ -41838,18 +41909,28 @@ function addEventListeners() {
     });
     // For some reason this one calculates incorrectly on load so we override the initial styles here
     const scaleRange = (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('scale');
-    const value = ((parseInt(scaleRange.value, 10) - parseInt(scaleRange.min, 10)) /
+    const scaleRangevalue = ((parseInt(scaleRange.value, 10) - parseInt(scaleRange.min, 10)) /
         (parseInt(scaleRange.max, 10) - parseInt(scaleRange.min))) *
         100;
     scaleRange.style.background =
         'linear-gradient(to right, #3e5765 0%, #3e5765 ' +
-            value +
+            scaleRangevalue +
             '%, #0d1c24 ' +
-            value +
+            scaleRangevalue +
             '%, #0d1c24 100%)';
     (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('scale').addEventListener('change', () => {
         location.reload();
     });
+    const combatTimerRange = (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('combatTimer');
+    const combatTimervalue = ((parseInt(combatTimerRange.value, 10) - parseInt(combatTimerRange.min, 10)) /
+        (parseInt(combatTimerRange.max, 10) - parseInt(combatTimerRange.min))) *
+        100;
+    combatTimerRange.style.background =
+        'linear-gradient(to right, #3e5765 0%, #3e5765 ' +
+            combatTimervalue +
+            '%, #0d1c24 ' +
+            combatTimervalue +
+            '%, #0d1c24 100%)';
     document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
         checkbox.addEventListener('change', () => {
             setNecromancyGaugeData(gauges);
@@ -41952,6 +42033,9 @@ function setNecromancyGaugeData(gauges) {
     if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showSouls') !== undefined) {
         gauges.necromancy.stacks.souls.isActiveOverlay =
             (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showSouls');
+    }
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('pre95Souls') !== undefined) {
+        gauges.necromancy.stacks.pre95Souls = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('pre95Souls');
     }
     if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showNecrosis') !== undefined) {
         gauges.necromancy.stacks.necrosis.isActiveOverlay =

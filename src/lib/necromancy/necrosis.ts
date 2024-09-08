@@ -30,11 +30,11 @@ document.body.appendChild(necrosisAlert);
 export async function necrosisOverlay(gauges: Overlay) {
 	const { necrosis } = gauges.necromancy.stacks;
 
-	await necrosisImages.promise;
-
 	if (!necrosis.isActiveOverlay) {
 		return;
 	}
+
+	await necrosisImages.promise;
 
 	if (gauges.necromancy.stacks.useColoredNecrosis && !scaledOnce) {
 		await necrosisColoredImages.promise;

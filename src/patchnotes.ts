@@ -1,6 +1,20 @@
 export const notes = [
 	// Add patch notes to top
 	{
+		date: '09/08/2024 - Various Fixes v1.1.2',
+		note: [
+			`There is now an option to display 3 residual soul stacks for users who do not have a Soulbound Lantern. The setting is found under the visibility settings`,
+			`The Ranged Gauge has been updated to match the Magic gauge aesthetic. None of the functionality was adjusted.`,
+			`Any text overlays are now cleared when the gauge changes combat styles`,
+			`Greater variants of Death's Swiftness and Sunshine should now have a more appropriate cooldown timer. Sorry, no Planted Feet support (yet)`,
+			`Buff/Debuff Bar locations are now scanned for once before loading the last known position. This should reduce the need to reset locations after adjusting your interface.`,
+			`Speaking of the "Reset Buffs and Debuffs Positions" please use that button if you move your buffs/debuffs or if Job Gauges seems to not be reading your buffs/debuffs then reload the app`,
+			`Wording has been adjusted for some settings to be more clear as to what the setting does`,
+			`Some old debug logging has been removed`,
+			`The styles for the out of combat range slider have been fixed on initial load if you had set a value above 100`,
+		],
+	},
+	{
 		date: '09/03/2024 - Magic Gauge cleanup v.1.1.1',
 		note: [
 			`Positioning of tracked items has been adjusted`,

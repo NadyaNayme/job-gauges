@@ -71,7 +71,8 @@ async function retryOperation<T>(
 
 export async function findBuffsBar(): Promise<void> {
 	console.info('Attempting to find buffs bar...');
-	if (getSetting('buffsPosition')) {
+	buffs.find();
+	if (buffs.pos == undefined && getSetting('buffsPosition')) {
 		const { x, y, maxhor, maxver } = getSetting('buffsPosition');
 		buffs.pos = { x, y, maxhor, maxver };
 		console.info('Loaded previous buffs location!');
@@ -93,7 +94,8 @@ export async function findBuffsBar(): Promise<void> {
 
 export async function findDebuffsBar(): Promise<void> {
 	console.info('Attempting to find debuffs bar...');
-	if (getSetting('debuffsPosition')) {
+	debuffs.find();
+	if (debuffs.pos == undefined && getSetting('debuffsPosition')) {
 		const { x, y, maxhor, maxver } = getSetting('debuffsPosition');
 		debuffs.pos = { x, y, maxhor, maxver };
 		console.info('Loaded previous debuffs location!');

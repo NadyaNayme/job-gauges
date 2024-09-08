@@ -12,6 +12,13 @@ const soulImages = a1lib.webpackImages({
 	souls_5: require('../../asset/gauge-ui/necromancy/residual-souls/5.data.png'),
 });
 
+const pre95SoulImages = a1lib.webpackImages({
+	souls_0: require('../../asset/gauge-ui/necromancy/residual-souls/pre95/0.data.png'),
+	souls_1: require('../../asset/gauge-ui/necromancy/residual-souls/pre95/1.data.png'),
+	souls_2: require('../../asset/gauge-ui/necromancy/residual-souls/pre95/2.data.png'),
+	souls_3: require('../../asset/gauge-ui/necromancy/residual-souls/pre95/3.data.png'),
+});
+
 let scaledOnce = false;
 let playingAlert = false;
 
@@ -27,6 +34,14 @@ export async function soulsOverlay(gauges: Overlay) {
 	}
 
 	await soulImages.promise;
+
+	if (gauges.necromancy.stacks.pre95Souls && !scaledOnce) {
+		await pre95SoulImages.promise;
+		soulImages.souls_0 = pre95SoulImages.souls_0;
+		soulImages.souls_1 = pre95SoulImages.souls_1;
+		soulImages.souls_2 = pre95SoulImages.souls_2;
+		soulImages.souls_3 = pre95SoulImages.souls_3;
+	}
 
 	if (!scaledOnce) {
 		Object.keys(soulImages).forEach(async (key) => {

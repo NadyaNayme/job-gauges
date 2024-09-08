@@ -251,20 +251,32 @@ function addEventListeners() {
 
 	// For some reason this one calculates incorrectly on load so we override the initial styles here
 	const scaleRange = <HTMLInputElement>getById('scale');
-	const value =
+	const scaleRangevalue =
 		((parseInt(scaleRange.value, 10) - parseInt(scaleRange.min, 10)) /
 			(parseInt(scaleRange.max, 10) - parseInt(scaleRange.min))) *
 		100;
 	scaleRange.style.background =
 		'linear-gradient(to right, #3e5765 0%, #3e5765 ' +
-		value +
+		scaleRangevalue +
 		'%, #0d1c24 ' +
-		value +
+		scaleRangevalue +
 		'%, #0d1c24 100%)';
 
 	getById('scale').addEventListener('change', () => {
 		location.reload();
 	});
+
+	const combatTimerRange = <HTMLInputElement>getById('combatTimer');
+	const combatTimervalue =
+		((parseInt(combatTimerRange.value, 10) - parseInt(combatTimerRange.min, 10)) /
+			(parseInt(combatTimerRange.max, 10) - parseInt(combatTimerRange.min))) *
+		100;
+	combatTimerRange.style.background =
+		'linear-gradient(to right, #3e5765 0%, #3e5765 ' +
+		combatTimervalue +
+		'%, #0d1c24 ' +
+		combatTimervalue +
+		'%, #0d1c24 100%)';
 
 	document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
 		checkbox.addEventListener('change', () => {
@@ -400,6 +412,10 @@ function setNecromancyGaugeData(gauges: Overlay) {
 	if (getSetting('showSouls') !== undefined) {
 		gauges.necromancy.stacks.souls.isActiveOverlay =
 			getSetting('showSouls');
+	}
+
+	if (getSetting('pre95Souls') !== undefined) {
+		gauges.necromancy.stacks.pre95Souls = getSetting('pre95Souls');
 	}
 
 	if (getSetting('showNecrosis') !== undefined) {
