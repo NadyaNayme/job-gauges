@@ -35496,6 +35496,7 @@ async function changeCombatStyles(gauges, style) {
     if (gauges.combatStyle !== style && gauges.automaticSwapping) {
         gauges.combatStyle = style;
         _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlays();
+        _utility__WEBPACK_IMPORTED_MODULE_0__.clearTextOverlays();
     }
 }
 async function updateDeathsSwiftness(gauges, value, greater) {

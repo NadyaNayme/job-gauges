@@ -917,6 +917,7 @@ async function changeCombatStyles(gauges: Overlay, style: number) {
 	if (gauges.combatStyle !== style && gauges.automaticSwapping) {
 		gauges.combatStyle = style;
 		utility.forceClearOverlays();
+		utility.clearTextOverlays();
 	}
 }
 
