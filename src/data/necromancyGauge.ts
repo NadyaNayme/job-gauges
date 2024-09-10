@@ -236,7 +236,7 @@ export const necromancy_gauge: NecromancyGauge = {
 				y: 5,
 			},
 			split: {
-				x: 60,
+				x: 58,
 				y: 5,
 			},
 			reverse_split: {
