@@ -8,7 +8,7 @@ import { A1Sauce } from '../a1sauce';
 import { appName } from '../data/constants';
 import { LogError } from '../a1sauce/Error/logError';
 import { beginRendering } from '..';
-import { endAbilityCooldown, startAbilityCooldown } from './util/ability-helpers';
+import { startAbilityCooldown } from './util/ability-helpers';
 
 const sauce = A1Sauce.instance;
 sauce.setName(appName);
@@ -514,7 +514,6 @@ async function updateLivingDeath(gauges: Overlay, value: number) {
 					scaleFactor: gauges.scaleFactor,
 				},
 				'LivingDeath',
-				() => endAbilityCooldown(gauges.necromancy.livingDeath, 'LivingDeath'),
 				false,
 			);
 		}, 1050);
@@ -653,7 +652,6 @@ async function updateSunshine(
 					scaleFactor: gauges.scaleFactor
 				},
 				'Sunshine',
-				() => endAbilityCooldown(gauges.magic.sunshine, 'Sunshine'),
 				greater
 			);
 		}, 1050);
@@ -692,7 +690,6 @@ async function updateFsoa(gauges: Overlay, value: number) {
 					scaleFactor: gauges.scaleFactor
 				},
 				'Instability',
-				() => endAbilityCooldown(gauges.magic.instability, 'Instability'),
 				false,
 			);
 		}, 1050);
@@ -740,8 +737,7 @@ async function updateTsunami(gauges: Overlay, value: number) {
 					position: gauges.magic.position,
 					scaleFactor: gauges.scaleFactor,
 				},
-				'Tsunami', 
-				() => endAbilityCooldown(gauges.magic.tsunami, 'Tsunami'),
+				'Tsunami',
 				false,
 			)
 		}, 1050);
@@ -792,8 +788,7 @@ async function updateDeathsSwiftness(
 					position: gauges.ranged.position,
 					scaleFactor: gauges.scaleFactor,
 				},
-				'DeathsSwiftness', 
-				() => endAbilityCooldown(gauges.ranged.deathsSwiftness, 'DeathsSwiftness'),
+				'DeathsSwiftness',
 				greater,
 			);
 		}, 1050);
@@ -830,7 +825,6 @@ async function updateCrystalRain(gauges: Overlay, value: number) {
 					scaleFactor: gauges.scaleFactor,
 				},
 				'CrystalRain',
-				() => endAbilityCooldown(gauges.ranged.crystalRain, 'CrystalRain'),
 				false,
 			);
 		}, 1050);
@@ -871,7 +865,6 @@ async function updateOdeToDeceit(gauges: Overlay, value: number) {
 					scaleFactor: gauges.scaleFactor,
 				},
 				'OdeToDeceit',
-				() => endAbilityCooldown(gauges.magic.odeToDeceit, 'OdeToDeceit'),
 				false,
 			);
 		}, 1050);

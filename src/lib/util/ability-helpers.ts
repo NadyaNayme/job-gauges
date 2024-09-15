@@ -34,7 +34,7 @@ export function updateAbility(ability: Ability, position: Position, duration: nu
    */
 }
 
-export async function startAbilityCooldown(abilityData: { scaleFactor: number, position: Position, ability: Ability }, abilityName: Abilities, endCooldown: () => unknown, greater: boolean) {
+export async function startAbilityCooldown(abilityData: { scaleFactor: number, position: Position, ability: Ability }, abilityName: Abilities, greater: boolean) {
   const { scaleFactor, position, ability } = abilityData;
 
   if (!ability.isActiveOverlay) {
@@ -43,8 +43,7 @@ export async function startAbilityCooldown(abilityData: { scaleFactor: number, p
 
   // If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
   if (ability.active) {
-    await endCooldown();
-    return;
+    return endAbilityCooldown(abilityData.ability, abilityName);
   }
 
   // Otherwise cooldown has started and we can clear the Active text
@@ -64,7 +63,7 @@ export async function startAbilityCooldown(abilityData: { scaleFactor: number, p
   const timer = setInterval(() => {
     if (ability.active || cooldown <= 0) {
       clearInterval(timer);
-      return endCooldown();
+      return endAbilityCooldown(abilityData.ability, abilityName)
     }
 
     cooldown -= 1;
