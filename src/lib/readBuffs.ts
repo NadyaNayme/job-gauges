@@ -363,7 +363,7 @@ export async function readBuffs(gauges: Overlay) {
 }
 
 async function updateBuffData(
-	buffsreader: BuffReader,
+	buffReader: BuffReader,
 	gauges: Overlay,
 	buffImage: ImageData,
 	threshold: number,
