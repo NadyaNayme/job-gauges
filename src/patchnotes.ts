@@ -1,6 +1,12 @@
 export const notes = [
 	// Add patch notes to top
 	{
+		date: '09/14/2024 - Better Error Handling v.1.1.3',
+		note: [
+			`Error handling has been improved slightly - providing clearer, more noticeable errors and steps to help with troubleshooting.`,
+		],
+	},
+	{
 		date: '09/08/2024 - Various Fixes v1.1.2',
 		note: [
 			`There is now an option to display 3 residual soul stacks for users who do not have a Soulbound Lantern. The setting is found under the visibility settings`,

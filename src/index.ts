@@ -52,11 +52,14 @@ import { crystalRainOverlay } from './lib/ranged/crystalRain';
 import { peOverlay } from './lib/ranged/perfectEquilibrium';
 import { odeToDeceitOverlay } from './lib/magic/odeToDeceit';
 import { rangedSplitSoulOverlay } from './lib/ranged/splitSoul';
+import { LogError } from './a1sauce/Error/logError';
 
 const sauce = A1Sauce.instance;
 sauce.setName(appName);
 sauce.setVersion(majorVersion, minorVersion, patchVersion);
 sauce.createSettings();
+
+const errorLogger = new LogError();
 
 const gauges: Overlay = {
 	isInCombat: false,
@@ -107,24 +110,24 @@ async function renderOverlays() {
 
 export async function startApp() {
 	if (!window.alt1) {
-		helperItems.Output.insertAdjacentHTML(
-			'beforeend',
-			`<div>You need to run this page in alt1 to capture the screen</div>`
-		);
+		errorLogger.showError({
+			title: 'Missing Alt1',
+			message: `<p>You need to run this page in Alt1 to be able to capture the screen.</p>`,
+		});
 		return;
 	}
 	if (!alt1.permissionPixel) {
-		helperItems.Output.insertAdjacentHTML(
-			'beforeend',
-			`<div><p>Page is not installed as app or capture permission is not enabled</p></div>`
-		);
+		errorLogger.showError({
+			title: 'Missing Screen Reading Permissions',
+			message: `<p>This app does not have permissions to capture your screen. Please adjust the app's settings in Alt1.</p>`,
+		});
 		return;
 	}
 	if (!alt1.permissionOverlay) {
-		helperItems.Output.insertAdjacentHTML(
-			'beforeend',
-			`<div><p>Attempted to use Overlay but app overlay permission is not enabled. Please enable "Show Overlay" permission in Alt1 settinsg (wrench icon in corner).</p></div>`
-		);
+		errorLogger.showError({
+			title: 'Missing Overlay Permissions',
+			message: `<p>This app does not have permissions to create overlays. Please adjust the app's settings in Alt1.</p>`,
+		});
 		return;
 	}
 
@@ -165,6 +168,10 @@ export async function startApp() {
 	alt1.overLaySetGroupZIndex('PerfectEquilibrium_Text', 1);
 	alt1.overLaySetGroupZIndex('SplitSoul_Text', 1);
 
+	await beginRendering();
+}
+
+export async function beginRendering() {
 	await findBuffsBar().then(() => {
 		findDebuffsBar().then(() => {
 			setInterval(function () {
@@ -525,11 +532,10 @@ window.onload = function () {
 		const addappurl = `alt1://addapp/${
 			new URL('./appconfig.json', document.location.href).href
 		}`;
-		helperItems.Output.insertAdjacentHTML(
-			'beforeend',
-			`
-			Alt1 not detected, click <a href='${addappurl}'>here</a> to add this app to Alt1
-		`
-		);
+		errorLogger.showError({
+			title: 'Alt1 Not Detected',
+			message:
+				`<p>Click <a href="${addappurl}">here</a> to add this app to Alt1</p>`,
+		});
 	}
 };

@@ -2,12 +2,13 @@
 import * as a1lib from 'alt1';
 import * as BuffReader from 'alt1/buffs';
 import * as utility from './utility';
-import { helperItems } from './utility';
 import { Overlay } from '../types';
 import { findAmmo } from './ranged/activeAmmo';
 import { A1Sauce } from '../a1sauce';
 import { appName } from '../data/constants';
 import { getSetting, updateSetting } from '../a1sauce/Settings/Storage';
+import { LogError } from '../a1sauce/Error/logError';
+import { beginRendering, startApp } from '..';
 
 const sauce = A1Sauce.instance;
 sauce.setName(appName);
@@ -15,6 +16,8 @@ sauce.setName(appName);
 const buffs = new BuffReader.default();
 const debuffs = new BuffReader.default();
 debuffs.debuffs = true;
+
+const errorLogger = new LogError();
 
 const buffsImages = a1lib.webpackImages({
 	/* Necromancy */
@@ -71,47 +74,28 @@ async function retryOperation<T>(
 
 export async function findBuffsBar(): Promise<void> {
 	console.info('Attempting to find buffs bar...');
-	buffs.find();
-	if (buffs.pos == undefined && getSetting('buffsPosition')) {
-		const { x, y, maxhor, maxver } = getSetting('buffsPosition');
-		buffs.pos = { x, y, maxhor, maxver };
-		console.info('Loaded previous buffs location!');
-	}
+	buffs.find(); // Before loading previous location try a single time to find the buffs bar
 	if (buffs.pos == undefined) {
-		buffs.find();
-		if (buffs.pos == undefined) {
-			throw new Error('BuffsBarSearchError: Failed to find buff bar');
-		} else {
-			alt1.setTooltip('[JG] Found buffs!');
-			setTimeout(() => {
-				alt1.clearTooltip();
-			}, 2000);
-			updateSetting('buffsPosition', buffs.pos);
-			return;
-		}
+		errorLogger.showError({
+			title: 'No Buffs',
+			message:
+				'<p>Job Gauges could not locate your buffs bar. Please use a defensive ability or some other way of obtaining a buff and Job Gauges will attempt to search again shortly.</p>',
+		});
+		throw new Error('BuffsBarSearchError: Failed to find buff bar');
 	}
 }
 
 export async function findDebuffsBar(): Promise<void> {
 	console.info('Attempting to find debuffs bar...');
-	debuffs.find();
-	if (debuffs.pos == undefined && getSetting('debuffsPosition')) {
-		const { x, y, maxhor, maxver } = getSetting('debuffsPosition');
-		debuffs.pos = { x, y, maxhor, maxver };
-		console.info('Loaded previous debuffs location!');
-	}
+	debuffs.find(); // Before loading previous location try a single time to find the debuffs bar
 	if (debuffs.pos == undefined) {
-		debuffs.find();
-		if (debuffs.pos == undefined) {
-			throw new Error('BuffsBarSearchError: Failed to find debuff bar');
-		} else {
-			alt1.setTooltip('[JG] Found debuffs!');
-			setTimeout(() => {
-				alt1.clearTooltip();
-			}, 2000);
-			updateSetting('debuffsPosition', debuffs.pos);
-			return;
-		}
+		errorLogger.showError({
+			title: 'No Debuffs',
+			message: `
+						<p>Job Gauges could not locate your debuffs bar. Please toggle on your Prayer or some other way of obtaining a debuff and Job Gauges will attempt to search again shortly.</p>
+					`,
+		});
+		throw new Error('BuffsBarSearchError: Failed to find debuff bar');
 	}
 }
 
@@ -123,46 +107,73 @@ export function testBuffSizes(): boolean {
 	let pos = screen.findSubimage(buffsImages.mediumBuffs);
 	let pos2 = screen.findSubimage(buffsImages.largeBuffs);
 	if (pos[0]?.x !== undefined) {
-		helperItems.Output.insertAdjacentHTML(
-			'beforeend',
-			`<p style="text-align:center;margin-top:10px;color:red;">Medium Buff size detected. Please change your settings to use "Small" Buffs. Gameplay->Interfaces->Buff Bar -> Bar Display Settings</p>`
-		);
+		errorLogger.showError({
+			title: 'Medium Buffs Detected',
+			message: `<p>Alt1 only supports reading Small Buffs. Please update your Buffs Bar settings. Interfaces > Buff Bar > Icon Size </p>
+				<img src="./ErrorImages/BuffIconSize.png">`,
+		});
 		return true;
 	}
 	if (pos2[0]?.x !== undefined) {
-		helperItems.Output.insertAdjacentHTML(
-			'beforeend',
-			`<p style="text-align:center;margin-top:10px;color:red;">Large Buff size detected. Please change your settings to use "Small" Buffs. Gameplay->Interfaces->Buff Bar -> Bar Display Settings</p>`
-		);
+		errorLogger.showError({
+			title: 'Large Buffs Detected',
+			message: `<p>Alt1 only supports reading Small Buffs. Please update your Buffs Bar settings. Interfaces > Buff Bar > Icon Size </p>
+				<img src="./ErrorImages/BuffIconSize.png">`,
+		});
 		return true;
 	}
 	return false;
 }
 
-retryOperation(findBuffsBar, 5, 6000)
-	.then(() => console.info('Success! Found Buffs.'))
+retryOperation(findBuffsBar, 3, 10000)
+	.then(() => {
+		console.info('Success! Found Buffs.');
+		if (document.getElementById('#Error') !== undefined) {
+			let err = document.querySelectorAll('#Error');
+			for (let i = 0; i < err.length; i++) {
+				let errHeader = err[i].querySelector('h2').innerText;
+				if (errHeader === 'No Buffs') {
+					err[i].remove();
+				}
+			}
+		}
+	})
 	.catch(() => {
 		let wrongBuffSize = testBuffSizes();
 		if (!wrongBuffSize) {
-			helperItems.Output.insertAdjacentHTML(
-				'beforeend',
-				`<p style="text-align:center;margin-top:10px;color:red;">Please make sure you have at least 1 buff on your buffs bar and then reload the app. The easiest way is to use a Defensive ability (Freedom, Anticipate) or toggle on Bone Shield.</p>`
-			);
+			errorLogger.showError({
+				title: 'Failed to find Buffs',
+				message: `<p>Job Gauges could not locate your buffs bar. Please ensure that Alt1 is able to read your screen (Alt1 Settings -> Capture tab). If it cannot you may need to adjust your Scaling or DPI settings. Further troubleshooting instructions are available in the <a href="https://discord.gg/KJ2SgWyJFF">Discord server</a>.</p>`,
+			});
 			console.warn(
 				'Please make sure you have at least 1 buff on your buffs bar and then reload the app. The easiest way is to use a Defensive ability (Freedom, Anticipate) or toggle on Bone Shield.'
 			);
 		}
 	});
 
-retryOperation(findDebuffsBar, 5, 6000)
-	.then(() => console.info('Success! Found Debuffs.'))
+retryOperation(findDebuffsBar, 3, 10000)
+	.then(() => {
+		console.info('Success! Found Debuffs.');
+		if (document.getElementById('#Error') !== undefined) {
+			let err = document.querySelectorAll('#Error');
+			for (let i = 0; i < err.length; i++) {
+				let errHeader = err[i].querySelector('h2').innerText;
+				if (errHeader === 'No Debuffs') {
+					err[i].remove();
+				}
+			}
+		}
+		if (buffs.pos && debuffs.pos) {
+			beginRendering();
+		}
+	})
 	.catch(() => {
 		let wrongBuffSize = testBuffSizes();
 		if (!wrongBuffSize) {
-			helperItems.Output.insertAdjacentHTML(
-				'beforeend',
-				`<p style="text-align:center;margin-top:10px;color:red;">Please make sure you have at least 1 debuff on your debuffs bar and then reload the app. The easiest way is to toggle a Prayer on.</p>`
-			);
+			errorLogger.showError({
+				title: 'Failed to find Deuffs',
+				message: `<p>Job Gauges could not locate your debuffs bar. Please ensure that Alt1 is able to read your screen (Alt1 Settings -> Capture tab). If it cannot you may need to adjust your Scaling or DPI settings. Further troubleshooting instructions are available in the <a href="https://discord.gg/KJ2SgWyJFF">Discord server</a>.</p>`,
+			});
 			console.warn(
 				'Please make sure you have at least 1 debuff on your debuffs bar and then reload the app. The easiest way is to toggle a Prayer on.'
 			);
