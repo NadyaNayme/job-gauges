@@ -1,5 +1,4 @@
 import * as utility from './lib/utility';
-import { helperItems } from './lib/utility';
 import { Overlay } from './types/index';
 
 // General Purpose
@@ -52,11 +51,14 @@ import { crystalRainOverlay } from './lib/ranged/crystalRain';
 import { peOverlay } from './lib/ranged/perfectEquilibrium';
 import { odeToDeceitOverlay } from './lib/magic/odeToDeceit';
 import { rangedSplitSoulOverlay } from './lib/ranged/splitSoul';
+import { LogError } from './a1sauce/Error/logError';
 
 const sauce = A1Sauce.instance;
 sauce.setName(appName);
 sauce.setVersion(majorVersion, minorVersion, patchVersion);
 sauce.createSettings();
+
+const errorLogger = new LogError();
 
 const gauges: Overlay = {
 	isInCombat: false,
@@ -107,24 +109,24 @@ async function renderOverlays() {
 
 export async function startApp() {
 	if (!window.alt1) {
-		helperItems.Output.insertAdjacentHTML(
-			'beforeend',
-			`<div>You need to run this page in alt1 to capture the screen</div>`
-		);
+		errorLogger.showError({
+			title: 'Missing Alt1',
+			message: `<p>You need to run this page in Alt1 to be able to capture the screen.</p>`,
+		});
 		return;
 	}
 	if (!alt1.permissionPixel) {
-		helperItems.Output.insertAdjacentHTML(
-			'beforeend',
-			`<div><p>Page is not installed as app or capture permission is not enabled</p></div>`
-		);
+		errorLogger.showError({
+			title: 'Missing Screen Reading Permissions',
+			message: `<p>This app does not have permissions to capture your screen. Please adjust the app's settings in Alt1.</p>`,
+		});
 		return;
 	}
 	if (!alt1.permissionOverlay) {
-		helperItems.Output.insertAdjacentHTML(
-			'beforeend',
-			`<div><p>Attempted to use Overlay but app overlay permission is not enabled. Please enable "Show Overlay" permission in Alt1 settinsg (wrench icon in corner).</p></div>`
-		);
+		errorLogger.showError({
+			title: 'Missing Overlay Permissions',
+			message: `<p>This app does not have permissions to create overlays. Please adjust the app's settings in Alt1.</p>`,
+		});
 		return;
 	}
 
@@ -165,13 +167,17 @@ export async function startApp() {
 	alt1.overLaySetGroupZIndex('PerfectEquilibrium_Text', 1);
 	alt1.overLaySetGroupZIndex('SplitSoul_Text', 1);
 
-	await findBuffsBar().then(() => {
-		findDebuffsBar().then(() => {
-			setInterval(function () {
-				renderOverlays();
-			}, 20);
-		});
-	});
+	await beginRendering();
+}
+
+export async function beginRendering() {
+  try {
+    await findBuffsBar();
+    await findDebuffsBar();
+    setInterval(() => renderOverlays(), 20);
+  } catch (e) {
+    console.error(`Issue when rendering.\n\n${JSON.stringify(e)}`);
+  }
 }
 
 function calibrationWarning(): void {
@@ -214,7 +220,8 @@ function updateActiveOrientationFromLocalStorage(): void {
 
 	// Function to recursively update orientations in an object
 	function updateActiveOrientation(obj: object) {
-		for (const key in obj) {
+		for (const key in obj){
+			// TODO: Fix types here. This code works w/o issues as-is and I'm not sure how to make it happy
 			if (typeof obj[key] === 'object' && obj[key] !== null) {
 				if (key === 'active_orientation') {
 					obj[key].x = obj[selectedOrientation].x;
@@ -227,24 +234,23 @@ function updateActiveOrientationFromLocalStorage(): void {
 		utility.freezeOverlays();
 		utility.continueOverlays();
 	}
+
 	updateActiveOrientation(gauges);
 }
 
 // TODO: Get rid of this crap
+// Null suppressions are used as these items
+// are added via A1Sauce.Settings and thus will always exist
 function addEventListeners() {
-	getById('selectedOrientation').addEventListener('change', () => {
+	getById('selectedOrientation')!.addEventListener('change', () => {
 		updateActiveOrientationFromLocalStorage();
 	});
 
-	getById('repositionOverlay').addEventListener('click', () => {
-		utility.setOverlayPosition(gauges, utility);
-	});
-
-	getById('showNecrosis').addEventListener('change', () => {
+	getById('showNecrosis')!.addEventListener('change', () => {
 		gauges.necromancy.stacks.duplicateNecrosisRow = getSetting('dupeRow');
 	});
 
-	getById('defaultCombatStyle').addEventListener('change', () => {
+	getById('defaultCombatStyle')!.addEventListener('change', () => {
 		gauges.combatStyle =
 			parseInt(getSetting('defaultCombatStyle'), 10);
 	});
@@ -262,7 +268,7 @@ function addEventListeners() {
 		scaleRangevalue +
 		'%, #0d1c24 100%)';
 
-	getById('scale').addEventListener('change', () => {
+	getById('scale')!.addEventListener('change', () => {
 		location.reload();
 	});
 
@@ -287,7 +293,7 @@ function addEventListeners() {
 	});
 
 	/* Update Alarm Thresholds */
-	getById('alarmSoulsThreshold').addEventListener('change', (e) => {
+	getById('alarmSoulsThreshold')!.addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.souls.alarm.threshold = parseInt(
 			target.value,
@@ -295,7 +301,7 @@ function addEventListeners() {
 		);
 	});
 
-	getById('alarmNecrosisThreshold').addEventListener('change', (e) => {
+	getById('alarmNecrosisThreshold')!.addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.necrosis.alarm.threshold = parseInt(
 			target.value,
@@ -304,29 +310,29 @@ function addEventListeners() {
 	});
 
 	/* Update Active Alarms */
-	getById('alarmSoulsActive').addEventListener('change', (e) => {
+	getById('alarmSoulsActive')!.addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.souls.alarm.isActive = target.checked;
 	});
 
-	getById('alarmNecrosisActive').addEventListener('change', (e) => {
+	getById('alarmNecrosisActive')!.addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.necrosis.alarm.isActive = target.checked;
 	});
 
 	/* Update Looping Alarms */
-	getById('alarmNecrosisLoop').addEventListener('change', (e) => {
+	getById('alarmNecrosisLoop')!.addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.necrosis.alarm.isLooping = target.checked;
 	});
 
-	getById('alarmSoulsLoop').addEventListener('change', (e) => {
+	getById('alarmSoulsLoop')!.addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.souls.alarm.isLooping = target.checked;
 	});
 
 	/* Update Alarm Volumes */
-	getById('alarmNecrosisVolume').addEventListener('change', (e) => {
+	getById('alarmNecrosisVolume')!.addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.necrosis.alarm.volume = parseInt(
 			target.value,
@@ -334,7 +340,7 @@ function addEventListeners() {
 		);
 	});
 
-	getById('alarmSoulsVolume').addEventListener('change', (e) => {
+	getById('alarmSoulsVolume')!.addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.souls.alarm.volume = parseInt(
 			target.value,
@@ -343,12 +349,12 @@ function addEventListeners() {
 	});
 
 	/* Update Alarm Sounds */
-	getById('alarmNecrosisAlertSound').addEventListener('change', (e) => {
+	getById('alarmNecrosisAlertSound')!.addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.necrosis.alarm.sound = target.value;
 	});
 
-	getById('alarmSoulsAlertSound').addEventListener('change', (e) => {
+	getById('alarmSoulsAlertSound')!.addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.souls.alarm.sound = target.value;
 	});
@@ -525,11 +531,10 @@ window.onload = function () {
 		const addappurl = `alt1://addapp/${
 			new URL('./appconfig.json', document.location.href).href
 		}`;
-		helperItems.Output.insertAdjacentHTML(
-			'beforeend',
-			`
-			Alt1 not detected, click <a href='${addappurl}'>here</a> to add this app to Alt1
-		`
-		);
+		errorLogger.showError({
+			title: 'Alt1 Not Detected',
+			message:
+				`<p>Click <a href="${addappurl}">here</a> to add this app to Alt1</p>`,
+		});
 	}
 };
