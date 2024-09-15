@@ -8,8 +8,7 @@ import { A1Sauce } from '../a1sauce';
 import { appName } from '../data/constants';
 import { LogError } from '../a1sauce/Error/logError';
 import { beginRendering } from '..';
-import { endAbilityCooldown, startAbilityCooldown, updateAbility } from './util/ability-helpers';
-import { Ability, Position } from '../types/common';
+import { endAbilityCooldown, startAbilityCooldown } from './util/ability-helpers';
 
 const sauce = A1Sauce.instance;
 sauce.setName(appName);
@@ -193,43 +192,43 @@ export async function readBuffs(gauges: Overlay) {
 	if (buffReader.pos !== undefined) {
 		updateBuffData(
 			buffReader,
-			gauges.ranged.deathsSwiftness,
-			gauges.ranged.position,
+			gauges,
 			buffsImages.deathsSwiftness,
 			300,
+			updateDeathsSwiftness,
 			false
 		);
 		updateBuffData(
 			buffReader,
-			gauges.ranged.deathsSwiftness,
-			gauges.ranged.position,
+			gauges,
 			buffsImages.greaterDeathsSwiftness,
 			300,
+			updateDeathsSwiftness,
 			true
 		);
 		updateBuffData(
 			buffReader,
-			gauges.magic.sunshine,
-			gauges.magic.position,
+			gauges,
 			buffsImages.sunshine,
 			300,
+			updateSunshine,
 			false
 		);
 		updateBuffData(
 			buffReader,
-			gauges.magic.sunshine,
-			gauges.magic.position,
+			gauges,
 			buffsImages.greaterSunshine,
 			100,
+			updateSunshine,
 			true
 		);
 		if (gauges.necromancy.livingDeath.isActiveOverlay) {
 			updateBuffData(
 				buffReader,
-				gauges.necromancy.livingDeath,
-				gauges.necromancy.position,
+				gauges,
 				buffsImages.living_death,
 				400,
+				updateLivingDeath,
 				false
 			);
 		}
@@ -364,11 +363,11 @@ export async function readBuffs(gauges: Overlay) {
 }
 
 async function updateBuffData(
-	buffReader: BuffReader,
-	ability: Ability,
-	position: Position,
+	buffsreader: BuffReader,
+	gauges: Overlay,
 	buffImage: ImageData,
 	threshold: number,
+	updateCallbackFn: (gauges: Overlay, duration: number, greater: boolean) => void,
 	greater: boolean
 ): Promise<boolean> {
 	const buffs = buffReader.read();
@@ -391,12 +390,12 @@ async function updateBuffData(
 		
 		if (match.passed > threshold) {
 			foundBuff = true;
-			updateAbility(ability, position, buff.readArg('timearg').time, greater);
+			updateCallbackFn(gauges, buff.readArg('timearg').time, greater);
 		}
 	}
 	
 	if (!foundBuff) {
-		updateAbility(ability, position, 0, greater);
+		updateCallbackFn(gauges, 0, greater);
 	}
 	
 	return foundBuff;
@@ -507,68 +506,19 @@ async function updateLivingDeath(gauges: Overlay, value: number) {
 			gauges.necromancy.livingDeath.time = 0;
 			gauges.necromancy.livingDeath.active = false;
 			gauges.necromancy.livingDeath.isOnCooldown = true;
-			startLivingDeathCooldown(gauges);
+			
+			startAbilityCooldown(
+				{
+					ability: gauges.necromancy.livingDeath,
+					position: gauges.necromancy.position,
+					scaleFactor: gauges.scaleFactor,
+				},
+				'LivingDeath',
+				() => endAbilityCooldown(gauges.necromancy.livingDeath, 'LivingDeath'),
+				false,
+			);
 		}, 1050);
 	}
-}
-
-async function startLivingDeathCooldown(gauges: Overlay) {
-	if (!gauges.necromancy.livingDeath.isActiveOverlay) {
-		return;
-	}
-
-	// If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
-	if (gauges.necromancy.livingDeath.active) {
-		return await endLivingDeathCooldown(gauges);
-	}
-
-	// Otherwise cooldown has started and we can clear the Active text
-	utility.forceClearOverlay('LivingDeath_Text');
-	alt1.overLaySetGroupZIndex('LivingDeath_Cooldown_Text', 1);
-	
-	let cooldown = 59;
-	
-	const timer = setInterval(() => {
-		// During our interval if the buff ever becomes active - kill the timer
-		if (gauges.necromancy.livingDeath.active) {
-			clearInterval(timer);
-			endLivingDeathCooldown(gauges);
-			return;
-		}
-		
-		cooldown -= 1;
-		
-		if (cooldown > 0) {
-			utility.forceClearOverlay('LivingDeath_Cooldown_Text');
-			
-			const xPositionAdjusted = gauges.necromancy.position.x + (gauges.necromancy.livingDeath.position?.active_orientation.x ?? 0) + 26;
-			const yPositionAdjusted = gauges.necromancy.position.y + (gauges.necromancy.livingDeath.position?.active_orientation.y ?? 0) + 26;
-			
-			alt1.overLayTextEx(
-				cooldown.toString(),
-				utility.white,
-				14,
-				utility.adjustPositionForScale(xPositionAdjusted, gauges.scaleFactor),
-				utility.adjustPositionForScale(yPositionAdjusted, gauges.scaleFactor),
-				3000,
-				'',
-				true,
-				true
-			);
-			
-			alt1.overLayRefreshGroup('LivingDeath_Cooldown_Text');
-		} else {
-			clearInterval(timer);
-			endLivingDeathCooldown(gauges);
-			return;
-		}
-	}, 1000);
-}
-
-async function endLivingDeathCooldown(gauges: Overlay) {
-	gauges.necromancy.livingDeath.isOnCooldown = false;
-	gauges.necromancy.livingDeath.cooldownDuration = 0;
-	utility.forceClearOverlay('LivingDeath_Cooldown_Text');
 }
 
 async function updateSkeleton(gauges: Overlay, value: number) {
