@@ -30,22 +30,27 @@ export async function resetBuffPositions() {
 	updateSetting('debuffsPosition', undefined);
 }
 
-export async function setOverlayPosition(gauges: Overlay, utility) {
+export async function setOverlayPosition(gauges: Overlay) {
 	updatingOverlayPosition = true;
 	a1lib.once('alt1pressed', updateLocation);
+	
 	alt1.setTooltip(
 		'Press Primary Keybind to save position (default keybind is alt+1)'
 	);
+	
 	setTimeout(() => {
 		alt1.clearTooltip();
 	}, 3000);
+	
 	while (updatingOverlayPosition) {
 		await timeout(1000);
-		utility.freezeOverlays();
+		
+		freezeOverlays();
 		//TODO: Per-gauge repositioning will be needed here as well
-		utility.resizeGaugesWithMousePosition(gauges);
-		utility.continueOverlays();
+		resizeGaugesWithMousePosition(gauges);
+		continueOverlays();
 	}
+	
 	updateSetting('overlayPosition', {
 		x: gauges.necromancy.position.x,
 		y: gauges.necromancy.position.y,

@@ -244,10 +244,6 @@ function addEventListeners() {
 		updateActiveOrientationFromLocalStorage();
 	});
 
-	getById('repositionOverlay').addEventListener('click', () => {
-		utility.setOverlayPosition(gauges, utility);
-	});
-
 	getById('showNecrosis').addEventListener('change', () => {
 		gauges.necromancy.stacks.duplicateNecrosisRow = getSetting('dupeRow');
 	});
