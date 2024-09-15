@@ -172,13 +172,13 @@ export async function startApp() {
 }
 
 export async function beginRendering() {
-	await findBuffsBar().then(() => {
-		findDebuffsBar().then(() => {
-			setInterval(function () {
-				renderOverlays();
-			}, 20);
-		});
-	});
+  try {
+    await findBuffsBar();
+    await findDebuffsBar();
+    setInterval(() => renderOverlays(), 20);
+  } catch (e) {
+    console.error(`Issue when rendering.\n\n${JSON.stringify(e)}`);
+  }
 }
 
 function calibrationWarning(): void {
@@ -218,7 +218,7 @@ function updateActiveOrientationFromLocalStorage(): void {
 	// END
 
 	updateSetting('selectedOrientation', selectedOrientation);
-
+	
 	// Function to recursively update orientations in an object
 	function updateActiveOrientation(obj: object) {
 		for (const key in obj) {
@@ -234,6 +234,7 @@ function updateActiveOrientationFromLocalStorage(): void {
 		utility.freezeOverlays();
 		utility.continueOverlays();
 	}
+	
 	updateActiveOrientation(gauges);
 }
 
@@ -241,10 +242,6 @@ function updateActiveOrientationFromLocalStorage(): void {
 function addEventListeners() {
 	getById('selectedOrientation').addEventListener('change', () => {
 		updateActiveOrientationFromLocalStorage();
-	});
-
-	getById('repositionOverlay').addEventListener('click', () => {
-		utility.setOverlayPosition(gauges, utility);
 	});
 
 	getById('showNecrosis').addEventListener('change', () => {

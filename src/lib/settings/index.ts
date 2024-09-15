@@ -60,7 +60,7 @@ export const renderSettings = async (gauges) => {
 		.addButton(
 			'repositionOverlay',
 			'Reposition Overlay',
-			setOverlayPosition,
+			() => setOverlayPosition(gauges),
 			{
 				classes: ['nisbutton'],
 			}
