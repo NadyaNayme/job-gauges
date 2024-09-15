@@ -19,25 +19,25 @@ var quiverImages = a1lib.webpackImages({
 
 let lastAmmo: string;
 
-export async function findAmmo(gauges: Overlay, buffs: BuffReader.Buff[]) {
+export async function findAmmo(gauges: Overlay, buffs: BuffReader.Buff[] | null) {
 	if (!buffs) {
 		return;
 	}
 
-	let ammmoActive: number = 0;
+	let ammmoActive = 0;
 	let currentAmmo = '';
 
 	for (let [_key, value] of Object.entries(buffs)) {
-		let checkBik = value.countMatch(quiverImages.bik, false);
-		let checkFul = value.countMatch(quiverImages.ful, false);
-		let checkWen = value.countMatch(quiverImages.wen, false);
-		let checkJas = value.countMatch(quiverImages.jas_dragonbane, false);
-		let checkBlackstone = value.countMatch(quiverImages.blackstone, false);
-		let checkDeathspores = value.countMatch(quiverImages.deathspore, false);
-		let checkDiamond = value.countMatch(quiverImages.diamond_bak, false);
-		let checkHydrix = value.countMatch(quiverImages.hydrix_bak, false);
-		let checkRuby = value.countMatch(quiverImages.ruby_bak, false);
-		let checkOnyx = value.countMatch(quiverImages.onyx_bak, false);
+		const checkBik = value.countMatch(quiverImages.bik, false);
+		const checkFul = value.countMatch(quiverImages.ful, false);
+		const checkWen = value.countMatch(quiverImages.wen, false);
+		const checkJas = value.countMatch(quiverImages.jas_dragonbane, false);
+		const checkBlackstone = value.countMatch(quiverImages.blackstone, false);
+		const checkDeathspores = value.countMatch(quiverImages.deathspore, false);
+		const checkDiamond = value.countMatch(quiverImages.diamond_bak, false);
+		const checkHydrix = value.countMatch(quiverImages.hydrix_bak, false);
+		const checkRuby = value.countMatch(quiverImages.ruby_bak, false);
+		const checkOnyx = value.countMatch(quiverImages.onyx_bak, false);
 
 		if (checkBik.failed == 0 || checkBik.passed > 28) {
 			currentAmmo = 'BIK';
@@ -109,7 +109,7 @@ function displayAmmoName(gauges: Overlay, ammo: string): void {
 			gauges.scaleFactor
 		),
 		3000,
-		undefined,
+		'',
 		true,
 		true
 	);
