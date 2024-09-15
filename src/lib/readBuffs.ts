@@ -55,7 +55,7 @@ const buffsImages = a1lib.webpackImages({
 	largeBuffs: require('../a1sauce/dataImages/ErrorHandling/large_buffs.data.png'),
 });
 
-async function retryOperation<T>(
+async function retryOperation(
 	operation: () => void,
 	maxRetries: number,
 	delay: number,
@@ -74,10 +74,10 @@ async function retryOperation<T>(
 
 export function findBuffsBar() {
 	console.info('Attempting to find buffs bar...');
-		
+
 	if (!buffReader.find()) {
 		console.log(`Failed to find those buffs`)
-		
+
 		errorLogger.showError({
 			title: 'No Buffs',
 			message: '<p>Job Gauges could not locate your buffs bar. Please use a defensive ability or some other way of obtaining a buff and Job Gauges will attempt to search again shortly.</p>',
@@ -97,38 +97,38 @@ export function findDebuffsBar() {
 				<p>Job Gauges could not locate your debuffs bar. Please toggle on your Prayer or some other way of obtaining a debuff and Job Gauges will attempt to search again shortly.</p>
 			`,
 		});
-		
+
 		throw new Error('BuffsBarSearchError: Failed to find debuff bar');
 	}
 }
 
 export function testBuffSizes(): boolean {
 	console.info('Unable to find buffs. Checking to see if Buffs are set to "Medium" or "Large"');
-	
+
 	const screen = a1lib.captureHoldFullRs();
 	const mediumBuffPositions = screen.findSubimage(buffsImages.mediumBuffs);
 	const largeBuffPositions = screen.findSubimage(buffsImages.largeBuffs);
-	
+
 	const message = `<p>Alt1 only supports reading Small Buffs. Please update your Buffs Bar settings. Interfaces > Buff Bar > Icon Size </p><img src="./ErrorImages/BuffIconSize.png">`;
-	
+
 	if (mediumBuffPositions.length) {
 		errorLogger.showError({
 			title: 'Medium Buffs Detected',
 			message,
 		});
-		
+
 		return true;
 	}
-	
+
 	if (largeBuffPositions.length) {
 		errorLogger.showError({
 			title: 'Large Buffs Detected',
 			message,
 		});
-		
+
 		return true;
 	}
-	
+
 	return false;
 }
 
@@ -147,7 +147,7 @@ retryOperation(findBuffsBar, 3, 10000)
 	})
 	.catch(() => {
 		const wrongBuffSize = testBuffSizes();
-		
+
 		if (!wrongBuffSize) {
 			errorLogger.showError({
 				title: 'Failed to find Buffs',
@@ -232,7 +232,7 @@ export async function readBuffs(gauges: Overlay) {
 				false
 			);
 		}
-		
+
 		switch (gauges.combatStyle) {
 			case 4:
 				updateBuffData(
@@ -371,11 +371,11 @@ async function updateBuffData(
 	greater: boolean
 ): Promise<boolean> {
 	const buffs = buffReader.read();
-	
+
 	if (!buffs) {
 		throw Error("Failed to read buffs for updateBuffData.");
 	}
-	
+
 	let foundBuff = false;
 	for (const buff of buffs) {
 		const match = buff.countMatch(buffImage, false);
@@ -387,17 +387,17 @@ async function updateBuffData(
 		if (buffImage === buffsImages.odeToDeceit && buff.readArg('timearg').time >= 50) {
 			return false;
 		}
-		
+
 		if (match.passed > threshold) {
 			foundBuff = true;
 			updateCallbackFn(gauges, buff.readArg('timearg').time, greater);
 		}
 	}
-	
+
 	if (!foundBuff) {
 		updateCallbackFn(gauges, 0, greater);
 	}
-	
+
 	return foundBuff;
 }
 
@@ -412,12 +412,12 @@ async function updateStackData(
 	if (!buffs) {
 		throw Error("Failed to read buffs for updateStackData.");
 	}
-	
+
 	let foundBuff = false;
-	
+
 	for (const buff of buffs) {
 		const match = buff.countMatch(buffImage, false);
-		
+
 		if (match.passed > threshold) {
 			foundBuff = true;
 			updateCallbackFn(
@@ -431,11 +431,11 @@ async function updateStackData(
 			);
 		}
 	}
-	
+
 	if (!foundBuff) {
 		updateCallbackFn(gauges, 0);
 	}
-	
+
 	return foundBuff;
 }
 
@@ -450,21 +450,21 @@ async function updateSimpleStackData(
 	if (!buffs) {
 		throw Error("Failed to read buffs for updateSimpleStackData.");
 	}
-	
+
 	let foundBuff = false;
 	for (const buff of buffs) {
 		const match = buff.countMatch(buffImage, false);
-		
+
 		if (match.passed > threshold) {
 			foundBuff = true;
 			updateCallbackFn(gauges, buff.readTime());
 		}
 	}
-	
+
 	if (!foundBuff) {
 		updateCallbackFn(gauges, 0);
 	}
-	
+
 	return foundBuff;
 }
 
@@ -506,7 +506,7 @@ async function updateLivingDeath(gauges: Overlay, value: number) {
 			gauges.necromancy.livingDeath.time = 0;
 			gauges.necromancy.livingDeath.active = false;
 			gauges.necromancy.livingDeath.isOnCooldown = true;
-			
+
 			startAbilityCooldown(
 				{
 					ability: gauges.necromancy.livingDeath,
@@ -645,8 +645,8 @@ async function updateSunshine(
 			gauges.magic.sunshine.time = 0;
 			gauges.magic.sunshine.active = false;
 			gauges.magic.sunshine.isOnCooldown = true;
-			
-			startAbilityCooldown({ 
+
+			startAbilityCooldown({
 					ability: gauges.magic.sunshine,
 					position: gauges.magic.position,
 					scaleFactor: gauges.scaleFactor
@@ -682,7 +682,7 @@ async function updateFsoa(gauges: Overlay, value: number) {
 			gauges.magic.instability.time = 0;
 			gauges.magic.instability.active = false;
 			gauges.magic.instability.isOnCooldown = true;
-			
+
 			startAbilityCooldown(
 				{
 					ability: gauges.magic.instability,
@@ -730,7 +730,7 @@ async function updateTsunami(gauges: Overlay, value: number) {
 			gauges.magic.tsunami.time = 0;
 			gauges.magic.tsunami.active = false;
 			gauges.magic.tsunami.isOnCooldown = true;
-			
+
 			startAbilityCooldown(
 				{
 					ability: gauges.magic.tsunami,
@@ -781,7 +781,7 @@ async function updateDeathsSwiftness(
 			gauges.ranged.deathsSwiftness.time = 0;
 			gauges.ranged.deathsSwiftness.active = false;
 			gauges.ranged.deathsSwiftness.isOnCooldown = true;
-			
+
 			startAbilityCooldown(
 				{
 					ability: gauges.ranged.deathsSwiftness,
@@ -817,7 +817,7 @@ async function updateCrystalRain(gauges: Overlay, value: number) {
 			gauges.ranged.crystalRain.time = 0;
 			gauges.ranged.crystalRain.active = false;
 			gauges.ranged.crystalRain.isOnCooldown = false;
-			
+
 			startAbilityCooldown(
 				{
 					ability: gauges.ranged.crystalRain,
@@ -857,7 +857,7 @@ async function updateOdeToDeceit(gauges: Overlay, value: number) {
 			gauges.magic.odeToDeceit.time = 0;
 			gauges.magic.odeToDeceit.active = false;
 			gauges.magic.odeToDeceit.isOnCooldown = false;
-			
+
 			startAbilityCooldown(
 				{
 					ability: gauges.magic.odeToDeceit,

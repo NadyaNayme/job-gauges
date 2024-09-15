@@ -14,8 +14,12 @@ export const green = a1lib.mixColor(0, 255, 0);
 export const blue = a1lib.mixColor(0, 0, 255);
 export const black = a1lib.mixColor(1, 1, 1);
 
-export function getByID(id: string): HTMLElement {
-	return document.getElementById(id);
+/*
+ * Should only return null if a typo is made as elements
+ * that are fetched are created by A1 Sauce
+ */
+export function getByID(id: string): HTMLElement | null {
+	return document.getElementById(id)!;
 }
 
 export const helperItems = {
@@ -33,24 +37,24 @@ export async function resetBuffPositions() {
 export async function setOverlayPosition(gauges: Overlay) {
 	updatingOverlayPosition = true;
 	a1lib.once('alt1pressed', updateLocation);
-	
+
 	alt1.setTooltip(
 		'Press Primary Keybind to save position (default keybind is alt+1)'
 	);
-	
+
 	setTimeout(() => {
 		alt1.clearTooltip();
 	}, 3000);
-	
+
 	while (updatingOverlayPosition) {
 		await timeout(1000);
-		
+
 		freezeOverlays();
 		//TODO: Per-gauge repositioning will be needed here as well
 		resizeGaugesWithMousePosition(gauges);
 		continueOverlays();
 	}
-	
+
 	updateSetting('overlayPosition', {
 		x: gauges.necromancy.position.x,
 		y: gauges.necromancy.position.y,
@@ -187,47 +191,44 @@ export function adjustPositionWithoutScale(
 }
 
 // TODO: Use future overlays[] to iterate over active overlays
+/*
+ * getMousePosition() can be null if the mouse is off the client screen
+ * but the error is silent and doesn't cause problems so I'm going to
+ * suppress the null checks to avoid adding lots of unnecessary noise
+ */
 export function resizeGaugesWithMousePosition(gauges: Overlay) {
 	gauges.necromancy.position.x = adjustPositionWithoutScale(
-		a1lib.getMousePosition().x,
+		a1lib.getMousePosition()!.x,
 		gauges.scaleFactor
 	);
 	gauges.necromancy.position.y = adjustPositionWithoutScale(
-		a1lib.getMousePosition().y,
+		a1lib.getMousePosition()!.y,
 		gauges.scaleFactor
 	);
 	gauges.magic.position.x = adjustPositionWithoutScale(
-		a1lib.getMousePosition().x,
+		a1lib.getMousePosition()!.x,
 		gauges.scaleFactor
 	);
 	gauges.magic.position.y = adjustPositionWithoutScale(
-		a1lib.getMousePosition().y,
+		a1lib.getMousePosition()!.y,
 		gauges.scaleFactor
 	);
 	gauges.ranged.position.x = adjustPositionWithoutScale(
-		a1lib.getMousePosition().x,
+		a1lib.getMousePosition()!.x,
 		gauges.scaleFactor
 	);
 	gauges.ranged.position.y = adjustPositionWithoutScale(
-		a1lib.getMousePosition().y,
+		a1lib.getMousePosition()!.y,
 		gauges.scaleFactor
 	);
 	gauges.melee.position.x = adjustPositionWithoutScale(
-		a1lib.getMousePosition().x,
+		a1lib.getMousePosition()!.x,
 		gauges.scaleFactor
 	);
 	gauges.melee.position.y = adjustPositionWithoutScale(
-		a1lib.getMousePosition().y,
+		a1lib.getMousePosition()!.y,
 		gauges.scaleFactor
 	);
-}
-
-export function updateCoordinates(
-	component,
-	position: { x: number; y: number }
-): void {
-	component.activePosition.x = position.x;
-	component.activePosition.y = position.y;
 }
 
 export function roundedToFixed(input: number, digits: number): string {
@@ -258,9 +259,11 @@ export async function resizeImageData(
 	tempCanvas.height = imageData.height;
 
 	// Draw the original image data onto the temporary canvas
+	if (tempContext === null) return
 	tempContext.putImageData(imageData, 0, 0);
 
 	// Draw the temporary canvas onto the new canvas with the desired scale
+	if (context === null) return
 	context.drawImage(
 		tempCanvas,
 		0,

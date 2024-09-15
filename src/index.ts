@@ -1,5 +1,4 @@
 import * as utility from './lib/utility';
-import { helperItems } from './lib/utility';
 import { Overlay } from './types/index';
 
 // General Purpose
@@ -218,10 +217,11 @@ function updateActiveOrientationFromLocalStorage(): void {
 	// END
 
 	updateSetting('selectedOrientation', selectedOrientation);
-	
+
 	// Function to recursively update orientations in an object
 	function updateActiveOrientation(obj: object) {
-		for (const key in obj) {
+		for (const key in obj){
+			// TODO: Fix types here. This code works w/o issues as-is and I'm not sure how to make it happy
 			if (typeof obj[key] === 'object' && obj[key] !== null) {
 				if (key === 'active_orientation') {
 					obj[key].x = obj[selectedOrientation].x;
@@ -234,21 +234,23 @@ function updateActiveOrientationFromLocalStorage(): void {
 		utility.freezeOverlays();
 		utility.continueOverlays();
 	}
-	
+
 	updateActiveOrientation(gauges);
 }
 
 // TODO: Get rid of this crap
+// Null suppressions are used as these items
+// are added via A1Sauce.Settings and thus will always exist
 function addEventListeners() {
-	getById('selectedOrientation').addEventListener('change', () => {
+	getById('selectedOrientation')!.addEventListener('change', () => {
 		updateActiveOrientationFromLocalStorage();
 	});
 
-	getById('showNecrosis').addEventListener('change', () => {
+	getById('showNecrosis')!.addEventListener('change', () => {
 		gauges.necromancy.stacks.duplicateNecrosisRow = getSetting('dupeRow');
 	});
 
-	getById('defaultCombatStyle').addEventListener('change', () => {
+	getById('defaultCombatStyle')!.addEventListener('change', () => {
 		gauges.combatStyle =
 			parseInt(getSetting('defaultCombatStyle'), 10);
 	});
@@ -266,7 +268,7 @@ function addEventListeners() {
 		scaleRangevalue +
 		'%, #0d1c24 100%)';
 
-	getById('scale').addEventListener('change', () => {
+	getById('scale')!.addEventListener('change', () => {
 		location.reload();
 	});
 
@@ -291,7 +293,7 @@ function addEventListeners() {
 	});
 
 	/* Update Alarm Thresholds */
-	getById('alarmSoulsThreshold').addEventListener('change', (e) => {
+	getById('alarmSoulsThreshold')!.addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.souls.alarm.threshold = parseInt(
 			target.value,
@@ -299,7 +301,7 @@ function addEventListeners() {
 		);
 	});
 
-	getById('alarmNecrosisThreshold').addEventListener('change', (e) => {
+	getById('alarmNecrosisThreshold')!.addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.necrosis.alarm.threshold = parseInt(
 			target.value,
@@ -308,29 +310,29 @@ function addEventListeners() {
 	});
 
 	/* Update Active Alarms */
-	getById('alarmSoulsActive').addEventListener('change', (e) => {
+	getById('alarmSoulsActive')!.addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.souls.alarm.isActive = target.checked;
 	});
 
-	getById('alarmNecrosisActive').addEventListener('change', (e) => {
+	getById('alarmNecrosisActive')!.addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.necrosis.alarm.isActive = target.checked;
 	});
 
 	/* Update Looping Alarms */
-	getById('alarmNecrosisLoop').addEventListener('change', (e) => {
+	getById('alarmNecrosisLoop')!.addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.necrosis.alarm.isLooping = target.checked;
 	});
 
-	getById('alarmSoulsLoop').addEventListener('change', (e) => {
+	getById('alarmSoulsLoop')!.addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.souls.alarm.isLooping = target.checked;
 	});
 
 	/* Update Alarm Volumes */
-	getById('alarmNecrosisVolume').addEventListener('change', (e) => {
+	getById('alarmNecrosisVolume')!.addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.necrosis.alarm.volume = parseInt(
 			target.value,
@@ -338,7 +340,7 @@ function addEventListeners() {
 		);
 	});
 
-	getById('alarmSoulsVolume').addEventListener('change', (e) => {
+	getById('alarmSoulsVolume')!.addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.souls.alarm.volume = parseInt(
 			target.value,
@@ -347,12 +349,12 @@ function addEventListeners() {
 	});
 
 	/* Update Alarm Sounds */
-	getById('alarmNecrosisAlertSound').addEventListener('change', (e) => {
+	getById('alarmNecrosisAlertSound')!.addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.necrosis.alarm.sound = target.value;
 	});
 
-	getById('alarmSoulsAlertSound').addEventListener('change', (e) => {
+	getById('alarmSoulsAlertSound')!.addEventListener('change', (e) => {
 		const target = <HTMLInputElement>e.target;
 		gauges.necromancy.stacks.souls.alarm.sound = target.value;
 	});

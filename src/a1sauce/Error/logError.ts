@@ -39,8 +39,12 @@ export class LogError {
 
 		const container = this.createErrorContainer();
 		const headerContainer = this.createErrorHeader(error);
+		/*
+		 * Null check is suppressed because headerContainer is created above using createErrorHeader
+		 * which appends a .close-button element meaning it can't possibly be null
+		 */
 		headerContainer
-			.querySelector('.close-button')
+			.querySelector('.close-button')!
 			.addEventListener('click', () => {
 				container.remove();
 			});

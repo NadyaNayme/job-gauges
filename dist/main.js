@@ -31681,6 +31681,10 @@ class LogError {
                 return;
             const container = this.createErrorContainer();
             const headerContainer = this.createErrorHeader(error);
+            /*
+             * Null check is suppressed because headerContainer is created above using createErrorHeader
+             * which appends a .close-button element meaning it can't possibly be null
+             */
             headerContainer
                 .querySelector('.close-button')
                 .addEventListener('click', () => {
@@ -32858,10 +32862,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   getById: () => (/* binding */ getById)
 /* harmony export */ });
 const getById = (id) => {
-    let el = document.getElementById(id);
-    if (el)
-        return el;
-    return null;
+    return document.getElementById(id);
 };
 
 
@@ -33841,13 +33842,14 @@ async function startApp() {
     await beginRendering();
 }
 async function beginRendering() {
-    await (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_1__.findBuffsBar)().then(() => {
-        (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_1__.findDebuffsBar)().then(() => {
-            setInterval(function () {
-                renderOverlays();
-            }, 20);
-        });
-    });
+    try {
+        await (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_1__.findBuffsBar)();
+        await (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_1__.findDebuffsBar)();
+        setInterval(() => renderOverlays(), 20);
+    }
+    catch (e) {
+        console.error(`Issue when rendering.\n\n${JSON.stringify(e)}`);
+    }
 }
 function calibrationWarning() {
     alt1.setTooltip('[JG] Use a Defensive ability such as Freedom or Anticipate to capture buffs location.');
@@ -33883,6 +33885,7 @@ function updateActiveOrientationFromLocalStorage() {
     // Function to recursively update orientations in an object
     function updateActiveOrientation(obj) {
         for (const key in obj) {
+            // TODO: Fix types here. This code works w/o issues as-is and I'm not sure how to make it happy
             if (typeof obj[key] === 'object' && obj[key] !== null) {
                 if (key === 'active_orientation') {
                     obj[key].x = obj[selectedOrientation].x;
@@ -33899,12 +33902,11 @@ function updateActiveOrientationFromLocalStorage() {
     updateActiveOrientation(gauges);
 }
 // TODO: Get rid of this crap
+// Null suppressions are used as these items
+// are added via A1Sauce.Settings and thus will always exist
 function addEventListeners() {
     (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('selectedOrientation').addEventListener('change', () => {
         updateActiveOrientationFromLocalStorage();
-    });
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('repositionOverlay').addEventListener('click', () => {
-        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.setOverlayPosition(gauges, _lib_utility__WEBPACK_IMPORTED_MODULE_0__);
     });
     (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('showNecrosis').addEventListener('change', () => {
         gauges.necromancy.stacks.duplicateNecrosisRow = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('dupeRow');
@@ -35224,16 +35226,16 @@ async function findAmmo(gauges, buffs) {
     let ammmoActive = 0;
     let currentAmmo = '';
     for (let [_key, value] of Object.entries(buffs)) {
-        let checkBik = value.countMatch(quiverImages.bik, false);
-        let checkFul = value.countMatch(quiverImages.ful, false);
-        let checkWen = value.countMatch(quiverImages.wen, false);
-        let checkJas = value.countMatch(quiverImages.jas_dragonbane, false);
-        let checkBlackstone = value.countMatch(quiverImages.blackstone, false);
-        let checkDeathspores = value.countMatch(quiverImages.deathspore, false);
-        let checkDiamond = value.countMatch(quiverImages.diamond_bak, false);
-        let checkHydrix = value.countMatch(quiverImages.hydrix_bak, false);
-        let checkRuby = value.countMatch(quiverImages.ruby_bak, false);
-        let checkOnyx = value.countMatch(quiverImages.onyx_bak, false);
+        const checkBik = value.countMatch(quiverImages.bik, false);
+        const checkFul = value.countMatch(quiverImages.ful, false);
+        const checkWen = value.countMatch(quiverImages.wen, false);
+        const checkJas = value.countMatch(quiverImages.jas_dragonbane, false);
+        const checkBlackstone = value.countMatch(quiverImages.blackstone, false);
+        const checkDeathspores = value.countMatch(quiverImages.deathspore, false);
+        const checkDiamond = value.countMatch(quiverImages.diamond_bak, false);
+        const checkHydrix = value.countMatch(quiverImages.hydrix_bak, false);
+        const checkRuby = value.countMatch(quiverImages.ruby_bak, false);
+        const checkOnyx = value.countMatch(quiverImages.onyx_bak, false);
         if (checkBik.failed == 0 || checkBik.passed > 28) {
             currentAmmo = 'BIK';
             ammmoActive++;
@@ -35290,7 +35292,7 @@ function displayAmmoName(gauges, ammo) {
     alt1.overLaySetGroup(`Ammo_Text`);
     alt1.overLayFreezeGroup(`Ammo_Text`);
     alt1.overLayClearGroup(`Ammo_Text`);
-    alt1.overLayTextEx(gauges.ranged.ammo.activeAmmo, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.x + 96, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.y + 24, gauges.scaleFactor), 3000, undefined, true, true);
+    alt1.overLayTextEx(gauges.ranged.ammo.activeAmmo, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.x + 96, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.y + 24, gauges.scaleFactor), 3000, '', true, true);
     alt1.overLayRefreshGroup('Ammo_Text');
 }
 
@@ -35638,17 +35640,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   readBuffs: () => (/* binding */ readBuffs),
 /* harmony export */   testBuffSizes: () => (/* binding */ testBuffSizes)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var alt1_buffs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! alt1/buffs */ "../node_modules/alt1/dist/buffs/index.js");
-/* harmony import */ var alt1_buffs__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(alt1_buffs__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var alt1_buffs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! alt1/buffs */ "../node_modules/alt1/dist/buffs/index.js");
+/* harmony import */ var alt1_buffs__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(alt1_buffs__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utility */ "./lib/utility.ts");
 /* harmony import */ var _ranged_activeAmmo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ranged/activeAmmo */ "./lib/ranged/activeAmmo.ts");
 /* harmony import */ var _a1sauce__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../a1sauce */ "./a1sauce/index.ts");
 /* harmony import */ var _data_constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../data/constants */ "./data/constants.ts");
 /* harmony import */ var _a1sauce_Error_logError__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../a1sauce/Error/logError */ "./a1sauce/Error/logError.ts");
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! .. */ "./index.ts");
+/* harmony import */ var _util_ability_helpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./util/ability-helpers */ "./lib/util/ability-helpers.ts");
 /* eslint-disable @typescript-eslint/no-require-imports */
+
 
 
 
@@ -35659,11 +35663,11 @@ __webpack_require__.r(__webpack_exports__);
 
 const sauce = _a1sauce__WEBPACK_IMPORTED_MODULE_2__.A1Sauce.instance;
 sauce.setName(_data_constants__WEBPACK_IMPORTED_MODULE_3__.appName);
-const buffs = new (alt1_buffs__WEBPACK_IMPORTED_MODULE_6___default())();
-const debuffs = new (alt1_buffs__WEBPACK_IMPORTED_MODULE_6___default())();
-debuffs.debuffs = true;
+const buffReader = new (alt1_buffs__WEBPACK_IMPORTED_MODULE_7___default());
+const debuffReader = new (alt1_buffs__WEBPACK_IMPORTED_MODULE_7___default());
+debuffReader.debuffs = true;
 const errorLogger = new _a1sauce_Error_logError__WEBPACK_IMPORTED_MODULE_4__.LogError();
-const buffsImages = alt1__WEBPACK_IMPORTED_MODULE_7__.webpackImages({
+const buffsImages = alt1__WEBPACK_IMPORTED_MODULE_8__.webpackImages({
     /* Necromancy */
     darkness: __webpack_require__(/*! ../asset/data/buffs/necromancy/darkness.data.png */ "./asset/data/buffs/necromancy/darkness.data.png"),
     living_death: __webpack_require__(/*! ../asset/data/buffs/necromancy/living-death.data.png */ "./asset/data/buffs/necromancy/living-death.data.png"),
@@ -35697,7 +35701,7 @@ const buffsImages = alt1__WEBPACK_IMPORTED_MODULE_7__.webpackImages({
 });
 async function retryOperation(operation, maxRetries, delay, attempt = 0) {
     try {
-        return await operation();
+        return operation();
     }
     catch (error) {
         if (attempt >= maxRetries) {
@@ -35707,10 +35711,10 @@ async function retryOperation(operation, maxRetries, delay, attempt = 0) {
         return retryOperation(operation, maxRetries, delay, attempt + 1);
     }
 }
-async function findBuffsBar() {
+function findBuffsBar() {
     console.info('Attempting to find buffs bar...');
-    buffs.find(); // Before loading previous location try a single time to find the buffs bar
-    if (buffs.pos == undefined) {
+    if (!buffReader.find()) {
+        console.log(`Failed to find those buffs`);
         errorLogger.showError({
             title: 'No Buffs',
             message: '<p>Job Gauges could not locate your buffs bar. Please use a defensive ability or some other way of obtaining a buff and Job Gauges will attempt to search again shortly.</p>',
@@ -35718,38 +35722,35 @@ async function findBuffsBar() {
         throw new Error('BuffsBarSearchError: Failed to find buff bar');
     }
 }
-async function findDebuffsBar() {
+function findDebuffsBar() {
     console.info('Attempting to find debuffs bar...');
-    debuffs.find(); // Before loading previous location try a single time to find the debuffs bar
-    if (debuffs.pos == undefined) {
+    if (!debuffReader.pos && !debuffReader.find()) {
         errorLogger.showError({
             title: 'No Debuffs',
             message: `
-						<p>Job Gauges could not locate your debuffs bar. Please toggle on your Prayer or some other way of obtaining a debuff and Job Gauges will attempt to search again shortly.</p>
-					`,
+				<p>Job Gauges could not locate your debuffs bar. Please toggle on your Prayer or some other way of obtaining a debuff and Job Gauges will attempt to search again shortly.</p>
+			`,
         });
         throw new Error('BuffsBarSearchError: Failed to find debuff bar');
     }
 }
 function testBuffSizes() {
-    var _a, _b;
     console.info('Unable to find buffs. Checking to see if Buffs are set to "Medium" or "Large"');
-    let screen = alt1__WEBPACK_IMPORTED_MODULE_7__.captureHoldFullRs();
-    let pos = screen.findSubimage(buffsImages.mediumBuffs);
-    let pos2 = screen.findSubimage(buffsImages.largeBuffs);
-    if (((_a = pos[0]) === null || _a === void 0 ? void 0 : _a.x) !== undefined) {
+    const screen = alt1__WEBPACK_IMPORTED_MODULE_8__.captureHoldFullRs();
+    const mediumBuffPositions = screen.findSubimage(buffsImages.mediumBuffs);
+    const largeBuffPositions = screen.findSubimage(buffsImages.largeBuffs);
+    const message = `<p>Alt1 only supports reading Small Buffs. Please update your Buffs Bar settings. Interfaces > Buff Bar > Icon Size </p><img src="./ErrorImages/BuffIconSize.png">`;
+    if (mediumBuffPositions.length) {
         errorLogger.showError({
             title: 'Medium Buffs Detected',
-            message: `<p>Alt1 only supports reading Small Buffs. Please update your Buffs Bar settings. Interfaces > Buff Bar > Icon Size </p>
-				<img src="./ErrorImages/BuffIconSize.png">`,
+            message,
         });
         return true;
     }
-    if (((_b = pos2[0]) === null || _b === void 0 ? void 0 : _b.x) !== undefined) {
+    if (largeBuffPositions.length) {
         errorLogger.showError({
             title: 'Large Buffs Detected',
-            message: `<p>Alt1 only supports reading Small Buffs. Please update your Buffs Bar settings. Interfaces > Buff Bar > Icon Size </p>
-				<img src="./ErrorImages/BuffIconSize.png">`,
+            message,
         });
         return true;
     }
@@ -35757,11 +35758,12 @@ function testBuffSizes() {
 }
 retryOperation(findBuffsBar, 3, 10000)
     .then(() => {
+    var _a;
     console.info('Success! Found Buffs.');
     if (document.getElementById('#Error') !== undefined) {
         let err = document.querySelectorAll('#Error');
         for (let i = 0; i < err.length; i++) {
-            let errHeader = err[i].querySelector('h2').innerText;
+            const errHeader = (_a = err[i].querySelector('h2')) === null || _a === void 0 ? void 0 : _a.innerText;
             if (errHeader === 'No Buffs') {
                 err[i].remove();
             }
@@ -35769,7 +35771,7 @@ retryOperation(findBuffsBar, 3, 10000)
     }
 })
     .catch(() => {
-    let wrongBuffSize = testBuffSizes();
+    const wrongBuffSize = testBuffSizes();
     if (!wrongBuffSize) {
         errorLogger.showError({
             title: 'Failed to find Buffs',
@@ -35780,17 +35782,18 @@ retryOperation(findBuffsBar, 3, 10000)
 });
 retryOperation(findDebuffsBar, 3, 10000)
     .then(() => {
+    var _a;
     console.info('Success! Found Debuffs.');
     if (document.getElementById('#Error') !== undefined) {
         let err = document.querySelectorAll('#Error');
         for (let i = 0; i < err.length; i++) {
-            let errHeader = err[i].querySelector('h2').innerText;
+            let errHeader = (_a = err[i].querySelector('h2')) === null || _a === void 0 ? void 0 : _a.innerText;
             if (errHeader === 'No Debuffs') {
                 err[i].remove();
             }
         }
     }
-    if (buffs.pos && debuffs.pos) {
+    if (buffReader.pos && debuffReader.pos) {
         (0,___WEBPACK_IMPORTED_MODULE_5__.beginRendering)();
     }
 })
@@ -35805,62 +35808,65 @@ retryOperation(findDebuffsBar, 3, 10000)
     }
 });
 async function readBuffs(gauges) {
-    if (buffs.pos !== undefined) {
-        updateBuffData(buffs, gauges, buffsImages.deathsSwiftness, 300, updateDeathsSwiftness, false);
-        updateBuffData(buffs, gauges, buffsImages.greaterDeathsSwiftness, 300, updateDeathsSwiftness, true);
-        updateBuffData(buffs, gauges, buffsImages.sunshine, 300, updateSunshine, false);
-        updateBuffData(buffs, gauges, buffsImages.greaterSunshine, 100, updateSunshine, true);
+    if (buffReader.pos !== undefined) {
+        updateBuffData(buffReader, gauges, buffsImages.deathsSwiftness, 300, updateDeathsSwiftness, false);
+        updateBuffData(buffReader, gauges, buffsImages.greaterDeathsSwiftness, 300, updateDeathsSwiftness, true);
+        updateBuffData(buffReader, gauges, buffsImages.sunshine, 300, updateSunshine, false);
+        updateBuffData(buffReader, gauges, buffsImages.greaterSunshine, 100, updateSunshine, true);
         if (gauges.necromancy.livingDeath.isActiveOverlay) {
-            updateBuffData(buffs, gauges, buffsImages.living_death, 400, updateLivingDeath, false);
+            updateBuffData(buffReader, gauges, buffsImages.living_death, 400, updateLivingDeath, false);
         }
         switch (gauges.combatStyle) {
             case 4:
-                updateBuffData(buffs, gauges, buffsImages.soul, 200, updateSoulCount, false);
-                updateBuffData(buffs, gauges, buffsImages.necrosis, 200, updateNecrosisCount, false);
+                updateBuffData(buffReader, gauges, buffsImages.soul, 200, updateSoulCount, false);
+                updateBuffData(buffReader, gauges, buffsImages.necrosis, 200, updateNecrosisCount, false);
                 updateConjures(gauges);
-                updateBuffData(buffs, gauges, buffsImages.darkness, 300, updateDarkness, false);
+                updateBuffData(buffReader, gauges, buffsImages.darkness, 300, updateDarkness, false);
                 if (!disableThreadsCheck) {
-                    updateBuffData(buffs, gauges, buffsImages.threads, 300, updateThreads, false);
+                    updateBuffData(buffReader, gauges, buffsImages.threads, 300, updateThreads, false);
                 }
                 if (!disableSplitCheck) {
-                    updateBuffData(buffs, gauges, buffsImages.split_soul, 350, updateSplitSoul, false);
+                    updateBuffData(buffReader, gauges, buffsImages.split_soul, 350, updateSplitSoul, false);
                 }
                 break;
             case 3:
-                updateBuffData(buffs, gauges, buffsImages.instability, 60, updateFsoa, false);
-                updateBuffData(buffs, gauges, buffsImages.tsunami, 200, updateTsunami, false);
+                updateBuffData(buffReader, gauges, buffsImages.instability, 60, updateFsoa, false);
+                updateBuffData(buffReader, gauges, buffsImages.tsunami, 200, updateTsunami, false);
                 updateStackData(gauges, buffsImages.bloodTithe, 30, updateBloodTithe);
                 updateStackData(gauges, buffsImages.glacialEmbrace, 30, updateGlacialEmbrace);
-                updateBuffData(debuffs, gauges, buffsImages.odeToDeceit, 9, updateOdeToDeceit, false);
+                updateBuffData(debuffReader, gauges, buffsImages.odeToDeceit, 9, updateOdeToDeceit, false);
                 break;
             case 2:
-                updateBuffData(debuffs, gauges, buffsImages.crystalRain, 60, updateCrystalRain, false);
-                (0,_ranged_activeAmmo__WEBPACK_IMPORTED_MODULE_1__.findAmmo)(gauges, buffs.read());
+                updateBuffData(debuffReader, gauges, buffsImages.crystalRain, 60, updateCrystalRain, false);
+                (0,_ranged_activeAmmo__WEBPACK_IMPORTED_MODULE_1__.findAmmo)(gauges, buffReader.read());
                 updateSimpleStackData(gauges, buffsImages.perfectEquilibrium, 300, updatePeCount);
-                updateBuffData(buffs, gauges, buffsImages.balanaceByForce, 20, updateBalanceByForce, false);
-                updateBuffData(buffs, gauges, buffsImages.rangedSplitSoul, 300, updateRangedSplitSoul, false);
+                updateBuffData(buffReader, gauges, buffsImages.balanaceByForce, 20, updateBalanceByForce, false);
+                updateBuffData(buffReader, gauges, buffsImages.rangedSplitSoul, 300, updateRangedSplitSoul, false);
                 break;
             case 1:
                 break;
         }
-        return buffs;
+        return buffReader;
     }
 }
-async function updateBuffData(buffsreader, gauges, buffImage, threshold, 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-updateCallbackFn, greater) {
-    const buffsData = buffsreader.read();
+async function updateBuffData(buffsreader, gauges, buffImage, threshold, updateCallbackFn, greater) {
+    const buffs = buffReader.read();
+    if (!buffs) {
+        throw Error("Failed to read buffs for updateBuffData.");
+    }
     let foundBuff = false;
-    for (const value of Object.values(buffsData)) {
-        const buff = value.countMatch(buffImage, false);
-        if (buffImage == buffsImages.odeToDeceit &&
-            value.readArg('timearg').time >= 50) {
-            foundBuff = false;
-            return;
+    for (const buff of buffs) {
+        const match = buff.countMatch(buffImage, false);
+        /**
+         * "THIS IS A HACK"
+         * Issues with Ode to Deceit false positives
+         */
+        if (buffImage === buffsImages.odeToDeceit && buff.readArg('timearg').time >= 50) {
+            return false;
         }
-        if (buff.passed > threshold) {
+        if (match.passed > threshold) {
             foundBuff = true;
-            updateCallbackFn(gauges, value.readArg('timearg').time, greater);
+            updateCallbackFn(gauges, buff.readArg('timearg').time, greater);
         }
     }
     if (!foundBuff) {
@@ -35868,18 +35874,19 @@ updateCallbackFn, greater) {
     }
     return foundBuff;
 }
-async function updateStackData(gauges, buffImage, threshold, 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-updateCallbackFn) {
-    const buffsData = buffs.read();
+async function updateStackData(gauges, buffImage, threshold, updateCallbackFn) {
+    const buffs = buffReader.read();
+    if (!buffs) {
+        throw Error("Failed to read buffs for updateStackData.");
+    }
     let foundBuff = false;
-    for (const value of Object.values(buffsData)) {
-        const buff = value.countMatch(buffImage, false);
-        if (buff.passed > threshold) {
+    for (const buff of buffs) {
+        const match = buff.countMatch(buffImage, false);
+        if (match.passed > threshold) {
             foundBuff = true;
-            updateCallbackFn(gauges, parseInt(value
+            updateCallbackFn(gauges, parseInt(buff
                 .readArg('timearg')
-                .arg.substring(1, value.readArg('timearg').arg.length - 1), 10));
+                .arg.substring(1, buff.readArg('timearg').arg.length - 1), 10));
         }
     }
     if (!foundBuff) {
@@ -35887,16 +35894,17 @@ updateCallbackFn) {
     }
     return foundBuff;
 }
-async function updateSimpleStackData(gauges, buffImage, threshold, 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-updateCallbackFn) {
-    const buffsData = buffs.read();
+async function updateSimpleStackData(gauges, buffImage, threshold, updateCallbackFn) {
+    const buffs = buffReader.read();
+    if (!buffs) {
+        throw Error("Failed to read buffs for updateSimpleStackData.");
+    }
     let foundBuff = false;
-    for (const value of Object.values(buffsData)) {
-        const buff = value.countMatch(buffImage, false);
-        if (buff.passed > threshold) {
+    for (const buff of buffs) {
+        const match = buff.countMatch(buffImage, false);
+        if (match.passed > threshold) {
             foundBuff = true;
-            updateCallbackFn(gauges, value.readTime());
+            updateCallbackFn(gauges, buff.readTime());
         }
     }
     if (!foundBuff) {
@@ -35938,53 +35946,13 @@ async function updateLivingDeath(gauges, value) {
             gauges.necromancy.livingDeath.time = 0;
             gauges.necromancy.livingDeath.active = false;
             gauges.necromancy.livingDeath.isOnCooldown = true;
-            startLivingDeathCooldown(gauges);
+            (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_6__.startAbilityCooldown)({
+                ability: gauges.necromancy.livingDeath,
+                position: gauges.necromancy.position,
+                scaleFactor: gauges.scaleFactor,
+            }, 'LivingDeath', false);
         }, 1050);
     }
-}
-async function startLivingDeathCooldown(gauges) {
-    if (!gauges.necromancy.livingDeath.isActiveOverlay) {
-        return;
-    }
-    // If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
-    if (gauges.necromancy.livingDeath.active) {
-        endLivingDeathCooldown(gauges);
-        return;
-    }
-    // Otherwise cooldown has started and we can clear the Active text
-    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('LivingDeath_Text');
-    alt1.overLaySetGroupZIndex('LivingDeath_Cooldown_Text', 1);
-    let cooldown = 59;
-    const timer = setInterval(() => {
-        // During our interval if the buff ever becomes active - kill the timer
-        if (gauges.necromancy.livingDeath.active) {
-            clearInterval(timer);
-            endLivingDeathCooldown(gauges);
-            return;
-        }
-        cooldown -= 1;
-        if (cooldown > 0) {
-            _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('LivingDeath_Cooldown_Text');
-            alt1.overLayTextEx(cooldown.toString(), _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.x +
-                gauges.necromancy.livingDeath.position
-                    .active_orientation.x +
-                26, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.necromancy.position.y +
-                gauges.necromancy.livingDeath.position
-                    .active_orientation.y +
-                26, gauges.scaleFactor), 3000, undefined, true, true);
-            alt1.overLayRefreshGroup('LivingDeath_Cooldown_Text');
-        }
-        else {
-            clearInterval(timer);
-            endLivingDeathCooldown(gauges);
-            return;
-        }
-    }, 1000);
-}
-async function endLivingDeathCooldown(gauges) {
-    gauges.necromancy.livingDeath.isOnCooldown = false;
-    gauges.necromancy.livingDeath.cooldownDuration = 0;
-    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('LivingDeath_Cooldown_Text');
 }
 async function updateSkeleton(gauges, value) {
     gauges.necromancy.conjures.skeleton.time = value;
@@ -36036,10 +36004,10 @@ async function updateSplitSoul(gauges, value) {
     }
 }
 async function updateConjures(gauges) {
-    const hasSkeleton = await updateBuffData(buffs, gauges, buffsImages.skeleton, 150, updateSkeleton, false);
-    const hasZombie = await updateBuffData(buffs, gauges, buffsImages.zombie, 150, updateZombie, false);
-    const hasGhost = await updateBuffData(buffs, gauges, buffsImages.ghost, 200, updateGhost, false);
-    const hasPhantom = await updateBuffData(buffs, gauges, buffsImages.phantom, 200, updatePhantom, false);
+    const hasSkeleton = await updateBuffData(buffReader, gauges, buffsImages.skeleton, 150, updateSkeleton, false);
+    const hasZombie = await updateBuffData(buffReader, gauges, buffsImages.zombie, 150, updateZombie, false);
+    const hasGhost = await updateBuffData(buffReader, gauges, buffsImages.ghost, 200, updateGhost, false);
+    const hasPhantom = await updateBuffData(buffReader, gauges, buffsImages.phantom, 200, updatePhantom, false);
     if (hasSkeleton || hasZombie || hasGhost || hasPhantom) {
         gauges.necromancy.conjures.active = true;
     }
@@ -36070,51 +36038,13 @@ async function updateSunshine(gauges, value, greater) {
             gauges.magic.sunshine.time = 0;
             gauges.magic.sunshine.active = false;
             gauges.magic.sunshine.isOnCooldown = true;
-            startSunshineCooldown(gauges, greater);
+            (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_6__.startAbilityCooldown)({
+                ability: gauges.magic.sunshine,
+                position: gauges.magic.position,
+                scaleFactor: gauges.scaleFactor
+            }, 'Sunshine', greater);
         }, 1050);
     }
-}
-async function startSunshineCooldown(gauges, greater) {
-    if (!gauges.magic.sunshine.isActiveOverlay) {
-        return;
-    }
-    // If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
-    if (gauges.magic.sunshine.active) {
-        endSunshineCooldown(gauges);
-        return;
-    }
-    // Otherwise cooldown has started and we can clear the Active text
-    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('Sunshine_Text');
-    alt1.overLaySetGroupZIndex('Sunshine_Cooldown_Text', 1);
-    let cooldown = greater ? 22 : 29;
-    const timer = setInterval(() => {
-        // During our interval if the buff ever becomes active - kill the timer
-        if (gauges.magic.sunshine.active) {
-            clearInterval(timer);
-            endSunshineCooldown(gauges);
-            return;
-        }
-        cooldown -= 1;
-        if (cooldown > 0) {
-            _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('Sunshine_Cooldown_Text');
-            alt1.overLayTextEx(cooldown.toString(), _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.magic.position.x +
-                gauges.magic.sunshine.position.active_orientation.x +
-                26, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.magic.position.y +
-                gauges.magic.sunshine.position.active_orientation.y +
-                26, gauges.scaleFactor), 3000, undefined, true, true);
-            alt1.overLayRefreshGroup('Sunshine_Cooldown_Text');
-        }
-        else {
-            clearInterval(timer);
-            endSunshineCooldown(gauges);
-            return;
-        }
-    }, 1000);
-}
-async function endSunshineCooldown(gauges) {
-    gauges.magic.sunshine.isOnCooldown = false;
-    gauges.magic.sunshine.cooldownDuration = 0;
-    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('Sunshine_Cooldown_Text');
 }
 async function updateFsoa(gauges, value) {
     // If Instability has an active buff and a timer:
@@ -36138,51 +36068,13 @@ async function updateFsoa(gauges, value) {
             gauges.magic.instability.time = 0;
             gauges.magic.instability.active = false;
             gauges.magic.instability.isOnCooldown = true;
-            startFsoaCooldown(gauges);
+            (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_6__.startAbilityCooldown)({
+                ability: gauges.magic.instability,
+                position: gauges.magic.position,
+                scaleFactor: gauges.scaleFactor
+            }, 'Instability', false);
         }, 1050);
     }
-}
-async function startFsoaCooldown(gauges) {
-    if (!gauges.magic.instability.isActiveOverlay) {
-        return;
-    }
-    // If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
-    if (gauges.magic.instability.active) {
-        endFsoaCooldown(gauges);
-        return;
-    }
-    // Otherwise cooldown has started and we can clear the Active text
-    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('Instability_Text');
-    alt1.overLaySetGroupZIndex('Instability_Cooldown_Text', 1);
-    let cooldown = 29;
-    const timer = setInterval(() => {
-        // During our interval if the buff ever becomes active - kill the timer
-        if (gauges.magic.instability.active) {
-            clearInterval(timer);
-            endFsoaCooldown(gauges);
-            return;
-        }
-        cooldown -= 1;
-        if (cooldown > 0) {
-            _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('Instability_Cooldown_Text');
-            alt1.overLayTextEx(cooldown.toString(), _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.magic.position.x +
-                gauges.magic.instability.position.active_orientation.x +
-                26, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.magic.position.y +
-                gauges.magic.instability.position.active_orientation.y +
-                30, gauges.scaleFactor), 3000, undefined, true, true);
-            alt1.overLayRefreshGroup('Instability_Cooldown_Text');
-        }
-        else {
-            clearInterval(timer);
-            endFsoaCooldown(gauges);
-            return;
-        }
-    }, 1000);
-}
-async function endFsoaCooldown(gauges) {
-    gauges.magic.instability.isOnCooldown = false;
-    gauges.magic.instability.cooldownDuration = 0;
-    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('Instability_Cooldown_Text');
 }
 async function updateBloodTithe(gauges, value) {
     gauges.magic.spells.bloodTithe.stacks = value;
@@ -36214,51 +36106,13 @@ async function updateTsunami(gauges, value) {
             gauges.magic.tsunami.time = 0;
             gauges.magic.tsunami.active = false;
             gauges.magic.tsunami.isOnCooldown = true;
-            startTsunamiCooldown(gauges);
+            (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_6__.startAbilityCooldown)({
+                ability: gauges.magic.tsunami,
+                position: gauges.magic.position,
+                scaleFactor: gauges.scaleFactor,
+            }, 'Tsunami', false);
         }, 1050);
     }
-}
-async function startTsunamiCooldown(gauges) {
-    if (!gauges.magic.tsunami.isActiveOverlay) {
-        return;
-    }
-    // If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
-    if (gauges.magic.tsunami.active) {
-        endTsunamiCooldown(gauges);
-        return;
-    }
-    // Otherwise cooldown has started and we can clear the Active text
-    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('TsunamiText');
-    alt1.overLaySetGroupZIndex('TsunamiCooldown_Text', 1);
-    let cooldown = 29;
-    const timer = setInterval(() => {
-        // During our interval if the buff ever becomes active - kill the timer
-        if (gauges.magic.tsunami.active) {
-            clearInterval(timer);
-            endTsunamiCooldown(gauges);
-            return;
-        }
-        cooldown -= 1;
-        if (cooldown > 0) {
-            _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('TsunamiCooldown_Text');
-            alt1.overLayTextEx(cooldown.toString(), _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.magic.position.x +
-                gauges.magic.tsunami.position.active_orientation.x +
-                26, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.magic.position.y +
-                gauges.magic.tsunami.position.active_orientation.y +
-                26, gauges.scaleFactor), 3000, undefined, true, true);
-            alt1.overLayRefreshGroup('TsunamiCooldown_Text');
-        }
-        else {
-            clearInterval(timer);
-            endTsunamiCooldown(gauges);
-            return;
-        }
-    }, 1000);
-}
-async function endTsunamiCooldown(gauges) {
-    gauges.magic.tsunami.isOnCooldown = false;
-    gauges.magic.tsunami.cooldownDuration = 0;
-    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('TsunamiCooldown_Text');
 }
 async function changeCombatStyles(gauges, style) {
     if (gauges.combatStyle !== style && gauges.automaticSwapping) {
@@ -36290,53 +36144,13 @@ async function updateDeathsSwiftness(gauges, value, greater) {
             gauges.ranged.deathsSwiftness.time = 0;
             gauges.ranged.deathsSwiftness.active = false;
             gauges.ranged.deathsSwiftness.isOnCooldown = true;
-            startDeathsSwiftnessCooldown(gauges, greater);
+            (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_6__.startAbilityCooldown)({
+                ability: gauges.ranged.deathsSwiftness,
+                position: gauges.ranged.position,
+                scaleFactor: gauges.scaleFactor,
+            }, 'DeathsSwiftness', greater);
         }, 1050);
     }
-}
-async function startDeathsSwiftnessCooldown(gauges, greater) {
-    if (!gauges.ranged.deathsSwiftness.isActiveOverlay) {
-        return;
-    }
-    // If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
-    if (gauges.ranged.deathsSwiftness.active) {
-        endDeathsSwiftnessCooldown(gauges);
-        return;
-    }
-    // Otherwise cooldown has started and we can clear the Active text
-    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('DeathsSwiftness_Text');
-    alt1.overLaySetGroupZIndex('DeathsSwiftnessCooldown_Text', 1);
-    let cooldown = greater ? 22 : 29;
-    const timer = setInterval(() => {
-        // During our interval if the buff ever becomes active - kill the timer
-        if (gauges.ranged.deathsSwiftness.active) {
-            clearInterval(timer);
-            endDeathsSwiftnessCooldown(gauges);
-            return;
-        }
-        cooldown -= 1;
-        if (cooldown > 0) {
-            _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('DeathsSwiftnessCooldown_Text');
-            alt1.overLayTextEx(cooldown.toString(), _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.x +
-                gauges.ranged.deathsSwiftness.position
-                    .active_orientation.x +
-                26, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.y +
-                gauges.ranged.deathsSwiftness.position
-                    .active_orientation.y +
-                26, gauges.scaleFactor), 3000, undefined, true, true);
-            alt1.overLayRefreshGroup('DeathsSwiftnessCooldown_Text');
-        }
-        else {
-            clearInterval(timer);
-            endDeathsSwiftnessCooldown(gauges);
-            return;
-        }
-    }, 1000);
-}
-async function endDeathsSwiftnessCooldown(gauges) {
-    gauges.ranged.deathsSwiftness.isOnCooldown = false;
-    gauges.ranged.deathsSwiftness.cooldownDuration = 0;
-    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('DeathsSwiftness_Text');
 }
 async function updateCrystalRain(gauges, value) {
     // If Crystal Rain has an active buff and a timer:
@@ -36358,55 +36172,13 @@ async function updateCrystalRain(gauges, value) {
             gauges.ranged.crystalRain.time = 0;
             gauges.ranged.crystalRain.active = false;
             gauges.ranged.crystalRain.isOnCooldown = false;
-            startCrystalRain(gauges);
+            (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_6__.startAbilityCooldown)({
+                ability: gauges.ranged.crystalRain,
+                position: gauges.ranged.position,
+                scaleFactor: gauges.scaleFactor,
+            }, 'CrystalRain', false);
         }, 1050);
     }
-}
-async function startCrystalRain(gauges) {
-    if (!gauges.ranged.crystalRain.isActiveOverlay) {
-        return;
-    }
-    // If the buff is not active then clear the text early and return
-    if (!gauges.ranged.crystalRain.active) {
-        endCrystalRainCooldown(gauges);
-        return;
-    }
-    // Otherwise cooldown has started
-    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('CrystalRain_Text');
-    alt1.overLaySetGroupZIndex('CrystalRain_Cooldown_Text', 1);
-    let cooldown = 29;
-    const timer = setInterval(() => {
-        // During our interval if the buff ever becomes inactive - kill the timer
-        if (!gauges.ranged.crystalRain.active) {
-            clearInterval(timer);
-            endCrystalRainCooldown(gauges);
-            return;
-        }
-        // If we have a more accurate cooldown time use it
-        cooldown = gauges.ranged.crystalRain.time;
-        cooldown -= 1;
-        if (cooldown > 0) {
-            _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('CrystalRain_Cooldown_Text');
-            alt1.overLayTextEx(cooldown.toString(), _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.x +
-                gauges.ranged.crystalRain.position.active_orientation
-                    .x +
-                26, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.ranged.position.y +
-                gauges.ranged.crystalRain.position.active_orientation
-                    .y +
-                26, gauges.scaleFactor), 3000, undefined, true, true);
-            alt1.overLayRefreshGroup('CrystalRain_Cooldown_Text');
-        }
-        else {
-            clearInterval(timer);
-            endCrystalRainCooldown(gauges);
-            return;
-        }
-    }, 1000);
-}
-async function endCrystalRainCooldown(gauges) {
-    gauges.ranged.crystalRain.isOnCooldown = false;
-    gauges.ranged.crystalRain.cooldownDuration = 0;
-    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('CrystalRain_Cooldown_Text');
 }
 async function updatePeCount(gauges, value) {
     gauges.ranged.perfectEquilibrium.stacks = value;
@@ -36431,53 +36203,13 @@ async function updateOdeToDeceit(gauges, value) {
             gauges.magic.odeToDeceit.time = 0;
             gauges.magic.odeToDeceit.active = false;
             gauges.magic.odeToDeceit.isOnCooldown = false;
-            startOdeToDeceit(gauges);
+            (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_6__.startAbilityCooldown)({
+                ability: gauges.magic.odeToDeceit,
+                position: gauges.magic.position,
+                scaleFactor: gauges.scaleFactor,
+            }, 'OdeToDeceit', false);
         }, 1050);
     }
-}
-async function startOdeToDeceit(gauges) {
-    if (!gauges.magic.odeToDeceit.isActiveOverlay) {
-        return;
-    }
-    // If the buff is not active then clear the text early and return
-    if (!gauges.magic.odeToDeceit.active) {
-        endOdeToDeceitCooldown(gauges);
-        return;
-    }
-    // Otherwise cooldown has started
-    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('OdeToDeceit_Text');
-    alt1.overLaySetGroupZIndex('OdeToDeceit_Cooldown_Text', 1);
-    let cooldown = 29;
-    const timer = setInterval(() => {
-        // During our interval if the buff ever becomes inactive - kill the timer
-        if (!gauges.magic.odeToDeceit.active) {
-            clearInterval(timer);
-            endOdeToDeceitCooldown(gauges);
-            return;
-        }
-        // If we have a more accurate cooldown time use it
-        cooldown = gauges.magic.odeToDeceit.time;
-        cooldown -= 1;
-        if (cooldown > 0) {
-            _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('OdeToDeceit_Cooldown_Text');
-            alt1.overLayTextEx(cooldown.toString(), _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.magic.position.x +
-                gauges.magic.odeToDeceit.position.active_orientation.x +
-                26, gauges.scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(gauges.magic.position.y +
-                gauges.magic.odeToDeceit.position.active_orientation.y +
-                26, gauges.scaleFactor), 3000, undefined, true, true);
-            alt1.overLayRefreshGroup('OdeToDeceit_Cooldown_Text');
-        }
-        else {
-            clearInterval(timer);
-            endOdeToDeceitCooldown(gauges);
-            return;
-        }
-    }, 1000);
-}
-async function endOdeToDeceitCooldown(gauges) {
-    gauges.magic.odeToDeceit.isOnCooldown = false;
-    gauges.magic.odeToDeceit.cooldownDuration = 0;
-    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('OdeToDeceit_Cooldown_Text');
 }
 async function updateBalanceByForce(gauges, value) {
     gauges.ranged.balanceByForce = Boolean(value);
@@ -36696,7 +36428,7 @@ const renderSettings = async (gauges) => {
         .addCheckboxSetting('hideOutsideCombat', 'Show gauges only while "In Combat"', false)
         .addRangeSetting('combatTimer', 'Seconds until Player is no longer "In Combat" after Target Information goes away', { defaultValue: '5', min: 1, max: 600, unit: 's' })
         .addSeperator()
-        .addButton('repositionOverlay', 'Reposition Overlay', _utility__WEBPACK_IMPORTED_MODULE_3__.setOverlayPosition, {
+        .addButton('repositionOverlay', 'Reposition Overlay', () => (0,_utility__WEBPACK_IMPORTED_MODULE_3__.setOverlayPosition)(gauges), {
         classes: ['nisbutton'],
     })
         .addSeperator()
@@ -36768,6 +36500,84 @@ const renderSettings = async (gauges) => {
 
 /***/ }),
 
+/***/ "./lib/util/ability-helpers.ts":
+/*!*************************************!*\
+  !*** ./lib/util/ability-helpers.ts ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   AbilityCooldowns: () => (/* binding */ AbilityCooldowns),
+/* harmony export */   endAbilityCooldown: () => (/* binding */ endAbilityCooldown),
+/* harmony export */   startAbilityCooldown: () => (/* binding */ startAbilityCooldown),
+/* harmony export */   updateAbility: () => (/* binding */ updateAbility)
+/* harmony export */ });
+/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+
+const defaultCooldowns = {
+    cooldownDefault: 29,
+    cooldownWhenGreater: 29,
+    positionX: 26,
+    positionY: 26,
+};
+const AbilityCooldowns = new Map([
+    ['Sunshine', Object.assign(Object.assign({}, defaultCooldowns), { cooldownWhenGreater: 22 })],
+    ['DeathsSwiftness', Object.assign(Object.assign({}, defaultCooldowns), { cooldownWhenGreater: 22 })],
+    ['Instability', Object.assign(Object.assign({}, defaultCooldowns), { positionY: 30 })],
+    ['Tsunami', Object.assign({}, defaultCooldowns)],
+    ['CrystalRain', Object.assign({}, defaultCooldowns)],
+    ['OdeToDeceit', Object.assign({}, defaultCooldowns)],
+    ['LivingDeath', Object.assign({}, defaultCooldowns)],
+]);
+function updateAbility(ability, position, duration, greater) {
+    /**
+     * Ignore this as empty. I should've committed MUCH earlier :)
+     */
+}
+async function startAbilityCooldown(abilityData, abilityName, greater) {
+    const { scaleFactor, position, ability } = abilityData;
+    if (!ability.isActiveOverlay) {
+        return;
+    }
+    // If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
+    if (ability.active) {
+        return endAbilityCooldown(abilityData.ability, abilityName);
+    }
+    // Otherwise cooldown has started and we can clear the Active text
+    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay(`${abilityName}_Text`);
+    alt1.overLaySetGroupZIndex(`${abilityName}_Cooldown_Text`, 1);
+    const cooldowns = AbilityCooldowns.get(abilityName);
+    if (!cooldowns) {
+        throw Error(`Missing cooldown definitions for ability: ${abilityName}`);
+    }
+    const { positionX, positionY } = cooldowns;
+    let cooldown = greater ? cooldowns.cooldownWhenGreater : cooldowns.cooldownDefault;
+    const timer = setInterval(() => {
+        var _a, _b, _c, _d;
+        if (ability.active || cooldown <= 0) {
+            clearInterval(timer);
+            return endAbilityCooldown(abilityData.ability, abilityName);
+        }
+        cooldown -= 1;
+        const cooldownText = `${abilityName}_Cooldown_Text`;
+        _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay(cooldownText);
+        const xPositionAdjusted = position.x + ((_b = (_a = ability.position) === null || _a === void 0 ? void 0 : _a.active_orientation.x) !== null && _b !== void 0 ? _b : 0) + positionX;
+        const yPositionAdjusted = position.y + ((_d = (_c = ability.position) === null || _c === void 0 ? void 0 : _c.active_orientation.y) !== null && _d !== void 0 ? _d : 0) + positionY;
+        alt1.overLayTextEx(`${cooldown}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(xPositionAdjusted, scaleFactor), _utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale(yPositionAdjusted, scaleFactor), 3000, '', true, true);
+        alt1.overLayRefreshGroup(cooldownText);
+    }, 1000);
+}
+function endAbilityCooldown(ability, name) {
+    ability.isOnCooldown = false;
+    ability.cooldownDuration = 0;
+    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay(`${name}_Cooldown_Text`);
+}
+
+
+/***/ }),
+
 /***/ "./lib/utility.ts":
 /*!************************!*\
   !*** ./lib/utility.ts ***!
@@ -36798,7 +36608,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   resizeImageData: () => (/* binding */ resizeImageData),
 /* harmony export */   roundedToFixed: () => (/* binding */ roundedToFixed),
 /* harmony export */   setOverlayPosition: () => (/* binding */ setOverlayPosition),
-/* harmony export */   updateCoordinates: () => (/* binding */ updateCoordinates),
 /* harmony export */   updateLocation: () => (/* binding */ updateLocation),
 /* harmony export */   white: () => (/* binding */ white)
 /* harmony export */ });
@@ -36819,6 +36628,10 @@ const red = alt1__WEBPACK_IMPORTED_MODULE_4__.mixColor(255, 0, 0);
 const green = alt1__WEBPACK_IMPORTED_MODULE_4__.mixColor(0, 255, 0);
 const blue = alt1__WEBPACK_IMPORTED_MODULE_4__.mixColor(0, 0, 255);
 const black = alt1__WEBPACK_IMPORTED_MODULE_4__.mixColor(1, 1, 1);
+/*
+ * Should only return null if a typo is made as elements
+ * that are fetched are created by A1 Sauce
+ */
 function getByID(id) {
     return document.getElementById(id);
 }
@@ -36831,7 +36644,7 @@ async function resetBuffPositions() {
     (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.updateSetting)('buffsPosition', undefined);
     (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.updateSetting)('debuffsPosition', undefined);
 }
-async function setOverlayPosition(gauges, utility) {
+async function setOverlayPosition(gauges) {
     updatingOverlayPosition = true;
     alt1__WEBPACK_IMPORTED_MODULE_4__.once('alt1pressed', updateLocation);
     alt1.setTooltip('Press Primary Keybind to save position (default keybind is alt+1)');
@@ -36840,10 +36653,10 @@ async function setOverlayPosition(gauges, utility) {
     }, 3000);
     while (updatingOverlayPosition) {
         await (0,_a1sauce_Utils_timeout__WEBPACK_IMPORTED_MODULE_1__.timeout)(1000);
-        utility.freezeOverlays();
+        freezeOverlays();
         //TODO: Per-gauge repositioning will be needed here as well
-        utility.resizeGaugesWithMousePosition(gauges);
-        utility.continueOverlays();
+        resizeGaugesWithMousePosition(gauges);
+        continueOverlays();
     }
     (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.updateSetting)('overlayPosition', {
         x: gauges.necromancy.position.x,
@@ -36954,6 +36767,11 @@ function adjustPositionWithoutScale(position, scaleFactor) {
     return parseInt(roundedToFixed(position * (1 / scaleFactor), 1), 10);
 }
 // TODO: Use future overlays[] to iterate over active overlays
+/*
+ * getMousePosition() can be null if the mouse is off the client screen
+ * but the error is silent and doesn't cause problems so I'm going to
+ * suppress the null checks to avoid adding lots of unnecessary noise
+ */
 function resizeGaugesWithMousePosition(gauges) {
     gauges.necromancy.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_4__.getMousePosition().x, gauges.scaleFactor);
     gauges.necromancy.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_4__.getMousePosition().y, gauges.scaleFactor);
@@ -36963,10 +36781,6 @@ function resizeGaugesWithMousePosition(gauges) {
     gauges.ranged.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_4__.getMousePosition().y, gauges.scaleFactor);
     gauges.melee.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_4__.getMousePosition().x, gauges.scaleFactor);
     gauges.melee.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_4__.getMousePosition().y, gauges.scaleFactor);
-}
-function updateCoordinates(component, position) {
-    component.activePosition.x = position.x;
-    component.activePosition.y = position.y;
 }
 function roundedToFixed(input, digits) {
     const rounder = Math.pow(10, digits);
@@ -36988,8 +36802,12 @@ async function resizeImageData(imageData, scaleFactor) {
     tempCanvas.width = imageData.width;
     tempCanvas.height = imageData.height;
     // Draw the original image data onto the temporary canvas
+    if (tempContext === null)
+        return;
     tempContext.putImageData(imageData, 0, 0);
     // Draw the temporary canvas onto the new canvas with the desired scale
+    if (context === null)
+        return;
     context.drawImage(tempCanvas, 0, 0, imageData.width, imageData.height, 0, 0, newWidth, newHeight);
     // Extract the new image data from the resized canvas
     return context.getImageData(0, 0, newWidth, newHeight);

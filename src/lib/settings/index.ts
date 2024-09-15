@@ -7,6 +7,7 @@ import {
 	minorVersion,
 	patchVersion,
 } from '../../data/constants';
+import { Overlay } from "../../types/overlay";
 import { resetBuffPositions, setOverlayPosition } from "../utility";
 
 import PouchDB from 'pouchdb';
@@ -18,7 +19,7 @@ const settings = sauce.createSettings();
 
 const db = new PouchDB(appName);
 
-export const renderSettings = async (gauges) => {
+export const renderSettings = async (gauges: Overlay) => {
 	settings
 		.addHeader('h2', 'Job Gauges - v' + sauce.getVersion())
 		.addText(
