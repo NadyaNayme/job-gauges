@@ -65,7 +65,7 @@ export const createCheckboxInput = (
 
 export const createDropdown = (
 	name: string,
-	defaultValue: unknown,
+	defaultValue: number | string,
 	options: DropdownOption[]
 ): HTMLSelectElement => {
 	const select = document.createElement('select');
