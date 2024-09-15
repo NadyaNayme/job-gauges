@@ -79,7 +79,7 @@ export function findBuffsBar() {
 		console.log(`Failed to find those buffs`)
 
 		errorLogger.showError({
-			title: 'No Buffs',
+			title: 'No Buffs Found',
 			message: '<p>Job Gauges could not locate your buffs bar. Please use a defensive ability or some other way of obtaining a buff and Job Gauges will attempt to search again shortly.</p>',
 		});
 
@@ -92,7 +92,7 @@ export function findDebuffsBar() {
 
 	if (!debuffReader.pos && !debuffReader.find()) {
 		errorLogger.showError({
-			title: 'No Debuffs',
+			title: 'No Debuffs Found',
 			message: `
 				<p>Job Gauges could not locate your debuffs bar. Please toggle on your Prayer or some other way of obtaining a debuff and Job Gauges will attempt to search again shortly.</p>
 			`,
@@ -139,7 +139,7 @@ retryOperation(findBuffsBar, 3, 10000)
 			let err = document.querySelectorAll('#Error');
 			for (let i = 0; i < err.length; i++) {
 				const errHeader = err[i].querySelector('h2')?.innerText;
-				if (errHeader === 'No Buffs') {
+				if (errHeader === 'No Buffs Found') {
 					err[i].remove();
 				}
 			}
@@ -166,7 +166,7 @@ retryOperation(findDebuffsBar, 3, 10000)
 			let err = document.querySelectorAll('#Error');
 			for (let i = 0; i < err.length; i++) {
 				let errHeader = err[i].querySelector('h2')?.innerText;
-				if (errHeader === 'No Debuffs') {
+				if (errHeader === 'No Debuffs Found') {
 					err[i].remove();
 				}
 			}
@@ -179,7 +179,7 @@ retryOperation(findDebuffsBar, 3, 10000)
 		let wrongBuffSize = testBuffSizes();
 		if (!wrongBuffSize) {
 			errorLogger.showError({
-				title: 'Failed to find Deuffs',
+				title: 'Failed to find Debuffs',
 				message: `<p>Job Gauges could not locate your debuffs bar. Please ensure that Alt1 is able to read your screen (Alt1 Settings -> Capture tab). If it cannot you may need to adjust your Scaling or DPI settings. Further troubleshooting instructions are available in the <a href="https://discord.gg/KJ2SgWyJFF">Discord server</a>.</p>`,
 			});
 			console.warn(
@@ -384,7 +384,7 @@ async function updateBuffData(
 		 * "THIS IS A HACK"
 		 * Issues with Ode to Deceit false positives
 		 */
-		if (buffImage === buffsImages.odeToDeceit && buff.readArg('timearg').time >= 50) {
+		if (buffImage === buffsImages.odeToDeceit && buff.readArg('timearg').time >= 46) {
 			return false;
 		}
 

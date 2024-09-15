@@ -1,9 +1,10 @@
 export const notes = [
 	// Add patch notes to top
 	{
-		date: '09/14/2024 - Better Error Handling v.1.1.3',
+		date: '09/15/2024 - Better Error Handling v.1.1.3',
 		note: [
-			`Error handling has been improved slightly - providing clearer, more noticeable errors and steps to help with troubleshooting.`,
+			`Error handling has been improved significantly. Errors now provide clearer messages to help with troubleshooting.`,
+			`Job Gauges received its first contribution from another developer with @Panku making their first contribution. A large amount of refactoring some old copy/pasted junk code and adding additional type safety to the codebase. While these changes are invisible to users they are quite important for development.`,
 		],
 	},
 	{

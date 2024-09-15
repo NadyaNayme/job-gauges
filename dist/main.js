@@ -33015,7 +33015,7 @@ const appName = 'job-gauges';
 const versionUrl = 'https://nadyanayme.github.io/job-gauges/dist/version.json';
 const majorVersion = 1;
 const minorVersion = 1;
-const patchVersion = 2;
+const patchVersion = 3;
 
 
 /***/ }),
@@ -35716,7 +35716,7 @@ function findBuffsBar() {
     if (!buffReader.find()) {
         console.log(`Failed to find those buffs`);
         errorLogger.showError({
-            title: 'No Buffs',
+            title: 'No Buffs Found',
             message: '<p>Job Gauges could not locate your buffs bar. Please use a defensive ability or some other way of obtaining a buff and Job Gauges will attempt to search again shortly.</p>',
         });
         throw new Error('BuffsBarSearchError: Failed to find buff bar');
@@ -35726,7 +35726,7 @@ function findDebuffsBar() {
     console.info('Attempting to find debuffs bar...');
     if (!debuffReader.pos && !debuffReader.find()) {
         errorLogger.showError({
-            title: 'No Debuffs',
+            title: 'No Debuffs Found',
             message: `
 				<p>Job Gauges could not locate your debuffs bar. Please toggle on your Prayer or some other way of obtaining a debuff and Job Gauges will attempt to search again shortly.</p>
 			`,
@@ -35764,7 +35764,7 @@ retryOperation(findBuffsBar, 3, 10000)
         let err = document.querySelectorAll('#Error');
         for (let i = 0; i < err.length; i++) {
             const errHeader = (_a = err[i].querySelector('h2')) === null || _a === void 0 ? void 0 : _a.innerText;
-            if (errHeader === 'No Buffs') {
+            if (errHeader === 'No Buffs Found') {
                 err[i].remove();
             }
         }
@@ -35788,7 +35788,7 @@ retryOperation(findDebuffsBar, 3, 10000)
         let err = document.querySelectorAll('#Error');
         for (let i = 0; i < err.length; i++) {
             let errHeader = (_a = err[i].querySelector('h2')) === null || _a === void 0 ? void 0 : _a.innerText;
-            if (errHeader === 'No Debuffs') {
+            if (errHeader === 'No Debuffs Found') {
                 err[i].remove();
             }
         }
@@ -35801,7 +35801,7 @@ retryOperation(findDebuffsBar, 3, 10000)
     let wrongBuffSize = testBuffSizes();
     if (!wrongBuffSize) {
         errorLogger.showError({
-            title: 'Failed to find Deuffs',
+            title: 'Failed to find Debuffs',
             message: `<p>Job Gauges could not locate your debuffs bar. Please ensure that Alt1 is able to read your screen (Alt1 Settings -> Capture tab). If it cannot you may need to adjust your Scaling or DPI settings. Further troubleshooting instructions are available in the <a href="https://discord.gg/KJ2SgWyJFF">Discord server</a>.</p>`,
         });
         console.warn('Please make sure you have at least 1 debuff on your debuffs bar and then reload the app. The easiest way is to toggle a Prayer on.');
@@ -35861,7 +35861,7 @@ async function updateBuffData(buffsreader, gauges, buffImage, threshold, updateC
          * "THIS IS A HACK"
          * Issues with Ode to Deceit false positives
          */
-        if (buffImage === buffsImages.odeToDeceit && buff.readArg('timearg').time >= 50) {
+        if (buffImage === buffsImages.odeToDeceit && buff.readArg('timearg').time >= 46) {
             return false;
         }
         if (match.passed > threshold) {
@@ -36867,9 +36867,10 @@ __webpack_require__.r(__webpack_exports__);
 const notes = [
     // Add patch notes to top
     {
-        date: '09/14/2024 - Better Error Handling v.1.1.3',
+        date: '09/15/2024 - Better Error Handling v.1.1.3',
         note: [
-            `Error handling has been improved slightly - providing clearer, more noticeable errors and steps to help with troubleshooting.`,
+            `Error handling has been improved significantly. Errors now provide clearer messages to help with troubleshooting.`,
+            `Job Gauges received its first contribution from another developer with @Panku making their first contribution. A large amount of refactoring some old copy/pasted junk code and adding additional type safety to the codebase. While these changes are invisible to users they are quite important for development.`,
         ],
     },
     {
