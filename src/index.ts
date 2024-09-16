@@ -1,5 +1,5 @@
 import * as utility from './lib/utility';
-import { Overlay } from './types/index';
+import { Overlay } from './types';
 
 // General Purpose
 import { findBuffsBar, findDebuffsBar, readBuffs } from './lib/readBuffs';
@@ -32,13 +32,7 @@ import { A1Sauce } from './a1sauce';
 import { getSetting, updateSetting } from './a1sauce/Settings/Storage';
 import { getById } from './a1sauce/Utils/getById';
 import { renderSettings } from './lib/settings';
-import {
-	appName,
-	majorVersion,
-	minorVersion,
-	patchVersion,
-	versionUrl,
-} from './data/constants';
+import { appName, majorVersion, minorVersion, patchVersion, versionUrl } from './data/constants';
 import { Patches } from './a1sauce/Patches/patchNotes';
 import { notes } from './patchnotes';
 import { startVersionChecking } from './a1sauce/Patches/serverCheck';
@@ -52,6 +46,7 @@ import { peOverlay } from './lib/ranged/perfectEquilibrium';
 import { odeToDeceitOverlay } from './lib/magic/odeToDeceit';
 import { rangedSplitSoulOverlay } from './lib/ranged/splitSoul';
 import { LogError } from './a1sauce/Error/logError';
+import { Orientation, OrientationTypes } from './types/common';
 
 const sauce = A1Sauce.instance;
 sauce.setName(appName);
@@ -109,28 +104,27 @@ async function renderOverlays() {
 
 export async function startApp() {
 	if (!window.alt1) {
-		errorLogger.showError({
+		return errorLogger.showError({
 			title: 'Missing Alt1',
 			message: `<p>You need to run this page in Alt1 to be able to capture the screen.</p>`,
 		});
-		return;
 	}
+	
 	if (!alt1.permissionPixel) {
-		errorLogger.showError({
+		return errorLogger.showError({
 			title: 'Missing Screen Reading Permissions',
 			message: `<p>This app does not have permissions to capture your screen. Please adjust the app's settings in Alt1.</p>`,
 		});
-		return;
 	}
+	
 	if (!alt1.permissionOverlay) {
-		errorLogger.showError({
+		return errorLogger.showError({
 			title: 'Missing Overlay Permissions',
 			message: `<p>This app does not have permissions to create overlays. Please adjust the app's settings in Alt1.</p>`,
 		});
-		return;
 	}
 
-	let patchCheck = new Patches();
+	const patchCheck = new Patches();
 	patchCheck.setNotes(notes);
 	patchCheck.showPatchNotes();
 
@@ -196,36 +190,40 @@ function calibrationWarning(): void {
 		findDebuffsBar();
 	}, 8000);
 }
-
 function updateActiveOrientationFromLocalStorage(): void {
 	// Retrieve selected orientation from localStorage
-	let selectedOrientation = getSetting('selectedOrientation');
-
+	const selectedOrientation: OrientationTypes | `${OrientationTypes}_orientation` = getSetting('selectedOrientation');
+	let mappedOrientation: OrientationTypes = 'reverse_split';
+	
 	if (!selectedOrientation) {
-		selectedOrientation = 'reverse_split';
+		mappedOrientation = 'reverse_split';
 	}
 
 	// TODO: Get rid of this crap
 	// Handle v0.0.3 values that included '_orientation' in the string
 	// This should only be needed for a few weeks
 	if (selectedOrientation == 'grouped_orientation')
-		selectedOrientation = 'grouped';
+		mappedOrientation = 'grouped';
 	if (selectedOrientation == 'split_orientation')
-		selectedOrientation = 'split';
+		mappedOrientation = 'split';
 	if (selectedOrientation == 'reverse_split_orientation')
-		selectedOrientation = 'reverse_split';
+		mappedOrientation = 'reverse_split';
 	// END
 
-	updateSetting('selectedOrientation', selectedOrientation);
+	updateSetting('selectedOrientation', mappedOrientation);
 
+	function isOrientation(obj: any, key: string): obj is Orientation {
+		return key === 'active_orientation' && !!obj.active_orientation;
+	}
+	
 	// Function to recursively update orientations in an object
-	function updateActiveOrientation(obj: object) {
+	function updateActiveOrientation(obj: { [k in string]: any }) {
 		for (const key in obj){
 			// TODO: Fix types here. This code works w/o issues as-is and I'm not sure how to make it happy
-			if (typeof obj[key] === 'object' && obj[key] !== null) {
-				if (key === 'active_orientation') {
-					obj[key].x = obj[selectedOrientation].x;
-					obj[key].y = obj[selectedOrientation].y;
+			if (typeof obj[key] === 'object') {
+				if (isOrientation(obj, key)) {
+					obj['active_orientation'].x = obj[mappedOrientation].x;
+					obj['active_orientation'].y = obj[mappedOrientation].y;
 				} else {
 					updateActiveOrientation(obj[key]);
 				}
@@ -234,6 +232,8 @@ function updateActiveOrientationFromLocalStorage(): void {
 		utility.freezeOverlays();
 		utility.continueOverlays();
 	}
+	
+	console.log(gauges)
 
 	updateActiveOrientation(gauges);
 }
@@ -251,8 +251,7 @@ function addEventListeners() {
 	});
 
 	getById('defaultCombatStyle')!.addEventListener('change', () => {
-		gauges.combatStyle =
-			parseInt(getSetting('defaultCombatStyle'), 10);
+		gauges.combatStyle = parseInt(getSetting('defaultCombatStyle'), 10);
 	});
 
 	// For some reason this one calculates incorrectly on load so we override the initial styles here
