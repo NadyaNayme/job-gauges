@@ -11,13 +11,13 @@ import PouchDB from 'pouchdb';
 const db = new PouchDB(appName);
 
 let alarms: DropdownOption[] = [
-	{ name: 'alarm2', value: './resource/alarms/alarm2.wav' },
-	{ name: 'notification1', value: './resource/alarms/notification1.wav' },
-	{ name: 'notification2', value: './resource/alarms/notification2.wav' },
-	{ name: 'notification3', value: './resource/alarms/notification3.wav' },
-	{ name: 'bell', value: './resource/alarms/bell.wav' },
-	{ name: 'elevator', value: './resource/alarms/elevator.wav' },
-	{ name: 'nuclear', value: './resource/alarms/nuclear.wav' },
+	{ name: 'alarm2', value: './Alarms/alarm2.wav' },
+	{ name: 'notification1', value: './Alarms/notification1.wav' },
+	{ name: 'notification2', value: './Alarms/notification2.wav' },
+	{ name: 'notification3', value: './Alarms/notification3.wav' },
+	{ name: 'bell', value: './Alarms/bell.wav' },
+	{ name: 'elevator', value: './Alarms/elevator.wav' },
+	{ name: 'nuclear', value: './Alarms/nuclear.wav' },
 ];
 
 export const createAlarmSetting = (

@@ -29,7 +29,8 @@ module.exports = {
 	plugins: [
 		new CopyPlugin({
 			patterns: [
-				{ from: "**/*.png", to: "./" },
+				{ from: '**/*.png', to: './' },
+				{ from: '**/*.wav', to: './' },
 			],
 		}),
 	],
