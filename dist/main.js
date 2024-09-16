@@ -32027,13 +32027,13 @@ __webpack_require__.r(__webpack_exports__);
 
 const db = new pouchdb__WEBPACK_IMPORTED_MODULE_6__["default"](_data_constants__WEBPACK_IMPORTED_MODULE_4__.appName);
 let alarms = [
-    { name: 'alarm2', value: './Alarms/alarm2.wav' },
-    { name: 'notification1', value: './Alarms/notification1.wav' },
-    { name: 'notification2', value: './Alarms/notification2.wav' },
-    { name: 'notification3', value: './Alarms/notification3.wav' },
-    { name: 'bell', value: './Alarms/bell.wav' },
-    { name: 'elevator', value: './Alarms/elevator.wav' },
-    { name: 'nuclear', value: './Alarms/nuclear.wav' },
+    { name: 'alarm2', value: './a1sauce/Settings/Library/Controls/Alarms/alarm2.wav' },
+    { name: 'notification1', value: './a1sauce/Settings/Library/Controls/Alarms/notification1.wav' },
+    { name: 'notification2', value: './a1sauce/Settings/Library/Controls/Alarms/notification2.wav' },
+    { name: 'notification3', value: './a1sauce/Settings/Library/Controls/Alarms/notification3.wav' },
+    { name: 'bell', value: './a1sauce/Settings/Library/Controls/Alarms/bell.wav' },
+    { name: 'elevator', value: './a1sauce/Settings/Library/Controls/Alarms/elevator.wav' },
+    { name: 'nuclear', value: './a1sauce/Settings/Library/Controls/Alarms/nuclear.wav' },
 ];
 const createAlarmSetting = (name, description, options = {}) => {
     const { classes = options.classes ?? '' } = options;
