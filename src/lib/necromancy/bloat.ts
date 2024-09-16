@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 import * as a1lib from 'alt1';
-import * as utility from '../utility';
 import { Overlay } from '../../types';
+import { adjustPositionForScale, handleResizingImages } from '../utility';
 
 const bloatImages = a1lib.webpackImages({
 	bloat_100: require('../../asset/gauge-ui/necromancy/bloat/100.data.png'),
@@ -28,57 +27,80 @@ export async function bloatOverlay(gauges: Overlay) {
 	}
 
 	await bloatImages.promise;
+	
+	const {
+		bloat_100,
+		bloat_90,
+		bloat_80,
+		bloat_70,
+		bloat_60,
+		bloat_50,
+		bloat_40,
+		bloat_30,
+		bloat_20,
+		bloat_10,
+		bloat_0,
+		bloat_expired,
+	} = bloatImages;
 
 	if (!scaledOnce) {
-		Object.keys(bloatImages).forEach(async (key) => {
-			bloatImages[key] = await utility.resizeImageData(
-				bloatImages[key],
-				gauges.scaleFactor
-			);
-		});
+		handleResizingImages([
+			bloat_100,
+			bloat_90,
+			bloat_80,
+			bloat_70,
+			bloat_60,
+			bloat_50,
+			bloat_40,
+			bloat_30,
+			bloat_20,
+			bloat_10,
+			bloat_0,
+			bloat_expired
+		], gauges.scaleFactor);
+
 		scaledOnce = true;
 	}
 
 	const value = bloat.time;
-	let imageKey: string = 'bloat_expired';
-
+  let image = bloat_expired;
+  
 	if (bloat.active) {
 		if (value < 2.4) {
-			imageKey = 'bloat_0';
+			image = bloat_0;
 		} else if (value < 3.6) {
-			imageKey = 'bloat_10';
+			image = bloat_10;
 		} else if (value < 5.4) {
-			imageKey = 'bloat_20';
+			image = bloat_20;
 		} else if (value < 7.2) {
-			imageKey = 'bloat_30';
+			image = bloat_30;
 		} else if (value < 9.0) {
-			imageKey = 'bloat_40';
+			image = bloat_40;
 		} else if (value < 10.8) {
-			imageKey = 'bloat_50';
+			image = bloat_50;
 		} else if (value < 12.6) {
-			imageKey = 'bloat_60';
+			image = bloat_60;
 		} else if (value < 14.4) {
-			imageKey = 'bloat_70';
+			image = bloat_70;
 		} else if (value < 16.2) {
-			imageKey = 'bloat_80';
+			image = bloat_80;
 		} else if (value < 18.0) {
-			imageKey = 'bloat_90';
+			image = bloat_90;
 		} else {
-			imageKey = 'bloat_100';
+			image = bloat_100;
 		}
 	} else {
-		imageKey = 'bloat_expired';
+		image = bloat_expired;
 	}
 
 	alt1.overLaySetGroup('Bloat');
-	const image = bloatImages[imageKey];
 
 	alt1.overLayImage(
-		utility.adjustPositionForScale(
+		adjustPositionForScale(
 			gauges.necromancy.position.x + bloat.position.active_orientation.x,
 			gauges.scaleFactor
 		),
-		utility.adjustPositionForScale(
+		adjustPositionForScale(
 			gauges.necromancy.position.y + bloat.position.active_orientation.y,
 			gauges.scaleFactor
 		),

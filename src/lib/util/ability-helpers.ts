@@ -1,5 +1,6 @@
 ﻿import { Ability, Position } from '../../types/common';
-import * as utility from '../utility';
+import * as a1lib from 'alt1';
+import { adjustPositionForScale, forceClearOverlay, white } from '../utility';
 
 export type AbilityCooldown = {
   positionX: number;
@@ -8,7 +9,18 @@ export type AbilityCooldown = {
   cooldownDefault: number;
 };
 
-export type Abilities = 'Sunshine' | 'Instability' | 'Tsunami' | 'DeathsSwiftness' | 'CrystalRain' | 'OdeToDeceit' | 'LivingDeath';
+export type Abilities = 
+  | 'Sunshine'
+  | 'Instability'
+  | 'Tsunami'
+  | 'DeathsSwiftness'
+  | 'CrystalRain'
+  | 'OdeToDeceit'
+  | 'LivingDeath'
+  | 'SplitSoul'
+  | 'Darkness'
+  | 'Invoke_Death'
+  | 'Threads';
 export type AbilityCooldownText = `${Abilities}_Cooldown_Text`;
 
 const defaultCooldowns: AbilityCooldown = {
@@ -34,6 +46,12 @@ export function updateAbility(ability: Ability, position: Position, duration: nu
    */
 }
 
+/**
+ * Handles ticking down an abilities cooldown and ending it when it's over or active.
+ * @param abilityData Metadata about the ability to get positioning and ending cooldowns.
+ * @param abilityName Strongly typed name for consistent overlay updating.
+ * @param greater If the cooldown is great...er(?) (Ask Nyu)
+ */
 export async function startAbilityCooldown(abilityData: { scaleFactor: number, position: Position, ability: Ability }, abilityName: Abilities, greater: boolean) {
   const { scaleFactor, position, ability } = abilityData;
 
@@ -47,7 +65,7 @@ export async function startAbilityCooldown(abilityData: { scaleFactor: number, p
   }
 
   // Otherwise cooldown has started and we can clear the Active text
-  utility.forceClearOverlay(`${abilityName}_Text`);
+  forceClearOverlay(`${abilityName}_Text`);
   alt1.overLaySetGroupZIndex(`${abilityName}_Cooldown_Text`, 1);
 
   const cooldowns = AbilityCooldowns.get(abilityName);
@@ -68,17 +86,17 @@ export async function startAbilityCooldown(abilityData: { scaleFactor: number, p
 
     cooldown -= 1;
     const cooldownText: AbilityCooldownText = `${abilityName}_Cooldown_Text`;
-    utility.forceClearOverlay(cooldownText);
+    forceClearOverlay(cooldownText);
 
     const xPositionAdjusted = position.x + (ability.position?.active_orientation.x ?? 0) + positionX;
     const yPositionAdjusted = position.y + (ability.position?.active_orientation.y ?? 0) + positionY;
 
     alt1.overLayTextEx(
       `${cooldown}`,
-      utility.white,
+      white,
       14,
-      utility.adjustPositionForScale(xPositionAdjusted, scaleFactor),
-      utility.adjustPositionForScale(yPositionAdjusted, scaleFactor),
+      adjustPositionForScale(xPositionAdjusted, scaleFactor),
+      adjustPositionForScale(yPositionAdjusted, scaleFactor),
       3000,
       '',
       true,
@@ -89,8 +107,57 @@ export async function startAbilityCooldown(abilityData: { scaleFactor: number, p
   }, 1000);
 }
 
+/**
+ * Clear the abilities cooldown and reset state.
+ * @param ability The ability to update.
+ * @param name Strongly typed name to clear overlay.
+ */
 export function endAbilityCooldown(ability: Ability, name: Abilities) {
   ability.isOnCooldown = false;
   ability.cooldownDuration = 0;
-  utility.forceClearOverlay(`${name}_Cooldown_Text`);
+  forceClearOverlay(`${name}_Cooldown_Text`);
+}
+
+/**
+ * Handle drawing abilities that have an active or inactive state.
+ * @param abilityData Required info to draw the ability image.
+ * @param name Strongly typed name to draw to image group.
+ * @param active If the ability is currently active.
+ */
+export function handleAbilityActiveState(
+  abilityData: {
+    position: Position,
+    ability: Ability,
+    scaleFactor: number,
+    images: {
+      active: ImageData,
+      inactive: ImageData,
+    }
+  },
+  name: Abilities,
+  active: boolean
+) {
+  const { position, ability, scaleFactor, images } = abilityData;
+  const image = active ? images.active : images.inactive;
+  const xPosition = position.x + ability.position.active_orientation.x;
+  const yPosition = position.y + ability.position.active_orientation.y;
+
+  alt1.overLaySetGroup(name);
+  alt1.overLayImage(
+    adjustPositionForScale(xPosition, scaleFactor),
+    adjustPositionForScale(yPosition, scaleFactor),
+    a1lib.encodeImageString(image.toDrawableData()),
+    image.width,
+    1000
+  );
+}
+
+/**
+ * Clear an abilities cooldown text and normal text.
+ * @param ability Strongly typed name of the ability to clear.
+ */
+export function clearAbilityOverlays(ability: Abilities): void {
+  forceClearOverlay(`${ability}_Text`);
+  forceClearOverlay(`${ability}_Cooldown_Text`);
+  alt1.overLayClearGroup(ability);
 }

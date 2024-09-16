@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 import * as a1lib from 'alt1';
-import * as utility from '../utility';
 import { Overlay } from '../../types';
+import { adjustPositionForScale, handleResizingImages, pauseAlert, playAlert } from '../utility';
 
 const necrosisImages = a1lib.webpackImages({
 	necrosis_0: require('../../asset/gauge-ui/necromancy/necrosis/0.data.png'),
@@ -43,20 +42,34 @@ export async function necrosisOverlay(gauges: Overlay) {
 		necrosisImages.necrosis_10 = necrosisColoredImages.necrosis_10;
 		necrosisImages.necrosis_12 = necrosisColoredImages.necrosis_12;
 	}
+	
+	const {
+		necrosis_0,
+		necrosis_2,
+		necrosis_4,
+		necrosis_6,
+		necrosis_8,
+		necrosis_10,
+		necrosis_12,
+	} = necrosisImages;
 
 	if (!scaledOnce) {
-		Object.keys(necrosisImages).forEach(async (key) => {
-			necrosisImages[key] = await utility.resizeImageData(
-				necrosisImages[key],
-				gauges.scaleFactor
-			);
-		});
+		handleResizingImages([
+			necrosis_0,
+			necrosis_2,
+			necrosis_4,
+			necrosis_6,
+			necrosis_8,
+			necrosis_10,
+			necrosis_12,
+		], gauges.scaleFactor);
 		scaledOnce = true;
 	}
 
 	const { position, stacks } = necrosis;
 	const { x, y } = position.active_orientation;
 	const bloatVisible = !gauges.necromancy.bloat.isActiveOverlay;
+	
 	let bloatSpace = 0;
 	if (bloatVisible) {
 		bloatSpace = -23;
@@ -64,61 +77,41 @@ export async function necrosisOverlay(gauges: Overlay) {
 
 	alt1.overLaySetGroup('Necrosis');
 
-	switch (stacks) {
-		case 0:
-		case 2:
-		case 4:
-		case 6:
-		case 8:
-		case 10:
-		case 12:
-			displayNecrosisImage(stacks);
-			break;
-	}
+	displayNecrosisImage(stacks);
 
 	if (stacks >= necrosis.alarm.threshold && necrosis.alarm.isActive) {
 		if (!playingAlert) {
-			utility.playAlert(necrosisAlert);
+			playAlert(necrosisAlert);
 			playingAlert = true;
 		}
 	} else if (playingAlert) {
-		utility.pauseAlert(necrosisAlert);
+		pauseAlert(necrosisAlert);
 		playingAlert = false;
 	}
 
 	if (gauges.necromancy.stacks.duplicateNecrosisRow) {
+		// @ts-ignore Don't want to mess with Alt1's typings. This will be a rare case.
+		const necrosisImage = necrosisImages[`necrosis_${stacks}`];
+		
 		alt1.overLaySetGroup('Necrosis_Row2');
 		alt1.overLayImage(
-			utility.adjustPositionForScale(
-				gauges.necromancy.position.x + x,
-				gauges.scaleFactor
-			),
-			utility.adjustPositionForScale(
-				gauges.necromancy.position.y + y + bloatSpace,
-				gauges.scaleFactor
-			) + necrosisImages.necrosis_0.height,
-			a1lib.encodeImageString(
-				necrosisImages[`necrosis_${stacks}`].toDrawableData()
-			),
-			necrosisImages[`necrosis_${stacks}`].width,
+			adjustPositionForScale(gauges.necromancy.position.x + x, gauges.scaleFactor),
+			adjustPositionForScale(gauges.necromancy.position.y + y + bloatSpace, gauges.scaleFactor) + necrosisImages.necrosis_0.height,
+			a1lib.encodeImageString(necrosisImage.toDrawableData()),
+			necrosisImage.width,
 			1000
 		);
 	}
 
 	function displayNecrosisImage(stacks: number): void {
+		// @ts-expect-error Don't want to mess with Alt1's typings. This will be a rare case.
+		const necrosisImage = necrosisImages[`necrosis_${stacks}`];
+
 		alt1.overLayImage(
-			utility.adjustPositionForScale(
-				gauges.necromancy.position.x + x,
-				gauges.scaleFactor
-			),
-			utility.adjustPositionForScale(
-				gauges.necromancy.position.y + y + bloatSpace,
-				gauges.scaleFactor
-			),
-			a1lib.encodeImageString(
-				necrosisImages[`necrosis_${stacks}`].toDrawableData()
-			),
-			necrosisImages[`necrosis_${stacks}`].width,
+			adjustPositionForScale(gauges.necromancy.position.x + x, gauges.scaleFactor),
+			adjustPositionForScale(gauges.necromancy.position.y + y + bloatSpace, gauges.scaleFactor),
+			a1lib.encodeImageString(necrosisImage.toDrawableData()),
+			necrosisImage.width,
 			1000
 		);
 	}

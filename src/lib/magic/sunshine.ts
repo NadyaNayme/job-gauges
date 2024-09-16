@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 import * as a1lib from 'alt1';
-import * as utility from '../utility';
-import { Overlay } from '../../types';
+import { adjustPositionForScale, forceClearOverlay, handleResizingImages, white } from '../utility';
+import { CombatStyle, Overlay } from '../../types';
+import { clearAbilityOverlays, handleAbilityActiveState } from '../util/ability-helpers';
 
 const ultimateImages = a1lib.webpackImages({
 	active: require('../../asset/gauge-ui/magic/sunshine/active.data.png'),
@@ -14,115 +14,66 @@ let scaledOnce = false;
 export async function sunshineOverlay(gauges: Overlay) {
 	const { magic } = gauges;
 	const { sunshine } = magic;
+	const { position: { active_orientation } } = sunshine;
 
 	if (!sunshine.isActiveOverlay) {
-		clearSunshineOverlays();
+		clearAbilityOverlays('Sunshine');
 		return;
 	}
 
 	await ultimateImages.promise;
 
+	const { active, inactive } = ultimateImages;
+
 	if (!scaledOnce) {
-		Object.keys(ultimateImages).forEach(async (key) => {
-			ultimateImages[key] = await utility.resizeImageData(
-				ultimateImages[key],
-				gauges.scaleFactor
-			);
-		});
+		handleResizingImages([active, inactive], gauges.scaleFactor);
+
 		scaledOnce = true;
 	}
 
+	const abilityData = {
+		images: ultimateImages,
+		scaleFactor: gauges.scaleFactor,
+		ability: sunshine,
+		position: magic.position,
+	};
+	
 	// If Sunshine is not Active and is not on cooldown it should appear as able to be activated
 	if (!sunshine.active) {
-		if (!sunshine.isOnCooldown) {
-			displayActiveSunshine(gauges);
-			alt1.overLayRefreshGroup('Sunshine_Text');
-			alt1.overLayClearGroup('Sunshine_Text');
-		} else {
-			displayInactiveSunshine(gauges);
-			alt1.overLayRefreshGroup('Sunshine_Text');
-			alt1.overLayClearGroup('Sunshine_Text');
-		}
-	} else {
-		sunshine.isOnCooldown = false;
-		utility.forceClearOverlay('Sunshine_Cooldown_Text');
-		if (gauges.automaticSwapping) {
-			gauges.combatStyle = 3;
-		}
-		displayActiveSunshine(gauges);
-		if (lastValue !== sunshine.time) {
-			sunshine.cooldownDuration = 0;
-			utility.forceClearOverlay('Sunshine_Cooldown_Text');
-			alt1.overLaySetGroup('Sunshine_Text');
-			alt1.overLayFreezeGroup('Sunshine_Text');
-			alt1.overLayClearGroup('Sunshine_Text');
-			alt1.overLayTextEx(
-				sunshine.time === 0 ? '' : sunshine.time.toString(),
-				utility.white,
-				14,
-				utility.adjustPositionForScale(
-					magic.position.x +
-						sunshine.position.active_orientation.x +
-						26,
-					gauges.scaleFactor
-				),
-				utility.adjustPositionForScale(
-					magic.position.y +
-						sunshine.position.active_orientation.y +
-						26,
-					gauges.scaleFactor
-				),
-				3000,
-				undefined,
-				true,
-				true
-			);
-			alt1.overLayRefreshGroup('Sunshine_Text');
-		}
+		handleAbilityActiveState(abilityData, 'Sunshine', !sunshine.isOnCooldown);
+		alt1.overLayRefreshGroup('Sunshine_Text');
+		alt1.overLayClearGroup('Sunshine_Text');
+		return lastValue = sunshine.time;
+	} 
+	
+	sunshine.isOnCooldown = false;
+	forceClearOverlay('Sunshine_Cooldown_Text');
+	
+	if (gauges.automaticSwapping) {
+		gauges.combatStyle = CombatStyle.mage;
 	}
+	
+	handleAbilityActiveState(abilityData, 'Sunshine', true);
+	
+	if (lastValue !== sunshine.time) {
+		sunshine.cooldownDuration = 0;
+		forceClearOverlay('Sunshine_Cooldown_Text');
+		alt1.overLaySetGroup('Sunshine_Text');
+		alt1.overLayFreezeGroup('Sunshine_Text');
+		alt1.overLayClearGroup('Sunshine_Text');
+		alt1.overLayTextEx(
+			sunshine.time === 0 ? '' : sunshine.time.toString(),
+			white,
+			14,
+			adjustPositionForScale(magic.position.x + active_orientation.x + 26, gauges.scaleFactor),
+			adjustPositionForScale(magic.position.y + active_orientation.y + 26, gauges.scaleFactor),
+			3000,
+			'',
+			true,
+			true
+		);
+		alt1.overLayRefreshGroup('Sunshine_Text');
+	}
+	
 	lastValue = sunshine.time;
-}
-
-function clearSunshineOverlays(): void {
-	utility.forceClearOverlay('Sunshine_Text');
-	utility.forceClearOverlay('Sunshine_Cooldown_Text');
-	alt1.overLayClearGroup('Sunshine');
-}
-
-function displayActiveSunshine(gauges: Overlay): void {
-	alt1.overLaySetGroup('Sunshine');
-	alt1.overLayImage(
-		utility.adjustPositionForScale(
-			gauges.magic.position.x +
-				gauges.magic.sunshine.position.active_orientation.x,
-			gauges.scaleFactor
-		),
-		utility.adjustPositionForScale(
-			gauges.magic.position.y +
-				gauges.magic.sunshine.position.active_orientation.y,
-			gauges.scaleFactor
-		),
-		a1lib.encodeImageString(ultimateImages.active.toDrawableData()),
-		ultimateImages.active.width,
-		1000
-	);
-}
-
-function displayInactiveSunshine(gauges: Overlay): void {
-	alt1.overLaySetGroup('Sunshine');
-	alt1.overLayImage(
-		utility.adjustPositionForScale(
-			gauges.magic.position.x +
-				gauges.magic.sunshine.position.active_orientation.x,
-			gauges.scaleFactor
-		),
-		utility.adjustPositionForScale(
-			gauges.magic.position.y +
-				gauges.magic.sunshine.position.active_orientation.y,
-			gauges.scaleFactor
-		),
-		a1lib.encodeImageString(ultimateImages.inactive.toDrawableData()),
-		ultimateImages.inactive.width,
-		1000
-	);
 }
