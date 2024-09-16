@@ -3,7 +3,11 @@ import { getSetting, updateSetting } from '../Settings/Storage';
 import { tempTooltip } from '../Utils/tempTooltip';
 
 import './Style/style.css';
-import { PatchNote } from '../../patchnotes';
+
+export type PatchNote = {
+	date: `${number}/${number}/${number} - ${string} v${string}`;
+	note: string[];
+};
 
 const sauce = A1Sauce.instance;
 

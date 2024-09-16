@@ -1,7 +1,4 @@
-export type PatchNote = {
-	date: `${number}/${number}/${number} - ${string} v${string}`;
-	note: string[];
-};
+import { PatchNote } from './a1sauce/Patches/patchNotes';
 
 export const notes: PatchNote[] = [
 	// Add patch notes to top
