@@ -80,7 +80,7 @@ export function findBuffsBar() {
 
 		errorLogger.showError({
 			title: 'No Buffs Found',
-			message: '<p>Job Gauges could not locate your buffs bar. Please use a defensive ability or some other way of obtaining a buff and Job Gauges will attempt to search again shortly.</p>',
+			message: `<p>Job Gauges could not locate your buffs bar. Please use a defensive ability or some other way of obtaining a buff and Job Gauges will attempt to search again shortly or click the button below.</p>`,
 		});
 
 		throw new Error('BuffsBarSearchError: Failed to find buff bar');
@@ -93,9 +93,7 @@ export function findDebuffsBar() {
 	if (!debuffReader.pos && !debuffReader.find()) {
 		errorLogger.showError({
 			title: 'No Debuffs Found',
-			message: `
-				<p>Job Gauges could not locate your debuffs bar. Please toggle on your Prayer or some other way of obtaining a debuff and Job Gauges will attempt to search again shortly.</p>
-			`,
+			message: `<p>Job Gauges could not locate your debuffs bar. Please toggle on your Prayer or some other way of obtaining a debuff and Job Gauges will attempt to search again shortly or click the button below.</p>`,
 		});
 
 		throw new Error('BuffsBarSearchError: Failed to find debuff bar');
@@ -109,7 +107,7 @@ export function testBuffSizes(): boolean {
 	const mediumBuffPositions = screen.findSubimage(buffsImages.mediumBuffs);
 	const largeBuffPositions = screen.findSubimage(buffsImages.largeBuffs);
 
-	const message = `<p>Alt1 only supports reading Small Buffs. Please update your Buffs Bar settings. Interfaces > Buff Bar > Icon Size </p><img src="./ErrorImages/BuffIconSize.png">`;
+	const message = `<p>Alt1 only supports reading Small Buffs.<br><br>Please update your Buffs Bar settings.<br> Interfaces > Buff Bar > Icon Size </p><img src="./a1sauce/Error/Images/BuffIconSize.png">`;
 
 	if (mediumBuffPositions.length) {
 		errorLogger.showError({

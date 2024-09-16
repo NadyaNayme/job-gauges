@@ -32,7 +32,13 @@ import { A1Sauce } from './a1sauce';
 import { getSetting, updateSetting } from './a1sauce/Settings/Storage';
 import { getById } from './a1sauce/Utils/getById';
 import { renderSettings } from './lib/settings';
-import { appName, majorVersion, minorVersion, patchVersion, versionUrl } from './data/constants';
+import {
+	appName,
+	majorVersion,
+	minorVersion,
+	patchVersion,
+	versionUrl,
+} from './data/constants';
 import { Patches } from './a1sauce/Patches/patchNotes';
 import { notes } from './patchnotes';
 import { startVersionChecking } from './a1sauce/Patches/serverCheck';
@@ -128,9 +134,7 @@ export async function startApp() {
 	patchCheck.setNotes(notes);
 	patchCheck.showPatchNotes();
 
-	if (
-		getSetting('buffsPosition') == undefined
-	) {
+	if (getSetting('buffsPosition') == undefined) {
 		calibrationWarning();
 	}
 
@@ -159,21 +163,23 @@ export async function startApp() {
 	alt1.overLaySetGroupZIndex('PerfectEquilibrium_Text', 1);
 	alt1.overLaySetGroupZIndex('SplitSoul_Text', 1);
 
-	await beginRendering();
+	findBuffAndDebuffBars();
+	beginRendering();
 }
 
-export async function beginRendering() {
-  try {
-    await findBuffsBar();
-    await findDebuffsBar();
-    setInterval(() => renderOverlays(), 20);
-  } catch (e) {
-    console.error(`Issue when rendering.\n\n${JSON.stringify(e)}`);
-  }
+export function findBuffAndDebuffBars() {
+	findBuffsBar();
+	findDebuffsBar();
+}
+
+export function beginRendering() {
+	setInterval(() => renderOverlays(), 20);
 }
 
 function calibrationWarning(): void {
-	alt1.setTooltip('[JG] Use a Defensive ability such as Freedom or Anticipate to capture buffs location.');
+	alt1.setTooltip(
+		'[JG] Use a Defensive ability such as Freedom or Anticipate to capture buffs location.'
+	);
 	setTimeout(() => {
 		alt1.clearTooltip();
 		findBuffsBar();
@@ -190,13 +196,15 @@ function calibrationWarning(): void {
 }
 function updateActiveOrientationFromLocalStorage(): void {
 	// Retrieve selected orientation from localStorage
-	let selectedOrientation: OrientationTypes = getSetting('selectedOrientation');
+	let selectedOrientation: OrientationTypes = getSetting(
+		'selectedOrientation'
+	);
 
 	if (!selectedOrientation) {
 		selectedOrientation = 'reverse_split';
 	}
 
-  	updateSetting('selectedOrientation', selectedOrientation);
+	updateSetting('selectedOrientation', selectedOrientation);
 
 	function isOrientation(obj: any, key: string): obj is Orientation {
 		return key === 'active_orientation' && !!obj.active_orientation;
@@ -204,7 +212,7 @@ function updateActiveOrientationFromLocalStorage(): void {
 
 	// Function to recursively update orientations in an object
 	function updateActiveOrientation(obj: { [k in string]: any }) {
-		for (const key in obj){
+		for (const key in obj) {
 			// TODO: Fix types here. This code works w/o issues as-is and I'm not sure how to make it happy
 			if (typeof obj[key] === 'object') {
 				if (isOrientation(obj, key)) {
@@ -257,8 +265,10 @@ function addEventListeners() {
 
 	const combatTimerRange = <HTMLInputElement>getById('combatTimer');
 	const combatTimervalue =
-		((parseInt(combatTimerRange.value, 10) - parseInt(combatTimerRange.min, 10)) /
-			(parseInt(combatTimerRange.max, 10) - parseInt(combatTimerRange.min))) *
+		((parseInt(combatTimerRange.value, 10) -
+			parseInt(combatTimerRange.min, 10)) /
+			(parseInt(combatTimerRange.max, 10) -
+				parseInt(combatTimerRange.min))) *
 		100;
 	combatTimerRange.style.background =
 		'linear-gradient(to right, #3e5765 0%, #3e5765 ' +
@@ -413,7 +423,8 @@ function setNecromancyGaugeData(gauges: Overlay) {
 	}
 
 	if (getSetting('useColoredNecrosis') !== undefined) {
-		gauges.necromancy.stacks.useColoredNecrosis = getSetting('useColoredNecrosis');
+		gauges.necromancy.stacks.useColoredNecrosis =
+			getSetting('useColoredNecrosis');
 	}
 
 	if (getSetting('dupeRow') !== undefined) {
@@ -480,15 +491,15 @@ function setNecromancyGaugeData(gauges: Overlay) {
 	}
 
 	if (getSetting('automaticSwapping') !== undefined) {
-		gauges.automaticSwapping =
-			getSetting('automaticSwapping');
+		gauges.automaticSwapping = getSetting('automaticSwapping');
 	}
 
 	if (getSetting('defaultCombatStyle') !== undefined) {
-		let input = <HTMLSelectElement>document.getElementById('defaultCombatStyle');
+		let input = <HTMLSelectElement>(
+			document.getElementById('defaultCombatStyle')
+		);
 		input.value = getSetting('defaultCombatStyle');
-		gauges.combatStyle =
-			parseInt(getSetting('defaultCombatStyle'), 10);
+		gauges.combatStyle = parseInt(getSetting('defaultCombatStyle'), 10);
 	}
 }
 
@@ -516,8 +527,7 @@ window.onload = function () {
 		}`;
 		errorLogger.showError({
 			title: 'Alt1 Not Detected',
-			message:
-				`<p>Click <a href="${addappurl}">here</a> to add this app to Alt1</p>`,
+			message: `<p>Click <a href="${addappurl}">here</a> to add this app to Alt1</p>`,
 		});
 	}
 };

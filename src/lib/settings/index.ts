@@ -1,4 +1,5 @@
 
+import { findBuffAndDebuffBars } from "../..";
 import { A1Sauce } from "../../a1sauce";
 import { getSetting, updateSetting } from "../../a1sauce/Settings/Storage";
 import {
@@ -8,7 +9,7 @@ import {
 	patchVersion,
 } from '../../data/constants';
 import { Overlay } from '../../types';
-import { resetBuffPositions, setOverlayPosition } from "../utility";
+import { setOverlayPosition } from "../utility";
 
 import PouchDB from 'pouchdb';
 
@@ -177,8 +178,8 @@ export const renderSettings = async (gauges: Overlay) => {
 		)
 		.addButton(
 			'resetPositons',
-			'Reset Buff and Debuff positions',
-			resetBuffPositions,
+			'Scan for Buff and Debuff Bars',
+			findBuffAndDebuffBars,
 			{ classes: ['nisbutton'] }
 		)
 		.build();
