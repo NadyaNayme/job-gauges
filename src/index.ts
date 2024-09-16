@@ -190,25 +190,13 @@ function calibrationWarning(): void {
 }
 function updateActiveOrientationFromLocalStorage(): void {
 	// Retrieve selected orientation from localStorage
-	const selectedOrientation: OrientationTypes | `${OrientationTypes}_orientation` = getSetting('selectedOrientation');
-	let mappedOrientation: OrientationTypes = 'reverse_split';
+	let selectedOrientation: OrientationTypes = getSetting('selectedOrientation');
 
 	if (!selectedOrientation) {
-		mappedOrientation = 'reverse_split';
+		selectedOrientation = 'reverse_split';
 	}
 
-	// TODO: Get rid of this crap
-	// Handle v0.0.3 values that included '_orientation' in the string
-	// This should only be needed for a few weeks
-	if (selectedOrientation == 'grouped_orientation')
-		mappedOrientation = 'grouped';
-	if (selectedOrientation == 'split_orientation')
-		mappedOrientation = 'split';
-	if (selectedOrientation == 'reverse_split_orientation')
-		mappedOrientation = 'reverse_split';
-	// END
-
-	updateSetting('selectedOrientation', mappedOrientation);
+  	updateSetting('selectedOrientation', selectedOrientation);
 
 	function isOrientation(obj: any, key: string): obj is Orientation {
 		return key === 'active_orientation' && !!obj.active_orientation;
@@ -220,8 +208,8 @@ function updateActiveOrientationFromLocalStorage(): void {
 			// TODO: Fix types here. This code works w/o issues as-is and I'm not sure how to make it happy
 			if (typeof obj[key] === 'object') {
 				if (isOrientation(obj, key)) {
-					obj['active_orientation'].x = obj[mappedOrientation].x;
-					obj['active_orientation'].y = obj[mappedOrientation].y;
+					obj['active_orientation'].x = obj[selectedOrientation].x;
+					obj['active_orientation'].y = obj[selectedOrientation].y;
 				} else {
 					updateActiveOrientation(obj[key]);
 				}
