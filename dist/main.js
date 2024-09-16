@@ -33832,22 +33832,11 @@ function calibrationWarning() {
 }
 function updateActiveOrientationFromLocalStorage() {
     // Retrieve selected orientation from localStorage
-    const selectedOrientation = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('selectedOrientation');
-    let mappedOrientation = 'reverse_split';
+    let selectedOrientation = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('selectedOrientation');
     if (!selectedOrientation) {
-        mappedOrientation = 'reverse_split';
+        selectedOrientation = 'reverse_split';
     }
-    // TODO: Get rid of this crap
-    // Handle v0.0.3 values that included '_orientation' in the string
-    // This should only be needed for a few weeks
-    if (selectedOrientation == 'grouped_orientation')
-        mappedOrientation = 'grouped';
-    if (selectedOrientation == 'split_orientation')
-        mappedOrientation = 'split';
-    if (selectedOrientation == 'reverse_split_orientation')
-        mappedOrientation = 'reverse_split';
-    // END
-    (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.updateSetting)('selectedOrientation', mappedOrientation);
+    (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.updateSetting)('selectedOrientation', selectedOrientation);
     function isOrientation(obj, key) {
         return key === 'active_orientation' && !!obj.active_orientation;
     }
@@ -33857,8 +33846,8 @@ function updateActiveOrientationFromLocalStorage() {
             // TODO: Fix types here. This code works w/o issues as-is and I'm not sure how to make it happy
             if (typeof obj[key] === 'object') {
                 if (isOrientation(obj, key)) {
-                    obj['active_orientation'].x = obj[mappedOrientation].x;
-                    obj['active_orientation'].y = obj[mappedOrientation].y;
+                    obj['active_orientation'].x = obj[selectedOrientation].x;
+                    obj['active_orientation'].y = obj[selectedOrientation].y;
                 }
                 else {
                     updateActiveOrientation(obj[key]);
