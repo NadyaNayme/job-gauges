@@ -1,3 +1,3 @@
 export const createSeperator = (): HTMLElement => {
-	return document.createElement('hr');
-}
+    return document.createElement('hr');
+};

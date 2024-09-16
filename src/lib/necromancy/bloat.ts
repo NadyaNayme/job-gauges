@@ -3,82 +3,82 @@ import { Overlay } from '../../types';
 import { adjustPositionForScale, handleResizingImages } from '../utility';
 
 const bloatImages = a1lib.webpackImages({
-	bloat_100: require('../../asset/gauge-ui/necromancy/bloat/100.data.png'),
-	bloat_90: require('../../asset/gauge-ui/necromancy/bloat/90.data.png'),
-	bloat_80: require('../../asset/gauge-ui/necromancy/bloat/80.data.png'),
-	bloat_70: require('../../asset/gauge-ui/necromancy/bloat/70.data.png'),
-	bloat_60: require('../../asset/gauge-ui/necromancy/bloat/60.data.png'),
-	bloat_50: require('../../asset/gauge-ui/necromancy/bloat/50.data.png'),
-	bloat_40: require('../../asset/gauge-ui/necromancy/bloat/40.data.png'),
-	bloat_30: require('../../asset/gauge-ui/necromancy/bloat/30.data.png'),
-	bloat_20: require('../../asset/gauge-ui/necromancy/bloat/20.data.png'),
-	bloat_10: require('../../asset/gauge-ui/necromancy/bloat/10.data.png'),
-	bloat_0: require('../../asset/gauge-ui/necromancy/bloat/0.data.png'),
-	bloat_expired: require('../../asset/gauge-ui/necromancy/bloat/expired.data.png'),
+    bloat_100: require('../../asset/gauge-ui/necromancy/bloat/100.data.png'),
+    bloat_90: require('../../asset/gauge-ui/necromancy/bloat/90.data.png'),
+    bloat_80: require('../../asset/gauge-ui/necromancy/bloat/80.data.png'),
+    bloat_70: require('../../asset/gauge-ui/necromancy/bloat/70.data.png'),
+    bloat_60: require('../../asset/gauge-ui/necromancy/bloat/60.data.png'),
+    bloat_50: require('../../asset/gauge-ui/necromancy/bloat/50.data.png'),
+    bloat_40: require('../../asset/gauge-ui/necromancy/bloat/40.data.png'),
+    bloat_30: require('../../asset/gauge-ui/necromancy/bloat/30.data.png'),
+    bloat_20: require('../../asset/gauge-ui/necromancy/bloat/20.data.png'),
+    bloat_10: require('../../asset/gauge-ui/necromancy/bloat/10.data.png'),
+    bloat_0: require('../../asset/gauge-ui/necromancy/bloat/0.data.png'),
+    bloat_expired: require('../../asset/gauge-ui/necromancy/bloat/expired.data.png'),
 });
 
 let scaledOnce = false;
 
 export async function bloatOverlay(gauges: Overlay) {
-	const { bloat } = gauges.necromancy;
+    const { bloat } = gauges.necromancy;
 
-	if (!bloat.isActiveOverlay) {
-		return;
-	}
+    if (!bloat.isActiveOverlay) {
+        return;
+    }
 
-	await bloatImages.promise;
+    await bloatImages.promise;
 
-	if (!scaledOnce) {
-		handleResizingImages(bloatImages, gauges.scaleFactor);
+    if (!scaledOnce) {
+        handleResizingImages(bloatImages, gauges.scaleFactor);
 
-		scaledOnce = true;
-	}
+        scaledOnce = true;
+    }
 
-	const value = bloat.time;
-  let image = bloatImages.bloat_expired;
-  
-	if (bloat.active) {
-		if (value < 2.4) {
-			image = bloatImages.bloat_0;
-		} else if (value < 3.6) {
-			image = bloatImages.bloat_10;
-		} else if (value < 5.4) {
-			image = bloatImages.bloat_20;
-		} else if (value < 7.2) {
-			image = bloatImages.bloat_30;
-		} else if (value < 9.0) {
-			image = bloatImages.bloat_40;
-		} else if (value < 10.8) {
-			image = bloatImages.bloat_50;
-		} else if (value < 12.6) {
-			image = bloatImages.bloat_60;
-		} else if (value < 14.4) {
-			image = bloatImages.bloat_70;
-		} else if (value < 16.2) {
-			image = bloatImages.bloat_80;
-		} else if (value < 18.0) {
-			image = bloatImages.bloat_90;
-		} else {
-			image = bloatImages.bloat_100;
-		}
-	} else {
-		image = bloatImages.bloat_expired;
-	}
+    const value = bloat.time;
+    let image = bloatImages.bloat_expired;
 
-	alt1.overLaySetGroup('Bloat');
+    if (bloat.active) {
+        if (value < 2.4) {
+            image = bloatImages.bloat_0;
+        } else if (value < 3.6) {
+            image = bloatImages.bloat_10;
+        } else if (value < 5.4) {
+            image = bloatImages.bloat_20;
+        } else if (value < 7.2) {
+            image = bloatImages.bloat_30;
+        } else if (value < 9.0) {
+            image = bloatImages.bloat_40;
+        } else if (value < 10.8) {
+            image = bloatImages.bloat_50;
+        } else if (value < 12.6) {
+            image = bloatImages.bloat_60;
+        } else if (value < 14.4) {
+            image = bloatImages.bloat_70;
+        } else if (value < 16.2) {
+            image = bloatImages.bloat_80;
+        } else if (value < 18.0) {
+            image = bloatImages.bloat_90;
+        } else {
+            image = bloatImages.bloat_100;
+        }
+    } else {
+        image = bloatImages.bloat_expired;
+    }
 
-	alt1.overLayImage(
-		adjustPositionForScale(
-			gauges.necromancy.position.x + bloat.position.active_orientation.x,
-			gauges.scaleFactor
-		),
-		adjustPositionForScale(
-			gauges.necromancy.position.y + bloat.position.active_orientation.y,
-			gauges.scaleFactor
-		),
-		a1lib.encodeImageString(image),
-		image.width,
-		1000
-	);
-	alt1.overLayRefreshGroup('Bloat');
+    alt1.overLaySetGroup('Bloat');
+
+    alt1.overLayImage(
+        adjustPositionForScale(
+            gauges.necromancy.position.x + bloat.position.active_orientation.x,
+            gauges.scaleFactor,
+        ),
+        adjustPositionForScale(
+            gauges.necromancy.position.y + bloat.position.active_orientation.y,
+            gauges.scaleFactor,
+        ),
+        a1lib.encodeImageString(image),
+        image.width,
+        1000,
+    );
+    alt1.overLayRefreshGroup('Bloat');
 }

@@ -1,45 +1,45 @@
 interface HasOrientation {
-	position: Orientation
+    position: Orientation;
 }
 
 interface HasOverlay {
-	isActiveOverlay: boolean;
+    isActiveOverlay: boolean;
 }
 
 interface HasTime {
-	time: number;
+    time: number;
 }
 
 interface HasStacks {
-	stacks: number;
+    stacks: number;
 }
 
 interface HasActiveState {
-	active: boolean;
+    active: boolean;
 }
 
 interface HasCooldown {
-	isOnCooldown: boolean;
-	cooldownDuration: number;
+    isOnCooldown: boolean;
+    cooldownDuration: number;
 }
 
 export interface HasName {
-	name: string;
+    name: string;
 }
 
 export interface HasAlarm {
-	alarm: {
-		isActive: boolean,
-		isLooping: boolean,
-		volume: number,
-		sound: string,
-		threshold: number,
-	}
+    alarm: {
+        isActive: boolean;
+        isLooping: boolean;
+        volume: number;
+        sound: string;
+        threshold: number;
+    };
 }
 
 export type Position = {
-	x: number;
-	y: number;
+    x: number;
+    y: number;
 };
 
 /**
@@ -47,15 +47,19 @@ export type Position = {
  * A mistake I hope not to repeat with the other combat styles.
  */
 export type Orientation = {
-	active_orientation: Position;
-	grouped: Position;
-	split: Position;
-	reverse_split: Position;
+    active_orientation: Position;
+    grouped: Position;
+    split: Position;
+    reverse_split: Position;
 };
 
 export type OrientationTypes = keyof Orientation;
 
-export type Ability = HasOverlay & HasOrientation & HasCooldown & HasTime & HasActiveState;
+export type Ability = HasOverlay &
+    HasOrientation &
+    HasCooldown &
+    HasTime &
+    HasActiveState;
 
 /**
  * A PlayerBuff is the base class for the types of buffs a player can have. It should not be used on its own and a subtype (TimedPlayerBuff, StackingPLayerBuff, StackingTimedPlayerBuff) should be used instead.
@@ -75,15 +79,24 @@ export type StackingPlayerBuff = PlayerBuff & HasStacks & HasName;
 /**
  * A StackingTimedPlayerBuff is an overlay which tracks a buff that has both a Duration of Time and a Stack Count. eg. Incense Sticks
  */
-export type StackingTimedPlayerBuff = PlayerBuff & HasTime & HasStacks & HasName;
+export type StackingTimedPlayerBuff = PlayerBuff &
+    HasTime &
+    HasStacks &
+    HasName;
 
 /**
  *  A PlayerDebuff is an overlay that tracks debuffs from the player's debuffs bar. This is primarily used to track cooldowns of Weapon Special Attacks - as the cooldown appears as a debuff on the player.
  */
 
-export type PlayerDebuff = HasOverlay & HasOrientation & HasTime & HasActiveState;
+export type PlayerDebuff = HasOverlay &
+    HasOrientation &
+    HasTime &
+    HasActiveState;
 
 /**
  * An EnemyDebuff is an overlay that tracks debuffs from the enemy nameplate. Enemy nameplates do not show the duration a debuff lasts for - the debuff duration is hard coded and tracked by Job Gauges.
  */
-export type EnemyDebuff = HasOverlay & HasOrientation & HasTime & HasActiveState;
+export type EnemyDebuff = HasOverlay &
+    HasOrientation &
+    HasTime &
+    HasActiveState;

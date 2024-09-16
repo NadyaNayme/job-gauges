@@ -3,8 +3,8 @@ import { Overlay } from '../../types';
 import { adjustPositionForScale, handleResizingImages } from '../utility';
 
 const conjureImages = a1lib.webpackImages({
-	active: require('../../asset/gauge-ui/necromancy/conjure-undead-army/active.data.png'),
-	inactive: require('../../asset/gauge-ui/necromancy/conjure-undead-army/inactive.data.png'),
+    active: require('../../asset/gauge-ui/necromancy/conjure-undead-army/active.data.png'),
+    inactive: require('../../asset/gauge-ui/necromancy/conjure-undead-army/inactive.data.png'),
 });
 
 const white = a1lib.mixColor(255, 255, 255);
@@ -13,62 +13,86 @@ let lastMinValue: number = 0;
 let scaledOnce = false;
 
 export async function conjureOverlay(gauges: Overlay) {
-	if (!gauges.necromancy.conjures.isActiveOverlay) {
-		return;
-	}
+    if (!gauges.necromancy.conjures.isActiveOverlay) {
+        return;
+    }
 
-	await conjureImages.promise;
-	
-	if (!scaledOnce) {
-		handleResizingImages(conjureImages, gauges.scaleFactor);
+    await conjureImages.promise;
 
-		scaledOnce = true;
-	}
+    if (!scaledOnce) {
+        handleResizingImages(conjureImages, gauges.scaleFactor);
 
-	alt1.overLaySetGroup('Undead_Army');
-	if (gauges.necromancy.conjures.active) {
-		alt1.overLayImage(
-			adjustPositionForScale(gauges.necromancy.position.x + gauges.necromancy.conjures.position.active_orientation.x, gauges.scaleFactor),
-			adjustPositionForScale(gauges.necromancy.position.y + gauges.necromancy.conjures.position.active_orientation.y, gauges.scaleFactor),
-			a1lib.encodeImageString(conjureImages.active.toDrawableData()),
-			conjureImages.active.width,
-			1000
-		);
-	} else {
-		alt1.overLayImage(
-			adjustPositionForScale(gauges.necromancy.position.x + gauges.necromancy.conjures.position.active_orientation.x, gauges.scaleFactor),
-			adjustPositionForScale(gauges.necromancy.position.y + gauges.necromancy.conjures.position.active_orientation.y, gauges.scaleFactor),
-			a1lib.encodeImageString(conjureImages.inactive.toDrawableData()),
-			conjureImages.inactive.width,
-			1000
-		);
-	}
+        scaledOnce = true;
+    }
 
-	const earliest_conjure = [
-		gauges.necromancy.conjures.skeleton.time,
-		gauges.necromancy.conjures.zombie.time,
-		gauges.necromancy.conjures.ghost.time,
-		gauges.necromancy.conjures.phantom.time,
-	];
-	
-	const minValue = Math.min.apply(null, earliest_conjure.filter(Boolean));
-	if (minValue !== Infinity && minValue !== lastMinValue) {
-		alt1.overLaySetGroup('Undead_Army_Text');
-		alt1.overLayFreezeGroup('Undead_Army_Text');
-		alt1.overLayClearGroup('Undead_Army_Text');
-		alt1.overLayTextEx(
-			`${minValue}`,
-			white,
-			14,
-			adjustPositionForScale(gauges.necromancy.position.x + 26 + gauges.necromancy.conjures.position.active_orientation.x, gauges.scaleFactor),
-			adjustPositionForScale(gauges.necromancy.position.y + 32, gauges.scaleFactor),
-			10000,
-			'',
-			true,
-			true
-		);
-		lastMinValue = minValue;
-	}
+    alt1.overLaySetGroup('Undead_Army');
+    if (gauges.necromancy.conjures.active) {
+        alt1.overLayImage(
+            adjustPositionForScale(
+                gauges.necromancy.position.x +
+                    gauges.necromancy.conjures.position.active_orientation.x,
+                gauges.scaleFactor,
+            ),
+            adjustPositionForScale(
+                gauges.necromancy.position.y +
+                    gauges.necromancy.conjures.position.active_orientation.y,
+                gauges.scaleFactor,
+            ),
+            a1lib.encodeImageString(conjureImages.active.toDrawableData()),
+            conjureImages.active.width,
+            1000,
+        );
+    } else {
+        alt1.overLayImage(
+            adjustPositionForScale(
+                gauges.necromancy.position.x +
+                    gauges.necromancy.conjures.position.active_orientation.x,
+                gauges.scaleFactor,
+            ),
+            adjustPositionForScale(
+                gauges.necromancy.position.y +
+                    gauges.necromancy.conjures.position.active_orientation.y,
+                gauges.scaleFactor,
+            ),
+            a1lib.encodeImageString(conjureImages.inactive.toDrawableData()),
+            conjureImages.inactive.width,
+            1000,
+        );
+    }
 
-	alt1.overLayRefreshGroup('Undead_Army_Text');
+    const earliest_conjure = [
+        gauges.necromancy.conjures.skeleton.time,
+        gauges.necromancy.conjures.zombie.time,
+        gauges.necromancy.conjures.ghost.time,
+        gauges.necromancy.conjures.phantom.time,
+    ];
+
+    const minValue = Math.min.apply(null, earliest_conjure.filter(Boolean));
+    if (minValue !== Infinity && minValue !== lastMinValue) {
+        alt1.overLaySetGroup('Undead_Army_Text');
+        alt1.overLayFreezeGroup('Undead_Army_Text');
+        alt1.overLayClearGroup('Undead_Army_Text');
+        alt1.overLayTextEx(
+            `${minValue}`,
+            white,
+            14,
+            adjustPositionForScale(
+                gauges.necromancy.position.x +
+                    26 +
+                    gauges.necromancy.conjures.position.active_orientation.x,
+                gauges.scaleFactor,
+            ),
+            adjustPositionForScale(
+                gauges.necromancy.position.y + 32,
+                gauges.scaleFactor,
+            ),
+            10000,
+            '',
+            true,
+            true,
+        );
+        lastMinValue = minValue;
+    }
+
+    alt1.overLayRefreshGroup('Undead_Army_Text');
 }
