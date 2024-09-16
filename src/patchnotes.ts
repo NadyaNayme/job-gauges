@@ -1,4 +1,6 @@
-export const notes = [
+import { PatchNote } from './a1sauce/Patches/patchNotes';
+
+export const notes: PatchNote[] = [
 	// Add patch notes to top
 	{
 		date: '09/15/2024 - Better Error Handling v.1.1.3',

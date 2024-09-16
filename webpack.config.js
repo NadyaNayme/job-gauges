@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-require-imports */
 const path = require('path');
+const CopyPlugin = require("copy-webpack-plugin");
 
 /**
  * @type {import("webpack").Configuration}
@@ -25,6 +26,13 @@ module.exports = {
 	resolve: {
 		extensions: ['.wasm', '.tsx', '.ts', '.mjs', '.jsx', '.js'],
 	},
+	plugins: [
+		new CopyPlugin({
+			patterns: [
+				{ from: "**/*.png", to: "assets" },
+			],
+		}),
+	],
 	module: {
 		// The rules section tells webpack what to do with different file types when you import them from js/ts
 		rules: [

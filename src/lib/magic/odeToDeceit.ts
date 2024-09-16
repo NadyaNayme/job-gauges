@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 import * as a1lib from 'alt1';
-import * as utility from '../utility';
 import { Overlay } from '../../types';
+import { adjustPositionForScale, forceClearOverlay, handleResizingImages, white } from '../utility';
+import { clearAbilityOverlays, handleAbilityActiveState } from '../util/ability-helpers';
 
 const ultimateImages = a1lib.webpackImages({
 	active: require('../../asset/gauge-ui/magic/ode-to-deceit/active.data.png'),
@@ -14,106 +14,62 @@ let scaledOnce = false;
 export async function odeToDeceitOverlay(gauges: Overlay) {
 	const { magic } = gauges;
 	const { odeToDeceit } = magic;
+	const { active_orientation } = odeToDeceit.position;
 
 	if (!odeToDeceit.isActiveOverlay) {
-		clearOdetoDeceitOverlay();
+		clearAbilityOverlays('OdeToDeceit');
 		return;
 	}
 
 	await ultimateImages.promise;
+	
 
 	if (!scaledOnce) {
-		Object.keys(ultimateImages).forEach(async (key) => {
-			ultimateImages[key] = await utility.resizeImageData(
-				ultimateImages[key],
-				gauges.scaleFactor
-			);
-		});
+		handleResizingImages(ultimateImages, gauges.scaleFactor);
+
 		scaledOnce = true;
 	}
 
+	const abilityData = {
+		images: ultimateImages,
+		scaleFactor: gauges.scaleFactor,
+		ability: odeToDeceit,
+		position: magic.position,
+	};
+
 	// If Crystal Rain Debuff is not active then it is available
 	if (!odeToDeceit.active) {
-		displayActiveCrystalRain(gauges);
+		handleAbilityActiveState(abilityData, 'OdeToDeceit', true);
 		alt1.overLayRefreshGroup('OdeToDeceit_Text');
 		alt1.overLayClearGroup('OdeToDeceit_Text');
-	} else {
-		odeToDeceit.isOnCooldown = false;
-		utility.forceClearOverlay('OdeToDeceit_Cooldown_Text');
-		displayInactiveOdeToDeceit(gauges);
-		if (lastValue !== odeToDeceit.time) {
-			odeToDeceit.cooldownDuration = 0;
-			utility.forceClearOverlay('OdeToDeceit_Cooldown_Text');
-			alt1.overLaySetGroup('OdeToDeceit_Text');
-			alt1.overLayFreezeGroup('OdeToDeceit_Text');
-			alt1.overLayClearGroup('OdeToDeceit_Text');
-			alt1.overLayTextEx(
-				odeToDeceit.time === 0 ? '' : odeToDeceit.time.toString(),
-				utility.white,
-				14,
-				utility.adjustPositionForScale(
-					magic.position.x +
-						odeToDeceit.position.active_orientation.x +
-						26,
-					gauges.scaleFactor
-				),
-				utility.adjustPositionForScale(
-					magic.position.y +
-						odeToDeceit.position.active_orientation.y +
-						30,
-					gauges.scaleFactor
-				),
-				3000,
-				undefined,
-				true,
-				true
-			);
-			alt1.overLayRefreshGroup('OdeToDeceit_Text');
-		}
+		
+		return lastValue = odeToDeceit.time;
+	} 
+	
+	odeToDeceit.isOnCooldown = false;
+	forceClearOverlay('OdeToDeceit_Cooldown_Text');
+	
+	handleAbilityActiveState(abilityData, 'OdeToDeceit', false);
+	
+	if (lastValue !== odeToDeceit.time) {
+		odeToDeceit.cooldownDuration = 0;
+		forceClearOverlay('OdeToDeceit_Cooldown_Text');
+		alt1.overLaySetGroup('OdeToDeceit_Text');
+		alt1.overLayFreezeGroup('OdeToDeceit_Text');
+		alt1.overLayClearGroup('OdeToDeceit_Text');
+		alt1.overLayTextEx(
+			`${odeToDeceit.time || ''}`,
+			white,
+			14,
+			adjustPositionForScale(magic.position.x + active_orientation.x + 26, gauges.scaleFactor),
+			adjustPositionForScale(magic.position.y + active_orientation.y + 30, gauges.scaleFactor),
+			3000,
+			'',
+			true,
+			true
+		);
+		alt1.overLayRefreshGroup('OdeToDeceit_Text');
 	}
+	
 	lastValue = odeToDeceit.time;
-}
-
-function clearOdetoDeceitOverlay(): void {
-	utility.forceClearOverlay('OdeToDeceit_Text');
-	utility.forceClearOverlay('OdeToDeceit_Cooldown_Text');
-	alt1.overLayClearGroup('OdeToDeceit');
-}
-
-function displayActiveCrystalRain(gauges: Overlay): void {
-	alt1.overLaySetGroup('OdeToDeceit');
-	alt1.overLayImage(
-		utility.adjustPositionForScale(
-			gauges.magic.position.x +
-				gauges.magic.odeToDeceit.position.active_orientation.x,
-			gauges.scaleFactor
-		),
-		utility.adjustPositionForScale(
-			gauges.magic.position.y +
-				gauges.magic.odeToDeceit.position.active_orientation.y,
-			gauges.scaleFactor
-		),
-		a1lib.encodeImageString(ultimateImages.active.toDrawableData()),
-		ultimateImages.active.width,
-		1000
-	);
-}
-
-function displayInactiveOdeToDeceit(gauges: Overlay): void {
-	alt1.overLaySetGroup('OdeToDeceit');
-	alt1.overLayImage(
-		utility.adjustPositionForScale(
-			gauges.magic.position.x +
-				gauges.magic.odeToDeceit.position.active_orientation.x,
-			gauges.scaleFactor
-		),
-		utility.adjustPositionForScale(
-			gauges.magic.position.y +
-				gauges.magic.odeToDeceit.position.active_orientation.y,
-			gauges.scaleFactor
-		),
-		a1lib.encodeImageString(ultimateImages.inactive.toDrawableData()),
-		ultimateImages.inactive.width,
-		1000
-	);
 }

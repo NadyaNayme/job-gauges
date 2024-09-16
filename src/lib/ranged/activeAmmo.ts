@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 import * as a1lib from 'alt1';
-import * as utility from '../utility';
 import * as BuffReader from 'alt1/buffs';
 import { Overlay } from '../../types';
+import { adjustPositionForScale, white } from '../utility';
 
-var quiverImages = a1lib.webpackImages({
+const quiverImages = a1lib.webpackImages({
 	bik: require('../../asset/data/buffs/ranged/ammo/bik.data.png'),
 	ful: require('../../asset/data/buffs/ranged/ammo/ful.data.png'),
 	jas_dragonbane: require('../../asset/data/buffs/ranged/ammo/jas-dragonbane.data.png'),
@@ -24,7 +23,7 @@ export async function findAmmo(gauges: Overlay, buffs: BuffReader.Buff[] | null)
 		return;
 	}
 
-	let ammmoActive = 0;
+	let ammoActive = 0;
 	let currentAmmo = '';
 
 	for (let [_key, value] of Object.entries(buffs)) {
@@ -41,47 +40,47 @@ export async function findAmmo(gauges: Overlay, buffs: BuffReader.Buff[] | null)
 
 		if (checkBik.failed == 0 || checkBik.passed > 28) {
 			currentAmmo = 'BIK';
-			ammmoActive++;
+			ammoActive++;
 		}
 		if (checkFul.failed == 0 || checkFul.passed > 28) {
 			currentAmmo = 'FUL';
-			ammmoActive++;
+			ammoActive++;
 		}
 		if (checkWen.failed == 0 || checkWen.passed > 28) {
 			currentAmmo = 'WEN';
-			ammmoActive++;
+			ammoActive++;
 		}
 		if (checkJas.failed == 0 || checkJas.passed > 28) {
 			currentAmmo = 'JAS';
-			ammmoActive++;
+			ammoActive++;
 		}
 		if (checkBlackstone.failed == 0 || checkBlackstone.passed > 28) {
 			currentAmmo = 'BSD';
-			ammmoActive++;
+			ammoActive++;
 		}
 		if (checkDeathspores.failed == 0 || checkDeathspores.passed > 28) {
 			currentAmmo = 'DSP';
-			ammmoActive++;
+			ammoActive++;
 		}
 		if (checkDiamond.failed == 0 || checkDiamond.passed > 180) {
 			currentAmmo = 'BAK (D)';
-			ammmoActive++;
+			ammoActive++;
 		}
 		if (checkHydrix.failed == 0 || checkHydrix.passed > 180) {
 			currentAmmo = 'BAK (H)';
-			ammmoActive++;
+			ammoActive++;
 		}
 		if (checkRuby.failed == 0 || checkRuby.passed > 180) {
 			currentAmmo = 'BAK (R)';
-			ammmoActive++;
+			ammoActive++;
 		}
 		if (checkOnyx.failed == 0 || checkOnyx.passed > 180) {
 			currentAmmo = 'BAK (O)';
-			ammmoActive++;
+			ammoActive++;
 		}
 	}
 
-	if (ammmoActive === 0) {
+	if (ammoActive === 0) {
 		gauges.ranged.ammo.activeAmmo = '';
 	} else {
 		gauges.ranged.ammo.activeAmmo = currentAmmo;
@@ -98,16 +97,10 @@ function displayAmmoName(gauges: Overlay, ammo: string): void {
 	alt1.overLayClearGroup(`Ammo_Text`);
 	alt1.overLayTextEx(
 		gauges.ranged.ammo.activeAmmo,
-		utility.white,
+		white,
 		14,
-		utility.adjustPositionForScale(
-			gauges.ranged.position.x + 96,
-			gauges.scaleFactor
-		),
-		utility.adjustPositionForScale(
-			gauges.ranged.position.y + 24,
-			gauges.scaleFactor
-		),
+		adjustPositionForScale(gauges.ranged.position.x + 96, gauges.scaleFactor),
+		adjustPositionForScale(gauges.ranged.position.y + 24, gauges.scaleFactor),
 		3000,
 		'',
 		true,

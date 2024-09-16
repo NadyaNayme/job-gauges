@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 import * as a1lib from 'alt1';
-import * as TargetMob from 'alt1/targetmob';
+import TargetMob from 'alt1/targetmob';
 import { roundedToFixed } from './utility';
 import { Overlay } from '../types';
 import { getSetting } from '../a1sauce/Settings/Storage';
 
-const targetDisplay = new TargetMob.default();
+const targetDisplay = new TargetMob();
 
 const enemyDebuffImages = a1lib.webpackImages({
 	invokeDeath: require('../asset/data/enemyDebuffs/death-mark.data.png'),
@@ -17,14 +17,14 @@ const bloatInterval = new Map();
 const bloat = 'bloat';
 
 const combatInterval = new Map();
-let combatTimer = undefined;
 const outOfCombat = 'isInCombat';
+let combatTimer = -1;
 
 export async function readEnemy(gauges: Overlay) {
 	//TODO: Store LastPos and detect when to rescan to avoid spamming CHFRS in loop
 	const targetData = targetDisplay.read();
 
-	if (combatTimer === undefined) {
+	if (combatTimer < 0) {
 		combatTimer = parseInt(getSetting('combatTimer'), 10);
 	}
 
@@ -40,15 +40,13 @@ export async function readEnemy(gauges: Overlay) {
 				const currentTick = combatTimer;
 
 				if (currentTick > 0) {
-					const nextTick = currentTick - 1;
-					combatTimer = nextTick;
-				} else {
-					if (!targetData) {
-						gauges.isInCombat = false;
-						combatTimer = parseInt(getSetting('combatTimer'), 10);
-					}
+					combatTimer = currentTick - 1;
+				} else if (!targetData) {
+					gauges.isInCombat = false;
+					combatTimer = parseInt(getSetting('combatTimer'), 10);
 				}
 			}, 1000);
+			
 			combatInterval.set(outOfCombat, intervalId);
 		}
 	} else {
@@ -61,8 +59,8 @@ export async function readEnemy(gauges: Overlay) {
 
 	if (targetData && gauges.isInCombat) {
 		const target_display_loc = {
-			x: targetDisplay?.lastpos.x - 120,
-			y: targetDisplay?.lastpos.y + 20,
+			x: (targetDisplay?.lastpos?.x ?? 0) - 120,
+			y: (targetDisplay?.lastpos?.y ?? 0) + 20,
 			w: 150,
 			h: 60,
 		};

@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 import * as a1lib from 'alt1';
-import * as utility from '../utility';
 import { Overlay } from '../../types';
+import { adjustPositionForScale, handleResizingImages, white } from '../utility';
 
 const bolgImage = a1lib.webpackImages({
 	active: require('../../asset/gauge-ui/ranged/perfect-equilibrium/active.data.png'),
@@ -20,14 +19,10 @@ export async function peOverlay(gauges: Overlay) {
 	}
 
 	await bolgImage.promise;
-
+	
 	if (!scaledOnce) {
-		Object.keys(bolgImage).forEach(async (key) => {
-			bolgImage[key] = await utility.resizeImageData(
-				bolgImage[key],
-				gauges.scaleFactor
-			);
-		});
+		handleResizingImages(bolgImage, gauges.scaleFactor);
+
 		scaledOnce = true;
 	}
 
@@ -49,14 +44,8 @@ export async function peOverlay(gauges: Overlay) {
 
 	function displayBuffImage(image: ImageData): void {
 		alt1.overLayImage(
-			utility.adjustPositionForScale(
-				gauges.ranged.position.x + x,
-				gauges.scaleFactor
-			),
-			utility.adjustPositionForScale(
-				gauges.ranged.position.y + y,
-				gauges.scaleFactor
-			),
+			adjustPositionForScale(gauges.ranged.position.x + x, gauges.scaleFactor),
+			adjustPositionForScale(gauges.ranged.position.y + y, gauges.scaleFactor),
 			a1lib.encodeImageString(image.toDrawableData()),
 			image.width,
 			1000
@@ -68,23 +57,16 @@ export async function peOverlay(gauges: Overlay) {
 		alt1.overLayFreezeGroup(`PerfectEquilibrium_Text`);
 		alt1.overLayClearGroup(`PerfectEquilibrium_Text`);
 		alt1.overLayTextEx(
-			stacks === 0 ? '0' : stacks.toString(),
-			utility.white,
+			`${stacks}`,
+			white,
 			14,
-			utility.adjustPositionForScale(
-				gauges.ranged.position.x + x + 26,
-				gauges.scaleFactor
-			),
-			utility.adjustPositionForScale(
-				gauges.ranged.position.y + y + 26,
-				gauges.scaleFactor
-			),
+			adjustPositionForScale(gauges.ranged.position.x + x + 26, gauges.scaleFactor),
+			adjustPositionForScale(gauges.ranged.position.y + y + 26, gauges.scaleFactor),
 			30000,
-			undefined,
+			'',
 			true,
 			true
 		);
 		alt1.overLayRefreshGroup('PerfectEquilibrium_Text');
 	}
-
 }

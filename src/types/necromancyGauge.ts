@@ -20,10 +20,10 @@ type Conjures = {
 	active: boolean;
 	isActiveOverlay: boolean;
 	position: Orientation;
-	skeleton: TimedPlayerBuff;
-	zombie: TimedPlayerBuff;
-	ghost: TimedPlayerBuff;
-	phantom: TimedPlayerBuff;
+	skeleton: Omit<TimedPlayerBuff, 'position'>;
+	zombie: Omit<TimedPlayerBuff, 'position'>;
+	ghost: Omit<TimedPlayerBuff, 'position'>;
+	phantom: Omit<TimedPlayerBuff, 'position'>;
 };
 
 type Incantations = {

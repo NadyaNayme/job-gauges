@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 import * as a1lib from 'alt1';
-import * as utility from '../utility';
 import { Overlay } from '../../types';
+import { adjustPositionForScale, handleResizingImages, pauseAlert, playAlert } from '../utility';
 
 const soulImages = a1lib.webpackImages({
 	souls_0: require('../../asset/gauge-ui/necromancy/residual-souls/0.data.png'),
@@ -43,13 +42,10 @@ export async function soulsOverlay(gauges: Overlay) {
 		soulImages.souls_3 = pre95SoulImages.souls_3;
 	}
 
+	
 	if (!scaledOnce) {
-		Object.keys(soulImages).forEach(async (key) => {
-			soulImages[key] = await utility.resizeImageData(
-				soulImages[key],
-				gauges.scaleFactor
-			);
-		});
+		handleResizingImages(soulImages, gauges.scaleFactor);
+		
 		scaledOnce = true;
 	}
 
@@ -58,6 +54,16 @@ export async function soulsOverlay(gauges: Overlay) {
 
 	alt1.overLaySetGroup('Souls');
 
+	const displaySoulImage = (image: ImageData) => {
+		alt1.overLayImage(
+			adjustPositionForScale(gauges.necromancy.position.x + x, gauges.scaleFactor),
+			adjustPositionForScale(gauges.necromancy.position.y + y, gauges.scaleFactor),
+			a1lib.encodeImageString(image.toDrawableData()),
+			image.width,
+			1000
+		);
+	};
+	
 	switch (souls.stacks) {
 		case 0:
 			displaySoulImage(soulImages.souls_0);
@@ -81,29 +87,14 @@ export async function soulsOverlay(gauges: Overlay) {
 			// Handle cases beyond 5 if needed
 			break;
 	}
+	
 	if (souls.stacks >= souls.alarm.threshold && souls.alarm.isActive) {
 		if (!playingAlert) {
-			utility.playAlert(soulsAlert);
+			await playAlert(soulsAlert);
 			playingAlert = true;
 		}
 	} else if (playingAlert) {
-		utility.pauseAlert(soulsAlert);
+		pauseAlert(soulsAlert);
 		playingAlert = false;
-	}
-
-	function displaySoulImage(image: ImageData): void {
-		alt1.overLayImage(
-			utility.adjustPositionForScale(
-				gauges.necromancy.position.x + x,
-				gauges.scaleFactor
-			),
-			utility.adjustPositionForScale(
-				gauges.necromancy.position.y + y,
-				gauges.scaleFactor
-			),
-			a1lib.encodeImageString(image.toDrawableData()),
-			image.width,
-			1000
-		);
 	}
 }

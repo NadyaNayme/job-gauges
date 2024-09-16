@@ -5,6 +5,7 @@ import { timeout } from '../a1sauce/Utils/timeout';
 
 import PouchDB from 'pouchdb';
 import { appName } from '../data/constants';
+import { Abilities } from './util/ability-helpers';
 
 const db = new PouchDB(appName);
 
@@ -68,7 +69,9 @@ export function updateLocation(): void {
 	alt1.clearTooltip();
 }
 
-export function forceClearOverlay(overlay: string): void {
+export type AbilitiesOverlayText = `${Abilities}_${'Text' | 'Cooldown_Text'}`;
+
+export function forceClearOverlay(overlay: AbilitiesOverlayText): void {
 	alt1.overLaySetGroup(overlay);
 	alt1.overLayFreezeGroup(overlay);
 	alt1.overLayClearGroup(overlay);
@@ -236,7 +239,19 @@ export function roundedToFixed(input: number, digits: number): string {
 	return (Math.round(input * rounder) / rounder).toFixed(digits);
 }
 
-export async function resizeImageData(
+export function handleResizingImages(images: { [k in string]: ImageData | unknown }, scaleFactor: number) {
+	for (const key of Object.keys(images)) {
+		if (images[key] instanceof ImageData) {
+			const resize = resizeImageData(images[key], scaleFactor);
+
+			if (resize) {
+				images[key] = resize;
+			}
+		}
+	}
+}
+
+export function resizeImageData(
 	imageData: ImageData,
 	scaleFactor: number
 ) {

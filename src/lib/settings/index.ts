@@ -7,7 +7,7 @@ import {
 	minorVersion,
 	patchVersion,
 } from '../../data/constants';
-import { Overlay } from "../../types/overlay";
+import { Overlay } from '../../types';
 import { resetBuffPositions, setOverlayPosition } from "../utility";
 
 import PouchDB from 'pouchdb';

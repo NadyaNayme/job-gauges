@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 import * as a1lib from 'alt1';
-import * as utility from '../utility';
 import { Overlay } from '../../types';
+import { adjustPositionForScale, handleResizingImages } from '../utility';
+import { Abilities } from '../util/ability-helpers';
 
 const incantationImages = a1lib.webpackImages({
 	invoke_death: require('../.././asset/gauge-ui/necromancy/incantations/invoke-death/active.data.png'),
@@ -17,8 +17,9 @@ const incantationImages = a1lib.webpackImages({
 let scaledOnce = false;
 
 export async function incantationsOverlay(gauges: Overlay) {
-	const { incantations } = gauges.necromancy;
-	const { invokeDeath, darkness, threads, splitSoul } = incantations;
+	const { necromancy, scaleFactor } = gauges;
+	const { incantations, position } = necromancy;
+	const { invokeDeath, darkness: darknessBuff, threads: threadsAbility, splitSoul } = incantations;
 
 	if (!incantations.isActiveOverlay) {
 		return;
@@ -27,182 +28,72 @@ export async function incantationsOverlay(gauges: Overlay) {
 	await incantationImages.promise;
 
 	if (!scaledOnce) {
-		Object.keys(incantationImages).forEach(async (key) => {
-			incantationImages[key] = await utility.resizeImageData(
-				incantationImages[key],
-				gauges.scaleFactor
-			);
-		});
+		handleResizingImages(incantationImages, gauges.scaleFactor);
+		
 		scaledOnce = true;
 	}
 
-	if (
-		incantations.active[0] &&
-		invokeDeath.isActiveOverlay &&
-		incantations.isActiveOverlay
-	) {
-		alt1.overLaySetGroup('Invoke_Death');
-		alt1.overLayImage(
-			utility.adjustPositionForScale(
-				gauges.necromancy.position.x +
-					invokeDeath.position.active_orientation.x,
-				gauges.scaleFactor
-			),
-			utility.adjustPositionForScale(
-				gauges.necromancy.position.y,
-				gauges.scaleFactor
-			),
-			a1lib.encodeImageString(
-				incantationImages.invoke_death.toDrawableData()
-			),
-			incantationImages.invoke_death.width,
-			1000
-		);
-	} else if (invokeDeath.isActiveOverlay && incantations.isActiveOverlay) {
-		alt1.overLaySetGroup('Invoke_Death');
-		alt1.overLayImage(
-			utility.adjustPositionForScale(
-				gauges.necromancy.position.x +
-					invokeDeath.position.active_orientation.x,
-				gauges.scaleFactor
-			),
-			utility.adjustPositionForScale(
-				gauges.necromancy.position.y,
-				gauges.scaleFactor
-			),
-			a1lib.encodeImageString(
-				incantationImages.invoke_death_inactive.toDrawableData()
-			),
-			incantationImages.invoke_death_inactive.width,
-			1000
+	const isInvokeDeathVisible = invokeDeath.isActiveOverlay && incantations.isActiveOverlay;
+	const isInvokeDeathActive = incantations.active[0];
+	const invokeDeathImage = isInvokeDeathActive ? incantationImages.invoke_death : incantationImages.invoke_death_inactive;
+
+	if (isInvokeDeathVisible) {
+		handleIncantationOverlays(
+			'Invoke_Death',
+			invokeDeath.position.active_orientation.x,
+			0,
+			invokeDeathImage
 		);
 	}
 
-	if (
-		incantations.active[1] &&
-		darkness.isActiveOverlay &&
-		incantations.isActiveOverlay
-	) {
-		alt1.overLaySetGroup('Darkness');
-		alt1.overLayImage(
-			utility.adjustPositionForScale(
-				gauges.necromancy.position.x +
-					darkness.position.active_orientation.x,
-				gauges.scaleFactor
-			),
-			utility.adjustPositionForScale(
-				gauges.necromancy.position.y +
-					darkness.position.active_orientation.y,
-				gauges.scaleFactor
-			),
-			a1lib.encodeImageString(
-				incantationImages.darkness.toDrawableData()
-			),
-			incantationImages.darkness.width,
-			1000
-		);
-	} else if (darkness.isActiveOverlay && incantations.isActiveOverlay) {
-		alt1.overLaySetGroup('Darkness');
-		alt1.overLayImage(
-			utility.adjustPositionForScale(
-				gauges.necromancy.position.x +
-					darkness.position.active_orientation.x,
-				gauges.scaleFactor
-			),
-			utility.adjustPositionForScale(
-				gauges.necromancy.position.y +
-					darkness.position.active_orientation.y,
-				gauges.scaleFactor
-			),
-			a1lib.encodeImageString(
-				incantationImages.darkness_inactive.toDrawableData()
-			),
-			incantationImages.darkness_inactive.width,
-			1000
+	const isDarknessVisible = darknessBuff.isActiveOverlay && incantations.isActiveOverlay;
+	const isDarknessActive = incantations.active[1];
+	const darknessImage = isDarknessActive ? incantationImages.darkness : incantationImages.darkness_inactive;
+
+	if (isDarknessVisible) {
+		handleIncantationOverlays(
+			'Darkness',
+			darknessBuff.position.active_orientation.x,
+			darknessBuff.position.active_orientation.y,
+			darknessImage
 		);
 	}
 
-	if (
-		incantations.active[2] &&
-		threads.isActiveOverlay &&
-		incantations.isActiveOverlay
-	) {
-		alt1.overLaySetGroup('Threads');
-		alt1.overLayImage(
-			utility.adjustPositionForScale(
-				gauges.necromancy.position.x +
-					threads.position.active_orientation.x * 2,
-				gauges.scaleFactor
-			),
-			utility.adjustPositionForScale(
-				gauges.necromancy.position.y,
-				gauges.scaleFactor
-			),
-			a1lib.encodeImageString(
-				incantationImages.threads_inactive.toDrawableData()
-			),
-			incantationImages.threads_inactive.width,
-			1000
-		);
-	} else if (threads.isActiveOverlay && incantations.isActiveOverlay) {
-		alt1.overLaySetGroup('Threads');
-		alt1.overLayImage(
-			utility.adjustPositionForScale(
-				gauges.necromancy.position.x +
-					threads.position.active_orientation.x * 2,
-				gauges.scaleFactor
-			),
-			utility.adjustPositionForScale(
-				gauges.necromancy.position.y,
-				gauges.scaleFactor
-			),
-			a1lib.encodeImageString(incantationImages.threads.toDrawableData()),
-			incantationImages.threads.width,
-			1000
+	const isThreadsVisible = threadsAbility.isActiveOverlay && incantations.isActiveOverlay;
+	const isThreadsActive = incantations.active[2];
+	const threadsImage = isThreadsActive ? incantationImages.threads_inactive : incantationImages.threads;
+
+	if (isThreadsVisible) {
+		handleIncantationOverlays(
+			'Threads',
+			threadsAbility.position.active_orientation.x * 2,
+			0,
+			threadsImage
 		);
 	}
 
-	if (
-		incantations.active[3] &&
-		splitSoul.isActiveOverlay &&
-		incantations.isActiveOverlay
-	) {
-		alt1.overLaySetGroup('SplitSoul');
-		alt1.overLayImage(
-			utility.adjustPositionForScale(
-				gauges.necromancy.position.x +
-					splitSoul.position.active_orientation.x * 2,
-				gauges.scaleFactor
-			),
-			utility.adjustPositionForScale(
-				gauges.necromancy.position.y +
-					splitSoul.position.active_orientation.y,
-				gauges.scaleFactor
-			),
-			a1lib.encodeImageString(
-				incantationImages.split_soul_inactive.toDrawableData()
-			),
-			incantationImages.split_soul_inactive.width,
-			1000
+	const isSplitSoulVisible = splitSoul.isActiveOverlay && incantations.isActiveOverlay;
+	const isSplitSoulActive = incantations.active[3];
+	const splitSoulImage = isSplitSoulActive ? incantationImages.split_soul_inactive : incantationImages.split_soul;
+	
+	if (isSplitSoulVisible) {
+		handleIncantationOverlays(
+			'SplitSoul',
+			splitSoul.position.active_orientation.x * 2,
+			splitSoul.position.active_orientation.y,
+			splitSoulImage
 		);
-	} else if (splitSoul.isActiveOverlay && incantations.isActiveOverlay) {
-		alt1.overLaySetGroup('SplitSoul');
+	}
+	
+	function handleIncantationOverlays(name: Abilities, xOffset: number, yOffset: number, image: ImageData) {
+		alt1.overLaySetGroup(name);
 		alt1.overLayImage(
-			utility.adjustPositionForScale(
-				gauges.necromancy.position.x +
-					splitSoul.position.active_orientation.x * 2,
-				gauges.scaleFactor
-			),
-			utility.adjustPositionForScale(
-				gauges.necromancy.position.y +
-					splitSoul.position.active_orientation.y,
-				gauges.scaleFactor
-			),
-			a1lib.encodeImageString(
-				incantationImages.split_soul.toDrawableData()
-			),
-			incantationImages.split_soul.width,
+			adjustPositionForScale(position.x + xOffset, scaleFactor),
+			adjustPositionForScale(position.y + yOffset, scaleFactor),
+			a1lib.encodeImageString(image.toDrawableData()),
+			image.width,
 			1000
 		);
 	}
 }
+
