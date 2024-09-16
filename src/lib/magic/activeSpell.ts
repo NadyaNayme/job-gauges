@@ -3,7 +3,7 @@ import * as ChatReader from 'alt1/chatbox';
 import { Overlay } from '../../types';
 import { keys } from 'lodash';
 import { StackingPlayerBuff } from '../../types/common';
-import { adjustPositionForScale, handleResizingImages, resizeImageData, white } from '../utility';
+import { adjustPositionForScale, handleResizingImages, white } from '../utility';
 
 const spellImages = a1lib.webpackImages({
 	bloodTithe: require('../.././asset/gauge-ui/magic/active-spell/blood-tithe.data.png'),
