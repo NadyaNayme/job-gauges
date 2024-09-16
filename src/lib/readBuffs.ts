@@ -2,7 +2,7 @@
 import * as a1lib from 'alt1';
 import BuffReader from 'alt1/buffs';
 import * as utility from './utility';
-import { Overlay } from '../types';
+import { CombatStyle, Overlay } from '../types';
 import { findAmmo } from './ranged/activeAmmo';
 import { A1Sauce } from '../a1sauce';
 import { appName } from '../data/constants';
@@ -363,7 +363,7 @@ export async function readBuffs(gauges: Overlay) {
 }
 
 async function updateBuffData(
-	buffsreader: BuffReader,
+	buffReader: BuffReader,
 	gauges: Overlay,
 	buffImage: ImageData,
 	threshold: number,
@@ -491,7 +491,7 @@ async function updateLivingDeath(gauges: Overlay, value: number) {
 		gauges.necromancy.livingDeath.cooldownDuration = 0;
 		gauges.necromancy.livingDeath.active = true;
 		gauges.necromancy.livingDeath.time = value;
-		changeCombatStyles(gauges, 4);
+		changeCombatStyles(gauges, CombatStyle.necro);
 	}
 
 	// When only 1 second of the buff exists
@@ -630,7 +630,7 @@ async function updateSunshine(
 		gauges.magic.sunshine.cooldownDuration = 0;
 		gauges.magic.sunshine.active = true;
 		gauges.magic.sunshine.time = value;
-		changeCombatStyles(gauges, 3);
+		changeCombatStyles(gauges, CombatStyle.mage);
 	}
 
 	// When only 1 second of the buff exists
@@ -744,7 +744,7 @@ async function updateTsunami(gauges: Overlay, value: number) {
 	}
 }
 
-async function changeCombatStyles(gauges: Overlay, style: number) {
+function changeCombatStyles(gauges: Overlay, style: CombatStyle) {
 	if (gauges.combatStyle !== style && gauges.automaticSwapping) {
 		gauges.combatStyle = style;
 		utility.forceClearOverlays();
@@ -766,7 +766,7 @@ async function updateDeathsSwiftness(
 		gauges.ranged.deathsSwiftness.cooldownDuration = 0;
 		gauges.ranged.deathsSwiftness.active = true;
 		gauges.ranged.deathsSwiftness.time = value;
-		changeCombatStyles(gauges, 2);
+		changeCombatStyles(gauges, CombatStyle.ranged);
 	}
 
 	// When only 1 second of the buff exists
@@ -885,7 +885,7 @@ async function updateRangedSplitSoul(gauges: Overlay, value: number) {
 		gauges.ranged.splitSoul.cooldownDuration = 0;
 		gauges.ranged.splitSoul.active = true;
 		gauges.ranged.splitSoul.time = value;
-		changeCombatStyles(gauges, 2);
+		changeCombatStyles(gauges, CombatStyle.ranged);
 	}
 
 	// When only 1 second of the buff exists
