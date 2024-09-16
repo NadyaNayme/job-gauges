@@ -20,7 +20,12 @@ export const createFileSetting = (
 ): HTMLElement => {
 
 	function uploadAlarm() {
-		const file = input.files[0];
+		const file = input.files?.[0];
+		
+		if (!file) {
+			throw Error(`Failed to find file when uploading alarm.`);
+		}
+		
 		db.put({
 			_id: nanoid(),
 			_attachments: {
@@ -40,10 +45,22 @@ export const createFileSetting = (
 	}
 
 	const input = createInput('file', name, defaultValue);
-	input.id = name;
+	
 	input.addEventListener('change', () => {
-		innerContainer.querySelector('button').innerText = 'Uploading file...';
-		const file = input.files[0];
+		const button = innerContainer.querySelector('button');
+		
+		if (!button) {
+			throw Error(`Failed to find button for file settings.`);
+		}
+		
+		button.innerText = 'Uploading file...';
+		
+		const file = input.files?.[0];
+		
+		if (!file) {
+			throw Error(`File settings contained no files.`);
+		}
+		
 		db.put({
 			_id: nanoid(),
 			_attachments: {
@@ -55,13 +72,13 @@ export const createFileSetting = (
 			name: file.name
 		})
 			.then(() => {
-				innerContainer.querySelector('button').innerText = 'File Uploaded!';
+				button.innerText = 'File Uploaded!';
 				setTimeout(() => {
 					const fileInput = <HTMLInputElement>(
 						container.querySelector('input[type="file"]')
 					);
 					fileInput.value = '';
-					innerContainer.querySelector('button').innerText =
+					button.innerText =
 						'Upload File';
 				}, 6000);
 			})
