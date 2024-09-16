@@ -1,13 +1,26 @@
 {
 	"compilerOptions": {
 		"strict": true,
-		"target": "es2017",
+		"target": "ES2022",
 		// Settings to make typescript play nice with webpack
 		"resolvePackageJsonExports": true,
 		"resolveJsonModule": true,
 		"moduleResolution": "bundler",
 		"allowSyntheticDefaultImports": true,
 		"module": "ESNext",
-		"lib": ["es2020", "dom"]
-	}
+		"lib": ["es2020", "dom"],
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"alwaysStrict": true,
+		"forceConsistentCasingInFileNames": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitAny": true,
+		"noImplicitThis": true,
+		"strictNullChecks": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"strictPropertyInitialization": false,
+		"inlineSources": true
+	},	
+	"exclude": ["**/*.test.ts", "node_modules", "dist"]
 }
