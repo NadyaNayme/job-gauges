@@ -109,14 +109,14 @@ export async function startApp() {
 			message: `<p>You need to run this page in Alt1 to be able to capture the screen.</p>`,
 		});
 	}
-	
+
 	if (!alt1.permissionPixel) {
 		return errorLogger.showError({
 			title: 'Missing Screen Reading Permissions',
 			message: `<p>This app does not have permissions to capture your screen. Please adjust the app's settings in Alt1.</p>`,
 		});
 	}
-	
+
 	if (!alt1.permissionOverlay) {
 		return errorLogger.showError({
 			title: 'Missing Overlay Permissions',
@@ -154,10 +154,8 @@ export async function startApp() {
 
 	alt1.overLaySetGroupZIndex('DeathsSwiftness_Text', 1);
 	alt1.overLaySetGroupZIndex('DeathsSwiftness_Cooldown_Text', 1);
-
 	alt1.overLaySetGroupZIndex('CrystalRain_Text', 1);
 	alt1.overLaySetGroupZIndex('CrystalRain_Cooldown_Text', 1);
-
 	alt1.overLaySetGroupZIndex('PerfectEquilibrium_Text', 1);
 	alt1.overLaySetGroupZIndex('SplitSoul_Text', 1);
 
@@ -194,7 +192,7 @@ function updateActiveOrientationFromLocalStorage(): void {
 	// Retrieve selected orientation from localStorage
 	const selectedOrientation: OrientationTypes | `${OrientationTypes}_orientation` = getSetting('selectedOrientation');
 	let mappedOrientation: OrientationTypes = 'reverse_split';
-	
+
 	if (!selectedOrientation) {
 		mappedOrientation = 'reverse_split';
 	}
@@ -215,7 +213,7 @@ function updateActiveOrientationFromLocalStorage(): void {
 	function isOrientation(obj: any, key: string): obj is Orientation {
 		return key === 'active_orientation' && !!obj.active_orientation;
 	}
-	
+
 	// Function to recursively update orientations in an object
 	function updateActiveOrientation(obj: { [k in string]: any }) {
 		for (const key in obj){
@@ -232,7 +230,7 @@ function updateActiveOrientationFromLocalStorage(): void {
 		utility.freezeOverlays();
 		utility.continueOverlays();
 	}
-	
+
 	updateActiveOrientation(gauges);
 }
 
