@@ -11,9 +11,9 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./a1sauce/dataImages/ErrorHandling/large_buffs.data.png":
+/***/ "./a1sauce/DataImages/ErrorHandling/large_buffs.data.png":
 /*!***************************************************************!*\
-  !*** ./a1sauce/dataImages/ErrorHandling/large_buffs.data.png ***!
+  !*** ./a1sauce/DataImages/ErrorHandling/large_buffs.data.png ***!
   \***************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -21,9 +21,9 @@ module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/
 
 /***/ }),
 
-/***/ "./a1sauce/dataImages/ErrorHandling/medium_buffs.data.png":
+/***/ "./a1sauce/DataImages/ErrorHandling/medium_buffs.data.png":
 /*!****************************************************************!*\
-  !*** ./a1sauce/dataImages/ErrorHandling/medium_buffs.data.png ***!
+  !*** ./a1sauce/DataImages/ErrorHandling/medium_buffs.data.png ***!
   \****************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -91,100 +91,100 @@ module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/
 
 /***/ }),
 
-/***/ "./asset/data/buffs/necromancy/darkness.data.png":
-/*!*******************************************************!*\
-  !*** ./asset/data/buffs/necromancy/darkness.data.png ***!
-  \*******************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("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")
-
-/***/ }),
-
-/***/ "./asset/data/buffs/necromancy/living-death.data.png":
-/*!***********************************************************!*\
-  !*** ./asset/data/buffs/necromancy/living-death.data.png ***!
-  \***********************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("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")
-
-/***/ }),
-
-/***/ "./asset/data/buffs/necromancy/necrosis.data.png":
-/*!*******************************************************!*\
-  !*** ./asset/data/buffs/necromancy/necrosis.data.png ***!
-  \*******************************************************/
+/***/ "./asset/data/buffs/necro/Necrosis.data.png":
+/*!**************************************************!*\
+  !*** ./asset/data/buffs/necro/Necrosis.data.png ***!
+  \**************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("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")
 
 /***/ }),
 
-/***/ "./asset/data/buffs/necromancy/phantom-guardian.data.png":
-/*!***************************************************************!*\
-  !*** ./asset/data/buffs/necromancy/phantom-guardian.data.png ***!
-  \***************************************************************/
+/***/ "./asset/data/buffs/necro/darkness.data.png":
+/*!**************************************************!*\
+  !*** ./asset/data/buffs/necro/darkness.data.png ***!
+  \**************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("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")
+
+/***/ }),
+
+/***/ "./asset/data/buffs/necro/living-death.data.png":
+/*!******************************************************!*\
+  !*** ./asset/data/buffs/necro/living-death.data.png ***!
+  \******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("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")
+
+/***/ }),
+
+/***/ "./asset/data/buffs/necro/phantom-guardian.data.png":
+/*!**********************************************************!*\
+  !*** ./asset/data/buffs/necro/phantom-guardian.data.png ***!
+  \**********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAABkAAAANCAYAAABcrsXuAAAAAW5vUEUAYtdMlAAAAARub1BFAAAAAEEgjiIAAAAJbm9QRQAAAAAAAAAAAKGKctUAAAQESURBVDhPLZTpU1NnFMbvv9Bpp9YkZCMhJBCyAAkhIBBR0rrBRAsBLPsaI0sNS9gdEeiECrKqaK20TnWKuMwUy3Ta+q1fO+1My/jH/HrupR+e+9733Oec8zznfecquboYLn09efo4bkMLHkMHBUYVLeRnXZW1Fa/svcZefKZ++oY3cMs3j7Ht/3iPBk9WB3mGJkEjLkNcW/P1stc3ojj1n0uxpuMGWe1ags+UwGuSRCniM3XjN/VR0zDA0t4Bawe/MvnNM4n3SPwaheYB/Jbrwu/CndUmaNWginWr0LeguA1fHDcwdkoDKWhOUmQZotAyiM/cL2uCWHKSqSd73PrhDZmXh2wd/k5lrJOA5QYB6wjF1mHNpSpMreETUV7Ze8R9gaENRQ16jF0aodCcoMg8RFASg9YxKZDCX3OZ4fXHjDx4ytTuC2afvsLhC2N3BykNt1GaPaXxi82DkjtAkUlgGT4WqTXqQPFbBqR4UrMekA9q4ZBtgjLbLGF7mtapZZJf3ye1vUtd3xj5wQj+8nO4gxWczMqm3H5LGk1QYh2lxCIQcUHruLgTgSLaa+pEKRbLxaJELR6U95AkhG1znMpZ4mLtNInFDbrn17nUfYPgmcuUnInhL4viLi5Hn2XFaY8K/6YmqtQ2o+WGbNNaPU28uQ8loCrInhTClGa9zC4JjgWqHMtEGnqJ35gXNxnMTj/u9iQFAxN8sriG/mMdOoMZo80lgr6iPGeRChF2StYyaaS6CsjY1BEqqr1S+4yQ5oW0oJEiuRkirhUi4RFi16bJ8Yaw5QXwJEY06OYy6D46gU5nxmYvo9q5QlWu8HNXqXRkRKg6whlC1rSMbhRFnWfYPkelqIk4VqgWYnXuXaKuTc5eGOJ8+xCuokrMDi/+RApvcpSTt1bQn9BjNRZTnbcq3G1qBGedm9LojuaoqW5TG506QiUsj/Kc21SI+mrnGp+6tojmbfNZ/g5n4teINieouNSKKTufov4UnoE0H2a20cuoaj3fc8H9Lefdjzjn3pG8e0zO/cjOq0NmMzs0X1yVizGPUm5f0DqfFgU1or7+9EM2nr/BkR/AYLBSVdsmh32FUHyc5vm/qF3/kw8e7qOTQ4/5nlPnfUadNBsbesn2/lse7b0llc7Q0p1mJH1XG7+i2uvpusfth8+Y29plZuM7xpd3sMiB6vRGbDYv4cE1ri7+TcvCP9RtHNFY9JomQX3hHrP3n/L4p994fvCO8ZlVrqeWCEdq5fZV0TuonvMSSiy6ypdLWwzOr5G8uULf9DIX471UdLwm/OCI6IP3NNw9om3xX9oXjqhff0+y7hfuv/iZ/Xd/8ER+NbOL9xidvkPl2Ss0d6ZpbB+j+nwzV7sm5EJk+A/744X0XACaYAAAAABJRU5ErkJggg==")
 
 /***/ }),
 
-/***/ "./asset/data/buffs/necromancy/putrid-zombie.data.png":
-/*!************************************************************!*\
-  !*** ./asset/data/buffs/necromancy/putrid-zombie.data.png ***!
-  \************************************************************/
+/***/ "./asset/data/buffs/necro/putrid-zombie.data.png":
+/*!*******************************************************!*\
+  !*** ./asset/data/buffs/necro/putrid-zombie.data.png ***!
+  \*******************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAABkAAAANCAIAAADTzFK5AAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAulJREFUeJw1U81rVUcUP+fMzHv3XRNNoFThCSl+oPhJ6aKF0kVcCEp1UylFrF256MqNqy4E40JQ/DNcaRNESEDaRSnNIgQEFUys+IW1pYbYF1/ey71v5pz+5ol3cS93Zs7v/D7O+EPbzzELSxAKxESmahEfYSfkmRvYJVIroztcFie2Ppq/w8/rvWdOPbp9k2uamJxMc+8GD7uUzIsIGcociomZ2NjETIU9DxeZPRZld1l/FZdmf+barEw4x5F2Hj/my1b8LHB06cWGJxSIsKHGoThTIyVORKCDncAU2Jm0i1e/z368a9/4nj1LN27Gbh/9/plfHNh6f9Dd/8Op6pcOmgs6c35QmQkaJ1NAgyHeYUjQeIV2HT3+9Nbs5k92UNLl6Rlphd7rN9SgA6e/q9e6blPDf9Dis2vZoACF5pJZZkXkHRaN9KUGHd18cOLJwl0GV29klJoclKlnNF3Hf5N30sCq4zBk4d1718gp7IdgHloJ3Qk+yH9/vXRvUmwZWiIPGVg0xWFaEX6r4IWkUCwue5wtAxyAoEvEaPgLKAnkRgNv2I5vTj6+PaOxQvboZRq7b18VW8ZpNWMV0KZQREPvcpzAhWeEo5Lhsc9pQLQKXfZs7i5FnGbVhI5WDUJzRBrOTPx7p+CAEUvTudJz4Tiy9CzVubXL4aDG9KECNq33Mz5gXdKNCoqK8TGrqsSSE8yMmuy3edof3L6GttRHz3+qPVD3N0uVp84jjAd0aPdZ+lJ6IyvLd27pan+okXzVHHQ3AIP5Ii45HGzKidbCpSvut4JCsHITjPr8/DmZi+6ecT9bZx21e8RL7NoffXrmx4Xr13ighNhfJ+sjI/AKAi72dWPx8lXMl0VkU3O/p+XIHxcufjH1k7OGLDnqWE4bw4EJeJbsPuT61F2jpqeWeI8ZwfiMeTlSLE5dHd5Fi1UN53xZqHft779dG606259ubR8Iv3ruWL5hMBxj0FFRiqq0Xknb2aizdfsfhQlMvDg+e7cAAAAASUVORK5CYII=")
 
 /***/ }),
 
-/***/ "./asset/data/buffs/necromancy/residual-soul.data.png":
-/*!************************************************************!*\
-  !*** ./asset/data/buffs/necromancy/residual-soul.data.png ***!
-  \************************************************************/
+/***/ "./asset/data/buffs/necro/residual-soul.data.png":
+/*!*******************************************************!*\
+  !*** ./asset/data/buffs/necro/residual-soul.data.png ***!
+  \*******************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAIAAABLixI0AAAFpUlEQVR4XjWVTWxcVxXHzzn33vfefNpje2zHjhtnaOymaQpNSnHboFYqVVAEG9iVDykSq4pd2bBg1X23ICQ2FVKLhAQICZENVaA0SqU0qUDkA8chsePYM/bMeOb5fd57DvPs+PeO/rv7O/+3uLo4i295wbQ2nlJEiKRImZI2NdIBu4zzfYBM2AKgAIKMYJDiE2YuQpxjm2dZ0taHIq21ItB+pTR1VtemoaRBK0LAnN1wP++vufixOBYQUlVVHQfyWCgbbNp4gAUewDRpY0YercCvjAfHXlcn55uXpxd/3vrq+0sXPzjz9gdnTr27WF4+ZyZe1p4xplp+4SW8dMKtVL3Jk5q0UkrrIotCqoBMUC3Nvlp+Y+z0j5fH6sGzFTXhEbMwyHKr+uhC/Mn75e4tVtjHVgWmM9wLYfCAXGS07ziXA1Szcn4kLk2erS7PX/zFmdla6ZiBALi3l/iGSCBOWNf01Pna4+tObF0NUlo3+rFzu/f1VMubO21UYKMeMxMhKu2p6vTc92Y8wj/++hPM85uru7/65dXfX7kTMYQCD/pZWKb5y+Ouwi5l6qfQ6yvT1OOn3ZsV+/y4P/YMIRAiIBkcVZswCIC+GSgvcyJOBsO0m2Fq0Qp2h3ntzNTcT6fVJXTnUjhZo+YUuJRuObDKNFqkPY2IVAwpgZm6986PvrHRj5aXpp979416SQ8EtqzLciYAsdBcPl5pzaLjPEw2v1yN233piHenioj+2ELhAmBwdufBLqw0awgb692ZZnVhquxYujHvO7Yi/d0IAAVx70mHo1hrbbMcPY0Lkvltcz2qKNCAJGIL143u+neyk0a1n+xd+8d/xy60DEHoJHYcR1kc5uJgsL0Zr7X1TVI9Qe2MALDTjiXKbLpX9BJmyXZ4tXX1yv/s2ycwczeu/GtivPTii/PtKBoMkrCfAuJweyO+3SndHMfh6GTbRh3mXFw+SuvyzOYaABAx7d/TweTgY/nUrK68+ZX+o063PezsZ1Fio0Gc59n+Rjv5Z6/yaJL3tpJwjV3M8PQyMYgAI4CGAhRn487nZXx18Fv3Wbq68s7XayX/QZjs7Pa2//OQdzP9Za3cbea921n0GAQRfTpQAFgAB4Bw5AJEApsnO5/7fH7/d/zFcL20WIm3hoMvNs1WOQjrkCbp3i2bDsifZETHORCyY7AOZQDOHrqOQJI8SzvXaa8RfbQYByVg8HMjyVaadsRGIqJLM5ly3jMyf+7ZRuuYC+N7f7ozvA/ouiJWyxFPdSKc7spOH1EjggUGGQ0CAnl1i27ypeDSe5eC6XHP2SjKXrjQ+sN7f+3fjRFTOioFUpxxAAKgBEDEClsoVhAgIhGQMfPuuz/7tj/TwNxyGH/84bWHaOZ/cA5MmUjTUSNNQQ2DBqIvUBgLHWDR92BIB6xyf6lGY7X29uCj33z6cCtc+f4rJijx3AT5Bg9/SpiRPFhqwmvz+sRppJIAH+j40ARao/Gyifz4qXnHOBwmw9TuES3N1ueqhgRlNAAHLhDOY9lI7LDHswKkgaUAAInQ+EoHGSblxerrrzzvrF04Vv/hT745Vw9uXL19c62zc2NN0pyFNRcIc8672ypusFoXFwtoQoXKHwWAS3WePVf91sXXQk+TyFjZ32iHf/7wM5hpVBPu/+UesLV5hqcal3WBUVopX2FJo1aACESoSTyARlA+23r5a62ls/OJITI6zvK/X1sb7mc6SqO/3U3uhDbqJNFQO8eIDhFhBCIaVo0aNWu0PAslb7JZW1hsnjg+WfbVLvPm/a17d7ejnaHbDmV9P27v235q424ah86JtjYD8ABAClgxQD7kKCFIsV7pbZfD1Sf/LhYWm9KHHVrXEuaSJuxExOZpL09j63jkwVl6y/Ob2vhK0SGKNJEBIlQEiFK0JUAAAWQQm4nkDDzCWTuKp+9j2vk/SHxq1pLaHMgAAAAASUVORK5CYII=")
 
 /***/ }),
 
-/***/ "./asset/data/buffs/necromancy/skeleton-warrior.data.png":
-/*!***************************************************************!*\
-  !*** ./asset/data/buffs/necromancy/skeleton-warrior.data.png ***!
-  \***************************************************************/
+/***/ "./asset/data/buffs/necro/skeleton-warrior.data.png":
+/*!**********************************************************!*\
+  !*** ./asset/data/buffs/necro/skeleton-warrior.data.png ***!
+  \**********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAABkAAAANCAIAAADTzFK5AAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAA1xJREFUeJxFk39oW1UUx8/98X7kpdmabE1WbVPWdVpdNzVqUafunyFChf2zUf1DZQOZhiHdP1a3gGxqB/NHddB/nBMEqZrN2RQn+0Nw3UTmDyiCOCpmNbVbkza0TZuXvJf37j3epMOdy7tcHud87vfccw7f3n6AICOEEqpT4EAAUEj0iTKgMtKcP/Q0fvEhTE+B+oHIXh9evPQ5cG5EtzbXYsZCleVu6DPzKo4T4LQexlQkJQ0WUHX2Q+bCS7vF+McwlIH/DdG5Px548B3N98pvHKSPvJz7anBLd1JEI9r8imKpxZUuJaquDhhqtLD/sdq3I3Dqu9sQw+i49HPUk7/tvA9On6N2jTS3QCxi3tGTXcl0bdhHlmoqXuFoY1fyeLG/177yKZwZv01xnXsv/sLtWul4ZuLFXnNbT9PMKlg8+tzgXGpfJDniDPat7uVUtnJGdYKoKO7mWDERFOkUNPJsGOk5/wMUbTeZxrmSgaJlY3Dh+PCmU5e1VddtCcpImBhW7MTFQqov8PwnnCoWIcU9CfubY5Bjt0CaET+d0Rcrlf2f6WWhEwaUg4Sm7KK4PK2XvEC+QgVuuru/cKSvdWDU6Njxz9WTvPzkPU7Mqpx7GyhDxPW9T9x5+BhbrtaSZ4kndEQgjCqWSpZC+PeCNWdb+SrzfD+oB9s6oLOLSLbx2bduDD3DF91J/H4y/OiubcmjpmnMfvmrM5jhwLhpoiZRFVUS5sq6WgX1pD5bVQVSMs0lt4yEhcI339vT9tqFDXtTPDF0solR+DE7e3RcSsXg0rdL7k2DhtZp7dL1VJ+otqFVn6FEVWgECmoD7vjWvLPlrlf+nv7LL2StrTt56al3y9SQoaCIhq5PfmBXclJ4t55eldc0H9/8PkVAS6cVl9QhjXZWGSMGiq4IW7yrq5A+0vbqWXUpQU6d+PrrV96sucuoQCjrzkDiiYc7e7ZPjB7a9cAZXhWUCrJGAiJQ6Kq3VzzIVzofSuXbLzjxdZwRJgOaszpT95JrFFgbl4Nfj6nhmrn2p9fdql0r8KrfQBGpfNSnhs4HXPaWNAh299m6z4FqMhRYmkqj56J6EeUmRP/A4fRHw0OJHQOjo9mrP/2be2H3gTEyNsV8URdc5zSSFEqb7oV0/48J58TIf8iTdyIW+EFBAAAAAElFTkSuQmCC")
 
 /***/ }),
 
-/***/ "./asset/data/buffs/necromancy/split-soul.data.png":
-/*!*********************************************************!*\
-  !*** ./asset/data/buffs/necromancy/split-soul.data.png ***!
-  \*********************************************************/
+/***/ "./asset/data/buffs/necro/split-soul.data.png":
+/*!****************************************************!*\
+  !*** ./asset/data/buffs/necro/split-soul.data.png ***!
+  \****************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("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")
 
 /***/ }),
 
-/***/ "./asset/data/buffs/necromancy/threads-of-date.data.png":
-/*!**************************************************************!*\
-  !*** ./asset/data/buffs/necromancy/threads-of-date.data.png ***!
-  \**************************************************************/
+/***/ "./asset/data/buffs/necro/threads-of-date.data.png":
+/*!*********************************************************!*\
+  !*** ./asset/data/buffs/necro/threads-of-date.data.png ***!
+  \*********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("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")
 
 /***/ }),
 
-/***/ "./asset/data/buffs/necromancy/vengeful-ghost.data.png":
-/*!*************************************************************!*\
-  !*** ./asset/data/buffs/necromancy/vengeful-ghost.data.png ***!
-  \*************************************************************/
+/***/ "./asset/data/buffs/necro/vengeful-ghost.data.png":
+/*!********************************************************!*\
+  !*** ./asset/data/buffs/necro/vengeful-ghost.data.png ***!
+  \********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAABkAAAANCAIAAADTzFK5AAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAypJREFUeJwlU91rFFcUv+ecO/fO7Gay25jSkCr4RWIbwUawFdKUisU+FEGQiiD9A4ogCLF9LIW8tA8+tQ/tYwuBUgyG9qVNzVNQC1W0sR+RTGyNiRpdEzeb3Z3Z+9Fz03kY7tx7zm9+H+fK4Z4xEAiC+C3ACwACSUIjKgAQwlvfsbbjfM4LIcIOhDofFkBCCOfaxhe8kHy8hcWNhEgSS7GsKFEuBqsPz++Awvd/tmgePGqZJ846RuBiBkIARWVN3asXBuLxK+idF06ikBAIEGMRKI3p4uQbGHMLovUFwsLXg9s/T9VM2znrmRCjeRdhnFLfX7Mje0anN1iJYIIgESPhA1tkwoBcPXQ6u32xP+qSDoEpgveL4wNDo0sd23bCemEZTFL8x/Tr6eQ9xo4wkagK25TAvDDY8L9SxkWHolb4JPD1TeNiorVGbNNcbuR2UwQ5ofilr5Yevl/dSRUN6fLE4cqpydDAvw9YEBIgVC6JmOHWnmhNzbTn5ljuv598+OJ43djcCSeCCFXOWvTCTqdx/vJhqD3r8xUZuLA3ILcES3b01kfdURQME8YWd34PVjtXe6vUT0luJGGkMNVRpVbFuFyZ/+UIzf7tXu0ljGWQFh4kCCFyNORZNDsoGj9Oh+iDVN+ZuELwMpFWWM5uH4OCOE9qehl5+/bA5vez2c+H2PtgmQSlqJTInvor2oogL6rbrvfeWVuY5/nh8/LJI9HEkqYu5UpkMV/4J9m9AyIwzfbmpesHvzTZcc0obE9Jy25N6Y2xGjTWkvu22LvfJZ5ndtuFc81rN+OhfRzwrQ9WD3zbw86zkNfOrFw/O8cFoJODX9i2Xe8bmZKMUpa9v42t6U4hnqMzKiejVjKn9+I2gYTp6CGbyk62XGDr7sn1wUu9/R/fzbXRMRVPiuFvSvViJbd1JwoZy+rVwe9KzaN5HiFHJMB56TfWbdMA51flT9icumpbDZsXzxORjfrdM/7PT63ycf7Y5PZZ7hrW5zx3zJKGs3fvmMvw5gnH3eEOMLmKmv/VHBhxT6H+0w8ijjwz9ODajVq1+fTYUgoDft3supZ07GoY9a2L9R+ee2lPH77d2gAAAABJRU5ErkJggg==")
@@ -1340,9 +1340,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(/*! ../../../Nis/images/range-input-tab.png */ "./a1sauce/Nis/images/range-input-tab.png"), __webpack_require__.b);
-var ___CSS_LOADER_URL_IMPORT_1___ = new URL(/* asset import */ __webpack_require__(/*! ../../../Nis/images/nis-range-minus.png */ "./a1sauce/Nis/images/nis-range-minus.png"), __webpack_require__.b);
-var ___CSS_LOADER_URL_IMPORT_2___ = new URL(/* asset import */ __webpack_require__(/*! ../../../Nis/images/nis-range-plus.png */ "./a1sauce/Nis/images/nis-range-plus.png"), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(/*! ../../../NIS/images/range-input-tab.png */ "./a1sauce/NIS/images/range-input-tab.png"), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_1___ = new URL(/* asset import */ __webpack_require__(/*! ../../../NIS/images/nis-range-minus.png */ "./a1sauce/NIS/images/nis-range-minus.png"), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_2___ = new URL(/* asset import */ __webpack_require__(/*! ../../../NIS/images/nis-range-plus.png */ "./a1sauce/NIS/images/nis-range-plus.png"), __webpack_require__.b);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
 var ___CSS_LOADER_URL_REPLACEMENT_1___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_1___);
@@ -35414,16 +35414,16 @@ debuffReader.debuffs = true;
 const errorLogger = new _a1sauce_Error_logError__WEBPACK_IMPORTED_MODULE_5__.LogError();
 const buffsImages = alt1__WEBPACK_IMPORTED_MODULE_9__.webpackImages({
     /* Necromancy */
-    darkness: __webpack_require__(/*! ../asset/data/buffs/necromancy/darkness.data.png */ "./asset/data/buffs/necromancy/darkness.data.png"),
-    living_death: __webpack_require__(/*! ../asset/data/buffs/necromancy/living-death.data.png */ "./asset/data/buffs/necromancy/living-death.data.png"),
-    split_soul: __webpack_require__(/*! ../asset/data/buffs/necromancy/split-soul.data.png */ "./asset/data/buffs/necromancy/split-soul.data.png"),
-    threads: __webpack_require__(/*! ../asset/data/buffs/necromancy/threads-of-date.data.png */ "./asset/data/buffs/necromancy/threads-of-date.data.png"),
-    necrosis: __webpack_require__(/*! ../asset/data/buffs/necromancy/necrosis.data.png */ "./asset/data/buffs/necromancy/necrosis.data.png"),
-    soul: __webpack_require__(/*! ../asset/data/buffs/necromancy/residual-soul.data.png */ "./asset/data/buffs/necromancy/residual-soul.data.png"),
-    skeleton: __webpack_require__(/*! ../asset/data/buffs/necromancy/skeleton-warrior.data.png */ "./asset/data/buffs/necromancy/skeleton-warrior.data.png"),
-    zombie: __webpack_require__(/*! ../asset/data/buffs/necromancy/putrid-zombie.data.png */ "./asset/data/buffs/necromancy/putrid-zombie.data.png"),
-    ghost: __webpack_require__(/*! ../asset/data/buffs/necromancy/vengeful-ghost.data.png */ "./asset/data/buffs/necromancy/vengeful-ghost.data.png"),
-    phantom: __webpack_require__(/*! ../asset/data/buffs/necromancy/phantom-guardian.data.png */ "./asset/data/buffs/necromancy/phantom-guardian.data.png"),
+    darkness: __webpack_require__(/*! ../asset/data/buffs/necro/darkness.data.png */ "./asset/data/buffs/necro/darkness.data.png"),
+    living_death: __webpack_require__(/*! ../asset/data/buffs/necro/living-death.data.png */ "./asset/data/buffs/necro/living-death.data.png"),
+    split_soul: __webpack_require__(/*! ../asset/data/buffs/necro/split-soul.data.png */ "./asset/data/buffs/necro/split-soul.data.png"),
+    threads: __webpack_require__(/*! ../asset/data/buffs/necro/threads-of-date.data.png */ "./asset/data/buffs/necro/threads-of-date.data.png"),
+    necrosis: __webpack_require__(/*! ../asset/data/buffs/necro/Necrosis.data.png */ "./asset/data/buffs/necro/Necrosis.data.png"),
+    soul: __webpack_require__(/*! ../asset/data/buffs/necro/residual-soul.data.png */ "./asset/data/buffs/necro/residual-soul.data.png"),
+    skeleton: __webpack_require__(/*! ../asset/data/buffs/necro/skeleton-warrior.data.png */ "./asset/data/buffs/necro/skeleton-warrior.data.png"),
+    zombie: __webpack_require__(/*! ../asset/data/buffs/necro/putrid-zombie.data.png */ "./asset/data/buffs/necro/putrid-zombie.data.png"),
+    ghost: __webpack_require__(/*! ../asset/data/buffs/necro/vengeful-ghost.data.png */ "./asset/data/buffs/necro/vengeful-ghost.data.png"),
+    phantom: __webpack_require__(/*! ../asset/data/buffs/necro/phantom-guardian.data.png */ "./asset/data/buffs/necro/phantom-guardian.data.png"),
     /* Magic */
     sunshine: __webpack_require__(/*! ../asset/data/buffs/magic/sunshine.data.png */ "./asset/data/buffs/magic/sunshine.data.png"),
     greaterSunshine: __webpack_require__(/*! ../asset/data/buffs/magic/greater-sunshine.data.png */ "./asset/data/buffs/magic/greater-sunshine.data.png"),
@@ -35441,8 +35441,8 @@ const buffsImages = alt1__WEBPACK_IMPORTED_MODULE_9__.webpackImages({
     rangedSplitSoul: __webpack_require__(/*! ../asset/data/buffs/ranged/split-soul.data.png */ "./asset/data/buffs/ranged/split-soul.data.png"),
     // TODO: Move this into A1 Sauce properly
     /* Troubleshooting */
-    mediumBuffs: __webpack_require__(/*! ../a1sauce/dataImages/ErrorHandling/medium_buffs.data.png */ "./a1sauce/dataImages/ErrorHandling/medium_buffs.data.png"),
-    largeBuffs: __webpack_require__(/*! ../a1sauce/dataImages/ErrorHandling/large_buffs.data.png */ "./a1sauce/dataImages/ErrorHandling/large_buffs.data.png"),
+    mediumBuffs: __webpack_require__(/*! ../a1sauce/DataImages/ErrorHandling/medium_buffs.data.png */ "./a1sauce/DataImages/ErrorHandling/medium_buffs.data.png"),
+    largeBuffs: __webpack_require__(/*! ../a1sauce/DataImages/ErrorHandling/large_buffs.data.png */ "./a1sauce/DataImages/ErrorHandling/large_buffs.data.png"),
 });
 async function retryOperation(operation, maxRetries, delay, attempt = 0) {
     try {
@@ -37259,6 +37259,39 @@ module.exports = __webpack_require__.p + "nis-bg.png";
 
 /***/ }),
 
+/***/ "./a1sauce/NIS/images/nis-range-minus.png":
+/*!************************************************!*\
+  !*** ./a1sauce/NIS/images/nis-range-minus.png ***!
+  \************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+module.exports = __webpack_require__.p + "nis-range-minus.png";
+
+/***/ }),
+
+/***/ "./a1sauce/NIS/images/nis-range-plus.png":
+/*!***********************************************!*\
+  !*** ./a1sauce/NIS/images/nis-range-plus.png ***!
+  \***********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+module.exports = __webpack_require__.p + "nis-range-plus.png";
+
+/***/ }),
+
+/***/ "./a1sauce/NIS/images/range-input-tab.png":
+/*!************************************************!*\
+  !*** ./a1sauce/NIS/images/range-input-tab.png ***!
+  \************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+module.exports = __webpack_require__.p + "range-input-tab.png";
+
+/***/ }),
+
 /***/ "./a1sauce/NIS/images/scroll.png":
 /*!***************************************!*\
   !*** ./a1sauce/NIS/images/scroll.png ***!
@@ -37278,39 +37311,6 @@ module.exports = __webpack_require__.p + "scroll.png";
 
 "use strict";
 module.exports = __webpack_require__.p + "scrollhor.png";
-
-/***/ }),
-
-/***/ "./a1sauce/Nis/images/nis-range-minus.png":
-/*!************************************************!*\
-  !*** ./a1sauce/Nis/images/nis-range-minus.png ***!
-  \************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-module.exports = __webpack_require__.p + "nis-range-minus.png";
-
-/***/ }),
-
-/***/ "./a1sauce/Nis/images/nis-range-plus.png":
-/*!***********************************************!*\
-  !*** ./a1sauce/Nis/images/nis-range-plus.png ***!
-  \***********************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-module.exports = __webpack_require__.p + "nis-range-plus.png";
-
-/***/ }),
-
-/***/ "./a1sauce/Nis/images/range-input-tab.png":
-/*!************************************************!*\
-  !*** ./a1sauce/Nis/images/range-input-tab.png ***!
-  \************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-module.exports = __webpack_require__.p + "range-input-tab.png";
 
 /***/ }),
 
