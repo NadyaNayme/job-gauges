@@ -1,6 +1,7 @@
 
 import { findBuffAndDebuffBars } from "../..";
 import { A1Sauce } from "../../a1sauce";
+import { Patches } from "../../a1sauce/Patches/patchNotes";
 import { getSetting, updateSetting } from "../../a1sauce/Settings/Storage";
 import {
 	appName,
@@ -8,6 +9,7 @@ import {
 	minorVersion,
 	patchVersion,
 } from '../../data/constants';
+import { notes } from "../../patchnotes";
 import { Overlay } from '../../types';
 import { setOverlayPosition } from "../utility";
 
@@ -19,6 +21,9 @@ sauce.setVersion(majorVersion, minorVersion, patchVersion);
 const settings = sauce.createSettings();
 
 const db = new PouchDB(appName);
+
+const patchNotes = new Patches();
+patchNotes.setNotes(notes);
 
 export const renderSettings = async (gauges: Overlay) => {
 	settings
@@ -173,14 +178,20 @@ export const renderSettings = async (gauges: Overlay) => {
 		)
 		.addAlarmSetting('alarmNecrosis', '')
 		.addSeperator()
-		.addText(
-			'Use the below button if you have adjusted your screen in any way and Job Gauges is no longer working.'
+		.addButton(
+			'openPatchNotes',
+			'Open Patch Notes',
+			patchNotes.showPatchNotes,
+			{ classes: ['nisbutton'] }
 		)
 		.addButton(
 			'resetPositons',
 			'Scan for Buff and Debuff Bars',
 			findBuffAndDebuffBars,
 			{ classes: ['nisbutton'] }
+		)
+		.addText(
+			'Use the above Scan button if you have adjusted your screen in any way and Job Gauges is no longer working.'
 		)
 		.build();
 

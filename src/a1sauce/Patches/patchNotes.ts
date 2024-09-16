@@ -19,7 +19,14 @@ export class Patches {
 		const lastKnownVersion = getSetting('lastKnownVersion');
 		const currentVersion = sauce.getVersion();
 		updateSetting('lastKnownVersion', currentVersion);
-		return lastKnownVersion !== currentVersion;
+		const isNewVersion = lastKnownVersion !== currentVersion;
+		if (isNewVersion) {
+			tempTooltip(
+				`New update! See ${sauce.getPublicName()} window for patch notes.`,
+				5000
+			);
+		}
+		return isNewVersion;
 	};
 
 	public setNotes = (notes: PatchNote[]): Patches => {
@@ -55,7 +62,7 @@ export class Patches {
 	private addNotesToContainer = (notes: PatchNote[], container: HTMLElement): void => {
 			const noteContainer = document.createElement('div');
 			noteContainer.classList.add('patch-notes');
-			
+
 			for (const note of notes) {
 				const noteDate = document.createElement('h3');
 				noteDate.innerText = note.date;
@@ -75,7 +82,6 @@ export class Patches {
 	}
 
 	public showPatchNotes = () => {
-		if (this.checkForNewVersion()) {
 			const container = this.createPatchContainer();
 
 			const headerContainer = this.createPatchHeader();
@@ -89,10 +95,5 @@ export class Patches {
 			this.addNotesToContainer(notes, container);
 
 			document.body.appendChild(container);
-			tempTooltip(
-				`New update! See ${sauce.getPublicName()} window for patch notes.`,
-				5000
-			);
-		}
 	};
 }

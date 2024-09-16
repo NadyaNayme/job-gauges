@@ -130,9 +130,15 @@ export async function startApp() {
 		});
 	}
 
-	const patchCheck = new Patches();
-	patchCheck.setNotes(notes);
-	patchCheck.showPatchNotes();
+	const patchNotes = new Patches();
+	patchNotes.setNotes(notes);
+	if (patchNotes.checkForNewVersion()) patchNotes.showPatchNotes();
+	document.addEventListener('keydown', function (event) {
+		if (event.ctrlKey && event.key === 'p') {
+			event.preventDefault(); // Prevent the default print dialog
+			patchNotes.showPatchNotes();
+		}
+	});
 
 	if (getSetting('buffsPosition') == undefined) {
 		calibrationWarning();
