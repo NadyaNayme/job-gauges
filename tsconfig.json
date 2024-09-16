@@ -19,8 +19,7 @@
 		"strictNullChecks": true,
 		"esModuleInterop": true,
 		"skipLibCheck": true,
-		"strictPropertyInitialization": false,
-		"inlineSources": true
+		"strictPropertyInitialization": false
 	},	
 	"exclude": ["**/*.test.ts", "node_modules", "dist"]
 }
