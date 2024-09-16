@@ -1,4 +1,9 @@
-export const notes = [
+export type PatchNote = {
+	date: `${number}/${number}/${number} - ${string} v${string}`;
+	note: string[];
+};
+
+export const notes: PatchNote[] = [
 	// Add patch notes to top
 	{
 		date: '09/15/2024 - Better Error Handling v.1.1.3',
