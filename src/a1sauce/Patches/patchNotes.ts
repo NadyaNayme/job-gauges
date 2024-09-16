@@ -3,16 +3,12 @@ import { getSetting, updateSetting } from '../Settings/Storage';
 import { tempTooltip } from '../Utils/tempTooltip';
 
 import './Style/style.css';
+import { PatchNote } from '../../patchnotes';
 
 const sauce = A1Sauce.instance;
 
-type PatchNote = {
-	date: string;
-	note: string[];
-};
-
 export class Patches {
-	_notes = [];
+	_notes: PatchNote[] = [];
 
 	public checkForNewVersion = (): boolean => {
 		// [0] = Major ; [1] = Minor ; [2] = Patch
@@ -22,7 +18,7 @@ export class Patches {
 		return lastKnownVersion !== currentVersion;
 	};
 
-	public setNotes = (notes: any[]): Patches => {
+	public setNotes = (notes: PatchNote[]): Patches => {
 		this._notes = notes;
 		return this;
 	};
@@ -40,9 +36,9 @@ export class Patches {
 	private createPatchHeader = (): HTMLElement => {
 		const headerContainer = document.createElement('div');
 		headerContainer.classList.add('title-row');
-		let header = document.createElement('h2');
+		const header = document.createElement('h2');
 		header.innerText = 'Patch Notes';
-		let closeButton = document.createElement('button');
+		const closeButton = document.createElement('button');
 		closeButton.innerText = 'Close Patch Notes';
 		closeButton.title = 'Close patch notes';
 		closeButton.classList.add('nisbutton');
@@ -52,19 +48,19 @@ export class Patches {
 		return headerContainer;
 	}
 
-	private addNotesToContainer = (notes: any[], container: HTMLElement): void => {
+	private addNotesToContainer = (notes: PatchNote[], container: HTMLElement): void => {
 			const noteContainer = document.createElement('div');
 			noteContainer.classList.add('patch-notes');
-			for (let i = 0; i < notes.length; i++) {
-				let noteType: PatchNote = notes[i];
+			
+			for (const note of notes) {
 				const noteDate = document.createElement('h3');
-				noteDate.innerText = noteType.date;
+				noteDate.innerText = note.date;
 				const notesList = document.createElement('ul');
 				notesList.classList.add('note');
 
-				for (let j = 0; j < noteType.note.length; j++) {
+				for (const details of note.note) {
 					const noteText = document.createElement('li');
-					noteText.innerText = noteType.note[j];
+					noteText.innerText = details;
 					notesList.appendChild(noteText);
 				}
 
@@ -74,18 +70,18 @@ export class Patches {
 			}
 	}
 
-	public showPatchNotes = async () => {
+	public showPatchNotes = () => {
 		if (this.checkForNewVersion()) {
 			const container = this.createPatchContainer();
 
 			const headerContainer = this.createPatchHeader();
-			headerContainer.querySelector('.close-button').addEventListener('click', () => {
+			headerContainer.querySelector('.close-button')?.addEventListener('click', () => {
 				container.remove();
 			});
 
 			container.appendChild(headerContainer);
 
-			let notes = this.getNotes();
+			const notes = this.getNotes();
 			this.addNotesToContainer(notes, container);
 
 			document.body.appendChild(container);
