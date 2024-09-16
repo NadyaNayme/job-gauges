@@ -89,7 +89,6 @@ export const updateSetting = (setting: string | undefined, value: unknown) => {
 		throw Error(`Failed to updating setting as it's invalid.`);
 	}
 	
-  console.log('Updating setting: ', setting);
   const sauce = A1Sauce.instance;
 	
   if (!localStorage.getItem(sauce.getName())) {
