@@ -31725,7 +31725,11 @@ class Patches {
         const lastKnownVersion = (0,_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('lastKnownVersion');
         const currentVersion = sauce.getVersion();
         (0,_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.updateSetting)('lastKnownVersion', currentVersion);
-        return lastKnownVersion !== currentVersion;
+        const isNewVersion = lastKnownVersion !== currentVersion;
+        if (isNewVersion) {
+            (0,_Utils_tempTooltip__WEBPACK_IMPORTED_MODULE_2__.tempTooltip)(`New update! See ${sauce.getPublicName()} window for patch notes.`, 5000);
+        }
+        return isNewVersion;
     };
     setNotes = (notes) => {
         this._notes = notes;
@@ -31772,18 +31776,15 @@ class Patches {
         }
     };
     showPatchNotes = () => {
-        if (this.checkForNewVersion()) {
-            const container = this.createPatchContainer();
-            const headerContainer = this.createPatchHeader();
-            headerContainer.querySelector('.close-button')?.addEventListener('click', () => {
-                container.remove();
-            });
-            container.appendChild(headerContainer);
-            const notes = this.getNotes();
-            this.addNotesToContainer(notes, container);
-            document.body.appendChild(container);
-            (0,_Utils_tempTooltip__WEBPACK_IMPORTED_MODULE_2__.tempTooltip)(`New update! See ${sauce.getPublicName()} window for patch notes.`, 5000);
-        }
+        const container = this.createPatchContainer();
+        const headerContainer = this.createPatchHeader();
+        headerContainer.querySelector('.close-button')?.addEventListener('click', () => {
+            container.remove();
+        });
+        container.appendChild(headerContainer);
+        const notes = this.getNotes();
+        this.addNotesToContainer(notes, container);
+        document.body.appendChild(container);
     };
 }
 
@@ -33779,9 +33780,16 @@ async function startApp() {
             message: `<p>This app does not have permissions to create overlays. Please adjust the app's settings in Alt1.</p>`,
         });
     }
-    const patchCheck = new _a1sauce_Patches_patchNotes__WEBPACK_IMPORTED_MODULE_23__.Patches();
-    patchCheck.setNotes(_patchnotes__WEBPACK_IMPORTED_MODULE_24__.notes);
-    patchCheck.showPatchNotes();
+    const patchNotes = new _a1sauce_Patches_patchNotes__WEBPACK_IMPORTED_MODULE_23__.Patches();
+    patchNotes.setNotes(_patchnotes__WEBPACK_IMPORTED_MODULE_24__.notes);
+    if (patchNotes.checkForNewVersion())
+        patchNotes.showPatchNotes();
+    document.addEventListener('keydown', function (event) {
+        if (event.ctrlKey && event.key === 'p') {
+            event.preventDefault(); // Prevent the default print dialog
+            patchNotes.showPatchNotes();
+        }
+    });
     if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('buffsPosition') == undefined) {
         calibrationWarning();
     }
@@ -36125,10 +36133,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../.. */ "./index.ts");
 /* harmony import */ var _a1sauce__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../a1sauce */ "./a1sauce/index.ts");
-/* harmony import */ var _a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../a1sauce/Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
-/* harmony import */ var _data_constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../data/constants */ "./data/constants.ts");
-/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
-/* harmony import */ var pouchdb__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! pouchdb */ "../node_modules/pouchdb/lib/index-browser.es.js");
+/* harmony import */ var _a1sauce_Patches_patchNotes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../a1sauce/Patches/patchNotes */ "./a1sauce/Patches/patchNotes.ts");
+/* harmony import */ var _a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../a1sauce/Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
+/* harmony import */ var _data_constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../data/constants */ "./data/constants.ts");
+/* harmony import */ var _patchnotes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../patchnotes */ "./patchnotes.ts");
+/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+/* harmony import */ var pouchdb__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! pouchdb */ "../node_modules/pouchdb/lib/index-browser.es.js");
+
+
 
 
 
@@ -36136,10 +36148,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const sauce = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.A1Sauce.instance;
-sauce.setName(_data_constants__WEBPACK_IMPORTED_MODULE_3__.appName);
-sauce.setVersion(_data_constants__WEBPACK_IMPORTED_MODULE_3__.majorVersion, _data_constants__WEBPACK_IMPORTED_MODULE_3__.minorVersion, _data_constants__WEBPACK_IMPORTED_MODULE_3__.patchVersion);
+sauce.setName(_data_constants__WEBPACK_IMPORTED_MODULE_4__.appName);
+sauce.setVersion(_data_constants__WEBPACK_IMPORTED_MODULE_4__.majorVersion, _data_constants__WEBPACK_IMPORTED_MODULE_4__.minorVersion, _data_constants__WEBPACK_IMPORTED_MODULE_4__.patchVersion);
 const settings = sauce.createSettings();
-const db = new pouchdb__WEBPACK_IMPORTED_MODULE_5__["default"](_data_constants__WEBPACK_IMPORTED_MODULE_3__.appName);
+const db = new pouchdb__WEBPACK_IMPORTED_MODULE_7__["default"](_data_constants__WEBPACK_IMPORTED_MODULE_4__.appName);
+const patchNotes = new _a1sauce_Patches_patchNotes__WEBPACK_IMPORTED_MODULE_2__.Patches();
+patchNotes.setNotes(_patchnotes__WEBPACK_IMPORTED_MODULE_5__.notes);
 const renderSettings = async (gauges) => {
     settings
         .addHeader('h2', 'Job Gauges - v' + sauce.getVersion())
@@ -36147,7 +36161,7 @@ const renderSettings = async (gauges) => {
         .addSeperator()
         .addHeader('h3', 'General')
         .addCheckboxSetting('checkForUpdates', 'Periodically check if a new update is available', false)
-        .addDropdownSetting('defaultCombatStyle', 'Select default combat style', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('defaultCombatStyle') ?? '4', [
+        .addDropdownSetting('defaultCombatStyle', 'Select default combat style', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('defaultCombatStyle') ?? '4', [
         { value: '2', name: 'Ranged' },
         { value: '3', name: 'Magic' },
         { value: '4', name: 'Necromancy' },
@@ -36156,7 +36170,7 @@ const renderSettings = async (gauges) => {
         .addCheckboxSetting('hideOutsideCombat', 'Show gauges only while "In Combat"', false)
         .addRangeSetting('combatTimer', 'Seconds until Player is no longer "In Combat" after Target Information goes away', { defaultValue: '5', min: 1, max: 600, unit: 's' })
         .addSeperator()
-        .addButton('repositionOverlay', 'Reposition Overlay', () => (0,_utility__WEBPACK_IMPORTED_MODULE_4__.setOverlayPosition)(gauges), {
+        .addButton('repositionOverlay', 'Reposition Overlay', () => (0,_utility__WEBPACK_IMPORTED_MODULE_6__.setOverlayPosition)(gauges), {
         classes: ['nisbutton'],
     })
         .addSeperator()
@@ -36164,7 +36178,7 @@ const renderSettings = async (gauges) => {
         .addRangeSetting('scale', 'Adjusts the size of the overlay. You must reload and reposition the overlay after scaling.', { defaultValue: '100', min: 50, max: 300 })
         .addSeperator()
         .addHeader('h3', 'Incantation Placement')
-        .addDropdownSetting('selectedOrientation', 'Select how to group Incantations', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('selectedOrientation') ?? 'reverse_split', [
+        .addDropdownSetting('selectedOrientation', 'Select how to group Incantations', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('selectedOrientation') ?? 'reverse_split', [
         { value: 'grouped', name: 'Grouped' },
         { value: 'split', name: 'Split' },
         { value: 'reverse_split', name: 'Reverse Split' },
@@ -36172,19 +36186,19 @@ const renderSettings = async (gauges) => {
         .addSeperator()
         .addHeader('h3', 'Visible Components')
         .addText('Select which components of the overlay you wish to see.')
-        .addCheckboxSetting('showConjures', 'Show Conjures', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('showConjures') ?? true)
-        .addCheckboxSetting('showLivingDeath', 'Show Living Death', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('showLivingDeath') ?? true)
-        .addCheckboxSetting('showIncantations', 'Show Incantations', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('showIncantations') ?? true)
-        .addCheckboxSetting('showInvokeDeath', 'Show Invoke Death', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('showInvokeDeath') ?? true)
-        .addCheckboxSetting('showDarkness', 'Show Darkness', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('showDarkness') ?? true)
-        .addCheckboxSetting('showThreads', 'Show Threads of Fate', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('showThreads') ?? true)
-        .addCheckboxSetting('showSplitSoul', 'Show Split Soul', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('showSplitSoul') ?? true)
-        .addCheckboxSetting('showSouls', 'Show Residual Souls', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('showSouls') ?? true)
-        .addCheckboxSetting('pre95Souls', 'Only show 3 Residual Souls / No Soulbound Lantern', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('pre95Souls') ?? false)
-        .addCheckboxSetting('showNecrosis', 'Show Necrosis', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('showNecrosis') ?? true)
-        .addCheckboxSetting('dupeRow', 'Show 2nd row of Necrosis stacks', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('dupeRow') ?? false)
-        .addCheckboxSetting('useColoredNecrosis', 'Use orange and red Necrosis Stacks when above certain thresholds', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('useColoredNecrosis') ?? false)
-        .addCheckboxSetting('showBloat', 'Show Bloat', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('showBloat') ?? true)
+        .addCheckboxSetting('showConjures', 'Show Conjures', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showConjures') ?? true)
+        .addCheckboxSetting('showLivingDeath', 'Show Living Death', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showLivingDeath') ?? true)
+        .addCheckboxSetting('showIncantations', 'Show Incantations', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showIncantations') ?? true)
+        .addCheckboxSetting('showInvokeDeath', 'Show Invoke Death', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showInvokeDeath') ?? true)
+        .addCheckboxSetting('showDarkness', 'Show Darkness', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showDarkness') ?? true)
+        .addCheckboxSetting('showThreads', 'Show Threads of Fate', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showThreads') ?? true)
+        .addCheckboxSetting('showSplitSoul', 'Show Split Soul', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showSplitSoul') ?? true)
+        .addCheckboxSetting('showSouls', 'Show Residual Souls', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showSouls') ?? true)
+        .addCheckboxSetting('pre95Souls', 'Only show 3 Residual Souls / No Soulbound Lantern', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('pre95Souls') ?? false)
+        .addCheckboxSetting('showNecrosis', 'Show Necrosis', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showNecrosis') ?? true)
+        .addCheckboxSetting('dupeRow', 'Show 2nd row of Necrosis stacks', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('dupeRow') ?? false)
+        .addCheckboxSetting('useColoredNecrosis', 'Use orange and red Necrosis Stacks when above certain thresholds', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('useColoredNecrosis') ?? false)
+        .addCheckboxSetting('showBloat', 'Show Bloat', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showBloat') ?? true)
         .addSeperator()
         .addHeader('h2', 'Alarms')
         .addFileSetting('customAlarms', 'Upload a custom alarm', '')
@@ -36196,8 +36210,9 @@ const renderSettings = async (gauges) => {
         .addRangeSetting('alarmNecrosisThreshold', 'Alert when at or above this many stacks', { defaultValue: '12', min: 2, max: 12, unit: ' stacks' })
         .addAlarmSetting('alarmNecrosis', '')
         .addSeperator()
-        .addText('Use the below button if you have adjusted your screen in any way and Job Gauges is no longer working.')
+        .addButton('openPatchNotes', 'Open Patch Notes', patchNotes.showPatchNotes, { classes: ['nisbutton'] })
         .addButton('resetPositons', 'Scan for Buff and Debuff Bars', ___WEBPACK_IMPORTED_MODULE_0__.findBuffAndDebuffBars, { classes: ['nisbutton'] })
+        .addText('Use the above Scan button if you have adjusted your screen in any way and Job Gauges is no longer working.')
         .build();
     db.allDocs({ include_docs: true, attachments: true, binary: true }).then((result) => {
         result.rows.forEach((row) => {
@@ -36217,10 +36232,10 @@ const renderSettings = async (gauges) => {
             dropdown.addEventListener('change', (e) => {
                 let target = e.target;
                 let settingName = target.id;
-                (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.updateSetting)(settingName, target.value);
+                (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.updateSetting)(settingName, target.value);
             });
             let dd = dropdown;
-            dd.value = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)(dropdown.id);
+            dd.value = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)(dropdown.id);
         });
     });
 };
