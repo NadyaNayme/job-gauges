@@ -1,5 +1,5 @@
 interface HasOrientation {
-	position?: Orientation
+	position: Orientation
 }
 
 interface HasOverlay {
@@ -52,6 +52,8 @@ export type Orientation = {
 	split: Position;
 	reverse_split: Position;
 };
+
+export type OrientationTypes = keyof Orientation;
 
 export type Ability = HasOverlay & HasOrientation & HasCooldown & HasTime & HasActiveState;
 
