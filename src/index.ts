@@ -233,8 +233,6 @@ function updateActiveOrientationFromLocalStorage(): void {
 		utility.continueOverlays();
 	}
 	
-	console.log(gauges)
-
 	updateActiveOrientation(gauges);
 }
 
