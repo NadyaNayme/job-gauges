@@ -31778,7 +31778,9 @@ class Patches {
     showPatchNotes = () => {
         const container = this.createPatchContainer();
         const headerContainer = this.createPatchHeader();
-        headerContainer.querySelector('.close-button')?.addEventListener('click', () => {
+        headerContainer
+            .querySelector('.close-button')
+            ?.addEventListener('click', () => {
             container.remove();
         });
         container.appendChild(headerContainer);
@@ -32034,7 +32036,7 @@ let alarms = [
     { name: 'nuclear', value: './Alarms/nuclear.wav' },
 ];
 const createAlarmSetting = (name, description, options = {}) => {
-    const { classes = options.classes ?? '', } = options;
+    const { classes = options.classes ?? '' } = options;
     const shortDescription = (0,_text__WEBPACK_IMPORTED_MODULE_3__.createText)(description);
     const activeCheckbox = (0,_checkbox__WEBPACK_IMPORTED_MODULE_1__.createCheckboxSetting)(name + 'Active', 'Active', false);
     activeCheckbox.classList.add('alarm-active');
@@ -32260,15 +32262,14 @@ const createFileSetting = (name, description, defaultValue) => {
                     data: file,
                 },
             },
-            name: file.name
+            name: file.name,
         })
             .then(() => {
             button.innerText = 'File Uploaded!';
             setTimeout(() => {
                 const fileInput = (container.querySelector('input[type="file"]'));
                 fileInput.value = '';
-                button.innerText =
-                    'Upload File';
+                button.innerText = 'Upload File';
             }, 6000);
         })
             .catch((err) => {
@@ -32703,7 +32704,7 @@ const SettingsType = {
  *
  * Settings Manager is your access point to localStorage and building your Settings UI.
  *
-*/
+ */
 class SettingsManager {
     static #instance;
     name = '';
@@ -34286,7 +34287,7 @@ async function fsoaOverlay(gauges) {
         (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'Instability', !instability.isOnCooldown);
         alt1.overLayRefreshGroup('Instability_Text');
         alt1.overLayClearGroup('Instability_Text');
-        return lastValue = instability.time;
+        return (lastValue = instability.time);
     }
     instability.isOnCooldown = false;
     (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('Instability_Cooldown_Text');
@@ -34354,7 +34355,7 @@ async function odeToDeceitOverlay(gauges) {
         (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'OdeToDeceit', true);
         alt1.overLayRefreshGroup('OdeToDeceit_Text');
         alt1.overLayClearGroup('OdeToDeceit_Text');
-        return lastValue = odeToDeceit.time;
+        return (lastValue = odeToDeceit.time);
     }
     odeToDeceit.isOnCooldown = false;
     (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('OdeToDeceit_Cooldown_Text');
@@ -34403,7 +34404,7 @@ let scaledOnce = false;
 async function sunshineOverlay(gauges) {
     const { magic } = gauges;
     const { sunshine } = magic;
-    const { position: { active_orientation } } = sunshine;
+    const { position: { active_orientation }, } = sunshine;
     if (!sunshine.isActiveOverlay) {
         (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_2__.clearAbilityOverlays)('Sunshine');
         return;
@@ -34424,7 +34425,7 @@ async function sunshineOverlay(gauges) {
         (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_2__.handleAbilityActiveState)(abilityData, 'Sunshine', !sunshine.isOnCooldown);
         alt1.overLayRefreshGroup('Sunshine_Text');
         alt1.overLayClearGroup('Sunshine_Text');
-        return lastValue = sunshine.time;
+        return (lastValue = sunshine.time);
     }
     sunshine.isOnCooldown = false;
     (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('Sunshine_Cooldown_Text');
@@ -34495,7 +34496,7 @@ async function tsunamiOverlay(gauges) {
         (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'Tsunami', !tsunami.isOnCooldown);
         alt1.overLayRefreshGroup('Tsunami_Text');
         alt1.overLayClearGroup('Tsunami_Text');
-        return lastValue = tsunami.time;
+        return (lastValue = tsunami.time);
     }
     tsunami.isOnCooldown = false;
     (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('Tsunami_Cooldown_Text');
@@ -34638,10 +34639,14 @@ async function conjureOverlay(gauges) {
     }
     alt1.overLaySetGroup('Undead_Army');
     if (gauges.necromancy.conjures.active) {
-        alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.x + gauges.necromancy.conjures.position.active_orientation.x, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.y + gauges.necromancy.conjures.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(conjureImages.active.toDrawableData()), conjureImages.active.width, 1000);
+        alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.x +
+            gauges.necromancy.conjures.position.active_orientation.x, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.y +
+            gauges.necromancy.conjures.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(conjureImages.active.toDrawableData()), conjureImages.active.width, 1000);
     }
     else {
-        alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.x + gauges.necromancy.conjures.position.active_orientation.x, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.y + gauges.necromancy.conjures.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(conjureImages.inactive.toDrawableData()), conjureImages.inactive.width, 1000);
+        alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.x +
+            gauges.necromancy.conjures.position.active_orientation.x, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.y +
+            gauges.necromancy.conjures.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(conjureImages.inactive.toDrawableData()), conjureImages.inactive.width, 1000);
     }
     const earliest_conjure = [
         gauges.necromancy.conjures.skeleton.time,
@@ -34654,7 +34659,9 @@ async function conjureOverlay(gauges) {
         alt1.overLaySetGroup('Undead_Army_Text');
         alt1.overLayFreezeGroup('Undead_Army_Text');
         alt1.overLayClearGroup('Undead_Army_Text');
-        alt1.overLayTextEx(`${minValue}`, white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.x + 26 + gauges.necromancy.conjures.position.active_orientation.x, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.y + 32, gauges.scaleFactor), 10000, '', true, true);
+        alt1.overLayTextEx(`${minValue}`, white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.x +
+            26 +
+            gauges.necromancy.conjures.position.active_orientation.x, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.y + 32, gauges.scaleFactor), 10000, '', true, true);
         lastMinValue = minValue;
     }
     alt1.overLayRefreshGroup('Undead_Army_Text');
@@ -34693,7 +34700,7 @@ let scaledOnce = false;
 async function incantationsOverlay(gauges) {
     const { necromancy, scaleFactor } = gauges;
     const { incantations, position } = necromancy;
-    const { invokeDeath, darkness: darknessBuff, threads: threadsAbility, splitSoul } = incantations;
+    const { invokeDeath, darkness: darknessBuff, threads: threadsAbility, splitSoul, } = incantations;
     if (!incantations.isActiveOverlay) {
         return;
     }
@@ -34704,25 +34711,33 @@ async function incantationsOverlay(gauges) {
     }
     const isInvokeDeathVisible = invokeDeath.isActiveOverlay && incantations.isActiveOverlay;
     const isInvokeDeathActive = incantations.active[0];
-    const invokeDeathImage = isInvokeDeathActive ? incantationImages.invoke_death : incantationImages.invoke_death_inactive;
+    const invokeDeathImage = isInvokeDeathActive
+        ? incantationImages.invoke_death
+        : incantationImages.invoke_death_inactive;
     if (isInvokeDeathVisible) {
         handleIncantationOverlays('Invoke_Death', invokeDeath.position.active_orientation.x, 0, invokeDeathImage);
     }
     const isDarknessVisible = darknessBuff.isActiveOverlay && incantations.isActiveOverlay;
     const isDarknessActive = incantations.active[1];
-    const darknessImage = isDarknessActive ? incantationImages.darkness : incantationImages.darkness_inactive;
+    const darknessImage = isDarknessActive
+        ? incantationImages.darkness
+        : incantationImages.darkness_inactive;
     if (isDarknessVisible) {
         handleIncantationOverlays('Darkness', darknessBuff.position.active_orientation.x, darknessBuff.position.active_orientation.y, darknessImage);
     }
     const isThreadsVisible = threadsAbility.isActiveOverlay && incantations.isActiveOverlay;
     const isThreadsActive = incantations.active[2];
-    const threadsImage = isThreadsActive ? incantationImages.threads_inactive : incantationImages.threads;
+    const threadsImage = isThreadsActive
+        ? incantationImages.threads_inactive
+        : incantationImages.threads;
     if (isThreadsVisible) {
         handleIncantationOverlays('Threads', threadsAbility.position.active_orientation.x * 2, 0, threadsImage);
     }
     const isSplitSoulVisible = splitSoul.isActiveOverlay && incantations.isActiveOverlay;
     const isSplitSoulActive = incantations.active[3];
-    const splitSoulImage = isSplitSoulActive ? incantationImages.split_soul_inactive : incantationImages.split_soul;
+    const splitSoulImage = isSplitSoulActive
+        ? incantationImages.split_soul_inactive
+        : incantationImages.split_soul;
     if (isSplitSoulVisible) {
         handleIncantationOverlays('SplitSoul', splitSoul.position.active_orientation.x * 2, splitSoul.position.active_orientation.y, splitSoulImage);
     }
@@ -34785,7 +34800,7 @@ async function livingDeathOverlay(gauges) {
         (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_2__.handleAbilityActiveState)(abilityData, 'LivingDeath', !livingDeath.isOnCooldown);
         alt1.overLayRefreshGroup('LivingDeath_Text');
         alt1.overLayClearGroup('LivingDeath_Text');
-        return lastValue = livingDeath.time;
+        return (lastValue = livingDeath.time);
     }
     livingDeath.isOnCooldown = false;
     (0,_utility__WEBPACK_IMPORTED_MODULE_1__.forceClearOverlay)('LivingDeath_Cooldown_Text');
@@ -35149,7 +35164,7 @@ async function crystalRainOverlay(gauges) {
         (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'CrystalRain', true);
         alt1.overLayRefreshGroup('CrystalRain_Text');
         alt1.overLayClearGroup('CrystalRain_Text');
-        return lastValue = crystalRain.time;
+        return (lastValue = crystalRain.time);
     }
     crystalRain.isOnCooldown = false;
     (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('CrystalRain_Cooldown_Text');
@@ -35217,7 +35232,7 @@ async function deathsSwiftnessOverlay(gauges) {
         (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'DeathsSwiftness', !deathsSwiftness.isOnCooldown);
         alt1.overLayRefreshGroup('DeathsSwiftness_Text');
         alt1.overLayClearGroup('DeathsSwiftness_Text');
-        return lastValue = deathsSwiftness.time;
+        return (lastValue = deathsSwiftness.time);
     }
     deathsSwiftness.isOnCooldown = false;
     (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('DeathsSwiftness_Cooldown_Text');
@@ -35346,7 +35361,7 @@ async function rangedSplitSoulOverlay(gauges) {
         (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'SplitSoul', false);
         alt1.overLayRefreshGroup('SplitSoul_Text');
         alt1.overLayClearGroup('SplitSoul_Text');
-        return lastValue = splitSoul.time;
+        return (lastValue = splitSoul.time);
     }
     splitSoul.isOnCooldown = false;
     (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('SplitSoul_Cooldown_Text');
@@ -35405,8 +35420,8 @@ __webpack_require__.r(__webpack_exports__);
 
 const sauce = _a1sauce__WEBPACK_IMPORTED_MODULE_3__.A1Sauce.instance;
 sauce.setName(_data_constants__WEBPACK_IMPORTED_MODULE_4__.appName);
-const buffReader = new (alt1_buffs__WEBPACK_IMPORTED_MODULE_8___default());
-const debuffReader = new (alt1_buffs__WEBPACK_IMPORTED_MODULE_8___default());
+const buffReader = new (alt1_buffs__WEBPACK_IMPORTED_MODULE_8___default())();
+const debuffReader = new (alt1_buffs__WEBPACK_IMPORTED_MODULE_8___default())();
 debuffReader.debuffs = true;
 const errorLogger = new _a1sauce_Error_logError__WEBPACK_IMPORTED_MODULE_5__.LogError();
 const buffsImages = alt1__WEBPACK_IMPORTED_MODULE_9__.webpackImages({
@@ -35590,7 +35605,7 @@ async function readBuffs(gauges) {
 async function updateBuffData(buffReader, gauges, buffImage, threshold, updateCallbackFn, greater) {
     const buffs = buffReader.read();
     if (!buffs) {
-        throw Error("Failed to read buffs for updateBuffData.");
+        throw Error('Failed to read buffs for updateBuffData.');
     }
     let foundBuff = false;
     for (const buff of buffs) {
@@ -35599,7 +35614,8 @@ async function updateBuffData(buffReader, gauges, buffImage, threshold, updateCa
          * "THIS IS A HACK"
          * Issues with Ode to Deceit false positives
          */
-        if (buffImage === buffsImages.odeToDeceit && buff.readArg('timearg').time >= 46) {
+        if (buffImage === buffsImages.odeToDeceit &&
+            buff.readArg('timearg').time >= 46) {
             return false;
         }
         if (match.passed > threshold) {
@@ -35615,7 +35631,7 @@ async function updateBuffData(buffReader, gauges, buffImage, threshold, updateCa
 async function updateStackData(gauges, buffImage, threshold, updateCallbackFn) {
     const buffs = buffReader.read();
     if (!buffs) {
-        throw Error("Failed to read buffs for updateStackData.");
+        throw Error('Failed to read buffs for updateStackData.');
     }
     let foundBuff = false;
     for (const buff of buffs) {
@@ -35635,7 +35651,7 @@ async function updateStackData(gauges, buffImage, threshold, updateCallbackFn) {
 async function updateSimpleStackData(gauges, buffImage, threshold, updateCallbackFn) {
     const buffs = buffReader.read();
     if (!buffs) {
-        throw Error("Failed to read buffs for updateSimpleStackData.");
+        throw Error('Failed to read buffs for updateSimpleStackData.');
     }
     let foundBuff = false;
     for (const buff of buffs) {
@@ -35779,7 +35795,7 @@ async function updateSunshine(gauges, value, greater) {
             (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_7__.startAbilityCooldown)({
                 ability: gauges.magic.sunshine,
                 position: gauges.magic.position,
-                scaleFactor: gauges.scaleFactor
+                scaleFactor: gauges.scaleFactor,
             }, 'Sunshine', greater);
         }, 1050);
     }
@@ -35809,7 +35825,7 @@ async function updateFsoa(gauges, value) {
             (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_7__.startAbilityCooldown)({
                 ability: gauges.magic.instability,
                 position: gauges.magic.position,
-                scaleFactor: gauges.scaleFactor
+                scaleFactor: gauges.scaleFactor,
             }, 'Instability', false);
         }, 1050);
     }
@@ -36214,7 +36230,8 @@ const renderSettings = async (gauges) => {
         .addButton('resetPositons', 'Scan for Buff and Debuff Bars', ___WEBPACK_IMPORTED_MODULE_0__.findBuffAndDebuffBars, { classes: ['nisbutton'] })
         .addText('Use the above Scan button if you have adjusted your screen in any way and Job Gauges is no longer working.')
         .build();
-    db.allDocs({ include_docs: true, attachments: true, binary: true }).then((result) => {
+    db.allDocs({ include_docs: true, attachments: true, binary: true })
+        .then((result) => {
         result.rows.forEach((row) => {
             let alarmDropdowns = document.querySelectorAll('.alarm-dropdown');
             for (let i = 0; i < alarmDropdowns.length; i++) {
@@ -36226,7 +36243,8 @@ const renderSettings = async (gauges) => {
                 alarmDropdowns[i].appendChild(option);
             }
         });
-    }).then(() => {
+    })
+        .then(() => {
         let alarmDropdowns = document.querySelectorAll('.alarm-dropdown');
         alarmDropdowns.forEach((dropdown) => {
             dropdown.addEventListener('change', (e) => {
@@ -36307,7 +36325,9 @@ async function startAbilityCooldown(abilityData, abilityName, greater) {
         throw Error(`Missing cooldown definitions for ability: ${abilityName}`);
     }
     const { positionX, positionY } = cooldowns;
-    let cooldown = greater ? cooldowns.cooldownWhenGreater : cooldowns.cooldownDefault;
+    let cooldown = greater
+        ? cooldowns.cooldownWhenGreater
+        : cooldowns.cooldownDefault;
     const timer = setInterval(() => {
         if (ability.active || cooldown <= 0) {
             clearInterval(timer);
@@ -36316,8 +36336,12 @@ async function startAbilityCooldown(abilityData, abilityName, greater) {
         cooldown -= 1;
         const cooldownText = `${abilityName}_Cooldown_Text`;
         (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)(cooldownText);
-        const xPositionAdjusted = position.x + (ability.position?.active_orientation.x ?? 0) + positionX;
-        const yPositionAdjusted = position.y + (ability.position?.active_orientation.y ?? 0) + positionY;
+        const xPositionAdjusted = position.x +
+            (ability.position?.active_orientation.x ?? 0) +
+            positionX;
+        const yPositionAdjusted = position.y +
+            (ability.position?.active_orientation.y ?? 0) +
+            positionY;
         alt1.overLayTextEx(`${cooldown}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(xPositionAdjusted, scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(yPositionAdjusted, scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup(cooldownText);
     }, 1000);
@@ -36846,7 +36870,6 @@ var CombatStyle;
     CombatStyle[CombatStyle["mage"] = 3] = "mage";
     CombatStyle[CombatStyle["necro"] = 4] = "necro";
 })(CombatStyle || (CombatStyle = {}));
-;
 
 
 /***/ }),
