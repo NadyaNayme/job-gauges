@@ -33629,6 +33629,7 @@ const ranged_gauge = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   beginRendering: () => (/* binding */ beginRendering),
+/* harmony export */   findBuffAndDebuffBars: () => (/* binding */ findBuffAndDebuffBars),
 /* harmony export */   startApp: () => (/* binding */ startApp)
 /* harmony export */ });
 /* harmony import */ var _lib_utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib/utility */ "./lib/utility.ts");
@@ -33804,17 +33805,15 @@ async function startApp() {
     alt1.overLaySetGroupZIndex('CrystalRain_Cooldown_Text', 1);
     alt1.overLaySetGroupZIndex('PerfectEquilibrium_Text', 1);
     alt1.overLaySetGroupZIndex('SplitSoul_Text', 1);
-    await beginRendering();
+    findBuffAndDebuffBars();
+    beginRendering();
 }
-async function beginRendering() {
-    try {
-        await (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_1__.findBuffsBar)();
-        await (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_1__.findDebuffsBar)();
-        setInterval(() => renderOverlays(), 20);
-    }
-    catch (e) {
-        console.error(`Issue when rendering.\n\n${JSON.stringify(e)}`);
-    }
+function findBuffAndDebuffBars() {
+    (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_1__.findBuffsBar)();
+    (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_1__.findDebuffsBar)();
+}
+function beginRendering() {
+    setInterval(() => renderOverlays(), 20);
 }
 function calibrationWarning() {
     alt1.setTooltip('[JG] Use a Defensive ability such as Freedom or Anticipate to capture buffs location.');
@@ -33887,8 +33886,10 @@ function addEventListeners() {
         location.reload();
     });
     const combatTimerRange = (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_20__.getById)('combatTimer');
-    const combatTimervalue = ((parseInt(combatTimerRange.value, 10) - parseInt(combatTimerRange.min, 10)) /
-        (parseInt(combatTimerRange.max, 10) - parseInt(combatTimerRange.min))) *
+    const combatTimervalue = ((parseInt(combatTimerRange.value, 10) -
+        parseInt(combatTimerRange.min, 10)) /
+        (parseInt(combatTimerRange.max, 10) -
+            parseInt(combatTimerRange.min))) *
         100;
     combatTimerRange.style.background =
         'linear-gradient(to right, #3e5765 0%, #3e5765 ' +
@@ -34007,7 +34008,8 @@ function setNecromancyGaugeData(gauges) {
             (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('showNecrosis');
     }
     if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('useColoredNecrosis') !== undefined) {
-        gauges.necromancy.stacks.useColoredNecrosis = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('useColoredNecrosis');
+        gauges.necromancy.stacks.useColoredNecrosis =
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('useColoredNecrosis');
     }
     if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('dupeRow') !== undefined) {
         gauges.necromancy.stacks.duplicateNecrosisRow = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('dupeRow');
@@ -34050,14 +34052,12 @@ function setNecromancyGaugeData(gauges) {
             (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('alarmSoulsVolume');
     }
     if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('automaticSwapping') !== undefined) {
-        gauges.automaticSwapping =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('automaticSwapping');
+        gauges.automaticSwapping = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('automaticSwapping');
     }
     if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('defaultCombatStyle') !== undefined) {
-        let input = document.getElementById('defaultCombatStyle');
+        let input = (document.getElementById('defaultCombatStyle'));
         input.value = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('defaultCombatStyle');
-        gauges.combatStyle =
-            parseInt((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('defaultCombatStyle'), 10);
+        gauges.combatStyle = parseInt((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.getSetting)('defaultCombatStyle'), 10);
     }
 }
 // TODO: For Gauge Settings I should be able to store the entire gauge in localStorage
@@ -35451,7 +35451,7 @@ function findBuffsBar() {
         console.log(`Failed to find those buffs`);
         errorLogger.showError({
             title: 'No Buffs Found',
-            message: '<p>Job Gauges could not locate your buffs bar. Please use a defensive ability or some other way of obtaining a buff and Job Gauges will attempt to search again shortly.</p>',
+            message: `<p>Job Gauges could not locate your buffs bar. Please use a defensive ability or some other way of obtaining a buff and Job Gauges will attempt to search again shortly or click the button below.</p>`,
         });
         throw new Error('BuffsBarSearchError: Failed to find buff bar');
     }
@@ -35461,9 +35461,7 @@ function findDebuffsBar() {
     if (!debuffReader.pos && !debuffReader.find()) {
         errorLogger.showError({
             title: 'No Debuffs Found',
-            message: `
-				<p>Job Gauges could not locate your debuffs bar. Please toggle on your Prayer or some other way of obtaining a debuff and Job Gauges will attempt to search again shortly.</p>
-			`,
+            message: `<p>Job Gauges could not locate your debuffs bar. Please toggle on your Prayer or some other way of obtaining a debuff and Job Gauges will attempt to search again shortly or click the button below.</p>`,
         });
         throw new Error('BuffsBarSearchError: Failed to find debuff bar');
     }
@@ -35473,7 +35471,7 @@ function testBuffSizes() {
     const screen = alt1__WEBPACK_IMPORTED_MODULE_9__.captureHoldFullRs();
     const mediumBuffPositions = screen.findSubimage(buffsImages.mediumBuffs);
     const largeBuffPositions = screen.findSubimage(buffsImages.largeBuffs);
-    const message = `<p>Alt1 only supports reading Small Buffs. Please update your Buffs Bar settings. Interfaces > Buff Bar > Icon Size </p><img src="./ErrorImages/BuffIconSize.png">`;
+    const message = `<p>Alt1 only supports reading Small Buffs.<br><br>Please update your Buffs Bar settings.<br> Interfaces > Buff Bar > Icon Size </p><img src="./a1sauce/Error/Images/BuffIconSize.png">`;
     if (mediumBuffPositions.length) {
         errorLogger.showError({
             title: 'Medium Buffs Detected',
@@ -36125,21 +36123,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderSettings: () => (/* binding */ renderSettings)
 /* harmony export */ });
-/* harmony import */ var _a1sauce__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../a1sauce */ "./a1sauce/index.ts");
-/* harmony import */ var _a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../a1sauce/Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
-/* harmony import */ var _data_constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../data/constants */ "./data/constants.ts");
-/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
-/* harmony import */ var pouchdb__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! pouchdb */ "../node_modules/pouchdb/lib/index-browser.es.js");
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../.. */ "./index.ts");
+/* harmony import */ var _a1sauce__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../a1sauce */ "./a1sauce/index.ts");
+/* harmony import */ var _a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../a1sauce/Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
+/* harmony import */ var _data_constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../data/constants */ "./data/constants.ts");
+/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+/* harmony import */ var pouchdb__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! pouchdb */ "../node_modules/pouchdb/lib/index-browser.es.js");
 
 
 
 
 
-const sauce = _a1sauce__WEBPACK_IMPORTED_MODULE_0__.A1Sauce.instance;
-sauce.setName(_data_constants__WEBPACK_IMPORTED_MODULE_2__.appName);
-sauce.setVersion(_data_constants__WEBPACK_IMPORTED_MODULE_2__.majorVersion, _data_constants__WEBPACK_IMPORTED_MODULE_2__.minorVersion, _data_constants__WEBPACK_IMPORTED_MODULE_2__.patchVersion);
+
+const sauce = _a1sauce__WEBPACK_IMPORTED_MODULE_1__.A1Sauce.instance;
+sauce.setName(_data_constants__WEBPACK_IMPORTED_MODULE_3__.appName);
+sauce.setVersion(_data_constants__WEBPACK_IMPORTED_MODULE_3__.majorVersion, _data_constants__WEBPACK_IMPORTED_MODULE_3__.minorVersion, _data_constants__WEBPACK_IMPORTED_MODULE_3__.patchVersion);
 const settings = sauce.createSettings();
-const db = new pouchdb__WEBPACK_IMPORTED_MODULE_4__["default"](_data_constants__WEBPACK_IMPORTED_MODULE_2__.appName);
+const db = new pouchdb__WEBPACK_IMPORTED_MODULE_5__["default"](_data_constants__WEBPACK_IMPORTED_MODULE_3__.appName);
 const renderSettings = async (gauges) => {
     settings
         .addHeader('h2', 'Job Gauges - v' + sauce.getVersion())
@@ -36147,7 +36147,7 @@ const renderSettings = async (gauges) => {
         .addSeperator()
         .addHeader('h3', 'General')
         .addCheckboxSetting('checkForUpdates', 'Periodically check if a new update is available', false)
-        .addDropdownSetting('defaultCombatStyle', 'Select default combat style', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('defaultCombatStyle') ?? '4', [
+        .addDropdownSetting('defaultCombatStyle', 'Select default combat style', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('defaultCombatStyle') ?? '4', [
         { value: '2', name: 'Ranged' },
         { value: '3', name: 'Magic' },
         { value: '4', name: 'Necromancy' },
@@ -36156,7 +36156,7 @@ const renderSettings = async (gauges) => {
         .addCheckboxSetting('hideOutsideCombat', 'Show gauges only while "In Combat"', false)
         .addRangeSetting('combatTimer', 'Seconds until Player is no longer "In Combat" after Target Information goes away', { defaultValue: '5', min: 1, max: 600, unit: 's' })
         .addSeperator()
-        .addButton('repositionOverlay', 'Reposition Overlay', () => (0,_utility__WEBPACK_IMPORTED_MODULE_3__.setOverlayPosition)(gauges), {
+        .addButton('repositionOverlay', 'Reposition Overlay', () => (0,_utility__WEBPACK_IMPORTED_MODULE_4__.setOverlayPosition)(gauges), {
         classes: ['nisbutton'],
     })
         .addSeperator()
@@ -36164,7 +36164,7 @@ const renderSettings = async (gauges) => {
         .addRangeSetting('scale', 'Adjusts the size of the overlay. You must reload and reposition the overlay after scaling.', { defaultValue: '100', min: 50, max: 300 })
         .addSeperator()
         .addHeader('h3', 'Incantation Placement')
-        .addDropdownSetting('selectedOrientation', 'Select how to group Incantations', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('selectedOrientation') ?? 'reverse_split', [
+        .addDropdownSetting('selectedOrientation', 'Select how to group Incantations', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('selectedOrientation') ?? 'reverse_split', [
         { value: 'grouped', name: 'Grouped' },
         { value: 'split', name: 'Split' },
         { value: 'reverse_split', name: 'Reverse Split' },
@@ -36172,19 +36172,19 @@ const renderSettings = async (gauges) => {
         .addSeperator()
         .addHeader('h3', 'Visible Components')
         .addText('Select which components of the overlay you wish to see.')
-        .addCheckboxSetting('showConjures', 'Show Conjures', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showConjures') ?? true)
-        .addCheckboxSetting('showLivingDeath', 'Show Living Death', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showLivingDeath') ?? true)
-        .addCheckboxSetting('showIncantations', 'Show Incantations', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showIncantations') ?? true)
-        .addCheckboxSetting('showInvokeDeath', 'Show Invoke Death', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showInvokeDeath') ?? true)
-        .addCheckboxSetting('showDarkness', 'Show Darkness', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showDarkness') ?? true)
-        .addCheckboxSetting('showThreads', 'Show Threads of Fate', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showThreads') ?? true)
-        .addCheckboxSetting('showSplitSoul', 'Show Split Soul', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showSplitSoul') ?? true)
-        .addCheckboxSetting('showSouls', 'Show Residual Souls', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showSouls') ?? true)
-        .addCheckboxSetting('pre95Souls', 'Only show 3 Residual Souls / No Soulbound Lantern', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('pre95Souls') ?? false)
-        .addCheckboxSetting('showNecrosis', 'Show Necrosis', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showNecrosis') ?? true)
-        .addCheckboxSetting('dupeRow', 'Show 2nd row of Necrosis stacks', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('dupeRow') ?? false)
-        .addCheckboxSetting('useColoredNecrosis', 'Use orange and red Necrosis Stacks when above certain thresholds', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('useColoredNecrosis') ?? false)
-        .addCheckboxSetting('showBloat', 'Show Bloat', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('showBloat') ?? true)
+        .addCheckboxSetting('showConjures', 'Show Conjures', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('showConjures') ?? true)
+        .addCheckboxSetting('showLivingDeath', 'Show Living Death', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('showLivingDeath') ?? true)
+        .addCheckboxSetting('showIncantations', 'Show Incantations', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('showIncantations') ?? true)
+        .addCheckboxSetting('showInvokeDeath', 'Show Invoke Death', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('showInvokeDeath') ?? true)
+        .addCheckboxSetting('showDarkness', 'Show Darkness', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('showDarkness') ?? true)
+        .addCheckboxSetting('showThreads', 'Show Threads of Fate', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('showThreads') ?? true)
+        .addCheckboxSetting('showSplitSoul', 'Show Split Soul', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('showSplitSoul') ?? true)
+        .addCheckboxSetting('showSouls', 'Show Residual Souls', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('showSouls') ?? true)
+        .addCheckboxSetting('pre95Souls', 'Only show 3 Residual Souls / No Soulbound Lantern', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('pre95Souls') ?? false)
+        .addCheckboxSetting('showNecrosis', 'Show Necrosis', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('showNecrosis') ?? true)
+        .addCheckboxSetting('dupeRow', 'Show 2nd row of Necrosis stacks', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('dupeRow') ?? false)
+        .addCheckboxSetting('useColoredNecrosis', 'Use orange and red Necrosis Stacks when above certain thresholds', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('useColoredNecrosis') ?? false)
+        .addCheckboxSetting('showBloat', 'Show Bloat', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)('showBloat') ?? true)
         .addSeperator()
         .addHeader('h2', 'Alarms')
         .addFileSetting('customAlarms', 'Upload a custom alarm', '')
@@ -36197,7 +36197,7 @@ const renderSettings = async (gauges) => {
         .addAlarmSetting('alarmNecrosis', '')
         .addSeperator()
         .addText('Use the below button if you have adjusted your screen in any way and Job Gauges is no longer working.')
-        .addButton('resetPositons', 'Reset Buff and Debuff positions', _utility__WEBPACK_IMPORTED_MODULE_3__.resetBuffPositions, { classes: ['nisbutton'] })
+        .addButton('resetPositons', 'Scan for Buff and Debuff Bars', ___WEBPACK_IMPORTED_MODULE_0__.findBuffAndDebuffBars, { classes: ['nisbutton'] })
         .build();
     db.allDocs({ include_docs: true, attachments: true, binary: true }).then((result) => {
         result.rows.forEach((row) => {
@@ -36217,10 +36217,10 @@ const renderSettings = async (gauges) => {
             dropdown.addEventListener('change', (e) => {
                 let target = e.target;
                 let settingName = target.id;
-                (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.updateSetting)(settingName, target.value);
+                (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.updateSetting)(settingName, target.value);
             });
             let dd = dropdown;
-            dd.value = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)(dropdown.id);
+            dd.value = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_2__.getSetting)(dropdown.id);
         });
     });
 };
@@ -36370,7 +36370,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   pauseAlert: () => (/* binding */ pauseAlert),
 /* harmony export */   playAlert: () => (/* binding */ playAlert),
 /* harmony export */   red: () => (/* binding */ red),
-/* harmony export */   resetBuffPositions: () => (/* binding */ resetBuffPositions),
 /* harmony export */   resizeGaugesWithMousePosition: () => (/* binding */ resizeGaugesWithMousePosition),
 /* harmony export */   resizeImageData: () => (/* binding */ resizeImageData),
 /* harmony export */   roundedToFixed: () => (/* binding */ roundedToFixed),
@@ -36407,10 +36406,6 @@ const helperItems = {
     settings: getByID('Settings'),
 };
 let updatingOverlayPosition = false;
-async function resetBuffPositions() {
-    (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.updateSetting)('buffsPosition', undefined);
-    (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.updateSetting)('debuffsPosition', undefined);
-}
 async function setOverlayPosition(gauges) {
     updatingOverlayPosition = true;
     alt1__WEBPACK_IMPORTED_MODULE_4__.once('alt1pressed', updateLocation);
