@@ -22,11 +22,9 @@ export async function crystalRainOverlay(gauges: Overlay) {
 	}
 
 	await ultimateImages.promise;
-
-	const { active, inactive } = ultimateImages;
-
+	
 	if (!scaledOnce) {
-		handleResizingImages([active, inactive], gauges.scaleFactor);
+		handleResizingImages(ultimateImages, gauges.scaleFactor);
 
 		scaledOnce = true;
 	}

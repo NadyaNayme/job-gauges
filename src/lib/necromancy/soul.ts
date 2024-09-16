@@ -42,10 +42,9 @@ export async function soulsOverlay(gauges: Overlay) {
 		soulImages.souls_3 = pre95SoulImages.souls_3;
 	}
 
-	const { souls_0, souls_1, souls_2, souls_3, souls_4, souls_5 } = soulImages;
 	
 	if (!scaledOnce) {
-		handleResizingImages([souls_0, souls_1, souls_2, souls_3, souls_4, souls_5], gauges.scaleFactor);
+		handleResizingImages(soulImages, gauges.scaleFactor);
 		
 		scaledOnce = true;
 	}
@@ -67,22 +66,22 @@ export async function soulsOverlay(gauges: Overlay) {
 	
 	switch (souls.stacks) {
 		case 0:
-			displaySoulImage(souls_0);
+			displaySoulImage(soulImages.souls_0);
 			break;
 		case 1:
-			displaySoulImage(souls_1);
+			displaySoulImage(soulImages.souls_1);
 			break;
 		case 2:
-			displaySoulImage(souls_2);
+			displaySoulImage(soulImages.souls_2);
 			break;
 		case 3:
-			displaySoulImage(souls_3);
+			displaySoulImage(soulImages.souls_3);
 			break;
 		case 4:
-			displaySoulImage(souls_4);
+			displaySoulImage(soulImages.souls_4);
 			break;
 		case 5:
-			displaySoulImage(souls_5);
+			displaySoulImage(soulImages.souls_5);
 			break;
 		default:
 			// Handle cases beyond 5 if needed

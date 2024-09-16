@@ -3,7 +3,7 @@ import * as ChatReader from 'alt1/chatbox';
 import { Overlay } from '../../types';
 import { keys } from 'lodash';
 import { StackingPlayerBuff } from '../../types/common';
-import { adjustPositionForScale, handleResizingImages, white } from '../utility';
+import { adjustPositionForScale, handleResizingImages, resizeImageData, white } from '../utility';
 
 const spellImages = a1lib.webpackImages({
 	bloodTithe: require('../.././asset/gauge-ui/magic/active-spell/blood-tithe.data.png'),
@@ -53,11 +53,9 @@ export async function spellsOverlay(gauges: Overlay) {
 	}
 
 	await spellImages.promise;
-
-	const { bloodTithe, noSpell, glacialEmbrace, iceBarrage } = spellImages;
-
+	
 	if (!scaledOnce) {
-		handleResizingImages([bloodTithe, noSpell, glacialEmbrace, iceBarrage], gauges.scaleFactor);
+		handleResizingImages(spellImages, gauges.scaleFactor);
 
 		scaledOnce = true;
 	}

@@ -18,11 +18,9 @@ export async function conjureOverlay(gauges: Overlay) {
 	}
 
 	await conjureImages.promise;
-
-	const { active, inactive } = conjureImages;
-
+	
 	if (!scaledOnce) {
-		handleResizingImages([active, inactive], gauges.scaleFactor);
+		handleResizingImages(conjureImages, gauges.scaleFactor);
 
 		scaledOnce = true;
 	}

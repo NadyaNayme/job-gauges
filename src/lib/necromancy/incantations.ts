@@ -26,36 +26,16 @@ export async function incantationsOverlay(gauges: Overlay) {
 	}
 
 	await incantationImages.promise;
-	
-	const {
-		invoke_death,
-		invoke_death_inactive,
-		darkness,
-		darkness_inactive,
-		threads,
-		threads_inactive,
-		split_soul,
-		split_soul_inactive,
-	} = incantationImages;
 
 	if (!scaledOnce) {
-		handleResizingImages([
-			invoke_death,
-			invoke_death_inactive,
-			darkness,
-			darkness_inactive,
-			threads,
-			threads_inactive,
-			split_soul,
-			split_soul_inactive,
-		], gauges.scaleFactor);
+		handleResizingImages(incantationImages, gauges.scaleFactor);
 		
 		scaledOnce = true;
 	}
 
 	const isInvokeDeathVisible = invokeDeath.isActiveOverlay && incantations.isActiveOverlay;
 	const isInvokeDeathActive = incantations.active[0];
-	const invokeDeathImage = isInvokeDeathActive ? invoke_death : invoke_death_inactive;
+	const invokeDeathImage = isInvokeDeathActive ? incantationImages.invoke_death : incantationImages.invoke_death_inactive;
 
 	if (isInvokeDeathVisible) {
 		handleIncantationOverlays(
@@ -68,7 +48,7 @@ export async function incantationsOverlay(gauges: Overlay) {
 
 	const isDarknessVisible = darknessBuff.isActiveOverlay && incantations.isActiveOverlay;
 	const isDarknessActive = incantations.active[1];
-	const darknessImage = isDarknessActive ? darkness : darkness_inactive;
+	const darknessImage = isDarknessActive ? incantationImages.darkness : incantationImages.darkness_inactive;
 
 	if (isDarknessVisible) {
 		handleIncantationOverlays(
@@ -81,7 +61,7 @@ export async function incantationsOverlay(gauges: Overlay) {
 
 	const isThreadsVisible = threadsAbility.isActiveOverlay && incantations.isActiveOverlay;
 	const isThreadsActive = incantations.active[2];
-	const threadsImage = isThreadsActive ? threads_inactive : threads;
+	const threadsImage = isThreadsActive ? incantationImages.threads_inactive : incantationImages.threads;
 
 	if (isThreadsVisible) {
 		handleIncantationOverlays(
@@ -94,7 +74,7 @@ export async function incantationsOverlay(gauges: Overlay) {
 
 	const isSplitSoulVisible = splitSoul.isActiveOverlay && incantations.isActiveOverlay;
 	const isSplitSoulActive = incantations.active[3];
-	const splitSoulImage = isSplitSoulActive ? split_soul_inactive : split_soul;
+	const splitSoulImage = isSplitSoulActive ? incantationImages.split_soul_inactive : incantationImages.split_soul;
 	
 	if (isSplitSoulVisible) {
 		handleIncantationOverlays(

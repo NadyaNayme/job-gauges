@@ -42,27 +42,9 @@ export async function necrosisOverlay(gauges: Overlay) {
 		necrosisImages.necrosis_10 = necrosisColoredImages.necrosis_10;
 		necrosisImages.necrosis_12 = necrosisColoredImages.necrosis_12;
 	}
-	
-	const {
-		necrosis_0,
-		necrosis_2,
-		necrosis_4,
-		necrosis_6,
-		necrosis_8,
-		necrosis_10,
-		necrosis_12,
-	} = necrosisImages;
 
 	if (!scaledOnce) {
-		handleResizingImages([
-			necrosis_0,
-			necrosis_2,
-			necrosis_4,
-			necrosis_6,
-			necrosis_8,
-			necrosis_10,
-			necrosis_12,
-		], gauges.scaleFactor);
+		handleResizingImages(necrosisImages, gauges.scaleFactor);
 		scaledOnce = true;
 	}
 

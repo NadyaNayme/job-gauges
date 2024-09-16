@@ -23,11 +23,9 @@ export async function sunshineOverlay(gauges: Overlay) {
 
 	await ultimateImages.promise;
 
-	const { active, inactive } = ultimateImages;
-
 	if (!scaledOnce) {
-		handleResizingImages([active, inactive], gauges.scaleFactor);
-
+		handleResizingImages(ultimateImages, gauges.scaleFactor);
+		
 		scaledOnce = true;
 	}
 
@@ -62,7 +60,7 @@ export async function sunshineOverlay(gauges: Overlay) {
 		alt1.overLayFreezeGroup('Sunshine_Text');
 		alt1.overLayClearGroup('Sunshine_Text');
 		alt1.overLayTextEx(
-			sunshine.time === 0 ? '' : sunshine.time.toString(),
+			`${sunshine.time || ''}`,
 			white,
 			14,
 			adjustPositionForScale(magic.position.x + active_orientation.x + 26, gauges.scaleFactor),

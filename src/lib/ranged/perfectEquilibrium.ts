@@ -19,11 +19,9 @@ export async function peOverlay(gauges: Overlay) {
 	}
 
 	await bolgImage.promise;
-
-	const { active, inactive } = bolgImage;
-
+	
 	if (!scaledOnce) {
-		handleResizingImages([active, inactive], gauges.scaleFactor);
+		handleResizingImages(bolgImage, gauges.scaleFactor);
 
 		scaledOnce = true;
 	}

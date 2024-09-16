@@ -239,12 +239,14 @@ export function roundedToFixed(input: number, digits: number): string {
 	return (Math.round(input * rounder) / rounder).toFixed(digits);
 }
 
-export function handleResizingImages(images: ImageData[], scaleFactor: number) {
-	for (let image of images) {
-		const resize = resizeImageData(image, scaleFactor);
+export function handleResizingImages(images: { [k in string]: ImageData | unknown }, scaleFactor: number) {
+	for (const key of Object.keys(images)) {
+		if (images[key] instanceof ImageData) {
+			const resize = resizeImageData(images[key], scaleFactor);
 
-		if (resize) {
-			image = resize;
+			if (resize) {
+				images[key] = resize;
+			}
 		}
 	}
 }

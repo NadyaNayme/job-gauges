@@ -27,70 +27,42 @@ export async function bloatOverlay(gauges: Overlay) {
 	}
 
 	await bloatImages.promise;
-	
-	const {
-		bloat_100,
-		bloat_90,
-		bloat_80,
-		bloat_70,
-		bloat_60,
-		bloat_50,
-		bloat_40,
-		bloat_30,
-		bloat_20,
-		bloat_10,
-		bloat_0,
-		bloat_expired,
-	} = bloatImages;
 
 	if (!scaledOnce) {
-		handleResizingImages([
-			bloat_100,
-			bloat_90,
-			bloat_80,
-			bloat_70,
-			bloat_60,
-			bloat_50,
-			bloat_40,
-			bloat_30,
-			bloat_20,
-			bloat_10,
-			bloat_0,
-			bloat_expired
-		], gauges.scaleFactor);
+		handleResizingImages(bloatImages, gauges.scaleFactor);
 
 		scaledOnce = true;
 	}
 
 	const value = bloat.time;
-  let image = bloat_expired;
+  let image = bloatImages.bloat_expired;
   
 	if (bloat.active) {
 		if (value < 2.4) {
-			image = bloat_0;
+			image = bloatImages.bloat_0;
 		} else if (value < 3.6) {
-			image = bloat_10;
+			image = bloatImages.bloat_10;
 		} else if (value < 5.4) {
-			image = bloat_20;
+			image = bloatImages.bloat_20;
 		} else if (value < 7.2) {
-			image = bloat_30;
+			image = bloatImages.bloat_30;
 		} else if (value < 9.0) {
-			image = bloat_40;
+			image = bloatImages.bloat_40;
 		} else if (value < 10.8) {
-			image = bloat_50;
+			image = bloatImages.bloat_50;
 		} else if (value < 12.6) {
-			image = bloat_60;
+			image = bloatImages.bloat_60;
 		} else if (value < 14.4) {
-			image = bloat_70;
+			image = bloatImages.bloat_70;
 		} else if (value < 16.2) {
-			image = bloat_80;
+			image = bloatImages.bloat_80;
 		} else if (value < 18.0) {
-			image = bloat_90;
+			image = bloatImages.bloat_90;
 		} else {
-			image = bloat_100;
+			image = bloatImages.bloat_100;
 		}
 	} else {
-		image = bloat_expired;
+		image = bloatImages.bloat_expired;
 	}
 
 	alt1.overLaySetGroup('Bloat');
