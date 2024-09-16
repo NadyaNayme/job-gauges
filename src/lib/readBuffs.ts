@@ -21,16 +21,16 @@ const errorLogger = new LogError();
 
 const buffsImages = a1lib.webpackImages({
 	/* Necromancy */
-	darkness: require('../asset/data/buffs/necromancy/darkness.data.png'),
-	living_death: require('../asset/data/buffs/necromancy/living-death.data.png'),
-	split_soul: require('../asset/data/buffs/necromancy/split-soul.data.png'),
-	threads: require('../asset/data/buffs/necromancy/threads-of-date.data.png'),
-	necrosis: require('../asset/data/buffs/necromancy/necrosis.data.png'),
-	soul: require('../asset/data/buffs/necromancy/residual-soul.data.png'),
-	skeleton: require('../asset/data/buffs/necromancy/skeleton-warrior.data.png'),
-	zombie: require('../asset/data/buffs/necromancy/putrid-zombie.data.png'),
-	ghost: require('../asset/data/buffs/necromancy/vengeful-ghost.data.png'),
-	phantom: require('../asset/data/buffs/necromancy/phantom-guardian.data.png'),
+	darkness: require('../asset/data/buffs/Necromancy/Darkness.data.png'),
+	living_death: require('../asset/data/buffs/Necromancy/living-death.data.png'),
+	split_soul: require('../asset/data/buffs/Necromancy/split-soul.data.png'),
+	threads: require('../asset/data/buffs/Necromancy/threads-of-date.data.png'),
+	necrosis: require('../asset/data/buffs/Necromancy/Necrosis.data.png'),
+	soul: require('../asset/data/buffs/Necromancy/residual-soul.data.png'),
+	skeleton: require('../asset/data/buffs/Necromancy/skeleton-warrior.data.png'),
+	zombie: require('../asset/data/buffs/Necromancy/putrid-zombie.data.png'),
+	ghost: require('../asset/data/buffs/Necromancy/vengeful-ghost.data.png'),
+	phantom: require('../asset/data/buffs/Necromancy/phantom-guardian.data.png'),
 
 	/* Magic */
 	sunshine: require('../asset/data/buffs/magic/sunshine.data.png'),
@@ -51,8 +51,8 @@ const buffsImages = a1lib.webpackImages({
 
 	// TODO: Move this into A1 Sauce properly
 	/* Troubleshooting */
-	mediumBuffs: require('../a1sauce/dataImages/ErrorHandling/medium_buffs.data.png'),
-	largeBuffs: require('../a1sauce/dataImages/ErrorHandling/large_buffs.data.png'),
+	mediumBuffs: require('../a1sauce/DataImages/ErrorHandling/medium_buffs.data.png'),
+	largeBuffs: require('../a1sauce/DataImages/ErrorHandling/large_buffs.data.png'),
 });
 
 async function retryOperation(
