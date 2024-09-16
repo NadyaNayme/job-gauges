@@ -21,16 +21,16 @@ const errorLogger = new LogError();
 
 const buffsImages = a1lib.webpackImages({
 	/* Necromancy */
-	darkness: require('../asset/data/buffs/Necromancy/Darkness.data.png'),
-	living_death: require('../asset/data/buffs/Necromancy/living-death.data.png'),
-	split_soul: require('../asset/data/buffs/Necromancy/split-soul.data.png'),
-	threads: require('../asset/data/buffs/Necromancy/threads-of-date.data.png'),
-	necrosis: require('../asset/data/buffs/Necromancy/Necrosis.data.png'),
-	soul: require('../asset/data/buffs/Necromancy/residual-soul.data.png'),
-	skeleton: require('../asset/data/buffs/Necromancy/skeleton-warrior.data.png'),
-	zombie: require('../asset/data/buffs/Necromancy/putrid-zombie.data.png'),
-	ghost: require('../asset/data/buffs/Necromancy/vengeful-ghost.data.png'),
-	phantom: require('../asset/data/buffs/Necromancy/phantom-guardian.data.png'),
+	darkness: require('../asset/data/buffs/necro/darkness.data.png'),
+	living_death: require('../asset/data/buffs/necro/living-death.data.png'),
+	split_soul: require('../asset/data/buffs/necro/split-soul.data.png'),
+	threads: require('../asset/data/buffs/necro/threads-of-date.data.png'),
+	necrosis: require('../asset/data/buffs/necro/Necrosis.data.png'),
+	soul: require('../asset/data/buffs/necro/residual-soul.data.png'),
+	skeleton: require('../asset/data/buffs/necro/skeleton-warrior.data.png'),
+	zombie: require('../asset/data/buffs/necro/putrid-zombie.data.png'),
+	ghost: require('../asset/data/buffs/necro/vengeful-ghost.data.png'),
+	phantom: require('../asset/data/buffs/necro/phantom-guardian.data.png'),
 
 	/* Magic */
 	sunshine: require('../asset/data/buffs/magic/sunshine.data.png'),
