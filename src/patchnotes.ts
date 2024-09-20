@@ -3,6 +3,12 @@ import { PatchNote } from './a1sauce/Patches/patchNotes';
 export const notes: PatchNote[] = [
     // Add patch notes to top
     {
+        date: '09/19/2024 - Opt-in "Remember Buff/Debuff Positions" v.1.1.4',
+        note: [
+            `Added a setting to opt-in to the recently removed "remember buff/debuff bar position" functionality. The functionality was removed in a recent release because it made the plugin difficult to use on more than one account at a time. Please only enable the setting if you do not adjust your UI very often and only play on a single account.`,
+        ],
+    },
+    {
         date: '09/15/2024 - Better Error Handling v.1.1.3',
         note: [
             `Error handling has been improved significantly. Errors now provide clearer messages to help with troubleshooting.`,

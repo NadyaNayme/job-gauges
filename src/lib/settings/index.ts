@@ -37,6 +37,11 @@ export const renderSettings = async (gauges: Overlay) => {
             'Periodically check if a new update is available',
             false,
         )
+        .addCheckboxSetting(
+            'rememberUiPosition',
+            'Remember last known position of buff/debuff bars to avoid needing to scan on every app start',
+            false,
+        )
         .addDropdownSetting(
             'defaultCombatStyle',
             'Select default combat style',

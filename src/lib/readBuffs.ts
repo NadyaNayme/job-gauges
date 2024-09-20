@@ -9,6 +9,7 @@ import { appName } from '../data/constants';
 import { LogError } from '../a1sauce/Error/logError';
 import { beginRendering } from '..';
 import { startAbilityCooldown } from './util/ability-helpers';
+import { getSetting, updateSetting } from '../a1sauce/Settings/Storage';
 
 const sauce = A1Sauce.instance;
 sauce.setName(appName);
@@ -75,6 +76,14 @@ async function retryOperation(
 export function findBuffsBar() {
     console.info('Attempting to find buffs bar...');
 
+    if (
+        getSetting('rememberUiPosition') &&
+        getSetting('buffsPosition')
+    ) {
+        buffReader.pos = JSON.parse(getSetting('buffsPosition'));
+        return;
+    }
+
     if (!buffReader.find()) {
         console.log(`Failed to find those buffs`);
 
@@ -89,6 +98,11 @@ export function findBuffsBar() {
 
 export function findDebuffsBar() {
     console.info('Attempting to find debuffs bar...');
+
+    if (getSetting('rememberUiPosition') && getSetting('debuffsPosition')) {
+        debuffReader.pos = JSON.parse(getSetting('debuffsPosition'));
+        return;
+    }
 
     if (!debuffReader.pos && !debuffReader.find()) {
         errorLogger.showError({
@@ -172,6 +186,8 @@ retryOperation(findDebuffsBar, 3, 10000)
             }
         }
         if (buffReader.pos && debuffReader.pos) {
+            updateSetting('buffsPosition', JSON.stringify(buffReader.pos));
+            updateSetting('debuffsPosition', JSON.stringify(debuffReader.pos));
             beginRendering();
         }
     })
