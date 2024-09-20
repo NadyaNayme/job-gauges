@@ -32985,7 +32985,7 @@ const appName = 'job-gauges';
 const versionUrl = 'https://nadyanayme.github.io/job-gauges/dist/version.json';
 const majorVersion = 1;
 const minorVersion = 1;
-const patchVersion = 3;
+const patchVersion = 4;
 
 
 /***/ }),
@@ -35395,10 +35395,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   readBuffs: () => (/* binding */ readBuffs),
 /* harmony export */   testBuffSizes: () => (/* binding */ testBuffSizes)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var alt1_buffs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! alt1/buffs */ "../node_modules/alt1/dist/buffs/index.js");
-/* harmony import */ var alt1_buffs__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(alt1_buffs__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var alt1_buffs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! alt1/buffs */ "../node_modules/alt1/dist/buffs/index.js");
+/* harmony import */ var alt1_buffs__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(alt1_buffs__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utility */ "./lib/utility.ts");
 /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../types */ "./types/index.ts");
 /* harmony import */ var _ranged_activeAmmo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ranged/activeAmmo */ "./lib/ranged/activeAmmo.ts");
@@ -35407,7 +35407,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _a1sauce_Error_logError__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../a1sauce/Error/logError */ "./a1sauce/Error/logError.ts");
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! .. */ "./index.ts");
 /* harmony import */ var _util_ability_helpers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./util/ability-helpers */ "./lib/util/ability-helpers.ts");
+/* harmony import */ var _a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../a1sauce/Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
 /* eslint-disable @typescript-eslint/no-require-imports */
+
 
 
 
@@ -35420,11 +35422,11 @@ __webpack_require__.r(__webpack_exports__);
 
 const sauce = _a1sauce__WEBPACK_IMPORTED_MODULE_3__.A1Sauce.instance;
 sauce.setName(_data_constants__WEBPACK_IMPORTED_MODULE_4__.appName);
-const buffReader = new (alt1_buffs__WEBPACK_IMPORTED_MODULE_8___default())();
-const debuffReader = new (alt1_buffs__WEBPACK_IMPORTED_MODULE_8___default())();
+const buffReader = new (alt1_buffs__WEBPACK_IMPORTED_MODULE_9___default())();
+const debuffReader = new (alt1_buffs__WEBPACK_IMPORTED_MODULE_9___default())();
 debuffReader.debuffs = true;
 const errorLogger = new _a1sauce_Error_logError__WEBPACK_IMPORTED_MODULE_5__.LogError();
-const buffsImages = alt1__WEBPACK_IMPORTED_MODULE_9__.webpackImages({
+const buffsImages = alt1__WEBPACK_IMPORTED_MODULE_10__.webpackImages({
     /* Necromancy */
     darkness: __webpack_require__(/*! ../asset/data/buffs/necro/darkness.data.png */ "./asset/data/buffs/necro/darkness.data.png"),
     living_death: __webpack_require__(/*! ../asset/data/buffs/necro/living-death.data.png */ "./asset/data/buffs/necro/living-death.data.png"),
@@ -35470,6 +35472,11 @@ async function retryOperation(operation, maxRetries, delay, attempt = 0) {
 }
 function findBuffsBar() {
     console.info('Attempting to find buffs bar...');
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_8__.getSetting)('rememberUiPosition') &&
+        (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_8__.getSetting)('buffsPosition')) {
+        buffReader.pos = JSON.parse((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_8__.getSetting)('buffsPosition'));
+        return;
+    }
     if (!buffReader.find()) {
         console.log(`Failed to find those buffs`);
         errorLogger.showError({
@@ -35481,6 +35488,10 @@ function findBuffsBar() {
 }
 function findDebuffsBar() {
     console.info('Attempting to find debuffs bar...');
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_8__.getSetting)('rememberUiPosition') && (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_8__.getSetting)('debuffsPosition')) {
+        debuffReader.pos = JSON.parse((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_8__.getSetting)('debuffsPosition'));
+        return;
+    }
     if (!debuffReader.pos && !debuffReader.find()) {
         errorLogger.showError({
             title: 'No Debuffs Found',
@@ -35491,7 +35502,7 @@ function findDebuffsBar() {
 }
 function testBuffSizes() {
     console.info('Unable to find buffs. Checking to see if Buffs are set to "Medium" or "Large"');
-    const screen = alt1__WEBPACK_IMPORTED_MODULE_9__.captureHoldFullRs();
+    const screen = alt1__WEBPACK_IMPORTED_MODULE_10__.captureHoldFullRs();
     const mediumBuffPositions = screen.findSubimage(buffsImages.mediumBuffs);
     const largeBuffPositions = screen.findSubimage(buffsImages.largeBuffs);
     const message = `<p>Alt1 only supports reading Small Buffs.<br><br>Please update your Buffs Bar settings.<br> Interfaces > Buff Bar > Icon Size </p><img src="./a1sauce/Error/Images/BuffIconSize.png">`;
@@ -35547,6 +35558,8 @@ retryOperation(findDebuffsBar, 3, 10000)
         }
     }
     if (buffReader.pos && debuffReader.pos) {
+        (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_8__.updateSetting)('buffsPosition', JSON.stringify(buffReader.pos));
+        (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_8__.updateSetting)('debuffsPosition', JSON.stringify(debuffReader.pos));
         (0,___WEBPACK_IMPORTED_MODULE_6__.beginRendering)();
     }
 })
@@ -36177,6 +36190,7 @@ const renderSettings = async (gauges) => {
         .addSeperator()
         .addHeader('h3', 'General')
         .addCheckboxSetting('checkForUpdates', 'Periodically check if a new update is available', false)
+        .addCheckboxSetting('rememberUiPosition', 'Remember last known position of buff/debuff bars to avoid needing to scan on every app start', false)
         .addDropdownSetting('defaultCombatStyle', 'Select default combat style', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('defaultCombatStyle') ?? '4', [
         { value: '2', name: 'Ranged' },
         { value: '3', name: 'Magic' },
@@ -36677,6 +36691,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 const notes = [
     // Add patch notes to top
+    {
+        date: '09/19/2024 - Opt-in "Remember Buff/Debuff Positions" v.1.1.4',
+        note: [
+            `Added a setting to opt-in to the recently removed "remember buff/debuff bar position" functionality. The functionality was removed in a recent release because it made the plugin difficult to use on more than one account at a time. Please only enable the setting if you do not adjust your UI very often and only play on a single account.`,
+        ],
+    },
     {
         date: '09/15/2024 - Better Error Handling v.1.1.3',
         note: [
