@@ -357,7 +357,7 @@ module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/
   \***************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAABsAAAAbCAMAAAC6CgRnAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAALFQTFRFAAAAPzFOQiw+GBIfGhMgNiAqSiQhJx4tIxYdViYkAAAAWjdBQSk6MicyLiAQTCAfAAABVzRDNSU3DwwHMysSGhYbVEcqZC4uMx8sNR8nSCozHhMeMBkZX0RmVzE/PSYxUSw1NiItKBYcYjhHUS49TSs0RiczOiQxFRAYRi9DSCgzRy09EwkLDQoRQTRRIhwqBAIEAwMFTz9iLyY6PjBMHRcjQTRQFhEcIBooNixDNipCZAJghAAAADt0Uk5TAP////////////////////////////////////////////////////////////////////////////+SQC1NAAAAeklEQVR4nGNkwA0YsQj9xynHxMjI+BuHHBtQjvEbVjlukBTjB6xygmC5V1jlxMFyT7DJyYKl7mF1izJY7gZWOU2Q1GUGbHJ6QJnzMA6qnBHjWSQeqpwJ42lccmaMJxlwyVmcYMAphwaQ5CyP45bDp48sOatj1DeTXnIA3L0QHMWMnekAAAAASUVORK5CYII=")
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAHVQTFRFAAAAPiY6OyM3JQ0hGA0kNh4uDQAQNR0tCQAMUzhQNiUoKyMYHhYLSzBINyYpMiofIxsQLBErUC5TOSklNCY1SCZLQDAsPi4qMiQzLi8yLS4xSCFIHB0gTTtYLx06QC5LKRc0KBgxFgYfJBYjLR8sCAAHIRMgTGYfZAAAACd0Uk5TAP//////////////////////////////////////////////////WYQoUgAAAHlJREFUeJxjZEAHjP8hFLo4EyPjH6wSDKy/Gdh+YZNg/8nA8QNTgpPxGzfjFyxG8f5lYWRkfI8pIcT4VuQNNstFgepfYJGQZGR8yoDNHzJPYCwUCVnGRwxYJeQZH2CXQAZ0lFC8TzWjlO5hk1C+S6JRKndUGW9hSAAAxWQWGSDC5dMAAAAASUVORK5CYII=")
 
 /***/ }),
 
