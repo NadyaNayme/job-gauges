@@ -40,16 +40,12 @@ export const AbilityCooldowns = new Map<Abilities, AbilityCooldown>([
     ['LivingDeath', { ...defaultCooldowns }],
 ]);
 
-export function updateAbility(
-    ability: Ability,
-    position: Position,
-    duration: number,
-    greater: boolean,
-) {
-    /**
-     * Ignore this as empty. I should've committed MUCH earlier :)
-     */
-}
+/**
+ * Keep track of which abilities are currently doing overlay countdowns for cooldowns.
+ * This helps prevent flickering when this function is relentlessly called over and over
+ * by the renderer.
+ */
+const AbilityCooldown = new Map<Abilities, boolean>();
 
 /**
  * Handles ticking down an abilities cooldown and ending it when it's over or active.
@@ -57,7 +53,7 @@ export function updateAbility(
  * @param abilityName Strongly typed name for consistent overlay updating.
  * @param greater If the cooldown is great...er(?) (Ask Nyu)
  */
-export async function startAbilityCooldown(
+export function startAbilityCooldown(
     abilityData: { scaleFactor: number; position: Position; ability: Ability },
     abilityName: Abilities,
     greater: boolean,
@@ -68,10 +64,21 @@ export async function startAbilityCooldown(
         return;
     }
 
+    const isAbilityOnCooldown = AbilityCooldown.get(abilityName);
+
     // If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
     if (ability.active) {
+        AbilityCooldown.set(abilityName, false);
         return endAbilityCooldown(abilityData.ability, abilityName);
     }
+
+    // If there's already a timer active... no need to do anything else.
+    if (isAbilityOnCooldown) {
+        return;
+    }
+
+    // We're going to begin the cooldown, so set to true to prevent any extra operations for this ability.
+    AbilityCooldown.set(abilityName, true);
 
     // Otherwise cooldown has started and we can clear the Active text
     forceClearOverlay(`${abilityName}_Text`);
@@ -92,10 +99,12 @@ export async function startAbilityCooldown(
     const timer = setInterval(() => {
         if (ability.active || cooldown <= 0) {
             clearInterval(timer);
+            AbilityCooldown.set(abilityName, false);
             return endAbilityCooldown(abilityData.ability, abilityName);
         }
 
         cooldown -= 1;
+
         const cooldownText: AbilityCooldownText = `${abilityName}_Cooldown_Text`;
         forceClearOverlay(cooldownText);
 
