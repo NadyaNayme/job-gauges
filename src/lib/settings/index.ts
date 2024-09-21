@@ -1,4 +1,4 @@
-import { findBuffAndDebuffBars } from '../..';
+import { resetPositionsAndFindBuffAndDebuffBars } from '../..';
 import { A1Sauce } from '../../a1sauce';
 import { Patches } from '../../a1sauce/Patches/patchNotes';
 import { getSetting, updateSetting } from '../../a1sauce/Settings/Storage';
@@ -191,7 +191,7 @@ export const renderSettings = async (gauges: Overlay) => {
         .addButton(
             'resetPositons',
             'Scan for Buff and Debuff Bars',
-            findBuffAndDebuffBars,
+            resetPositionsAndFindBuffAndDebuffBars,
             { classes: ['nisbutton'] },
         )
         .addText(

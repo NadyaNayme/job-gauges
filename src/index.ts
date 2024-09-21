@@ -178,6 +178,12 @@ export function findBuffAndDebuffBars() {
     findDebuffsBar();
 }
 
+export function resetPositionsAndFindBuffAndDebuffBars() {
+    updateSetting('buffsPosition', undefined);
+    updateSetting('debuffsPosition', undefined);
+    findBuffAndDebuffBars();
+}
+
 export function beginRendering() {
     setInterval(() => renderOverlays(), 20);
 }
