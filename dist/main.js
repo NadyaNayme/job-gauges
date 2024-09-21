@@ -33632,6 +33632,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   beginRendering: () => (/* binding */ beginRendering),
 /* harmony export */   findBuffAndDebuffBars: () => (/* binding */ findBuffAndDebuffBars),
+/* harmony export */   resetPositionsAndFindBuffAndDebuffBars: () => (/* binding */ resetPositionsAndFindBuffAndDebuffBars),
 /* harmony export */   startApp: () => (/* binding */ startApp)
 /* harmony export */ });
 /* harmony import */ var _lib_utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib/utility */ "./lib/utility.ts");
@@ -33820,6 +33821,11 @@ async function startApp() {
 function findBuffAndDebuffBars() {
     (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_1__.findBuffsBar)();
     (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_1__.findDebuffsBar)();
+}
+function resetPositionsAndFindBuffAndDebuffBars() {
+    (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.updateSetting)('buffsPosition', undefined);
+    (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_19__.updateSetting)('debuffsPosition', undefined);
+    findBuffAndDebuffBars();
 }
 function beginRendering() {
     setInterval(() => renderOverlays(), 20);
@@ -36241,7 +36247,7 @@ const renderSettings = async (gauges) => {
         .addAlarmSetting('alarmNecrosis', '')
         .addSeperator()
         .addButton('openPatchNotes', 'Open Patch Notes', patchNotes.showPatchNotes, { classes: ['nisbutton'] })
-        .addButton('resetPositons', 'Scan for Buff and Debuff Bars', ___WEBPACK_IMPORTED_MODULE_0__.findBuffAndDebuffBars, { classes: ['nisbutton'] })
+        .addButton('resetPositons', 'Scan for Buff and Debuff Bars', ___WEBPACK_IMPORTED_MODULE_0__.resetPositionsAndFindBuffAndDebuffBars, { classes: ['nisbutton'] })
         .addText('Use the above Scan button if you have adjusted your screen in any way and Job Gauges is no longer working.')
         .build();
     db.allDocs({ include_docs: true, attachments: true, binary: true })
