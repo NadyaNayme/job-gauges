@@ -235,7 +235,7 @@ export function roundedToFixed(input: number, digits: number): string {
 }
 
 export function handleResizingImages(
-    images: { [k in string]: ImageData | unknown },
+    images: Record<string, ImageData | unknown>,
     scaleFactor: number,
 ) {
     for (const key of Object.keys(images)) {
