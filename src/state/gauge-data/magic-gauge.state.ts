@@ -14,8 +14,6 @@ export type MagicPropertyAbilities = 'odeToDeceit' | 'instability' | 'tsunami' |
 export type MagicSpells = 'bloodTithe' | 'glacialEmbrace';
 export type MagicAbilities = Extract<Abilities, 'Sunshine' | 'OdeToDeceit' | 'Tsunami' | 'Instability'>
 
-export
-
 export const MagicGaugeSlice = createSlice({
     name: 'MagicGauge',
     initialState,
