@@ -47,6 +47,7 @@ import { odeToDeceitOverlay } from './lib/magic/odeToDeceit';
 import { rangedSplitSoulOverlay } from './lib/ranged/splitSoul';
 import { LogError } from './a1sauce/Error/logError';
 import { Orientation, OrientationTypes } from './types/common';
+import { forceClearOverlays } from './lib/utility';
 
 const sauce = A1Sauce.instance;
 sauce.setName(appName);
@@ -251,6 +252,8 @@ function addEventListeners() {
 
     getById('defaultCombatStyle')!.addEventListener('change', () => {
         gauges.combatStyle = parseInt(getSetting('defaultCombatStyle'), 10);
+        // Clear all overlays, this gives a snappier feeling in the UI.
+        forceClearOverlays();
     });
 
     // For some reason this one calculates incorrectly on load so we override the initial styles here
