@@ -1,13 +1,8 @@
 import * as a1lib from 'alt1';
-import * as ChatReader from 'alt1/chatbox';
-import { Overlay } from '../../types';
-import { keys } from 'lodash';
+import ChatReader from 'alt1/chatbox';
+import { ActiveSpellNames, ActiveSpells, Overlay } from '../../types';
 import { StackingPlayerBuff } from '../../types/common';
-import {
-    adjustPositionForScale,
-    handleResizingImages,
-    white,
-} from '../utility';
+import { adjustPositionForScale, handleResizingImages, white } from '../utility';
 
 const spellImages = a1lib.webpackImages({
     bloodTithe: require('../.././asset/gauge-ui/magic/active-spell/blood-tithe.data.png'),
@@ -16,7 +11,7 @@ const spellImages = a1lib.webpackImages({
     noSpell: require('../.././asset/gauge-ui/magic/active-spell/no-spell.data.png'),
 });
 
-let chat = new ChatReader.default();
+const chat = new ChatReader;
 chat.diffRead = true;
 chat.diffReadUseTimestamps = true;
 chat.readargs = {
@@ -27,20 +22,18 @@ chat.readargs = {
     ],
 };
 
-const SPELL_TEXT = {
+const SPELL_TEXT: Record<string, ActiveSpellNames> = {
     'Main-hand spell set to: Exsanguinate.': 'Exsanguinate',
     'Main-hand and off-hand spells set to: Exsanguinate.': 'Exsanguinate',
-    'Main-hand spell set to: Incite Fear.': 'Incite Fear',
-    'Main-hand and off-hand spells set to: Incite Fear.': 'Incite Fear',
-    'Main-hand spell set to: Ice Barrage.': 'Ice Barrage',
-    'Main-hand and off-hand spells set to: Ice Barrage.': 'Ice Barrage',
+    'Main-hand spell set to: Incite Fear.': 'Incite_Fear',
+    'Main-hand and off-hand spells set to: Incite Fear.': 'Incite_Fear',
+    'Main-hand spell set to: Ice Barrage.': 'Ice_Barrage',
+    'Main-hand and off-hand spells set to: Ice Barrage.': 'Ice_Barrage',
 };
 
 const getChat = () => {
-    if (chat) {
-        if (!chat.pos) {
-            chat.find();
-        }
+    if (!chat.pos) {
+        chat.find();
     }
 };
 
@@ -127,40 +120,30 @@ export async function spellsOverlay(gauges: Overlay) {
         alt1.overLayRefreshGroup('Spell_Text');
     }
 
-    async function readChatbox(gauges: Overlay) {
-        if (chat && chat.pos && chat.pos.boxes[0] !== undefined) {
-            // alt1.overLayRect(
-            // 	red,
-            // 	chat.pos.mainbox.rect.x,
-            // 	chat.pos.mainbox.rect.y,
-            // 	chat.pos.mainbox.rect.width,
-            // 	chat.pos.mainbox.rect.height,
-            // 	10000,
-            // 	2
-            // );
-            let chatLines = chat.read();
-            let pocketMessages = keys(SPELL_TEXT);
+    function readChatbox(gauges: Overlay) {
+        if (!chat.pos || !chat.pos.boxes[0]) {
+            return;
+        }
 
-            for (const line of chatLines ?? []) {
-                const match = pocketMessages.find((m) => line.text.includes(m));
+        // alt1.overLayRect(
+        // 	red,
+        // 	chat.pos.mainbox.rect.x,
+        // 	chat.pos.mainbox.rect.y,
+        // 	chat.pos.mainbox.rect.width,
+        // 	chat.pos.mainbox.rect.height,
+        // 	10000,
+        // 	2
+        // );
+        const chatLines = chat.read();
+        const pocketMessages = Object.keys(SPELL_TEXT);
 
-                if (!match) continue;
+        for (const line of chatLines ?? []) {
+            const match = pocketMessages.find((m) => line.text.includes(m));
 
-                if (match.includes('Exsanguinate')) {
-                    gauges.magic.spells.activeSpell = 1;
-                    resetSpellText();
-                }
+            if (!match) continue;
 
-                if (match.includes('Incite Fear')) {
-                    gauges.magic.spells.activeSpell = 2;
-                    resetSpellText();
-                }
-
-                if (match.includes('Ice Barrage')) {
-                    gauges.magic.spells.activeSpell = 3;
-                    resetSpellText();
-                }
-            }
+            gauges.magic.spells.activeSpell = ActiveSpells[SPELL_TEXT[match]];
+            resetSpellText();
         }
     }
 }

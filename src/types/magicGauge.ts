@@ -1,5 +1,13 @@
 import { Position, Ability, StackingPlayerBuff } from './common';
 
+export enum ActiveSpells {
+    Exsanguinate = 1,
+    Incite_Fear = 2,
+    Ice_Barrage = 3,
+}
+
+export type ActiveSpellNames = keyof typeof ActiveSpells;
+
 export type Spells = {
     isActiveOverlay: boolean;
     activeSpell: number;

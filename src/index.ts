@@ -1,5 +1,5 @@
 import * as utility from './lib/utility';
-import { Overlay } from './types';
+import { CombatStyle, Overlay } from './types';
 
 // General Purpose
 import { findBuffsBar, findDebuffsBar, readBuffs } from './lib/readBuffs';
@@ -32,13 +32,7 @@ import { A1Sauce } from './a1sauce';
 import { getSetting, updateSetting } from './a1sauce/Settings/Storage';
 import { getById } from './a1sauce/Utils/getById';
 import { renderSettings } from './lib/settings';
-import {
-    appName,
-    majorVersion,
-    minorVersion,
-    patchVersion,
-    versionUrl,
-} from './data/constants';
+import { appName, majorVersion, minorVersion, patchVersion, versionUrl } from './data/constants';
 import { Patches } from './a1sauce/Patches/patchNotes';
 import { notes } from './patchnotes';
 import { startVersionChecking } from './a1sauce/Patches/serverCheck';
@@ -76,35 +70,36 @@ const gauges: Overlay = {
 
 async function renderOverlays() {
     await readEnemy(gauges);
-    if (gauges.isInCombat || getSetting('updatingOverlayPosition')) {
-        await readBuffs(gauges);
-        switch (gauges.combatStyle) {
-            case 4:
-                await livingDeathOverlay(gauges);
-                await conjureOverlay(gauges);
-                await soulsOverlay(gauges);
-                await necrosisOverlay(gauges);
-                await incantationsOverlay(gauges);
-                await bloatOverlay(gauges);
-                break;
-            case 3:
-                await sunshineOverlay(gauges);
-                await spellsOverlay(gauges);
-                await fsoaOverlay(gauges);
-                await tsunamiOverlay(gauges);
-                await odeToDeceitOverlay(gauges);
-                break;
-            case 2:
-                await deathsSwiftnessOverlay(gauges);
-                await crystalRainOverlay(gauges);
-                await peOverlay(gauges);
-                await rangedSplitSoulOverlay(gauges);
-                break;
-            case 1:
-                break;
-        }
-    } else {
-        utility.clearTextOverlays();
+
+    if (!gauges.isInCombat && !getSetting('updatingOverlayPosition')) {
+        return utility.clearTextOverlays();
+    }
+
+    await readBuffs(gauges);
+    switch (gauges.combatStyle) {
+        case CombatStyle.necro:
+            await livingDeathOverlay(gauges);
+            await conjureOverlay(gauges);
+            await soulsOverlay(gauges);
+            await necrosisOverlay(gauges);
+            await incantationsOverlay(gauges);
+            await bloatOverlay(gauges);
+            break;
+        case CombatStyle.mage:
+            await sunshineOverlay(gauges);
+            await spellsOverlay(gauges);
+            await fsoaOverlay(gauges);
+            await tsunamiOverlay(gauges);
+            await odeToDeceitOverlay(gauges);
+            break;
+        case CombatStyle.ranged:
+            await deathsSwiftnessOverlay(gauges);
+            await crystalRainOverlay(gauges);
+            await peOverlay(gauges);
+            await rangedSplitSoulOverlay(gauges);
+            break;
+        case CombatStyle.melee:
+            break;
     }
 }
 
@@ -185,7 +180,7 @@ export function resetPositionsAndFindBuffAndDebuffBars() {
 }
 
 export function beginRendering() {
-    setInterval(() => renderOverlays(), 20);
+    setInterval(() => renderOverlays(), 80);
 }
 
 function calibrationWarning(): void {
@@ -507,7 +502,7 @@ function setNecromancyGaugeData(gauges: Overlay) {
     }
 
     if (getSetting('defaultCombatStyle') !== undefined) {
-        let input = <HTMLSelectElement>(
+        const input = <HTMLSelectElement>(
             document.getElementById('defaultCombatStyle')
         );
         input.value = getSetting('defaultCombatStyle');
@@ -519,7 +514,7 @@ function setNecromancyGaugeData(gauges: Overlay) {
 // TODO: and recover it instead of setting each property individually from a different setting
 // TODO: Just need to figure out why my earlier attempt with setGaugeData() wasn't saving values properly
 function getGaugeData(gauges: Overlay) {
-    let gaugeData = getSetting('gaugedata');
+    const gaugeData = getSetting('gaugedata');
     if (gaugeData !== undefined) {
         gauges = gaugeData;
         return JSON.parse(gaugeData);

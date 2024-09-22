@@ -205,177 +205,179 @@ retryOperation(findDebuffsBar, 3, 10000)
     });
 
 export async function readBuffs(gauges: Overlay) {
-    if (buffReader.pos !== undefined) {
+    if (!buffReader.pos) {
+        return;
+    }
+
+    updateBuffData(
+        buffReader,
+        gauges,
+        buffsImages.deathsSwiftness,
+        300,
+        updateDeathsSwiftness,
+        false,
+    );
+    updateBuffData(
+        buffReader,
+        gauges,
+        buffsImages.greaterDeathsSwiftness,
+        300,
+        updateDeathsSwiftness,
+        true,
+    );
+    updateBuffData(
+        buffReader,
+        gauges,
+        buffsImages.sunshine,
+        300,
+        updateSunshine,
+        false,
+    );
+    updateBuffData(
+        buffReader,
+        gauges,
+        buffsImages.greaterSunshine,
+        100,
+        updateSunshine,
+        true,
+    );
+    if (gauges.necromancy.livingDeath.isActiveOverlay) {
         updateBuffData(
             buffReader,
             gauges,
-            buffsImages.deathsSwiftness,
-            300,
-            updateDeathsSwiftness,
+            buffsImages.living_death,
+            400,
+            updateLivingDeath,
             false,
         );
-        updateBuffData(
-            buffReader,
-            gauges,
-            buffsImages.greaterDeathsSwiftness,
-            300,
-            updateDeathsSwiftness,
-            true,
-        );
-        updateBuffData(
-            buffReader,
-            gauges,
-            buffsImages.sunshine,
-            300,
-            updateSunshine,
-            false,
-        );
-        updateBuffData(
-            buffReader,
-            gauges,
-            buffsImages.greaterSunshine,
-            100,
-            updateSunshine,
-            true,
-        );
-        if (gauges.necromancy.livingDeath.isActiveOverlay) {
+    }
+
+    switch (gauges.combatStyle) {
+        case CombatStyle.necro:
             updateBuffData(
                 buffReader,
                 gauges,
-                buffsImages.living_death,
-                400,
-                updateLivingDeath,
+                buffsImages.soul,
+                200,
+                updateSoulCount,
                 false,
             );
-        }
+            updateBuffData(
+                buffReader,
+                gauges,
+                buffsImages.necrosis,
+                200,
+                updateNecrosisCount,
+                false,
+            );
+            updateConjures(gauges);
 
-        switch (gauges.combatStyle) {
-            case 4:
-                updateBuffData(
-                    buffReader,
-                    gauges,
-                    buffsImages.soul,
-                    200,
-                    updateSoulCount,
-                    false,
-                );
-                updateBuffData(
-                    buffReader,
-                    gauges,
-                    buffsImages.necrosis,
-                    200,
-                    updateNecrosisCount,
-                    false,
-                );
-                updateConjures(gauges);
+            updateBuffData(
+                buffReader,
+                gauges,
+                buffsImages.darkness,
+                300,
+                updateDarkness,
+                false,
+            );
 
+            if (!disableThreadsCheck) {
                 updateBuffData(
                     buffReader,
                     gauges,
-                    buffsImages.darkness,
+                    buffsImages.threads,
                     300,
-                    updateDarkness,
+                    updateThreads,
                     false,
                 );
-
-                if (!disableThreadsCheck) {
-                    updateBuffData(
-                        buffReader,
-                        gauges,
-                        buffsImages.threads,
-                        300,
-                        updateThreads,
-                        false,
-                    );
-                }
-                if (!disableSplitCheck) {
-                    updateBuffData(
-                        buffReader,
-                        gauges,
-                        buffsImages.split_soul,
-                        350,
-                        updateSplitSoul,
-                        false,
-                    );
-                }
-                break;
-            case 3:
+            }
+            if (!disableSplitCheck) {
                 updateBuffData(
                     buffReader,
                     gauges,
-                    buffsImages.instability,
-                    60,
-                    updateFsoa,
+                    buffsImages.split_soul,
+                    350,
+                    updateSplitSoul,
                     false,
                 );
-                updateBuffData(
-                    buffReader,
-                    gauges,
-                    buffsImages.tsunami,
-                    200,
-                    updateTsunami,
-                    false,
-                );
-                updateStackData(
-                    gauges,
-                    buffsImages.bloodTithe,
-                    30,
-                    updateBloodTithe,
-                );
-                updateStackData(
-                    gauges,
-                    buffsImages.glacialEmbrace,
-                    30,
-                    updateGlacialEmbrace,
-                );
-                updateBuffData(
-                    debuffReader,
-                    gauges,
-                    buffsImages.odeToDeceit,
-                    9,
-                    updateOdeToDeceit,
-                    false,
-                );
-                break;
-            case 2:
-                updateBuffData(
-                    debuffReader,
-                    gauges,
-                    buffsImages.crystalRain,
-                    60,
-                    updateCrystalRain,
-                    false,
-                );
-                findAmmo(gauges, buffReader.read());
-                updateSimpleStackData(
-                    gauges,
-                    buffsImages.perfectEquilibrium,
-                    300,
-                    updatePeCount,
-                );
-                updateBuffData(
-                    buffReader,
-                    gauges,
-                    buffsImages.balanaceByForce,
-                    20,
-                    updateBalanceByForce,
-                    false,
-                );
-                updateBuffData(
-                    buffReader,
-                    gauges,
-                    buffsImages.rangedSplitSoul,
-                    300,
-                    updateRangedSplitSoul,
-                    false,
-                );
-                break;
-            case 1:
-                break;
-        }
-
-        return buffReader;
+            }
+            break;
+        case CombatStyle.mage:
+            updateBuffData(
+                buffReader,
+                gauges,
+                buffsImages.instability,
+                60,
+                updateFsoa,
+                false,
+            );
+            updateBuffData(
+                buffReader,
+                gauges,
+                buffsImages.tsunami,
+                200,
+                updateTsunami,
+                false,
+            );
+            updateStackData(
+                gauges,
+                buffsImages.bloodTithe,
+                30,
+                updateBloodTithe,
+            );
+            updateStackData(
+                gauges,
+                buffsImages.glacialEmbrace,
+                30,
+                updateGlacialEmbrace,
+            );
+            updateBuffData(
+                debuffReader,
+                gauges,
+                buffsImages.odeToDeceit,
+                9,
+                updateOdeToDeceit,
+                false,
+            );
+            break;
+        case CombatStyle.ranged:
+            updateBuffData(
+                debuffReader,
+                gauges,
+                buffsImages.crystalRain,
+                60,
+                updateCrystalRain,
+                false,
+            );
+            findAmmo(gauges, buffReader.read());
+            updateSimpleStackData(
+                gauges,
+                buffsImages.perfectEquilibrium,
+                300,
+                updatePeCount,
+            );
+            updateBuffData(
+                buffReader,
+                gauges,
+                buffsImages.balanaceByForce,
+                20,
+                updateBalanceByForce,
+                false,
+            );
+            updateBuffData(
+                buffReader,
+                gauges,
+                buffsImages.rangedSplitSoul,
+                300,
+                updateRangedSplitSoul,
+                false,
+            );
+            break;
+        case CombatStyle.melee:
+            break;
     }
+
+    return buffReader;
 }
 
 async function updateBuffData(
