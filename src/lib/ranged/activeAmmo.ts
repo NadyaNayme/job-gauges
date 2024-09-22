@@ -1,7 +1,8 @@
 import * as a1lib from 'alt1';
 import * as BuffReader from 'alt1/buffs';
-import { Overlay } from '../../types';
 import { adjustPositionForScale, white } from '../utility';
+import { store } from '../../state';
+import { RangeGaugeSlice } from '../../state/gauge-data/range-gauge.state';
 
 const quiverImages = a1lib.webpackImages({
     bik: require('../../asset/data/buffs/ranged/ammo/bik.data.png'),
@@ -18,18 +19,17 @@ const quiverImages = a1lib.webpackImages({
 
 let lastAmmo: string;
 
-export async function findAmmo(
-    gauges: Overlay,
-    buffs: BuffReader.Buff[] | null,
-) {
+export async function findAmmo(buffs: BuffReader.Buff[] | null) {
     if (!buffs) {
         return;
     }
 
+    const range = store.getState().range;
+
     let ammoActive = 0;
     let currentAmmo = '';
 
-    for (let [_key, value] of Object.entries(buffs)) {
+    for (const [_key, value] of Object.entries(buffs)) {
         const checkBik = value.countMatch(quiverImages.bik, false);
         const checkFul = value.countMatch(quiverImages.ful, false);
         const checkWen = value.countMatch(quiverImages.wen, false);
@@ -89,32 +89,34 @@ export async function findAmmo(
         }
     }
 
-    if (ammoActive === 0) {
-        gauges.ranged.ammo.activeAmmo = '';
-    } else {
-        gauges.ranged.ammo.activeAmmo = currentAmmo;
-        if (lastAmmo !== currentAmmo) {
-            lastAmmo = currentAmmo;
+    store.dispatch(RangeGaugeSlice.actions.updateState({
+        ammo: {
+            activeAmmo: ammoActive ? currentAmmo : '',
+            isActiveOverlay: range.ammo.isActiveOverlay,
         }
-    }
-    displayAmmoName(gauges, currentAmmo);
+    }));
+
+    displayAmmoName();
 }
 
-function displayAmmoName(gauges: Overlay, ammo: string): void {
+function displayAmmoName(): void {
+    const range = store.getState().range;
+    const gaugeData = store.getState().gaugeData;
+
     alt1.overLaySetGroup(`Ammo_Text`);
     alt1.overLayFreezeGroup(`Ammo_Text`);
     alt1.overLayClearGroup(`Ammo_Text`);
     alt1.overLayTextEx(
-        gauges.ranged.ammo.activeAmmo,
+        range.ammo.activeAmmo,
         white,
         14,
         adjustPositionForScale(
-            gauges.ranged.position.x + 96,
-            gauges.scaleFactor,
+            range.position.x + 96,
+            gaugeData.scaleFactor,
         ),
         adjustPositionForScale(
-            gauges.ranged.position.y + 24,
-            gauges.scaleFactor,
+            range.position.y + 24,
+            gaugeData.scaleFactor,
         ),
         3000,
         '',

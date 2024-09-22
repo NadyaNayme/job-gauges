@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 import * as a1lib from 'alt1';
 import TargetMob from 'alt1/targetmob';
 import { roundedToFixed } from './utility';
-import { Overlay } from '../types';
 import { getSetting } from '../a1sauce/Settings/Storage';
+import { store } from '../state';
+import { GaugeDataSlice } from '../state/gauge-data/gauge-data.state';
 
 const targetDisplay = new TargetMob();
 
@@ -20,7 +20,9 @@ const combatInterval = new Map();
 const outOfCombat = 'isInCombat';
 let combatTimer = -1;
 
-export async function readEnemy(gauges: Overlay) {
+export async function readEnemy() {
+    const gauges = store.getState().gaugeData;
+
     //TODO: Store LastPos and detect when to rescan to avoid spamming CHFRS in loop
     const targetData = targetDisplay.read();
 
@@ -71,10 +73,19 @@ export async function readEnemy(gauges: Overlay) {
             target_display_loc.w,
             target_display_loc.h,
         );
+
         const targetIsDeathMarked = targetDebuffs.findSubimage(
             enemyDebuffImages.invokeDeath,
         ).length;
+
         if (targetIsDeathMarked) {
+            store.dispatch(GaugeDataSlice.actions.updateState({
+                necromancy: {
+                    incantations: {
+                        active: [true]
+                    }
+                }
+            }))
             gauges.necromancy.incantations.active[0] = true;
         } else if (!targetIsDeathMarked) {
             gauges.necromancy.incantations.active[0] = false;

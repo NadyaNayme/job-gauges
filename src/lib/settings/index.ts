@@ -24,7 +24,7 @@ const db = new PouchDB(appName);
 const patchNotes = new Patches();
 patchNotes.setNotes(notes);
 
-export const renderSettings = async (gauges: Overlay) => {
+export const renderSettings = (gauges: Overlay) => {
     settings
         .addHeader('h2', 'Job Gauges - v' + sauce.getVersion())
         .addText(
@@ -56,11 +56,16 @@ export const renderSettings = async (gauges: Overlay) => {
             'automaticSwapping',
             'Swap gauge automatically based on last used Ultimate Ability',
             false,
+            (event) => gauges.automaticSwapping = event,
         )
         .addCheckboxSetting(
             'hideOutsideCombat',
             'Show gauges only while "In Combat"',
             false,
+            (event) => {
+                gauges.checkCombatStatus = event;
+                gauges.isInCombat = false;
+            },
         )
         .addRangeSetting(
             'combatTimer',
@@ -102,66 +107,79 @@ export const renderSettings = async (gauges: Overlay) => {
             'showConjures',
             'Show Conjures',
             getSetting('showConjures') ?? true,
+            (event) => gauges.necromancy.conjures.isActiveOverlay = event,
         )
         .addCheckboxSetting(
             'showLivingDeath',
             'Show Living Death',
             getSetting('showLivingDeath') ?? true,
+            (event) => gauges.necromancy.livingDeath.isActiveOverlay = event,
         )
         .addCheckboxSetting(
             'showIncantations',
             'Show Incantations',
             getSetting('showIncantations') ?? true,
+            (event) => gauges.necromancy.incantations.isActiveOverlay = event,
         )
         .addCheckboxSetting(
             'showInvokeDeath',
             'Show Invoke Death',
             getSetting('showInvokeDeath') ?? true,
+            (event) => gauges.necromancy.incantations.invokeDeath.isActiveOverlay = event,
         )
         .addCheckboxSetting(
             'showDarkness',
             'Show Darkness',
             getSetting('showDarkness') ?? true,
+            (event) => gauges.necromancy.incantations.darkness.isActiveOverlay = event,
         )
         .addCheckboxSetting(
             'showThreads',
             'Show Threads of Fate',
             getSetting('showThreads') ?? true,
+            (event) => gauges.necromancy.incantations.threads.isActiveOverlay = event,
         )
         .addCheckboxSetting(
             'showSplitSoul',
             'Show Split Soul',
             getSetting('showSplitSoul') ?? true,
+            (event) => gauges.necromancy.incantations.splitSoul.isActiveOverlay = event,
         )
         .addCheckboxSetting(
             'showSouls',
             'Show Residual Souls',
             getSetting('showSouls') ?? true,
+            (event) => gauges.necromancy.stacks.souls.isActiveOverlay = event,
         )
         .addCheckboxSetting(
             'pre95Souls',
             'Only show 3 Residual Souls / No Soulbound Lantern',
             getSetting('pre95Souls') ?? false,
+            (event) => gauges.necromancy.stacks.pre95Souls = event,
         )
         .addCheckboxSetting(
             'showNecrosis',
             'Show Necrosis',
             getSetting('showNecrosis') ?? true,
+            (event) => gauges.necromancy.stacks.necrosis.isActiveOverlay = event,
         )
         .addCheckboxSetting(
             'dupeRow',
             'Show 2nd row of Necrosis stacks',
             getSetting('dupeRow') ?? false,
+            (event) => gauges.necromancy.stacks.duplicateNecrosisRow = event,
         )
         .addCheckboxSetting(
             'useColoredNecrosis',
             'Use orange and red Necrosis Stacks when above certain thresholds',
             getSetting('useColoredNecrosis') ?? false,
+            (event) => gauges.necromancy.stacks.useColoredNecrosis = event,
         )
         .addCheckboxSetting(
             'showBloat',
             'Show Bloat',
             getSetting('showBloat') ?? true,
+            (event) => gauges.necromancy.bloat.isActiveOverlay = event,
         )
         .addSeperator()
         .addHeader('h2', 'Alarms')
@@ -202,12 +220,17 @@ export const renderSettings = async (gauges: Overlay) => {
     db.allDocs({ include_docs: true, attachments: true, binary: true })
         .then((result) => {
             result.rows.forEach((row) => {
-                let alarmDropdowns =
-                    document.querySelectorAll('.alarm-dropdown');
+                if (!row.doc) {
+                    console.error(`Doc for row wassdss undefined.`);
+                    return;
+                }
+
+                const alarmDropdowns = document.querySelectorAll('.alarm-dropdown');
                 for (let i = 0; i < alarmDropdowns.length; i++) {
-                    let option = document.createElement('option');
-                    // @ts-ignore
+                    const option = document.createElement('option');
                     option.value = `Custom:${row.doc._id}`;
+                    // @ts-ignore
+                    console.log(`Row name?: `, row.doc.name);
                     // @ts-ignore
                     option.innerText = `${row.doc.name}`;
                     alarmDropdowns[i].appendChild(option);
@@ -215,14 +238,14 @@ export const renderSettings = async (gauges: Overlay) => {
             });
         })
         .then(() => {
-            let alarmDropdowns = document.querySelectorAll('.alarm-dropdown');
+            const alarmDropdowns = document.querySelectorAll('.alarm-dropdown');
             alarmDropdowns.forEach((dropdown) => {
                 dropdown.addEventListener('change', (e) => {
-                    let target = <HTMLSelectElement>e.target;
-                    let settingName = target.id;
+                    const target = <HTMLSelectElement>e.target;
+                    const settingName = target.id;
                     updateSetting(settingName, target.value);
                 });
-                let dd = <HTMLSelectElement>dropdown;
+                const dd = <HTMLSelectElement>dropdown;
                 dd.value = getSetting(dropdown.id);
             });
         });

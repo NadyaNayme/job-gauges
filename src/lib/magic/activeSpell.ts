@@ -1,8 +1,9 @@
 import * as a1lib from 'alt1';
 import ChatReader from 'alt1/chatbox';
-import { ActiveSpellNames, ActiveSpells, Overlay } from '../../types';
+import { ActiveSpellNames, ActiveSpells } from '../../types';
 import { StackingPlayerBuff } from '../../types/common';
 import { adjustPositionForScale, handleResizingImages, white } from '../utility';
+import { store } from '../../state';
 
 const spellImages = a1lib.webpackImages({
     bloodTithe: require('../.././asset/gauge-ui/magic/active-spell/blood-tithe.data.png'),
@@ -39,11 +40,14 @@ const getChat = () => {
 
 let scaledOnce = false;
 
-export async function spellsOverlay(gauges: Overlay) {
+export async function spellsOverlay() {
     getChat();
-    readChatbox(gauges);
+    readChatbox();
 
-    const { spells } = gauges.magic;
+    const magic = store.getState().magic;
+    const gaugeData = store.getState().gaugeData;
+
+    const { spells } = magic;
 
     if (!spells.isActiveOverlay) {
         return;
@@ -52,7 +56,7 @@ export async function spellsOverlay(gauges: Overlay) {
     await spellImages.promise;
 
     if (!scaledOnce) {
-        handleResizingImages(spellImages, gauges.scaleFactor);
+        handleResizingImages(spellImages, gaugeData.scaleFactor);
 
         scaledOnce = true;
     }
@@ -65,11 +69,11 @@ export async function spellsOverlay(gauges: Overlay) {
     switch (spells.activeSpell) {
         case 1:
             displaySpellImage(spellImages.bloodTithe);
-            displaySpellStacks(gauges.magic.spells.bloodTithe);
+            displaySpellStacks(magic.spells.bloodTithe);
             break;
         case 2:
             displaySpellImage(spellImages.glacialEmbrace);
-            displaySpellStacks(gauges.magic.spells.glacialEmbrace);
+            displaySpellStacks(magic.spells.glacialEmbrace);
             break;
         case 3:
             displaySpellImage(spellImages.iceBarrage);
@@ -82,12 +86,12 @@ export async function spellsOverlay(gauges: Overlay) {
     function displaySpellImage(image: ImageData): void {
         alt1.overLayImage(
             adjustPositionForScale(
-                gauges.magic.position.x + x,
-                gauges.scaleFactor,
+                magic.position.x + x,
+                gaugeData.scaleFactor,
             ),
             adjustPositionForScale(
-                gauges.magic.position.y + y,
-                gauges.scaleFactor,
+                magic.position.y + y,
+                gaugeData.scaleFactor,
             ),
             a1lib.encodeImageString(image.toDrawableData()),
             image.width,
@@ -105,12 +109,12 @@ export async function spellsOverlay(gauges: Overlay) {
             white,
             14,
             adjustPositionForScale(
-                gauges.magic.position.x + x + 26,
-                gauges.scaleFactor,
+                magic.position.x + x + 26,
+                gaugeData.scaleFactor,
             ),
             adjustPositionForScale(
-                gauges.magic.position.y + y + 23,
-                gauges.scaleFactor,
+                magic.position.y + y + 23,
+                gaugeData.scaleFactor,
             ),
             3000,
             '',
@@ -120,20 +124,13 @@ export async function spellsOverlay(gauges: Overlay) {
         alt1.overLayRefreshGroup('Spell_Text');
     }
 
-    function readChatbox(gauges: Overlay) {
+    function readChatbox() {
+        const magic = store.getState().magic;
+
         if (!chat.pos || !chat.pos.boxes[0]) {
             return;
         }
 
-        // alt1.overLayRect(
-        // 	red,
-        // 	chat.pos.mainbox.rect.x,
-        // 	chat.pos.mainbox.rect.y,
-        // 	chat.pos.mainbox.rect.width,
-        // 	chat.pos.mainbox.rect.height,
-        // 	10000,
-        // 	2
-        // );
         const chatLines = chat.read();
         const pocketMessages = Object.keys(SPELL_TEXT);
 
@@ -142,7 +139,7 @@ export async function spellsOverlay(gauges: Overlay) {
 
             if (!match) continue;
 
-            gauges.magic.spells.activeSpell = ActiveSpells[SPELL_TEXT[match]];
+            magic.spells.activeSpell = ActiveSpells[SPELL_TEXT[match]];
             resetSpellText();
         }
     }
