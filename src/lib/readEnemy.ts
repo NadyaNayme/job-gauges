@@ -3,7 +3,7 @@ import TargetMob from 'alt1/targetmob';
 import { roundedToFixed } from './utility';
 import { getSetting } from '../a1sauce/Settings/Storage';
 import { store } from '../state';
-import { GaugeDataSlice } from '../state/gauge-data/gauge-data.state';
+import { NecromancyGaugeSlice } from '../state/gauge-data/necromancy-gauge.state';
 
 const targetDisplay = new TargetMob();
 
@@ -59,69 +59,59 @@ export async function readEnemy() {
         }
     }
 
-    if (targetData && gauges.isInCombat) {
-        const target_display_loc = {
-            x: (targetDisplay?.lastpos?.x ?? 0) - 120,
-            y: (targetDisplay?.lastpos?.y ?? 0) + 20,
-            w: 150,
-            h: 60,
-        };
+    if (!(targetData && gauges.isInCombat)) {
+        store.dispatch(NecromancyGaugeSlice.actions.updateActiveIncantation({ active: false, incantation: 0 }));
+        store.dispatch(NecromancyGaugeSlice.actions.updateBloat({ active: false, time: 0 }));
+        return;
+    }
 
-        const targetDebuffs = a1lib.captureHold(
-            target_display_loc.x,
-            target_display_loc.y,
-            target_display_loc.w,
-            target_display_loc.h,
-        );
+    const target_display_loc = {
+        x: (targetDisplay?.lastpos?.x ?? 0) - 120,
+        y: (targetDisplay?.lastpos?.y ?? 0) + 20,
+        w: 150,
+        h: 60,
+    };
 
-        const targetIsDeathMarked = targetDebuffs.findSubimage(
-            enemyDebuffImages.invokeDeath,
-        ).length;
+    const targetDebuffs = a1lib.captureHold(
+        target_display_loc.x,
+        target_display_loc.y,
+        target_display_loc.w,
+        target_display_loc.h,
+    );
 
-        if (targetIsDeathMarked) {
-            store.dispatch(GaugeDataSlice.actions.updateState({
-                necromancy: {
-                    incantations: {
-                        active: [true]
-                    }
-                }
-            }))
-            gauges.necromancy.incantations.active[0] = true;
-        } else if (!targetIsDeathMarked) {
-            gauges.necromancy.incantations.active[0] = false;
-        }
+    const targetIsDeathMarked = targetDebuffs.findSubimage(
+        enemyDebuffImages.invokeDeath,
+    ).length;
 
-        const targetIsBloated = targetDebuffs.findSubimage(
-            enemyDebuffImages.bloat,
-        ).length;
-        if (targetIsBloated && !bloatInterval.has(bloat)) {
-            gauges.necromancy.bloat.time = 20.5;
-            gauges.necromancy.bloat.active = true;
-            const intervalId = setInterval(() => {
-                const currentTick = gauges.necromancy.bloat.time;
+    store.dispatch(NecromancyGaugeSlice.actions.updateActiveIncantation({
+        active: !!targetIsDeathMarked,
+        incantation: 0,
+    }));
 
-                if (currentTick > 0) {
-                    const nextTick = parseFloat(
-                        roundedToFixed(currentTick - 0.6, 1),
-                    );
-                    gauges.necromancy.bloat.time = nextTick;
-                } else {
-                    clearInterval(bloatInterval.get(bloat));
-                    bloatInterval.delete(bloat);
-                    gauges.necromancy.bloat.time = 0;
-                }
-            }, 600);
-            bloatInterval.set(bloat, intervalId);
-        } else if (!targetIsBloated) {
-            if (bloatInterval.has(bloat)) {
+    const targetIsBloated = targetDebuffs.findSubimage(
+        enemyDebuffImages.bloat,
+    ).length;
+
+    if (targetIsBloated && !bloatInterval.has(bloat)) {
+        gauges.necromancy.bloat.time = 20.5;
+        gauges.necromancy.bloat.active = true;
+        const intervalId = setInterval(() => {
+            const currentTick = gauges.necromancy.bloat.time;
+
+            if (currentTick > 0) {
+                gauges.necromancy.bloat.time = parseFloat(roundedToFixed(currentTick - 0.6, 1));
+            } else {
                 clearInterval(bloatInterval.get(bloat));
                 bloatInterval.delete(bloat);
+                gauges.necromancy.bloat.time = 0;
             }
-            gauges.necromancy.bloat.time = 0;
-            gauges.necromancy.bloat.active = false;
+        }, 600);
+        bloatInterval.set(bloat, intervalId);
+    } else if (!targetIsBloated) {
+        if (bloatInterval.has(bloat)) {
+            clearInterval(bloatInterval.get(bloat));
+            bloatInterval.delete(bloat);
         }
-    } else {
-        gauges.necromancy.incantations.active[0] = false;
         gauges.necromancy.bloat.time = 0;
         gauges.necromancy.bloat.active = false;
     }

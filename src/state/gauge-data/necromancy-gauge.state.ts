@@ -1,6 +1,6 @@
 import { NecromancyGauge } from '../../types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Ability, TimedPlayerBuff } from '../../types/common';
+import { Ability, EnemyDebuff, TimedPlayerBuff } from '../../types/common';
 import { necromancy_gauge } from '../../data/necromancyGauge';
 
 export type NecromancyGaugeState = NecromancyGauge;
@@ -45,8 +45,14 @@ export const NecromancyGaugeSlice = createSlice({
 
             state.conjures.active = !!action.payload.conjure.active;
         },
-        updateActiveIncantation: (state, action: PayloadAction<{ incantation: 1 | 2 | 3 | 4, active: boolean }>) => {
+        updateActiveIncantation: (state, action: PayloadAction<{ incantation: 0 | 1 | 2 | 3 | 4, active: boolean }>) => {
             state.incantations.active[action.payload.incantation] = action.payload.active;
+        },
+        updateBloat: (state, action: PayloadAction<Partial<EnemyDebuff>>) => {
+            state.bloat = {
+                ...state.bloat,
+                ...action.payload,
+            }
         },
         updateAbilityCooldown: (state, action: PayloadAction<{
             abilityName: 'livingDeath',

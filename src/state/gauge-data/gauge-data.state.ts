@@ -1,10 +1,6 @@
-import { CombatStyle, NecromancyGauge, Overlay } from '../../types';
-import { necromancy_gauge } from '../../data/necromancyGauge';
-import { magic_gauge } from '../../data/magicGauge';
-import { ranged_gauge } from '../../data/rangedGauge';
-import { melee_gauge } from '../../data/meleeGauge';
-import { createSlice } from '@reduxjs/toolkit';
+import { CombatStyle, Overlay } from '../../types';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 export type GaugeDataState = Overlay;
 

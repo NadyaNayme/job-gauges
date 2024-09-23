@@ -168,9 +168,10 @@ export class SettingsManager {
             max?: number;
             unit?: string;
         } = {},
+        callback?: (value: number) => unknown
     ): SettingsManager => {
         this.settings?.push(
-            Library.createRangeSetting(name, description, options),
+            Library.createRangeSetting(name, description, options, callback),
         );
         return this;
     };

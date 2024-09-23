@@ -12,6 +12,6 @@ export type RangedGauge = {
     ammo: Ammo;
     crystalRain: Ability;
     deathsSwiftness: Ability;
-    perfectEquilibrium: StackingPlayerBuff;
     splitSoul: Ability;
+    perfectEquilibrium: StackingPlayerBuff;
 };

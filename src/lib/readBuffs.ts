@@ -10,9 +10,10 @@ import { startAbilityCooldown } from './util/ability-helpers';
 import { getSetting, updateSetting } from '../a1sauce/Settings/Storage';
 import { store } from '../state';
 import { NecromancyGaugeSlice } from '../state/gauge-data/necromancy-gauge.state';
-import { clearTextOverlays, forceClearOverlay, forceClearOverlays } from './utility';
+import { clearTextOverlays, forceClearOverlays } from './utility';
 import { MagicAbilities, MagicGaugeSlice, MagicPropertyAbilities } from '../state/gauge-data/magic-gauge.state';
 import { GaugeDataSlice } from '../state/gauge-data/gauge-data.state';
+import { RangeAbilities, RangeGaugeSlice, RangePropertyAbilities } from '../state/gauge-data/range-gauge.state';
 
 const sauce = A1Sauce.instance;
 sauce.setName(appName);
@@ -219,28 +220,28 @@ export async function readBuffs() {
         buffReader,
         buffsImages.deathsSwiftness,
         100,
-        updateDeathsSwiftness,
+        (time) => updateRangeAbility(time, false, 'DeathsSwiftness'),
         false,
     );
     updateBuffData(
         buffReader,
         buffsImages.greaterDeathsSwiftness,
         350,
-        updateDeathsSwiftness,
+        (time) => updateRangeAbility(time, true, 'DeathsSwiftness'),
         true,
     );
     updateBuffData(
         buffReader,
         buffsImages.sunshine,
         300,
-        (time) => updateMagicAbility(time, 'Sunshine'),
+        (time) => updateMagicAbility(time, false, 'Sunshine'),
         false,
     );
     updateBuffData(
         buffReader,
         buffsImages.greaterSunshine,
         100,
-        (time) => updateMagicAbility(time, 'Sunshine'),
+        (time) => updateMagicAbility(time, true, 'Sunshine'),
         true,
     );
     if (necromancy.livingDeath.isActiveOverlay) {
@@ -309,14 +310,14 @@ export async function readBuffs() {
                 buffReader,
                 buffsImages.instability,
                 60,
-                (time) => updateMagicAbility(time, 'Instability'),
+                (time) => updateMagicAbility(time, false, 'Instability'),
                 false,
             );
             updateBuffData(
                 buffReader,
                 buffsImages.tsunami,
                 200,
-                (time) => updateMagicAbility(time, 'Tsunami'),
+                (time) => updateMagicAbility(time, false, 'Tsunami'),
                 false,
             );
             updateStackData(
@@ -333,7 +334,7 @@ export async function readBuffs() {
                 debuffReader,
                 buffsImages.odeToDeceit,
                 9,
-                (time) => updateMagicAbility(time, 'OdeToDeceit'),
+                (time) => updateMagicAbility(time, false, 'OdeToDeceit'),
                 false,
             );
             break;
@@ -342,7 +343,7 @@ export async function readBuffs() {
                 debuffReader,
                 buffsImages.crystalRain,
                 60,
-                updateCrystalRain,
+                (time) => updateRangeAbility(time, true, 'CrystalRain'),
                 false,
             );
             findAmmo(buffReader.read());
@@ -355,14 +356,17 @@ export async function readBuffs() {
                 buffReader,
                 buffsImages.balanaceByForce,
                 20,
-                updateBalanceByForce,
+                (active) => updateBalanceByForce(!!active),
                 false,
             );
             updateBuffData(
                 buffReader,
                 buffsImages.rangedSplitSoul,
                 300,
-                updateRangedSplitSoul,
+                /**
+                 * @TODO - I know this isn't how this one works exactly. Figure out a way. Or just update the old method.
+                 */
+                (time) => updateRangeAbility(time, false, 'SplitSoul'),
                 false,
             );
             break;
@@ -392,21 +396,19 @@ function updateBuffData(
     let foundBuff = false;
     for (const buff of buffs) {
         const match = buff.countMatch(buffImage, false);
+        const { time } = buff.readArg('timearg');
 
         /**
          * "THIS IS A HACK"
          * Issues with Ode to Deceit false positives
          */
-        if (
-            buffImage === buffsImages.odeToDeceit &&
-            buff.readArg('timearg').time >= 46
-        ) {
+        if (buffImage === buffsImages.odeToDeceit && time >= 46) {
             return false;
         }
 
         if (match.passed > threshold) {
             foundBuff = true;
-            updateCallbackFn(buff.readArg('timearg').time, greater);
+            updateCallbackFn(time, greater);
         }
     }
 
@@ -435,16 +437,9 @@ function updateStackData(
 
         if (match.passed > threshold) {
             foundBuff = true;
+            const timearg = buff.readArg('timearg').arg;
             updateCallbackFn(
-                parseInt(
-                    buff
-                        .readArg('timearg')
-                        .arg.substring(
-                        1,
-                        buff.readArg('timearg').arg.length - 1,
-                    ),
-                    10,
-                ),
+                parseInt(timearg.substring(1, timearg.length - 1), 10),
             );
         }
     }
@@ -645,13 +640,15 @@ const MagicAbilityToName = {
     'OdeToDeceit': 'odeToDeceit',
     'Tsunami': 'tsunami',
     'Instability': 'instability',
-} satisfies Record<MagicAbilities, MagicPropertyAbilities>
+} satisfies Record<MagicAbilities, MagicPropertyAbilities>;
 
-function updateMagicAbility(time: number, abilityName: MagicAbilities) {
+function updateMagicAbility(time: number, greater: boolean, abilityName: MagicAbilities) {
     const property = MagicAbilityToName[abilityName];
 
     const magic = store.getState().magic;
     const gaugeData = store.getState().gaugeData;
+    const { position } = magic;
+    const { scaleFactor } = gaugeData;
 
     const ability = magic[property];
 
@@ -685,13 +682,65 @@ function updateMagicAbility(time: number, abilityName: MagicAbilities) {
                 },
             }));
 
-            startAbilityCooldown({
-                    ability: ability,
-                    position: magic.position,
-                    scaleFactor: gaugeData.scaleFactor,
-                },
+            startAbilityCooldown(
+                { ability, position, scaleFactor },
                 abilityName,
-                false,
+                greater,
+            );
+        }, 1050);
+    }
+}
+
+const RangeAbilityToName = {
+    'DeathsSwiftness': 'deathsSwiftness',
+    'CrystalRain': 'crystalRain',
+    'SplitSoul': 'splitSoul',
+} satisfies Record<RangeAbilities, RangePropertyAbilities>;
+
+function updateRangeAbility(time: number, greater: boolean, abilityName: RangeAbilities) {
+    const property = RangeAbilityToName[abilityName];
+
+    const range = store.getState().range;
+    const gaugeData = store.getState().gaugeData;
+
+    const ability = range[property];
+    const { position } = range;
+    const { scaleFactor } = gaugeData;
+
+    if (time > 1) {
+        store.dispatch(RangeGaugeSlice.actions.updateAbility({
+            abilityName: property,
+            ability: {
+                isOnCooldown: false,
+                cooldownDuration: 0,
+                active: true,
+                time,
+            },
+        }));
+
+        if (abilityName === 'DeathsSwiftness' || abilityName === 'SplitSoul') {
+            changeCombatStyles(CombatStyle.mage);
+        }
+    }
+
+    if (time === 1 && ability.active) {
+        // Make sure to update the text one final time
+        store.dispatch(RangeGaugeSlice.actions.updateAbilityTime({ abilityName: property, time }));
+
+        setTimeout(() => {
+            store.dispatch(RangeGaugeSlice.actions.updateAbility({
+                abilityName: property,
+                ability: {
+                    isOnCooldown: true,
+                    active: false,
+                    time,
+                },
+            }));
+
+            startAbilityCooldown(
+                { ability, position, scaleFactor },
+                abilityName,
+                greater,
             );
         }, 1050);
     }
@@ -718,140 +767,64 @@ function changeCombatStyles(combatStyle: CombatStyle) {
     clearTextOverlays();
 }
 
-function updateDeathsSwiftness(
-    value: number,
-    greater: boolean,
-) {
-    const ranged = store.getState().range;
-    // If Death Swiftness has an active buff and a timer:
-    //   - it cannot be on cooldown
-    //   - it must be active
-    //   - The remaining time is its timer
-    if (value > 1) {
-        ranged.deathsSwiftness.isOnCooldown = false;
-        ranged.deathsSwiftness.cooldownDuration = 0;
-        ranged.deathsSwiftness.active = true;
-        ranged.deathsSwiftness.time = value;
-        changeCombatStyles(CombatStyle.ranged);
-    }
-
-    // When only 1 second of the buff exists
-    if (value == 1 && ranged.deathsSwiftness.active) {
-        // Make sure to update the text one final time
-        ranged.deathsSwiftness.time = value;
-
-        // Then start a timer to wait just past the last second
-        //  - Clear the timer
-        //  - DS is now on Cooldown so is not active
-        setTimeout(() => {
-            ranged.deathsSwiftness.time = 0;
-            ranged.deathsSwiftness.active = false;
-            ranged.deathsSwiftness.isOnCooldown = true;
-
-            startAbilityCooldown(
-                {
-                    ability: ranged.deathsSwiftness,
-                    position: ranged.position,
-                    scaleFactor: gauges.scaleFactor,
-                },
-                'DeathsSwiftness',
-                greater,
-            );
-        }, 1050);
-    }
+function updatePeCount(stacks: number) {
+    store.dispatch(RangeGaugeSlice.actions.updatePerfectEquilibriumStack({ stacks }));
 }
 
-async function updateCrystalRain(value: number) {
-    // If Crystal Rain has an active buff and a timer:
-    //   - it is on cooldown
-    //   - The remaining time is its timer
-    if (value > 1) {
-        ranged.crystalRain.isOnCooldown = true;
-        ranged.crystalRain.active = true;
-        ranged.crystalRain.time = value;
-    }
-
-    // When only 1 second of the buff exists
-    if (value == 1 && ranged.crystalRain.active) {
-        // Make sure to update the text one final time
-        ranged.crystalRain.time = value;
-
-        // Then start a timer to wait just past the last second
-        //  - Clear the timer
-        //  - CR is now available again
-        setTimeout(() => {
-            ranged.crystalRain.time = 0;
-            ranged.crystalRain.active = false;
-            ranged.crystalRain.isOnCooldown = false;
-
-            startAbilityCooldown(
-                {
-                    ability: ranged.crystalRain,
-                    position: ranged.position,
-                    scaleFactor: gauges.scaleFactor,
-                },
-                'CrystalRain',
-                false,
-            );
-        }, 1050);
-    }
+function updateBalanceByForce(active: boolean) {
+    store.dispatch(RangeGaugeSlice.actions.updateBalanceByForce({ active }));
 }
 
-async function updatePeCount(value: number) {
-    ranged.perfectEquilibrium.stacks = value;
-}
+/**
+ * Keeping around until I figure out why it's special.
+ */
+// function updateRangedSplitSoul(value: number) {
+//     // If Split Soul has an active buff and a timer:
+//     //   - it cannot be on cooldown
+//     //   - it must be active
+//     //   - The remaining time is its timer
+//     if (value > 1) {
+//         ranged.splitSoul.isOnCooldown = false;
+//         ranged.splitSoul.cooldownDuration = 0;
+//         ranged.splitSoul.active = true;
+//         ranged.splitSoul.time = value;
+//         changeCombatStyles(CombatStyle.ranged);
+//     }
+//
+//     // When only 1 second of the buff exists
+//     if (value == 1 && ranged.splitSoul.active) {
+//         // Make sure to update the text one final time
+//         ranged.splitSoul.time = value;
+//
+//         // Then start a timer to wait just past the last second
+//         //  - Clear the timer
+//         //  - DS is now on Cooldown so is not active
+//         setTimeout(() => {
+//             ranged.splitSoul.time = 0;
+//             ranged.splitSoul.active = false;
+//             ranged.splitSoul.isOnCooldown = true;
+//             startRangedSplitSoul(gauges);
+//         }, 1050);
+//     }
+// }
+//
+// async function startRangedSplitSoul() {
+//     if (!ranged.splitSoul.isActiveOverlay) {
+//         return;
+//     }
+//
+//     // If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
+//     if (ranged.splitSoul.active) {
+//         endRangedSoulSplit(gauges);
+//         return;
+//     }
+//
+//     // Otherwise cooldown has started and we can clear the Active text
+//     forceClearOverlay('SplitSoul_Text');
+// }
 
-async function updateBalanceByForce(value: number) {
-    ranged.balanceByForce = Boolean(value);
-}
-
-async function updateRangedSplitSoul(value: number) {
-    // If Split Soul has an active buff and a timer:
-    //   - it cannot be on cooldown
-    //   - it must be active
-    //   - The remaining time is its timer
-    if (value > 1) {
-        ranged.splitSoul.isOnCooldown = false;
-        ranged.splitSoul.cooldownDuration = 0;
-        ranged.splitSoul.active = true;
-        ranged.splitSoul.time = value;
-        changeCombatStyles(CombatStyle.ranged);
-    }
-
-    // When only 1 second of the buff exists
-    if (value == 1 && ranged.splitSoul.active) {
-        // Make sure to update the text one final time
-        ranged.splitSoul.time = value;
-
-        // Then start a timer to wait just past the last second
-        //  - Clear the timer
-        //  - DS is now on Cooldown so is not active
-        setTimeout(() => {
-            ranged.splitSoul.time = 0;
-            ranged.splitSoul.active = false;
-            ranged.splitSoul.isOnCooldown = true;
-            startRangedSplitSoul(gauges);
-        }, 1050);
-    }
-}
-
-async function startRangedSplitSoul() {
-    if (!ranged.splitSoul.isActiveOverlay) {
-        return;
-    }
-
-    // If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
-    if (ranged.splitSoul.active) {
-        endRangedSoulSplit(gauges);
-        return;
-    }
-
-    // Otherwise cooldown has started and we can clear the Active text
-    forceClearOverlay('SplitSoul_Text');
-}
-
-async function endRangedSoulSplit() {
-    ranged.splitSoul.isOnCooldown = false;
-    ranged.splitSoul.cooldownDuration = 0;
-    forceClearOverlay('SplitSoul_Text');
-}
+// async function endRangedSoulSplit() {
+//     ranged.splitSoul.isOnCooldown = false;
+//     ranged.splitSoul.cooldownDuration = 0;
+//     forceClearOverlay('SplitSoul_Text');
+// }
