@@ -213,7 +213,7 @@ export async function readBuffs(gauges: Overlay) {
         buffReader,
         gauges,
         buffsImages.deathsSwiftness,
-        100,
+        125,
         updateDeathsSwiftness,
         false,
     );
