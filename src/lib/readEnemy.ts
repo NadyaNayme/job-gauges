@@ -14,7 +14,7 @@ const enemyDebuffImages = a1lib.webpackImages({
 
 // Thanks to rodultra97 for PR to previous repo
 const bloatInterval = new Map();
-const bloat = 'bloat';
+const bloatString = 'bloat';
 
 const combatInterval = new Map();
 const outOfCombat = 'isInCombat';
@@ -92,27 +92,36 @@ export async function readEnemy() {
         enemyDebuffImages.bloat,
     ).length;
 
-    if (targetIsBloated && !bloatInterval.has(bloat)) {
-        gauges.necromancy.bloat.time = 20.5;
-        gauges.necromancy.bloat.active = true;
-        const intervalId = setInterval(() => {
-            const currentTick = gauges.necromancy.bloat.time;
+    if (targetIsBloated && !bloatInterval.has(bloatString)) {
+        store.dispatch(NecromancyGaugeSlice.actions.updateBloat({
+            active: true,
+            time: 20.5,
+        }));
 
-            if (currentTick > 0) {
-                gauges.necromancy.bloat.time = parseFloat(roundedToFixed(currentTick - 0.6, 1));
-            } else {
+        const intervalId = setInterval(() => {
+            const { bloat } = store.getState().necromancy
+            const currentTick = bloat.time;
+            const timeRemaining = parseFloat(roundedToFixed(currentTick - 0.6, 1));
+
+            if (currentTick <= 0) {
                 clearInterval(bloatInterval.get(bloat));
                 bloatInterval.delete(bloat);
-                gauges.necromancy.bloat.time = 0;
             }
+
+            store.dispatch(NecromancyGaugeSlice.actions.updateBloat({
+                time: currentTick > 0 ? timeRemaining : 0,
+            }));
         }, 600);
-        bloatInterval.set(bloat, intervalId);
+        bloatInterval.set(bloatString, intervalId);
     } else if (!targetIsBloated) {
-        if (bloatInterval.has(bloat)) {
-            clearInterval(bloatInterval.get(bloat));
-            bloatInterval.delete(bloat);
+        if (bloatInterval.has(bloatString)) {
+            clearInterval(bloatInterval.get(bloatString));
+            bloatInterval.delete(bloatString);
         }
-        gauges.necromancy.bloat.time = 0;
-        gauges.necromancy.bloat.active = false;
+
+        store.dispatch(NecromancyGaugeSlice.actions.updateBloat({
+            time: 0,
+            active: false,
+        }));
     }
 }

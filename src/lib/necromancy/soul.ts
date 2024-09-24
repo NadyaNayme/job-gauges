@@ -1,11 +1,6 @@
 import * as a1lib from 'alt1';
-import { Overlay } from '../../types';
-import {
-    adjustPositionForScale,
-    handleResizingImages,
-    pauseAlert,
-    playAlert,
-} from '../utility';
+import { adjustPositionForScale, handleResizingImages, pauseAlert, playAlert } from '../utility';
+import { store } from '../../state';
 
 const soulImages = a1lib.webpackImages({
     souls_0: require('../../asset/gauge-ui/necromancy/residual-souls/0.data.png'),
@@ -30,8 +25,9 @@ const soulsAlert: HTMLAudioElement = new Audio();
 soulsAlert.id = 'alarmSouls';
 document.body.appendChild(soulsAlert);
 
-export async function soulsOverlay(gauges: Overlay) {
-    const { souls } = gauges.necromancy.stacks;
+export async function soulsOverlay() {
+    const { gaugeData, necromancy } = store.getState();
+    const { souls } = necromancy.stacks;
 
     if (!souls.isActiveOverlay) {
         return;
@@ -39,7 +35,7 @@ export async function soulsOverlay(gauges: Overlay) {
 
     await soulImages.promise;
 
-    if (gauges.necromancy.stacks.pre95Souls && !scaledOnce) {
+    if (necromancy.stacks.pre95Souls && !scaledOnce) {
         await pre95SoulImages.promise;
         soulImages.souls_0 = pre95SoulImages.souls_0;
         soulImages.souls_1 = pre95SoulImages.souls_1;
@@ -48,7 +44,7 @@ export async function soulsOverlay(gauges: Overlay) {
     }
 
     if (!scaledOnce) {
-        handleResizingImages(soulImages, gauges.scaleFactor);
+        handleResizingImages(soulImages, gaugeData.scaleFactor);
 
         scaledOnce = true;
     }
@@ -61,12 +57,12 @@ export async function soulsOverlay(gauges: Overlay) {
     const displaySoulImage = (image: ImageData) => {
         alt1.overLayImage(
             adjustPositionForScale(
-                gauges.necromancy.position.x + x,
-                gauges.scaleFactor,
+                necromancy.position.x + x,
+                gaugeData.scaleFactor,
             ),
             adjustPositionForScale(
-                gauges.necromancy.position.y + y,
-                gauges.scaleFactor,
+                necromancy.position.y + y,
+                gaugeData.scaleFactor,
             ),
             a1lib.encodeImageString(image.toDrawableData()),
             image.width,

@@ -24,7 +24,7 @@ export async function findAmmo(buffs: BuffReader.Buff[] | null) {
         return;
     }
 
-    const range = store.getState().range;
+    const { ranged } = store.getState();
 
     let ammoActive = 0;
     let currentAmmo = '';
@@ -92,7 +92,7 @@ export async function findAmmo(buffs: BuffReader.Buff[] | null) {
     store.dispatch(RangeGaugeSlice.actions.updateState({
         ammo: {
             activeAmmo: ammoActive ? currentAmmo : '',
-            isActiveOverlay: range.ammo.isActiveOverlay,
+            isActiveOverlay: ranged.ammo.isActiveOverlay,
         }
     }));
 
@@ -100,22 +100,21 @@ export async function findAmmo(buffs: BuffReader.Buff[] | null) {
 }
 
 function displayAmmoName(): void {
-    const range = store.getState().range;
-    const gaugeData = store.getState().gaugeData;
+    const { ranged, gaugeData } = store.getState();
 
     alt1.overLaySetGroup(`Ammo_Text`);
     alt1.overLayFreezeGroup(`Ammo_Text`);
     alt1.overLayClearGroup(`Ammo_Text`);
     alt1.overLayTextEx(
-        range.ammo.activeAmmo,
+        ranged.ammo.activeAmmo,
         white,
         14,
         adjustPositionForScale(
-            range.position.x + 96,
+            ranged.position.x + 96,
             gaugeData.scaleFactor,
         ),
         adjustPositionForScale(
-            range.position.y + 24,
+            ranged.position.y + 24,
             gaugeData.scaleFactor,
         ),
         3000,

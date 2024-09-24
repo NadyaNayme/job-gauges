@@ -10,7 +10,7 @@ export const store = configureStore({
         gaugeData: GaugeDataSlice.reducer,
         alarms: AlarmSlice.reducer,
         magic: MagicGaugeSlice.reducer,
-        range: RangeGaugeSlice.reducer,
+        ranged: RangeGaugeSlice.reducer,
         necromancy: NecromancyGaugeSlice.reducer,
     },
 });

@@ -6,6 +6,10 @@ import { timeout } from '../a1sauce/Utils/timeout';
 import PouchDB from 'pouchdb';
 import { appName } from '../data/constants';
 import { Abilities } from './util/ability-helpers';
+import { store } from '../state';
+import { NecromancyGaugeSlice } from '../state/gauge-data/necromancy-gauge.state';
+import { MagicGaugeSlice } from '../state/gauge-data/magic-gauge.state';
+import { RangeGaugeSlice } from '../state/gauge-data/range-gauge.state';
 
 const db = new PouchDB(appName);
 
@@ -30,7 +34,7 @@ export const helperItems = {
 
 let updatingOverlayPosition = false;
 
-export async function setOverlayPosition(gauges: Overlay) {
+export async function setOverlayPosition() {
     updatingOverlayPosition = true;
     a1lib.once('alt1pressed', updateLocation);
 
@@ -47,13 +51,15 @@ export async function setOverlayPosition(gauges: Overlay) {
 
         freezeOverlays();
         //TODO: Per-gauge repositioning will be needed here as well
-        resizeGaugesWithMousePosition(gauges);
+        resizeGaugesWithMousePosition();
         continueOverlays();
     }
 
+    const { necromancy } = store.getState();
+
     updateSetting('overlayPosition', {
-        x: gauges.necromancy.position.x,
-        y: gauges.necromancy.position.y,
+        x: necromancy.position.x,
+        y: necromancy.position.y,
     });
 }
 
@@ -188,45 +194,24 @@ export function adjustPositionWithoutScale(
     return parseInt(roundedToFixed(position * (1 / scaleFactor), 1), 10);
 }
 
-// TODO: Use future overlays[] to iterate over active overlays
-/*
- * getMousePosition() can be null if the mouse is off the client screen
- * but the error is silent and doesn't cause problems so I'm going to
- * suppress the null checks to avoid adding lots of unnecessary noise
- */
-export function resizeGaugesWithMousePosition(gauges: Overlay) {
-    gauges.necromancy.position.x = adjustPositionWithoutScale(
-        a1lib.getMousePosition()!.x,
-        gauges.scaleFactor,
-    );
-    gauges.necromancy.position.y = adjustPositionWithoutScale(
-        a1lib.getMousePosition()!.y,
-        gauges.scaleFactor,
-    );
-    gauges.magic.position.x = adjustPositionWithoutScale(
-        a1lib.getMousePosition()!.x,
-        gauges.scaleFactor,
-    );
-    gauges.magic.position.y = adjustPositionWithoutScale(
-        a1lib.getMousePosition()!.y,
-        gauges.scaleFactor,
-    );
-    gauges.ranged.position.x = adjustPositionWithoutScale(
-        a1lib.getMousePosition()!.x,
-        gauges.scaleFactor,
-    );
-    gauges.ranged.position.y = adjustPositionWithoutScale(
-        a1lib.getMousePosition()!.y,
-        gauges.scaleFactor,
-    );
-    gauges.melee.position.x = adjustPositionWithoutScale(
-        a1lib.getMousePosition()!.x,
-        gauges.scaleFactor,
-    );
-    gauges.melee.position.y = adjustPositionWithoutScale(
-        a1lib.getMousePosition()!.y,
-        gauges.scaleFactor,
-    );
+export function resizeGaugesWithMousePosition() {
+    const position = a1lib.getMousePosition();
+
+    if (!position) {
+        return;
+    }
+
+    const { gaugeData } = store.getState();
+    const { x, y } = position;
+
+    const adjustedXPosition = adjustPositionWithoutScale(x, gaugeData.scaleFactor);
+    const adjustedYPosition = adjustPositionWithoutScale(y, gaugeData.scaleFactor);
+
+    store.dispatch(NecromancyGaugeSlice.actions.updatePosition({ x: adjustedXPosition, y: adjustedYPosition }));
+    store.dispatch(MagicGaugeSlice.actions.updatePosition({ x: adjustedXPosition, y: adjustedYPosition }));
+    store.dispatch(RangeGaugeSlice.actions.updatePosition({ x: adjustedXPosition, y: adjustedYPosition }));
+
+    // Add melee sometime lol
 }
 
 export function roundedToFixed(input: number, digits: number): string {

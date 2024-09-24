@@ -225,24 +225,27 @@ function updateActiveOrientationFromLocalStorage(): void {
         return key === 'active_orientation' && !!obj.active_orientation;
     }
 
-    // Function to recursively update orientations in an object
-    function updateActiveOrientation(obj: { [k in string]: any }) {
-        for (const key in obj) {
-            // TODO: Fix types here. This code works w/o issues as-is and I'm not sure how to make it happy
-            if (typeof obj[key] === 'object') {
-                if (isOrientation(obj, key)) {
-                    obj['active_orientation'].x = obj[selectedOrientation].x;
-                    obj['active_orientation'].y = obj[selectedOrientation].y;
-                } else {
-                    updateActiveOrientation(obj[key]);
-                }
-            }
-        }
-        utility.freezeOverlays();
-        utility.continueOverlays();
-    }
-
-    updateActiveOrientation();
+    /**
+     * @TODO handle this later.
+     */
+    // // Function to recursively update orientations in an object
+    // function updateActiveOrientation(obj: { [k in string]: any }) {
+    //     for (const key in obj) {
+    //         // TODO: Fix types here. This code works w/o issues as-is and I'm not sure how to make it happy
+    //         if (typeof obj[key] === 'object') {
+    //             if (isOrientation(obj, key)) {
+    //                 obj['active_orientation'].x = obj[selectedOrientation].x;
+    //                 obj['active_orientation'].y = obj[selectedOrientation].y;
+    //             } else {
+    //                 updateActiveOrientation(obj[key]);
+    //             }
+    //         }
+    //     }
+    //     utility.freezeOverlays();
+    //     utility.continueOverlays();
+    // }
+    //
+    // updateActiveOrientation();
 }
 
 // TODO: Get rid of this crap
@@ -254,7 +257,7 @@ function addEventListeners() {
     });
 
     getById('defaultCombatStyle')!.addEventListener('change', () => {
-        .combatStyle = parseInt(getSetting('defaultCombatStyle'), 10);
+        store.dispatch(GaugeDataSlice.actions.updateCombatStyle(parseInt(getSetting('defaultCombatStyle'), 10)));
         // Clear all overlays, this gives a snappier feeling in the UI.
         forceClearOverlays();
     });
@@ -306,68 +309,86 @@ function addEventListeners() {
     /* Update Alarm Thresholds */
     getById('alarmSoulsThreshold')?.addEventListener('change', (e) => {
         const target = <HTMLInputElement>e.target;
-        necromancy.stacks.souls.alarm.threshold = parseInt(
-            target.value,
-            10,
-        );
+        store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'souls',
+            alarm: { threshold: parseInt(target.value, 10) },
+        }));
     });
 
     getById('alarmNecrosisThreshold')!.addEventListener('change', (e) => {
         const target = <HTMLInputElement>e.target;
-        necromancy.stacks.necrosis.alarm.threshold = parseInt(
-            target.value,
-            10,
-        );
+        store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'necrosis',
+            alarm: { threshold: parseInt(target.value, 10) },
+        }));
     });
 
     /* Update Active Alarms */
     getById('alarmSoulsActive')!.addEventListener('change', (e) => {
         const target = <HTMLInputElement>e.target;
-        necromancy.stacks.souls.alarm.isActive = target.checked;
+        store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'souls',
+            alarm: { isActive: target.checked },
+        }));
     });
 
     getById('alarmNecrosisActive')!.addEventListener('change', (e) => {
         const target = <HTMLInputElement>e.target;
-        necromancy.stacks.necrosis.alarm.isActive = target.checked;
+        store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'necrosis',
+            alarm: { isActive: target.checked },
+        }));
     });
 
     /* Update Looping Alarms */
     getById('alarmNecrosisLoop')!.addEventListener('change', (e) => {
         const target = <HTMLInputElement>e.target;
-        necromancy.stacks.necrosis.alarm.isLooping = target.checked;
+        store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'necrosis',
+            alarm: { isLooping: target.checked },
+        }));
     });
 
     getById('alarmSoulsLoop')!.addEventListener('change', (e) => {
         const target = <HTMLInputElement>e.target;
-        necromancy.stacks.souls.alarm.isLooping = target.checked;
+        store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'souls',
+            alarm: { isLooping: target.checked },
+        }));
     });
 
     /* Update Alarm Volumes */
     getById('alarmNecrosisVolume')!.addEventListener('change', (e) => {
         const target = <HTMLInputElement>e.target;
-        necromancy.stacks.necrosis.alarm.volume = parseInt(
-            target.value,
-            10,
-        );
+        store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'necrosis',
+            alarm: { volume: parseInt(target.value, 10) },
+        }));
     });
 
     getById('alarmSoulsVolume')!.addEventListener('change', (e) => {
         const target = <HTMLInputElement>e.target;
-        necromancy.stacks.souls.alarm.volume = parseInt(
-            target.value,
-            10,
-        );
+        store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'souls',
+            alarm: { volume: parseInt(target.value, 10) },
+        }));
     });
 
     /* Update Alarm Sounds */
     getById('alarmNecrosisAlertSound')!.addEventListener('change', (e) => {
         const target = <HTMLInputElement>e.target;
-        necromancy.stacks.necrosis.alarm.sound = target.value;
+        store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'necrosis',
+            alarm: { sound: target.value },
+        }));
     });
 
     getById('alarmSoulsAlertSound')!.addEventListener('change', (e) => {
         const target = <HTMLInputElement>e.target;
-        necromancy.stacks.souls.alarm.sound = target.value;
+        store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'souls',
+            alarm: { sound: target.value },
+        }));
     });
 }
 

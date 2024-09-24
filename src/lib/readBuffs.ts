@@ -213,8 +213,7 @@ export async function readBuffs() {
         return;
     }
 
-    const gaugeData = store.getState().gaugeData;
-    const necromancy = store.getState().necromancy;
+    const { gaugeData, necromancy } = store.getState();
 
     updateBuffData(
         buffReader,
@@ -260,9 +259,11 @@ export async function readBuffs() {
                 buffReader,
                 buffsImages.soul,
                 200,
-                (stacks) => store.dispatch(NecromancyGaugeSlice.actions.updateSoulStacks({
+                (stacks) => store.dispatch(NecromancyGaugeSlice.actions.updateStacksAbility({
                     stackType: 'souls',
-                    stacks,
+                    stack: {
+                        stacks
+                    },
                 })),
                 false,
             );
@@ -270,9 +271,11 @@ export async function readBuffs() {
                 buffReader,
                 buffsImages.necrosis,
                 200,
-                (stacks) => store.dispatch(NecromancyGaugeSlice.actions.updateSoulStacks({
+                (stacks) => store.dispatch(NecromancyGaugeSlice.actions.updateStacksAbility({
                     stackType: 'necrosis',
-                    stacks,
+                    stack: {
+                        stacks
+                    },
                 })),
                 false,
             );
@@ -699,12 +702,10 @@ const RangeAbilityToName = {
 
 function updateRangeAbility(time: number, greater: boolean, abilityName: RangeAbilities) {
     const property = RangeAbilityToName[abilityName];
+    const { ranged, gaugeData } = store.getState();
 
-    const range = store.getState().range;
-    const gaugeData = store.getState().gaugeData;
-
-    const ability = range[property];
-    const { position } = range;
+    const ability = ranged[property];
+    const { position } = ranged;
     const { scaleFactor } = gaugeData;
 
     if (time > 1) {
@@ -784,8 +785,8 @@ function updateBalanceByForce(active: boolean) {
 //     //   - it must be active
 //     //   - The remaining time is its timer
 //     if (value > 1) {
-//         ranged.splitSoul.isOnCooldown = false;
-//         ranged.splitSoul.cooldownDuration = 0;
+//         rangedd.splitSoul.isOnCooldown = false;
+//         rangedd.splitSoul.cooldownDuration = 0;
 //         ranged.splitSoul.active = true;
 //         ranged.splitSoul.time = value;
 //         changeCombatStyles(CombatStyle.ranged);

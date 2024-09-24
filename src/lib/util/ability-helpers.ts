@@ -139,8 +139,9 @@ export function startAbilityCooldown(
  * @param name Strongly typed name to clear overlay.
  */
 export function endAbilityCooldown(ability: Ability, name: Abilities) {
-    ability.isOnCooldown = false;
-    ability.cooldownDuration = 0;
+    //
+    // ability.isOnCooldown = false;
+    // ability.cooldownDuration = 0;
     forceClearOverlay(`${name}_Cooldown_Text`);
 }
 

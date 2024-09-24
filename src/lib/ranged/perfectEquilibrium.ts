@@ -1,10 +1,6 @@
 import * as a1lib from 'alt1';
-import { Overlay } from '../../types';
-import {
-    adjustPositionForScale,
-    handleResizingImages,
-    white,
-} from '../utility';
+import { adjustPositionForScale, handleResizingImages, white } from '../utility';
+import { store } from '../../state';
 
 const bolgImage = a1lib.webpackImages({
     active: require('../../asset/gauge-ui/ranged/perfect-equilibrium/active.data.png'),
@@ -14,9 +10,10 @@ const bolgImage = a1lib.webpackImages({
 let scaledOnce = false;
 let lastStacks = 0;
 
-export async function peOverlay(gauges: Overlay) {
-    const { perfectEquilibrium } = gauges.ranged;
-    const { stacks } = gauges.ranged.perfectEquilibrium;
+export async function peOverlay() {
+    const { ranged, gaugeData } = store.getState();
+    const { perfectEquilibrium } = ranged;
+    const { stacks } = ranged.perfectEquilibrium;
 
     if (!perfectEquilibrium.isActiveOverlay) {
         return;
@@ -25,7 +22,7 @@ export async function peOverlay(gauges: Overlay) {
     await bolgImage.promise;
 
     if (!scaledOnce) {
-        handleResizingImages(bolgImage, gauges.scaleFactor);
+        handleResizingImages(bolgImage, gaugeData.scaleFactor);
 
         scaledOnce = true;
     }
@@ -35,7 +32,7 @@ export async function peOverlay(gauges: Overlay) {
 
     alt1.overLaySetGroup('PerfectEquilibrium');
 
-    if (gauges.ranged.balanceByForce) {
+    if (ranged.balanceByForce) {
         displayBuffImage(bolgImage.active);
     } else {
         displayBuffImage(bolgImage.inactive);
@@ -49,12 +46,12 @@ export async function peOverlay(gauges: Overlay) {
     function displayBuffImage(image: ImageData): void {
         alt1.overLayImage(
             adjustPositionForScale(
-                gauges.ranged.position.x + x,
-                gauges.scaleFactor,
+                ranged.position.x + x,
+                gaugeData.scaleFactor,
             ),
             adjustPositionForScale(
-                gauges.ranged.position.y + y,
-                gauges.scaleFactor,
+                ranged.position.y + y,
+                gaugeData.scaleFactor,
             ),
             a1lib.encodeImageString(image.toDrawableData()),
             image.width,
@@ -71,12 +68,12 @@ export async function peOverlay(gauges: Overlay) {
             white,
             14,
             adjustPositionForScale(
-                gauges.ranged.position.x + x + 26,
-                gauges.scaleFactor,
+                ranged.position.x + x + 26,
+                gaugeData.scaleFactor,
             ),
             adjustPositionForScale(
-                gauges.ranged.position.y + y + 26,
-                gauges.scaleFactor,
+                ranged.position.y + y + 26,
+                gaugeData.scaleFactor,
             ),
             30000,
             '',

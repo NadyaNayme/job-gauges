@@ -22,11 +22,10 @@ export const GaugeDataSlice = createSlice({
                 ...state,
                 ...action.payload
             };
+        },
+        updateCombatStyle: (state, action: PayloadAction<CombatStyle>) => {
+            state.combatStyle = action.payload;
         }
     },
-    selectors: {
-        selectState: state => state,
-    }
 });
 
-export const { selectState } = GaugeDataSlice.getSelectors();

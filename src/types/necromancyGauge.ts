@@ -8,7 +8,7 @@ import {
     HasAlarm,
 } from './common';
 
-type StackingAbilities = {
+export type StackingAbilities = {
     souls: StackingPlayerBuff & HasAlarm;
     necrosis: StackingPlayerBuff & HasAlarm;
     pre95Souls: boolean;

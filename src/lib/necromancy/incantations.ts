@@ -1,7 +1,7 @@
 import * as a1lib from 'alt1';
-import { Overlay } from '../../types';
 import { adjustPositionForScale, handleResizingImages } from '../utility';
 import { Abilities } from '../util/ability-helpers';
+import { store } from '../../state';
 
 const incantationImages = a1lib.webpackImages({
     invoke_death: require('../.././asset/gauge-ui/necromancy/incantations/invoke-death/active.data.png'),
@@ -16,8 +16,8 @@ const incantationImages = a1lib.webpackImages({
 
 let scaledOnce = false;
 
-export async function incantationsOverlay(gauges: Overlay) {
-    const { necromancy, scaleFactor } = gauges;
+export async function incantationsOverlay() {
+    const { gaugeData, necromancy } = store.getState();
     const { incantations, position } = necromancy;
     const {
         invokeDeath,
@@ -33,7 +33,7 @@ export async function incantationsOverlay(gauges: Overlay) {
     await incantationImages.promise;
 
     if (!scaledOnce) {
-        handleResizingImages(incantationImages, gauges.scaleFactor);
+        handleResizingImages(incantationImages, gaugeData.scaleFactor);
 
         scaledOnce = true;
     }
@@ -110,8 +110,8 @@ export async function incantationsOverlay(gauges: Overlay) {
     ) {
         alt1.overLaySetGroup(name);
         alt1.overLayImage(
-            adjustPositionForScale(position.x + xOffset, scaleFactor),
-            adjustPositionForScale(position.y + yOffset, scaleFactor),
+            adjustPositionForScale(position.x + xOffset, gaugeData.scaleFactor),
+            adjustPositionForScale(position.y + yOffset, gaugeData.scaleFactor),
             a1lib.encodeImageString(image.toDrawableData()),
             image.width,
             1000,

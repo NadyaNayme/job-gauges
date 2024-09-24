@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Ability } from '../../types/common';
+import { Ability, Position } from '../../types/common';
 import { RangedGauge } from '../../types';
 import { ranged_gauge } from '../../data/rangedGauge';
 import { Abilities } from '../../lib/util/ability-helpers';
@@ -43,6 +43,12 @@ export const RangeGaugeSlice = createSlice({
         },
         updateBalanceByForce: (state, action: PayloadAction<{ active: boolean }>) => {
             state.balanceByForce = action.payload.active;
+        },
+        updatePosition: (state, action: PayloadAction<Partial<Position>>) => {
+            state.position = {
+                ...state.position,
+                ...action.payload,
+            };
         },
     },
 });
