@@ -687,6 +687,11 @@ function updateMagicAbility(time: number, greater: boolean, abilityName: MagicAb
                 },
             }));
 
+            // We don't want these abilities to trigger the cooldown overlay.
+            if (abilityName === 'OdeToDeceit') {
+                return;
+            }
+
             const { magic } = store.getState();
             const ability = magic[property];
 
@@ -748,6 +753,14 @@ function updateRangeAbility(time: number, greater: boolean, abilityName: RangeAb
                     time: 0,
                 },
             }));
+
+            // We don't want CR to start an overlay cooldown.
+            if (abilityName === 'CrystalRain') {
+                return;
+            }
+
+            const { ranged } = store.getState();
+            const ability = ranged[property];
 
             startAbilityCooldown(
                 { ability, position, scaleFactor },
