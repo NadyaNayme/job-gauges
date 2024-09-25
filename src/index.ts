@@ -149,7 +149,6 @@ export async function startApp() {
         }
 
         oldStateString = stateString;
-
         localStorage.setItem('gauge_data', JSON.stringify(state));
     });
 
@@ -248,7 +247,9 @@ function addEventListeners() {
         scaleRangevalue +
         '%, #0d1c24 100%)';
 
-    getById('scale')!.addEventListener('change', async () => {
+    getById('scale')!.addEventListener('change', async (e) => {
+        const scaleFactor = Number((e.target as HTMLInputElement).value);
+        store.dispatch(GaugeDataSlice.actions.updateState({ scaleFactor: scaleFactor / 100 }));
         location.reload();
     });
 

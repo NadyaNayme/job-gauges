@@ -84,7 +84,10 @@ export const renderSettings = () => {
             'scale',
             'Adjusts the size of the overlay. You must reload and reposition the overlay after scaling.',
             { defaultValue: '100', min: 50, max: 300 },
-            (scaleFactor) => store.dispatch(GaugeDataSlice.actions.updateState({ scaleFactor: scaleFactor / 100 })),
+            (scaleFactor) => {
+                store.dispatch(GaugeDataSlice.actions.updateState({ scaleFactor: scaleFactor / 100 }));
+                location.reload();
+            },
         )
         .addSeperator()
         .addHeader('h3', 'Incantation Placement')
