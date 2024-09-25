@@ -1,6 +1,6 @@
 import * as utility from './lib/utility';
 import { forceClearOverlays } from './lib/utility';
-import { CombatStyle, Overlay } from './types';
+import { CombatStyle } from './types';
 
 // General Purpose
 import { findBuffsBar, findDebuffsBar, readBuffs } from './lib/readBuffs';
@@ -37,7 +37,6 @@ import { peOverlay } from './lib/ranged/perfectEquilibrium';
 import { odeToDeceitOverlay } from './lib/magic/odeToDeceit';
 import { rangedSplitSoulOverlay } from './lib/ranged/splitSoul';
 import { LogError } from './a1sauce/Error/logError';
-import { Orientation, OrientationTypes } from './types/common';
 import { GaugeDataSlice } from './state/gauge-data/gauge-data.state';
 import { store } from './state';
 import { MagicGaugeSlice } from './state/gauge-data/magic-gauge.state';

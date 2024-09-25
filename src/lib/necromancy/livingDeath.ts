@@ -4,7 +4,6 @@ import { adjustPositionForScale, forceClearOverlay, handleResizingImages, white 
 import { clearAbilityOverlays, handleAbilityActiveState } from '../util/ability-helpers';
 import { store } from '../../state';
 import { GaugeDataSlice } from '../../state/gauge-data/gauge-data.state';
-import { RangeGaugeSlice } from '../../state/gauge-data/range-gauge.state';
 import { NecromancyGaugeSlice } from '../../state/gauge-data/necromancy-gauge.state';
 
 const ultimateImages = a1lib.webpackImages({

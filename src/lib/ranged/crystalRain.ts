@@ -2,7 +2,6 @@ import * as a1lib from 'alt1';
 import { adjustPositionForScale, forceClearOverlay, handleResizingImages, white } from '../utility';
 import { clearAbilityOverlays, handleAbilityActiveState } from '../util/ability-helpers';
 import { store } from '../../state';
-import { MagicGaugeSlice } from '../../state/gauge-data/magic-gauge.state';
 import { RangeGaugeSlice } from '../../state/gauge-data/range-gauge.state';
 
 const ultimateImages = a1lib.webpackImages({
