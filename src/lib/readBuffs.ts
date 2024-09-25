@@ -10,7 +10,7 @@ import { startAbilityCooldown } from './util/ability-helpers';
 import { getSetting, updateSetting } from '../a1sauce/Settings/Storage';
 import { store } from '../state';
 import { NecromancyGaugeSlice } from '../state/gauge-data/necromancy-gauge.state';
-import { clearTextOverlays, forceClearOverlays } from './utility';
+import { clearTextOverlays, forceClearOverlay, forceClearOverlays } from './utility';
 import { MagicAbilities, MagicGaugeSlice, MagicPropertyAbilities } from '../state/gauge-data/magic-gauge.state';
 import { GaugeDataSlice } from '../state/gauge-data/gauge-data.state';
 import { RangeAbilities, RangeGaugeSlice, RangePropertyAbilities } from '../state/gauge-data/range-gauge.state';
@@ -262,7 +262,7 @@ export async function readBuffs() {
                 (stacks) => store.dispatch(NecromancyGaugeSlice.actions.updateStacksAbility({
                     stackType: 'souls',
                     stack: {
-                        stacks
+                        stacks,
                     },
                 })),
                 false,
@@ -274,7 +274,7 @@ export async function readBuffs() {
                 (stacks) => store.dispatch(NecromancyGaugeSlice.actions.updateStacksAbility({
                     stackType: 'necrosis',
                     stack: {
-                        stacks
+                        stacks,
                     },
                 })),
                 false,
@@ -366,10 +366,7 @@ export async function readBuffs() {
                 buffReader,
                 buffsImages.rangedSplitSoul,
                 300,
-                /**
-                 * @TODO - I know this isn't how this one works exactly. Figure out a way. Or just update the old method.
-                 */
-                (time) => updateRangeAbility(time, false, 'SplitSoul'),
+                (time) => updateRangedSplitSoul(time),
                 false,
             );
             break;
@@ -529,6 +526,12 @@ function updateLivingDeath(value: number) {
                 },
                 'LivingDeath',
                 false,
+                () => {
+                    store.dispatch(NecromancyGaugeSlice.actions.updateAbility({
+                        key: 'livingDeath',
+                        ability: { isOnCooldown: false, cooldownDuration: 0 },
+                    }));
+                },
             );
         }, 1050);
     }
@@ -648,8 +651,7 @@ const MagicAbilityToName = {
 function updateMagicAbility(time: number, greater: boolean, abilityName: MagicAbilities) {
     const property = MagicAbilityToName[abilityName];
 
-    const magic = store.getState().magic;
-    const gaugeData = store.getState().gaugeData;
+    const { magic, gaugeData } = store.getState();
     const { position } = magic;
     const { scaleFactor } = gaugeData;
 
@@ -681,14 +683,23 @@ function updateMagicAbility(time: number, greater: boolean, abilityName: MagicAb
                 ability: {
                     isOnCooldown: true,
                     active: false,
-                    time,
+                    time: 0,
                 },
             }));
+
+            const { magic } = store.getState();
+            const ability = magic[property];
 
             startAbilityCooldown(
                 { ability, position, scaleFactor },
                 abilityName,
                 greater,
+                () => {
+                    store.dispatch(MagicGaugeSlice.actions.updateAbility({
+                        abilityName: property,
+                        ability: { isOnCooldown: false, cooldownDuration: 0, active: true },
+                    }));
+                },
             );
         }, 1050);
     }
@@ -734,7 +745,7 @@ function updateRangeAbility(time: number, greater: boolean, abilityName: RangeAb
                 ability: {
                     isOnCooldown: true,
                     active: false,
-                    time,
+                    time: 0,
                 },
             }));
 
@@ -742,6 +753,12 @@ function updateRangeAbility(time: number, greater: boolean, abilityName: RangeAb
                 { ability, position, scaleFactor },
                 abilityName,
                 greater,
+                () => {
+                    store.dispatch(RangeGaugeSlice.actions.updateAbility({
+                        abilityName: property,
+                        ability: { isOnCooldown: false, cooldownDuration: 0 },
+                    }));
+                },
             );
         }, 1050);
     }
@@ -755,14 +772,16 @@ function updateSpell(spellName: 'bloodTithe' | 'glacialEmbrace', active: number)
 }
 
 function changeCombatStyles(combatStyle: CombatStyle) {
+    const { gaugeData } = store.getState();
+
+    // If the style hasn't changed we don't need to mess with state or overlays.
+    if (gaugeData.combatStyle === combatStyle) {
+        return;
+    }
+
     store.dispatch(GaugeDataSlice.actions.updateState({
         combatStyle,
     }));
-
-    // handle this later
-    // if (gauges.combatStyle !== style && gauges.automaticSwapping) {
-    //     gauges.combatStyle = style;
-    // }
 
     forceClearOverlays();
     clearTextOverlays();
@@ -779,53 +798,71 @@ function updateBalanceByForce(active: boolean) {
 /**
  * Keeping around until I figure out why it's special.
  */
-// function updateRangedSplitSoul(value: number) {
-//     // If Split Soul has an active buff and a timer:
-//     //   - it cannot be on cooldown
-//     //   - it must be active
-//     //   - The remaining time is its timer
-//     if (value > 1) {
-//         rangedd.splitSoul.isOnCooldown = false;
-//         rangedd.splitSoul.cooldownDuration = 0;
-//         ranged.splitSoul.active = true;
-//         ranged.splitSoul.time = value;
-//         changeCombatStyles(CombatStyle.ranged);
-//     }
-//
-//     // When only 1 second of the buff exists
-//     if (value == 1 && ranged.splitSoul.active) {
-//         // Make sure to update the text one final time
-//         ranged.splitSoul.time = value;
-//
-//         // Then start a timer to wait just past the last second
-//         //  - Clear the timer
-//         //  - DS is now on Cooldown so is not active
-//         setTimeout(() => {
-//             ranged.splitSoul.time = 0;
-//             ranged.splitSoul.active = false;
-//             ranged.splitSoul.isOnCooldown = true;
-//             startRangedSplitSoul(gauges);
-//         }, 1050);
-//     }
-// }
-//
-// async function startRangedSplitSoul() {
-//     if (!ranged.splitSoul.isActiveOverlay) {
-//         return;
-//     }
-//
-//     // If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
-//     if (ranged.splitSoul.active) {
-//         endRangedSoulSplit(gauges);
-//         return;
-//     }
-//
-//     // Otherwise cooldown has started and we can clear the Active text
-//     forceClearOverlay('SplitSoul_Text');
-// }
+function updateRangedSplitSoul(time: number) {
+    const { ranged } = store.getState();
 
-// async function endRangedSoulSplit() {
-//     ranged.splitSoul.isOnCooldown = false;
-//     ranged.splitSoul.cooldownDuration = 0;
-//     forceClearOverlay('SplitSoul_Text');
-// }
+    // If Split Soul has an active buff and a timer:
+    //   - it cannot be on cooldown
+    //   - it must be active
+    //   - The remaining time is its timer
+    if (time > 1) {
+        store.dispatch(RangeGaugeSlice.actions.updateAbility({
+            abilityName: 'splitSoul',
+            ability: {
+                isOnCooldown: false,
+                cooldownDuration: 0,
+                active: true,
+                time,
+            },
+        }));
+
+        changeCombatStyles(CombatStyle.ranged);
+    }
+
+    // When only 1 second of the buff exists
+    if (time == 1 && ranged.splitSoul.active) {
+        // Make sure to update the text one final time
+        store.dispatch(RangeGaugeSlice.actions.updateAbilityTime({ abilityName: 'splitSoul', time }));
+
+        // Then start a timer to wait just past the last second
+        //  - Clear the timer
+        //  - DS is now on Cooldown so is not active
+        setTimeout(() => {
+            store.dispatch(RangeGaugeSlice.actions.updateAbility({
+                abilityName: 'splitSoul',
+                ability: {
+                    active: false,
+                    isOnCooldown: true,
+                    cooldownDuration: 0,
+                    time: 0,
+                },
+            }));
+
+            startRangedSplitSoul();
+        }, 1050);
+    }
+}
+
+function startRangedSplitSoul() {
+    const { ranged } = store.getState();
+
+    if (!ranged.splitSoul.isActiveOverlay) {
+        return;
+    }
+
+    // If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
+    if (ranged.splitSoul.active) {
+        store.dispatch(RangeGaugeSlice.actions.updateAbility({
+            abilityName: 'splitSoul',
+            ability: {
+                isOnCooldown: false,
+                cooldownDuration: 0,
+            },
+        }));
+
+        return forceClearOverlay('SplitSoul_Text');
+    }
+
+    // Otherwise cooldown has started and we can clear the Active text
+    forceClearOverlay('SplitSoul_Text');
+}

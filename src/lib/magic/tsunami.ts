@@ -2,6 +2,7 @@ import * as a1lib from 'alt1';
 import { adjustPositionForScale, forceClearOverlay, handleResizingImages, white } from '../utility';
 import { clearAbilityOverlays, handleAbilityActiveState } from '../util/ability-helpers';
 import { store } from '../../state';
+import { MagicGaugeSlice } from '../../state/gauge-data/magic-gauge.state';
 
 const ultimateImages = a1lib.webpackImages({
     active: require('../.././asset/gauge-ui/magic/tsunami/active.data.png'),
@@ -45,13 +46,21 @@ export async function tsunamiOverlay() {
         return (lastValue = tsunami.time);
     }
 
-    tsunami.isOnCooldown = false;
+    store.dispatch(MagicGaugeSlice.actions.updateAbility({
+        abilityName: 'tsunami',
+        ability: { isOnCooldown: false },
+    }));
+
     forceClearOverlay('Tsunami_Cooldown_Text');
 
     handleAbilityActiveState(abilityData, 'Tsunami', true);
 
     if (lastValue !== tsunami.time) {
-        tsunami.cooldownDuration = 0;
+        store.dispatch(MagicGaugeSlice.actions.updateAbility({
+            abilityName: 'tsunami',
+            ability: { cooldownDuration: 0 },
+        }));
+
         forceClearOverlay('Tsunami_Cooldown_Text');
         alt1.overLaySetGroup('Tsunami_Text');
         alt1.overLayFreezeGroup('Tsunami_Text');

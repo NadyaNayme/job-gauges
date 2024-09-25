@@ -2,14 +2,8 @@ import { resetPositionsAndFindBuffAndDebuffBars } from '../..';
 import { A1Sauce } from '../../a1sauce';
 import { Patches } from '../../a1sauce/Patches/patchNotes';
 import { getSetting, updateSetting } from '../../a1sauce/Settings/Storage';
-import {
-    appName,
-    majorVersion,
-    minorVersion,
-    patchVersion,
-} from '../../data/constants';
+import { appName, majorVersion, minorVersion, patchVersion } from '../../data/constants';
 import { notes } from '../../patchnotes';
-import { Overlay } from '../../types';
 import { setOverlayPosition } from '../utility';
 
 import PouchDB from 'pouchdb';
@@ -90,6 +84,7 @@ export const renderSettings = () => {
             'scale',
             'Adjusts the size of the overlay. You must reload and reposition the overlay after scaling.',
             { defaultValue: '100', min: 50, max: 300 },
+            (scaleFactor) => store.dispatch(GaugeDataSlice.actions.updateState({ scaleFactor: scaleFactor / 100 })),
         )
         .addSeperator()
         .addHeader('h3', 'Incantation Placement')

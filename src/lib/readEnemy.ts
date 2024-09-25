@@ -4,6 +4,7 @@ import { roundedToFixed } from './utility';
 import { getSetting } from '../a1sauce/Settings/Storage';
 import { store } from '../state';
 import { NecromancyGaugeSlice } from '../state/gauge-data/necromancy-gauge.state';
+import { GaugeDataSlice } from '../state/gauge-data/gauge-data.state';
 
 const targetDisplay = new TargetMob();
 
@@ -21,7 +22,7 @@ const outOfCombat = 'isInCombat';
 let combatTimer = -1;
 
 export async function readEnemy() {
-    const gauges = store.getState().gaugeData;
+    const { gaugeData } = store.getState();
 
     //TODO: Store LastPos and detect when to rescan to avoid spamming CHFRS in loop
     const targetData = targetDisplay.read();
@@ -30,9 +31,9 @@ export async function readEnemy() {
         combatTimer = parseInt(getSetting('combatTimer'), 10);
     }
 
-    if (gauges.checkCombatStatus) {
+    if (gaugeData.checkCombatStatus) {
         if (targetData) {
-            gauges.isInCombat = true;
+            store.dispatch(GaugeDataSlice.actions.updateState({ isInCombat: true }));
             if (combatInterval.has(outOfCombat)) {
                 clearInterval(combatInterval.get(outOfCombat));
                 combatInterval.delete(outOfCombat);
@@ -44,7 +45,8 @@ export async function readEnemy() {
                 if (currentTick > 0) {
                     combatTimer = currentTick - 1;
                 } else if (!targetData) {
-                    gauges.isInCombat = false;
+                    store.dispatch(GaugeDataSlice.actions.updateState({ isInCombat: false }));
+
                     combatTimer = parseInt(getSetting('combatTimer'), 10);
                 }
             }, 1000);
@@ -52,14 +54,17 @@ export async function readEnemy() {
             combatInterval.set(outOfCombat, intervalId);
         }
     } else {
-        gauges.isInCombat = true;
+        if (!gaugeData.isInCombat) {
+            store.dispatch(GaugeDataSlice.actions.updateState({ isInCombat: true }));
+        }
+
         if (combatInterval.has(outOfCombat)) {
             clearInterval(combatInterval.get(outOfCombat));
             combatInterval.delete(outOfCombat);
         }
     }
 
-    if (!(targetData && gauges.isInCombat)) {
+    if (!(targetData && gaugeData.isInCombat)) {
         store.dispatch(NecromancyGaugeSlice.actions.updateActiveIncantation({ active: false, incantation: 0 }));
         store.dispatch(NecromancyGaugeSlice.actions.updateBloat({ active: false, time: 0 }));
         return;

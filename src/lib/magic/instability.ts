@@ -2,6 +2,7 @@ import * as a1lib from 'alt1';
 import { adjustPositionForScale, forceClearOverlay, handleResizingImages, white } from '../utility';
 import { clearAbilityOverlays, handleAbilityActiveState } from '../util/ability-helpers';
 import { store } from '../../state';
+import { MagicGaugeSlice } from '../../state/gauge-data/magic-gauge.state';
 
 const ultimateImages = a1lib.webpackImages({
     active: require('../../asset/gauge-ui/magic/instability/active.data.png'),
@@ -50,13 +51,21 @@ export async function fsoaOverlay() {
         return (lastValue = instability.time);
     }
 
-    instability.isOnCooldown = false;
+    store.dispatch(MagicGaugeSlice.actions.updateAbility({
+        abilityName: 'instability',
+        ability: { isOnCooldown: false },
+    }));
+
     forceClearOverlay('Instability_Cooldown_Text');
 
     handleAbilityActiveState(abilityData, 'Instability', true);
 
     if (lastValue !== instability.time) {
-        instability.cooldownDuration = 0;
+        store.dispatch(MagicGaugeSlice.actions.updateAbility({
+            abilityName: 'instability',
+            ability: { cooldownDuration: 0 },
+        }));
+
         forceClearOverlay('Instability_Cooldown_Text');
         alt1.overLaySetGroup('Instability_Text');
         alt1.overLayFreezeGroup('Instability_Text');

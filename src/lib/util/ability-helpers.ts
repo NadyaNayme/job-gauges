@@ -51,12 +51,14 @@ const AbilityCooldown = new Map<Abilities, boolean>();
  * Handles ticking down an abilities cooldown and ending it when it's over or active.
  * @param abilityData Metadata about the ability to get positioning and ending cooldowns.
  * @param abilityName Strongly typed name for consistent overlay updating.
- * @param greater If the cooldown is great...er(?) (Ask Nyu)
+ * @param greater If the ability is the greater variant
+ * @param updateStateCallback Have the caller set state cooldown.
  */
 export function startAbilityCooldown(
     abilityData: { scaleFactor: number; position: Position; ability: Ability },
     abilityName: Abilities,
     greater: boolean,
+    updateStateCallback: () => unknown
 ) {
     const { scaleFactor, position, ability } = abilityData;
 
@@ -69,6 +71,7 @@ export function startAbilityCooldown(
     // If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
     if (ability.active) {
         AbilityCooldown.set(abilityName, false);
+        updateStateCallback();
         return endAbilityCooldown(abilityData.ability, abilityName);
     }
 
@@ -100,7 +103,8 @@ export function startAbilityCooldown(
         if (ability.active || cooldown <= 0) {
             clearInterval(timer);
             AbilityCooldown.set(abilityName, false);
-            return endAbilityCooldown(abilityData.ability, abilityName);
+            updateStateCallback();
+            return forceClearOverlay(`${abilityName}_Cooldown_Text`)
         }
 
         cooldown -= 1;
@@ -139,9 +143,6 @@ export function startAbilityCooldown(
  * @param name Strongly typed name to clear overlay.
  */
 export function endAbilityCooldown(ability: Ability, name: Abilities) {
-    //
-    // ability.isOnCooldown = false;
-    // ability.cooldownDuration = 0;
     forceClearOverlay(`${name}_Cooldown_Text`);
 }
 

@@ -17,17 +17,17 @@ export const RangeGaugeSlice = createSlice({
     name: 'RangeGauge',
     initialState,
     reducers: {
-        updateState: (state, action: PayloadAction<Partial<RangeGaugeState>>) => {
-            state = {
-                ...state,
-                ...action.payload,
-            };
-        },
+        updateState: (state, action: PayloadAction<Partial<RangeGaugeState>>) => ({
+            ...state,
+            ...action.payload,
+        }),
         updateAbilityTime: (state, action: PayloadAction<{ abilityName: RangePropertyAbilities, time: number }>) => {
             state[action.payload.abilityName] = {
                 ...state[action.payload.abilityName],
                 time: action.payload.time,
             };
+
+            return state;
         },
         updateAbility: (state, action: PayloadAction<{
             abilityName: RangePropertyAbilities,
@@ -37,18 +37,24 @@ export const RangeGaugeSlice = createSlice({
                 ...state[action.payload.abilityName],
                 ...action.payload.ability,
             };
+
+            return state;
         },
         updatePerfectEquilibriumStack: (state, action: PayloadAction<{ stacks: number }>) => {
             state.perfectEquilibrium.stacks = action.payload.stacks;
+            return state;
         },
         updateBalanceByForce: (state, action: PayloadAction<{ active: boolean }>) => {
             state.balanceByForce = action.payload.active;
+            return state;
         },
         updatePosition: (state, action: PayloadAction<Partial<Position>>) => {
             state.position = {
                 ...state.position,
                 ...action.payload,
             };
+
+            return state;
         },
     },
 });

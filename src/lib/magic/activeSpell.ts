@@ -4,6 +4,7 @@ import { ActiveSpellNames, ActiveSpells } from '../../types';
 import { StackingPlayerBuff } from '../../types/common';
 import { adjustPositionForScale, handleResizingImages, white } from '../utility';
 import { store } from '../../state';
+import { MagicGaugeSlice } from '../../state/gauge-data/magic-gauge.state';
 
 const spellImages = a1lib.webpackImages({
     bloodTithe: require('../.././asset/gauge-ui/magic/active-spell/blood-tithe.data.png'),
@@ -125,8 +126,6 @@ export async function spellsOverlay() {
     }
 
     function readChatbox() {
-        const magic = store.getState().magic;
-
         if (!chat.pos || !chat.pos.boxes[0]) {
             return;
         }
@@ -139,7 +138,10 @@ export async function spellsOverlay() {
 
             if (!match) continue;
 
-            magic.spells.activeSpell = ActiveSpells[SPELL_TEXT[match]];
+            store.dispatch(MagicGaugeSlice.actions.updateActiveSpell({
+                activeSpell: ActiveSpells[SPELL_TEXT[match]],
+            }));
+
             resetSpellText();
         }
     }

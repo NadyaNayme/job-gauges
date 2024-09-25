@@ -1,5 +1,4 @@
 import * as a1lib from 'alt1';
-import { Overlay } from '../types';
 import { getSetting, updateSetting } from '../a1sauce/Settings/Storage';
 import { timeout } from '../a1sauce/Utils/timeout';
 
@@ -10,6 +9,7 @@ import { store } from '../state';
 import { NecromancyGaugeSlice } from '../state/gauge-data/necromancy-gauge.state';
 import { MagicGaugeSlice } from '../state/gauge-data/magic-gauge.state';
 import { RangeGaugeSlice } from '../state/gauge-data/range-gauge.state';
+import { GaugeDataSlice } from '../state/gauge-data/gauge-data.state';
 
 const db = new PouchDB(appName);
 
@@ -32,10 +32,9 @@ export const helperItems = {
     settings: getByID('Settings'),
 };
 
-let updatingOverlayPosition = false;
-
 export async function setOverlayPosition() {
-    updatingOverlayPosition = true;
+    store.dispatch(GaugeDataSlice.actions.updateState({ updatingOverlayPosition: true }));
+
     a1lib.once('alt1pressed', updateLocation);
 
     alt1.setTooltip(
@@ -46,8 +45,14 @@ export async function setOverlayPosition() {
         alt1.clearTooltip();
     }, 3000);
 
-    while (updatingOverlayPosition) {
-        await timeout(1000);
+    while (true) {
+        const { gaugeData } = store.getState();
+
+        if (!gaugeData.updatingOverlayPosition) {
+            break;
+        }
+
+        await timeout(500);
 
         freezeOverlays();
         //TODO: Per-gauge repositioning will be needed here as well
@@ -64,7 +69,7 @@ export async function setOverlayPosition() {
 }
 
 export function updateLocation(): void {
-    updatingOverlayPosition = false;
+    store.dispatch(GaugeDataSlice.actions.updateState({ updatingOverlayPosition: false }));
     alt1.overLayClearGroup('overlayPositionHelper');
     alt1.overLayRefreshGroup('overlayPositionHelper');
     alt1.clearTooltip();
@@ -99,6 +104,7 @@ const overlays = [
     'CrystalRain',
     'PerfectEquilibrium',
     'SplitSoul',
+    'Spells',
 ];
 
 export function freezeOverlays(): void {
@@ -288,7 +294,7 @@ export async function playAlert(alarm: HTMLAudioElement) {
 
 function loadAlarm(alarm: HTMLAudioElement) {
     if (alarm.src.startsWith('custom:') || alarm.src.startsWith('Custom:')) {
-        let customAudio = getSetting(alarm.id + 'AlertSound').substring(7);
+        const customAudio = getSetting(alarm.id + 'AlertSound').substring(7);
         db.get(customAudio, { attachments: true })
             .then((doc) => {
                 // @ts-ignore

@@ -1,4 +1,5 @@
 import * as utility from './lib/utility';
+import { forceClearOverlays } from './lib/utility';
 import { CombatStyle, Overlay } from './types';
 
 // General Purpose
@@ -6,22 +7,12 @@ import { findBuffsBar, findDebuffsBar, readBuffs } from './lib/readBuffs';
 import { readEnemy } from './lib/readEnemy';
 
 // Necromancy Gauge
-import { necromancy_gauge } from './data/necromancyGauge';
 import { conjureOverlay } from './lib/necromancy/conjures';
 import { soulsOverlay } from './lib/necromancy/soul';
 import { necrosisOverlay } from './lib/necromancy/necrosis';
 import { incantationsOverlay } from './lib/necromancy/incantations';
 import { livingDeathOverlay } from './lib/necromancy/livingDeath';
 import { bloatOverlay } from './lib/necromancy/bloat';
-
-// Magic Gauge
-import { magic_gauge } from './data/magicGauge';
-
-// Ranged Gauge
-import { ranged_gauge } from './data/rangedGauge';
-
-// Melee Gauge
-import { melee_gauge } from './data/meleeGauge';
 
 import './index.html';
 import './appconfig.json';
@@ -47,7 +38,6 @@ import { odeToDeceitOverlay } from './lib/magic/odeToDeceit';
 import { rangedSplitSoulOverlay } from './lib/ranged/splitSoul';
 import { LogError } from './a1sauce/Error/logError';
 import { Orientation, OrientationTypes } from './types/common';
-import { forceClearOverlays } from './lib/utility';
 import { GaugeDataSlice } from './state/gauge-data/gauge-data.state';
 import { store } from './state';
 import { MagicGaugeSlice } from './state/gauge-data/magic-gauge.state';
@@ -62,11 +52,10 @@ sauce.createSettings();
 const errorLogger = new LogError();
 
 async function renderOverlays() {
+    const { gaugeData } = store.getState();
     await readEnemy();
 
-    const gaugeData = store.getState().gaugeData;
-
-    if (!gaugeData.isInCombat && !getSetting('updatingOverlayPosition')) {
+    if (!gaugeData.isInCombat && !gaugeData.updatingOverlayPosition) {
         return utility.clearTextOverlays();
     }
 
@@ -130,23 +119,40 @@ export async function startApp() {
         }
     });
 
-    if (getSetting('buffsPosition') == undefined) {
+    if (getSetting('buffsPosition') === undefined) {
         calibrationWarning();
     }
 
-    const localGaugeData = getGaugeData();
+    // Should be initial?
+    let oldStateString = JSON.stringify(store.getState());
+
+    const localGaugeData = localStorage.getItem('gauge_data');
 
     /**
      * Localstorage for _any_ of the data will _not_ exist if this is the users first time launching.
      * Otherwise, we know the data is there from us populating it.
      */
     if (localGaugeData) {
-        const { magic, ranged, necromancy, melee, ...rest } = localGaugeData;
-        store.dispatch(GaugeDataSlice.actions.updateState(rest));
+        const { magic, ranged, necromancy, melee, gaugeData, alarms } = JSON.parse(localGaugeData);
+        console.log(gaugeData);
+        store.dispatch(GaugeDataSlice.actions.updateState(gaugeData));
         store.dispatch(MagicGaugeSlice.actions.updateState(magic));
         store.dispatch(RangeGaugeSlice.actions.updateState(ranged));
         store.dispatch(NecromancyGaugeSlice.actions.updateState(necromancy));
     }
+
+    store.subscribe(() => {
+        const state = store.getState();
+        const stateString = JSON.stringify(state);
+
+        if (oldStateString === stateString) {
+            return;
+        }
+
+        oldStateString = stateString;
+
+        localStorage.setItem('gauge_data', JSON.stringify(state));
+    });
 
     updateActiveOrientationFromLocalStorage();
 
@@ -210,42 +216,10 @@ function calibrationWarning(): void {
 }
 
 function updateActiveOrientationFromLocalStorage(): void {
-    // Retrieve selected orientation from localStorage
-    let selectedOrientation: OrientationTypes = getSetting(
-        'selectedOrientation',
-    );
+    const selectedOrientation = getSetting('selectedOrientation');
 
-    if (!selectedOrientation) {
-        selectedOrientation = 'reverse_split';
-    }
-
-    updateSetting('selectedOrientation', selectedOrientation);
-
-    function isOrientation(obj: any, key: string): obj is Orientation {
-        return key === 'active_orientation' && !!obj.active_orientation;
-    }
-
-    /**
-     * @TODO handle this later.
-     */
-    // // Function to recursively update orientations in an object
-    // function updateActiveOrientation(obj: { [k in string]: any }) {
-    //     for (const key in obj) {
-    //         // TODO: Fix types here. This code works w/o issues as-is and I'm not sure how to make it happy
-    //         if (typeof obj[key] === 'object') {
-    //             if (isOrientation(obj, key)) {
-    //                 obj['active_orientation'].x = obj[selectedOrientation].x;
-    //                 obj['active_orientation'].y = obj[selectedOrientation].y;
-    //             } else {
-    //                 updateActiveOrientation(obj[key]);
-    //             }
-    //         }
-    //     }
-    //     utility.freezeOverlays();
-    //     utility.continueOverlays();
-    // }
-    //
-    // updateActiveOrientation();
+    store.dispatch(NecromancyGaugeSlice.actions.updateActiveOrientation(selectedOrientation));
+    forceClearOverlays();
 }
 
 // TODO: Get rid of this crap
@@ -275,7 +249,7 @@ function addEventListeners() {
         scaleRangevalue +
         '%, #0d1c24 100%)';
 
-    getById('scale')!.addEventListener('change', () => {
+    getById('scale')!.addEventListener('change', async () => {
         location.reload();
     });
 
@@ -300,9 +274,11 @@ function addEventListeners() {
             utility.freezeAndContinueOverlays(); // Force an instant redraw
             const state = store.getState();
             updateSetting('gauge-data', JSON.stringify(state));
+            // store.dispatch(GaugeDataSlice.actions.updateState({
+            //
+            // }))
             //const gaugeData = getGaugeData()!;
             //Object.assign(, gaugeData);
-            console.log(`Um????`);
         });
     });
 
@@ -390,16 +366,6 @@ function addEventListeners() {
             alarm: { sound: target.value },
         }));
     });
-}
-
-function getGaugeData(): Overlay | null {
-    const gaugeData = getSetting('gaugedata');
-
-    if (!gaugeData) {
-        return null;
-    }
-
-    return JSON.parse(gaugeData);
 }
 
 window.onload = function () {

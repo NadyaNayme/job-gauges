@@ -3,6 +3,8 @@ import { adjustPositionForScale, forceClearOverlay, handleResizingImages, white 
 import { CombatStyle } from '../../types';
 import { clearAbilityOverlays, handleAbilityActiveState } from '../util/ability-helpers';
 import { store } from '../../state';
+import { MagicGaugeSlice } from '../../state/gauge-data/magic-gauge.state';
+import { GaugeDataSlice } from '../../state/gauge-data/gauge-data.state';
 
 const ultimateImages = a1lib.webpackImages({
     active: require('../../asset/gauge-ui/magic/sunshine/active.data.png'),
@@ -51,17 +53,27 @@ export async function sunshineOverlay() {
         return (lastValue = sunshine.time);
     }
 
-    sunshine.isOnCooldown = false;
+    store.dispatch(MagicGaugeSlice.actions.updateAbility({
+        abilityName: 'sunshine',
+        ability: { isOnCooldown: false },
+    }));
+
     forceClearOverlay('Sunshine_Cooldown_Text');
 
     if (gaugeData.automaticSwapping) {
-        gaugeData.combatStyle = CombatStyle.mage;
+        store.dispatch(GaugeDataSlice.actions.updateState({
+            combatStyle: CombatStyle.mage,
+        }));
     }
 
     handleAbilityActiveState(abilityData, 'Sunshine', true);
 
     if (lastValue !== sunshine.time) {
-        sunshine.cooldownDuration = 0;
+        store.dispatch(MagicGaugeSlice.actions.updateAbility({
+            abilityName: 'sunshine',
+            ability: { cooldownDuration: 0 },
+        }));
+
         forceClearOverlay('Sunshine_Cooldown_Text');
         alt1.overLaySetGroup('Sunshine_Text');
         alt1.overLayFreezeGroup('Sunshine_Text');
@@ -83,6 +95,7 @@ export async function sunshineOverlay() {
             true,
             true,
         );
+
         alt1.overLayRefreshGroup('Sunshine_Text');
     }
 

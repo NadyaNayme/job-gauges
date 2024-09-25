@@ -4,6 +4,8 @@ import { adjustPositionForScale, forceClearOverlay, handleResizingImages, white 
 import { clearAbilityOverlays, handleAbilityActiveState } from '../util/ability-helpers';
 import { store } from '../../state';
 import { GaugeDataSlice } from '../../state/gauge-data/gauge-data.state';
+import { RangeGaugeSlice } from '../../state/gauge-data/range-gauge.state';
+import { NecromancyGaugeSlice } from '../../state/gauge-data/necromancy-gauge.state';
 
 const ultimateImages = a1lib.webpackImages({
     active: require('../../asset/gauge-ui/necromancy/living-death/active.data.png'),
@@ -52,7 +54,11 @@ export async function livingDeathOverlay() {
         return (lastValue = livingDeath.time);
     }
 
-    livingDeath.isOnCooldown = false;
+    store.dispatch(NecromancyGaugeSlice.actions.updateAbility({
+        key: 'livingDeath',
+        ability: { isOnCooldown: false },
+    }));
+
     forceClearOverlay('LivingDeath_Cooldown_Text');
     if (gaugeData.automaticSwapping) {
         store.dispatch(GaugeDataSlice.actions.updateCombatStyle(CombatStyle.necro));
@@ -61,7 +67,11 @@ export async function livingDeathOverlay() {
     handleAbilityActiveState(abilityData, 'LivingDeath', true);
 
     if (lastValue !== livingDeath.time) {
-        livingDeath.cooldownDuration = 0;
+        store.dispatch(NecromancyGaugeSlice.actions.updateAbility({
+            key: 'livingDeath',
+            ability: { cooldownDuration: 0 },
+        }));
+
         forceClearOverlay('LivingDeath_Cooldown_Text');
         alt1.overLaySetGroup('LivingDeath_Text');
         alt1.overLayFreezeGroup('LivingDeath_Text');

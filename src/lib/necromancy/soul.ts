@@ -33,21 +33,17 @@ export async function soulsOverlay() {
         return;
     }
 
-    await soulImages.promise;
-
-    if (necromancy.stacks.pre95Souls && !scaledOnce) {
-        await pre95SoulImages.promise;
-        soulImages.souls_0 = pre95SoulImages.souls_0;
-        soulImages.souls_1 = pre95SoulImages.souls_1;
-        soulImages.souls_2 = pre95SoulImages.souls_2;
-        soulImages.souls_3 = pre95SoulImages.souls_3;
-    }
-
     if (!scaledOnce) {
+        await soulImages.promise;
+        await pre95SoulImages.promise;
+
         handleResizingImages(soulImages, gaugeData.scaleFactor);
+        handleResizingImages(pre95SoulImages, gaugeData.scaleFactor);
 
         scaledOnce = true;
     }
+
+    const activeSoulImages = necromancy.stacks.pre95Souls ? pre95SoulImages : soulImages;
 
     const { position } = souls;
     const { x, y } = position.active_orientation;
@@ -72,16 +68,16 @@ export async function soulsOverlay() {
 
     switch (souls.stacks) {
         case 0:
-            displaySoulImage(soulImages.souls_0);
+            displaySoulImage(activeSoulImages.souls_0);
             break;
         case 1:
-            displaySoulImage(soulImages.souls_1);
+            displaySoulImage(activeSoulImages.souls_1);
             break;
         case 2:
-            displaySoulImage(soulImages.souls_2);
+            displaySoulImage(activeSoulImages.souls_2);
             break;
         case 3:
-            displaySoulImage(soulImages.souls_3);
+            displaySoulImage(activeSoulImages.souls_3);
             break;
         case 4:
             displaySoulImage(soulImages.souls_4);
