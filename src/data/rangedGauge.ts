@@ -19,8 +19,8 @@ export const ranged_gauge: RangedGauge = {
         cooldownDuration: 0,
         position: {
             active_orientation: {
-                x: 0,
-                y: 0,
+                x: 10,
+                y: 45,
             },
             grouped: {
                 x: 10,
@@ -44,8 +44,8 @@ export const ranged_gauge: RangedGauge = {
         cooldownDuration: 0,
         position: {
             active_orientation: {
-                x: 0,
-                y: 0,
+                x: 35,
+                y: 5,
             },
             grouped: {
                 x: 35,
@@ -69,8 +69,8 @@ export const ranged_gauge: RangedGauge = {
         cooldownDuration: 0,
         position: {
             active_orientation: {
-                x: 0,
-                y: 0,
+                x: -3,
+                y: 5,
             },
             grouped: {
                 x: -3,
@@ -93,8 +93,8 @@ export const ranged_gauge: RangedGauge = {
         stacks: 0,
         position: {
             active_orientation: {
-                x: 0,
-                y: 0,
+                x: 55,
+                y: 45,
             },
             grouped: {
                 x: 55,
