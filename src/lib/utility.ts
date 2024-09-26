@@ -281,8 +281,6 @@ export function resizeImageData(imageData: ImageData, scaleFactor: number) {
     return context.getImageData(0, 0, newWidth, newHeight);
 }
 
-const PlayingAbilityAlarms = new Map();
-
 function createAlarmElement(alarmId: string) {
     const alertElement: HTMLAudioElement = new Audio();
     const volume = Number(getSetting(alarmId + 'Volume')) / 100;
@@ -295,11 +293,6 @@ function createAlarmElement(alarmId: string) {
 
     document.body.appendChild(alertElement);
 
-    alertElement.addEventListener('ended', () => {
-        AlarmHasPlayed.set(alarmId, true);
-        PlayingAbilityAlarms.delete(alarmId);
-    });
-
     return alertElement;
 }
 
@@ -311,19 +304,17 @@ export async function alarmLoop() {
 
     while (true) {
         // Arbitrary wait time, this number holds no meaning besides how often we want to check to play an alarm.
-        await timeout(300);
+        await timeout(200);
 
         const { necromancy } = store.getState();
         const { stacks: { necrosis, souls } } = necromancy;
 
         const shouldNecrosisAlarmPlay = (necrosis.alarm.isLooping || !AlarmHasPlayed.has('alarmNecrosis')) && necrosis.alarm.isActive;
 
-        if (shouldNecrosisAlarmPlay && necrosis.stacks > necrosis.alarm.threshold && !PlayingAbilityAlarms.has('alarmNecrosis')) {
-            PlayingAbilityAlarms.set('alarmNecrosis', true);
-            await necrosisAlarm.play();
-        } else if (necrosis.stacks <= necrosis.alarm.threshold && PlayingAbilityAlarms.has('alarmNecrosis')) {
-            // These ensure if we drop below the threshold (used stacks) while a loop is happening, then it'll kill the loop
-            PlayingAbilityAlarms.delete('alarmNecrosis');
+        if (shouldNecrosisAlarmPlay && necrosis.stacks >= necrosis.alarm.threshold) {
+            AlarmHasPlayed.set('alarmNecrosis', true);
+            necrosisAlarm.play();
+        } else if (necrosis.stacks < necrosis.alarm.threshold && AlarmHasPlayed.has('alarmNecrosis')) {
             AlarmHasPlayed.delete('alarmNecrosis');
             necrosisAlarm.pause();
         }
@@ -331,12 +322,10 @@ export async function alarmLoop() {
 
         const shouldSoulsAlarmPlay = (souls.alarm.isLooping || !AlarmHasPlayed.has('alarmSouls')) && souls.alarm.isActive;
 
-        if (shouldSoulsAlarmPlay && souls.stacks > souls.alarm.threshold && !PlayingAbilityAlarms.has('alarmSouls')) {
-            PlayingAbilityAlarms.set('alarmSouls', true);
-            await soulsAlarm.play();
-        } else if (souls.stacks <= souls.alarm.threshold && PlayingAbilityAlarms.has('alarmSouls')) {
-            // These ensure if we drop below the threshold (used stacks) while a loop is happening, then it'll kill the loop
-            PlayingAbilityAlarms.delete('alarmSouls');
+        if (shouldSoulsAlarmPlay && souls.stacks >= souls.alarm.threshold && !AlarmHasPlayed.has('alarmSouls')) {
+            AlarmHasPlayed.set('alarmSouls', true);
+            soulsAlarm.play();
+        } else if (souls.stacks < souls.alarm.threshold && AlarmHasPlayed.has('alarmSouls')) {
             AlarmHasPlayed.delete('alarmSouls');
             soulsAlarm.pause();
         }
