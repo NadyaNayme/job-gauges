@@ -281,17 +281,71 @@ export function resizeImageData(imageData: ImageData, scaleFactor: number) {
     return context.getImageData(0, 0, newWidth, newHeight);
 }
 
-export async function playAlert(alarm: HTMLAudioElement) {
-    loadAlarm(alarm);
-    alarm.loop = Boolean(getSetting(alarm.id + 'Loop'));
-    alarm.volume = Number(getSetting(alarm.id + 'Volume')) / 100;
-    await timeout(20).then(() => {
-        alarm.pause();
-        loadAlarm(alarm);
-        alarm.play();
+const PlayingAbilityAlarms = new Map();
+
+function createAlarmElement(alarmId: string) {
+    const alertElement: HTMLAudioElement = new Audio();
+    const volume = Number(getSetting(alarmId + 'Volume')) / 100;
+
+    alertElement.id = alarmId;
+    alertElement.volume = volume;
+
+    alertElement.src = getSetting(alertElement.id + 'AlertSound');
+    alertElement.load();
+
+    document.body.appendChild(alertElement);
+
+    alertElement.addEventListener('ended', () => {
+        AlarmHasPlayed.set(alarmId, true);
+        PlayingAbilityAlarms.delete(alarmId);
     });
+
+    return alertElement;
 }
 
+const AlarmHasPlayed = new Map();
+
+export async function alarmLoop() {
+    const necrosisAlarm = createAlarmElement('alarmNecrosis');
+    const soulsAlarm = createAlarmElement('alarmNecrosis');
+
+    while (true) {
+        // Arbitrary wait time, this number holds no meaning besides how often we want to check to play an alarm.
+        await timeout(300);
+
+        const { necromancy } = store.getState();
+        const { stacks: { necrosis, souls } } = necromancy;
+
+        const shouldNecrosisAlarmPlay = (necrosis.alarm.isLooping || !AlarmHasPlayed.has('alarmNecrosis')) && necrosis.alarm.isActive;
+
+        if (shouldNecrosisAlarmPlay && necrosis.stacks > necrosis.alarm.threshold && !PlayingAbilityAlarms.has('alarmNecrosis')) {
+            PlayingAbilityAlarms.set('alarmNecrosis', true);
+            await necrosisAlarm.play();
+        } else if (necrosis.stacks <= necrosis.alarm.threshold && PlayingAbilityAlarms.has('alarmNecrosis')) {
+            // These ensure if we drop below the threshold (used stacks) while a loop is happening, then it'll kill the loop
+            PlayingAbilityAlarms.delete('alarmNecrosis');
+            AlarmHasPlayed.delete('alarmNecrosis');
+            necrosisAlarm.pause();
+        }
+
+
+        const shouldSoulsAlarmPlay = (souls.alarm.isLooping || !AlarmHasPlayed.has('alarmSouls')) && souls.alarm.isActive;
+
+        if (shouldSoulsAlarmPlay && souls.stacks > souls.alarm.threshold && !PlayingAbilityAlarms.has('alarmSouls')) {
+            PlayingAbilityAlarms.set('alarmSouls', true);
+            await soulsAlarm.play();
+        } else if (souls.stacks <= souls.alarm.threshold && PlayingAbilityAlarms.has('alarmSouls')) {
+            // These ensure if we drop below the threshold (used stacks) while a loop is happening, then it'll kill the loop
+            PlayingAbilityAlarms.delete('alarmSouls');
+            AlarmHasPlayed.delete('alarmSouls');
+            soulsAlarm.pause();
+        }
+    }
+}
+
+/**
+ * @TODO Handle loading custom alarms later.
+ */
 function loadAlarm(alarm: HTMLAudioElement) {
     if (alarm.src.startsWith('custom:') || alarm.src.startsWith('Custom:')) {
         const customAudio = getSetting(alarm.id + 'AlertSound').substring(7);
@@ -310,12 +364,4 @@ function loadAlarm(alarm: HTMLAudioElement) {
         alarm.src = getSetting(alarm.id + 'AlertSound');
         alarm.load();
     }
-}
-
-export function pauseAlert(alarm: HTMLAudioElement) {
-    alarm.volume = 0;
-    alarm.play().then(() => {
-        alarm.currentTime = 0;
-        alarm.pause();
-    });
 }

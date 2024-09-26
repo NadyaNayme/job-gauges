@@ -1,5 +1,5 @@
 import * as utility from './lib/utility';
-import { forceClearOverlays } from './lib/utility';
+import { alarmLoop, forceClearOverlays } from './lib/utility';
 import { CombatStyle } from './types';
 
 // General Purpose
@@ -153,6 +153,12 @@ export async function startApp() {
     });
 
     updateActiveOrientationFromLocalStorage();
+
+    /**
+     * This loop will be the alarm handler, it'll loop forever constantly checking
+     * the state of alarms and what needs to play or not.
+     */
+    alarmLoop();
 
     // Apparently setting GroupZIndex is a pretty expensive call to do in the loop - so let's only do it once
     alt1.overLaySetGroupZIndex('Undead_Army_Text', 1);

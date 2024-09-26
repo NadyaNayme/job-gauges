@@ -19,11 +19,6 @@ const pre95SoulImages = a1lib.webpackImages({
 });
 
 let scaledOnce = false;
-let playingAlert = false;
-
-const soulsAlert: HTMLAudioElement = new Audio();
-soulsAlert.id = 'alarmSouls';
-document.body.appendChild(soulsAlert);
 
 export async function soulsOverlay() {
     const { gaugeData, necromancy } = store.getState();
@@ -88,15 +83,5 @@ export async function soulsOverlay() {
         default:
             // Handle cases beyond 5 if needed
             break;
-    }
-
-    if (souls.stacks >= souls.alarm.threshold && souls.alarm.isActive) {
-        if (!playingAlert) {
-            await playAlert(soulsAlert);
-            playingAlert = true;
-        }
-    } else if (playingAlert) {
-        pauseAlert(soulsAlert);
-        playingAlert = false;
     }
 }

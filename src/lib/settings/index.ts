@@ -249,7 +249,7 @@ export const renderSettings = () => {
         .then((result) => {
             result.rows.forEach((row) => {
                 if (!row.doc) {
-                    console.error(`Doc for row wassdss undefined.`);
+                    console.error(`Doc for row was undefined.`);
                     return;
                 }
 

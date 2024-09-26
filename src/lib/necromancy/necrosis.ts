@@ -20,11 +20,6 @@ const necrosisColoredImages = a1lib.webpackImages({
 });
 
 let scaledOnce = false;
-let playingAlert = false;
-
-const necrosisAlert: HTMLAudioElement = new Audio();
-necrosisAlert.id = 'alarmNecrosis';
-document.body.appendChild(necrosisAlert);
 
 export async function necrosisOverlay() {
     const { necromancy, gaugeData } = store.getState();
@@ -61,14 +56,6 @@ export async function necrosisOverlay() {
     alt1.overLaySetGroup('Necrosis');
 
     displayNecrosisImage(stacks);
-
-    if (stacks >= necrosis.alarm.threshold && necrosis.alarm.isActive && !playingAlert) {
-        playAlert(necrosisAlert);
-        playingAlert = true;
-    } else if (playingAlert) {
-        pauseAlert(necrosisAlert);
-        playingAlert = false;
-    }
 
     if (necromancy.stacks.duplicateNecrosisRow) {
         // @ts-ignore Don't want to mess with Alt1's typings. This will be a rare case.
