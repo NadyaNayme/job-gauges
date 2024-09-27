@@ -265,6 +265,7 @@ export const renderSettings = () => {
                 for (let i = 0; i < alarmDropdowns.length; i++) {
                     const option = document.createElement('option');
                     option.value = `Custom:${row.doc._id}`;
+                    // @ts-ignore
                     option.innerText = `${row.doc.name}`;
                     alarmDropdowns[i].appendChild(option);
                 }
