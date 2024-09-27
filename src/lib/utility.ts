@@ -281,15 +281,14 @@ export function resizeImageData(imageData: ImageData, scaleFactor: number) {
     return context.getImageData(0, 0, newWidth, newHeight);
 }
 
-function createAlarmElement(alarmId: string) {
+async function createAlarmElement(alarmId: string) {
     const alertElement: HTMLAudioElement = new Audio();
     const volume = Number(getSetting(alarmId + 'Volume')) / 100;
 
     alertElement.id = alarmId;
     alertElement.volume = volume;
 
-    alertElement.src = getSetting(alertElement.id + 'AlertSound');
-    alertElement.load();
+    await loadAlarm(alertElement);
 
     document.body.appendChild(alertElement);
 
@@ -299,8 +298,8 @@ function createAlarmElement(alarmId: string) {
 const AlarmHasPlayed = new Map();
 
 export async function alarmLoop() {
-    const necrosisAlarm = createAlarmElement('alarmNecrosis');
-    const soulsAlarm = createAlarmElement('alarmNecrosis');
+    const necrosisAlarm = await createAlarmElement('alarmNecrosis');
+    const soulsAlarm = await createAlarmElement('alarmSouls');
 
     while (true) {
         // Arbitrary wait time, this number holds no meaning besides how often we want to check to play an alarm.
@@ -317,40 +316,38 @@ export async function alarmLoop() {
         } else if (necrosis.stacks < necrosis.alarm.threshold && AlarmHasPlayed.has('alarmNecrosis')) {
             AlarmHasPlayed.delete('alarmNecrosis');
             necrosisAlarm.pause();
+            necrosisAlarm.currentTime = 0;
         }
 
 
         const shouldSoulsAlarmPlay = (souls.alarm.isLooping || !AlarmHasPlayed.has('alarmSouls')) && souls.alarm.isActive;
 
-        if (shouldSoulsAlarmPlay && souls.stacks >= souls.alarm.threshold && !AlarmHasPlayed.has('alarmSouls')) {
+        if (shouldSoulsAlarmPlay && souls.stacks >= souls.alarm.threshold) {
             AlarmHasPlayed.set('alarmSouls', true);
             soulsAlarm.play();
         } else if (souls.stacks < souls.alarm.threshold && AlarmHasPlayed.has('alarmSouls')) {
             AlarmHasPlayed.delete('alarmSouls');
             soulsAlarm.pause();
+            soulsAlarm.currentTime = 0;
         }
     }
 }
 
-/**
- * @TODO Handle loading custom alarms later.
- */
-function loadAlarm(alarm: HTMLAudioElement) {
-    if (alarm.src.startsWith('custom:') || alarm.src.startsWith('Custom:')) {
-        const customAudio = getSetting(alarm.id + 'AlertSound').substring(7);
-        db.get(customAudio, { attachments: true })
-            .then((doc) => {
-                // @ts-ignore
-                alarm.src = `data:${doc._attachments.filename.content_type};base64,${doc._attachments.filename.data}`;
-            })
-            .then(() => {
-                alarm.load();
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    } else if (!alarm.src.startsWith('data')) {
+async function loadAlarm(alarm: HTMLAudioElement) {
+    const alarmSrc = getSetting(alarm.id + 'AlertSound');
+
+    if (!alarmSrc.startsWith('custom:') && !alarmSrc.startsWith('Custom:') && !alarmSrc.startsWith('data')) {
         alarm.src = getSetting(alarm.id + 'AlertSound');
+        return alarm.load();
+    }
+
+    try {
+        const customAudio = alarmSrc.substring(7);
+        const doc = await db.get(customAudio, { attachments: true });
+        // @ts-ignore
+        alarm.src = `data:${doc._attachments?.filename.content_type};base64,${doc._attachments?.filename.data}`;
         alarm.load();
+    } catch (e) {
+        console.error(`Encountered an error loading custom audio source: ${JSON.stringify(e)}`);
     }
 }
