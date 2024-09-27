@@ -14,7 +14,7 @@ import '../Styles/alarm.css';
 import PouchDB from 'pouchdb';
 const db = new PouchDB(appName);
 
-let alarms: DropdownOption[] = [
+const alarms: DropdownOption[] = [
     { name: 'alarm2', value: './a1sauce/Settings/Library/Controls/Alarms/alarm2.wav' },
     { name: 'notification1', value: './a1sauce/Settings/Library/Controls/Alarms/notification1.wav' },
     { name: 'notification2', value: './a1sauce/Settings/Library/Controls/Alarms/notification2.wav' },

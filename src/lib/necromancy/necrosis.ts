@@ -1,5 +1,5 @@
 import * as a1lib from 'alt1';
-import { adjustPositionForScale, handleResizingImages, pauseAlert, playAlert } from '../utility';
+import { adjustPositionForScale, handleResizingImages } from '../utility';
 import { store } from '../../state';
 
 const necrosisImages = a1lib.webpackImages({

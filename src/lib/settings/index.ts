@@ -217,6 +217,10 @@ export const renderSettings = () => {
             'alarmSoulsThreshold',
             'Alert when at or above this many souls',
             { defaultValue: '5', min: 2, max: 5, unit: ' souls' },
+            (threshold) => store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
+                stackName: 'souls',
+                alarm: { threshold },
+            })),
         )
         .addAlarmSetting('alarmSouls', '')
         .addSeperator()
@@ -225,6 +229,10 @@ export const renderSettings = () => {
             'alarmNecrosisThreshold',
             'Alert when at or above this many stacks',
             { defaultValue: '12', min: 2, max: 12, unit: ' stacks' },
+            (threshold) => store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
+                stackName: 'necrosis',
+                alarm: { threshold },
+            })),
         )
         .addAlarmSetting('alarmNecrosis', '')
         .addSeperator()
@@ -247,7 +255,7 @@ export const renderSettings = () => {
 
     db.allDocs({ include_docs: true, attachments: true, binary: true })
         .then((result) => {
-            result.rows.forEach((row) => {
+            for (const row of result.rows) {
                 if (!row.doc) {
                     console.error(`Doc for row was undefined.`);
                     return;
@@ -257,17 +265,15 @@ export const renderSettings = () => {
                 for (let i = 0; i < alarmDropdowns.length; i++) {
                     const option = document.createElement('option');
                     option.value = `Custom:${row.doc._id}`;
-                    // @ts-ignore
-                    console.log(`Row name?: `, row.doc.name);
-                    // @ts-ignore
                     option.innerText = `${row.doc.name}`;
                     alarmDropdowns[i].appendChild(option);
                 }
-            });
+            }
         })
         .then(() => {
             const alarmDropdowns = document.querySelectorAll('.alarm-dropdown');
             alarmDropdowns.forEach((dropdown) => {
+
                 dropdown.addEventListener('change', (e) => {
                     const target = <HTMLSelectElement>e.target;
                     const settingName = target.id;

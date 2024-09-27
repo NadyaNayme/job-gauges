@@ -668,7 +668,7 @@ function updateMagicAbility(time: number, greater: boolean, abilityName: MagicAb
             },
         }));
 
-        if (abilityName === 'Sunshine') {
+        if (gaugeData.automaticSwapping && abilityName === 'Sunshine') {
             changeCombatStyles(CombatStyle.mage);
         }
     }
@@ -735,7 +735,7 @@ function updateRangeAbility(time: number, greater: boolean, abilityName: RangeAb
             },
         }));
 
-        if (abilityName === 'DeathsSwiftness' || abilityName === 'SplitSoul') {
+        if (gaugeData.automaticSwapping && abilityName === 'DeathsSwiftness' || abilityName === 'SplitSoul') {
             changeCombatStyles(CombatStyle.mage);
         }
     }
