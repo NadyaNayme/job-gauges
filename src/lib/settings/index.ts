@@ -4,12 +4,13 @@ import { Patches } from '../../a1sauce/Patches/patchNotes';
 import { getSetting, updateSetting } from '../../a1sauce/Settings/Storage';
 import { appName, majorVersion, minorVersion, patchVersion } from '../../data/constants';
 import { notes } from '../../patchnotes';
-import { setOverlayPosition } from '../utility';
+import { forceClearOverlays, setOverlayPosition } from '../utility';
 
 import PouchDB from 'pouchdb';
 import { store } from '../../state';
 import { GaugeDataSlice } from '../../state/gauge-data/gauge-data.state';
 import { NecromancyGaugeSlice } from '../../state/gauge-data/necromancy-gauge.state';
+import { CombatStyle } from '../../types';
 
 const sauce = A1Sauce.instance;
 sauce.setName(appName);
@@ -20,6 +21,12 @@ const db = new PouchDB(appName);
 
 const patchNotes = new Patches();
 patchNotes.setNotes(notes);
+
+function updateCombatStyle(combatStyle: CombatStyle) {
+    store.dispatch(GaugeDataSlice.actions.updateCombatStyle(combatStyle));
+
+    forceClearOverlays();
+}
 
 export const renderSettings = () => {
     settings
@@ -39,15 +46,23 @@ export const renderSettings = () => {
             'Remember last known position of buff/debuff bars to avoid needing to scan on every app start',
             false,
         )
-        .addDropdownSetting(
-            'defaultCombatStyle',
-            'Select default combat style',
-            getSetting('defaultCombatStyle') ?? '4',
-            [
-                { value: '2', name: 'Ranged' },
-                { value: '3', name: 'Magic' },
-                { value: '4', name: 'Necromancy' },
-            ],
+        .addButton(
+            'necroCombatStyle',
+            'Select Necro Overlay',
+            () => updateCombatStyle(CombatStyle.necro),
+            { classes: ['nisbutton'] },
+        )
+        .addButton(
+            'mageCombatStyle',
+            'Select Mage Overlay',
+            () => updateCombatStyle(CombatStyle.mage),
+            { classes: ['nisbutton'] },
+        )
+        .addButton(
+            'rangeCombatStyle',
+            'Select Range Overlay',
+            () => updateCombatStyle(CombatStyle.ranged),
+            { classes: ['nisbutton'] },
         )
         .addCheckboxSetting(
             'automaticSwapping',

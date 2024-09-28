@@ -234,12 +234,6 @@ function addEventListeners() {
         updateActiveOrientationFromLocalStorage();
     });
 
-    getById('defaultCombatStyle')!.addEventListener('change', () => {
-        store.dispatch(GaugeDataSlice.actions.updateCombatStyle(parseInt(getSetting('defaultCombatStyle'), 10)));
-        // Clear all overlays, this gives a snappier feeling in the UI.
-        forceClearOverlays();
-    });
-
     // For some reason this one calculates incorrectly on load so we override the initial styles here
     const scaleRange = <HTMLInputElement>getById('scale');
     const scaleRangevalue =
