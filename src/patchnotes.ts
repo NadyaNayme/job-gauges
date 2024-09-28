@@ -12,7 +12,8 @@ export const notes: PatchNote[] = [
             `Switching between gauges should feel snappier`,
             `Alarm playback should be more consistent and actually sound the alarm the first time the alarm threshold is crossed`,
             `Alarms thresholds are now properly "at or above  instead of only "above"`,
-            `The setting about swapping on last used ultimate has been further clarified that only certain ultimates trigger an automatic change`
+            `The setting about swapping on last used ultimate has been further clarified that only certain ultimates trigger an automatic change`,
+            `Blame Nyu if stuff is broken she pushed the release out early on accident`,
         ],
     },
     {
