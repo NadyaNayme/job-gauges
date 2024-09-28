@@ -1,11 +1,15 @@
 import * as a1lib from 'alt1';
-import { Overlay } from '../types';
 import { getSetting, updateSetting } from '../a1sauce/Settings/Storage';
 import { timeout } from '../a1sauce/Utils/timeout';
 
 import PouchDB from 'pouchdb';
 import { appName } from '../data/constants';
 import { Abilities } from './util/ability-helpers';
+import { store } from '../state';
+import { NecromancyGaugeSlice } from '../state/gauge-data/necromancy-gauge.state';
+import { MagicGaugeSlice } from '../state/gauge-data/magic-gauge.state';
+import { RangeGaugeSlice } from '../state/gauge-data/range-gauge.state';
+import { GaugeDataSlice } from '../state/gauge-data/gauge-data.state';
 
 const db = new PouchDB(appName);
 
@@ -28,10 +32,9 @@ export const helperItems = {
     settings: getByID('Settings'),
 };
 
-let updatingOverlayPosition = false;
+export async function setOverlayPosition() {
+    store.dispatch(GaugeDataSlice.actions.updateState({ updatingOverlayPosition: true }));
 
-export async function setOverlayPosition(gauges: Overlay) {
-    updatingOverlayPosition = true;
     a1lib.once('alt1pressed', updateLocation);
 
     alt1.setTooltip(
@@ -42,23 +45,31 @@ export async function setOverlayPosition(gauges: Overlay) {
         alt1.clearTooltip();
     }, 3000);
 
-    while (updatingOverlayPosition) {
-        await timeout(1000);
+    while (true) {
+        const { gaugeData } = store.getState();
+
+        if (!gaugeData.updatingOverlayPosition) {
+            break;
+        }
+
+        await timeout(500);
 
         freezeOverlays();
         //TODO: Per-gauge repositioning will be needed here as well
-        resizeGaugesWithMousePosition(gauges);
+        resizeGaugesWithMousePosition();
         continueOverlays();
     }
 
+    const { necromancy } = store.getState();
+
     updateSetting('overlayPosition', {
-        x: gauges.necromancy.position.x,
-        y: gauges.necromancy.position.y,
+        x: necromancy.position.x,
+        y: necromancy.position.y,
     });
 }
 
 export function updateLocation(): void {
-    updatingOverlayPosition = false;
+    store.dispatch(GaugeDataSlice.actions.updateState({ updatingOverlayPosition: false }));
     alt1.overLayClearGroup('overlayPositionHelper');
     alt1.overLayRefreshGroup('overlayPositionHelper');
     alt1.clearTooltip();
@@ -93,6 +104,7 @@ const overlays = [
     'CrystalRain',
     'PerfectEquilibrium',
     'SplitSoul',
+    'Spells',
 ];
 
 export function freezeOverlays(): void {
@@ -188,45 +200,24 @@ export function adjustPositionWithoutScale(
     return parseInt(roundedToFixed(position * (1 / scaleFactor), 1), 10);
 }
 
-// TODO: Use future overlays[] to iterate over active overlays
-/*
- * getMousePosition() can be null if the mouse is off the client screen
- * but the error is silent and doesn't cause problems so I'm going to
- * suppress the null checks to avoid adding lots of unnecessary noise
- */
-export function resizeGaugesWithMousePosition(gauges: Overlay) {
-    gauges.necromancy.position.x = adjustPositionWithoutScale(
-        a1lib.getMousePosition()!.x,
-        gauges.scaleFactor,
-    );
-    gauges.necromancy.position.y = adjustPositionWithoutScale(
-        a1lib.getMousePosition()!.y,
-        gauges.scaleFactor,
-    );
-    gauges.magic.position.x = adjustPositionWithoutScale(
-        a1lib.getMousePosition()!.x,
-        gauges.scaleFactor,
-    );
-    gauges.magic.position.y = adjustPositionWithoutScale(
-        a1lib.getMousePosition()!.y,
-        gauges.scaleFactor,
-    );
-    gauges.ranged.position.x = adjustPositionWithoutScale(
-        a1lib.getMousePosition()!.x,
-        gauges.scaleFactor,
-    );
-    gauges.ranged.position.y = adjustPositionWithoutScale(
-        a1lib.getMousePosition()!.y,
-        gauges.scaleFactor,
-    );
-    gauges.melee.position.x = adjustPositionWithoutScale(
-        a1lib.getMousePosition()!.x,
-        gauges.scaleFactor,
-    );
-    gauges.melee.position.y = adjustPositionWithoutScale(
-        a1lib.getMousePosition()!.y,
-        gauges.scaleFactor,
-    );
+export function resizeGaugesWithMousePosition() {
+    const position = a1lib.getMousePosition();
+
+    if (!position) {
+        return;
+    }
+
+    const { gaugeData } = store.getState();
+    const { x, y } = position;
+
+    const adjustedXPosition = adjustPositionWithoutScale(x, gaugeData.scaleFactor);
+    const adjustedYPosition = adjustPositionWithoutScale(y, gaugeData.scaleFactor);
+
+    store.dispatch(NecromancyGaugeSlice.actions.updatePosition({ x: adjustedXPosition, y: adjustedYPosition }));
+    store.dispatch(MagicGaugeSlice.actions.updatePosition({ x: adjustedXPosition, y: adjustedYPosition }));
+    store.dispatch(RangeGaugeSlice.actions.updatePosition({ x: adjustedXPosition, y: adjustedYPosition }));
+
+    // Add melee sometime lol
 }
 
 export function roundedToFixed(input: number, digits: number): string {
@@ -290,41 +281,73 @@ export function resizeImageData(imageData: ImageData, scaleFactor: number) {
     return context.getImageData(0, 0, newWidth, newHeight);
 }
 
-export async function playAlert(alarm: HTMLAudioElement) {
-    loadAlarm(alarm);
-    alarm.loop = Boolean(getSetting(alarm.id + 'Loop'));
-    alarm.volume = Number(getSetting(alarm.id + 'Volume')) / 100;
-    await timeout(20).then(() => {
-        alarm.pause();
-        loadAlarm(alarm);
-        alarm.play();
-    });
+async function createAlarmElement(alarmId: string) {
+    const alertElement: HTMLAudioElement = new Audio();
+    const volume = Number(getSetting(alarmId + 'Volume')) / 100;
+
+    alertElement.id = alarmId;
+    alertElement.volume = volume;
+
+    await loadAlarm(alertElement);
+
+    document.body.appendChild(alertElement);
+
+    return alertElement;
 }
 
-function loadAlarm(alarm: HTMLAudioElement) {
-    if (alarm.src.startsWith('custom:') || alarm.src.startsWith('Custom:')) {
-        let customAudio = getSetting(alarm.id + 'AlertSound').substring(7);
-        db.get(customAudio, { attachments: true })
-            .then((doc) => {
-                // @ts-ignore
-                alarm.src = `data:${doc._attachments.filename.content_type};base64,${doc._attachments.filename.data}`;
-            })
-            .then(() => {
-                alarm.load();
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    } else if (!alarm.src.startsWith('data')) {
-        alarm.src = getSetting(alarm.id + 'AlertSound');
-        alarm.load();
+const AlarmHasPlayed = new Map();
+
+export async function alarmLoop() {
+    const necrosisAlarm = await createAlarmElement('alarmNecrosis');
+    const soulsAlarm = await createAlarmElement('alarmSouls');
+
+    while (true) {
+        // Arbitrary wait time, this number holds no meaning besides how often we want to check to play an alarm.
+        await timeout(200);
+
+        const { necromancy } = store.getState();
+        const { stacks: { necrosis, souls } } = necromancy;
+
+        const shouldNecrosisAlarmPlay = (necrosis.alarm.isLooping || !AlarmHasPlayed.has('alarmNecrosis')) && necrosis.alarm.isActive;
+
+        if (shouldNecrosisAlarmPlay && necrosis.stacks >= necrosis.alarm.threshold) {
+            AlarmHasPlayed.set('alarmNecrosis', true);
+            necrosisAlarm.play();
+        } else if (necrosis.stacks < necrosis.alarm.threshold && AlarmHasPlayed.has('alarmNecrosis')) {
+            AlarmHasPlayed.delete('alarmNecrosis');
+            necrosisAlarm.pause();
+            necrosisAlarm.currentTime = 0;
+        }
+
+
+        const shouldSoulsAlarmPlay = (souls.alarm.isLooping || !AlarmHasPlayed.has('alarmSouls')) && souls.alarm.isActive;
+
+        if (shouldSoulsAlarmPlay && souls.stacks >= souls.alarm.threshold) {
+            AlarmHasPlayed.set('alarmSouls', true);
+            soulsAlarm.play();
+        } else if (souls.stacks < souls.alarm.threshold && AlarmHasPlayed.has('alarmSouls')) {
+            AlarmHasPlayed.delete('alarmSouls');
+            soulsAlarm.pause();
+            soulsAlarm.currentTime = 0;
+        }
     }
 }
 
-export function pauseAlert(alarm: HTMLAudioElement) {
-    alarm.volume = 0;
-    alarm.play().then(() => {
-        alarm.currentTime = 0;
-        alarm.pause();
-    });
+async function loadAlarm(alarm: HTMLAudioElement) {
+    const alarmSrc = getSetting(alarm.id + 'AlertSound');
+
+    if (!alarmSrc.startsWith('custom:') && !alarmSrc.startsWith('Custom:') && !alarmSrc.startsWith('data')) {
+        alarm.src = getSetting(alarm.id + 'AlertSound');
+        return alarm.load();
+    }
+
+    try {
+        const customAudio = alarmSrc.substring(7);
+        const doc = await db.get(customAudio, { attachments: true });
+        // @ts-ignore
+        alarm.src = `data:${doc._attachments?.filename.content_type};base64,${doc._attachments?.filename.data}`;
+        alarm.load();
+    } catch (e) {
+        console.error(`Encountered an error loading custom audio source: ${JSON.stringify(e)}`);
+    }
 }

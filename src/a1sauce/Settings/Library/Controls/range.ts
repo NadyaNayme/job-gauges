@@ -10,17 +10,6 @@ import { getSetting, updateSetting } from '../../Storage';
 import '../Styles/range.css';
 
 let isMouseDown = false;
-async function updateRangeValue(rangeInput: HTMLInputElement, add: boolean) {
-    if (add) {
-        rangeInput.value = String(parseInt(rangeInput.value, 10) + 1);
-    } else {
-        rangeInput.value = String(parseInt(rangeInput.value, 10) - 1);
-    }
-    rangeInput.dispatchEvent(new Event('input', { bubbles: true }));
-    updateSetting(rangeInput.id, rangeInput.value);
-    await timeout(50);
-    if (isMouseDown) updateRangeValue(rangeInput, add);
-}
 
 export const createRangeSetting = (
     name: string,
@@ -32,6 +21,7 @@ export const createRangeSetting = (
         max?: number;
         unit?: string;
     } = {},
+    callback?: (value: number) => unknown
 ): HTMLElement => {
     const {
         classes = options.classes ?? '',
@@ -40,6 +30,7 @@ export const createRangeSetting = (
         max = options.max ?? 100,
         unit = options.unit ?? '%',
     } = options;
+
     const rangeInput = createInput('range', name, defaultValue);
     rangeInput.setAttribute('min', min.toString());
     rangeInput.setAttribute('max', max.toString());
@@ -48,12 +39,14 @@ export const createRangeSetting = (
         ((parseInt(rangeInput.value, 10) - parseInt(rangeInput.min, 10)) /
             (parseInt(rangeInput.max, 10) - parseInt(rangeInput.min))) *
         100;
+
     rangeInput.style.background =
         'linear-gradient(to right, #3e5765 0%, #3e5765 ' +
         value +
         '%, #0d1c24 ' +
         value +
         '%, #0d1c24 100%)';
+
     rangeInput.oninput = function () {
         const value =
             ((parseInt(rangeInput.value, 10) - parseInt(rangeInput.min, 10)) /
@@ -66,6 +59,21 @@ export const createRangeSetting = (
             value +
             '%, #0d1c24 100%)';
     };
+
+    async function updateRangeValue(rangeInput: HTMLInputElement, add: boolean) {
+        if (add) {
+            rangeInput.value = String(parseInt(rangeInput.value, 10) + 1);
+        } else {
+            rangeInput.value = String(parseInt(rangeInput.value, 10) - 1);
+        }
+        rangeInput.dispatchEvent(new Event('input', { bubbles: true }));
+        updateSetting(rangeInput.id, rangeInput.value);
+
+        callback?.(parseInt(rangeInput.value, 10));
+
+        await timeout(50);
+        if (isMouseDown) updateRangeValue(rangeInput, add);
+    }
 
     const minusButton = document.createElement('div');
     minusButton.classList.add('minus-btn');
@@ -112,21 +120,25 @@ export const createRangeSetting = (
     flexcontainer.classList.add('flex-between-center');
 
     const label = createLabel(name, description);
+
     label.classList.add('full');
     if (getSetting(name) != undefined) {
         rangeInput.value = getSetting(name);
     }
+
     const output = createOutput();
     output.setAttribute('id', `${name}Output`);
     output.setAttribute('for', name);
     output.innerHTML = rangeInput.value + unit;
     output.after(unit);
+
     const container = createFlexContainer();
     if (classes.length) {
         for (let i = classes.length; i--; i >= 0) {
             container.classList.add(classes[i]);
         }
     }
+
     container.classList.add('flex-wrap');
     container.appendChild(label);
     flexcontainer.appendChild(minusButton);

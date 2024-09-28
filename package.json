@@ -7,6 +7,7 @@
 		"start": "http-server"
 	},
 	"dependencies": {
+		"@reduxjs/toolkit": "^2.2.7",
 		"@types/pouchdb": "^6.4.2",
 		"alt1": "^0.0.7",
 		"lodash": "^4.17.21",

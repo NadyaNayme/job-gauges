@@ -2,17 +2,15 @@ import { resetPositionsAndFindBuffAndDebuffBars } from '../..';
 import { A1Sauce } from '../../a1sauce';
 import { Patches } from '../../a1sauce/Patches/patchNotes';
 import { getSetting, updateSetting } from '../../a1sauce/Settings/Storage';
-import {
-    appName,
-    majorVersion,
-    minorVersion,
-    patchVersion,
-} from '../../data/constants';
+import { appName, majorVersion, minorVersion, patchVersion } from '../../data/constants';
 import { notes } from '../../patchnotes';
-import { Overlay } from '../../types';
-import { setOverlayPosition } from '../utility';
+import { forceClearOverlays, setOverlayPosition } from '../utility';
 
 import PouchDB from 'pouchdb';
+import { store } from '../../state';
+import { GaugeDataSlice } from '../../state/gauge-data/gauge-data.state';
+import { NecromancyGaugeSlice } from '../../state/gauge-data/necromancy-gauge.state';
+import { CombatStyle } from '../../types';
 
 const sauce = A1Sauce.instance;
 sauce.setName(appName);
@@ -24,7 +22,13 @@ const db = new PouchDB(appName);
 const patchNotes = new Patches();
 patchNotes.setNotes(notes);
 
-export const renderSettings = async (gauges: Overlay) => {
+function updateCombatStyle(combatStyle: CombatStyle) {
+    store.dispatch(GaugeDataSlice.actions.updateCombatStyle(combatStyle));
+
+    forceClearOverlays();
+}
+
+export const renderSettings = () => {
     settings
         .addHeader('h2', 'Job Gauges - v' + sauce.getVersion())
         .addText(
@@ -42,25 +46,40 @@ export const renderSettings = async (gauges: Overlay) => {
             'Remember last known position of buff/debuff bars to avoid needing to scan on every app start',
             false,
         )
-        .addDropdownSetting(
-            'defaultCombatStyle',
-            'Select default combat style',
-            getSetting('defaultCombatStyle') ?? '4',
-            [
-                { value: '2', name: 'Ranged' },
-                { value: '3', name: 'Magic' },
-                { value: '4', name: 'Necromancy' },
-            ],
+        .addButton(
+            'necroCombatStyle',
+            'Select Necro Overlay',
+            () => updateCombatStyle(CombatStyle.necro),
+            { classes: ['nisbutton'] },
+        )
+        .addButton(
+            'mageCombatStyle',
+            'Select Mage Overlay',
+            () => updateCombatStyle(CombatStyle.mage),
+            { classes: ['nisbutton'] },
+        )
+        .addButton(
+            'rangeCombatStyle',
+            'Select Range Overlay',
+            () => updateCombatStyle(CombatStyle.ranged),
+            { classes: ['nisbutton'] },
         )
         .addCheckboxSetting(
             'automaticSwapping',
             'Swap gauge automatically based on last used Ultimate Ability',
             false,
+            (event) => store.dispatch(GaugeDataSlice.actions.updateState({ automaticSwapping: event })),
         )
         .addCheckboxSetting(
             'hideOutsideCombat',
             'Show gauges only while "In Combat"',
             false,
+            (event) => {
+                store.dispatch(GaugeDataSlice.actions.updateState({
+                    checkCombatStatus: event,
+                    isInCombat: false,
+                }));
+            },
         )
         .addRangeSetting(
             'combatTimer',
@@ -71,10 +90,8 @@ export const renderSettings = async (gauges: Overlay) => {
         .addButton(
             'repositionOverlay',
             'Reposition Overlay',
-            () => setOverlayPosition(gauges),
-            {
-                classes: ['nisbutton'],
-            },
+            () => setOverlayPosition(),
+            { classes: ['nisbutton'] },
         )
         .addSeperator()
         .addHeader('h3', 'Scale')
@@ -82,6 +99,10 @@ export const renderSettings = async (gauges: Overlay) => {
             'scale',
             'Adjusts the size of the overlay. You must reload and reposition the overlay after scaling.',
             { defaultValue: '100', min: 50, max: 300 },
+            (scaleFactor) => {
+                store.dispatch(GaugeDataSlice.actions.updateState({ scaleFactor: scaleFactor / 100 }));
+                location.reload();
+            },
         )
         .addSeperator()
         .addHeader('h3', 'Incantation Placement')
@@ -102,66 +123,106 @@ export const renderSettings = async (gauges: Overlay) => {
             'showConjures',
             'Show Conjures',
             getSetting('showConjures') ?? true,
+            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateIsActiveOverlay({
+                key: 'conjures',
+                isActiveOverlay: event,
+            })),
         )
         .addCheckboxSetting(
             'showLivingDeath',
             'Show Living Death',
             getSetting('showLivingDeath') ?? true,
+            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateIsActiveOverlay({
+                key: 'livingDeath',
+                isActiveOverlay: event,
+            })),
         )
         .addCheckboxSetting(
             'showIncantations',
             'Show Incantations',
             getSetting('showIncantations') ?? true,
+            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateIsActiveOverlay({
+                key: 'incantations',
+                isActiveOverlay: event,
+            })),
         )
         .addCheckboxSetting(
             'showInvokeDeath',
             'Show Invoke Death',
             getSetting('showInvokeDeath') ?? true,
+            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateIncantationActive({
+                key: 'invokeDeath',
+                isActiveOverlay: event,
+            })),
         )
         .addCheckboxSetting(
             'showDarkness',
             'Show Darkness',
             getSetting('showDarkness') ?? true,
+            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateIncantationActive({
+                key: 'darkness',
+                isActiveOverlay: event,
+            })),
         )
         .addCheckboxSetting(
             'showThreads',
             'Show Threads of Fate',
             getSetting('showThreads') ?? true,
+            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateIncantationActive({
+                key: 'threads',
+                isActiveOverlay: event,
+            })),
         )
         .addCheckboxSetting(
             'showSplitSoul',
             'Show Split Soul',
             getSetting('showSplitSoul') ?? true,
+            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateIncantationActive({
+                key: 'splitSoul',
+                isActiveOverlay: event,
+            })),
         )
         .addCheckboxSetting(
             'showSouls',
             'Show Residual Souls',
             getSetting('showSouls') ?? true,
+            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateStacksAbility({
+                stackType: 'souls',
+                stack: { isActiveOverlay: event },
+            })),
         )
         .addCheckboxSetting(
             'pre95Souls',
             'Only show 3 Residual Souls / No Soulbound Lantern',
             getSetting('pre95Souls') ?? false,
+            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateStacks({ pre95Souls: event })),
         )
         .addCheckboxSetting(
             'showNecrosis',
             'Show Necrosis',
             getSetting('showNecrosis') ?? true,
+            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateStacksAbility({
+                stackType: 'necrosis',
+                stack: { isActiveOverlay: event },
+            })),
         )
         .addCheckboxSetting(
             'dupeRow',
             'Show 2nd row of Necrosis stacks',
             getSetting('dupeRow') ?? false,
+            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateStacks({ duplicateNecrosisRow: event })),
         )
         .addCheckboxSetting(
             'useColoredNecrosis',
             'Use orange and red Necrosis Stacks when above certain thresholds',
             getSetting('useColoredNecrosis') ?? false,
+            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateStacks({ useColoredNecrosis: event })),
         )
         .addCheckboxSetting(
             'showBloat',
             'Show Bloat',
             getSetting('showBloat') ?? true,
+            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateBloat({ isActiveOverlay: event })),
         )
         .addSeperator()
         .addHeader('h2', 'Alarms')
@@ -171,6 +232,10 @@ export const renderSettings = async (gauges: Overlay) => {
             'alarmSoulsThreshold',
             'Alert when at or above this many souls',
             { defaultValue: '5', min: 2, max: 5, unit: ' souls' },
+            (threshold) => store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
+                stackName: 'souls',
+                alarm: { threshold },
+            })),
         )
         .addAlarmSetting('alarmSouls', '')
         .addSeperator()
@@ -179,6 +244,10 @@ export const renderSettings = async (gauges: Overlay) => {
             'alarmNecrosisThreshold',
             'Alert when at or above this many stacks',
             { defaultValue: '12', min: 2, max: 12, unit: ' stacks' },
+            (threshold) => store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
+                stackName: 'necrosis',
+                alarm: { threshold },
+            })),
         )
         .addAlarmSetting('alarmNecrosis', '')
         .addSeperator()
@@ -201,28 +270,32 @@ export const renderSettings = async (gauges: Overlay) => {
 
     db.allDocs({ include_docs: true, attachments: true, binary: true })
         .then((result) => {
-            result.rows.forEach((row) => {
-                let alarmDropdowns =
-                    document.querySelectorAll('.alarm-dropdown');
+            for (const row of result.rows) {
+                if (!row.doc) {
+                    console.error(`Doc for row was undefined.`);
+                    return;
+                }
+
+                const alarmDropdowns = document.querySelectorAll('.alarm-dropdown');
                 for (let i = 0; i < alarmDropdowns.length; i++) {
-                    let option = document.createElement('option');
-                    // @ts-ignore
+                    const option = document.createElement('option');
                     option.value = `Custom:${row.doc._id}`;
                     // @ts-ignore
                     option.innerText = `${row.doc.name}`;
                     alarmDropdowns[i].appendChild(option);
                 }
-            });
+            }
         })
         .then(() => {
-            let alarmDropdowns = document.querySelectorAll('.alarm-dropdown');
+            const alarmDropdowns = document.querySelectorAll('.alarm-dropdown');
             alarmDropdowns.forEach((dropdown) => {
+
                 dropdown.addEventListener('change', (e) => {
-                    let target = <HTMLSelectElement>e.target;
-                    let settingName = target.id;
+                    const target = <HTMLSelectElement>e.target;
+                    const settingName = target.id;
                     updateSetting(settingName, target.value);
                 });
-                let dd = <HTMLSelectElement>dropdown;
+                const dd = <HTMLSelectElement>dropdown;
                 dd.value = getSetting(dropdown.id);
             });
         });

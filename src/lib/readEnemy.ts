@@ -1,9 +1,10 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 import * as a1lib from 'alt1';
 import TargetMob from 'alt1/targetmob';
 import { roundedToFixed } from './utility';
-import { Overlay } from '../types';
 import { getSetting } from '../a1sauce/Settings/Storage';
+import { store } from '../state';
+import { NecromancyGaugeSlice } from '../state/gauge-data/necromancy-gauge.state';
+import { GaugeDataSlice } from '../state/gauge-data/gauge-data.state';
 
 const targetDisplay = new TargetMob();
 
@@ -14,13 +15,15 @@ const enemyDebuffImages = a1lib.webpackImages({
 
 // Thanks to rodultra97 for PR to previous repo
 const bloatInterval = new Map();
-const bloat = 'bloat';
+const bloatString = 'bloat';
 
 const combatInterval = new Map();
 const outOfCombat = 'isInCombat';
 let combatTimer = -1;
 
-export async function readEnemy(gauges: Overlay) {
+export async function readEnemy() {
+    const { gaugeData } = store.getState();
+
     //TODO: Store LastPos and detect when to rescan to avoid spamming CHFRS in loop
     const targetData = targetDisplay.read();
 
@@ -28,9 +31,9 @@ export async function readEnemy(gauges: Overlay) {
         combatTimer = parseInt(getSetting('combatTimer'), 10);
     }
 
-    if (gauges.checkCombatStatus) {
+    if (gaugeData.checkCombatStatus) {
         if (targetData) {
-            gauges.isInCombat = true;
+            store.dispatch(GaugeDataSlice.actions.updateState({ isInCombat: true }));
             if (combatInterval.has(outOfCombat)) {
                 clearInterval(combatInterval.get(outOfCombat));
                 combatInterval.delete(outOfCombat);
@@ -42,7 +45,8 @@ export async function readEnemy(gauges: Overlay) {
                 if (currentTick > 0) {
                     combatTimer = currentTick - 1;
                 } else if (!targetData) {
-                    gauges.isInCombat = false;
+                    store.dispatch(GaugeDataSlice.actions.updateState({ isInCombat: false }));
+
                     combatTimer = parseInt(getSetting('combatTimer'), 10);
                 }
             }, 1000);
@@ -50,68 +54,79 @@ export async function readEnemy(gauges: Overlay) {
             combatInterval.set(outOfCombat, intervalId);
         }
     } else {
-        gauges.isInCombat = true;
+        if (!gaugeData.isInCombat) {
+            store.dispatch(GaugeDataSlice.actions.updateState({ isInCombat: true }));
+        }
+
         if (combatInterval.has(outOfCombat)) {
             clearInterval(combatInterval.get(outOfCombat));
             combatInterval.delete(outOfCombat);
         }
     }
 
-    if (targetData && gauges.isInCombat) {
-        const target_display_loc = {
-            x: (targetDisplay?.lastpos?.x ?? 0) - 120,
-            y: (targetDisplay?.lastpos?.y ?? 0) + 20,
-            w: 150,
-            h: 60,
-        };
+    if (!(targetData && gaugeData.isInCombat)) {
+        store.dispatch(NecromancyGaugeSlice.actions.updateActiveIncantation({ active: false, incantation: 0 }));
+        store.dispatch(NecromancyGaugeSlice.actions.updateBloat({ active: false, time: 0 }));
+        return;
+    }
 
-        const targetDebuffs = a1lib.captureHold(
-            target_display_loc.x,
-            target_display_loc.y,
-            target_display_loc.w,
-            target_display_loc.h,
-        );
-        const targetIsDeathMarked = targetDebuffs.findSubimage(
-            enemyDebuffImages.invokeDeath,
-        ).length;
-        if (targetIsDeathMarked) {
-            gauges.necromancy.incantations.active[0] = true;
-        } else if (!targetIsDeathMarked) {
-            gauges.necromancy.incantations.active[0] = false;
-        }
+    const target_display_loc = {
+        x: (targetDisplay?.lastpos?.x ?? 0) - 120,
+        y: (targetDisplay?.lastpos?.y ?? 0) + 20,
+        w: 150,
+        h: 60,
+    };
 
-        const targetIsBloated = targetDebuffs.findSubimage(
-            enemyDebuffImages.bloat,
-        ).length;
-        if (targetIsBloated && !bloatInterval.has(bloat)) {
-            gauges.necromancy.bloat.time = 20.5;
-            gauges.necromancy.bloat.active = true;
-            const intervalId = setInterval(() => {
-                const currentTick = gauges.necromancy.bloat.time;
+    const targetDebuffs = a1lib.captureHold(
+        target_display_loc.x,
+        target_display_loc.y,
+        target_display_loc.w,
+        target_display_loc.h,
+    );
 
-                if (currentTick > 0) {
-                    const nextTick = parseFloat(
-                        roundedToFixed(currentTick - 0.6, 1),
-                    );
-                    gauges.necromancy.bloat.time = nextTick;
-                } else {
-                    clearInterval(bloatInterval.get(bloat));
-                    bloatInterval.delete(bloat);
-                    gauges.necromancy.bloat.time = 0;
-                }
-            }, 600);
-            bloatInterval.set(bloat, intervalId);
-        } else if (!targetIsBloated) {
-            if (bloatInterval.has(bloat)) {
+    const targetIsDeathMarked = targetDebuffs.findSubimage(
+        enemyDebuffImages.invokeDeath,
+    ).length;
+
+    store.dispatch(NecromancyGaugeSlice.actions.updateActiveIncantation({
+        active: !!targetIsDeathMarked,
+        incantation: 0,
+    }));
+
+    const targetIsBloated = targetDebuffs.findSubimage(
+        enemyDebuffImages.bloat,
+    ).length;
+
+    if (targetIsBloated && !bloatInterval.has(bloatString)) {
+        store.dispatch(NecromancyGaugeSlice.actions.updateBloat({
+            active: true,
+            time: 20.5,
+        }));
+
+        const intervalId = setInterval(() => {
+            const { bloat } = store.getState().necromancy
+            const currentTick = bloat.time;
+            const timeRemaining = parseFloat(roundedToFixed(currentTick - 0.6, 1));
+
+            if (currentTick <= 0) {
                 clearInterval(bloatInterval.get(bloat));
                 bloatInterval.delete(bloat);
             }
-            gauges.necromancy.bloat.time = 0;
-            gauges.necromancy.bloat.active = false;
+
+            store.dispatch(NecromancyGaugeSlice.actions.updateBloat({
+                time: currentTick > 0 ? timeRemaining : 0,
+            }));
+        }, 600);
+        bloatInterval.set(bloatString, intervalId);
+    } else if (!targetIsBloated) {
+        if (bloatInterval.has(bloatString)) {
+            clearInterval(bloatInterval.get(bloatString));
+            bloatInterval.delete(bloatString);
         }
-    } else {
-        gauges.necromancy.incantations.active[0] = false;
-        gauges.necromancy.bloat.time = 0;
-        gauges.necromancy.bloat.active = false;
+
+        store.dispatch(NecromancyGaugeSlice.actions.updateBloat({
+            time: 0,
+            active: false,
+        }));
     }
 }

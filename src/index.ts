@@ -1,27 +1,18 @@
 import * as utility from './lib/utility';
-import { CombatStyle, Overlay } from './types';
+import { alarmLoop, forceClearOverlays } from './lib/utility';
+import { CombatStyle } from './types';
 
 // General Purpose
 import { findBuffsBar, findDebuffsBar, readBuffs } from './lib/readBuffs';
 import { readEnemy } from './lib/readEnemy';
 
 // Necromancy Gauge
-import { necromancy_gauge } from './data/necromancyGauge';
 import { conjureOverlay } from './lib/necromancy/conjures';
 import { soulsOverlay } from './lib/necromancy/soul';
 import { necrosisOverlay } from './lib/necromancy/necrosis';
 import { incantationsOverlay } from './lib/necromancy/incantations';
 import { livingDeathOverlay } from './lib/necromancy/livingDeath';
 import { bloatOverlay } from './lib/necromancy/bloat';
-
-// Magic Gauge
-import { magic_gauge } from './data/magicGauge';
-
-// Ranged Gauge
-import { ranged_gauge } from './data/rangedGauge';
-
-// Melee Gauge
-import { melee_gauge } from './data/meleeGauge';
 
 import './index.html';
 import './appconfig.json';
@@ -46,8 +37,11 @@ import { peOverlay } from './lib/ranged/perfectEquilibrium';
 import { odeToDeceitOverlay } from './lib/magic/odeToDeceit';
 import { rangedSplitSoulOverlay } from './lib/ranged/splitSoul';
 import { LogError } from './a1sauce/Error/logError';
-import { Orientation, OrientationTypes } from './types/common';
-import { forceClearOverlays } from './lib/utility';
+import { GaugeDataSlice } from './state/gauge-data/gauge-data.state';
+import { store } from './state';
+import { MagicGaugeSlice } from './state/gauge-data/magic-gauge.state';
+import { RangeGaugeSlice } from './state/gauge-data/range-gauge.state';
+import { NecromancyGaugeSlice } from './state/gauge-data/necromancy-gauge.state';
 
 const sauce = A1Sauce.instance;
 sauce.setName(appName);
@@ -56,48 +50,36 @@ sauce.createSettings();
 
 const errorLogger = new LogError();
 
-const gauges: Overlay = {
-    isInCombat: false,
-    checkCombatStatus: false,
-    hasBeenOutOfCombat: 10,
-    scaleFactor: 1,
-    combatStyle: 3,
-    automaticSwapping: false,
-    necromancy: necromancy_gauge,
-    magic: magic_gauge,
-    ranged: ranged_gauge,
-    melee: melee_gauge,
-};
-
 async function renderOverlays() {
-    await readEnemy(gauges);
+    const { gaugeData } = store.getState();
+    await readEnemy();
 
-    if (!gauges.isInCombat && !getSetting('updatingOverlayPosition')) {
+    if (!gaugeData.isInCombat && !gaugeData.updatingOverlayPosition) {
         return utility.clearTextOverlays();
     }
 
-    await readBuffs(gauges);
-    switch (gauges.combatStyle) {
+    await readBuffs();
+    switch (gaugeData.combatStyle) {
         case CombatStyle.necro:
-            await livingDeathOverlay(gauges);
-            await conjureOverlay(gauges);
-            await soulsOverlay(gauges);
-            await necrosisOverlay(gauges);
-            await incantationsOverlay(gauges);
-            await bloatOverlay(gauges);
+            await livingDeathOverlay();
+            await conjureOverlay();
+            await soulsOverlay();
+            await necrosisOverlay();
+            await incantationsOverlay();
+            await bloatOverlay();
             break;
         case CombatStyle.mage:
-            await sunshineOverlay(gauges);
-            await spellsOverlay(gauges);
-            await fsoaOverlay(gauges);
-            await tsunamiOverlay(gauges);
-            await odeToDeceitOverlay(gauges);
+            await sunshineOverlay();
+            await spellsOverlay();
+            await fsoaOverlay();
+            await tsunamiOverlay();
+            await odeToDeceitOverlay();
             break;
         case CombatStyle.ranged:
-            await deathsSwiftnessOverlay(gauges);
-            await crystalRainOverlay(gauges);
-            await peOverlay(gauges);
-            await rangedSplitSoulOverlay(gauges);
+            await deathsSwiftnessOverlay();
+            await crystalRainOverlay();
+            await peOverlay();
+            await rangedSplitSoulOverlay();
             break;
         case CombatStyle.melee:
             break;
@@ -136,13 +118,47 @@ export async function startApp() {
         }
     });
 
-    if (getSetting('buffsPosition') == undefined) {
+    if (getSetting('buffsPosition') === undefined) {
         calibrationWarning();
     }
 
-    setNecromancyGaugeData(gauges);
+    // Should be initial?
+    let oldStateString = JSON.stringify(store.getState());
+
+    const localGaugeData = localStorage.getItem('gauge_data');
+
+    /**
+     * Localstorage for _any_ of the data will _not_ exist if this is the users first time launching.
+     * Otherwise, we know the data is there from us populating it.
+     */
+    if (localGaugeData) {
+        const { magic, ranged, necromancy, melee, gaugeData, alarms } = JSON.parse(localGaugeData);
+        console.log(gaugeData);
+        store.dispatch(GaugeDataSlice.actions.updateState(gaugeData));
+        store.dispatch(MagicGaugeSlice.actions.updateState(magic));
+        store.dispatch(RangeGaugeSlice.actions.updateState(ranged));
+        store.dispatch(NecromancyGaugeSlice.actions.updateState(necromancy));
+    }
+
+    store.subscribe(() => {
+        const state = store.getState();
+        const stateString = JSON.stringify(state);
+
+        if (oldStateString === stateString) {
+            return;
+        }
+
+        oldStateString = stateString;
+        localStorage.setItem('gauge_data', JSON.stringify(state));
+    });
 
     updateActiveOrientationFromLocalStorage();
+
+    /**
+     * This loop will be the alarm handler, it'll loop forever constantly checking
+     * the state of alarms and what needs to play or not.
+     */
+    alarmLoop();
 
     // Apparently setting GroupZIndex is a pretty expensive call to do in the loop - so let's only do it once
     alt1.overLaySetGroupZIndex('Undead_Army_Text', 1);
@@ -202,40 +218,12 @@ function calibrationWarning(): void {
         findDebuffsBar();
     }, 8000);
 }
+
 function updateActiveOrientationFromLocalStorage(): void {
-    // Retrieve selected orientation from localStorage
-    let selectedOrientation: OrientationTypes = getSetting(
-        'selectedOrientation',
-    );
+    const selectedOrientation = getSetting('selectedOrientation');
 
-    if (!selectedOrientation) {
-        selectedOrientation = 'reverse_split';
-    }
-
-    updateSetting('selectedOrientation', selectedOrientation);
-
-    function isOrientation(obj: any, key: string): obj is Orientation {
-        return key === 'active_orientation' && !!obj.active_orientation;
-    }
-
-    // Function to recursively update orientations in an object
-    function updateActiveOrientation(obj: { [k in string]: any }) {
-        for (const key in obj) {
-            // TODO: Fix types here. This code works w/o issues as-is and I'm not sure how to make it happy
-            if (typeof obj[key] === 'object') {
-                if (isOrientation(obj, key)) {
-                    obj['active_orientation'].x = obj[selectedOrientation].x;
-                    obj['active_orientation'].y = obj[selectedOrientation].y;
-                } else {
-                    updateActiveOrientation(obj[key]);
-                }
-            }
-        }
-        utility.freezeOverlays();
-        utility.continueOverlays();
-    }
-
-    updateActiveOrientation(gauges);
+    store.dispatch(NecromancyGaugeSlice.actions.updateActiveOrientation(selectedOrientation));
+    forceClearOverlays();
 }
 
 // TODO: Get rid of this crap
@@ -244,16 +232,6 @@ function updateActiveOrientationFromLocalStorage(): void {
 function addEventListeners() {
     getById('selectedOrientation')!.addEventListener('change', () => {
         updateActiveOrientationFromLocalStorage();
-    });
-
-    getById('showNecrosis')!.addEventListener('change', () => {
-        gauges.necromancy.stacks.duplicateNecrosisRow = getSetting('dupeRow');
-    });
-
-    getById('defaultCombatStyle')!.addEventListener('change', () => {
-        gauges.combatStyle = parseInt(getSetting('defaultCombatStyle'), 10);
-        // Clear all overlays, this gives a snappier feeling in the UI.
-        forceClearOverlays();
     });
 
     // For some reason this one calculates incorrectly on load so we override the initial styles here
@@ -269,14 +247,16 @@ function addEventListeners() {
         scaleRangevalue +
         '%, #0d1c24 100%)';
 
-    getById('scale')!.addEventListener('change', () => {
+    getById('scale')!.addEventListener('change', async (e) => {
+        const scaleFactor = Number((e.target as HTMLInputElement).value);
+        store.dispatch(GaugeDataSlice.actions.updateState({ scaleFactor: scaleFactor / 100 }));
         location.reload();
     });
 
     const combatTimerRange = <HTMLInputElement>getById('combatTimer');
     const combatTimervalue =
         ((parseInt(combatTimerRange.value, 10) -
-            parseInt(combatTimerRange.min, 10)) /
+                parseInt(combatTimerRange.min, 10)) /
             (parseInt(combatTimerRange.max, 10) -
                 parseInt(combatTimerRange.min))) *
         100;
@@ -289,246 +269,110 @@ function addEventListeners() {
 
     document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
         checkbox.addEventListener('change', () => {
-            setNecromancyGaugeData(gauges);
+            //console.log();
+            // setNecromancyGaugeData();
             utility.freezeAndContinueOverlays(); // Force an instant redraw
-            updateSetting('gaugedata', JSON.stringify(gauges));
+            const state = store.getState();
+            updateSetting('gauge-data', JSON.stringify(state));
+            // store.dispatch(GaugeDataSlice.actions.updateState({
+            //
+            // }))
+            //const gaugeData = getGaugeData()!;
+            //Object.assign(, gaugeData);
         });
     });
 
     /* Update Alarm Thresholds */
-    getById('alarmSoulsThreshold')!.addEventListener('change', (e) => {
+    getById('alarmSoulsThreshold')?.addEventListener('change', (e) => {
         const target = <HTMLInputElement>e.target;
-        gauges.necromancy.stacks.souls.alarm.threshold = parseInt(
-            target.value,
-            10,
-        );
+        store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'souls',
+            alarm: { threshold: parseInt(target.value, 10) },
+        }));
     });
 
     getById('alarmNecrosisThreshold')!.addEventListener('change', (e) => {
         const target = <HTMLInputElement>e.target;
-        gauges.necromancy.stacks.necrosis.alarm.threshold = parseInt(
-            target.value,
-            10,
-        );
+        store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'necrosis',
+            alarm: { threshold: parseInt(target.value, 10) },
+        }));
     });
 
     /* Update Active Alarms */
     getById('alarmSoulsActive')!.addEventListener('change', (e) => {
         const target = <HTMLInputElement>e.target;
-        gauges.necromancy.stacks.souls.alarm.isActive = target.checked;
+        store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'souls',
+            alarm: { isActive: target.checked },
+        }));
     });
 
     getById('alarmNecrosisActive')!.addEventListener('change', (e) => {
         const target = <HTMLInputElement>e.target;
-        gauges.necromancy.stacks.necrosis.alarm.isActive = target.checked;
+        store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'necrosis',
+            alarm: { isActive: target.checked },
+        }));
     });
 
     /* Update Looping Alarms */
     getById('alarmNecrosisLoop')!.addEventListener('change', (e) => {
         const target = <HTMLInputElement>e.target;
-        gauges.necromancy.stacks.necrosis.alarm.isLooping = target.checked;
+        store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'necrosis',
+            alarm: { isLooping: target.checked },
+        }));
     });
 
     getById('alarmSoulsLoop')!.addEventListener('change', (e) => {
         const target = <HTMLInputElement>e.target;
-        gauges.necromancy.stacks.souls.alarm.isLooping = target.checked;
+        store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'souls',
+            alarm: { isLooping: target.checked },
+        }));
     });
 
     /* Update Alarm Volumes */
     getById('alarmNecrosisVolume')!.addEventListener('change', (e) => {
         const target = <HTMLInputElement>e.target;
-        gauges.necromancy.stacks.necrosis.alarm.volume = parseInt(
-            target.value,
-            10,
-        );
+        store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'necrosis',
+            alarm: { volume: parseInt(target.value, 10) },
+        }));
     });
 
     getById('alarmSoulsVolume')!.addEventListener('change', (e) => {
         const target = <HTMLInputElement>e.target;
-        gauges.necromancy.stacks.souls.alarm.volume = parseInt(
-            target.value,
-            10,
-        );
+        store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'souls',
+            alarm: { volume: parseInt(target.value, 10) },
+        }));
     });
 
     /* Update Alarm Sounds */
     getById('alarmNecrosisAlertSound')!.addEventListener('change', (e) => {
         const target = <HTMLInputElement>e.target;
-        gauges.necromancy.stacks.necrosis.alarm.sound = target.value;
+        store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'necrosis',
+            alarm: { sound: target.value },
+        }));
     });
 
     getById('alarmSoulsAlertSound')!.addEventListener('change', (e) => {
         const target = <HTMLInputElement>e.target;
-        gauges.necromancy.stacks.souls.alarm.sound = target.value;
+        store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'souls',
+            alarm: { sound: target.value },
+        }));
     });
-}
-
-// TODO: Get rid of this crap
-function setNecromancyGaugeData(gauges: Overlay) {
-    if (getSetting('overlayPosition') !== undefined) {
-        //TODO: Each gauge should be able to be positioned separately
-        gauges.necromancy.position = getSetting('overlayPosition');
-        gauges.magic.position = getSetting('overlayPosition');
-        gauges.ranged.position = getSetting('overlayPosition');
-        gauges.melee.position = getSetting('overlayPosition');
-    }
-
-    if (getSetting('hideOutsideCombat') !== undefined) {
-        gauges.checkCombatStatus = getSetting('hideOutsideCombat');
-        gauges.isInCombat = false;
-    }
-
-    if (getSetting('scale') !== undefined) {
-        gauges.scaleFactor = getSetting('scale') / 100;
-    } else {
-        gauges.scaleFactor = 1;
-    }
-
-    if (getSetting('showConjures') !== undefined) {
-        gauges.necromancy.conjures.isActiveOverlay = getSetting('showConjures');
-    }
-
-    if (getSetting('showLivingDeath') !== undefined) {
-        gauges.necromancy.livingDeath.isActiveOverlay =
-            getSetting('showLivingDeath');
-    }
-
-    if (getSetting('showIncantations') !== undefined) {
-        gauges.necromancy.incantations.isActiveOverlay =
-            getSetting('showIncantations');
-    }
-
-    if (getSetting('showInvokeDeath') !== undefined) {
-        gauges.necromancy.incantations.invokeDeath.isActiveOverlay =
-            getSetting('showInvokeDeath');
-    }
-
-    if (getSetting('showDarkness') !== undefined) {
-        gauges.necromancy.incantations.darkness.isActiveOverlay =
-            getSetting('showDarkness');
-    }
-
-    if (getSetting('showThreads') !== undefined) {
-        gauges.necromancy.incantations.threads.isActiveOverlay =
-            getSetting('showThreads');
-    }
-
-    if (getSetting('showSplitSoul') !== undefined) {
-        gauges.necromancy.incantations.splitSoul.isActiveOverlay =
-            getSetting('showSplitSoul');
-    }
-
-    if (getSetting('showSouls') !== undefined) {
-        gauges.necromancy.stacks.souls.isActiveOverlay =
-            getSetting('showSouls');
-    }
-
-    if (getSetting('pre95Souls') !== undefined) {
-        gauges.necromancy.stacks.pre95Souls = getSetting('pre95Souls');
-    }
-
-    if (getSetting('showNecrosis') !== undefined) {
-        gauges.necromancy.stacks.necrosis.isActiveOverlay =
-            getSetting('showNecrosis');
-    }
-
-    if (getSetting('useColoredNecrosis') !== undefined) {
-        gauges.necromancy.stacks.useColoredNecrosis =
-            getSetting('useColoredNecrosis');
-    }
-
-    if (getSetting('dupeRow') !== undefined) {
-        gauges.necromancy.stacks.duplicateNecrosisRow = getSetting('dupeRow');
-    }
-
-    if (getSetting('showBloat') !== undefined) {
-        gauges.necromancy.bloat.isActiveOverlay = getSetting('showBloat');
-    }
-
-    if (getSetting('alarmNecrosisActive') !== undefined) {
-        gauges.necromancy.stacks.necrosis.alarm.isActive = getSetting(
-            'alarmNecrosisActive',
-        );
-    }
-
-    if (getSetting('alarmNecrosisAlertSound') !== undefined) {
-        gauges.necromancy.stacks.necrosis.alarm.sound = getSetting(
-            'alarmNecrosisAlertSound',
-        );
-    }
-
-    if (getSetting('alarmNecrosisLoop') !== undefined) {
-        gauges.necromancy.stacks.necrosis.alarm.isLooping =
-            getSetting('alarmNecrosisLoop');
-    }
-
-    if (getSetting('alarmNecrosisThreshold') !== undefined) {
-        gauges.necromancy.stacks.necrosis.alarm.threshold = getSetting(
-            'alarmNecrosisThreshold',
-        );
-    }
-
-    if (getSetting('alarmNecrosisVolume') !== undefined) {
-        gauges.necromancy.stacks.necrosis.alarm.volume = getSetting(
-            'alarmNecrosisVolume',
-        );
-    }
-    if (getSetting('alarmSoulsActive') !== undefined) {
-        gauges.necromancy.stacks.souls.alarm.isActive =
-            getSetting('alarmSoulsActive');
-    }
-
-    if (getSetting('alarmSoulsAlertSound') !== undefined) {
-        gauges.necromancy.stacks.souls.alarm.sound = getSetting(
-            'alarmSoulsAlertSound',
-        );
-    }
-
-    if (getSetting('alarmSoulsLoop') !== undefined) {
-        gauges.necromancy.stacks.souls.alarm.isLooping =
-            getSetting('alarmSoulsLoop');
-    }
-
-    if (getSetting('alarmSoulsThreshold') !== undefined) {
-        gauges.necromancy.stacks.souls.alarm.threshold = getSetting(
-            'alarmSoulsThreshold',
-        );
-    }
-
-    if (getSetting('alarmSoulsVolume') !== undefined) {
-        gauges.necromancy.stacks.souls.alarm.volume =
-            getSetting('alarmSoulsVolume');
-    }
-
-    if (getSetting('automaticSwapping') !== undefined) {
-        gauges.automaticSwapping = getSetting('automaticSwapping');
-    }
-
-    if (getSetting('defaultCombatStyle') !== undefined) {
-        const input = <HTMLSelectElement>(
-            document.getElementById('defaultCombatStyle')
-        );
-        input.value = getSetting('defaultCombatStyle');
-        gauges.combatStyle = parseInt(getSetting('defaultCombatStyle'), 10);
-    }
-}
-
-// TODO: For Gauge Settings I should be able to store the entire gauge in localStorage
-// TODO: and recover it instead of setting each property individually from a different setting
-// TODO: Just need to figure out why my earlier attempt with setGaugeData() wasn't saving values properly
-function getGaugeData(gauges: Overlay) {
-    const gaugeData = getSetting('gaugedata');
-    if (gaugeData !== undefined) {
-        gauges = gaugeData;
-        return JSON.parse(gaugeData);
-    }
 }
 
 window.onload = function () {
     if (window.alt1) {
         alt1.identifyAppUrl('./appconfig.json');
         if (getSetting('checkForUpdates')) startVersionChecking(versionUrl);
-        renderSettings(gauges);
+        renderSettings();
         addEventListeners();
         startApp();
     } else {

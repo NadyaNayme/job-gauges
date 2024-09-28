@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 import * as a1lib from 'alt1';
 import BuffReader from 'alt1/buffs';
-import * as utility from './utility';
-import { CombatStyle, Overlay } from '../types';
+import { CombatStyle } from '../types';
 import { findAmmo } from './ranged/activeAmmo';
 import { A1Sauce } from '../a1sauce';
 import { appName } from '../data/constants';
@@ -10,6 +8,12 @@ import { LogError } from '../a1sauce/Error/logError';
 import { beginRendering } from '..';
 import { startAbilityCooldown } from './util/ability-helpers';
 import { getSetting, updateSetting } from '../a1sauce/Settings/Storage';
+import { store } from '../state';
+import { NecromancyGaugeSlice } from '../state/gauge-data/necromancy-gauge.state';
+import { clearTextOverlays, forceClearOverlay, forceClearOverlays } from './utility';
+import { MagicAbilities, MagicGaugeSlice, MagicPropertyAbilities } from '../state/gauge-data/magic-gauge.state';
+import { GaugeDataSlice } from '../state/gauge-data/gauge-data.state';
+import { RangeAbilities, RangeGaugeSlice, RangePropertyAbilities } from '../state/gauge-data/range-gauge.state';
 
 const sauce = A1Sauce.instance;
 sauce.setName(appName);
@@ -150,7 +154,7 @@ retryOperation(findBuffsBar, 3, 10000)
     .then(() => {
         console.info('Success! Found Buffs.');
         if (document.getElementById('#Error') !== undefined) {
-            let err = document.querySelectorAll('#Error');
+            const err = document.querySelectorAll('#Error');
             for (let i = 0; i < err.length; i++) {
                 const errHeader = err[i].querySelector('h2')?.innerText;
                 if (errHeader === 'No Buffs Found') {
@@ -177,9 +181,9 @@ retryOperation(findDebuffsBar, 3, 10000)
     .then(() => {
         console.info('Success! Found Debuffs.');
         if (document.getElementById('#Error') !== undefined) {
-            let err = document.querySelectorAll('#Error');
+            const err = document.querySelectorAll('#Error');
             for (let i = 0; i < err.length; i++) {
-                let errHeader = err[i].querySelector('h2')?.innerText;
+                const errHeader = err[i].querySelector('h2')?.innerText;
                 if (errHeader === 'No Debuffs Found') {
                     err[i].remove();
                 }
@@ -192,7 +196,7 @@ retryOperation(findDebuffsBar, 3, 10000)
         }
     })
     .catch(() => {
-        let wrongBuffSize = testBuffSizes();
+        const wrongBuffSize = testBuffSizes();
         if (!wrongBuffSize) {
             errorLogger.showError({
                 title: 'Failed to find Debuffs',
@@ -204,47 +208,44 @@ retryOperation(findDebuffsBar, 3, 10000)
         }
     });
 
-export async function readBuffs(gauges: Overlay) {
+export async function readBuffs() {
     if (!buffReader.pos) {
         return;
     }
 
+    const { gaugeData, necromancy } = store.getState();
+
     updateBuffData(
         buffReader,
-        gauges,
         buffsImages.deathsSwiftness,
         125,
-        updateDeathsSwiftness,
+        (time) => updateRangeAbility(time, false, 'DeathsSwiftness'),
         false,
     );
     updateBuffData(
         buffReader,
-        gauges,
         buffsImages.greaterDeathsSwiftness,
         350,
-        updateDeathsSwiftness,
+        (time) => updateRangeAbility(time, true, 'DeathsSwiftness'),
         true,
     );
     updateBuffData(
         buffReader,
-        gauges,
         buffsImages.sunshine,
         300,
-        updateSunshine,
+        (time) => updateMagicAbility(time, false, 'Sunshine'),
         false,
     );
     updateBuffData(
         buffReader,
-        gauges,
         buffsImages.greaterSunshine,
         100,
-        updateSunshine,
+        (time) => updateMagicAbility(time, true, 'Sunshine'),
         true,
     );
-    if (gauges.necromancy.livingDeath.isActiveOverlay) {
+    if (necromancy.livingDeath.isActiveOverlay) {
         updateBuffData(
             buffReader,
-            gauges,
             buffsImages.living_death,
             400,
             updateLivingDeath,
@@ -252,29 +253,36 @@ export async function readBuffs(gauges: Overlay) {
         );
     }
 
-    switch (gauges.combatStyle) {
+    switch (gaugeData.combatStyle) {
         case CombatStyle.necro:
             updateBuffData(
                 buffReader,
-                gauges,
                 buffsImages.soul,
                 200,
-                updateSoulCount,
+                (stacks) => store.dispatch(NecromancyGaugeSlice.actions.updateStacksAbility({
+                    stackType: 'souls',
+                    stack: {
+                        stacks,
+                    },
+                })),
                 false,
             );
             updateBuffData(
                 buffReader,
-                gauges,
                 buffsImages.necrosis,
                 200,
-                updateNecrosisCount,
+                (stacks) => store.dispatch(NecromancyGaugeSlice.actions.updateStacksAbility({
+                    stackType: 'necrosis',
+                    stack: {
+                        stacks,
+                    },
+                })),
                 false,
             );
-            updateConjures(gauges);
+            updateConjures();
 
             updateBuffData(
                 buffReader,
-                gauges,
                 buffsImages.darkness,
                 300,
                 updateDarkness,
@@ -284,7 +292,6 @@ export async function readBuffs(gauges: Overlay) {
             if (!disableThreadsCheck) {
                 updateBuffData(
                     buffReader,
-                    gauges,
                     buffsImages.threads,
                     300,
                     updateThreads,
@@ -294,7 +301,6 @@ export async function readBuffs(gauges: Overlay) {
             if (!disableSplitCheck) {
                 updateBuffData(
                     buffReader,
-                    gauges,
                     buffsImages.split_soul,
                     350,
                     updateSplitSoul,
@@ -305,71 +311,62 @@ export async function readBuffs(gauges: Overlay) {
         case CombatStyle.mage:
             updateBuffData(
                 buffReader,
-                gauges,
                 buffsImages.instability,
                 60,
-                updateFsoa,
+                (time) => updateMagicAbility(time, false, 'Instability'),
                 false,
             );
             updateBuffData(
                 buffReader,
-                gauges,
                 buffsImages.tsunami,
                 200,
-                updateTsunami,
+                (time) => updateMagicAbility(time, false, 'Tsunami'),
                 false,
             );
             updateStackData(
-                gauges,
                 buffsImages.bloodTithe,
                 30,
-                updateBloodTithe,
+                (active) => updateSpell('bloodTithe', active),
             );
             updateStackData(
-                gauges,
                 buffsImages.glacialEmbrace,
                 30,
-                updateGlacialEmbrace,
+                (active) => updateSpell('glacialEmbrace', active),
             );
             updateBuffData(
                 debuffReader,
-                gauges,
                 buffsImages.odeToDeceit,
                 9,
-                updateOdeToDeceit,
+                (time) => updateMagicAbility(time, false, 'OdeToDeceit'),
                 false,
             );
             break;
         case CombatStyle.ranged:
             updateBuffData(
                 debuffReader,
-                gauges,
                 buffsImages.crystalRain,
                 60,
-                updateCrystalRain,
+                (time) => updateRangeAbility(time, true, 'CrystalRain'),
                 false,
             );
-            findAmmo(gauges, buffReader.read());
+            findAmmo(buffReader.read());
             updateSimpleStackData(
-                gauges,
                 buffsImages.perfectEquilibrium,
                 300,
                 updatePeCount,
             );
             updateBuffData(
                 buffReader,
-                gauges,
                 buffsImages.balanaceByForce,
                 20,
-                updateBalanceByForce,
+                (active) => updateBalanceByForce(!!active),
                 false,
             );
             updateBuffData(
                 buffReader,
-                gauges,
                 buffsImages.rangedSplitSoul,
                 300,
-                updateRangedSplitSoul,
+                (time) => updateRangedSplitSoul(time),
                 false,
             );
             break;
@@ -380,18 +377,16 @@ export async function readBuffs(gauges: Overlay) {
     return buffReader;
 }
 
-async function updateBuffData(
+function updateBuffData(
     buffReader: BuffReader,
-    gauges: Overlay,
     buffImage: ImageData,
     threshold: number,
     updateCallbackFn: (
-        gauges: Overlay,
         duration: number,
         greater: boolean,
     ) => void,
     greater: boolean,
-): Promise<boolean> {
+): boolean {
     const buffs = buffReader.read();
 
     if (!buffs) {
@@ -401,37 +396,34 @@ async function updateBuffData(
     let foundBuff = false;
     for (const buff of buffs) {
         const match = buff.countMatch(buffImage, false);
+        const { time } = buff.readArg('timearg');
 
         /**
          * "THIS IS A HACK"
          * Issues with Ode to Deceit false positives
          */
-        if (
-            buffImage === buffsImages.odeToDeceit &&
-            buff.readArg('timearg').time >= 46
-        ) {
+        if (buffImage === buffsImages.odeToDeceit && time >= 46) {
             return false;
         }
 
         if (match.passed > threshold) {
             foundBuff = true;
-            updateCallbackFn(gauges, buff.readArg('timearg').time, greater);
+            updateCallbackFn(time, greater);
         }
     }
 
     if (!foundBuff) {
-        updateCallbackFn(gauges, 0, greater);
+        updateCallbackFn(0, greater);
     }
 
     return foundBuff;
 }
 
-async function updateStackData(
-    gauges: Overlay,
+function updateStackData(
     buffImage: ImageData,
     threshold: number,
-    updateCallbackFn: Function,
-): Promise<boolean> {
+    updateCallbackFn: (time: number) => unknown,
+): boolean {
     const buffs = buffReader.read();
 
     if (!buffs) {
@@ -445,34 +437,25 @@ async function updateStackData(
 
         if (match.passed > threshold) {
             foundBuff = true;
+            const timearg = buff.readArg('timearg').arg;
             updateCallbackFn(
-                gauges,
-                parseInt(
-                    buff
-                        .readArg('timearg')
-                        .arg.substring(
-                            1,
-                            buff.readArg('timearg').arg.length - 1,
-                        ),
-                    10,
-                ),
+                parseInt(timearg.substring(1, timearg.length - 1), 10),
             );
         }
     }
 
     if (!foundBuff) {
-        updateCallbackFn(gauges, 0);
+        updateCallbackFn(0);
     }
 
     return foundBuff;
 }
 
-async function updateSimpleStackData(
-    gauges: Overlay,
+function updateSimpleStackData(
     buffImage: ImageData,
     threshold: number,
-    updateCallbackFn: Function,
-): Promise<boolean> {
+    updateCallbackFn: (time: number) => unknown,
+): boolean {
     const buffs = buffReader.read();
 
     if (!buffs) {
@@ -485,472 +468,414 @@ async function updateSimpleStackData(
 
         if (match.passed > threshold) {
             foundBuff = true;
-            updateCallbackFn(gauges, buff.readTime());
+            updateCallbackFn(buff.readTime());
         }
     }
 
     if (!foundBuff) {
-        updateCallbackFn(gauges, 0);
+        updateCallbackFn(0);
     }
 
     return foundBuff;
 }
 
-// TODO: Figure out a cleaner way to update values.
-// There shouldn't be any reason the below functions can't be done via updateBuffData
-// without passing an updateCallbackfn()
-// Passing data = ['necromancy]['stacks']['souls]['count'] and trying
-// to update gauges.data doesn't work because somehow ['souls'] is undefined?
-async function updateSoulCount(gauges: Overlay, value: number) {
-    gauges.necromancy.stacks.souls.stacks = value;
-}
+function updateLivingDeath(value: number) {
+    const necromancy = store.getState().necromancy;
+    const gaugeData = store.getState().gaugeData;
 
-async function updateNecrosisCount(gauges: Overlay, value: number) {
-    gauges.necromancy.stacks.necrosis.stacks = value;
-}
-
-async function updateLivingDeath(gauges: Overlay, value: number) {
     // If Living Death has an active buff and a timer:
     //   - it cannot be on cooldown
     //   - it must be active
     //   - The remaining time is its timer
     if (value > 1) {
-        gauges.necromancy.livingDeath.isOnCooldown = false;
-        gauges.necromancy.livingDeath.cooldownDuration = 0;
-        gauges.necromancy.livingDeath.active = true;
-        gauges.necromancy.livingDeath.time = value;
-        changeCombatStyles(gauges, CombatStyle.necro);
+        store.dispatch(NecromancyGaugeSlice.actions.updateAbilityCooldown({
+            ability: {
+                active: true,
+                time: value,
+                cooldownDuration: 0,
+                isOnCooldown: false,
+            },
+            abilityName: 'livingDeath',
+        }));
+
+        changeCombatStyles(CombatStyle.necro);
     }
 
     // When only 1 second of the buff exists
-    if (value == 1 && gauges.necromancy.livingDeath.active) {
+    if (value == 1 && necromancy.livingDeath.active) {
         // Make sure to update the text one final time
-        gauges.necromancy.livingDeath.time = value;
+        store.dispatch(NecromancyGaugeSlice.actions.updateAbilityTime({ abilityName: 'livingDeath', time: value }));
 
         // Then start a timer to wait just past the last second
         //  - Clear the timer
         //  - LD is now on Cooldown so is not active
         setTimeout(() => {
-            gauges.necromancy.livingDeath.time = 0;
-            gauges.necromancy.livingDeath.active = false;
-            gauges.necromancy.livingDeath.isOnCooldown = true;
+            store.dispatch(NecromancyGaugeSlice.actions.updateAbilityCooldown({
+                ability: {
+                    active: false,
+                    time: 0,
+                    isOnCooldown: true,
+                },
+                abilityName: 'livingDeath',
+            }));
 
-            startAbilityCooldown(
-                {
-                    ability: gauges.necromancy.livingDeath,
-                    position: gauges.necromancy.position,
-                    scaleFactor: gauges.scaleFactor,
+            startAbilityCooldown({
+                    ability: necromancy.livingDeath,
+                    position: necromancy.position,
+                    scaleFactor: gaugeData.scaleFactor,
                 },
                 'LivingDeath',
                 false,
+                () => {
+                    store.dispatch(NecromancyGaugeSlice.actions.updateAbility({
+                        key: 'livingDeath',
+                        ability: { isOnCooldown: false, cooldownDuration: 0 },
+                    }));
+                },
             );
         }, 1050);
     }
 }
 
-async function updateSkeleton(gauges: Overlay, value: number) {
-    gauges.necromancy.conjures.skeleton.time = value;
-    gauges.necromancy.conjures.skeleton.active = Boolean(value);
+function updateConjure(conjureType: 'skeleton' | 'zombie' | 'phantom' | 'ghost', timing: number) {
+    store.dispatch(NecromancyGaugeSlice.actions.updateConjures({
+        conjureType,
+        conjure: {
+            time: timing,
+            active: !!timing,
+        },
+    }));
 }
 
-async function updateZombie(gauges: Overlay, value: number) {
-    gauges.necromancy.conjures.zombie.time = value;
-    gauges.necromancy.conjures.zombie.active = Boolean(value);
-}
-
-async function updateGhost(gauges: Overlay, value: number) {
-    gauges.necromancy.conjures.ghost.time = value;
-    gauges.necromancy.conjures.ghost.active = Boolean(value);
-}
-
-async function updatePhantom(gauges: Overlay, value: number) {
-    gauges.necromancy.conjures.phantom.time = value;
-    gauges.necromancy.conjures.phantom.active = Boolean(value);
-}
-
-async function updateDarkness(gauges: Overlay, value: number) {
-    gauges.necromancy.incantations.active[1] = Boolean(value);
+function updateDarkness(value: number) {
+    store.dispatch(NecromancyGaugeSlice.actions.updateActiveIncantation({
+        incantation: 1,
+        active: !!value,
+    }));
 }
 
 let disableThreadsCheck = false;
-async function updateThreads(gauges: Overlay, value: number) {
-    gauges.necromancy.incantations.active[2] = false;
-    if (value > 1) {
-        gauges.necromancy.incantations.active[2] = true;
+
+function updateThreads(value: number) {
+    if (value < 1) {
+        return store.dispatch(NecromancyGaugeSlice.actions.updateActiveIncantation({
+            incantation: 2,
+            active: false,
+        }));
     }
-    if (value == 1) {
-        gauges.necromancy.incantations.active[2] = true;
+
+    const necromancy = store.getState().necromancy;
+    store.dispatch(NecromancyGaugeSlice.actions.updateActiveIncantation({
+        incantation: 2,
+        active: true,
+    }));
+
+    if (value === 1) {
         disableThreadsCheck = true;
         setTimeout(() => {
-            gauges.necromancy.incantations.active[2] = false;
+            store.dispatch(NecromancyGaugeSlice.actions.updateActiveIncantation({
+                incantation: 2,
+                active: false,
+            }));
             disableThreadsCheck = false;
-        }, gauges.necromancy.incantations.threads.cooldownDuration * 1000);
+        }, necromancy.incantations.threads.cooldownDuration * 1000);
     }
 }
 
 let disableSplitCheck = false;
-async function updateSplitSoul(gauges: Overlay, value: number) {
-    gauges.necromancy.incantations.active[3] = false;
-    if (value > 1) {
-        gauges.necromancy.incantations.active[3] = true;
+
+async function updateSplitSoul(value: number) {
+    if (value < 1) {
+        return store.dispatch(NecromancyGaugeSlice.actions.updateActiveIncantation({
+            incantation: 3,
+            active: false,
+        }));
     }
-    if (value == 1) {
-        gauges.necromancy.incantations.active[3] = true;
+
+    const necromancy = store.getState().necromancy;
+    store.dispatch(NecromancyGaugeSlice.actions.updateActiveIncantation({
+        incantation: 3,
+        active: true,
+    }));
+
+    if (value === 1) {
         disableSplitCheck = true;
         setTimeout(() => {
-            gauges.necromancy.incantations.active[3] = false;
+            store.dispatch(NecromancyGaugeSlice.actions.updateActiveIncantation({
+                incantation: 3,
+                active: false,
+            }));
             disableSplitCheck = false;
-        }, gauges.necromancy.incantations.splitSoul.cooldownDuration * 1000);
+        }, necromancy.incantations.splitSoul.cooldownDuration * 1000);
     }
 }
 
-async function updateConjures(gauges: Overlay) {
-    const hasSkeleton = await updateBuffData(
+async function updateConjures() {
+    updateBuffData(
         buffReader,
-        gauges,
         buffsImages.skeleton,
         150,
-        updateSkeleton,
+        (time) => updateConjure('skeleton', time),
         false,
     );
-    const hasZombie = await updateBuffData(
+    updateBuffData(
         buffReader,
-        gauges,
         buffsImages.zombie,
         150,
-        updateZombie,
+        (time) => updateConjure('zombie', time),
         false,
     );
-    const hasGhost = await updateBuffData(
+    updateBuffData(
         buffReader,
-        gauges,
         buffsImages.ghost,
         200,
-        updateGhost,
+        (time) => updateConjure('ghost', time),
         false,
     );
-    const hasPhantom = await updateBuffData(
+    updateBuffData(
         buffReader,
-        gauges,
         buffsImages.phantom,
         200,
-        updatePhantom,
+        (time) => updateConjure('phantom', time),
         false,
     );
-    if (hasSkeleton || hasZombie || hasGhost || hasPhantom) {
-        gauges.necromancy.conjures.active = true;
-    } else {
-        gauges.necromancy.conjures.active = false;
-    }
 }
 
-async function updateSunshine(
-    gauges: Overlay,
-    value: number,
-    greater: boolean,
-) {
-    // If Sunshine has an active buff and a timer:
-    //   - it cannot be on cooldown
-    //   - it must be active
-    //   - The remaining time is its timer
-    if (value > 1) {
-        gauges.magic.sunshine.isOnCooldown = false;
-        gauges.magic.sunshine.cooldownDuration = 0;
-        gauges.magic.sunshine.active = true;
-        gauges.magic.sunshine.time = value;
-        changeCombatStyles(gauges, CombatStyle.mage);
+const MagicAbilityToName = {
+    'Sunshine': 'sunshine',
+    'OdeToDeceit': 'odeToDeceit',
+    'Tsunami': 'tsunami',
+    'Instability': 'instability',
+} satisfies Record<MagicAbilities, MagicPropertyAbilities>;
+
+function updateMagicAbility(time: number, greater: boolean, abilityName: MagicAbilities) {
+    const property = MagicAbilityToName[abilityName];
+
+    const { magic, gaugeData } = store.getState();
+    const { position } = magic;
+    const { scaleFactor } = gaugeData;
+
+    const ability = magic[property];
+
+    if (time > 1) {
+        store.dispatch(MagicGaugeSlice.actions.updateAbility({
+            abilityName: property,
+            ability: {
+                isOnCooldown: false,
+                cooldownDuration: 0,
+                active: true,
+                time,
+            },
+        }));
+
+        if (gaugeData.automaticSwapping && abilityName === 'Sunshine') {
+            changeCombatStyles(CombatStyle.mage);
+        }
     }
 
-    // When only 1 second of the buff exists
-    if (value == 1 && gauges.magic.sunshine.active) {
+    if (time === 1 && ability.active) {
         // Make sure to update the text one final time
-        gauges.magic.sunshine.time = value;
+        store.dispatch(MagicGaugeSlice.actions.updateAbilityTime({ abilityName: property, time }));
 
-        // Then start a timer to wait just past the last second
-        //  - Clear the timer
-        //  - LD is now on Cooldown so is not active
         setTimeout(() => {
-            gauges.magic.sunshine.time = 0;
-            gauges.magic.sunshine.active = false;
-            gauges.magic.sunshine.isOnCooldown = true;
+            store.dispatch(MagicGaugeSlice.actions.updateAbility({
+                abilityName: property,
+                ability: {
+                    isOnCooldown: true,
+                    active: false,
+                    time: 0,
+                },
+            }));
+
+            // We don't want these abilities to trigger the cooldown overlay.
+            if (abilityName === 'OdeToDeceit') {
+                return;
+            }
+
+            const { magic } = store.getState();
+            const ability = magic[property];
 
             startAbilityCooldown(
-                {
-                    ability: gauges.magic.sunshine,
-                    position: gauges.magic.position,
-                    scaleFactor: gauges.scaleFactor,
-                },
-                'Sunshine',
+                { ability, position, scaleFactor },
+                abilityName,
                 greater,
+                () => {
+                    store.dispatch(MagicGaugeSlice.actions.updateAbility({
+                        abilityName: property,
+                        ability: { isOnCooldown: false, cooldownDuration: 0, active: true },
+                    }));
+                },
             );
         }, 1050);
     }
 }
 
-async function updateFsoa(gauges: Overlay, value: number) {
-    // If Instability has an active buff and a timer:
-    //   - it cannot be on cooldown
-    //   - it must be active
-    //   - The remaining time is its timer
-    if (value > 1) {
-        gauges.magic.instability.isOnCooldown = false;
-        gauges.magic.instability.cooldownDuration = 0;
-        gauges.magic.instability.active = true;
-        gauges.magic.instability.time = value;
+const RangeAbilityToName = {
+    'DeathsSwiftness': 'deathsSwiftness',
+    'CrystalRain': 'crystalRain',
+    'SplitSoul': 'splitSoul',
+} satisfies Record<RangeAbilities, RangePropertyAbilities>;
+
+function updateRangeAbility(time: number, greater: boolean, abilityName: RangeAbilities) {
+    const property = RangeAbilityToName[abilityName];
+    const { ranged, gaugeData } = store.getState();
+
+    const ability = ranged[property];
+    const { position } = ranged;
+    const { scaleFactor } = gaugeData;
+
+    if (time > 1) {
+        store.dispatch(RangeGaugeSlice.actions.updateAbility({
+            abilityName: property,
+            ability: {
+                isOnCooldown: false,
+                cooldownDuration: 0,
+                active: true,
+                time,
+            },
+        }));
+
+        if (gaugeData.automaticSwapping && abilityName === 'DeathsSwiftness' || abilityName === 'SplitSoul') {
+            changeCombatStyles(CombatStyle.mage);
+        }
     }
 
-    // When only 1 second of the buff exists
-    if (value == 1 && gauges.magic.instability.active) {
+    if (time === 1 && ability.active) {
         // Make sure to update the text one final time
-        gauges.magic.instability.time = value;
+        store.dispatch(RangeGaugeSlice.actions.updateAbilityTime({ abilityName: property, time }));
 
-        // Then start a timer to wait just past the last second
-        //  - Clear the timer
-        //  - LD is now on Cooldown so is not active
         setTimeout(() => {
-            gauges.magic.instability.time = 0;
-            gauges.magic.instability.active = false;
-            gauges.magic.instability.isOnCooldown = true;
+            store.dispatch(RangeGaugeSlice.actions.updateAbility({
+                abilityName: property,
+                ability: {
+                    isOnCooldown: true,
+                    active: false,
+                    time: 0,
+                },
+            }));
+
+            // We don't want CR to start an overlay cooldown.
+            if (abilityName === 'CrystalRain') {
+                return;
+            }
+
+            const { ranged } = store.getState();
+            const ability = ranged[property];
 
             startAbilityCooldown(
-                {
-                    ability: gauges.magic.instability,
-                    position: gauges.magic.position,
-                    scaleFactor: gauges.scaleFactor,
-                },
-                'Instability',
-                false,
-            );
-        }, 1050);
-    }
-}
-
-async function updateBloodTithe(gauges: Overlay, value: number) {
-    gauges.magic.spells.bloodTithe.stacks = value;
-    gauges.magic.spells.bloodTithe.active = Boolean(value);
-}
-
-async function updateGlacialEmbrace(gauges: Overlay, value: number) {
-    gauges.magic.spells.glacialEmbrace.stacks = value;
-    gauges.magic.spells.glacialEmbrace.active = Boolean(value);
-}
-
-async function updateTsunami(gauges: Overlay, value: number) {
-    // If Tsunami has an active buff and a timer:
-    //   - it cannot be on cooldown
-    //   - it must be active
-    //   - The remaining time is its timer
-    if (value > 1) {
-        gauges.magic.tsunami.isOnCooldown = false;
-        gauges.magic.tsunami.cooldownDuration = 0;
-        gauges.magic.tsunami.active = true;
-        gauges.magic.tsunami.time = value;
-    }
-
-    // When only 1 second of the buff exists
-    if (value == 1 && gauges.magic.tsunami.active) {
-        // Make sure to update the text one final time
-        gauges.magic.tsunami.time = value;
-
-        // Then start a timer to wait just past the last second
-        //  - Clear the timer
-        //  - LD is now on Cooldown so is not active
-        setTimeout(() => {
-            gauges.magic.tsunami.time = 0;
-            gauges.magic.tsunami.active = false;
-            gauges.magic.tsunami.isOnCooldown = true;
-
-            startAbilityCooldown(
-                {
-                    ability: gauges.magic.tsunami,
-                    position: gauges.magic.position,
-                    scaleFactor: gauges.scaleFactor,
-                },
-                'Tsunami',
-                false,
-            );
-        }, 1050);
-    }
-}
-
-function changeCombatStyles(gauges: Overlay, style: CombatStyle) {
-    if (gauges.combatStyle !== style && gauges.automaticSwapping) {
-        gauges.combatStyle = style;
-        utility.forceClearOverlays();
-        utility.clearTextOverlays();
-    }
-}
-
-async function updateDeathsSwiftness(
-    gauges: Overlay,
-    value: number,
-    greater: boolean,
-) {
-    // If Death Swiftness has an active buff and a timer:
-    //   - it cannot be on cooldown
-    //   - it must be active
-    //   - The remaining time is its timer
-    if (value > 1) {
-        gauges.ranged.deathsSwiftness.isOnCooldown = false;
-        gauges.ranged.deathsSwiftness.cooldownDuration = 0;
-        gauges.ranged.deathsSwiftness.active = true;
-        gauges.ranged.deathsSwiftness.time = value;
-        changeCombatStyles(gauges, CombatStyle.ranged);
-    }
-
-    // When only 1 second of the buff exists
-    if (value == 1 && gauges.ranged.deathsSwiftness.active) {
-        // Make sure to update the text one final time
-        gauges.ranged.deathsSwiftness.time = value;
-
-        // Then start a timer to wait just past the last second
-        //  - Clear the timer
-        //  - DS is now on Cooldown so is not active
-        setTimeout(() => {
-            gauges.ranged.deathsSwiftness.time = 0;
-            gauges.ranged.deathsSwiftness.active = false;
-            gauges.ranged.deathsSwiftness.isOnCooldown = true;
-
-            startAbilityCooldown(
-                {
-                    ability: gauges.ranged.deathsSwiftness,
-                    position: gauges.ranged.position,
-                    scaleFactor: gauges.scaleFactor,
-                },
-                'DeathsSwiftness',
+                { ability, position, scaleFactor },
+                abilityName,
                 greater,
-            );
-        }, 1050);
-    }
-}
-
-async function updateCrystalRain(gauges: Overlay, value: number) {
-    // If Crystal Rain has an active buff and a timer:
-    //   - it is on cooldown
-    //   - The remaining time is its timer
-    if (value > 1) {
-        gauges.ranged.crystalRain.isOnCooldown = true;
-        gauges.ranged.crystalRain.active = true;
-        gauges.ranged.crystalRain.time = value;
-    }
-
-    // When only 1 second of the buff exists
-    if (value == 1 && gauges.ranged.crystalRain.active) {
-        // Make sure to update the text one final time
-        gauges.ranged.crystalRain.time = value;
-
-        // Then start a timer to wait just past the last second
-        //  - Clear the timer
-        //  - CR is now available again
-        setTimeout(() => {
-            gauges.ranged.crystalRain.time = 0;
-            gauges.ranged.crystalRain.active = false;
-            gauges.ranged.crystalRain.isOnCooldown = false;
-
-            startAbilityCooldown(
-                {
-                    ability: gauges.ranged.crystalRain,
-                    position: gauges.ranged.position,
-                    scaleFactor: gauges.scaleFactor,
+                () => {
+                    store.dispatch(RangeGaugeSlice.actions.updateAbility({
+                        abilityName: property,
+                        ability: { isOnCooldown: false, cooldownDuration: 0 },
+                    }));
                 },
-                'CrystalRain',
-                false,
             );
         }, 1050);
     }
 }
 
-async function updatePeCount(gauges: Overlay, value: number) {
-    gauges.ranged.perfectEquilibrium.stacks = value;
+function updateSpell(spellName: 'bloodTithe' | 'glacialEmbrace', active: number) {
+    store.dispatch(MagicGaugeSlice.actions.updateSpell({
+        spellName,
+        spell: { active: !!active },
+    }));
 }
 
-async function updateOdeToDeceit(gauges: Overlay, value: number) {
-    // If Ode to Deceit has an active buff and a timer:
-    //   - it is on cooldown
-    //   - The remaining time is its timer
-    if (value > 1) {
-        gauges.magic.odeToDeceit.isOnCooldown = true;
-        gauges.magic.odeToDeceit.active = true;
-        gauges.magic.odeToDeceit.time = value;
+function changeCombatStyles(combatStyle: CombatStyle) {
+    const { gaugeData } = store.getState();
+
+    // If the style hasn't changed we don't need to mess with state or overlays.
+    if (gaugeData.combatStyle === combatStyle) {
+        return;
     }
 
-    // When only 1 second of the buff exists
-    if (value == 1 && gauges.magic.odeToDeceit.active) {
-        // Make sure to update the text one final time
-        gauges.magic.odeToDeceit.time = value;
+    store.dispatch(GaugeDataSlice.actions.updateState({
+        combatStyle,
+    }));
 
-        // Then start a timer to wait just past the last second
-        //  - Clear the timer
-        //  - CR is now available again
-        setTimeout(() => {
-            gauges.magic.odeToDeceit.time = 0;
-            gauges.magic.odeToDeceit.active = false;
-            gauges.magic.odeToDeceit.isOnCooldown = false;
-
-            startAbilityCooldown(
-                {
-                    ability: gauges.magic.odeToDeceit,
-                    position: gauges.magic.position,
-                    scaleFactor: gauges.scaleFactor,
-                },
-                'OdeToDeceit',
-                false,
-            );
-        }, 1050);
-    }
+    forceClearOverlays();
+    clearTextOverlays();
 }
 
-async function updateBalanceByForce(gauges: Overlay, value: number) {
-    gauges.ranged.balanceByForce = Boolean(value);
+function updatePeCount(stacks: number) {
+    store.dispatch(RangeGaugeSlice.actions.updatePerfectEquilibriumStack({ stacks }));
 }
 
-async function updateRangedSplitSoul(gauges: Overlay, value: number) {
+function updateBalanceByForce(active: boolean) {
+    store.dispatch(RangeGaugeSlice.actions.updateBalanceByForce({ active }));
+}
+
+/**
+ * Keeping around until I figure out why it's special.
+ */
+function updateRangedSplitSoul(time: number) {
+    const { ranged } = store.getState();
+
     // If Split Soul has an active buff and a timer:
     //   - it cannot be on cooldown
     //   - it must be active
     //   - The remaining time is its timer
-    if (value > 1) {
-        gauges.ranged.splitSoul.isOnCooldown = false;
-        gauges.ranged.splitSoul.cooldownDuration = 0;
-        gauges.ranged.splitSoul.active = true;
-        gauges.ranged.splitSoul.time = value;
-        changeCombatStyles(gauges, CombatStyle.ranged);
+    if (time > 1) {
+        store.dispatch(RangeGaugeSlice.actions.updateAbility({
+            abilityName: 'splitSoul',
+            ability: {
+                isOnCooldown: false,
+                cooldownDuration: 0,
+                active: true,
+                time,
+            },
+        }));
+
+        changeCombatStyles(CombatStyle.ranged);
     }
 
     // When only 1 second of the buff exists
-    if (value == 1 && gauges.ranged.splitSoul.active) {
+    if (time == 1 && ranged.splitSoul.active) {
         // Make sure to update the text one final time
-        gauges.ranged.splitSoul.time = value;
+        store.dispatch(RangeGaugeSlice.actions.updateAbilityTime({ abilityName: 'splitSoul', time }));
 
         // Then start a timer to wait just past the last second
         //  - Clear the timer
         //  - DS is now on Cooldown so is not active
         setTimeout(() => {
-            gauges.ranged.splitSoul.time = 0;
-            gauges.ranged.splitSoul.active = false;
-            gauges.ranged.splitSoul.isOnCooldown = true;
-            startRangedSplitSoul(gauges);
+            store.dispatch(RangeGaugeSlice.actions.updateAbility({
+                abilityName: 'splitSoul',
+                ability: {
+                    active: false,
+                    isOnCooldown: true,
+                    cooldownDuration: 0,
+                    time: 0,
+                },
+            }));
+
+            startRangedSplitSoul();
         }, 1050);
     }
 }
 
-async function startRangedSplitSoul(gauges: Overlay) {
-    if (!gauges.ranged.splitSoul.isActiveOverlay) {
+function startRangedSplitSoul() {
+    const { ranged } = store.getState();
+
+    if (!ranged.splitSoul.isActiveOverlay) {
         return;
     }
 
     // If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
-    if (gauges.ranged.splitSoul.active) {
-        endRangedSoulSplit(gauges);
-        return;
+    if (ranged.splitSoul.active) {
+        store.dispatch(RangeGaugeSlice.actions.updateAbility({
+            abilityName: 'splitSoul',
+            ability: {
+                isOnCooldown: false,
+                cooldownDuration: 0,
+            },
+        }));
+
+        return forceClearOverlay('SplitSoul_Text');
     }
 
     // Otherwise cooldown has started and we can clear the Active text
-    utility.forceClearOverlay('SplitSoul_Text');
-}
-
-async function endRangedSoulSplit(gauges: Overlay) {
-    gauges.ranged.splitSoul.isOnCooldown = false;
-    gauges.ranged.splitSoul.cooldownDuration = 0;
-    utility.forceClearOverlay('SplitSoul_Text');
+    forceClearOverlay('SplitSoul_Text');
 }

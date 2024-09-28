@@ -1,15 +1,8 @@
 import * as a1lib from 'alt1';
-import { Overlay } from '../../types';
-import {
-    adjustPositionForScale,
-    forceClearOverlay,
-    handleResizingImages,
-    white,
-} from '../utility';
-import {
-    clearAbilityOverlays,
-    handleAbilityActiveState,
-} from '../util/ability-helpers';
+import { adjustPositionForScale, forceClearOverlay, handleResizingImages, white } from '../utility';
+import { clearAbilityOverlays, handleAbilityActiveState } from '../util/ability-helpers';
+import { store } from '../../state';
+import { RangeGaugeSlice } from '../../state/gauge-data/range-gauge.state';
 
 const ultimateImages = a1lib.webpackImages({
     active: require('../../asset/gauge-ui/ranged/split-soul/active.data.png'),
@@ -19,8 +12,8 @@ const ultimateImages = a1lib.webpackImages({
 let lastValue: number;
 let scaledOnce = false;
 
-export async function rangedSplitSoulOverlay(gauges: Overlay) {
-    const { ranged } = gauges;
+export async function rangedSplitSoulOverlay() {
+    const { gaugeData, ranged } = store.getState();
     const { splitSoul } = ranged;
     const { active_orientation } = ranged.splitSoul.position;
 
@@ -32,14 +25,14 @@ export async function rangedSplitSoulOverlay(gauges: Overlay) {
     await ultimateImages.promise;
 
     if (!scaledOnce) {
-        handleResizingImages(ultimateImages, gauges.scaleFactor);
+        handleResizingImages(ultimateImages, gaugeData.scaleFactor);
 
         scaledOnce = true;
     }
 
     const abilityData = {
         images: ultimateImages,
-        scaleFactor: gauges.scaleFactor,
+        scaleFactor: gaugeData.scaleFactor,
         ability: splitSoul,
         position: ranged.position,
     };
@@ -52,13 +45,21 @@ export async function rangedSplitSoulOverlay(gauges: Overlay) {
         return (lastValue = splitSoul.time);
     }
 
-    splitSoul.isOnCooldown = false;
+    store.dispatch(RangeGaugeSlice.actions.updateAbility({
+        abilityName: 'splitSoul',
+        ability: { isOnCooldown: false },
+    }));
+
     forceClearOverlay('SplitSoul_Cooldown_Text');
 
     handleAbilityActiveState(abilityData, 'SplitSoul', true);
 
     if (lastValue !== splitSoul.time) {
-        splitSoul.cooldownDuration = 0;
+        store.dispatch(RangeGaugeSlice.actions.updateAbility({
+            abilityName: 'splitSoul',
+            ability: { cooldownDuration: 0 },
+        }));
+
         forceClearOverlay('SplitSoul_Cooldown_Text');
         alt1.overLaySetGroup('SplitSoul_Text');
         alt1.overLayFreezeGroup('SplitSoul_Text');
@@ -69,11 +70,11 @@ export async function rangedSplitSoulOverlay(gauges: Overlay) {
             14,
             adjustPositionForScale(
                 ranged.position.x + active_orientation.x + 26,
-                gauges.scaleFactor,
+                gaugeData.scaleFactor,
             ),
             adjustPositionForScale(
                 ranged.position.y + active_orientation.y + 26,
-                gauges.scaleFactor,
+                gaugeData.scaleFactor,
             ),
             3000,
             '',

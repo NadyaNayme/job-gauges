@@ -1,15 +1,8 @@
 import * as a1lib from 'alt1';
-import { Overlay } from '../../types';
-import {
-    adjustPositionForScale,
-    forceClearOverlay,
-    handleResizingImages,
-    white,
-} from '../utility';
-import {
-    clearAbilityOverlays,
-    handleAbilityActiveState,
-} from '../util/ability-helpers';
+import { adjustPositionForScale, forceClearOverlay, handleResizingImages, white } from '../utility';
+import { clearAbilityOverlays, handleAbilityActiveState } from '../util/ability-helpers';
+import { store } from '../../state';
+import { MagicGaugeSlice } from '../../state/gauge-data/magic-gauge.state';
 
 const ultimateImages = a1lib.webpackImages({
     active: require('../../asset/gauge-ui/magic/instability/active.data.png'),
@@ -19,8 +12,8 @@ const ultimateImages = a1lib.webpackImages({
 let lastValue: number;
 let scaledOnce = false;
 
-export async function fsoaOverlay(gauges: Overlay) {
-    const { magic } = gauges;
+export async function fsoaOverlay() {
+    const { magic, gaugeData } = store.getState();
     const { instability } = magic;
     const { active_orientation } = instability.position;
 
@@ -32,14 +25,14 @@ export async function fsoaOverlay(gauges: Overlay) {
     await ultimateImages.promise;
 
     if (!scaledOnce) {
-        handleResizingImages(ultimateImages, gauges.scaleFactor);
+        handleResizingImages(ultimateImages, gaugeData.scaleFactor);
 
         scaledOnce = true;
     }
 
     const abilityData = {
         images: ultimateImages,
-        scaleFactor: gauges.scaleFactor,
+        scaleFactor: gaugeData.scaleFactor,
         ability: instability,
         position: magic.position,
     };
@@ -58,13 +51,21 @@ export async function fsoaOverlay(gauges: Overlay) {
         return (lastValue = instability.time);
     }
 
-    instability.isOnCooldown = false;
+    store.dispatch(MagicGaugeSlice.actions.updateAbility({
+        abilityName: 'instability',
+        ability: { isOnCooldown: false },
+    }));
+
     forceClearOverlay('Instability_Cooldown_Text');
 
     handleAbilityActiveState(abilityData, 'Instability', true);
 
     if (lastValue !== instability.time) {
-        instability.cooldownDuration = 0;
+        store.dispatch(MagicGaugeSlice.actions.updateAbility({
+            abilityName: 'instability',
+            ability: { cooldownDuration: 0 },
+        }));
+
         forceClearOverlay('Instability_Cooldown_Text');
         alt1.overLaySetGroup('Instability_Text');
         alt1.overLayFreezeGroup('Instability_Text');
@@ -75,11 +76,11 @@ export async function fsoaOverlay(gauges: Overlay) {
             14,
             adjustPositionForScale(
                 magic.position.x + active_orientation.x + 26,
-                gauges.scaleFactor,
+                gaugeData.scaleFactor,
             ),
             adjustPositionForScale(
                 magic.position.y + active_orientation.y + 30,
-                gauges.scaleFactor,
+                gaugeData.scaleFactor,
             ),
             3000,
             '',

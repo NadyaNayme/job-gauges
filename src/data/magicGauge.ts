@@ -16,8 +16,8 @@ export const magic_gauge: MagicGauge = {
             stacks: 0,
             position: {
                 active_orientation: {
-                    x: 0,
-                    y: 0,
+                    x: 68,
+                    y: 12,
                 },
                 grouped: {
                     x: 68,
@@ -40,8 +40,8 @@ export const magic_gauge: MagicGauge = {
             stacks: 0,
             position: {
                 active_orientation: {
-                    x: 0,
-                    y: 0,
+                    x: 68,
+                    y: 12,
                 },
                 grouped: {
                     x: 68,
@@ -66,8 +66,8 @@ export const magic_gauge: MagicGauge = {
         cooldownDuration: 0,
         position: {
             active_orientation: {
-                x: 0,
-                y: 0,
+                x: 30,
+                y: 5,
             },
             grouped: {
                 x: 30,
@@ -91,8 +91,8 @@ export const magic_gauge: MagicGauge = {
         cooldownDuration: 0,
         position: {
             active_orientation: {
-                x: 0,
-                y: 0,
+                x: -3,
+                y: 5,
             },
             grouped: {
                 x: -3,
@@ -116,8 +116,8 @@ export const magic_gauge: MagicGauge = {
         cooldownDuration: 0,
         position: {
             active_orientation: {
-                x: 0,
-                y: 0,
+                x: 55,
+                y: 45,
             },
             grouped: {
                 x: 55,
@@ -141,8 +141,8 @@ export const magic_gauge: MagicGauge = {
         cooldownDuration: 0,
         position: {
             active_orientation: {
-                x: 0,
-                y: 0,
+                x: 10,
+                y: 45,
             },
             grouped: {
                 x: 10,

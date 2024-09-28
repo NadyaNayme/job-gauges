@@ -1,6 +1,6 @@
 import * as a1lib from 'alt1';
-import { Overlay } from '../../types';
 import { adjustPositionForScale, handleResizingImages } from '../utility';
+import { store } from '../../state';
 
 const conjureImages = a1lib.webpackImages({
     active: require('../../asset/gauge-ui/necromancy/conjure-undead-army/active.data.png'),
@@ -12,31 +12,33 @@ let lastMinValue: number = 0;
 
 let scaledOnce = false;
 
-export async function conjureOverlay(gauges: Overlay) {
-    if (!gauges.necromancy.conjures.isActiveOverlay) {
+export async function conjureOverlay() {
+    const { gaugeData, necromancy } = store.getState();
+
+    if (!necromancy.conjures.isActiveOverlay) {
         return;
     }
 
     await conjureImages.promise;
 
     if (!scaledOnce) {
-        handleResizingImages(conjureImages, gauges.scaleFactor);
+        handleResizingImages(conjureImages, gaugeData.scaleFactor);
 
         scaledOnce = true;
     }
 
     alt1.overLaySetGroup('Undead_Army');
-    if (gauges.necromancy.conjures.active) {
+    if (necromancy.conjures.active) {
         alt1.overLayImage(
             adjustPositionForScale(
-                gauges.necromancy.position.x +
-                    gauges.necromancy.conjures.position.active_orientation.x,
-                gauges.scaleFactor,
+                necromancy.position.x +
+                necromancy.conjures.position.active_orientation.x,
+                gaugeData.scaleFactor,
             ),
             adjustPositionForScale(
-                gauges.necromancy.position.y +
-                    gauges.necromancy.conjures.position.active_orientation.y,
-                gauges.scaleFactor,
+                necromancy.position.y +
+                necromancy.conjures.position.active_orientation.y,
+                gaugeData.scaleFactor,
             ),
             a1lib.encodeImageString(conjureImages.active.toDrawableData()),
             conjureImages.active.width,
@@ -45,14 +47,14 @@ export async function conjureOverlay(gauges: Overlay) {
     } else {
         alt1.overLayImage(
             adjustPositionForScale(
-                gauges.necromancy.position.x +
-                    gauges.necromancy.conjures.position.active_orientation.x,
-                gauges.scaleFactor,
+                necromancy.position.x +
+                necromancy.conjures.position.active_orientation.x,
+                gaugeData.scaleFactor,
             ),
             adjustPositionForScale(
-                gauges.necromancy.position.y +
-                    gauges.necromancy.conjures.position.active_orientation.y,
-                gauges.scaleFactor,
+                necromancy.position.y +
+                necromancy.conjures.position.active_orientation.y,
+                gaugeData.scaleFactor,
             ),
             a1lib.encodeImageString(conjureImages.inactive.toDrawableData()),
             conjureImages.inactive.width,
@@ -61,10 +63,10 @@ export async function conjureOverlay(gauges: Overlay) {
     }
 
     const earliest_conjure = [
-        gauges.necromancy.conjures.skeleton.time,
-        gauges.necromancy.conjures.zombie.time,
-        gauges.necromancy.conjures.ghost.time,
-        gauges.necromancy.conjures.phantom.time,
+        necromancy.conjures.skeleton.time,
+        necromancy.conjures.zombie.time,
+        necromancy.conjures.ghost.time,
+        necromancy.conjures.phantom.time,
     ];
 
     const minValue = Math.min.apply(null, earliest_conjure.filter(Boolean));
@@ -77,14 +79,14 @@ export async function conjureOverlay(gauges: Overlay) {
             white,
             14,
             adjustPositionForScale(
-                gauges.necromancy.position.x +
-                    26 +
-                    gauges.necromancy.conjures.position.active_orientation.x,
-                gauges.scaleFactor,
+                necromancy.position.x +
+                26 +
+                necromancy.conjures.position.active_orientation.x,
+                gaugeData.scaleFactor,
             ),
             adjustPositionForScale(
-                gauges.necromancy.position.y + 32,
-                gauges.scaleFactor,
+                necromancy.position.y + 32,
+                gaugeData.scaleFactor,
             ),
             10000,
             '',

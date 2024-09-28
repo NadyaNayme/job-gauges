@@ -75,10 +75,11 @@ export class SettingsManager {
     public addCheckboxSetting = (
         name: string,
         description: string,
-        defaultValue: unknown,
+        defaultValue: boolean,
+        callback?: (value: boolean) => unknown,
     ): SettingsManager => {
         this.settings?.push(
-            Library.createCheckboxSetting(name, description, defaultValue),
+            Library.createCheckboxSetting(name, description, defaultValue, callback),
         );
         return this;
     };
@@ -167,9 +168,10 @@ export class SettingsManager {
             max?: number;
             unit?: string;
         } = {},
+        callback?: (value: number) => unknown
     ): SettingsManager => {
         this.settings?.push(
-            Library.createRangeSetting(name, description, options),
+            Library.createRangeSetting(name, description, options, callback),
         );
         return this;
     };
