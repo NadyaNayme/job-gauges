@@ -18608,8 +18608,8 @@ function updateRangeAbility(time, greater, abilityName) {
                 time,
             },
         }));
-        if (gaugeData.automaticSwapping && abilityName === 'DeathsSwiftness' || abilityName === 'SplitSoul') {
-            changeCombatStyles(_types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.necro);
+        if (gaugeData.automaticSwapping && abilityName === 'DeathsSwiftness') {
+            changeCombatStyles(_types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.ranged);
         }
     }
     if (time === 1 && ability.active) {
@@ -18682,7 +18682,6 @@ function updateRangedSplitSoul(time) {
                 time,
             },
         }));
-        changeCombatStyles(_types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.ranged);
     }
     // When only 1 second of the buff exists
     if (time == 1 && ranged.splitSoul.active) {
