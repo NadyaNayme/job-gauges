@@ -747,7 +747,7 @@ function updateRangeAbility(time: number, greater: boolean, abilityName: RangeAb
             },
         }));
 
-        if (gaugeData.automaticSwapping && abilityName === 'DeathsSwiftness' || abilityName === 'SplitSoul') {
+        if (gaugeData.automaticSwapping && abilityName === 'DeathsSwiftness') {
             changeCombatStyles(CombatStyle.ranged);
         }
     }
