@@ -15773,8 +15773,8 @@ __webpack_require__.r(__webpack_exports__);
 const appName = 'job-gauges';
 const versionUrl = 'https://nadyanayme.github.io/job-gauges/dist/version.json';
 const majorVersion = 1;
-const minorVersion = 1;
-const patchVersion = 4;
+const minorVersion = 2;
+const patchVersion = 0;
 
 
 /***/ }),
@@ -16851,7 +16851,7 @@ async function spellsOverlay() {
         alt1.overLaySetGroup(`Spell_Text`);
         alt1.overLayFreezeGroup(`Spell_Text`);
         alt1.overLayClearGroup(`Spell_Text`);
-        alt1.overLayTextEx(`${spell.stacks || ''}`, _utility__WEBPACK_IMPORTED_MODULE_1__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(magic.position.x + x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(magic.position.y + y + 23, gaugeData.scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${spell.stacks || ''}`, _utility__WEBPACK_IMPORTED_MODULE_1__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(magic.position.x + x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(magic.position.y + y + 23, gaugeData.scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup('Spell_Text');
     }
     function readChatbox() {
@@ -16949,7 +16949,7 @@ async function fsoaOverlay() {
         alt1.overLaySetGroup('Instability_Text');
         alt1.overLayFreezeGroup('Instability_Text');
         alt1.overLayClearGroup('Instability_Text');
-        alt1.overLayTextEx(`${instability.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.y + active_orientation.y + 30, gaugeData.scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${instability.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.y + active_orientation.y + 30, gaugeData.scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup('Instability_Text');
     }
     lastValue = instability.time;
@@ -17027,7 +17027,7 @@ async function soulfireOverlay() {
         alt1.overLaySetGroup('Soulfire_Text');
         alt1.overLayFreezeGroup('Soulfire_Text');
         alt1.overLayClearGroup('Soulfire_Text');
-        alt1.overLayTextEx(`${soulfire.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.y + active_orientation.y + 30, gaugeData.scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${soulfire.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.y + active_orientation.y + 30, gaugeData.scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup('Soulfire_Text');
     }
     lastValue = soulfire.time;
@@ -17114,7 +17114,7 @@ async function sunshineOverlay() {
         alt1.overLaySetGroup('Sunshine_Text');
         alt1.overLayFreezeGroup('Sunshine_Text');
         alt1.overLayClearGroup('Sunshine_Text');
-        alt1.overLayTextEx(`${sunshine.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.y + active_orientation.y + 26, gaugeData.scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${sunshine.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.y + active_orientation.y + 26, gaugeData.scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup('Sunshine_Text');
     }
     lastValue = sunshine.time;
@@ -17192,7 +17192,7 @@ async function tsunamiOverlay() {
         alt1.overLaySetGroup('Tsunami_Text');
         alt1.overLayFreezeGroup('Tsunami_Text');
         alt1.overLayClearGroup('Tsunami_Text');
-        alt1.overLayTextEx(`${tsunami.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.y + active_orientation.y + 26, gaugeData.scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${tsunami.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.y + active_orientation.y + 26, gaugeData.scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup('Tsunami_Text');
     }
     lastValue = tsunami.time;
@@ -17350,7 +17350,7 @@ async function conjureOverlay() {
         alt1.overLaySetGroup('Undead_Army_Text');
         alt1.overLayFreezeGroup('Undead_Army_Text');
         alt1.overLayClearGroup('Undead_Army_Text');
-        alt1.overLayTextEx(`${minValue}`, white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.x +
+        alt1.overLayTextEx(`${minValue}`, white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.x +
             26 +
             necromancy.conjures.position.active_orientation.x, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.y + 32, gaugeData.scaleFactor), 10000, '', true, true);
         lastMinValue = minValue;
@@ -17519,7 +17519,7 @@ async function livingDeathOverlay() {
         alt1.overLaySetGroup('LivingDeath_Text');
         alt1.overLayFreezeGroup('LivingDeath_Text');
         alt1.overLayClearGroup('LivingDeath_Text');
-        alt1.overLayTextEx(`${livingDeath.time}`, _utility__WEBPACK_IMPORTED_MODULE_1__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(necromancy.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(necromancy.position.y + active_orientation.y + 26, gaugeData.scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${livingDeath.time}`, _utility__WEBPACK_IMPORTED_MODULE_1__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(necromancy.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(necromancy.position.y + active_orientation.y + 26, gaugeData.scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup('LivingDeath_Text');
     }
     lastValue = livingDeath.time;
@@ -17791,7 +17791,7 @@ function displayAmmoName() {
     alt1.overLaySetGroup(`Ammo_Text`);
     alt1.overLayFreezeGroup(`Ammo_Text`);
     alt1.overLayClearGroup(`Ammo_Text`);
-    alt1.overLayTextEx(ranged.ammo.activeAmmo, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + 96, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + 24, gaugeData.scaleFactor), 3000, '', true, true);
+    alt1.overLayTextEx(ranged.ammo.activeAmmo, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + 96, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + 24, gaugeData.scaleFactor), 3000, '', true, true);
     alt1.overLayRefreshGroup('Ammo_Text');
 }
 
@@ -17867,7 +17867,7 @@ async function crystalRainOverlay() {
         alt1.overLaySetGroup('CrystalRain_Text');
         alt1.overLayFreezeGroup('CrystalRain_Text');
         alt1.overLayClearGroup('CrystalRain_Text');
-        alt1.overLayTextEx(`${crystalRain.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + active_orientation.y + 26, gaugeData.scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${crystalRain.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + active_orientation.y + 26, gaugeData.scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup('CrystalRain_Text');
     }
     lastValue = crystalRain.time;
@@ -17945,7 +17945,7 @@ async function deathsSwiftnessOverlay() {
         alt1.overLaySetGroup('DeathsSwiftness_Text');
         alt1.overLayFreezeGroup('DeathsSwiftness_Text');
         alt1.overLayClearGroup('DeathsSwiftness_Text');
-        alt1.overLayTextEx(`${deathsSwiftness.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + active_orientation.y + 26, gaugeData.scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${deathsSwiftness.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + active_orientation.y + 26, gaugeData.scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup('DeathsSwiftness_Text');
     }
     lastValue = deathsSwiftness.time;
@@ -18010,7 +18010,7 @@ async function peOverlay() {
         alt1.overLaySetGroup(`PerfectEquilibrium_Text`);
         alt1.overLayFreezeGroup(`PerfectEquilibrium_Text`);
         alt1.overLayClearGroup(`PerfectEquilibrium_Text`);
-        alt1.overLayTextEx(`${stacks}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + y + 26, gaugeData.scaleFactor), 30000, '', true, true);
+        alt1.overLayTextEx(`${stacks}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + y + 26, gaugeData.scaleFactor), 30000, '', true, true);
         alt1.overLayRefreshGroup('PerfectEquilibrium_Text');
     }
 }
@@ -18087,7 +18087,7 @@ async function rangedSplitSoulOverlay() {
         alt1.overLaySetGroup('SplitSoul_Text');
         alt1.overLayFreezeGroup('SplitSoul_Text');
         alt1.overLayClearGroup('SplitSoul_Text');
-        alt1.overLayTextEx(`${splitSoul.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + active_orientation.y + 26, gaugeData.scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${splitSoul.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + active_orientation.y + 26, gaugeData.scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup('SplitSoul_Text');
     }
     lastValue = splitSoul.time;
@@ -18913,11 +18913,11 @@ const renderSettings = () => {
         .addSeperator()
         .addHeader('h3', 'General')
         .addCheckboxSetting('checkForUpdates', 'Periodically check if a new update is available', false)
-        .addCheckboxSetting('rememberUiPosition', 'Remember last known position of buff/debuff bars to avoid needing to scan on every app start', false)
+        .addCheckboxSetting('rememberUiPosition', 'Remember last known position of buff/debuff bars to avoid needing to scan on every app start', true)
         .addButton('necroCombatStyle', 'Select Necro Overlay', () => updateCombatStyle(_types__WEBPACK_IMPORTED_MODULE_11__.CombatStyle.necro), { classes: ['nisbutton'] })
         .addButton('mageCombatStyle', 'Select Mage Overlay', () => updateCombatStyle(_types__WEBPACK_IMPORTED_MODULE_11__.CombatStyle.mage), { classes: ['nisbutton'] })
         .addButton('rangeCombatStyle', 'Select Range Overlay', () => updateCombatStyle(_types__WEBPACK_IMPORTED_MODULE_11__.CombatStyle.ranged), { classes: ['nisbutton'] })
-        .addCheckboxSetting('automaticSwapping', 'Swap gauge automatically based on last used Ultimate Ability', false, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_9__.GaugeDataSlice.actions.updateState({ automaticSwapping: event })))
+        .addCheckboxSetting('automaticSwapping', 'Swap gauge automatically when Living Death, Sunshine, or Death\'s Swiftness are used', false, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_9__.GaugeDataSlice.actions.updateState({ automaticSwapping: event })))
         .addCheckboxSetting('hideOutsideCombat', 'Show gauges only while "In Combat"', false, (event) => {
         _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_9__.GaugeDataSlice.actions.updateState({
             checkCombatStatus: event,
@@ -19131,7 +19131,7 @@ function startAbilityCooldown(abilityData, abilityName, greater, updateStateCall
         const yPositionAdjusted = position.y +
             (ability.position?.active_orientation.y ?? 0) +
             positionY;
-        alt1.overLayTextEx(`${cooldown}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(xPositionAdjusted, scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(yPositionAdjusted, scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${cooldown}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(xPositionAdjusted, scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(yPositionAdjusted, scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup(cooldownText);
     }, 1000);
 }
@@ -19497,6 +19497,20 @@ __webpack_require__.r(__webpack_exports__);
 const notes = [
     // Add patch notes to top
     {
+        date: '09/28/2024 - Redux Refactor" v.1.2.0',
+        note: [
+            `More wizardry from Panku - most of Job Gauges has been rewritten to track the state of things better and by doing so a number of improvements were made.`,
+            `Text should no longer flicker when counting down cooldown timers`,
+            `Soulfire tracking has been significantly improved - it may still lose track of the cooldown from 39-24s or so but should no longer be plagued with false positives and junk data`,
+            `The dropdown to change the active gauge is now separate buttons - to make it a little faster to switch. The styles of these buttons will be adjusted in the future.`,
+            `Switching between gauges should feel snappier`,
+            `Alarm playback should be more consistent and actually sound the alarm the first time the alarm threshold is crossed`,
+            `Alarms thresholds are now properly "at or above  instead of only "above"`,
+            `The setting about swapping on last used ultimate has been further clarified that only certain ultimates trigger an automatic change`,
+            `Blame Nyu if stuff is broken she pushed the release out early on accident`,
+        ],
+    },
+    {
         date: '09/19/2024 - Opt-in "Remember Buff/Debuff Positions" v.1.1.4',
         note: [
             `Added a setting to opt-in to the recently removed "remember buff/debuff bar position" functionality. The functionality was removed in a recent release because it made the plugin difficult to use on more than one account at a time. Please only enable the setting if you do not adjust your UI very often and only play on a single account.`,
@@ -19533,11 +19547,11 @@ const notes = [
         ],
     },
     {
-        date: '09/03/2024 - Ranged Gauge & Ode To Deceit v.1.1.0',
+        date: '09/03/2024 - Ranged Gauge & Soulfire v.1.1.0',
         note: [
             `Similar to the barebones Magic Gauge - a Ranged Gauge has been added. The Ranged Gauge tracks your active ammo (must be in quiver, not all types are tracked only the most "meta" options), Perfect Eqilibruim stacks, Death's Swiftness, and Seren Godbow's Crystal Rain special attack. Eldritch Crossbow's Split Soul tracking is expected to be added soon.`,
-            `Ode to Deceit tracking has been added to the Magic Gauge`,
-            `Crystal Rain and Ode to Deceit are tracked using the Debuffs bar - and in order to succesfully be tracked Job Gauges must know where your debuffs are located. When loading the app it is recommended to use a defensive ability and activate your prayer for a brief period of time so that Job Gauges can find your buffs & debuffs bars.`,
+            `Soulfire tracking has been added to the Magic Gauge`,
+            `Crystal Rain and Soulfire are tracked using the Debuffs bar - and in order to succesfully be tracked Job Gauges must know where your debuffs are located. When loading the app it is recommended to use a defensive ability and activate your prayer for a brief period of time so that Job Gauges can find your buffs & debuffs bars.`,
             `Phantom Guardian duration tracking has been added to Conjure Undead Army - Phantom's Valour stacks may be added in a future update`,
             `Future updates will add visibility toggles for each individual ranged/magic overlay similar to the Necromancy overlays.`,
         ],
