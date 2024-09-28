@@ -14,7 +14,7 @@ const initialState: Omit<GaugeDataState, 'ranged' | 'necromancy' | 'magic' | 'me
     automaticSwapping: false,
     checkCombatStatus: false,
     isInCombat: false,
-    combatStyle: CombatStyle.necro,
+    combatStyle: CombatStyle.necromancy,
     updatingOverlayPosition: false,
     selectedOrientation: 'reverse_split'
 };

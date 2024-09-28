@@ -13,7 +13,7 @@ import { NecromancyGaugeSlice } from '../state/gauge-data/necromancy-gauge.state
 import { clearTextOverlays, forceClearOverlay, forceClearOverlays } from './utility';
 import { MagicAbilities, MagicGaugeSlice, MagicPropertyAbilities } from '../state/gauge-data/magic-gauge.state';
 import { GaugeDataSlice } from '../state/gauge-data/gauge-data.state';
-import { RangeAbilities, RangeGaugeSlice, RangePropertyAbilities } from '../state/gauge-data/range-gauge.state';
+import { RangedAbilities, RangedGaugeSlice, RangedPropertyAbilities } from '../state/gauge-data/ranged-gauge.state';
 
 const sauce = A1Sauce.instance;
 sauce.setName(appName);
@@ -252,7 +252,7 @@ export async function readBuffs() {
     }
 
     switch (gaugeData.combatStyle) {
-        case CombatStyle.necro:
+        case CombatStyle.necromancy:
             updateBuffData(
                 buffReader,
                 buffsImages.soul,
@@ -306,7 +306,7 @@ export async function readBuffs() {
                 );
             }
             break;
-        case CombatStyle.mage:
+        case CombatStyle.magic:
             updateBuffData(
                 buffReader,
                 buffsImages.instability,
@@ -510,7 +510,7 @@ function updateLivingDeath(value: number) {
             abilityName: 'livingDeath',
         }));
 
-        changeCombatStyles(CombatStyle.necro);
+        changeCombatStyles(CombatStyle.necromancy);
     }
 
     // When only 1 second of the buff exists
@@ -681,7 +681,7 @@ function updateMagicAbility(time: number, greater: boolean, abilityName: MagicAb
         }));
 
         if (gaugeData.automaticSwapping && abilityName === 'Sunshine') {
-            changeCombatStyles(CombatStyle.mage);
+            changeCombatStyles(CombatStyle.magic);
         }
     }
 
@@ -722,14 +722,14 @@ function updateMagicAbility(time: number, greater: boolean, abilityName: MagicAb
     }
 }
 
-const RangeAbilityToName = {
+const RangedAbilityToName = {
     'DeathsSwiftness': 'deathsSwiftness',
     'CrystalRain': 'crystalRain',
     'SplitSoul': 'splitSoul',
-} satisfies Record<RangeAbilities, RangePropertyAbilities>;
+} satisfies Record<RangedAbilities, RangedPropertyAbilities>;
 
-function updateRangeAbility(time: number, greater: boolean, abilityName: RangeAbilities) {
-    const property = RangeAbilityToName[abilityName];
+function updateRangeAbility(time: number, greater: boolean, abilityName: RangedAbilities) {
+    const property = RangedAbilityToName[abilityName];
     const { ranged, gaugeData } = store.getState();
 
     const ability = ranged[property];
@@ -737,7 +737,7 @@ function updateRangeAbility(time: number, greater: boolean, abilityName: RangeAb
     const { scaleFactor } = gaugeData;
 
     if (time > 1) {
-        store.dispatch(RangeGaugeSlice.actions.updateAbility({
+        store.dispatch(RangedGaugeSlice.actions.updateAbility({
             abilityName: property,
             ability: {
                 isOnCooldown: false,
@@ -754,10 +754,10 @@ function updateRangeAbility(time: number, greater: boolean, abilityName: RangeAb
 
     if (time === 1 && ability.active) {
         // Make sure to update the text one final time
-        store.dispatch(RangeGaugeSlice.actions.updateAbilityTime({ abilityName: property, time }));
+        store.dispatch(RangedGaugeSlice.actions.updateAbilityTime({ abilityName: property, time }));
 
         setTimeout(() => {
-            store.dispatch(RangeGaugeSlice.actions.updateAbility({
+            store.dispatch(RangedGaugeSlice.actions.updateAbility({
                 abilityName: property,
                 ability: {
                     isOnCooldown: true,
@@ -779,7 +779,7 @@ function updateRangeAbility(time: number, greater: boolean, abilityName: RangeAb
                 abilityName,
                 greater,
                 () => {
-                    store.dispatch(RangeGaugeSlice.actions.updateAbility({
+                    store.dispatch(RangedGaugeSlice.actions.updateAbility({
                         abilityName: property,
                         ability: { isOnCooldown: false, cooldownDuration: 0 },
                     }));
@@ -813,11 +813,11 @@ function changeCombatStyles(combatStyle: CombatStyle) {
 }
 
 function updatePeCount(stacks: number) {
-    store.dispatch(RangeGaugeSlice.actions.updatePerfectEquilibriumStack({ stacks }));
+    store.dispatch(RangedGaugeSlice.actions.updatePerfectEquilibriumStack({ stacks }));
 }
 
 function updateBalanceByForce(active: boolean) {
-    store.dispatch(RangeGaugeSlice.actions.updateBalanceByForce({ active }));
+    store.dispatch(RangedGaugeSlice.actions.updateBalanceByForce({ active }));
 }
 
 /**
@@ -831,7 +831,7 @@ function updateRangedSplitSoul(time: number) {
     //   - it must be active
     //   - The remaining time is its timer
     if (time > 1) {
-        store.dispatch(RangeGaugeSlice.actions.updateAbility({
+        store.dispatch(RangedGaugeSlice.actions.updateAbility({
             abilityName: 'splitSoul',
             ability: {
                 isOnCooldown: false,
@@ -845,13 +845,13 @@ function updateRangedSplitSoul(time: number) {
     // When only 1 second of the buff exists
     if (time == 1 && ranged.splitSoul.active) {
         // Make sure to update the text one final time
-        store.dispatch(RangeGaugeSlice.actions.updateAbilityTime({ abilityName: 'splitSoul', time }));
+        store.dispatch(RangedGaugeSlice.actions.updateAbilityTime({ abilityName: 'splitSoul', time }));
 
         // Then start a timer to wait just past the last second
         //  - Clear the timer
         //  - DS is now on Cooldown so is not active
         setTimeout(() => {
-            store.dispatch(RangeGaugeSlice.actions.updateAbility({
+            store.dispatch(RangedGaugeSlice.actions.updateAbility({
                 abilityName: 'splitSoul',
                 ability: {
                     active: false,
@@ -875,7 +875,7 @@ function startRangedSplitSoul() {
 
     // If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
     if (ranged.splitSoul.active) {
-        store.dispatch(RangeGaugeSlice.actions.updateAbility({
+        store.dispatch(RangedGaugeSlice.actions.updateAbility({
             abilityName: 'splitSoul',
             ability: {
                 isOnCooldown: false,

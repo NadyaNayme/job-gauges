@@ -60,7 +60,7 @@ export async function livingDeathOverlay() {
 
     forceClearOverlay('LivingDeath_Cooldown_Text');
     if (gaugeData.automaticSwapping) {
-        store.dispatch(GaugeDataSlice.actions.updateCombatStyle(CombatStyle.necro));
+        store.dispatch(GaugeDataSlice.actions.updateCombatStyle(CombatStyle.necromancy));
     }
 
     handleAbilityActiveState(abilityData, 'LivingDeath', true);

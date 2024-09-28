@@ -2,7 +2,7 @@ import * as a1lib from 'alt1';
 import { adjustPositionForScale, forceClearOverlay, handleResizingImages, white } from '../utility';
 import { clearAbilityOverlays, handleAbilityActiveState } from '../util/ability-helpers';
 import { store } from '../../state';
-import { RangeGaugeSlice } from '../../state/gauge-data/range-gauge.state';
+import { RangedGaugeSlice } from '../../state/gauge-data/ranged-gauge.state';
 
 const ultimateImages = a1lib.webpackImages({
     active: require('../../asset/gauge-ui/ranged/split-soul/active.data.png'),
@@ -45,7 +45,7 @@ export async function rangedSplitSoulOverlay() {
         return (lastValue = splitSoul.time);
     }
 
-    store.dispatch(RangeGaugeSlice.actions.updateAbility({
+    store.dispatch(RangedGaugeSlice.actions.updateAbility({
         abilityName: 'splitSoul',
         ability: { isOnCooldown: false },
     }));
@@ -55,7 +55,7 @@ export async function rangedSplitSoulOverlay() {
     handleAbilityActiveState(abilityData, 'SplitSoul', true);
 
     if (lastValue !== splitSoul.time) {
-        store.dispatch(RangeGaugeSlice.actions.updateAbility({
+        store.dispatch(RangedGaugeSlice.actions.updateAbility({
             abilityName: 'splitSoul',
             ability: { cooldownDuration: 0 },
         }));

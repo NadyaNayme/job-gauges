@@ -40,7 +40,7 @@ import { LogError } from './a1sauce/Error/logError';
 import { GaugeDataSlice } from './state/gauge-data/gauge-data.state';
 import { store } from './state';
 import { MagicGaugeSlice } from './state/gauge-data/magic-gauge.state';
-import { RangeGaugeSlice } from './state/gauge-data/range-gauge.state';
+import { RangedGaugeSlice } from './state/gauge-data/ranged-gauge.state';
 import { NecromancyGaugeSlice } from './state/gauge-data/necromancy-gauge.state';
 
 const sauce = A1Sauce.instance;
@@ -60,30 +60,46 @@ async function renderOverlays() {
 
     await readBuffs();
     switch (gaugeData.combatStyle) {
-        case CombatStyle.necro:
-            await livingDeathOverlay();
-            await conjureOverlay();
-            await soulsOverlay();
-            await necrosisOverlay();
-            await incantationsOverlay();
-            await bloatOverlay();
+
+        case CombatStyle.necromancy:
+            await renderNecromancyOverlays();
             break;
-        case CombatStyle.mage:
-            await sunshineOverlay();
-            await spellsOverlay();
-            await fsoaOverlay();
-            await tsunamiOverlay();
-            await soulfireOverlay();
+
+        case CombatStyle.magic:
+            await renderMagicOverlays();
             break;
+
         case CombatStyle.ranged:
-            await deathsSwiftnessOverlay();
-            await crystalRainOverlay();
-            await peOverlay();
-            await rangedSplitSoulOverlay();
+            await renderRangedOverlays();
             break;
+
         case CombatStyle.melee:
             break;
     }
+}
+
+async function renderNecromancyOverlays() {
+    await livingDeathOverlay();
+    await conjureOverlay();
+    await soulsOverlay();
+    await necrosisOverlay();
+    await incantationsOverlay();
+    await bloatOverlay();
+}
+
+async function renderMagicOverlays() {
+    await sunshineOverlay();
+    await spellsOverlay();
+    await fsoaOverlay();
+    await tsunamiOverlay();
+    await soulfireOverlay();
+}
+
+async function renderRangedOverlays() {
+    await deathsSwiftnessOverlay();
+    await crystalRainOverlay();
+    await peOverlay();
+    await rangedSplitSoulOverlay();
 }
 
 export async function startApp() {
@@ -136,7 +152,7 @@ export async function startApp() {
 
         store.dispatch(GaugeDataSlice.actions.updateState(gaugeData));
         store.dispatch(MagicGaugeSlice.actions.updateState(magic));
-        store.dispatch(RangeGaugeSlice.actions.updateState(ranged));
+        store.dispatch(RangedGaugeSlice.actions.updateState(ranged));
         store.dispatch(NecromancyGaugeSlice.actions.updateState(necromancy));
     }
 

@@ -62,7 +62,7 @@ export async function sunshineOverlay() {
 
     if (gaugeData.automaticSwapping) {
         store.dispatch(GaugeDataSlice.actions.updateState({
-            combatStyle: CombatStyle.mage,
+            combatStyle: CombatStyle.magic,
         }));
     }
 

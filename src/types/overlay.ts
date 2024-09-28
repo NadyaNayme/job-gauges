@@ -6,8 +6,8 @@ import { MeleeGauge } from './meleeGauge';
 export enum CombatStyle {
     melee = 1,
     ranged = 2,
-    mage = 3,
-    necro = 4,
+    magic = 3,
+    necromancy = 4,
 }
 
 export type Overlay = {

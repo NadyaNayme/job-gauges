@@ -2,7 +2,7 @@ import * as a1lib from 'alt1';
 import * as BuffReader from 'alt1/buffs';
 import { adjustPositionForScale, white } from '../utility';
 import { store } from '../../state';
-import { RangeGaugeSlice } from '../../state/gauge-data/range-gauge.state';
+import { RangedGaugeSlice } from '../../state/gauge-data/ranged-gauge.state';
 
 const quiverImages = a1lib.webpackImages({
     bik: require('../../asset/data/buffs/ranged/ammo/bik.data.png'),
@@ -89,7 +89,7 @@ export async function findAmmo(buffs: BuffReader.Buff[] | null) {
         }
     }
 
-    store.dispatch(RangeGaugeSlice.actions.updateState({
+    store.dispatch(RangedGaugeSlice.actions.updateState({
         ammo: {
             activeAmmo: ammoActive ? currentAmmo : '',
             isActiveOverlay: ranged.ammo.isActiveOverlay,

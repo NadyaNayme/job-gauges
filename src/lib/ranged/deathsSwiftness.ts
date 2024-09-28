@@ -2,7 +2,7 @@ import * as a1lib from 'alt1';
 import { adjustPositionForScale, forceClearOverlay, handleResizingImages, white } from '../utility';
 import { clearAbilityOverlays, handleAbilityActiveState } from '../util/ability-helpers';
 import { store } from '../../state';
-import { RangeGaugeSlice } from '../../state/gauge-data/range-gauge.state';
+import { RangedGaugeSlice } from '../../state/gauge-data/ranged-gauge.state';
 
 const ultimateImages = a1lib.webpackImages({
     active: require('../../asset/gauge-ui/ranged/deaths-swiftness/active.data.png'),
@@ -50,7 +50,7 @@ export async function deathsSwiftnessOverlay() {
         return (lastValue = deathsSwiftness.time);
     }
 
-    store.dispatch(RangeGaugeSlice.actions.updateAbility({
+    store.dispatch(RangedGaugeSlice.actions.updateAbility({
         abilityName: 'deathsSwiftness',
         ability: { isOnCooldown: false },
     }));
@@ -60,7 +60,7 @@ export async function deathsSwiftnessOverlay() {
     handleAbilityActiveState(abilityData, 'DeathsSwiftness', true);
 
     if (lastValue !== deathsSwiftness.time) {
-        store.dispatch(RangeGaugeSlice.actions.updateAbility({
+        store.dispatch(RangedGaugeSlice.actions.updateAbility({
             abilityName: 'deathsSwiftness',
             ability: { cooldownDuration: 0 },
         }));

@@ -47,38 +47,45 @@ export const renderSettings = () => {
             true,
         )
         .addButton(
-            'necroCombatStyle',
-            'Select Necro Overlay',
-            () => updateCombatStyle(CombatStyle.necro),
+            'necromancyCombatStyle',
+            'Swap to Necromancy Gauge',
+            () => updateCombatStyle(CombatStyle.necromancy),
             { classes: ['nisbutton'] },
         )
         .addButton(
-            'mageCombatStyle',
-            'Select Mage Overlay',
-            () => updateCombatStyle(CombatStyle.mage),
+            'magicCombatStyle',
+            'Swap to Magic Gauge',
+            () => updateCombatStyle(CombatStyle.magic),
             { classes: ['nisbutton'] },
         )
         .addButton(
-            'rangeCombatStyle',
-            'Select Range Overlay',
+            'rangedCombatStyle',
+            'Swap to Ranged Gauge',
             () => updateCombatStyle(CombatStyle.ranged),
             { classes: ['nisbutton'] },
         )
         .addCheckboxSetting(
             'automaticSwapping',
-            'Swap gauge automatically when Living Death, Sunshine, or Death\'s Swiftness are used',
+            "Swap gauge automatically when Living Death, Sunshine, or Death's Swiftness are used",
             false,
-            (event) => store.dispatch(GaugeDataSlice.actions.updateState({ automaticSwapping: event })),
+            (event) =>
+                store.dispatch(
+                    GaugeDataSlice.actions.updateState({
+                        automaticSwapping: event,
+                    }),
+                ),
         )
         .addCheckboxSetting(
             'hideOutsideCombat',
             'Show gauges only while "In Combat"',
             false,
             (event) => {
-                store.dispatch(GaugeDataSlice.actions.updateState({
-                    checkCombatStatus: event,
-                    isInCombat: false,
-                }));
+                store.dispatch(
+                    GaugeDataSlice.actions.updateState({
+                        checkCombatStatus: event,
+                        isInCombat: false,
+                    }),
+                );
             },
         )
         .addRangeSetting(
@@ -89,8 +96,14 @@ export const renderSettings = () => {
         .addSeperator()
         .addButton(
             'repositionOverlay',
-            'Reposition Overlay',
-            () => setOverlayPosition(),
+            'Position Active Gauge',
+            () => setOverlayPosition(false),
+            { classes: ['nisbutton'] },
+        )
+        .addButton(
+            'repositionOverlay',
+            'Position All Gauges',
+            () => setOverlayPosition(true),
             { classes: ['nisbutton'] },
         )
         .addSeperator()
@@ -100,7 +113,11 @@ export const renderSettings = () => {
             'Adjusts the size of the overlay. You must reload and reposition the overlay after scaling.',
             { defaultValue: '100', min: 50, max: 300 },
             (scaleFactor) => {
-                store.dispatch(GaugeDataSlice.actions.updateState({ scaleFactor: scaleFactor / 100 }));
+                store.dispatch(
+                    GaugeDataSlice.actions.updateState({
+                        scaleFactor: scaleFactor / 100,
+                    }),
+                );
                 location.reload();
             },
         )
@@ -123,106 +140,153 @@ export const renderSettings = () => {
             'showConjures',
             'Show Conjures',
             getSetting('showConjures') ?? true,
-            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateIsActiveOverlay({
-                key: 'conjures',
-                isActiveOverlay: event,
-            })),
+            (event) =>
+                store.dispatch(
+                    NecromancyGaugeSlice.actions.updateIsActiveOverlay({
+                        key: 'conjures',
+                        isActiveOverlay: event,
+                    }),
+                ),
         )
         .addCheckboxSetting(
             'showLivingDeath',
             'Show Living Death',
             getSetting('showLivingDeath') ?? true,
-            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateIsActiveOverlay({
-                key: 'livingDeath',
-                isActiveOverlay: event,
-            })),
+            (event) =>
+                store.dispatch(
+                    NecromancyGaugeSlice.actions.updateIsActiveOverlay({
+                        key: 'livingDeath',
+                        isActiveOverlay: event,
+                    }),
+                ),
         )
         .addCheckboxSetting(
             'showIncantations',
             'Show Incantations',
             getSetting('showIncantations') ?? true,
-            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateIsActiveOverlay({
-                key: 'incantations',
-                isActiveOverlay: event,
-            })),
+            (event) =>
+                store.dispatch(
+                    NecromancyGaugeSlice.actions.updateIsActiveOverlay({
+                        key: 'incantations',
+                        isActiveOverlay: event,
+                    }),
+                ),
         )
         .addCheckboxSetting(
             'showInvokeDeath',
             'Show Invoke Death',
             getSetting('showInvokeDeath') ?? true,
-            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateIncantationActive({
-                key: 'invokeDeath',
-                isActiveOverlay: event,
-            })),
+            (event) =>
+                store.dispatch(
+                    NecromancyGaugeSlice.actions.updateIncantationActive({
+                        key: 'invokeDeath',
+                        isActiveOverlay: event,
+                    }),
+                ),
         )
         .addCheckboxSetting(
             'showDarkness',
             'Show Darkness',
             getSetting('showDarkness') ?? true,
-            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateIncantationActive({
-                key: 'darkness',
-                isActiveOverlay: event,
-            })),
+            (event) =>
+                store.dispatch(
+                    NecromancyGaugeSlice.actions.updateIncantationActive({
+                        key: 'darkness',
+                        isActiveOverlay: event,
+                    }),
+                ),
         )
         .addCheckboxSetting(
             'showThreads',
             'Show Threads of Fate',
             getSetting('showThreads') ?? true,
-            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateIncantationActive({
-                key: 'threads',
-                isActiveOverlay: event,
-            })),
+            (event) =>
+                store.dispatch(
+                    NecromancyGaugeSlice.actions.updateIncantationActive({
+                        key: 'threads',
+                        isActiveOverlay: event,
+                    }),
+                ),
         )
         .addCheckboxSetting(
             'showSplitSoul',
             'Show Split Soul',
             getSetting('showSplitSoul') ?? true,
-            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateIncantationActive({
-                key: 'splitSoul',
-                isActiveOverlay: event,
-            })),
+            (event) =>
+                store.dispatch(
+                    NecromancyGaugeSlice.actions.updateIncantationActive({
+                        key: 'splitSoul',
+                        isActiveOverlay: event,
+                    }),
+                ),
         )
         .addCheckboxSetting(
             'showSouls',
             'Show Residual Souls',
             getSetting('showSouls') ?? true,
-            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateStacksAbility({
-                stackType: 'souls',
-                stack: { isActiveOverlay: event },
-            })),
+            (event) =>
+                store.dispatch(
+                    NecromancyGaugeSlice.actions.updateStacksAbility({
+                        stackType: 'souls',
+                        stack: { isActiveOverlay: event },
+                    }),
+                ),
         )
         .addCheckboxSetting(
             'pre95Souls',
             'Only show 3 Residual Souls / No Soulbound Lantern',
             getSetting('pre95Souls') ?? false,
-            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateStacks({ pre95Souls: event })),
+            (event) =>
+                store.dispatch(
+                    NecromancyGaugeSlice.actions.updateStacks({
+                        pre95Souls: event,
+                    }),
+                ),
         )
         .addCheckboxSetting(
             'showNecrosis',
             'Show Necrosis',
             getSetting('showNecrosis') ?? true,
-            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateStacksAbility({
-                stackType: 'necrosis',
-                stack: { isActiveOverlay: event },
-            })),
+            (event) =>
+                store.dispatch(
+                    NecromancyGaugeSlice.actions.updateStacksAbility({
+                        stackType: 'necrosis',
+                        stack: { isActiveOverlay: event },
+                    }),
+                ),
         )
         .addCheckboxSetting(
             'dupeRow',
             'Show 2nd row of Necrosis stacks',
             getSetting('dupeRow') ?? false,
-            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateStacks({ duplicateNecrosisRow: event })),
+            (event) =>
+                store.dispatch(
+                    NecromancyGaugeSlice.actions.updateStacks({
+                        duplicateNecrosisRow: event,
+                    }),
+                ),
         )
         .addCheckboxSetting(
             'useColoredNecrosis',
             'Use orange and red Necrosis Stacks when above certain thresholds',
             getSetting('useColoredNecrosis') ?? false,
-            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateStacks({ useColoredNecrosis: event })),
+            (event) =>
+                store.dispatch(
+                    NecromancyGaugeSlice.actions.updateStacks({
+                        useColoredNecrosis: event,
+                    }),
+                ),
         )
         .addCheckboxSetting(
             'showBloat',
             'Show Bloat',
             getSetting('showBloat') ?? true,
-            (event) => store.dispatch(NecromancyGaugeSlice.actions.updateBloat({ isActiveOverlay: event })),
+            (event) =>
+                store.dispatch(
+                    NecromancyGaugeSlice.actions.updateBloat({
+                        isActiveOverlay: event,
+                    }),
+                ),
         )
         .addSeperator()
         .addHeader('h2', 'Alarms')
@@ -232,10 +296,13 @@ export const renderSettings = () => {
             'alarmSoulsThreshold',
             'Alert when at or above this many souls',
             { defaultValue: '5', min: 2, max: 5, unit: ' souls' },
-            (threshold) => store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
-                stackName: 'souls',
-                alarm: { threshold },
-            })),
+            (threshold) =>
+                store.dispatch(
+                    NecromancyGaugeSlice.actions.updateStackAlarm({
+                        stackName: 'souls',
+                        alarm: { threshold },
+                    }),
+                ),
         )
         .addAlarmSetting('alarmSouls', '')
         .addSeperator()
@@ -244,10 +311,13 @@ export const renderSettings = () => {
             'alarmNecrosisThreshold',
             'Alert when at or above this many stacks',
             { defaultValue: '12', min: 2, max: 12, unit: ' stacks' },
-            (threshold) => store.dispatch(NecromancyGaugeSlice.actions.updateStackAlarm({
-                stackName: 'necrosis',
-                alarm: { threshold },
-            })),
+            (threshold) =>
+                store.dispatch(
+                    NecromancyGaugeSlice.actions.updateStackAlarm({
+                        stackName: 'necrosis',
+                        alarm: { threshold },
+                    }),
+                ),
         )
         .addAlarmSetting('alarmNecrosis', '')
         .addSeperator()

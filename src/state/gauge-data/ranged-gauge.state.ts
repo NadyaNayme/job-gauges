@@ -4,24 +4,24 @@ import { RangedGauge } from '../../types';
 import { ranged_gauge } from '../../data/rangedGauge';
 import { Abilities } from '../../lib/util/ability-helpers';
 
-export type RangeGaugeState = RangedGauge;
+export type RangedGaugeState = RangedGauge;
 
-const initialState: RangeGaugeState = {
+const initialState: RangedGaugeState = {
     ...ranged_gauge,
 };
 
-export type RangePropertyAbilities = 'splitSoul' | 'deathsSwiftness' | 'crystalRain';
-export type RangeAbilities = Extract<Abilities, 'DeathsSwiftness' | 'CrystalRain' | 'SplitSoul'>
+export type RangedPropertyAbilities = 'splitSoul' | 'deathsSwiftness' | 'crystalRain';
+export type RangedAbilities = Extract<Abilities, 'DeathsSwiftness' | 'CrystalRain' | 'SplitSoul'>
 
-export const RangeGaugeSlice = createSlice({
-    name: 'RangeGauge',
+export const RangedGaugeSlice = createSlice({
+    name: 'RangedGauge',
     initialState,
     reducers: {
-        updateState: (state, action: PayloadAction<Partial<RangeGaugeState>>) => ({
+        updateState: (state, action: PayloadAction<Partial<RangedGaugeState>>) => ({
             ...state,
             ...action.payload,
         }),
-        updateAbilityTime: (state, action: PayloadAction<{ abilityName: RangePropertyAbilities, time: number }>) => {
+        updateAbilityTime: (state, action: PayloadAction<{ abilityName: RangedPropertyAbilities, time: number }>) => {
             state[action.payload.abilityName] = {
                 ...state[action.payload.abilityName],
                 time: action.payload.time,
@@ -30,7 +30,7 @@ export const RangeGaugeSlice = createSlice({
             return state;
         },
         updateAbility: (state, action: PayloadAction<{
-            abilityName: RangePropertyAbilities,
+            abilityName: RangedPropertyAbilities,
             ability: Partial<Ability>
         }>) => {
             state[action.payload.abilityName] = {

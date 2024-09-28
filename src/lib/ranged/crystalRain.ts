@@ -2,7 +2,7 @@ import * as a1lib from 'alt1';
 import { adjustPositionForScale, forceClearOverlay, handleResizingImages, white } from '../utility';
 import { clearAbilityOverlays, handleAbilityActiveState } from '../util/ability-helpers';
 import { store } from '../../state';
-import { RangeGaugeSlice } from '../../state/gauge-data/range-gauge.state';
+import { RangedGaugeSlice } from '../../state/gauge-data/ranged-gauge.state';
 
 const ultimateImages = a1lib.webpackImages({
     active: require('../../asset/gauge-ui/ranged/crystal-rain/active.data.png'),
@@ -46,7 +46,7 @@ export async function crystalRainOverlay() {
         return (lastValue = crystalRain.time);
     }
 
-    store.dispatch(RangeGaugeSlice.actions.updateAbility({
+    store.dispatch(RangedGaugeSlice.actions.updateAbility({
         abilityName: 'crystalRain',
         ability: { isOnCooldown: false },
     }));
@@ -55,7 +55,7 @@ export async function crystalRainOverlay() {
     handleAbilityActiveState(abilityData, 'CrystalRain', false);
 
     if (lastValue !== crystalRain.time) {
-        store.dispatch(RangeGaugeSlice.actions.updateAbility({
+        store.dispatch(RangedGaugeSlice.actions.updateAbility({
             abilityName: 'crystalRain',
             ability: { cooldownDuration: 0 },
         }));

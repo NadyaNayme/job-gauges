@@ -1,5 +1,5 @@
 import * as a1lib from 'alt1';
-import { getSetting, updateSetting } from '../a1sauce/Settings/Storage';
+import { getSetting } from '../a1sauce/Settings/Storage';
 import { timeout } from '../a1sauce/Utils/timeout';
 
 import PouchDB from 'pouchdb';
@@ -8,8 +8,9 @@ import { Abilities } from './util/ability-helpers';
 import { store } from '../state';
 import { NecromancyGaugeSlice } from '../state/gauge-data/necromancy-gauge.state';
 import { MagicGaugeSlice } from '../state/gauge-data/magic-gauge.state';
-import { RangeGaugeSlice } from '../state/gauge-data/range-gauge.state';
+import { RangedGaugeSlice } from '../state/gauge-data/ranged-gauge.state';
 import { GaugeDataSlice } from '../state/gauge-data/gauge-data.state';
+import { CombatStyle } from '../types';
 
 const db = new PouchDB(appName);
 
@@ -32,7 +33,7 @@ export const helperItems = {
     settings: getByID('Settings'),
 };
 
-export async function setOverlayPosition() {
+export async function setOverlayPosition(all: boolean) {
     store.dispatch(GaugeDataSlice.actions.updateState({ updatingOverlayPosition: true }));
 
     a1lib.once('alt1pressed', updateLocation);
@@ -55,23 +56,13 @@ export async function setOverlayPosition() {
         await timeout(500);
 
         freezeOverlays();
-        //TODO: Per-gauge repositioning will be needed here as well
-        resizeGaugesWithMousePosition();
+        resizeGaugesWithMousePosition(all);
         continueOverlays();
     }
-
-    const { necromancy } = store.getState();
-
-    updateSetting('overlayPosition', {
-        x: necromancy.position.x,
-        y: necromancy.position.y,
-    });
 }
 
 export function updateLocation(): void {
     store.dispatch(GaugeDataSlice.actions.updateState({ updatingOverlayPosition: false }));
-    alt1.overLayClearGroup('overlayPositionHelper');
-    alt1.overLayRefreshGroup('overlayPositionHelper');
     alt1.clearTooltip();
 }
 
@@ -200,7 +191,7 @@ export function adjustPositionWithoutScale(
     return parseInt(roundedToFixed(position * (1 / scaleFactor), 1), 10);
 }
 
-export function resizeGaugesWithMousePosition() {
+export function resizeGaugesWithMousePosition(all: boolean) {
     const position = a1lib.getMousePosition();
 
     if (!position) {
@@ -213,11 +204,54 @@ export function resizeGaugesWithMousePosition() {
     const adjustedXPosition = adjustPositionWithoutScale(x, gaugeData.scaleFactor);
     const adjustedYPosition = adjustPositionWithoutScale(y, gaugeData.scaleFactor);
 
-    store.dispatch(NecromancyGaugeSlice.actions.updatePosition({ x: adjustedXPosition, y: adjustedYPosition }));
-    store.dispatch(MagicGaugeSlice.actions.updatePosition({ x: adjustedXPosition, y: adjustedYPosition }));
-    store.dispatch(RangeGaugeSlice.actions.updatePosition({ x: adjustedXPosition, y: adjustedYPosition }));
+    if (all) {
+        store.dispatch(
+            MagicGaugeSlice.actions.updatePosition({
+                x: adjustedXPosition,
+                y: adjustedYPosition,
+            }),
+        );
+        store.dispatch(
+            RangedGaugeSlice.actions.updatePosition({
+                x: adjustedXPosition,
+                y: adjustedYPosition,
+            }),
+        );
+        store.dispatch(
+            NecromancyGaugeSlice.actions.updatePosition({
+                x: adjustedXPosition,
+                y: adjustedYPosition,
+            }),
+        );
+        return;
+    }
 
-    // Add melee sometime lol
+    switch (gaugeData.combatStyle) {
+        case CombatStyle.magic:
+            store.dispatch(
+                MagicGaugeSlice.actions.updatePosition({
+                    x: adjustedXPosition,
+                    y: adjustedYPosition,
+                }),
+            );
+            break;
+        case CombatStyle.ranged:
+            store.dispatch(
+                RangedGaugeSlice.actions.updatePosition({
+                    x: adjustedXPosition,
+                    y: adjustedYPosition,
+                }),
+            );
+            break;
+        case CombatStyle.necromancy:
+            store.dispatch(
+                NecromancyGaugeSlice.actions.updatePosition({
+                    x: adjustedXPosition,
+                    y: adjustedYPosition,
+                }),
+            );
+            break;
+    }
 }
 
 export function roundedToFixed(input: number, digits: number): string {
