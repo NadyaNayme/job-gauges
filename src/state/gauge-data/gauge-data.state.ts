@@ -14,7 +14,7 @@ const initialState: Omit<GaugeDataState, 'ranged' | 'necromancy' | 'magic' | 'me
     automaticSwapping: false,
     checkCombatStatus: false,
     isInCombat: false,
-    combatStyle: CombatStyle.mage,
+    combatStyle: CombatStyle.necro,
     updatingOverlayPosition: false,
     selectedOrientation: 'reverse_split'
 };
@@ -33,4 +33,3 @@ export const GaugeDataSlice = createSlice({
         }),
     },
 });
-
