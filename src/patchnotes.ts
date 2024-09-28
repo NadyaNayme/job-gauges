@@ -3,6 +3,19 @@ import { PatchNote } from './a1sauce/Patches/patchNotes';
 export const notes: PatchNote[] = [
     // Add patch notes to top
     {
+        date: '09/28/2024 - Redux Refactor" v.1.2.0',
+        note: [
+            `More wizardry from Panku - most of Job Gauges has been rewritten to track the state of things better and by doing so a number of improvements were made.`,
+            `Text should no longer flicker when counting down cooldown timers`,
+            `Soulfire tracking has been significantly improved - it may still lose track of the cooldown from 39-24s or so but should no longer be plagued with false positives and junk data`,
+            `The dropdown to change the active gauge is now separate buttons - to make it a little faster to switch. The styles of these buttons will be adjusted in the future.`,
+            `Switching between gauges should feel snappier`,
+            `Alarm playback should be more consistent and actually sound the alarm the first time the alarm threshold is crossed`,
+            `Alarms thresholds are now properly "at or above  instead of only "above"`,
+            `The setting about swapping on last used ultimate has been further clarified that only certain ultimates trigger an automatic change`
+        ],
+    },
+    {
         date: '09/19/2024 - Opt-in "Remember Buff/Debuff Positions" v.1.1.4',
         note: [
             `Added a setting to opt-in to the recently removed "remember buff/debuff bar position" functionality. The functionality was removed in a recent release because it made the plugin difficult to use on more than one account at a time. Please only enable the setting if you do not adjust your UI very often and only play on a single account.`,
@@ -39,11 +52,11 @@ export const notes: PatchNote[] = [
         ],
     },
     {
-        date: '09/03/2024 - Ranged Gauge & Ode To Deceit v.1.1.0',
+        date: '09/03/2024 - Ranged Gauge & Soulfire v.1.1.0',
         note: [
             `Similar to the barebones Magic Gauge - a Ranged Gauge has been added. The Ranged Gauge tracks your active ammo (must be in quiver, not all types are tracked only the most "meta" options), Perfect Eqilibruim stacks, Death's Swiftness, and Seren Godbow's Crystal Rain special attack. Eldritch Crossbow's Split Soul tracking is expected to be added soon.`,
-            `Ode to Deceit tracking has been added to the Magic Gauge`,
-            `Crystal Rain and Ode to Deceit are tracked using the Debuffs bar - and in order to succesfully be tracked Job Gauges must know where your debuffs are located. When loading the app it is recommended to use a defensive ability and activate your prayer for a brief period of time so that Job Gauges can find your buffs & debuffs bars.`,
+            `Soulfire tracking has been added to the Magic Gauge`,
+            `Crystal Rain and Soulfire are tracked using the Debuffs bar - and in order to succesfully be tracked Job Gauges must know where your debuffs are located. When loading the app it is recommended to use a defensive ability and activate your prayer for a brief period of time so that Job Gauges can find your buffs & debuffs bars.`,
             `Phantom Guardian duration tracking has been added to Conjure Undead Army - Phantom's Valour stacks may be added in a future update`,
             `Future updates will add visibility toggles for each individual ranged/magic overlay similar to the Necromancy overlays.`,
         ],

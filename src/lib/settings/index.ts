@@ -44,7 +44,7 @@ export const renderSettings = () => {
         .addCheckboxSetting(
             'rememberUiPosition',
             'Remember last known position of buff/debuff bars to avoid needing to scan on every app start',
-            false,
+            true,
         )
         .addButton(
             'necroCombatStyle',
@@ -66,7 +66,7 @@ export const renderSettings = () => {
         )
         .addCheckboxSetting(
             'automaticSwapping',
-            'Swap gauge automatically based on last used Ultimate Ability',
+            'Swap gauge automatically when Living Death, Sunshine, or Death\'s Swiftness are used',
             false,
             (event) => store.dispatch(GaugeDataSlice.actions.updateState({ automaticSwapping: event })),
         )
