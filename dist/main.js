@@ -307,7 +307,7 @@ module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/
   \***********************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("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")
+module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("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")
 
 /***/ }),
 
@@ -16535,7 +16535,6 @@ async function startApp() {
      */
     if (localGaugeData) {
         const { magic, ranged, necromancy, melee, gaugeData, alarms } = JSON.parse(localGaugeData);
-        console.log(gaugeData);
         _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_33__.GaugeDataSlice.actions.updateState(gaugeData));
         _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_35__.MagicGaugeSlice.actions.updateState(magic));
         _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_36__.RangeGaugeSlice.actions.updateState(ranged));
@@ -16645,16 +16644,9 @@ function addEventListeners() {
             '%, #0d1c24 100%)';
     document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
         checkbox.addEventListener('change', () => {
-            //console.log();
-            // setNecromancyGaugeData();
             _lib_utility__WEBPACK_IMPORTED_MODULE_0__.freezeAndContinueOverlays(); // Force an instant redraw
             const state = _state__WEBPACK_IMPORTED_MODULE_34__.store.getState();
             (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_16__.updateSetting)('gauge-data', JSON.stringify(state));
-            // store.dispatch(GaugeDataSlice.actions.updateState({
-            //
-            // }))
-            //const gaugeData = getGaugeData()!;
-            //Object.assign(, gaugeData);
         });
     });
     /* Update Alarm Thresholds */
@@ -18202,7 +18194,6 @@ function findBuffsBar() {
         return;
     }
     if (!buffReader.find()) {
-        console.log(`Failed to find those buffs`);
         errorLogger.showError({
             title: 'No Buffs Found',
             message: `<p>Job Gauges could not locate your buffs bar. Please use a defensive ability or some other way of obtaining a buff and Job Gauges will attempt to search again shortly or click the button below.</p>`,
@@ -18302,9 +18293,9 @@ async function readBuffs() {
         return;
     }
     const { gaugeData, necromancy } = _state__WEBPACK_IMPORTED_MODULE_8__.store.getState();
-    updateBuffData(buffReader, buffsImages.deathsSwiftness, 125, (time) => updateRangeAbility(time, false, 'DeathsSwiftness'), false);
+    updateBuffData(buffReader, buffsImages.deathsSwiftness, 500, (time) => updateRangeAbility(time, false, 'DeathsSwiftness'), false);
     updateBuffData(buffReader, buffsImages.greaterDeathsSwiftness, 350, (time) => updateRangeAbility(time, true, 'DeathsSwiftness'), true);
-    updateBuffData(buffReader, buffsImages.sunshine, 300, (time) => updateMagicAbility(time, false, 'Sunshine'), false);
+    updateBuffData(buffReader, buffsImages.sunshine, 500, (time) => updateMagicAbility(time, false, 'Sunshine'), false);
     updateBuffData(buffReader, buffsImages.greaterSunshine, 100, (time) => updateMagicAbility(time, true, 'Sunshine'), true);
     if (necromancy.livingDeath.isActiveOverlay) {
         updateBuffData(buffReader, buffsImages.living_death, 400, updateLivingDeath, false);
@@ -18367,6 +18358,11 @@ function updateBuffData(buffReader, buffImage, threshold, updateCallbackFn, grea
         if (buffImage === buffsImages.soulfire && time >= 46) {
             return false;
         }
+        // if (buffImage === buffsImages.sunshine) {
+        //     console.log(
+        //         `BuffPosition: ${buff.bufferx / 30 == 0 ? 0 : buff.bufferx / 30} | Time: ${time.toString()} \n Tested: ${match.tested} | Skipped: ${match.skipped} \n Passed: ${match.passed} | Failed: ${match.failed}`,
+        //     );
+        // }
         /**
          * TODO: Update this function to take in a failureThreshold
          * for now just being lazy and hard coding it in for Soulfire
@@ -18613,7 +18609,7 @@ function updateRangeAbility(time, greater, abilityName) {
             },
         }));
         if (gaugeData.automaticSwapping && abilityName === 'DeathsSwiftness' || abilityName === 'SplitSoul') {
-            changeCombatStyles(_types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.mage);
+            changeCombatStyles(_types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.necro);
         }
     }
     if (time === 1 && ability.active) {
@@ -19687,7 +19683,7 @@ const initialState = {
     automaticSwapping: false,
     checkCombatStatus: false,
     isInCombat: false,
-    combatStyle: _types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.mage,
+    combatStyle: _types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.necro,
     updatingOverlayPosition: false,
     selectedOrientation: 'reverse_split'
 };
@@ -19882,7 +19878,6 @@ const NecromancyGaugeSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.cr
             return state;
         },
         updateActiveOrientation: (state, action) => {
-            console.log(`Updating orientation:`, action.payload);
             // Conjures
             state.conjures.position.active_orientation = {
                 ...state.conjures.position[action.payload],
