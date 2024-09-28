@@ -34,7 +34,7 @@ import { tsunamiOverlay } from './lib/magic/tsunami';
 import { deathsSwiftnessOverlay } from './lib/ranged/deathsSwiftness';
 import { crystalRainOverlay } from './lib/ranged/crystalRain';
 import { peOverlay } from './lib/ranged/perfectEquilibrium';
-import { odeToDeceitOverlay } from './lib/magic/odeToDeceit';
+import { soulfireOverlay } from './lib/magic/soulfire';
 import { rangedSplitSoulOverlay } from './lib/ranged/splitSoul';
 import { LogError } from './a1sauce/Error/logError';
 import { GaugeDataSlice } from './state/gauge-data/gauge-data.state';
@@ -73,7 +73,7 @@ async function renderOverlays() {
             await spellsOverlay();
             await fsoaOverlay();
             await tsunamiOverlay();
-            await odeToDeceitOverlay();
+            await soulfireOverlay();
             break;
         case CombatStyle.ranged:
             await deathsSwiftnessOverlay();
@@ -171,8 +171,8 @@ export async function startApp() {
     alt1.overLaySetGroupZIndex('Instability_Cooldown_Text', 1);
     alt1.overLaySetGroupZIndex('Tsunami_Text', 1);
     alt1.overLaySetGroupZIndex('Tsunami_Cooldown_Text', 1);
-    alt1.overLaySetGroupZIndex('OdeToDeceit_Text', 1);
-    alt1.overLaySetGroupZIndex('OdeToDeceit_Cooldown_Text', 1);
+    alt1.overLaySetGroupZIndex('Soulfire_Text', 1);
+    alt1.overLaySetGroupZIndex('Soulfire_Cooldown_Text', 1);
 
     alt1.overLaySetGroupZIndex('DeathsSwiftness_Text', 1);
     alt1.overLaySetGroupZIndex('DeathsSwiftness_Cooldown_Text', 1);

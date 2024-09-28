@@ -83,7 +83,7 @@ export const magic_gauge: MagicGauge = {
             },
         },
     },
-    odeToDeceit: {
+    soulfire: {
         isActiveOverlay: true,
         active: false,
         time: 0,

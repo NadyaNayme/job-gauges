@@ -12,13 +12,13 @@ const ultimateImages = a1lib.webpackImages({
 let lastValue: number;
 let scaledOnce = false;
 
-export async function odeToDeceitOverlay() {
+export async function soulfireOverlay() {
     const { magic, gaugeData } = store.getState();
-    const { odeToDeceit } = magic;
-    const { active_orientation } = odeToDeceit.position;
+    const { soulfire } = magic;
+    const { active_orientation } = soulfire.position;
 
-    if (!odeToDeceit.isActiveOverlay) {
-        clearAbilityOverlays('OdeToDeceit');
+    if (!soulfire.isActiveOverlay) {
+        clearAbilityOverlays('Soulfire');
         return;
     }
 
@@ -33,40 +33,40 @@ export async function odeToDeceitOverlay() {
     const abilityData = {
         images: ultimateImages,
         scaleFactor: gaugeData.scaleFactor,
-        ability: odeToDeceit,
+        ability: soulfire,
         position: magic.position,
     };
 
     // If Crystal Rain Debuff is not active then it is available
-    if (!odeToDeceit.active) {
-        handleAbilityActiveState(abilityData, 'OdeToDeceit', true);
-        alt1.overLayRefreshGroup('OdeToDeceit_Text');
-        alt1.overLayClearGroup('OdeToDeceit_Text');
+    if (!soulfire.active) {
+        handleAbilityActiveState(abilityData, 'Soulfire', true);
+        alt1.overLayRefreshGroup('Soulfire_Text');
+        alt1.overLayClearGroup('Soulfire_Text');
 
-        return (lastValue = odeToDeceit.time);
+        return (lastValue = soulfire.time);
     }
 
     store.dispatch(MagicGaugeSlice.actions.updateAbility({
-        abilityName: 'odeToDeceit',
+        abilityName: 'soulfire',
         ability: { isOnCooldown: false },
     }));
 
-    forceClearOverlay('OdeToDeceit_Cooldown_Text');
+    forceClearOverlay('Soulfire_Cooldown_Text');
 
-    handleAbilityActiveState(abilityData, 'OdeToDeceit', false);
+    handleAbilityActiveState(abilityData, 'Soulfire', false);
 
-    if (lastValue !== odeToDeceit.time) {
+    if (lastValue !== soulfire.time) {
         store.dispatch(MagicGaugeSlice.actions.updateAbility({
-            abilityName: 'odeToDeceit',
+            abilityName: 'soulfire',
             ability: { cooldownDuration: 0 },
         }));
 
-        forceClearOverlay('OdeToDeceit_Cooldown_Text');
-        alt1.overLaySetGroup('OdeToDeceit_Text');
-        alt1.overLayFreezeGroup('OdeToDeceit_Text');
-        alt1.overLayClearGroup('OdeToDeceit_Text');
+        forceClearOverlay('Soulfire_Cooldown_Text');
+        alt1.overLaySetGroup('Soulfire_Text');
+        alt1.overLayFreezeGroup('Soulfire_Text');
+        alt1.overLayClearGroup('Soulfire_Text');
         alt1.overLayTextEx(
-            `${odeToDeceit.time || ''}`,
+            `${soulfire.time || ''}`,
             white,
             14,
             adjustPositionForScale(
@@ -82,8 +82,8 @@ export async function odeToDeceitOverlay() {
             true,
             true,
         );
-        alt1.overLayRefreshGroup('OdeToDeceit_Text');
+        alt1.overLayRefreshGroup('Soulfire_Text');
     }
 
-    lastValue = odeToDeceit.time;
+    lastValue = soulfire.time;
 }

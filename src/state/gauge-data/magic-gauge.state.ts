@@ -10,9 +10,9 @@ const initialState: MagicGaugeState = {
     ...magic_gauge,
 };
 
-export type MagicPropertyAbilities = 'odeToDeceit' | 'instability' | 'tsunami' | 'sunshine';
+export type MagicPropertyAbilities = 'soulfire' | 'instability' | 'tsunami' | 'sunshine';
 export type MagicSpells = 'bloodTithe' | 'glacialEmbrace';
-export type MagicAbilities = Extract<Abilities, 'Sunshine' | 'OdeToDeceit' | 'Tsunami' | 'Instability'>
+export type MagicAbilities = Extract<Abilities, 'Sunshine' | 'Soulfire' | 'Tsunami' | 'Instability'>
 
 export const MagicGaugeSlice = createSlice({
     name: 'MagicGauge',

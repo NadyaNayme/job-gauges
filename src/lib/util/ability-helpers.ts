@@ -15,7 +15,7 @@ export type Abilities =
     | 'Tsunami'
     | 'DeathsSwiftness'
     | 'CrystalRain'
-    | 'OdeToDeceit'
+    | 'Soulfire'
     | 'LivingDeath'
     | 'SplitSoul'
     | 'Darkness'
@@ -36,7 +36,7 @@ export const AbilityCooldowns = new Map<Abilities, AbilityCooldown>([
     ['Instability', { ...defaultCooldowns, positionY: 30 }],
     ['Tsunami', { ...defaultCooldowns }],
     ['CrystalRain', { ...defaultCooldowns }],
-    ['OdeToDeceit', { ...defaultCooldowns }],
+    ['Soulfire', { ...defaultCooldowns }],
     ['LivingDeath', { ...defaultCooldowns }],
 ]);
 

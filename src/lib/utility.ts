@@ -98,7 +98,7 @@ const overlays = [
     'Souls',
     'Sunshine',
     'Instability',
-    'OdeToDeceit',
+    'Soulfire',
     'Tsunami',
     'DeathsSwiftness',
     'CrystalRain',
@@ -156,10 +156,10 @@ export function clearTextOverlays(): void {
     alt1.overLayClearGroup('Instability_Cooldown_Text');
     alt1.overLayRefreshGroup('Instability_Cooldown_Text');
 
-    alt1.overLayClearGroup('OdeToDeceit_Text');
-    alt1.overLayRefreshGroup('OdeToDeceit_Text');
-    alt1.overLayClearGroup('OdeToDeceit_Cooldown_Text');
-    alt1.overLayRefreshGroup('OdeToDeceit_Cooldown_Text');
+    alt1.overLayClearGroup('Soulfire_Text');
+    alt1.overLayRefreshGroup('Soulfire_Text');
+    alt1.overLayClearGroup('Soulfire_Cooldown_Text');
+    alt1.overLayRefreshGroup('Soulfire_Cooldown_Text');
 
     alt1.overLayClearGroup('Tsunami_Text');
     alt1.overLayRefreshGroup('Tsunami_Text');

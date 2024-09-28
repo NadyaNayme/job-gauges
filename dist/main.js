@@ -351,10 +351,10 @@ module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/
 
 /***/ }),
 
-/***/ "./asset/data/debuffs/ode-to-deceit.data.png":
-/*!***************************************************!*\
-  !*** ./asset/data/debuffs/ode-to-deceit.data.png ***!
-  \***************************************************/
+/***/ "./asset/data/debuffs/soulfire.data.png":
+/*!**********************************************!*\
+  !*** ./asset/data/debuffs/soulfire.data.png ***!
+  \**********************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports=(__webpack_require__(/*! alt1/base */ "../node_modules/alt1/dist/base/index.js").ImageDetect).imageDataFromBase64("iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAHVQTFRFAAAAPiY6OyM3JQ0hGA0kNh4uDQAQNR0tCQAMUzhQNiUoKyMYHhYLSzBINyYpMiofIxsQLBErUC5TOSklNCY1SCZLQDAsPi4qMiQzLi8yLS4xSCFIHB0gTTtYLx06QC5LKRc0KBgxFgYfJBYjLR8sCAAHIRMgTGYfZAAAACd0Uk5TAP//////////////////////////////////////////////////WYQoUgAAAHlJREFUeJxjZEAHjP8hFLo4EyPjH6wSDKy/Gdh+YZNg/8nA8QNTgpPxGzfjFyxG8f5lYWRkfI8pIcT4VuQNNstFgepfYJGQZGR8yoDNHzJPYCwUCVnGRwxYJeQZH2CXQAZ0lFC8TzWjlO5hk1C+S6JRKndUGW9hSAAAxWQWGSDC5dMAAAAASUVORK5CYII=")
@@ -14814,7 +14814,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const db = new pouchdb__WEBPACK_IMPORTED_MODULE_6__["default"](_data_constants__WEBPACK_IMPORTED_MODULE_4__.appName);
-let alarms = [
+const alarms = [
     { name: 'alarm2', value: './a1sauce/Settings/Library/Controls/Alarms/alarm2.wav' },
     { name: 'notification1', value: './a1sauce/Settings/Library/Controls/Alarms/notification1.wav' },
     { name: 'notification2', value: './a1sauce/Settings/Library/Controls/Alarms/notification2.wav' },
@@ -14923,7 +14923,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Storage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Storage */ "./a1sauce/Settings/Storage/index.ts");
 
 
-const createCheckboxSetting = (name, description, defaultValue) => {
+const createCheckboxSetting = (name, description, defaultValue, callback) => {
     const input = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createCheckboxInput)(name, defaultValue);
     const label = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createLabel)(name, description);
     const checkboxLabel = (0,_Components__WEBPACK_IMPORTED_MODULE_0__.createLabel)(name, '');
@@ -14936,11 +14936,11 @@ const createCheckboxSetting = (name, description, defaultValue) => {
     container.appendChild(checkboxLabel);
     container.appendChild(label);
     container.addEventListener('click', (e) => {
-        if (e.target == container) {
-            input.checked = !input.checked;
-            input.dispatchEvent(new CustomEvent('change', { bubbles: true }));
-            (0,_Storage__WEBPACK_IMPORTED_MODULE_1__.updateSetting)(name, input.checked);
-        }
+        e.preventDefault();
+        callback?.(!input.checked);
+        input.checked = !input.checked;
+        input.dispatchEvent(new CustomEvent('change', { bubbles: true }));
+        (0,_Storage__WEBPACK_IMPORTED_MODULE_1__.updateSetting)(name, input.checked);
     });
     return container;
 };
@@ -15155,20 +15155,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let isMouseDown = false;
-async function updateRangeValue(rangeInput, add) {
-    if (add) {
-        rangeInput.value = String(parseInt(rangeInput.value, 10) + 1);
-    }
-    else {
-        rangeInput.value = String(parseInt(rangeInput.value, 10) - 1);
-    }
-    rangeInput.dispatchEvent(new Event('input', { bubbles: true }));
-    (0,_Storage__WEBPACK_IMPORTED_MODULE_2__.updateSetting)(rangeInput.id, rangeInput.value);
-    await (0,_Utils_timeout__WEBPACK_IMPORTED_MODULE_0__.timeout)(50);
-    if (isMouseDown)
-        updateRangeValue(rangeInput, add);
-}
-const createRangeSetting = (name, description, options = {}) => {
+const createRangeSetting = (name, description, options = {}, callback) => {
     const { classes = options.classes ?? '', defaultValue = options.defaultValue ?? '100', min = options.min ?? 0, max = options.max ?? 100, unit = options.unit ?? '%', } = options;
     const rangeInput = (0,_Components__WEBPACK_IMPORTED_MODULE_1__.createInput)('range', name, defaultValue);
     rangeInput.setAttribute('min', min.toString());
@@ -15193,6 +15180,20 @@ const createRangeSetting = (name, description, options = {}) => {
                 value +
                 '%, #0d1c24 100%)';
     };
+    async function updateRangeValue(rangeInput, add) {
+        if (add) {
+            rangeInput.value = String(parseInt(rangeInput.value, 10) + 1);
+        }
+        else {
+            rangeInput.value = String(parseInt(rangeInput.value, 10) - 1);
+        }
+        rangeInput.dispatchEvent(new Event('input', { bubbles: true }));
+        (0,_Storage__WEBPACK_IMPORTED_MODULE_2__.updateSetting)(rangeInput.id, rangeInput.value);
+        callback?.(parseInt(rangeInput.value, 10));
+        await (0,_Utils_timeout__WEBPACK_IMPORTED_MODULE_0__.timeout)(50);
+        if (isMouseDown)
+            updateRangeValue(rangeInput, add);
+    }
     const minusButton = document.createElement('div');
     minusButton.classList.add('minus-btn');
     minusButton.classList.add('nis-btn');
@@ -15524,8 +15525,8 @@ class SettingsManager {
         this.settings?.push(_Library_index__WEBPACK_IMPORTED_MODULE_0__.createButton(name, content, fn, options));
         return this;
     };
-    addCheckboxSetting = (name, description, defaultValue) => {
-        this.settings?.push(_Library_index__WEBPACK_IMPORTED_MODULE_0__.createCheckboxSetting(name, description, defaultValue));
+    addCheckboxSetting = (name, description, defaultValue, callback) => {
+        this.settings?.push(_Library_index__WEBPACK_IMPORTED_MODULE_0__.createCheckboxSetting(name, description, defaultValue, callback));
         return this;
     };
     addDropdownSetting = (name, description, defaultValue, options) => {
@@ -15560,8 +15561,8 @@ class SettingsManager {
         this.settings?.push(_Library_index__WEBPACK_IMPORTED_MODULE_0__.createNumberSetting(name, description, options));
         return this;
     };
-    addRangeSetting = (name, description, options = {}) => {
-        this.settings?.push(_Library_index__WEBPACK_IMPORTED_MODULE_0__.createRangeSetting(name, description, options));
+    addRangeSetting = (name, description, options = {}, callback) => {
+        this.settings?.push(_Library_index__WEBPACK_IMPORTED_MODULE_0__.createRangeSetting(name, description, options, callback));
         return this;
     };
     getSettings = () => {
@@ -15805,8 +15806,8 @@ const magic_gauge = {
             stacks: 0,
             position: {
                 active_orientation: {
-                    x: 0,
-                    y: 0,
+                    x: 68,
+                    y: 12,
                 },
                 grouped: {
                     x: 68,
@@ -15829,8 +15830,8 @@ const magic_gauge = {
             stacks: 0,
             position: {
                 active_orientation: {
-                    x: 0,
-                    y: 0,
+                    x: 68,
+                    y: 12,
                 },
                 grouped: {
                     x: 68,
@@ -15855,8 +15856,8 @@ const magic_gauge = {
         cooldownDuration: 0,
         position: {
             active_orientation: {
-                x: 0,
-                y: 0,
+                x: 30,
+                y: 5,
             },
             grouped: {
                 x: 30,
@@ -15872,7 +15873,7 @@ const magic_gauge = {
             },
         },
     },
-    odeToDeceit: {
+    soulfire: {
         isActiveOverlay: true,
         active: false,
         time: 0,
@@ -15880,8 +15881,8 @@ const magic_gauge = {
         cooldownDuration: 0,
         position: {
             active_orientation: {
-                x: 0,
-                y: 0,
+                x: -3,
+                y: 5,
             },
             grouped: {
                 x: -3,
@@ -15905,8 +15906,8 @@ const magic_gauge = {
         cooldownDuration: 0,
         position: {
             active_orientation: {
-                x: 0,
-                y: 0,
+                x: 55,
+                y: 45,
             },
             grouped: {
                 x: 55,
@@ -15930,8 +15931,8 @@ const magic_gauge = {
         cooldownDuration: 0,
         position: {
             active_orientation: {
-                x: 0,
-                y: 0,
+                x: 10,
+                y: 45,
             },
             grouped: {
                 x: 10,
@@ -15944,53 +15945,6 @@ const magic_gauge = {
             reverse_split: {
                 x: 10,
                 y: 45,
-            },
-        },
-    },
-};
-
-
-/***/ }),
-
-/***/ "./data/meleeGauge.ts":
-/*!****************************!*\
-  !*** ./data/meleeGauge.ts ***!
-  \****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   melee_gauge: () => (/* binding */ melee_gauge)
-/* harmony export */ });
-const melee_gauge = {
-    isInCombat: false,
-    position: {
-        x: 50,
-        y: 50,
-    },
-    berserk: {
-        isActiveOverlay: false,
-        active: false,
-        time: 0,
-        isOnCooldown: false,
-        cooldownDuration: 0,
-        position: {
-            active_orientation: {
-                x: 0,
-                y: 0,
-            },
-            grouped: {
-                x: 0,
-                y: 0,
-            },
-            split: {
-                x: 0,
-                y: 0,
-            },
-            reverse_split: {
-                x: 0,
-                y: 0,
             },
         },
     },
@@ -16313,8 +16267,8 @@ const ranged_gauge = {
         cooldownDuration: 0,
         position: {
             active_orientation: {
-                x: 0,
-                y: 0,
+                x: 10,
+                y: 45,
             },
             grouped: {
                 x: 10,
@@ -16338,8 +16292,8 @@ const ranged_gauge = {
         cooldownDuration: 0,
         position: {
             active_orientation: {
-                x: 0,
-                y: 0,
+                x: 35,
+                y: 5,
             },
             grouped: {
                 x: 35,
@@ -16363,8 +16317,8 @@ const ranged_gauge = {
         cooldownDuration: 0,
         position: {
             active_orientation: {
-                x: 0,
-                y: 0,
+                x: -3,
+                y: 5,
             },
             grouped: {
                 x: -3,
@@ -16387,8 +16341,8 @@ const ranged_gauge = {
         stacks: 0,
         position: {
             active_orientation: {
-                x: 0,
-                y: 0,
+                x: 55,
+                y: 45,
             },
             grouped: {
                 x: 55,
@@ -16427,39 +16381,41 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./types */ "./types/index.ts");
 /* harmony import */ var _lib_readBuffs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./lib/readBuffs */ "./lib/readBuffs.ts");
 /* harmony import */ var _lib_readEnemy__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./lib/readEnemy */ "./lib/readEnemy.ts");
-/* harmony import */ var _data_necromancyGauge__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./data/necromancyGauge */ "./data/necromancyGauge.ts");
-/* harmony import */ var _lib_necromancy_conjures__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./lib/necromancy/conjures */ "./lib/necromancy/conjures.ts");
-/* harmony import */ var _lib_necromancy_soul__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./lib/necromancy/soul */ "./lib/necromancy/soul.ts");
-/* harmony import */ var _lib_necromancy_necrosis__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./lib/necromancy/necrosis */ "./lib/necromancy/necrosis.ts");
-/* harmony import */ var _lib_necromancy_incantations__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./lib/necromancy/incantations */ "./lib/necromancy/incantations.ts");
-/* harmony import */ var _lib_necromancy_livingDeath__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./lib/necromancy/livingDeath */ "./lib/necromancy/livingDeath.ts");
-/* harmony import */ var _lib_necromancy_bloat__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./lib/necromancy/bloat */ "./lib/necromancy/bloat.ts");
-/* harmony import */ var _data_magicGauge__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./data/magicGauge */ "./data/magicGauge.ts");
-/* harmony import */ var _data_rangedGauge__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./data/rangedGauge */ "./data/rangedGauge.ts");
-/* harmony import */ var _data_meleeGauge__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./data/meleeGauge */ "./data/meleeGauge.ts");
-/* harmony import */ var _index_html__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./index.html */ "./index.html");
-/* harmony import */ var _appconfig_json__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./appconfig.json */ "./appconfig.json");
-/* harmony import */ var _version_json__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./version.json */ "./version.json");
-/* harmony import */ var _icon_png__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./icon.png */ "./icon.png");
-/* harmony import */ var _css_styles_css__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./css/styles.css */ "./css/styles.css");
-/* harmony import */ var _a1sauce__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./a1sauce */ "./a1sauce/index.ts");
-/* harmony import */ var _a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./a1sauce/Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
-/* harmony import */ var _a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./a1sauce/Utils/getById */ "./a1sauce/Utils/getById.ts");
-/* harmony import */ var _lib_settings__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./lib/settings */ "./lib/settings/index.ts");
-/* harmony import */ var _data_constants__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./data/constants */ "./data/constants.ts");
-/* harmony import */ var _a1sauce_Patches_patchNotes__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./a1sauce/Patches/patchNotes */ "./a1sauce/Patches/patchNotes.ts");
-/* harmony import */ var _patchnotes__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./patchnotes */ "./patchnotes.ts");
-/* harmony import */ var _a1sauce_Patches_serverCheck__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./a1sauce/Patches/serverCheck */ "./a1sauce/Patches/serverCheck.ts");
-/* harmony import */ var _lib_magic_sunshine__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./lib/magic/sunshine */ "./lib/magic/sunshine.ts");
-/* harmony import */ var _lib_magic_activeSpell__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./lib/magic/activeSpell */ "./lib/magic/activeSpell.ts");
-/* harmony import */ var _lib_magic_instability__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./lib/magic/instability */ "./lib/magic/instability.ts");
-/* harmony import */ var _lib_magic_tsunami__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./lib/magic/tsunami */ "./lib/magic/tsunami.ts");
-/* harmony import */ var _lib_ranged_deathsSwiftness__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./lib/ranged/deathsSwiftness */ "./lib/ranged/deathsSwiftness.ts");
-/* harmony import */ var _lib_ranged_crystalRain__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./lib/ranged/crystalRain */ "./lib/ranged/crystalRain.ts");
-/* harmony import */ var _lib_ranged_perfectEquilibrium__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./lib/ranged/perfectEquilibrium */ "./lib/ranged/perfectEquilibrium.ts");
-/* harmony import */ var _lib_magic_odeToDeceit__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./lib/magic/odeToDeceit */ "./lib/magic/odeToDeceit.ts");
-/* harmony import */ var _lib_ranged_splitSoul__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./lib/ranged/splitSoul */ "./lib/ranged/splitSoul.ts");
-/* harmony import */ var _a1sauce_Error_logError__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./a1sauce/Error/logError */ "./a1sauce/Error/logError.ts");
+/* harmony import */ var _lib_necromancy_conjures__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./lib/necromancy/conjures */ "./lib/necromancy/conjures.ts");
+/* harmony import */ var _lib_necromancy_soul__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./lib/necromancy/soul */ "./lib/necromancy/soul.ts");
+/* harmony import */ var _lib_necromancy_necrosis__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./lib/necromancy/necrosis */ "./lib/necromancy/necrosis.ts");
+/* harmony import */ var _lib_necromancy_incantations__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./lib/necromancy/incantations */ "./lib/necromancy/incantations.ts");
+/* harmony import */ var _lib_necromancy_livingDeath__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./lib/necromancy/livingDeath */ "./lib/necromancy/livingDeath.ts");
+/* harmony import */ var _lib_necromancy_bloat__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./lib/necromancy/bloat */ "./lib/necromancy/bloat.ts");
+/* harmony import */ var _index_html__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./index.html */ "./index.html");
+/* harmony import */ var _appconfig_json__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./appconfig.json */ "./appconfig.json");
+/* harmony import */ var _version_json__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./version.json */ "./version.json");
+/* harmony import */ var _icon_png__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./icon.png */ "./icon.png");
+/* harmony import */ var _css_styles_css__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./css/styles.css */ "./css/styles.css");
+/* harmony import */ var _a1sauce__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./a1sauce */ "./a1sauce/index.ts");
+/* harmony import */ var _a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./a1sauce/Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
+/* harmony import */ var _a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./a1sauce/Utils/getById */ "./a1sauce/Utils/getById.ts");
+/* harmony import */ var _lib_settings__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./lib/settings */ "./lib/settings/index.ts");
+/* harmony import */ var _data_constants__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./data/constants */ "./data/constants.ts");
+/* harmony import */ var _a1sauce_Patches_patchNotes__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./a1sauce/Patches/patchNotes */ "./a1sauce/Patches/patchNotes.ts");
+/* harmony import */ var _patchnotes__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./patchnotes */ "./patchnotes.ts");
+/* harmony import */ var _a1sauce_Patches_serverCheck__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./a1sauce/Patches/serverCheck */ "./a1sauce/Patches/serverCheck.ts");
+/* harmony import */ var _lib_magic_sunshine__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./lib/magic/sunshine */ "./lib/magic/sunshine.ts");
+/* harmony import */ var _lib_magic_activeSpell__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./lib/magic/activeSpell */ "./lib/magic/activeSpell.ts");
+/* harmony import */ var _lib_magic_instability__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./lib/magic/instability */ "./lib/magic/instability.ts");
+/* harmony import */ var _lib_magic_tsunami__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./lib/magic/tsunami */ "./lib/magic/tsunami.ts");
+/* harmony import */ var _lib_ranged_deathsSwiftness__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./lib/ranged/deathsSwiftness */ "./lib/ranged/deathsSwiftness.ts");
+/* harmony import */ var _lib_ranged_crystalRain__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./lib/ranged/crystalRain */ "./lib/ranged/crystalRain.ts");
+/* harmony import */ var _lib_ranged_perfectEquilibrium__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./lib/ranged/perfectEquilibrium */ "./lib/ranged/perfectEquilibrium.ts");
+/* harmony import */ var _lib_magic_soulfire__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./lib/magic/soulfire */ "./lib/magic/soulfire.ts");
+/* harmony import */ var _lib_ranged_splitSoul__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./lib/ranged/splitSoul */ "./lib/ranged/splitSoul.ts");
+/* harmony import */ var _a1sauce_Error_logError__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./a1sauce/Error/logError */ "./a1sauce/Error/logError.ts");
+/* harmony import */ var _state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./state/gauge-data/gauge-data.state */ "./state/gauge-data/gauge-data.state.ts");
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./state */ "./state/index.ts");
+/* harmony import */ var _state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./state/gauge-data/magic-gauge.state */ "./state/gauge-data/magic-gauge.state.ts");
+/* harmony import */ var _state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./state/gauge-data/range-gauge.state */ "./state/gauge-data/range-gauge.state.ts");
+/* harmony import */ var _state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./state/gauge-data/necromancy-gauge.state */ "./state/gauge-data/necromancy-gauge.state.ts");
+
 
 
 // General Purpose
@@ -16473,11 +16429,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// Magic Gauge
-
-// Ranged Gauge
-
-// Melee Gauge
 
 
 
@@ -16503,50 +16454,41 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const sauce = _a1sauce__WEBPACK_IMPORTED_MODULE_19__.A1Sauce.instance;
-sauce.setName(_data_constants__WEBPACK_IMPORTED_MODULE_23__.appName);
-sauce.setVersion(_data_constants__WEBPACK_IMPORTED_MODULE_23__.majorVersion, _data_constants__WEBPACK_IMPORTED_MODULE_23__.minorVersion, _data_constants__WEBPACK_IMPORTED_MODULE_23__.patchVersion);
+
+
+const sauce = _a1sauce__WEBPACK_IMPORTED_MODULE_15__.A1Sauce.instance;
+sauce.setName(_data_constants__WEBPACK_IMPORTED_MODULE_19__.appName);
+sauce.setVersion(_data_constants__WEBPACK_IMPORTED_MODULE_19__.majorVersion, _data_constants__WEBPACK_IMPORTED_MODULE_19__.minorVersion, _data_constants__WEBPACK_IMPORTED_MODULE_19__.patchVersion);
 sauce.createSettings();
-const errorLogger = new _a1sauce_Error_logError__WEBPACK_IMPORTED_MODULE_36__.LogError();
-const gauges = {
-    isInCombat: false,
-    checkCombatStatus: false,
-    hasBeenOutOfCombat: 10,
-    scaleFactor: 1,
-    combatStyle: 3,
-    automaticSwapping: false,
-    necromancy: _data_necromancyGauge__WEBPACK_IMPORTED_MODULE_4__.necromancy_gauge,
-    magic: _data_magicGauge__WEBPACK_IMPORTED_MODULE_11__.magic_gauge,
-    ranged: _data_rangedGauge__WEBPACK_IMPORTED_MODULE_12__.ranged_gauge,
-    melee: _data_meleeGauge__WEBPACK_IMPORTED_MODULE_13__.melee_gauge,
-};
+const errorLogger = new _a1sauce_Error_logError__WEBPACK_IMPORTED_MODULE_32__.LogError();
 async function renderOverlays() {
-    await (0,_lib_readEnemy__WEBPACK_IMPORTED_MODULE_3__.readEnemy)(gauges);
-    if (!gauges.isInCombat && !(0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('updatingOverlayPosition')) {
+    const { gaugeData } = _state__WEBPACK_IMPORTED_MODULE_34__.store.getState();
+    await (0,_lib_readEnemy__WEBPACK_IMPORTED_MODULE_3__.readEnemy)();
+    if (!gaugeData.isInCombat && !gaugeData.updatingOverlayPosition) {
         return _lib_utility__WEBPACK_IMPORTED_MODULE_0__.clearTextOverlays();
     }
-    await (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_2__.readBuffs)(gauges);
-    switch (gauges.combatStyle) {
+    await (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_2__.readBuffs)();
+    switch (gaugeData.combatStyle) {
         case _types__WEBPACK_IMPORTED_MODULE_1__.CombatStyle.necro:
-            await (0,_lib_necromancy_livingDeath__WEBPACK_IMPORTED_MODULE_9__.livingDeathOverlay)(gauges);
-            await (0,_lib_necromancy_conjures__WEBPACK_IMPORTED_MODULE_5__.conjureOverlay)(gauges);
-            await (0,_lib_necromancy_soul__WEBPACK_IMPORTED_MODULE_6__.soulsOverlay)(gauges);
-            await (0,_lib_necromancy_necrosis__WEBPACK_IMPORTED_MODULE_7__.necrosisOverlay)(gauges);
-            await (0,_lib_necromancy_incantations__WEBPACK_IMPORTED_MODULE_8__.incantationsOverlay)(gauges);
-            await (0,_lib_necromancy_bloat__WEBPACK_IMPORTED_MODULE_10__.bloatOverlay)(gauges);
+            await (0,_lib_necromancy_livingDeath__WEBPACK_IMPORTED_MODULE_8__.livingDeathOverlay)();
+            await (0,_lib_necromancy_conjures__WEBPACK_IMPORTED_MODULE_4__.conjureOverlay)();
+            await (0,_lib_necromancy_soul__WEBPACK_IMPORTED_MODULE_5__.soulsOverlay)();
+            await (0,_lib_necromancy_necrosis__WEBPACK_IMPORTED_MODULE_6__.necrosisOverlay)();
+            await (0,_lib_necromancy_incantations__WEBPACK_IMPORTED_MODULE_7__.incantationsOverlay)();
+            await (0,_lib_necromancy_bloat__WEBPACK_IMPORTED_MODULE_9__.bloatOverlay)();
             break;
         case _types__WEBPACK_IMPORTED_MODULE_1__.CombatStyle.mage:
-            await (0,_lib_magic_sunshine__WEBPACK_IMPORTED_MODULE_27__.sunshineOverlay)(gauges);
-            await (0,_lib_magic_activeSpell__WEBPACK_IMPORTED_MODULE_28__.spellsOverlay)(gauges);
-            await (0,_lib_magic_instability__WEBPACK_IMPORTED_MODULE_29__.fsoaOverlay)(gauges);
-            await (0,_lib_magic_tsunami__WEBPACK_IMPORTED_MODULE_30__.tsunamiOverlay)(gauges);
-            await (0,_lib_magic_odeToDeceit__WEBPACK_IMPORTED_MODULE_34__.odeToDeceitOverlay)(gauges);
+            await (0,_lib_magic_sunshine__WEBPACK_IMPORTED_MODULE_23__.sunshineOverlay)();
+            await (0,_lib_magic_activeSpell__WEBPACK_IMPORTED_MODULE_24__.spellsOverlay)();
+            await (0,_lib_magic_instability__WEBPACK_IMPORTED_MODULE_25__.fsoaOverlay)();
+            await (0,_lib_magic_tsunami__WEBPACK_IMPORTED_MODULE_26__.tsunamiOverlay)();
+            await (0,_lib_magic_soulfire__WEBPACK_IMPORTED_MODULE_30__.soulfireOverlay)();
             break;
         case _types__WEBPACK_IMPORTED_MODULE_1__.CombatStyle.ranged:
-            await (0,_lib_ranged_deathsSwiftness__WEBPACK_IMPORTED_MODULE_31__.deathsSwiftnessOverlay)(gauges);
-            await (0,_lib_ranged_crystalRain__WEBPACK_IMPORTED_MODULE_32__.crystalRainOverlay)(gauges);
-            await (0,_lib_ranged_perfectEquilibrium__WEBPACK_IMPORTED_MODULE_33__.peOverlay)(gauges);
-            await (0,_lib_ranged_splitSoul__WEBPACK_IMPORTED_MODULE_35__.rangedSplitSoulOverlay)(gauges);
+            await (0,_lib_ranged_deathsSwiftness__WEBPACK_IMPORTED_MODULE_27__.deathsSwiftnessOverlay)();
+            await (0,_lib_ranged_crystalRain__WEBPACK_IMPORTED_MODULE_28__.crystalRainOverlay)();
+            await (0,_lib_ranged_perfectEquilibrium__WEBPACK_IMPORTED_MODULE_29__.peOverlay)();
+            await (0,_lib_ranged_splitSoul__WEBPACK_IMPORTED_MODULE_31__.rangedSplitSoulOverlay)();
             break;
         case _types__WEBPACK_IMPORTED_MODULE_1__.CombatStyle.melee:
             break;
@@ -16571,8 +16513,8 @@ async function startApp() {
             message: `<p>This app does not have permissions to create overlays. Please adjust the app's settings in Alt1.</p>`,
         });
     }
-    const patchNotes = new _a1sauce_Patches_patchNotes__WEBPACK_IMPORTED_MODULE_24__.Patches();
-    patchNotes.setNotes(_patchnotes__WEBPACK_IMPORTED_MODULE_25__.notes);
+    const patchNotes = new _a1sauce_Patches_patchNotes__WEBPACK_IMPORTED_MODULE_20__.Patches();
+    patchNotes.setNotes(_patchnotes__WEBPACK_IMPORTED_MODULE_21__.notes);
     if (patchNotes.checkForNewVersion())
         patchNotes.showPatchNotes();
     document.addEventListener('keydown', function (event) {
@@ -16581,11 +16523,39 @@ async function startApp() {
             patchNotes.showPatchNotes();
         }
     });
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('buffsPosition') == undefined) {
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_16__.getSetting)('buffsPosition') === undefined) {
         calibrationWarning();
     }
-    setNecromancyGaugeData(gauges);
+    // Should be initial?
+    let oldStateString = JSON.stringify(_state__WEBPACK_IMPORTED_MODULE_34__.store.getState());
+    const localGaugeData = localStorage.getItem('gauge_data');
+    /**
+     * Localstorage for _any_ of the data will _not_ exist if this is the users first time launching.
+     * Otherwise, we know the data is there from us populating it.
+     */
+    if (localGaugeData) {
+        const { magic, ranged, necromancy, melee, gaugeData, alarms } = JSON.parse(localGaugeData);
+        console.log(gaugeData);
+        _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_33__.GaugeDataSlice.actions.updateState(gaugeData));
+        _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_35__.MagicGaugeSlice.actions.updateState(magic));
+        _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_36__.RangeGaugeSlice.actions.updateState(ranged));
+        _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_37__.NecromancyGaugeSlice.actions.updateState(necromancy));
+    }
+    _state__WEBPACK_IMPORTED_MODULE_34__.store.subscribe(() => {
+        const state = _state__WEBPACK_IMPORTED_MODULE_34__.store.getState();
+        const stateString = JSON.stringify(state);
+        if (oldStateString === stateString) {
+            return;
+        }
+        oldStateString = stateString;
+        localStorage.setItem('gauge_data', JSON.stringify(state));
+    });
     updateActiveOrientationFromLocalStorage();
+    /**
+     * This loop will be the alarm handler, it'll loop forever constantly checking
+     * the state of alarms and what needs to play or not.
+     */
+    (0,_lib_utility__WEBPACK_IMPORTED_MODULE_0__.alarmLoop)();
     // Apparently setting GroupZIndex is a pretty expensive call to do in the loop - so let's only do it once
     alt1.overLaySetGroupZIndex('Undead_Army_Text', 1);
     alt1.overLaySetGroupZIndex('LivingDeath_Text', 1);
@@ -16596,8 +16566,8 @@ async function startApp() {
     alt1.overLaySetGroupZIndex('Instability_Cooldown_Text', 1);
     alt1.overLaySetGroupZIndex('Tsunami_Text', 1);
     alt1.overLaySetGroupZIndex('Tsunami_Cooldown_Text', 1);
-    alt1.overLaySetGroupZIndex('OdeToDeceit_Text', 1);
-    alt1.overLaySetGroupZIndex('OdeToDeceit_Cooldown_Text', 1);
+    alt1.overLaySetGroupZIndex('Soulfire_Text', 1);
+    alt1.overLaySetGroupZIndex('Soulfire_Cooldown_Text', 1);
     alt1.overLaySetGroupZIndex('DeathsSwiftness_Text', 1);
     alt1.overLaySetGroupZIndex('DeathsSwiftness_Cooldown_Text', 1);
     alt1.overLaySetGroupZIndex('CrystalRain_Text', 1);
@@ -16612,8 +16582,8 @@ function findBuffAndDebuffBars() {
     (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_2__.findDebuffsBar)();
 }
 function resetPositionsAndFindBuffAndDebuffBars() {
-    (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.updateSetting)('buffsPosition', undefined);
-    (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.updateSetting)('debuffsPosition', undefined);
+    (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_16__.updateSetting)('buffsPosition', undefined);
+    (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_16__.updateSetting)('debuffsPosition', undefined);
     findBuffAndDebuffBars();
 }
 function beginRendering() {
@@ -16634,51 +16604,19 @@ function calibrationWarning() {
     }, 8000);
 }
 function updateActiveOrientationFromLocalStorage() {
-    // Retrieve selected orientation from localStorage
-    let selectedOrientation = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('selectedOrientation');
-    if (!selectedOrientation) {
-        selectedOrientation = 'reverse_split';
-    }
-    (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.updateSetting)('selectedOrientation', selectedOrientation);
-    function isOrientation(obj, key) {
-        return key === 'active_orientation' && !!obj.active_orientation;
-    }
-    // Function to recursively update orientations in an object
-    function updateActiveOrientation(obj) {
-        for (const key in obj) {
-            // TODO: Fix types here. This code works w/o issues as-is and I'm not sure how to make it happy
-            if (typeof obj[key] === 'object') {
-                if (isOrientation(obj, key)) {
-                    obj['active_orientation'].x = obj[selectedOrientation].x;
-                    obj['active_orientation'].y = obj[selectedOrientation].y;
-                }
-                else {
-                    updateActiveOrientation(obj[key]);
-                }
-            }
-        }
-        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.freezeOverlays();
-        _lib_utility__WEBPACK_IMPORTED_MODULE_0__.continueOverlays();
-    }
-    updateActiveOrientation(gauges);
+    const selectedOrientation = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_16__.getSetting)('selectedOrientation');
+    _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_37__.NecromancyGaugeSlice.actions.updateActiveOrientation(selectedOrientation));
+    (0,_lib_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlays)();
 }
 // TODO: Get rid of this crap
 // Null suppressions are used as these items
 // are added via A1Sauce.Settings and thus will always exist
 function addEventListeners() {
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_21__.getById)('selectedOrientation').addEventListener('change', () => {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('selectedOrientation').addEventListener('change', () => {
         updateActiveOrientationFromLocalStorage();
     });
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_21__.getById)('showNecrosis').addEventListener('change', () => {
-        gauges.necromancy.stacks.duplicateNecrosisRow = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('dupeRow');
-    });
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_21__.getById)('defaultCombatStyle').addEventListener('change', () => {
-        gauges.combatStyle = parseInt((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('defaultCombatStyle'), 10);
-        // Clear all overlays, this gives a snappier feeling in the UI.
-        (0,_lib_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlays)();
-    });
     // For some reason this one calculates incorrectly on load so we override the initial styles here
-    const scaleRange = (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_21__.getById)('scale');
+    const scaleRange = (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('scale');
     const scaleRangevalue = ((parseInt(scaleRange.value, 10) - parseInt(scaleRange.min, 10)) /
         (parseInt(scaleRange.max, 10) - parseInt(scaleRange.min))) *
         100;
@@ -16688,10 +16626,12 @@ function addEventListeners() {
             '%, #0d1c24 ' +
             scaleRangevalue +
             '%, #0d1c24 100%)';
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_21__.getById)('scale').addEventListener('change', () => {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('scale').addEventListener('change', async (e) => {
+        const scaleFactor = Number(e.target.value);
+        _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_33__.GaugeDataSlice.actions.updateState({ scaleFactor: scaleFactor / 100 }));
         location.reload();
     });
-    const combatTimerRange = (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_21__.getById)('combatTimer');
+    const combatTimerRange = (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('combatTimer');
     const combatTimervalue = ((parseInt(combatTimerRange.value, 10) -
         parseInt(combatTimerRange.min, 10)) /
         (parseInt(combatTimerRange.max, 10) -
@@ -16705,183 +16645,100 @@ function addEventListeners() {
             '%, #0d1c24 100%)';
     document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
         checkbox.addEventListener('change', () => {
-            setNecromancyGaugeData(gauges);
+            //console.log();
+            // setNecromancyGaugeData();
             _lib_utility__WEBPACK_IMPORTED_MODULE_0__.freezeAndContinueOverlays(); // Force an instant redraw
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.updateSetting)('gaugedata', JSON.stringify(gauges));
+            const state = _state__WEBPACK_IMPORTED_MODULE_34__.store.getState();
+            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_16__.updateSetting)('gauge-data', JSON.stringify(state));
+            // store.dispatch(GaugeDataSlice.actions.updateState({
+            //
+            // }))
+            //const gaugeData = getGaugeData()!;
+            //Object.assign(, gaugeData);
         });
     });
     /* Update Alarm Thresholds */
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_21__.getById)('alarmSoulsThreshold').addEventListener('change', (e) => {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('alarmSoulsThreshold')?.addEventListener('change', (e) => {
         const target = e.target;
-        gauges.necromancy.stacks.souls.alarm.threshold = parseInt(target.value, 10);
+        _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_37__.NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'souls',
+            alarm: { threshold: parseInt(target.value, 10) },
+        }));
     });
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_21__.getById)('alarmNecrosisThreshold').addEventListener('change', (e) => {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('alarmNecrosisThreshold').addEventListener('change', (e) => {
         const target = e.target;
-        gauges.necromancy.stacks.necrosis.alarm.threshold = parseInt(target.value, 10);
+        _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_37__.NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'necrosis',
+            alarm: { threshold: parseInt(target.value, 10) },
+        }));
     });
     /* Update Active Alarms */
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_21__.getById)('alarmSoulsActive').addEventListener('change', (e) => {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('alarmSoulsActive').addEventListener('change', (e) => {
         const target = e.target;
-        gauges.necromancy.stacks.souls.alarm.isActive = target.checked;
+        _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_37__.NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'souls',
+            alarm: { isActive: target.checked },
+        }));
     });
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_21__.getById)('alarmNecrosisActive').addEventListener('change', (e) => {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('alarmNecrosisActive').addEventListener('change', (e) => {
         const target = e.target;
-        gauges.necromancy.stacks.necrosis.alarm.isActive = target.checked;
+        _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_37__.NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'necrosis',
+            alarm: { isActive: target.checked },
+        }));
     });
     /* Update Looping Alarms */
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_21__.getById)('alarmNecrosisLoop').addEventListener('change', (e) => {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('alarmNecrosisLoop').addEventListener('change', (e) => {
         const target = e.target;
-        gauges.necromancy.stacks.necrosis.alarm.isLooping = target.checked;
+        _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_37__.NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'necrosis',
+            alarm: { isLooping: target.checked },
+        }));
     });
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_21__.getById)('alarmSoulsLoop').addEventListener('change', (e) => {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('alarmSoulsLoop').addEventListener('change', (e) => {
         const target = e.target;
-        gauges.necromancy.stacks.souls.alarm.isLooping = target.checked;
+        _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_37__.NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'souls',
+            alarm: { isLooping: target.checked },
+        }));
     });
     /* Update Alarm Volumes */
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_21__.getById)('alarmNecrosisVolume').addEventListener('change', (e) => {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('alarmNecrosisVolume').addEventListener('change', (e) => {
         const target = e.target;
-        gauges.necromancy.stacks.necrosis.alarm.volume = parseInt(target.value, 10);
+        _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_37__.NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'necrosis',
+            alarm: { volume: parseInt(target.value, 10) },
+        }));
     });
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_21__.getById)('alarmSoulsVolume').addEventListener('change', (e) => {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('alarmSoulsVolume').addEventListener('change', (e) => {
         const target = e.target;
-        gauges.necromancy.stacks.souls.alarm.volume = parseInt(target.value, 10);
+        _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_37__.NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'souls',
+            alarm: { volume: parseInt(target.value, 10) },
+        }));
     });
     /* Update Alarm Sounds */
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_21__.getById)('alarmNecrosisAlertSound').addEventListener('change', (e) => {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('alarmNecrosisAlertSound').addEventListener('change', (e) => {
         const target = e.target;
-        gauges.necromancy.stacks.necrosis.alarm.sound = target.value;
+        _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_37__.NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'necrosis',
+            alarm: { sound: target.value },
+        }));
     });
-    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_21__.getById)('alarmSoulsAlertSound').addEventListener('change', (e) => {
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('alarmSoulsAlertSound').addEventListener('change', (e) => {
         const target = e.target;
-        gauges.necromancy.stacks.souls.alarm.sound = target.value;
+        _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_37__.NecromancyGaugeSlice.actions.updateStackAlarm({
+            stackName: 'souls',
+            alarm: { sound: target.value },
+        }));
     });
-}
-// TODO: Get rid of this crap
-function setNecromancyGaugeData(gauges) {
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('overlayPosition') !== undefined) {
-        //TODO: Each gauge should be able to be positioned separately
-        gauges.necromancy.position = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('overlayPosition');
-        gauges.magic.position = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('overlayPosition');
-        gauges.ranged.position = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('overlayPosition');
-        gauges.melee.position = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('overlayPosition');
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('hideOutsideCombat') !== undefined) {
-        gauges.checkCombatStatus = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('hideOutsideCombat');
-        gauges.isInCombat = false;
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('scale') !== undefined) {
-        gauges.scaleFactor = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('scale') / 100;
-    }
-    else {
-        gauges.scaleFactor = 1;
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('showConjures') !== undefined) {
-        gauges.necromancy.conjures.isActiveOverlay = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('showConjures');
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('showLivingDeath') !== undefined) {
-        gauges.necromancy.livingDeath.isActiveOverlay =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('showLivingDeath');
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('showIncantations') !== undefined) {
-        gauges.necromancy.incantations.isActiveOverlay =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('showIncantations');
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('showInvokeDeath') !== undefined) {
-        gauges.necromancy.incantations.invokeDeath.isActiveOverlay =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('showInvokeDeath');
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('showDarkness') !== undefined) {
-        gauges.necromancy.incantations.darkness.isActiveOverlay =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('showDarkness');
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('showThreads') !== undefined) {
-        gauges.necromancy.incantations.threads.isActiveOverlay =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('showThreads');
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('showSplitSoul') !== undefined) {
-        gauges.necromancy.incantations.splitSoul.isActiveOverlay =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('showSplitSoul');
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('showSouls') !== undefined) {
-        gauges.necromancy.stacks.souls.isActiveOverlay =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('showSouls');
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('pre95Souls') !== undefined) {
-        gauges.necromancy.stacks.pre95Souls = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('pre95Souls');
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('showNecrosis') !== undefined) {
-        gauges.necromancy.stacks.necrosis.isActiveOverlay =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('showNecrosis');
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('useColoredNecrosis') !== undefined) {
-        gauges.necromancy.stacks.useColoredNecrosis =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('useColoredNecrosis');
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('dupeRow') !== undefined) {
-        gauges.necromancy.stacks.duplicateNecrosisRow = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('dupeRow');
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('showBloat') !== undefined) {
-        gauges.necromancy.bloat.isActiveOverlay = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('showBloat');
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('alarmNecrosisActive') !== undefined) {
-        gauges.necromancy.stacks.necrosis.alarm.isActive = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('alarmNecrosisActive');
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('alarmNecrosisAlertSound') !== undefined) {
-        gauges.necromancy.stacks.necrosis.alarm.sound = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('alarmNecrosisAlertSound');
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('alarmNecrosisLoop') !== undefined) {
-        gauges.necromancy.stacks.necrosis.alarm.isLooping =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('alarmNecrosisLoop');
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('alarmNecrosisThreshold') !== undefined) {
-        gauges.necromancy.stacks.necrosis.alarm.threshold = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('alarmNecrosisThreshold');
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('alarmNecrosisVolume') !== undefined) {
-        gauges.necromancy.stacks.necrosis.alarm.volume = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('alarmNecrosisVolume');
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('alarmSoulsActive') !== undefined) {
-        gauges.necromancy.stacks.souls.alarm.isActive =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('alarmSoulsActive');
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('alarmSoulsAlertSound') !== undefined) {
-        gauges.necromancy.stacks.souls.alarm.sound = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('alarmSoulsAlertSound');
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('alarmSoulsLoop') !== undefined) {
-        gauges.necromancy.stacks.souls.alarm.isLooping =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('alarmSoulsLoop');
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('alarmSoulsThreshold') !== undefined) {
-        gauges.necromancy.stacks.souls.alarm.threshold = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('alarmSoulsThreshold');
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('alarmSoulsVolume') !== undefined) {
-        gauges.necromancy.stacks.souls.alarm.volume =
-            (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('alarmSoulsVolume');
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('automaticSwapping') !== undefined) {
-        gauges.automaticSwapping = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('automaticSwapping');
-    }
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('defaultCombatStyle') !== undefined) {
-        const input = (document.getElementById('defaultCombatStyle'));
-        input.value = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('defaultCombatStyle');
-        gauges.combatStyle = parseInt((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('defaultCombatStyle'), 10);
-    }
-}
-// TODO: For Gauge Settings I should be able to store the entire gauge in localStorage
-// TODO: and recover it instead of setting each property individually from a different setting
-// TODO: Just need to figure out why my earlier attempt with setGaugeData() wasn't saving values properly
-function getGaugeData(gauges) {
-    const gaugeData = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('gaugedata');
-    if (gaugeData !== undefined) {
-        gauges = gaugeData;
-        return JSON.parse(gaugeData);
-    }
 }
 window.onload = function () {
     if (window.alt1) {
         alt1.identifyAppUrl('./appconfig.json');
-        if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_20__.getSetting)('checkForUpdates'))
-            (0,_a1sauce_Patches_serverCheck__WEBPACK_IMPORTED_MODULE_26__.startVersionChecking)(_data_constants__WEBPACK_IMPORTED_MODULE_23__.versionUrl);
-        (0,_lib_settings__WEBPACK_IMPORTED_MODULE_22__.renderSettings)(gauges);
+        if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_16__.getSetting)('checkForUpdates'))
+            (0,_a1sauce_Patches_serverCheck__WEBPACK_IMPORTED_MODULE_22__.startVersionChecking)(_data_constants__WEBPACK_IMPORTED_MODULE_19__.versionUrl);
+        (0,_lib_settings__WEBPACK_IMPORTED_MODULE_18__.renderSettings)();
         addEventListeners();
         startApp();
     }
@@ -16908,30 +16765,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   spellsOverlay: () => (/* binding */ spellsOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var alt1_chatbox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! alt1/chatbox */ "../node_modules/alt1/dist/chatbox/index.js");
-/* harmony import */ var alt1_chatbox__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(alt1_chatbox__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var alt1_chatbox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! alt1/chatbox */ "../node_modules/alt1/dist/chatbox/index.js");
+/* harmony import */ var alt1_chatbox__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(alt1_chatbox__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../types */ "./types/index.ts");
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
+/* harmony import */ var _state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state/gauge-data/magic-gauge.state */ "./state/gauge-data/magic-gauge.state.ts");
 
 
 
 
-const spellImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
+
+
+const spellImages = alt1__WEBPACK_IMPORTED_MODULE_4__.webpackImages({
     bloodTithe: __webpack_require__(/*! ../.././asset/gauge-ui/magic/active-spell/blood-tithe.data.png */ "./asset/gauge-ui/magic/active-spell/blood-tithe.data.png"),
     glacialEmbrace: __webpack_require__(/*! ../.././asset/gauge-ui/magic/active-spell/glacial-embrace.data.png */ "./asset/gauge-ui/magic/active-spell/glacial-embrace.data.png"),
     iceBarrage: __webpack_require__(/*! ../.././asset/gauge-ui/magic/active-spell/ice-barrage.data.png */ "./asset/gauge-ui/magic/active-spell/ice-barrage.data.png"),
     noSpell: __webpack_require__(/*! ../.././asset/gauge-ui/magic/active-spell/no-spell.data.png */ "./asset/gauge-ui/magic/active-spell/no-spell.data.png"),
 });
-const chat = new (alt1_chatbox__WEBPACK_IMPORTED_MODULE_3___default());
+const chat = new (alt1_chatbox__WEBPACK_IMPORTED_MODULE_5___default());
 chat.diffRead = true;
 chat.diffReadUseTimestamps = true;
 chat.readargs = {
     colors: [
-        alt1__WEBPACK_IMPORTED_MODULE_2__.mixColor(255, 255, 255),
-        alt1__WEBPACK_IMPORTED_MODULE_2__.mixColor(127, 169, 255),
-        alt1__WEBPACK_IMPORTED_MODULE_2__.mixColor(132, 212, 119),
+        alt1__WEBPACK_IMPORTED_MODULE_4__.mixColor(255, 255, 255),
+        alt1__WEBPACK_IMPORTED_MODULE_4__.mixColor(127, 169, 255),
+        alt1__WEBPACK_IMPORTED_MODULE_4__.mixColor(132, 212, 119),
     ],
 };
 const SPELL_TEXT = {
@@ -16948,16 +16809,18 @@ const getChat = () => {
     }
 };
 let scaledOnce = false;
-async function spellsOverlay(gauges) {
+async function spellsOverlay() {
     getChat();
-    readChatbox(gauges);
-    const { spells } = gauges.magic;
+    readChatbox();
+    const magic = _state__WEBPACK_IMPORTED_MODULE_2__.store.getState().magic;
+    const gaugeData = _state__WEBPACK_IMPORTED_MODULE_2__.store.getState().gaugeData;
+    const { spells } = magic;
     if (!spells.isActiveOverlay) {
         return;
     }
     await spellImages.promise;
     if (!scaledOnce) {
-        (0,_utility__WEBPACK_IMPORTED_MODULE_1__.handleResizingImages)(spellImages, gauges.scaleFactor);
+        (0,_utility__WEBPACK_IMPORTED_MODULE_1__.handleResizingImages)(spellImages, gaugeData.scaleFactor);
         scaledOnce = true;
     }
     const { position } = spells.bloodTithe;
@@ -16966,11 +16829,11 @@ async function spellsOverlay(gauges) {
     switch (spells.activeSpell) {
         case 1:
             displaySpellImage(spellImages.bloodTithe);
-            displaySpellStacks(gauges.magic.spells.bloodTithe);
+            displaySpellStacks(magic.spells.bloodTithe);
             break;
         case 2:
             displaySpellImage(spellImages.glacialEmbrace);
-            displaySpellStacks(gauges.magic.spells.glacialEmbrace);
+            displaySpellStacks(magic.spells.glacialEmbrace);
             break;
         case 3:
             displaySpellImage(spellImages.iceBarrage);
@@ -16980,7 +16843,7 @@ async function spellsOverlay(gauges) {
             break;
     }
     function displaySpellImage(image) {
-        alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(gauges.magic.position.x + x, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(gauges.magic.position.y + y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(image.toDrawableData()), image.width, 1000);
+        alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(magic.position.x + x, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(magic.position.y + y, gaugeData.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_4__.encodeImageString(image.toDrawableData()), image.width, 1000);
     }
     function displaySpellStacks(spell) {
         if (isNaN(spell.stacks))
@@ -16988,29 +16851,22 @@ async function spellsOverlay(gauges) {
         alt1.overLaySetGroup(`Spell_Text`);
         alt1.overLayFreezeGroup(`Spell_Text`);
         alt1.overLayClearGroup(`Spell_Text`);
-        alt1.overLayTextEx(`${spell.stacks || ''}`, _utility__WEBPACK_IMPORTED_MODULE_1__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(gauges.magic.position.x + x + 26, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(gauges.magic.position.y + y + 23, gauges.scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${spell.stacks || ''}`, _utility__WEBPACK_IMPORTED_MODULE_1__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(magic.position.x + x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(magic.position.y + y + 23, gaugeData.scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup('Spell_Text');
     }
-    function readChatbox(gauges) {
+    function readChatbox() {
         if (!chat.pos || !chat.pos.boxes[0]) {
             return;
         }
-        // alt1.overLayRect(
-        // 	red,
-        // 	chat.pos.mainbox.rect.x,
-        // 	chat.pos.mainbox.rect.y,
-        // 	chat.pos.mainbox.rect.width,
-        // 	chat.pos.mainbox.rect.height,
-        // 	10000,
-        // 	2
-        // );
         const chatLines = chat.read();
         const pocketMessages = Object.keys(SPELL_TEXT);
         for (const line of chatLines ?? []) {
             const match = pocketMessages.find((m) => line.text.includes(m));
             if (!match)
                 continue;
-            gauges.magic.spells.activeSpell = _types__WEBPACK_IMPORTED_MODULE_0__.ActiveSpells[SPELL_TEXT[match]];
+            _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_3__.MagicGaugeSlice.actions.updateActiveSpell({
+                activeSpell: _types__WEBPACK_IMPORTED_MODULE_0__.ActiveSpells[SPELL_TEXT[match]],
+            }));
             resetSpellText();
         }
     }
@@ -17035,21 +16891,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   fsoaOverlay: () => (/* binding */ fsoaOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/ability-helpers */ "./lib/util/ability-helpers.ts");
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
+/* harmony import */ var _state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state/gauge-data/magic-gauge.state */ "./state/gauge-data/magic-gauge.state.ts");
 
 
 
-const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
+
+
+const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_4__.webpackImages({
     active: __webpack_require__(/*! ../../asset/gauge-ui/magic/instability/active.data.png */ "./asset/gauge-ui/magic/instability/active.data.png"),
     inactive: __webpack_require__(/*! ../../asset/gauge-ui/magic/instability/inactive.data.png */ "./asset/gauge-ui/magic/instability/inactive.data.png"),
 });
 let lastValue;
 let scaledOnce = false;
-async function fsoaOverlay(gauges) {
-    const { magic } = gauges;
+async function fsoaOverlay() {
+    const { magic, gaugeData } = _state__WEBPACK_IMPORTED_MODULE_2__.store.getState();
     const { instability } = magic;
     const { active_orientation } = instability.position;
     if (!instability.isActiveOverlay) {
@@ -17058,12 +16918,12 @@ async function fsoaOverlay(gauges) {
     }
     await ultimateImages.promise;
     if (!scaledOnce) {
-        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(ultimateImages, gauges.scaleFactor);
+        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(ultimateImages, gaugeData.scaleFactor);
         scaledOnce = true;
     }
     const abilityData = {
         images: ultimateImages,
-        scaleFactor: gauges.scaleFactor,
+        scaleFactor: gaugeData.scaleFactor,
         ability: instability,
         position: magic.position,
     };
@@ -17074,16 +16934,22 @@ async function fsoaOverlay(gauges) {
         alt1.overLayClearGroup('Instability_Text');
         return (lastValue = instability.time);
     }
-    instability.isOnCooldown = false;
+    _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_3__.MagicGaugeSlice.actions.updateAbility({
+        abilityName: 'instability',
+        ability: { isOnCooldown: false },
+    }));
     (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('Instability_Cooldown_Text');
     (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'Instability', true);
     if (lastValue !== instability.time) {
-        instability.cooldownDuration = 0;
+        _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_3__.MagicGaugeSlice.actions.updateAbility({
+            abilityName: 'instability',
+            ability: { cooldownDuration: 0 },
+        }));
         (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('Instability_Cooldown_Text');
         alt1.overLaySetGroup('Instability_Text');
         alt1.overLayFreezeGroup('Instability_Text');
         alt1.overLayClearGroup('Instability_Text');
-        alt1.overLayTextEx(`${instability.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.x + active_orientation.x + 26, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.y + active_orientation.y + 30, gauges.scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${instability.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.y + active_orientation.y + 30, gaugeData.scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup('Instability_Text');
     }
     lastValue = instability.time;
@@ -17092,69 +16958,79 @@ async function fsoaOverlay(gauges) {
 
 /***/ }),
 
-/***/ "./lib/magic/odeToDeceit.ts":
-/*!**********************************!*\
-  !*** ./lib/magic/odeToDeceit.ts ***!
-  \**********************************/
+/***/ "./lib/magic/soulfire.ts":
+/*!*******************************!*\
+  !*** ./lib/magic/soulfire.ts ***!
+  \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   odeToDeceitOverlay: () => (/* binding */ odeToDeceitOverlay)
+/* harmony export */   soulfireOverlay: () => (/* binding */ soulfireOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/ability-helpers */ "./lib/util/ability-helpers.ts");
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
+/* harmony import */ var _state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state/gauge-data/magic-gauge.state */ "./state/gauge-data/magic-gauge.state.ts");
 
 
 
-const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
+
+
+const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_4__.webpackImages({
     active: __webpack_require__(/*! ../../asset/gauge-ui/magic/ode-to-deceit/active.data.png */ "./asset/gauge-ui/magic/ode-to-deceit/active.data.png"),
     inactive: __webpack_require__(/*! ../../asset/gauge-ui/magic/ode-to-deceit/inactive.data.png */ "./asset/gauge-ui/magic/ode-to-deceit/inactive.data.png"),
 });
 let lastValue;
 let scaledOnce = false;
-async function odeToDeceitOverlay(gauges) {
-    const { magic } = gauges;
-    const { odeToDeceit } = magic;
-    const { active_orientation } = odeToDeceit.position;
-    if (!odeToDeceit.isActiveOverlay) {
-        (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.clearAbilityOverlays)('OdeToDeceit');
+async function soulfireOverlay() {
+    const { magic, gaugeData } = _state__WEBPACK_IMPORTED_MODULE_2__.store.getState();
+    const { soulfire } = magic;
+    const { active_orientation } = soulfire.position;
+    if (!soulfire.isActiveOverlay) {
+        (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.clearAbilityOverlays)('Soulfire');
         return;
     }
     await ultimateImages.promise;
     if (!scaledOnce) {
-        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(ultimateImages, gauges.scaleFactor);
+        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(ultimateImages, gaugeData.scaleFactor);
         scaledOnce = true;
     }
     const abilityData = {
         images: ultimateImages,
-        scaleFactor: gauges.scaleFactor,
-        ability: odeToDeceit,
+        scaleFactor: gaugeData.scaleFactor,
+        ability: soulfire,
         position: magic.position,
     };
     // If Crystal Rain Debuff is not active then it is available
-    if (!odeToDeceit.active) {
-        (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'OdeToDeceit', true);
-        alt1.overLayRefreshGroup('OdeToDeceit_Text');
-        alt1.overLayClearGroup('OdeToDeceit_Text');
-        return (lastValue = odeToDeceit.time);
+    if (!soulfire.active) {
+        (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'Soulfire', true);
+        alt1.overLayRefreshGroup('Soulfire_Text');
+        alt1.overLayClearGroup('Soulfire_Text');
+        return (lastValue = soulfire.time);
     }
-    odeToDeceit.isOnCooldown = false;
-    (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('OdeToDeceit_Cooldown_Text');
-    (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'OdeToDeceit', false);
-    if (lastValue !== odeToDeceit.time) {
-        odeToDeceit.cooldownDuration = 0;
-        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('OdeToDeceit_Cooldown_Text');
-        alt1.overLaySetGroup('OdeToDeceit_Text');
-        alt1.overLayFreezeGroup('OdeToDeceit_Text');
-        alt1.overLayClearGroup('OdeToDeceit_Text');
-        alt1.overLayTextEx(`${odeToDeceit.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.x + active_orientation.x + 26, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.y + active_orientation.y + 30, gauges.scaleFactor), 3000, '', true, true);
-        alt1.overLayRefreshGroup('OdeToDeceit_Text');
+    _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_3__.MagicGaugeSlice.actions.updateAbility({
+        abilityName: 'soulfire',
+        ability: { isOnCooldown: false },
+    }));
+    (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('Soulfire_Cooldown_Text');
+    (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'Soulfire', false);
+    if (lastValue !== soulfire.time) {
+        _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_3__.MagicGaugeSlice.actions.updateAbility({
+            abilityName: 'soulfire',
+            ability: { cooldownDuration: 0 },
+        }));
+        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('Soulfire_Cooldown_Text');
+        alt1.overLaySetGroup('Soulfire_Text');
+        alt1.overLayFreezeGroup('Soulfire_Text');
+        alt1.overLayClearGroup('Soulfire_Text');
+        alt1.overLayTextEx(`${soulfire.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.y + active_orientation.y + 30, gaugeData.scaleFactor), 3000, '', true, true);
+        alt1.overLayRefreshGroup('Soulfire_Text');
     }
-    lastValue = odeToDeceit.time;
+    lastValue = soulfire.time;
 }
 
 
@@ -17171,23 +17047,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   sunshineOverlay: () => (/* binding */ sunshineOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../types */ "./types/index.ts");
 /* harmony import */ var _util_ability_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../util/ability-helpers */ "./lib/util/ability-helpers.ts");
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
+/* harmony import */ var _state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../state/gauge-data/magic-gauge.state */ "./state/gauge-data/magic-gauge.state.ts");
+/* harmony import */ var _state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../state/gauge-data/gauge-data.state */ "./state/gauge-data/gauge-data.state.ts");
 
 
 
 
-const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_3__.webpackImages({
+
+
+
+const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_6__.webpackImages({
     active: __webpack_require__(/*! ../../asset/gauge-ui/magic/sunshine/active.data.png */ "./asset/gauge-ui/magic/sunshine/active.data.png"),
     inactive: __webpack_require__(/*! ../../asset/gauge-ui/magic/sunshine/inactive.data.png */ "./asset/gauge-ui/magic/sunshine/inactive.data.png"),
 });
 let lastValue;
 let scaledOnce = false;
-async function sunshineOverlay(gauges) {
-    const { magic } = gauges;
+async function sunshineOverlay() {
+    const { magic, gaugeData } = _state__WEBPACK_IMPORTED_MODULE_3__.store.getState();
     const { sunshine } = magic;
     const { position: { active_orientation }, } = sunshine;
     if (!sunshine.isActiveOverlay) {
@@ -17196,12 +17078,12 @@ async function sunshineOverlay(gauges) {
     }
     await ultimateImages.promise;
     if (!scaledOnce) {
-        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(ultimateImages, gauges.scaleFactor);
+        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(ultimateImages, gaugeData.scaleFactor);
         scaledOnce = true;
     }
     const abilityData = {
         images: ultimateImages,
-        scaleFactor: gauges.scaleFactor,
+        scaleFactor: gaugeData.scaleFactor,
         ability: sunshine,
         position: magic.position,
     };
@@ -17212,19 +17094,27 @@ async function sunshineOverlay(gauges) {
         alt1.overLayClearGroup('Sunshine_Text');
         return (lastValue = sunshine.time);
     }
-    sunshine.isOnCooldown = false;
+    _state__WEBPACK_IMPORTED_MODULE_3__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_4__.MagicGaugeSlice.actions.updateAbility({
+        abilityName: 'sunshine',
+        ability: { isOnCooldown: false },
+    }));
     (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('Sunshine_Cooldown_Text');
-    if (gauges.automaticSwapping) {
-        gauges.combatStyle = _types__WEBPACK_IMPORTED_MODULE_1__.CombatStyle.mage;
+    if (gaugeData.automaticSwapping) {
+        _state__WEBPACK_IMPORTED_MODULE_3__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_5__.GaugeDataSlice.actions.updateState({
+            combatStyle: _types__WEBPACK_IMPORTED_MODULE_1__.CombatStyle.mage,
+        }));
     }
     (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_2__.handleAbilityActiveState)(abilityData, 'Sunshine', true);
     if (lastValue !== sunshine.time) {
-        sunshine.cooldownDuration = 0;
+        _state__WEBPACK_IMPORTED_MODULE_3__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_4__.MagicGaugeSlice.actions.updateAbility({
+            abilityName: 'sunshine',
+            ability: { cooldownDuration: 0 },
+        }));
         (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('Sunshine_Cooldown_Text');
         alt1.overLaySetGroup('Sunshine_Text');
         alt1.overLayFreezeGroup('Sunshine_Text');
         alt1.overLayClearGroup('Sunshine_Text');
-        alt1.overLayTextEx(`${sunshine.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.x + active_orientation.x + 26, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.y + active_orientation.y + 26, gauges.scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${sunshine.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.y + active_orientation.y + 26, gaugeData.scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup('Sunshine_Text');
     }
     lastValue = sunshine.time;
@@ -17244,21 +17134,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   tsunamiOverlay: () => (/* binding */ tsunamiOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/ability-helpers */ "./lib/util/ability-helpers.ts");
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
+/* harmony import */ var _state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state/gauge-data/magic-gauge.state */ "./state/gauge-data/magic-gauge.state.ts");
 
 
 
-const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
+
+
+const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_4__.webpackImages({
     active: __webpack_require__(/*! ../.././asset/gauge-ui/magic/tsunami/active.data.png */ "./asset/gauge-ui/magic/tsunami/active.data.png"),
     inactive: __webpack_require__(/*! ../.././asset/gauge-ui/magic/tsunami/inactive.data.png */ "./asset/gauge-ui/magic/tsunami/inactive.data.png"),
 });
 let lastValue;
 let scaledOnce = false;
-async function tsunamiOverlay(gauges) {
-    const { magic } = gauges;
+async function tsunamiOverlay() {
+    const { magic, gaugeData } = _state__WEBPACK_IMPORTED_MODULE_2__.store.getState();
     const { tsunami } = magic;
     const { active_orientation } = tsunami.position;
     if (!tsunami.isActiveOverlay) {
@@ -17267,12 +17161,12 @@ async function tsunamiOverlay(gauges) {
     }
     await ultimateImages.promise;
     if (!scaledOnce) {
-        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(ultimateImages, gauges.scaleFactor);
+        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(ultimateImages, gaugeData.scaleFactor);
         scaledOnce = true;
     }
     const abilityData = {
         images: ultimateImages,
-        scaleFactor: gauges.scaleFactor,
+        scaleFactor: gaugeData.scaleFactor,
         ability: tsunami,
         position: magic.position,
     };
@@ -17283,16 +17177,22 @@ async function tsunamiOverlay(gauges) {
         alt1.overLayClearGroup('Tsunami_Text');
         return (lastValue = tsunami.time);
     }
-    tsunami.isOnCooldown = false;
+    _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_3__.MagicGaugeSlice.actions.updateAbility({
+        abilityName: 'tsunami',
+        ability: { isOnCooldown: false },
+    }));
     (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('Tsunami_Cooldown_Text');
     (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'Tsunami', true);
     if (lastValue !== tsunami.time) {
-        tsunami.cooldownDuration = 0;
+        _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_3__.MagicGaugeSlice.actions.updateAbility({
+            abilityName: 'tsunami',
+            ability: { cooldownDuration: 0 },
+        }));
         (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('Tsunami_Cooldown_Text');
         alt1.overLaySetGroup('Tsunami_Text');
         alt1.overLayFreezeGroup('Tsunami_Text');
         alt1.overLayClearGroup('Tsunami_Text');
-        alt1.overLayTextEx(`${tsunami.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.x + active_orientation.x + 26, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.y + active_orientation.y + 26, gauges.scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${tsunami.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.y + active_orientation.y + 26, gaugeData.scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup('Tsunami_Text');
     }
     lastValue = tsunami.time;
@@ -17312,12 +17212,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   bloatOverlay: () => (/* binding */ bloatOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
 
 
-const bloatImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
+
+const bloatImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
     bloat_100: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/bloat/100.data.png */ "./asset/gauge-ui/necromancy/bloat/100.data.png"),
     bloat_90: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/bloat/90.data.png */ "./asset/gauge-ui/necromancy/bloat/90.data.png"),
     bloat_80: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/bloat/80.data.png */ "./asset/gauge-ui/necromancy/bloat/80.data.png"),
@@ -17332,14 +17234,15 @@ const bloatImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     bloat_expired: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/bloat/expired.data.png */ "./asset/gauge-ui/necromancy/bloat/expired.data.png"),
 });
 let scaledOnce = false;
-async function bloatOverlay(gauges) {
-    const { bloat } = gauges.necromancy;
+async function bloatOverlay() {
+    const { gaugeData, necromancy } = _state__WEBPACK_IMPORTED_MODULE_1__.store.getState();
+    const { bloat } = necromancy;
     if (!bloat.isActiveOverlay) {
         return;
     }
     await bloatImages.promise;
     if (!scaledOnce) {
-        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(bloatImages, gauges.scaleFactor);
+        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(bloatImages, gaugeData.scaleFactor);
         scaledOnce = true;
     }
     const value = bloat.time;
@@ -17383,7 +17286,7 @@ async function bloatOverlay(gauges) {
         image = bloatImages.bloat_expired;
     }
     alt1.overLaySetGroup('Bloat');
-    alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.x + bloat.position.active_orientation.x, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.y + bloat.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(image), image.width, 1000);
+    alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.x + bloat.position.active_orientation.x, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.y + bloat.position.active_orientation.y, gaugeData.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(image), image.width, 1000);
     alt1.overLayRefreshGroup('Bloat');
 }
 
@@ -17401,52 +17304,55 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   conjureOverlay: () => (/* binding */ conjureOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
 
 
-const conjureImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
+
+const conjureImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
     active: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/conjure-undead-army/active.data.png */ "./asset/gauge-ui/necromancy/conjure-undead-army/active.data.png"),
     inactive: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/conjure-undead-army/inactive.data.png */ "./asset/gauge-ui/necromancy/conjure-undead-army/inactive.data.png"),
 });
-const white = alt1__WEBPACK_IMPORTED_MODULE_1__.mixColor(255, 255, 255);
+const white = alt1__WEBPACK_IMPORTED_MODULE_2__.mixColor(255, 255, 255);
 let lastMinValue = 0;
 let scaledOnce = false;
-async function conjureOverlay(gauges) {
-    if (!gauges.necromancy.conjures.isActiveOverlay) {
+async function conjureOverlay() {
+    const { gaugeData, necromancy } = _state__WEBPACK_IMPORTED_MODULE_1__.store.getState();
+    if (!necromancy.conjures.isActiveOverlay) {
         return;
     }
     await conjureImages.promise;
     if (!scaledOnce) {
-        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(conjureImages, gauges.scaleFactor);
+        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(conjureImages, gaugeData.scaleFactor);
         scaledOnce = true;
     }
     alt1.overLaySetGroup('Undead_Army');
-    if (gauges.necromancy.conjures.active) {
-        alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.x +
-            gauges.necromancy.conjures.position.active_orientation.x, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.y +
-            gauges.necromancy.conjures.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(conjureImages.active.toDrawableData()), conjureImages.active.width, 1000);
+    if (necromancy.conjures.active) {
+        alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.x +
+            necromancy.conjures.position.active_orientation.x, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.y +
+            necromancy.conjures.position.active_orientation.y, gaugeData.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(conjureImages.active.toDrawableData()), conjureImages.active.width, 1000);
     }
     else {
-        alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.x +
-            gauges.necromancy.conjures.position.active_orientation.x, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.y +
-            gauges.necromancy.conjures.position.active_orientation.y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(conjureImages.inactive.toDrawableData()), conjureImages.inactive.width, 1000);
+        alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.x +
+            necromancy.conjures.position.active_orientation.x, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.y +
+            necromancy.conjures.position.active_orientation.y, gaugeData.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(conjureImages.inactive.toDrawableData()), conjureImages.inactive.width, 1000);
     }
     const earliest_conjure = [
-        gauges.necromancy.conjures.skeleton.time,
-        gauges.necromancy.conjures.zombie.time,
-        gauges.necromancy.conjures.ghost.time,
-        gauges.necromancy.conjures.phantom.time,
+        necromancy.conjures.skeleton.time,
+        necromancy.conjures.zombie.time,
+        necromancy.conjures.ghost.time,
+        necromancy.conjures.phantom.time,
     ];
     const minValue = Math.min.apply(null, earliest_conjure.filter(Boolean));
     if (minValue !== Infinity && minValue !== lastMinValue) {
         alt1.overLaySetGroup('Undead_Army_Text');
         alt1.overLayFreezeGroup('Undead_Army_Text');
         alt1.overLayClearGroup('Undead_Army_Text');
-        alt1.overLayTextEx(`${minValue}`, white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.x +
+        alt1.overLayTextEx(`${minValue}`, white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.x +
             26 +
-            gauges.necromancy.conjures.position.active_orientation.x, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.y + 32, gauges.scaleFactor), 10000, '', true, true);
+            necromancy.conjures.position.active_orientation.x, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.y + 32, gaugeData.scaleFactor), 10000, '', true, true);
         lastMinValue = minValue;
     }
     alt1.overLayRefreshGroup('Undead_Army_Text');
@@ -17466,12 +17372,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   incantationsOverlay: () => (/* binding */ incantationsOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
 
 
-const incantationImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
+
+const incantationImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
     invoke_death: __webpack_require__(/*! ../.././asset/gauge-ui/necromancy/incantations/invoke-death/active.data.png */ "./asset/gauge-ui/necromancy/incantations/invoke-death/active.data.png"),
     invoke_death_inactive: __webpack_require__(/*! ../.././asset/gauge-ui/necromancy/incantations/invoke-death/inactive.data.png */ "./asset/gauge-ui/necromancy/incantations/invoke-death/inactive.data.png"),
     darkness: __webpack_require__(/*! ../.././asset/gauge-ui/necromancy/incantations/darkness/active.data.png */ "./asset/gauge-ui/necromancy/incantations/darkness/active.data.png"),
@@ -17482,8 +17390,8 @@ const incantationImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     split_soul_inactive: __webpack_require__(/*! ../.././asset/gauge-ui/necromancy/incantations/split-soul/inactive.data.png */ "./asset/gauge-ui/necromancy/incantations/split-soul/inactive.data.png"),
 });
 let scaledOnce = false;
-async function incantationsOverlay(gauges) {
-    const { necromancy, scaleFactor } = gauges;
+async function incantationsOverlay() {
+    const { gaugeData, necromancy } = _state__WEBPACK_IMPORTED_MODULE_1__.store.getState();
     const { incantations, position } = necromancy;
     const { invokeDeath, darkness: darknessBuff, threads: threadsAbility, splitSoul, } = incantations;
     if (!incantations.isActiveOverlay) {
@@ -17491,7 +17399,7 @@ async function incantationsOverlay(gauges) {
     }
     await incantationImages.promise;
     if (!scaledOnce) {
-        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(incantationImages, gauges.scaleFactor);
+        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(incantationImages, gaugeData.scaleFactor);
         scaledOnce = true;
     }
     const isInvokeDeathVisible = invokeDeath.isActiveOverlay && incantations.isActiveOverlay;
@@ -17528,7 +17436,7 @@ async function incantationsOverlay(gauges) {
     }
     function handleIncantationOverlays(name, xOffset, yOffset, image) {
         alt1.overLaySetGroup(name);
-        alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(position.x + xOffset, scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(position.y + yOffset, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(image.toDrawableData()), image.width, 1000);
+        alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(position.x + xOffset, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(position.y + yOffset, gaugeData.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(image.toDrawableData()), image.width, 1000);
     }
 }
 
@@ -17546,23 +17454,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   livingDeathOverlay: () => (/* binding */ livingDeathOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../types */ "./types/index.ts");
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _util_ability_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../util/ability-helpers */ "./lib/util/ability-helpers.ts");
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
+/* harmony import */ var _state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../state/gauge-data/gauge-data.state */ "./state/gauge-data/gauge-data.state.ts");
+/* harmony import */ var _state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../state/gauge-data/necromancy-gauge.state */ "./state/gauge-data/necromancy-gauge.state.ts");
 
 
 
 
-const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_3__.webpackImages({
+
+
+
+const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_6__.webpackImages({
     active: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/living-death/active.data.png */ "./asset/gauge-ui/necromancy/living-death/active.data.png"),
     inactive: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/living-death/inactive.data.png */ "./asset/gauge-ui/necromancy/living-death/inactive.data.png"),
 });
 let lastValue;
 let scaledOnce = false;
-async function livingDeathOverlay(gauges) {
-    const { necromancy } = gauges;
+async function livingDeathOverlay() {
+    const { gaugeData, necromancy } = _state__WEBPACK_IMPORTED_MODULE_3__.store.getState();
     const { livingDeath } = necromancy;
     const { active_orientation } = livingDeath.position;
     if (!livingDeath.isActiveOverlay) {
@@ -17571,12 +17485,12 @@ async function livingDeathOverlay(gauges) {
     }
     await ultimateImages.promise;
     if (!scaledOnce) {
-        (0,_utility__WEBPACK_IMPORTED_MODULE_1__.handleResizingImages)(ultimateImages, gauges.scaleFactor);
+        (0,_utility__WEBPACK_IMPORTED_MODULE_1__.handleResizingImages)(ultimateImages, gaugeData.scaleFactor);
         scaledOnce = true;
     }
     const abilityData = {
         images: ultimateImages,
-        scaleFactor: gauges.scaleFactor,
+        scaleFactor: gaugeData.scaleFactor,
         ability: livingDeath,
         position: necromancy.position,
     };
@@ -17587,19 +17501,25 @@ async function livingDeathOverlay(gauges) {
         alt1.overLayClearGroup('LivingDeath_Text');
         return (lastValue = livingDeath.time);
     }
-    livingDeath.isOnCooldown = false;
+    _state__WEBPACK_IMPORTED_MODULE_3__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_5__.NecromancyGaugeSlice.actions.updateAbility({
+        key: 'livingDeath',
+        ability: { isOnCooldown: false },
+    }));
     (0,_utility__WEBPACK_IMPORTED_MODULE_1__.forceClearOverlay)('LivingDeath_Cooldown_Text');
-    if (gauges.automaticSwapping) {
-        gauges.combatStyle = _types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.necro;
+    if (gaugeData.automaticSwapping) {
+        _state__WEBPACK_IMPORTED_MODULE_3__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_4__.GaugeDataSlice.actions.updateCombatStyle(_types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.necro));
     }
     (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_2__.handleAbilityActiveState)(abilityData, 'LivingDeath', true);
     if (lastValue !== livingDeath.time) {
-        livingDeath.cooldownDuration = 0;
+        _state__WEBPACK_IMPORTED_MODULE_3__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_5__.NecromancyGaugeSlice.actions.updateAbility({
+            key: 'livingDeath',
+            ability: { cooldownDuration: 0 },
+        }));
         (0,_utility__WEBPACK_IMPORTED_MODULE_1__.forceClearOverlay)('LivingDeath_Cooldown_Text');
         alt1.overLaySetGroup('LivingDeath_Text');
         alt1.overLayFreezeGroup('LivingDeath_Text');
         alt1.overLayClearGroup('LivingDeath_Text');
-        alt1.overLayTextEx(`${livingDeath.time}`, _utility__WEBPACK_IMPORTED_MODULE_1__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(necromancy.position.x + active_orientation.x + 26, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(necromancy.position.y + active_orientation.y + 26, gauges.scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${livingDeath.time}`, _utility__WEBPACK_IMPORTED_MODULE_1__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(necromancy.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(necromancy.position.y + active_orientation.y + 26, gaugeData.scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup('LivingDeath_Text');
     }
     lastValue = livingDeath.time;
@@ -17619,12 +17539,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   necrosisOverlay: () => (/* binding */ necrosisOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
 
 
-const necrosisImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
+
+const necrosisImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
     necrosis_0: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/necrosis/0.data.png */ "./asset/gauge-ui/necromancy/necrosis/0.data.png"),
     necrosis_2: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/necrosis/2.data.png */ "./asset/gauge-ui/necromancy/necrosis/2.data.png"),
     necrosis_4: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/necrosis/4.data.png */ "./asset/gauge-ui/necromancy/necrosis/4.data.png"),
@@ -17633,24 +17555,21 @@ const necrosisImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     necrosis_10: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/necrosis/10.data.png */ "./asset/gauge-ui/necromancy/necrosis/10.data.png"),
     necrosis_12: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/necrosis/12.data.png */ "./asset/gauge-ui/necromancy/necrosis/12.data.png"),
 });
-const necrosisColoredImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
+const necrosisColoredImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
     necrosis_6: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/necrosis/colored/6-warning.data.png */ "./asset/gauge-ui/necromancy/necrosis/colored/6-warning.data.png"),
     necrosis_8: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/necrosis/colored/8-warning.data.png */ "./asset/gauge-ui/necromancy/necrosis/colored/8-warning.data.png"),
     necrosis_10: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/necrosis/colored/10-warning.data.png */ "./asset/gauge-ui/necromancy/necrosis/colored/10-warning.data.png"),
     necrosis_12: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/necrosis/colored/12-danger.data.png */ "./asset/gauge-ui/necromancy/necrosis/colored/12-danger.data.png"),
 });
 let scaledOnce = false;
-let playingAlert = false;
-const necrosisAlert = new Audio();
-necrosisAlert.id = 'alarmNecrosis';
-document.body.appendChild(necrosisAlert);
-async function necrosisOverlay(gauges) {
-    const { necrosis } = gauges.necromancy.stacks;
+async function necrosisOverlay() {
+    const { necromancy, gaugeData } = _state__WEBPACK_IMPORTED_MODULE_1__.store.getState();
+    const { necrosis } = necromancy.stacks;
     if (!necrosis.isActiveOverlay) {
         return;
     }
     await necrosisImages.promise;
-    if (gauges.necromancy.stacks.useColoredNecrosis && !scaledOnce) {
+    if (necromancy.stacks.useColoredNecrosis && !scaledOnce) {
         await necrosisColoredImages.promise;
         necrosisImages.necrosis_6 = necrosisColoredImages.necrosis_6;
         necrosisImages.necrosis_8 = necrosisColoredImages.necrosis_8;
@@ -17658,38 +17577,28 @@ async function necrosisOverlay(gauges) {
         necrosisImages.necrosis_12 = necrosisColoredImages.necrosis_12;
     }
     if (!scaledOnce) {
-        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(necrosisImages, gauges.scaleFactor);
+        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(necrosisImages, gaugeData.scaleFactor);
         scaledOnce = true;
     }
     const { position, stacks } = necrosis;
     const { x, y } = position.active_orientation;
-    const bloatVisible = !gauges.necromancy.bloat.isActiveOverlay;
+    const bloatVisible = !necromancy.bloat.isActiveOverlay;
     let bloatSpace = 0;
     if (bloatVisible) {
         bloatSpace = -23;
     }
     alt1.overLaySetGroup('Necrosis');
     displayNecrosisImage(stacks);
-    if (stacks >= necrosis.alarm.threshold && necrosis.alarm.isActive) {
-        if (!playingAlert) {
-            (0,_utility__WEBPACK_IMPORTED_MODULE_0__.playAlert)(necrosisAlert);
-            playingAlert = true;
-        }
-    }
-    else if (playingAlert) {
-        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.pauseAlert)(necrosisAlert);
-        playingAlert = false;
-    }
-    if (gauges.necromancy.stacks.duplicateNecrosisRow) {
+    if (necromancy.stacks.duplicateNecrosisRow) {
         // @ts-ignore Don't want to mess with Alt1's typings. This will be a rare case.
         const necrosisImage = necrosisImages[`necrosis_${stacks}`];
         alt1.overLaySetGroup('Necrosis_Row2');
-        alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.x + x, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.y + y + bloatSpace, gauges.scaleFactor) + necrosisImages.necrosis_0.height, alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(necrosisImage.toDrawableData()), necrosisImage.width, 1000);
+        alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.x + x, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.y + y + bloatSpace, gaugeData.scaleFactor) + necrosisImages.necrosis_0.height, alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(necrosisImage.toDrawableData()), necrosisImage.width, 1000);
     }
     function displayNecrosisImage(stacks) {
         // @ts-expect-error Don't want to mess with Alt1's typings. This will be a rare case.
         const necrosisImage = necrosisImages[`necrosis_${stacks}`];
-        alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.x + x, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.y + y + bloatSpace, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(necrosisImage.toDrawableData()), necrosisImage.width, 1000);
+        alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.x + x, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.y + y + bloatSpace, gaugeData.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(necrosisImage.toDrawableData()), necrosisImage.width, 1000);
     }
 }
 
@@ -17707,12 +17616,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   soulsOverlay: () => (/* binding */ soulsOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
 
 
-const soulImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
+
+const soulImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
     souls_0: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/residual-souls/0.data.png */ "./asset/gauge-ui/necromancy/residual-souls/0.data.png"),
     souls_1: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/residual-souls/1.data.png */ "./asset/gauge-ui/necromancy/residual-souls/1.data.png"),
     souls_2: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/residual-souls/2.data.png */ "./asset/gauge-ui/necromancy/residual-souls/2.data.png"),
@@ -17720,52 +17631,45 @@ const soulImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     souls_4: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/residual-souls/4.data.png */ "./asset/gauge-ui/necromancy/residual-souls/4.data.png"),
     souls_5: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/residual-souls/5.data.png */ "./asset/gauge-ui/necromancy/residual-souls/5.data.png"),
 });
-const pre95SoulImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
+const pre95SoulImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
     souls_0: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/residual-souls/pre95/0.data.png */ "./asset/gauge-ui/necromancy/residual-souls/pre95/0.data.png"),
     souls_1: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/residual-souls/pre95/1.data.png */ "./asset/gauge-ui/necromancy/residual-souls/pre95/1.data.png"),
     souls_2: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/residual-souls/pre95/2.data.png */ "./asset/gauge-ui/necromancy/residual-souls/pre95/2.data.png"),
     souls_3: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/residual-souls/pre95/3.data.png */ "./asset/gauge-ui/necromancy/residual-souls/pre95/3.data.png"),
 });
 let scaledOnce = false;
-let playingAlert = false;
-const soulsAlert = new Audio();
-soulsAlert.id = 'alarmSouls';
-document.body.appendChild(soulsAlert);
-async function soulsOverlay(gauges) {
-    const { souls } = gauges.necromancy.stacks;
+async function soulsOverlay() {
+    const { gaugeData, necromancy } = _state__WEBPACK_IMPORTED_MODULE_1__.store.getState();
+    const { souls } = necromancy.stacks;
     if (!souls.isActiveOverlay) {
         return;
     }
-    await soulImages.promise;
-    if (gauges.necromancy.stacks.pre95Souls && !scaledOnce) {
-        await pre95SoulImages.promise;
-        soulImages.souls_0 = pre95SoulImages.souls_0;
-        soulImages.souls_1 = pre95SoulImages.souls_1;
-        soulImages.souls_2 = pre95SoulImages.souls_2;
-        soulImages.souls_3 = pre95SoulImages.souls_3;
-    }
     if (!scaledOnce) {
-        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(soulImages, gauges.scaleFactor);
+        await soulImages.promise;
+        await pre95SoulImages.promise;
+        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(soulImages, gaugeData.scaleFactor);
+        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(pre95SoulImages, gaugeData.scaleFactor);
         scaledOnce = true;
     }
+    const activeSoulImages = necromancy.stacks.pre95Souls ? pre95SoulImages : soulImages;
     const { position } = souls;
     const { x, y } = position.active_orientation;
     alt1.overLaySetGroup('Souls');
     const displaySoulImage = (image) => {
-        alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.x + x, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.necromancy.position.y + y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(image.toDrawableData()), image.width, 1000);
+        alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.x + x, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.y + y, gaugeData.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(image.toDrawableData()), image.width, 1000);
     };
     switch (souls.stacks) {
         case 0:
-            displaySoulImage(soulImages.souls_0);
+            displaySoulImage(activeSoulImages.souls_0);
             break;
         case 1:
-            displaySoulImage(soulImages.souls_1);
+            displaySoulImage(activeSoulImages.souls_1);
             break;
         case 2:
-            displaySoulImage(soulImages.souls_2);
+            displaySoulImage(activeSoulImages.souls_2);
             break;
         case 3:
-            displaySoulImage(soulImages.souls_3);
+            displaySoulImage(activeSoulImages.souls_3);
             break;
         case 4:
             displaySoulImage(soulImages.souls_4);
@@ -17776,16 +17680,6 @@ async function soulsOverlay(gauges) {
         default:
             // Handle cases beyond 5 if needed
             break;
-    }
-    if (souls.stacks >= souls.alarm.threshold && souls.alarm.isActive) {
-        if (!playingAlert) {
-            await (0,_utility__WEBPACK_IMPORTED_MODULE_0__.playAlert)(soulsAlert);
-            playingAlert = true;
-        }
-    }
-    else if (playingAlert) {
-        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.pauseAlert)(soulsAlert);
-        playingAlert = false;
     }
 }
 
@@ -17803,12 +17697,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   findAmmo: () => (/* binding */ findAmmo)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
+/* harmony import */ var _state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../state/gauge-data/range-gauge.state */ "./state/gauge-data/range-gauge.state.ts");
 
 
-const quiverImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
+
+
+const quiverImages = alt1__WEBPACK_IMPORTED_MODULE_3__.webpackImages({
     bik: __webpack_require__(/*! ../../asset/data/buffs/ranged/ammo/bik.data.png */ "./asset/data/buffs/ranged/ammo/bik.data.png"),
     ful: __webpack_require__(/*! ../../asset/data/buffs/ranged/ammo/ful.data.png */ "./asset/data/buffs/ranged/ammo/ful.data.png"),
     jas_dragonbane: __webpack_require__(/*! ../../asset/data/buffs/ranged/ammo/jas-dragonbane.data.png */ "./asset/data/buffs/ranged/ammo/jas-dragonbane.data.png"),
@@ -17821,13 +17719,14 @@ const quiverImages = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
     onyx_bak: __webpack_require__(/*! ../../asset/data/buffs/ranged/ammo/onyx-bak.data.png */ "./asset/data/buffs/ranged/ammo/onyx-bak.data.png"),
 });
 let lastAmmo;
-async function findAmmo(gauges, buffs) {
+async function findAmmo(buffs) {
     if (!buffs) {
         return;
     }
+    const { ranged } = _state__WEBPACK_IMPORTED_MODULE_1__.store.getState();
     let ammoActive = 0;
     let currentAmmo = '';
-    for (let [_key, value] of Object.entries(buffs)) {
+    for (const [_key, value] of Object.entries(buffs)) {
         const checkBik = value.countMatch(quiverImages.bik, false);
         const checkFul = value.countMatch(quiverImages.ful, false);
         const checkWen = value.countMatch(quiverImages.wen, false);
@@ -17879,22 +17778,20 @@ async function findAmmo(gauges, buffs) {
             ammoActive++;
         }
     }
-    if (ammoActive === 0) {
-        gauges.ranged.ammo.activeAmmo = '';
-    }
-    else {
-        gauges.ranged.ammo.activeAmmo = currentAmmo;
-        if (lastAmmo !== currentAmmo) {
-            lastAmmo = currentAmmo;
+    _state__WEBPACK_IMPORTED_MODULE_1__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_2__.RangeGaugeSlice.actions.updateState({
+        ammo: {
+            activeAmmo: ammoActive ? currentAmmo : '',
+            isActiveOverlay: ranged.ammo.isActiveOverlay,
         }
-    }
-    displayAmmoName(gauges, currentAmmo);
+    }));
+    displayAmmoName();
 }
-function displayAmmoName(gauges, ammo) {
+function displayAmmoName() {
+    const { ranged, gaugeData } = _state__WEBPACK_IMPORTED_MODULE_1__.store.getState();
     alt1.overLaySetGroup(`Ammo_Text`);
     alt1.overLayFreezeGroup(`Ammo_Text`);
     alt1.overLayClearGroup(`Ammo_Text`);
-    alt1.overLayTextEx(gauges.ranged.ammo.activeAmmo, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.ranged.position.x + 96, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.ranged.position.y + 24, gauges.scaleFactor), 3000, '', true, true);
+    alt1.overLayTextEx(ranged.ammo.activeAmmo, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + 96, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + 24, gaugeData.scaleFactor), 3000, '', true, true);
     alt1.overLayRefreshGroup('Ammo_Text');
 }
 
@@ -17912,21 +17809,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   crystalRainOverlay: () => (/* binding */ crystalRainOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/ability-helpers */ "./lib/util/ability-helpers.ts");
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
+/* harmony import */ var _state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state/gauge-data/range-gauge.state */ "./state/gauge-data/range-gauge.state.ts");
 
 
 
-const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
+
+
+const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_4__.webpackImages({
     active: __webpack_require__(/*! ../../asset/gauge-ui/ranged/crystal-rain/active.data.png */ "./asset/gauge-ui/ranged/crystal-rain/active.data.png"),
     inactive: __webpack_require__(/*! ../../asset/gauge-ui/ranged/crystal-rain/inactive.data.png */ "./asset/gauge-ui/ranged/crystal-rain/inactive.data.png"),
 });
 let lastValue;
 let scaledOnce = false;
-async function crystalRainOverlay(gauges) {
-    const { ranged } = gauges;
+async function crystalRainOverlay() {
+    const { ranged, gaugeData } = _state__WEBPACK_IMPORTED_MODULE_2__.store.getState();
     const { crystalRain } = ranged;
     const { active_orientation } = crystalRain.position;
     if (!crystalRain.isActiveOverlay) {
@@ -17935,12 +17836,12 @@ async function crystalRainOverlay(gauges) {
     }
     await ultimateImages.promise;
     if (!scaledOnce) {
-        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(ultimateImages, gauges.scaleFactor);
+        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(ultimateImages, gaugeData.scaleFactor);
         scaledOnce = true;
     }
     const abilityData = {
         images: ultimateImages,
-        scaleFactor: gauges.scaleFactor,
+        scaleFactor: gaugeData.scaleFactor,
         ability: crystalRain,
         position: ranged.position,
     };
@@ -17951,16 +17852,22 @@ async function crystalRainOverlay(gauges) {
         alt1.overLayClearGroup('CrystalRain_Text');
         return (lastValue = crystalRain.time);
     }
-    crystalRain.isOnCooldown = false;
+    _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangeGaugeSlice.actions.updateAbility({
+        abilityName: 'crystalRain',
+        ability: { isOnCooldown: false },
+    }));
     (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('CrystalRain_Cooldown_Text');
     (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'CrystalRain', false);
     if (lastValue !== crystalRain.time) {
-        crystalRain.cooldownDuration = 0;
+        _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangeGaugeSlice.actions.updateAbility({
+            abilityName: 'crystalRain',
+            ability: { cooldownDuration: 0 },
+        }));
         (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('CrystalRain_Cooldown_Text');
         alt1.overLaySetGroup('CrystalRain_Text');
         alt1.overLayFreezeGroup('CrystalRain_Text');
         alt1.overLayClearGroup('CrystalRain_Text');
-        alt1.overLayTextEx(`${crystalRain.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + active_orientation.x + 26, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + active_orientation.y + 26, gauges.scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${crystalRain.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + active_orientation.y + 26, gaugeData.scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup('CrystalRain_Text');
     }
     lastValue = crystalRain.time;
@@ -17980,21 +17887,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   deathsSwiftnessOverlay: () => (/* binding */ deathsSwiftnessOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/ability-helpers */ "./lib/util/ability-helpers.ts");
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
+/* harmony import */ var _state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state/gauge-data/range-gauge.state */ "./state/gauge-data/range-gauge.state.ts");
 
 
 
-const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
+
+
+const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_4__.webpackImages({
     active: __webpack_require__(/*! ../../asset/gauge-ui/ranged/deaths-swiftness/active.data.png */ "./asset/gauge-ui/ranged/deaths-swiftness/active.data.png"),
     inactive: __webpack_require__(/*! ../../asset/gauge-ui/ranged/deaths-swiftness/inactive.data.png */ "./asset/gauge-ui/ranged/deaths-swiftness/inactive.data.png"),
 });
 let lastValue;
 let scaledOnce = false;
-async function deathsSwiftnessOverlay(gauges) {
-    const { ranged } = gauges;
+async function deathsSwiftnessOverlay() {
+    const { ranged, gaugeData } = _state__WEBPACK_IMPORTED_MODULE_2__.store.getState();
     const { deathsSwiftness } = ranged;
     const { active_orientation } = ranged.deathsSwiftness.position;
     if (!deathsSwiftness.isActiveOverlay) {
@@ -18003,12 +17914,12 @@ async function deathsSwiftnessOverlay(gauges) {
     }
     await ultimateImages.promise;
     if (!scaledOnce) {
-        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(ultimateImages, gauges.scaleFactor);
+        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(ultimateImages, gaugeData.scaleFactor);
         scaledOnce = true;
     }
     const abilityData = {
         images: ultimateImages,
-        scaleFactor: gauges.scaleFactor,
+        scaleFactor: gaugeData.scaleFactor,
         ability: deathsSwiftness,
         position: ranged.position,
     };
@@ -18019,16 +17930,22 @@ async function deathsSwiftnessOverlay(gauges) {
         alt1.overLayClearGroup('DeathsSwiftness_Text');
         return (lastValue = deathsSwiftness.time);
     }
-    deathsSwiftness.isOnCooldown = false;
+    _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangeGaugeSlice.actions.updateAbility({
+        abilityName: 'deathsSwiftness',
+        ability: { isOnCooldown: false },
+    }));
     (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('DeathsSwiftness_Cooldown_Text');
     (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'DeathsSwiftness', true);
     if (lastValue !== deathsSwiftness.time) {
-        deathsSwiftness.cooldownDuration = 0;
+        _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangeGaugeSlice.actions.updateAbility({
+            abilityName: 'deathsSwiftness',
+            ability: { cooldownDuration: 0 },
+        }));
         (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('DeathsSwiftness_Cooldown_Text');
         alt1.overLaySetGroup('DeathsSwiftness_Text');
         alt1.overLayFreezeGroup('DeathsSwiftness_Text');
         alt1.overLayClearGroup('DeathsSwiftness_Text');
-        alt1.overLayTextEx(`${deathsSwiftness.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + active_orientation.x + 26, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + active_orientation.y + 26, gauges.scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${deathsSwiftness.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + active_orientation.y + 26, gaugeData.scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup('DeathsSwiftness_Text');
     }
     lastValue = deathsSwiftness.time;
@@ -18048,32 +17965,35 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   peOverlay: () => (/* binding */ peOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
 
 
-const bolgImage = alt1__WEBPACK_IMPORTED_MODULE_1__.webpackImages({
+
+const bolgImage = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
     active: __webpack_require__(/*! ../../asset/gauge-ui/ranged/perfect-equilibrium/active.data.png */ "./asset/gauge-ui/ranged/perfect-equilibrium/active.data.png"),
     inactive: __webpack_require__(/*! ../../asset/gauge-ui/ranged/perfect-equilibrium/inactive.data.png */ "./asset/gauge-ui/ranged/perfect-equilibrium/inactive.data.png"),
 });
 let scaledOnce = false;
 let lastStacks = 0;
-async function peOverlay(gauges) {
-    const { perfectEquilibrium } = gauges.ranged;
-    const { stacks } = gauges.ranged.perfectEquilibrium;
+async function peOverlay() {
+    const { ranged, gaugeData } = _state__WEBPACK_IMPORTED_MODULE_1__.store.getState();
+    const { perfectEquilibrium } = ranged;
+    const { stacks } = ranged.perfectEquilibrium;
     if (!perfectEquilibrium.isActiveOverlay) {
         return;
     }
     await bolgImage.promise;
     if (!scaledOnce) {
-        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(bolgImage, gauges.scaleFactor);
+        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(bolgImage, gaugeData.scaleFactor);
         scaledOnce = true;
     }
     const { position } = perfectEquilibrium;
     const { x, y } = position.active_orientation;
     alt1.overLaySetGroup('PerfectEquilibrium');
-    if (gauges.ranged.balanceByForce) {
+    if (ranged.balanceByForce) {
         displayBuffImage(bolgImage.active);
     }
     else {
@@ -18084,13 +18004,13 @@ async function peOverlay(gauges) {
         lastStacks = stacks;
     }
     function displayBuffImage(image) {
-        alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.ranged.position.x + x, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.ranged.position.y + y, gauges.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(image.toDrawableData()), image.width, 1000);
+        alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + x, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + y, gaugeData.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(image.toDrawableData()), image.width, 1000);
     }
     function displayStacks(stacks) {
         alt1.overLaySetGroup(`PerfectEquilibrium_Text`);
         alt1.overLayFreezeGroup(`PerfectEquilibrium_Text`);
         alt1.overLayClearGroup(`PerfectEquilibrium_Text`);
-        alt1.overLayTextEx(`${stacks}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.ranged.position.x + x + 26, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(gauges.ranged.position.y + y + 26, gauges.scaleFactor), 30000, '', true, true);
+        alt1.overLayTextEx(`${stacks}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + y + 26, gaugeData.scaleFactor), 30000, '', true, true);
         alt1.overLayRefreshGroup('PerfectEquilibrium_Text');
     }
 }
@@ -18109,21 +18029,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   rangedSplitSoulOverlay: () => (/* binding */ rangedSplitSoulOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/ability-helpers */ "./lib/util/ability-helpers.ts");
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
+/* harmony import */ var _state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state/gauge-data/range-gauge.state */ "./state/gauge-data/range-gauge.state.ts");
 
 
 
-const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
+
+
+const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_4__.webpackImages({
     active: __webpack_require__(/*! ../../asset/gauge-ui/ranged/split-soul/active.data.png */ "./asset/gauge-ui/ranged/split-soul/active.data.png"),
     inactive: __webpack_require__(/*! ../../asset/gauge-ui/ranged/split-soul/inactive.data.png */ "./asset/gauge-ui/ranged/split-soul/inactive.data.png"),
 });
 let lastValue;
 let scaledOnce = false;
-async function rangedSplitSoulOverlay(gauges) {
-    const { ranged } = gauges;
+async function rangedSplitSoulOverlay() {
+    const { gaugeData, ranged } = _state__WEBPACK_IMPORTED_MODULE_2__.store.getState();
     const { splitSoul } = ranged;
     const { active_orientation } = ranged.splitSoul.position;
     if (!splitSoul.isActiveOverlay) {
@@ -18132,12 +18056,12 @@ async function rangedSplitSoulOverlay(gauges) {
     }
     await ultimateImages.promise;
     if (!scaledOnce) {
-        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(ultimateImages, gauges.scaleFactor);
+        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(ultimateImages, gaugeData.scaleFactor);
         scaledOnce = true;
     }
     const abilityData = {
         images: ultimateImages,
-        scaleFactor: gauges.scaleFactor,
+        scaleFactor: gaugeData.scaleFactor,
         ability: splitSoul,
         position: ranged.position,
     };
@@ -18148,16 +18072,22 @@ async function rangedSplitSoulOverlay(gauges) {
         alt1.overLayClearGroup('SplitSoul_Text');
         return (lastValue = splitSoul.time);
     }
-    splitSoul.isOnCooldown = false;
+    _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangeGaugeSlice.actions.updateAbility({
+        abilityName: 'splitSoul',
+        ability: { isOnCooldown: false },
+    }));
     (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('SplitSoul_Cooldown_Text');
     (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'SplitSoul', true);
     if (lastValue !== splitSoul.time) {
-        splitSoul.cooldownDuration = 0;
+        _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangeGaugeSlice.actions.updateAbility({
+            abilityName: 'splitSoul',
+            ability: { cooldownDuration: 0 },
+        }));
         (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('SplitSoul_Cooldown_Text');
         alt1.overLaySetGroup('SplitSoul_Text');
         alt1.overLayFreezeGroup('SplitSoul_Text');
         alt1.overLayClearGroup('SplitSoul_Text');
-        alt1.overLayTextEx(`${splitSoul.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + active_orientation.x + 26, gauges.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + active_orientation.y + 26, gauges.scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${splitSoul.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, 14, (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + active_orientation.y + 26, gaugeData.scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup('SplitSoul_Text');
     }
     lastValue = splitSoul.time;
@@ -18180,20 +18110,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   readBuffs: () => (/* binding */ readBuffs),
 /* harmony export */   testBuffSizes: () => (/* binding */ testBuffSizes)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var alt1_buffs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! alt1/buffs */ "../node_modules/alt1/dist/buffs/index.js");
-/* harmony import */ var alt1_buffs__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(alt1_buffs__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utility */ "./lib/utility.ts");
-/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../types */ "./types/index.ts");
-/* harmony import */ var _ranged_activeAmmo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ranged/activeAmmo */ "./lib/ranged/activeAmmo.ts");
-/* harmony import */ var _a1sauce__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../a1sauce */ "./a1sauce/index.ts");
-/* harmony import */ var _data_constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../data/constants */ "./data/constants.ts");
-/* harmony import */ var _a1sauce_Error_logError__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../a1sauce/Error/logError */ "./a1sauce/Error/logError.ts");
-/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! .. */ "./index.ts");
-/* harmony import */ var _util_ability_helpers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./util/ability-helpers */ "./lib/util/ability-helpers.ts");
-/* harmony import */ var _a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../a1sauce/Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
-/* eslint-disable @typescript-eslint/no-require-imports */
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var alt1_buffs__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! alt1/buffs */ "../node_modules/alt1/dist/buffs/index.js");
+/* harmony import */ var alt1_buffs__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(alt1_buffs__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../types */ "./types/index.ts");
+/* harmony import */ var _ranged_activeAmmo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ranged/activeAmmo */ "./lib/ranged/activeAmmo.ts");
+/* harmony import */ var _a1sauce__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../a1sauce */ "./a1sauce/index.ts");
+/* harmony import */ var _data_constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../data/constants */ "./data/constants.ts");
+/* harmony import */ var _a1sauce_Error_logError__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../a1sauce/Error/logError */ "./a1sauce/Error/logError.ts");
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! .. */ "./index.ts");
+/* harmony import */ var _util_ability_helpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./util/ability-helpers */ "./lib/util/ability-helpers.ts");
+/* harmony import */ var _a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../a1sauce/Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../state */ "./state/index.ts");
+/* harmony import */ var _state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../state/gauge-data/necromancy-gauge.state */ "./state/gauge-data/necromancy-gauge.state.ts");
+/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./utility */ "./lib/utility.ts");
+/* harmony import */ var _state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../state/gauge-data/magic-gauge.state */ "./state/gauge-data/magic-gauge.state.ts");
+/* harmony import */ var _state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../state/gauge-data/gauge-data.state */ "./state/gauge-data/gauge-data.state.ts");
+/* harmony import */ var _state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../state/gauge-data/range-gauge.state */ "./state/gauge-data/range-gauge.state.ts");
 
 
 
@@ -18205,13 +18139,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const sauce = _a1sauce__WEBPACK_IMPORTED_MODULE_3__.A1Sauce.instance;
-sauce.setName(_data_constants__WEBPACK_IMPORTED_MODULE_4__.appName);
-const buffReader = new (alt1_buffs__WEBPACK_IMPORTED_MODULE_9___default())();
-const debuffReader = new (alt1_buffs__WEBPACK_IMPORTED_MODULE_9___default())();
+
+
+
+
+
+const sauce = _a1sauce__WEBPACK_IMPORTED_MODULE_2__.A1Sauce.instance;
+sauce.setName(_data_constants__WEBPACK_IMPORTED_MODULE_3__.appName);
+const buffReader = new (alt1_buffs__WEBPACK_IMPORTED_MODULE_14___default())();
+const debuffReader = new (alt1_buffs__WEBPACK_IMPORTED_MODULE_14___default())();
 debuffReader.debuffs = true;
-const errorLogger = new _a1sauce_Error_logError__WEBPACK_IMPORTED_MODULE_5__.LogError();
-const buffsImages = alt1__WEBPACK_IMPORTED_MODULE_10__.webpackImages({
+const errorLogger = new _a1sauce_Error_logError__WEBPACK_IMPORTED_MODULE_4__.LogError();
+const buffsImages = alt1__WEBPACK_IMPORTED_MODULE_15__.webpackImages({
     /* Necromancy */
     darkness: __webpack_require__(/*! ../asset/data/buffs/necro/darkness.data.png */ "./asset/data/buffs/necro/darkness.data.png"),
     living_death: __webpack_require__(/*! ../asset/data/buffs/necro/living-death.data.png */ "./asset/data/buffs/necro/living-death.data.png"),
@@ -18229,7 +18168,7 @@ const buffsImages = alt1__WEBPACK_IMPORTED_MODULE_10__.webpackImages({
     bloodTithe: __webpack_require__(/*! ../asset/data/buffs/magic/blood-tithe.data.png */ "./asset/data/buffs/magic/blood-tithe.data.png"),
     glacialEmbrace: __webpack_require__(/*! ../asset/data/buffs/magic/glacial-embrace.data.png */ "./asset/data/buffs/magic/glacial-embrace.data.png"),
     instability: __webpack_require__(/*! ../asset/data/buffs/magic/instability.data.png */ "./asset/data/buffs/magic/instability.data.png"),
-    odeToDeceit: __webpack_require__(/*! ../asset/data/debuffs/ode-to-deceit.data.png */ "./asset/data/debuffs/ode-to-deceit.data.png"),
+    soulfire: __webpack_require__(/*! ../asset/data/debuffs/soulfire.data.png */ "./asset/data/debuffs/soulfire.data.png"),
     tsunami: __webpack_require__(/*! ../asset/data/buffs/magic/critical-strike.data.png */ "./asset/data/buffs/magic/critical-strike.data.png"),
     /* Ranged */
     deathsSwiftness: __webpack_require__(/*! ../asset/data/buffs/ranged/deaths-swiftness.data.png */ "./asset/data/buffs/ranged/deaths-swiftness.data.png"),
@@ -18257,9 +18196,9 @@ async function retryOperation(operation, maxRetries, delay, attempt = 0) {
 }
 function findBuffsBar() {
     console.info('Attempting to find buffs bar...');
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_8__.getSetting)('rememberUiPosition') &&
-        (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_8__.getSetting)('buffsPosition')) {
-        buffReader.pos = JSON.parse((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_8__.getSetting)('buffsPosition'));
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_7__.getSetting)('rememberUiPosition') &&
+        (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_7__.getSetting)('buffsPosition')) {
+        buffReader.pos = JSON.parse((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_7__.getSetting)('buffsPosition'));
         return;
     }
     if (!buffReader.find()) {
@@ -18273,8 +18212,8 @@ function findBuffsBar() {
 }
 function findDebuffsBar() {
     console.info('Attempting to find debuffs bar...');
-    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_8__.getSetting)('rememberUiPosition') && (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_8__.getSetting)('debuffsPosition')) {
-        debuffReader.pos = JSON.parse((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_8__.getSetting)('debuffsPosition'));
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_7__.getSetting)('rememberUiPosition') && (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_7__.getSetting)('debuffsPosition')) {
+        debuffReader.pos = JSON.parse((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_7__.getSetting)('debuffsPosition'));
         return;
     }
     if (!debuffReader.pos && !debuffReader.find()) {
@@ -18287,7 +18226,7 @@ function findDebuffsBar() {
 }
 function testBuffSizes() {
     console.info('Unable to find buffs. Checking to see if Buffs are set to "Medium" or "Large"');
-    const screen = alt1__WEBPACK_IMPORTED_MODULE_10__.captureHoldFullRs();
+    const screen = alt1__WEBPACK_IMPORTED_MODULE_15__.captureHoldFullRs();
     const mediumBuffPositions = screen.findSubimage(buffsImages.mediumBuffs);
     const largeBuffPositions = screen.findSubimage(buffsImages.largeBuffs);
     const message = `<p>Alt1 only supports reading Small Buffs.<br><br>Please update your Buffs Bar settings.<br> Interfaces > Buff Bar > Icon Size </p><img src="./a1sauce/Error/Images/BuffIconSize.png">`;
@@ -18311,7 +18250,7 @@ retryOperation(findBuffsBar, 3, 10000)
     .then(() => {
     console.info('Success! Found Buffs.');
     if (document.getElementById('#Error') !== undefined) {
-        let err = document.querySelectorAll('#Error');
+        const err = document.querySelectorAll('#Error');
         for (let i = 0; i < err.length; i++) {
             const errHeader = err[i].querySelector('h2')?.innerText;
             if (errHeader === 'No Buffs Found') {
@@ -18334,22 +18273,22 @@ retryOperation(findDebuffsBar, 3, 10000)
     .then(() => {
     console.info('Success! Found Debuffs.');
     if (document.getElementById('#Error') !== undefined) {
-        let err = document.querySelectorAll('#Error');
+        const err = document.querySelectorAll('#Error');
         for (let i = 0; i < err.length; i++) {
-            let errHeader = err[i].querySelector('h2')?.innerText;
+            const errHeader = err[i].querySelector('h2')?.innerText;
             if (errHeader === 'No Debuffs Found') {
                 err[i].remove();
             }
         }
     }
     if (buffReader.pos && debuffReader.pos) {
-        (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_8__.updateSetting)('buffsPosition', JSON.stringify(buffReader.pos));
-        (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_8__.updateSetting)('debuffsPosition', JSON.stringify(debuffReader.pos));
-        (0,___WEBPACK_IMPORTED_MODULE_6__.beginRendering)();
+        (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_7__.updateSetting)('buffsPosition', JSON.stringify(buffReader.pos));
+        (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_7__.updateSetting)('debuffsPosition', JSON.stringify(debuffReader.pos));
+        (0,___WEBPACK_IMPORTED_MODULE_5__.beginRendering)();
     }
 })
     .catch(() => {
-    let wrongBuffSize = testBuffSizes();
+    const wrongBuffSize = testBuffSizes();
     if (!wrongBuffSize) {
         errorLogger.showError({
             title: 'Failed to find Debuffs',
@@ -18358,50 +18297,61 @@ retryOperation(findDebuffsBar, 3, 10000)
         console.warn('Please make sure you have at least 1 debuff on your debuffs bar and then reload the app. The easiest way is to toggle a Prayer on.');
     }
 });
-async function readBuffs(gauges) {
+async function readBuffs() {
     if (!buffReader.pos) {
         return;
     }
-    updateBuffData(buffReader, gauges, buffsImages.deathsSwiftness, 125, updateDeathsSwiftness, false);
-    updateBuffData(buffReader, gauges, buffsImages.greaterDeathsSwiftness, 350, updateDeathsSwiftness, true);
-    updateBuffData(buffReader, gauges, buffsImages.sunshine, 300, updateSunshine, false);
-    updateBuffData(buffReader, gauges, buffsImages.greaterSunshine, 100, updateSunshine, true);
-    if (gauges.necromancy.livingDeath.isActiveOverlay) {
-        updateBuffData(buffReader, gauges, buffsImages.living_death, 400, updateLivingDeath, false);
+    const { gaugeData, necromancy } = _state__WEBPACK_IMPORTED_MODULE_8__.store.getState();
+    updateBuffData(buffReader, buffsImages.deathsSwiftness, 125, (time) => updateRangeAbility(time, false, 'DeathsSwiftness'), false);
+    updateBuffData(buffReader, buffsImages.greaterDeathsSwiftness, 350, (time) => updateRangeAbility(time, true, 'DeathsSwiftness'), true);
+    updateBuffData(buffReader, buffsImages.sunshine, 300, (time) => updateMagicAbility(time, false, 'Sunshine'), false);
+    updateBuffData(buffReader, buffsImages.greaterSunshine, 100, (time) => updateMagicAbility(time, true, 'Sunshine'), true);
+    if (necromancy.livingDeath.isActiveOverlay) {
+        updateBuffData(buffReader, buffsImages.living_death, 400, updateLivingDeath, false);
     }
-    switch (gauges.combatStyle) {
-        case _types__WEBPACK_IMPORTED_MODULE_1__.CombatStyle.necro:
-            updateBuffData(buffReader, gauges, buffsImages.soul, 200, updateSoulCount, false);
-            updateBuffData(buffReader, gauges, buffsImages.necrosis, 200, updateNecrosisCount, false);
-            updateConjures(gauges);
-            updateBuffData(buffReader, gauges, buffsImages.darkness, 300, updateDarkness, false);
+    switch (gaugeData.combatStyle) {
+        case _types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.necro:
+            updateBuffData(buffReader, buffsImages.soul, 200, (stacks) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_9__.NecromancyGaugeSlice.actions.updateStacksAbility({
+                stackType: 'souls',
+                stack: {
+                    stacks,
+                },
+            })), false);
+            updateBuffData(buffReader, buffsImages.necrosis, 200, (stacks) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_9__.NecromancyGaugeSlice.actions.updateStacksAbility({
+                stackType: 'necrosis',
+                stack: {
+                    stacks,
+                },
+            })), false);
+            updateConjures();
+            updateBuffData(buffReader, buffsImages.darkness, 300, updateDarkness, false);
             if (!disableThreadsCheck) {
-                updateBuffData(buffReader, gauges, buffsImages.threads, 300, updateThreads, false);
+                updateBuffData(buffReader, buffsImages.threads, 300, updateThreads, false);
             }
             if (!disableSplitCheck) {
-                updateBuffData(buffReader, gauges, buffsImages.split_soul, 350, updateSplitSoul, false);
+                updateBuffData(buffReader, buffsImages.split_soul, 350, updateSplitSoul, false);
             }
             break;
-        case _types__WEBPACK_IMPORTED_MODULE_1__.CombatStyle.mage:
-            updateBuffData(buffReader, gauges, buffsImages.instability, 60, updateFsoa, false);
-            updateBuffData(buffReader, gauges, buffsImages.tsunami, 200, updateTsunami, false);
-            updateStackData(gauges, buffsImages.bloodTithe, 30, updateBloodTithe);
-            updateStackData(gauges, buffsImages.glacialEmbrace, 30, updateGlacialEmbrace);
-            updateBuffData(debuffReader, gauges, buffsImages.odeToDeceit, 9, updateOdeToDeceit, false);
+        case _types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.mage:
+            updateBuffData(buffReader, buffsImages.instability, 60, (time) => updateMagicAbility(time, false, 'Instability'), false);
+            updateBuffData(buffReader, buffsImages.tsunami, 200, (time) => updateMagicAbility(time, false, 'Tsunami'), false);
+            updateStackData(buffsImages.bloodTithe, 30, (active) => updateSpell('bloodTithe', active));
+            updateStackData(buffsImages.glacialEmbrace, 30, (active) => updateSpell('glacialEmbrace', active));
+            updateBuffData(debuffReader, buffsImages.soulfire, 25, (time) => updateMagicAbility(time, false, 'Soulfire'), false);
             break;
-        case _types__WEBPACK_IMPORTED_MODULE_1__.CombatStyle.ranged:
-            updateBuffData(debuffReader, gauges, buffsImages.crystalRain, 60, updateCrystalRain, false);
-            (0,_ranged_activeAmmo__WEBPACK_IMPORTED_MODULE_2__.findAmmo)(gauges, buffReader.read());
-            updateSimpleStackData(gauges, buffsImages.perfectEquilibrium, 300, updatePeCount);
-            updateBuffData(buffReader, gauges, buffsImages.balanaceByForce, 20, updateBalanceByForce, false);
-            updateBuffData(buffReader, gauges, buffsImages.rangedSplitSoul, 300, updateRangedSplitSoul, false);
+        case _types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.ranged:
+            updateBuffData(debuffReader, buffsImages.crystalRain, 60, (time) => updateRangeAbility(time, true, 'CrystalRain'), false);
+            (0,_ranged_activeAmmo__WEBPACK_IMPORTED_MODULE_1__.findAmmo)(buffReader.read());
+            updateSimpleStackData(buffsImages.perfectEquilibrium, 300, updatePeCount);
+            updateBuffData(buffReader, buffsImages.balanaceByForce, 20, (active) => updateBalanceByForce(!!active), false);
+            updateBuffData(buffReader, buffsImages.rangedSplitSoul, 300, (time) => updateRangedSplitSoul(time), false);
             break;
-        case _types__WEBPACK_IMPORTED_MODULE_1__.CombatStyle.melee:
+        case _types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.melee:
             break;
     }
     return buffReader;
 }
-async function updateBuffData(buffReader, gauges, buffImage, threshold, updateCallbackFn, greater) {
+function updateBuffData(buffReader, buffImage, threshold, updateCallbackFn, greater) {
     const buffs = buffReader.read();
     if (!buffs) {
         throw Error('Failed to read buffs for updateBuffData.');
@@ -18409,25 +18359,32 @@ async function updateBuffData(buffReader, gauges, buffImage, threshold, updateCa
     let foundBuff = false;
     for (const buff of buffs) {
         const match = buff.countMatch(buffImage, false);
+        const { time } = buff.readArg('timearg');
         /**
          * "THIS IS A HACK"
-         * Issues with Ode to Deceit false positives
+         * Issues with Soulfire false positives
          */
-        if (buffImage === buffsImages.odeToDeceit &&
-            buff.readArg('timearg').time >= 46) {
+        if (buffImage === buffsImages.soulfire && time >= 46) {
+            return false;
+        }
+        /**
+         * TODO: Update this function to take in a failureThreshold
+         * for now just being lazy and hard coding it in for Soulfire
+         */
+        if (buffImage === buffsImages.soulfire && match.failed >= 10) {
             return false;
         }
         if (match.passed > threshold) {
             foundBuff = true;
-            updateCallbackFn(gauges, buff.readArg('timearg').time, greater);
+            updateCallbackFn(time, greater);
         }
     }
     if (!foundBuff) {
-        updateCallbackFn(gauges, 0, greater);
+        updateCallbackFn(0, greater);
     }
     return foundBuff;
 }
-async function updateStackData(gauges, buffImage, threshold, updateCallbackFn) {
+function updateStackData(buffImage, threshold, updateCallbackFn) {
     const buffs = buffReader.read();
     if (!buffs) {
         throw Error('Failed to read buffs for updateStackData.');
@@ -18437,17 +18394,16 @@ async function updateStackData(gauges, buffImage, threshold, updateCallbackFn) {
         const match = buff.countMatch(buffImage, false);
         if (match.passed > threshold) {
             foundBuff = true;
-            updateCallbackFn(gauges, parseInt(buff
-                .readArg('timearg')
-                .arg.substring(1, buff.readArg('timearg').arg.length - 1), 10));
+            const timearg = buff.readArg('timearg').arg;
+            updateCallbackFn(parseInt(timearg.substring(1, timearg.length - 1), 10));
         }
     }
     if (!foundBuff) {
-        updateCallbackFn(gauges, 0);
+        updateCallbackFn(0);
     }
     return foundBuff;
 }
-async function updateSimpleStackData(gauges, buffImage, threshold, updateCallbackFn) {
+function updateSimpleStackData(buffImage, threshold, updateCallbackFn) {
     const buffs = buffReader.read();
     if (!buffs) {
         throw Error('Failed to read buffs for updateSimpleStackData.');
@@ -18457,359 +18413,320 @@ async function updateSimpleStackData(gauges, buffImage, threshold, updateCallbac
         const match = buff.countMatch(buffImage, false);
         if (match.passed > threshold) {
             foundBuff = true;
-            updateCallbackFn(gauges, buff.readTime());
+            updateCallbackFn(buff.readTime());
         }
     }
     if (!foundBuff) {
-        updateCallbackFn(gauges, 0);
+        updateCallbackFn(0);
     }
     return foundBuff;
 }
-// TODO: Figure out a cleaner way to update values.
-// There shouldn't be any reason the below functions can't be done via updateBuffData
-// without passing an updateCallbackfn()
-// Passing data = ['necromancy]['stacks']['souls]['count'] and trying
-// to update gauges.data doesn't work because somehow ['souls'] is undefined?
-async function updateSoulCount(gauges, value) {
-    gauges.necromancy.stacks.souls.stacks = value;
-}
-async function updateNecrosisCount(gauges, value) {
-    gauges.necromancy.stacks.necrosis.stacks = value;
-}
-async function updateLivingDeath(gauges, value) {
+function updateLivingDeath(value) {
+    const necromancy = _state__WEBPACK_IMPORTED_MODULE_8__.store.getState().necromancy;
+    const gaugeData = _state__WEBPACK_IMPORTED_MODULE_8__.store.getState().gaugeData;
     // If Living Death has an active buff and a timer:
     //   - it cannot be on cooldown
     //   - it must be active
     //   - The remaining time is its timer
     if (value > 1) {
-        gauges.necromancy.livingDeath.isOnCooldown = false;
-        gauges.necromancy.livingDeath.cooldownDuration = 0;
-        gauges.necromancy.livingDeath.active = true;
-        gauges.necromancy.livingDeath.time = value;
-        changeCombatStyles(gauges, _types__WEBPACK_IMPORTED_MODULE_1__.CombatStyle.necro);
+        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_9__.NecromancyGaugeSlice.actions.updateAbilityCooldown({
+            ability: {
+                active: true,
+                time: value,
+                cooldownDuration: 0,
+                isOnCooldown: false,
+            },
+            abilityName: 'livingDeath',
+        }));
+        changeCombatStyles(_types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.necro);
     }
     // When only 1 second of the buff exists
-    if (value == 1 && gauges.necromancy.livingDeath.active) {
+    if (value == 1 && necromancy.livingDeath.active) {
         // Make sure to update the text one final time
-        gauges.necromancy.livingDeath.time = value;
+        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_9__.NecromancyGaugeSlice.actions.updateAbilityTime({ abilityName: 'livingDeath', time: value }));
         // Then start a timer to wait just past the last second
         //  - Clear the timer
         //  - LD is now on Cooldown so is not active
         setTimeout(() => {
-            gauges.necromancy.livingDeath.time = 0;
-            gauges.necromancy.livingDeath.active = false;
-            gauges.necromancy.livingDeath.isOnCooldown = true;
-            (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_7__.startAbilityCooldown)({
-                ability: gauges.necromancy.livingDeath,
-                position: gauges.necromancy.position,
-                scaleFactor: gauges.scaleFactor,
-            }, 'LivingDeath', false);
+            _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_9__.NecromancyGaugeSlice.actions.updateAbilityCooldown({
+                ability: {
+                    active: false,
+                    time: 0,
+                    isOnCooldown: true,
+                },
+                abilityName: 'livingDeath',
+            }));
+            (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_6__.startAbilityCooldown)({
+                ability: necromancy.livingDeath,
+                position: necromancy.position,
+                scaleFactor: gaugeData.scaleFactor,
+            }, 'LivingDeath', false, () => {
+                _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_9__.NecromancyGaugeSlice.actions.updateAbility({
+                    key: 'livingDeath',
+                    ability: { isOnCooldown: false, cooldownDuration: 0 },
+                }));
+            });
         }, 1050);
     }
 }
-async function updateSkeleton(gauges, value) {
-    gauges.necromancy.conjures.skeleton.time = value;
-    gauges.necromancy.conjures.skeleton.active = Boolean(value);
+function updateConjure(conjureType, timing) {
+    _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_9__.NecromancyGaugeSlice.actions.updateConjures({
+        conjureType,
+        conjure: {
+            time: timing,
+            active: !!timing,
+        },
+    }));
 }
-async function updateZombie(gauges, value) {
-    gauges.necromancy.conjures.zombie.time = value;
-    gauges.necromancy.conjures.zombie.active = Boolean(value);
-}
-async function updateGhost(gauges, value) {
-    gauges.necromancy.conjures.ghost.time = value;
-    gauges.necromancy.conjures.ghost.active = Boolean(value);
-}
-async function updatePhantom(gauges, value) {
-    gauges.necromancy.conjures.phantom.time = value;
-    gauges.necromancy.conjures.phantom.active = Boolean(value);
-}
-async function updateDarkness(gauges, value) {
-    gauges.necromancy.incantations.active[1] = Boolean(value);
+function updateDarkness(value) {
+    _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_9__.NecromancyGaugeSlice.actions.updateActiveIncantation({
+        incantation: 1,
+        active: !!value,
+    }));
 }
 let disableThreadsCheck = false;
-async function updateThreads(gauges, value) {
-    gauges.necromancy.incantations.active[2] = false;
-    if (value > 1) {
-        gauges.necromancy.incantations.active[2] = true;
+function updateThreads(value) {
+    if (value < 1) {
+        return _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_9__.NecromancyGaugeSlice.actions.updateActiveIncantation({
+            incantation: 2,
+            active: false,
+        }));
     }
-    if (value == 1) {
-        gauges.necromancy.incantations.active[2] = true;
+    const necromancy = _state__WEBPACK_IMPORTED_MODULE_8__.store.getState().necromancy;
+    _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_9__.NecromancyGaugeSlice.actions.updateActiveIncantation({
+        incantation: 2,
+        active: true,
+    }));
+    if (value === 1) {
         disableThreadsCheck = true;
         setTimeout(() => {
-            gauges.necromancy.incantations.active[2] = false;
+            _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_9__.NecromancyGaugeSlice.actions.updateActiveIncantation({
+                incantation: 2,
+                active: false,
+            }));
             disableThreadsCheck = false;
-        }, gauges.necromancy.incantations.threads.cooldownDuration * 1000);
+        }, necromancy.incantations.threads.cooldownDuration * 1000);
     }
 }
 let disableSplitCheck = false;
-async function updateSplitSoul(gauges, value) {
-    gauges.necromancy.incantations.active[3] = false;
-    if (value > 1) {
-        gauges.necromancy.incantations.active[3] = true;
+async function updateSplitSoul(value) {
+    if (value < 1) {
+        return _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_9__.NecromancyGaugeSlice.actions.updateActiveIncantation({
+            incantation: 3,
+            active: false,
+        }));
     }
-    if (value == 1) {
-        gauges.necromancy.incantations.active[3] = true;
+    const necromancy = _state__WEBPACK_IMPORTED_MODULE_8__.store.getState().necromancy;
+    _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_9__.NecromancyGaugeSlice.actions.updateActiveIncantation({
+        incantation: 3,
+        active: true,
+    }));
+    if (value === 1) {
         disableSplitCheck = true;
         setTimeout(() => {
-            gauges.necromancy.incantations.active[3] = false;
+            _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_9__.NecromancyGaugeSlice.actions.updateActiveIncantation({
+                incantation: 3,
+                active: false,
+            }));
             disableSplitCheck = false;
-        }, gauges.necromancy.incantations.splitSoul.cooldownDuration * 1000);
+        }, necromancy.incantations.splitSoul.cooldownDuration * 1000);
     }
 }
-async function updateConjures(gauges) {
-    const hasSkeleton = await updateBuffData(buffReader, gauges, buffsImages.skeleton, 150, updateSkeleton, false);
-    const hasZombie = await updateBuffData(buffReader, gauges, buffsImages.zombie, 150, updateZombie, false);
-    const hasGhost = await updateBuffData(buffReader, gauges, buffsImages.ghost, 200, updateGhost, false);
-    const hasPhantom = await updateBuffData(buffReader, gauges, buffsImages.phantom, 200, updatePhantom, false);
-    if (hasSkeleton || hasZombie || hasGhost || hasPhantom) {
-        gauges.necromancy.conjures.active = true;
-    }
-    else {
-        gauges.necromancy.conjures.active = false;
-    }
+async function updateConjures() {
+    updateBuffData(buffReader, buffsImages.skeleton, 150, (time) => updateConjure('skeleton', time), false);
+    updateBuffData(buffReader, buffsImages.zombie, 150, (time) => updateConjure('zombie', time), false);
+    updateBuffData(buffReader, buffsImages.ghost, 200, (time) => updateConjure('ghost', time), false);
+    updateBuffData(buffReader, buffsImages.phantom, 200, (time) => updateConjure('phantom', time), false);
 }
-async function updateSunshine(gauges, value, greater) {
-    // If Sunshine has an active buff and a timer:
-    //   - it cannot be on cooldown
-    //   - it must be active
-    //   - The remaining time is its timer
-    if (value > 1) {
-        gauges.magic.sunshine.isOnCooldown = false;
-        gauges.magic.sunshine.cooldownDuration = 0;
-        gauges.magic.sunshine.active = true;
-        gauges.magic.sunshine.time = value;
-        changeCombatStyles(gauges, _types__WEBPACK_IMPORTED_MODULE_1__.CombatStyle.mage);
+const MagicAbilityToName = {
+    'Sunshine': 'sunshine',
+    'Soulfire': 'soulfire',
+    'Tsunami': 'tsunami',
+    'Instability': 'instability',
+};
+function updateMagicAbility(time, greater, abilityName) {
+    const property = MagicAbilityToName[abilityName];
+    const { magic, gaugeData } = _state__WEBPACK_IMPORTED_MODULE_8__.store.getState();
+    const { position } = magic;
+    const { scaleFactor } = gaugeData;
+    const ability = magic[property];
+    if (time > 1) {
+        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_11__.MagicGaugeSlice.actions.updateAbility({
+            abilityName: property,
+            ability: {
+                isOnCooldown: false,
+                cooldownDuration: 0,
+                active: true,
+                time,
+            },
+        }));
+        if (gaugeData.automaticSwapping && abilityName === 'Sunshine') {
+            changeCombatStyles(_types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.mage);
+        }
     }
-    // When only 1 second of the buff exists
-    if (value == 1 && gauges.magic.sunshine.active) {
+    if (time === 1 && ability.active) {
         // Make sure to update the text one final time
-        gauges.magic.sunshine.time = value;
-        // Then start a timer to wait just past the last second
-        //  - Clear the timer
-        //  - LD is now on Cooldown so is not active
+        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_11__.MagicGaugeSlice.actions.updateAbilityTime({ abilityName: property, time }));
         setTimeout(() => {
-            gauges.magic.sunshine.time = 0;
-            gauges.magic.sunshine.active = false;
-            gauges.magic.sunshine.isOnCooldown = true;
-            (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_7__.startAbilityCooldown)({
-                ability: gauges.magic.sunshine,
-                position: gauges.magic.position,
-                scaleFactor: gauges.scaleFactor,
-            }, 'Sunshine', greater);
+            _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_11__.MagicGaugeSlice.actions.updateAbility({
+                abilityName: property,
+                ability: {
+                    isOnCooldown: true,
+                    active: false,
+                    time: 0,
+                },
+            }));
+            // We don't want these abilities to trigger the cooldown overlay.
+            if (abilityName === 'Soulfire') {
+                return;
+            }
+            const { magic } = _state__WEBPACK_IMPORTED_MODULE_8__.store.getState();
+            const ability = magic[property];
+            (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_6__.startAbilityCooldown)({ ability, position, scaleFactor }, abilityName, greater, () => {
+                _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_11__.MagicGaugeSlice.actions.updateAbility({
+                    abilityName: property,
+                    ability: { isOnCooldown: false, cooldownDuration: 0, active: true },
+                }));
+            });
         }, 1050);
     }
 }
-async function updateFsoa(gauges, value) {
-    // If Instability has an active buff and a timer:
-    //   - it cannot be on cooldown
-    //   - it must be active
-    //   - The remaining time is its timer
-    if (value > 1) {
-        gauges.magic.instability.isOnCooldown = false;
-        gauges.magic.instability.cooldownDuration = 0;
-        gauges.magic.instability.active = true;
-        gauges.magic.instability.time = value;
+const RangeAbilityToName = {
+    'DeathsSwiftness': 'deathsSwiftness',
+    'CrystalRain': 'crystalRain',
+    'SplitSoul': 'splitSoul',
+};
+function updateRangeAbility(time, greater, abilityName) {
+    const property = RangeAbilityToName[abilityName];
+    const { ranged, gaugeData } = _state__WEBPACK_IMPORTED_MODULE_8__.store.getState();
+    const ability = ranged[property];
+    const { position } = ranged;
+    const { scaleFactor } = gaugeData;
+    if (time > 1) {
+        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangeGaugeSlice.actions.updateAbility({
+            abilityName: property,
+            ability: {
+                isOnCooldown: false,
+                cooldownDuration: 0,
+                active: true,
+                time,
+            },
+        }));
+        if (gaugeData.automaticSwapping && abilityName === 'DeathsSwiftness' || abilityName === 'SplitSoul') {
+            changeCombatStyles(_types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.mage);
+        }
     }
-    // When only 1 second of the buff exists
-    if (value == 1 && gauges.magic.instability.active) {
+    if (time === 1 && ability.active) {
         // Make sure to update the text one final time
-        gauges.magic.instability.time = value;
-        // Then start a timer to wait just past the last second
-        //  - Clear the timer
-        //  - LD is now on Cooldown so is not active
+        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangeGaugeSlice.actions.updateAbilityTime({ abilityName: property, time }));
         setTimeout(() => {
-            gauges.magic.instability.time = 0;
-            gauges.magic.instability.active = false;
-            gauges.magic.instability.isOnCooldown = true;
-            (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_7__.startAbilityCooldown)({
-                ability: gauges.magic.instability,
-                position: gauges.magic.position,
-                scaleFactor: gauges.scaleFactor,
-            }, 'Instability', false);
+            _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangeGaugeSlice.actions.updateAbility({
+                abilityName: property,
+                ability: {
+                    isOnCooldown: true,
+                    active: false,
+                    time: 0,
+                },
+            }));
+            // We don't want CR to start an overlay cooldown.
+            if (abilityName === 'CrystalRain') {
+                return;
+            }
+            const { ranged } = _state__WEBPACK_IMPORTED_MODULE_8__.store.getState();
+            const ability = ranged[property];
+            (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_6__.startAbilityCooldown)({ ability, position, scaleFactor }, abilityName, greater, () => {
+                _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangeGaugeSlice.actions.updateAbility({
+                    abilityName: property,
+                    ability: { isOnCooldown: false, cooldownDuration: 0 },
+                }));
+            });
         }, 1050);
     }
 }
-async function updateBloodTithe(gauges, value) {
-    gauges.magic.spells.bloodTithe.stacks = value;
-    gauges.magic.spells.bloodTithe.active = Boolean(value);
+function updateSpell(spellName, active) {
+    _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_11__.MagicGaugeSlice.actions.updateSpell({
+        spellName,
+        spell: { active: !!active },
+    }));
 }
-async function updateGlacialEmbrace(gauges, value) {
-    gauges.magic.spells.glacialEmbrace.stacks = value;
-    gauges.magic.spells.glacialEmbrace.active = Boolean(value);
+function changeCombatStyles(combatStyle) {
+    const { gaugeData } = _state__WEBPACK_IMPORTED_MODULE_8__.store.getState();
+    // If the style hasn't changed we don't need to mess with state or overlays.
+    if (gaugeData.combatStyle === combatStyle) {
+        return;
+    }
+    _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_12__.GaugeDataSlice.actions.updateState({
+        combatStyle,
+    }));
+    (0,_utility__WEBPACK_IMPORTED_MODULE_10__.forceClearOverlays)();
+    (0,_utility__WEBPACK_IMPORTED_MODULE_10__.clearTextOverlays)();
 }
-async function updateTsunami(gauges, value) {
-    // If Tsunami has an active buff and a timer:
-    //   - it cannot be on cooldown
-    //   - it must be active
-    //   - The remaining time is its timer
-    if (value > 1) {
-        gauges.magic.tsunami.isOnCooldown = false;
-        gauges.magic.tsunami.cooldownDuration = 0;
-        gauges.magic.tsunami.active = true;
-        gauges.magic.tsunami.time = value;
-    }
-    // When only 1 second of the buff exists
-    if (value == 1 && gauges.magic.tsunami.active) {
-        // Make sure to update the text one final time
-        gauges.magic.tsunami.time = value;
-        // Then start a timer to wait just past the last second
-        //  - Clear the timer
-        //  - LD is now on Cooldown so is not active
-        setTimeout(() => {
-            gauges.magic.tsunami.time = 0;
-            gauges.magic.tsunami.active = false;
-            gauges.magic.tsunami.isOnCooldown = true;
-            (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_7__.startAbilityCooldown)({
-                ability: gauges.magic.tsunami,
-                position: gauges.magic.position,
-                scaleFactor: gauges.scaleFactor,
-            }, 'Tsunami', false);
-        }, 1050);
-    }
+function updatePeCount(stacks) {
+    _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangeGaugeSlice.actions.updatePerfectEquilibriumStack({ stacks }));
 }
-function changeCombatStyles(gauges, style) {
-    if (gauges.combatStyle !== style && gauges.automaticSwapping) {
-        gauges.combatStyle = style;
-        _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlays();
-        _utility__WEBPACK_IMPORTED_MODULE_0__.clearTextOverlays();
-    }
+function updateBalanceByForce(active) {
+    _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangeGaugeSlice.actions.updateBalanceByForce({ active }));
 }
-async function updateDeathsSwiftness(gauges, value, greater) {
-    // If Death Swiftness has an active buff and a timer:
-    //   - it cannot be on cooldown
-    //   - it must be active
-    //   - The remaining time is its timer
-    if (value > 1) {
-        gauges.ranged.deathsSwiftness.isOnCooldown = false;
-        gauges.ranged.deathsSwiftness.cooldownDuration = 0;
-        gauges.ranged.deathsSwiftness.active = true;
-        gauges.ranged.deathsSwiftness.time = value;
-        changeCombatStyles(gauges, _types__WEBPACK_IMPORTED_MODULE_1__.CombatStyle.ranged);
-    }
-    // When only 1 second of the buff exists
-    if (value == 1 && gauges.ranged.deathsSwiftness.active) {
-        // Make sure to update the text one final time
-        gauges.ranged.deathsSwiftness.time = value;
-        // Then start a timer to wait just past the last second
-        //  - Clear the timer
-        //  - DS is now on Cooldown so is not active
-        setTimeout(() => {
-            gauges.ranged.deathsSwiftness.time = 0;
-            gauges.ranged.deathsSwiftness.active = false;
-            gauges.ranged.deathsSwiftness.isOnCooldown = true;
-            (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_7__.startAbilityCooldown)({
-                ability: gauges.ranged.deathsSwiftness,
-                position: gauges.ranged.position,
-                scaleFactor: gauges.scaleFactor,
-            }, 'DeathsSwiftness', greater);
-        }, 1050);
-    }
-}
-async function updateCrystalRain(gauges, value) {
-    // If Crystal Rain has an active buff and a timer:
-    //   - it is on cooldown
-    //   - The remaining time is its timer
-    if (value > 1) {
-        gauges.ranged.crystalRain.isOnCooldown = true;
-        gauges.ranged.crystalRain.active = true;
-        gauges.ranged.crystalRain.time = value;
-    }
-    // When only 1 second of the buff exists
-    if (value == 1 && gauges.ranged.crystalRain.active) {
-        // Make sure to update the text one final time
-        gauges.ranged.crystalRain.time = value;
-        // Then start a timer to wait just past the last second
-        //  - Clear the timer
-        //  - CR is now available again
-        setTimeout(() => {
-            gauges.ranged.crystalRain.time = 0;
-            gauges.ranged.crystalRain.active = false;
-            gauges.ranged.crystalRain.isOnCooldown = false;
-            (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_7__.startAbilityCooldown)({
-                ability: gauges.ranged.crystalRain,
-                position: gauges.ranged.position,
-                scaleFactor: gauges.scaleFactor,
-            }, 'CrystalRain', false);
-        }, 1050);
-    }
-}
-async function updatePeCount(gauges, value) {
-    gauges.ranged.perfectEquilibrium.stacks = value;
-}
-async function updateOdeToDeceit(gauges, value) {
-    // If Ode to Deceit has an active buff and a timer:
-    //   - it is on cooldown
-    //   - The remaining time is its timer
-    if (value > 1) {
-        gauges.magic.odeToDeceit.isOnCooldown = true;
-        gauges.magic.odeToDeceit.active = true;
-        gauges.magic.odeToDeceit.time = value;
-    }
-    // When only 1 second of the buff exists
-    if (value == 1 && gauges.magic.odeToDeceit.active) {
-        // Make sure to update the text one final time
-        gauges.magic.odeToDeceit.time = value;
-        // Then start a timer to wait just past the last second
-        //  - Clear the timer
-        //  - CR is now available again
-        setTimeout(() => {
-            gauges.magic.odeToDeceit.time = 0;
-            gauges.magic.odeToDeceit.active = false;
-            gauges.magic.odeToDeceit.isOnCooldown = false;
-            (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_7__.startAbilityCooldown)({
-                ability: gauges.magic.odeToDeceit,
-                position: gauges.magic.position,
-                scaleFactor: gauges.scaleFactor,
-            }, 'OdeToDeceit', false);
-        }, 1050);
-    }
-}
-async function updateBalanceByForce(gauges, value) {
-    gauges.ranged.balanceByForce = Boolean(value);
-}
-async function updateRangedSplitSoul(gauges, value) {
+/**
+ * Keeping around until I figure out why it's special.
+ */
+function updateRangedSplitSoul(time) {
+    const { ranged } = _state__WEBPACK_IMPORTED_MODULE_8__.store.getState();
     // If Split Soul has an active buff and a timer:
     //   - it cannot be on cooldown
     //   - it must be active
     //   - The remaining time is its timer
-    if (value > 1) {
-        gauges.ranged.splitSoul.isOnCooldown = false;
-        gauges.ranged.splitSoul.cooldownDuration = 0;
-        gauges.ranged.splitSoul.active = true;
-        gauges.ranged.splitSoul.time = value;
-        changeCombatStyles(gauges, _types__WEBPACK_IMPORTED_MODULE_1__.CombatStyle.ranged);
+    if (time > 1) {
+        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangeGaugeSlice.actions.updateAbility({
+            abilityName: 'splitSoul',
+            ability: {
+                isOnCooldown: false,
+                cooldownDuration: 0,
+                active: true,
+                time,
+            },
+        }));
+        changeCombatStyles(_types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.ranged);
     }
     // When only 1 second of the buff exists
-    if (value == 1 && gauges.ranged.splitSoul.active) {
+    if (time == 1 && ranged.splitSoul.active) {
         // Make sure to update the text one final time
-        gauges.ranged.splitSoul.time = value;
+        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangeGaugeSlice.actions.updateAbilityTime({ abilityName: 'splitSoul', time }));
         // Then start a timer to wait just past the last second
         //  - Clear the timer
         //  - DS is now on Cooldown so is not active
         setTimeout(() => {
-            gauges.ranged.splitSoul.time = 0;
-            gauges.ranged.splitSoul.active = false;
-            gauges.ranged.splitSoul.isOnCooldown = true;
-            startRangedSplitSoul(gauges);
+            _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangeGaugeSlice.actions.updateAbility({
+                abilityName: 'splitSoul',
+                ability: {
+                    active: false,
+                    isOnCooldown: true,
+                    cooldownDuration: 0,
+                    time: 0,
+                },
+            }));
+            startRangedSplitSoul();
         }, 1050);
     }
 }
-async function startRangedSplitSoul(gauges) {
-    if (!gauges.ranged.splitSoul.isActiveOverlay) {
+function startRangedSplitSoul() {
+    const { ranged } = _state__WEBPACK_IMPORTED_MODULE_8__.store.getState();
+    if (!ranged.splitSoul.isActiveOverlay) {
         return;
     }
     // If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
-    if (gauges.ranged.splitSoul.active) {
-        endRangedSoulSplit(gauges);
-        return;
+    if (ranged.splitSoul.active) {
+        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangeGaugeSlice.actions.updateAbility({
+            abilityName: 'splitSoul',
+            ability: {
+                isOnCooldown: false,
+                cooldownDuration: 0,
+            },
+        }));
+        return (0,_utility__WEBPACK_IMPORTED_MODULE_10__.forceClearOverlay)('SplitSoul_Text');
     }
     // Otherwise cooldown has started and we can clear the Active text
-    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('SplitSoul_Text');
-}
-async function endRangedSoulSplit(gauges) {
-    gauges.ranged.splitSoul.isOnCooldown = false;
-    gauges.ranged.splitSoul.cooldownDuration = 0;
-    _utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay('SplitSoul_Text');
+    (0,_utility__WEBPACK_IMPORTED_MODULE_10__.forceClearOverlay)('SplitSoul_Text');
 }
 
 
@@ -18826,37 +18743,43 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   readEnemy: () => (/* binding */ readEnemy)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var alt1_targetmob__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1/targetmob */ "../node_modules/alt1/dist/targetmob/index.js");
-/* harmony import */ var alt1_targetmob__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1_targetmob__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var alt1_targetmob__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! alt1/targetmob */ "../node_modules/alt1/dist/targetmob/index.js");
+/* harmony import */ var alt1_targetmob__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(alt1_targetmob__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utility */ "./lib/utility.ts");
 /* harmony import */ var _a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../a1sauce/Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
-/* eslint-disable @typescript-eslint/no-require-imports */
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../state */ "./state/index.ts");
+/* harmony import */ var _state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../state/gauge-data/necromancy-gauge.state */ "./state/gauge-data/necromancy-gauge.state.ts");
+/* harmony import */ var _state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../state/gauge-data/gauge-data.state */ "./state/gauge-data/gauge-data.state.ts");
 
 
 
 
-const targetDisplay = new (alt1_targetmob__WEBPACK_IMPORTED_MODULE_2___default())();
-const enemyDebuffImages = alt1__WEBPACK_IMPORTED_MODULE_3__.webpackImages({
+
+
+
+const targetDisplay = new (alt1_targetmob__WEBPACK_IMPORTED_MODULE_5___default())();
+const enemyDebuffImages = alt1__WEBPACK_IMPORTED_MODULE_6__.webpackImages({
     invokeDeath: __webpack_require__(/*! ../asset/data/enemyDebuffs/death-mark.data.png */ "./asset/data/enemyDebuffs/death-mark.data.png"),
     bloat: __webpack_require__(/*! ../asset/data/enemyDebuffs/bloated.data.png */ "./asset/data/enemyDebuffs/bloated.data.png"),
 });
 // Thanks to rodultra97 for PR to previous repo
 const bloatInterval = new Map();
-const bloat = 'bloat';
+const bloatString = 'bloat';
 const combatInterval = new Map();
 const outOfCombat = 'isInCombat';
 let combatTimer = -1;
-async function readEnemy(gauges) {
+async function readEnemy() {
+    const { gaugeData } = _state__WEBPACK_IMPORTED_MODULE_2__.store.getState();
     //TODO: Store LastPos and detect when to rescan to avoid spamming CHFRS in loop
     const targetData = targetDisplay.read();
     if (combatTimer < 0) {
         combatTimer = parseInt((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('combatTimer'), 10);
     }
-    if (gauges.checkCombatStatus) {
+    if (gaugeData.checkCombatStatus) {
         if (targetData) {
-            gauges.isInCombat = true;
+            _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_4__.GaugeDataSlice.actions.updateState({ isInCombat: true }));
             if (combatInterval.has(outOfCombat)) {
                 clearInterval(combatInterval.get(outOfCombat));
                 combatInterval.delete(outOfCombat);
@@ -18869,7 +18792,7 @@ async function readEnemy(gauges) {
                     combatTimer = currentTick - 1;
                 }
                 else if (!targetData) {
-                    gauges.isInCombat = false;
+                    _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_4__.GaugeDataSlice.actions.updateState({ isInCombat: false }));
                     combatTimer = parseInt((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_1__.getSetting)('combatTimer'), 10);
                 }
             }, 1000);
@@ -18877,58 +18800,60 @@ async function readEnemy(gauges) {
         }
     }
     else {
-        gauges.isInCombat = true;
+        if (!gaugeData.isInCombat) {
+            _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_4__.GaugeDataSlice.actions.updateState({ isInCombat: true }));
+        }
         if (combatInterval.has(outOfCombat)) {
             clearInterval(combatInterval.get(outOfCombat));
             combatInterval.delete(outOfCombat);
         }
     }
-    if (targetData && gauges.isInCombat) {
-        const target_display_loc = {
-            x: (targetDisplay?.lastpos?.x ?? 0) - 120,
-            y: (targetDisplay?.lastpos?.y ?? 0) + 20,
-            w: 150,
-            h: 60,
-        };
-        const targetDebuffs = alt1__WEBPACK_IMPORTED_MODULE_3__.captureHold(target_display_loc.x, target_display_loc.y, target_display_loc.w, target_display_loc.h);
-        const targetIsDeathMarked = targetDebuffs.findSubimage(enemyDebuffImages.invokeDeath).length;
-        if (targetIsDeathMarked) {
-            gauges.necromancy.incantations.active[0] = true;
-        }
-        else if (!targetIsDeathMarked) {
-            gauges.necromancy.incantations.active[0] = false;
-        }
-        const targetIsBloated = targetDebuffs.findSubimage(enemyDebuffImages.bloat).length;
-        if (targetIsBloated && !bloatInterval.has(bloat)) {
-            gauges.necromancy.bloat.time = 20.5;
-            gauges.necromancy.bloat.active = true;
-            const intervalId = setInterval(() => {
-                const currentTick = gauges.necromancy.bloat.time;
-                if (currentTick > 0) {
-                    const nextTick = parseFloat((0,_utility__WEBPACK_IMPORTED_MODULE_0__.roundedToFixed)(currentTick - 0.6, 1));
-                    gauges.necromancy.bloat.time = nextTick;
-                }
-                else {
-                    clearInterval(bloatInterval.get(bloat));
-                    bloatInterval.delete(bloat);
-                    gauges.necromancy.bloat.time = 0;
-                }
-            }, 600);
-            bloatInterval.set(bloat, intervalId);
-        }
-        else if (!targetIsBloated) {
-            if (bloatInterval.has(bloat)) {
+    if (!(targetData && gaugeData.isInCombat)) {
+        _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_3__.NecromancyGaugeSlice.actions.updateActiveIncantation({ active: false, incantation: 0 }));
+        _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_3__.NecromancyGaugeSlice.actions.updateBloat({ active: false, time: 0 }));
+        return;
+    }
+    const target_display_loc = {
+        x: (targetDisplay?.lastpos?.x ?? 0) - 120,
+        y: (targetDisplay?.lastpos?.y ?? 0) + 20,
+        w: 150,
+        h: 60,
+    };
+    const targetDebuffs = alt1__WEBPACK_IMPORTED_MODULE_6__.captureHold(target_display_loc.x, target_display_loc.y, target_display_loc.w, target_display_loc.h);
+    const targetIsDeathMarked = targetDebuffs.findSubimage(enemyDebuffImages.invokeDeath).length;
+    _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_3__.NecromancyGaugeSlice.actions.updateActiveIncantation({
+        active: !!targetIsDeathMarked,
+        incantation: 0,
+    }));
+    const targetIsBloated = targetDebuffs.findSubimage(enemyDebuffImages.bloat).length;
+    if (targetIsBloated && !bloatInterval.has(bloatString)) {
+        _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_3__.NecromancyGaugeSlice.actions.updateBloat({
+            active: true,
+            time: 20.5,
+        }));
+        const intervalId = setInterval(() => {
+            const { bloat } = _state__WEBPACK_IMPORTED_MODULE_2__.store.getState().necromancy;
+            const currentTick = bloat.time;
+            const timeRemaining = parseFloat((0,_utility__WEBPACK_IMPORTED_MODULE_0__.roundedToFixed)(currentTick - 0.6, 1));
+            if (currentTick <= 0) {
                 clearInterval(bloatInterval.get(bloat));
                 bloatInterval.delete(bloat);
             }
-            gauges.necromancy.bloat.time = 0;
-            gauges.necromancy.bloat.active = false;
-        }
+            _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_3__.NecromancyGaugeSlice.actions.updateBloat({
+                time: currentTick > 0 ? timeRemaining : 0,
+            }));
+        }, 600);
+        bloatInterval.set(bloatString, intervalId);
     }
-    else {
-        gauges.necromancy.incantations.active[0] = false;
-        gauges.necromancy.bloat.time = 0;
-        gauges.necromancy.bloat.active = false;
+    else if (!targetIsBloated) {
+        if (bloatInterval.has(bloatString)) {
+            clearInterval(bloatInterval.get(bloatString));
+            bloatInterval.delete(bloatString);
+        }
+        _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_3__.NecromancyGaugeSlice.actions.updateBloat({
+            time: 0,
+            active: false,
+        }));
     }
 }
 
@@ -18954,6 +18879,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _patchnotes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../patchnotes */ "./patchnotes.ts");
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var pouchdb__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! pouchdb */ "../node_modules/pouchdb/lib/index-browser.es.js");
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
+/* harmony import */ var _state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../state/gauge-data/gauge-data.state */ "./state/gauge-data/gauge-data.state.ts");
+/* harmony import */ var _state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../state/gauge-data/necromancy-gauge.state */ "./state/gauge-data/necromancy-gauge.state.ts");
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../types */ "./types/index.ts");
+
+
+
+
 
 
 
@@ -18969,7 +18902,11 @@ const settings = sauce.createSettings();
 const db = new pouchdb__WEBPACK_IMPORTED_MODULE_7__["default"](_data_constants__WEBPACK_IMPORTED_MODULE_4__.appName);
 const patchNotes = new _a1sauce_Patches_patchNotes__WEBPACK_IMPORTED_MODULE_2__.Patches();
 patchNotes.setNotes(_patchnotes__WEBPACK_IMPORTED_MODULE_5__.notes);
-const renderSettings = async (gauges) => {
+function updateCombatStyle(combatStyle) {
+    _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_9__.GaugeDataSlice.actions.updateCombatStyle(combatStyle));
+    (0,_utility__WEBPACK_IMPORTED_MODULE_6__.forceClearOverlays)();
+}
+const renderSettings = () => {
     settings
         .addHeader('h2', 'Job Gauges - v' + sauce.getVersion())
         .addText(`Please <a href="https://discord.gg/KJ2SgWyJFF" target="_blank" rel="nofollow">join the Discord</a> for any suggestions or support`)
@@ -18977,21 +18914,25 @@ const renderSettings = async (gauges) => {
         .addHeader('h3', 'General')
         .addCheckboxSetting('checkForUpdates', 'Periodically check if a new update is available', false)
         .addCheckboxSetting('rememberUiPosition', 'Remember last known position of buff/debuff bars to avoid needing to scan on every app start', false)
-        .addDropdownSetting('defaultCombatStyle', 'Select default combat style', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('defaultCombatStyle') ?? '4', [
-        { value: '2', name: 'Ranged' },
-        { value: '3', name: 'Magic' },
-        { value: '4', name: 'Necromancy' },
-    ])
-        .addCheckboxSetting('automaticSwapping', 'Swap gauge automatically based on last used Ultimate Ability', false)
-        .addCheckboxSetting('hideOutsideCombat', 'Show gauges only while "In Combat"', false)
+        .addButton('necroCombatStyle', 'Select Necro Overlay', () => updateCombatStyle(_types__WEBPACK_IMPORTED_MODULE_11__.CombatStyle.necro), { classes: ['nisbutton'] })
+        .addButton('mageCombatStyle', 'Select Mage Overlay', () => updateCombatStyle(_types__WEBPACK_IMPORTED_MODULE_11__.CombatStyle.mage), { classes: ['nisbutton'] })
+        .addButton('rangeCombatStyle', 'Select Range Overlay', () => updateCombatStyle(_types__WEBPACK_IMPORTED_MODULE_11__.CombatStyle.ranged), { classes: ['nisbutton'] })
+        .addCheckboxSetting('automaticSwapping', 'Swap gauge automatically based on last used Ultimate Ability', false, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_9__.GaugeDataSlice.actions.updateState({ automaticSwapping: event })))
+        .addCheckboxSetting('hideOutsideCombat', 'Show gauges only while "In Combat"', false, (event) => {
+        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_9__.GaugeDataSlice.actions.updateState({
+            checkCombatStatus: event,
+            isInCombat: false,
+        }));
+    })
         .addRangeSetting('combatTimer', 'Seconds until Player is no longer "In Combat" after Target Information goes away', { defaultValue: '5', min: 1, max: 600, unit: 's' })
         .addSeperator()
-        .addButton('repositionOverlay', 'Reposition Overlay', () => (0,_utility__WEBPACK_IMPORTED_MODULE_6__.setOverlayPosition)(gauges), {
-        classes: ['nisbutton'],
-    })
+        .addButton('repositionOverlay', 'Reposition Overlay', () => (0,_utility__WEBPACK_IMPORTED_MODULE_6__.setOverlayPosition)(), { classes: ['nisbutton'] })
         .addSeperator()
         .addHeader('h3', 'Scale')
-        .addRangeSetting('scale', 'Adjusts the size of the overlay. You must reload and reposition the overlay after scaling.', { defaultValue: '100', min: 50, max: 300 })
+        .addRangeSetting('scale', 'Adjusts the size of the overlay. You must reload and reposition the overlay after scaling.', { defaultValue: '100', min: 50, max: 300 }, (scaleFactor) => {
+        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_9__.GaugeDataSlice.actions.updateState({ scaleFactor: scaleFactor / 100 }));
+        location.reload();
+    })
         .addSeperator()
         .addHeader('h3', 'Incantation Placement')
         .addDropdownSetting('selectedOrientation', 'Select how to group Incantations', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('selectedOrientation') ?? 'reverse_split', [
@@ -19002,28 +18943,61 @@ const renderSettings = async (gauges) => {
         .addSeperator()
         .addHeader('h3', 'Visible Components')
         .addText('Select which components of the overlay you wish to see.')
-        .addCheckboxSetting('showConjures', 'Show Conjures', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showConjures') ?? true)
-        .addCheckboxSetting('showLivingDeath', 'Show Living Death', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showLivingDeath') ?? true)
-        .addCheckboxSetting('showIncantations', 'Show Incantations', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showIncantations') ?? true)
-        .addCheckboxSetting('showInvokeDeath', 'Show Invoke Death', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showInvokeDeath') ?? true)
-        .addCheckboxSetting('showDarkness', 'Show Darkness', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showDarkness') ?? true)
-        .addCheckboxSetting('showThreads', 'Show Threads of Fate', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showThreads') ?? true)
-        .addCheckboxSetting('showSplitSoul', 'Show Split Soul', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showSplitSoul') ?? true)
-        .addCheckboxSetting('showSouls', 'Show Residual Souls', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showSouls') ?? true)
-        .addCheckboxSetting('pre95Souls', 'Only show 3 Residual Souls / No Soulbound Lantern', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('pre95Souls') ?? false)
-        .addCheckboxSetting('showNecrosis', 'Show Necrosis', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showNecrosis') ?? true)
-        .addCheckboxSetting('dupeRow', 'Show 2nd row of Necrosis stacks', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('dupeRow') ?? false)
-        .addCheckboxSetting('useColoredNecrosis', 'Use orange and red Necrosis Stacks when above certain thresholds', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('useColoredNecrosis') ?? false)
-        .addCheckboxSetting('showBloat', 'Show Bloat', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showBloat') ?? true)
+        .addCheckboxSetting('showConjures', 'Show Conjures', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showConjures') ?? true, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__.NecromancyGaugeSlice.actions.updateIsActiveOverlay({
+        key: 'conjures',
+        isActiveOverlay: event,
+    })))
+        .addCheckboxSetting('showLivingDeath', 'Show Living Death', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showLivingDeath') ?? true, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__.NecromancyGaugeSlice.actions.updateIsActiveOverlay({
+        key: 'livingDeath',
+        isActiveOverlay: event,
+    })))
+        .addCheckboxSetting('showIncantations', 'Show Incantations', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showIncantations') ?? true, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__.NecromancyGaugeSlice.actions.updateIsActiveOverlay({
+        key: 'incantations',
+        isActiveOverlay: event,
+    })))
+        .addCheckboxSetting('showInvokeDeath', 'Show Invoke Death', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showInvokeDeath') ?? true, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__.NecromancyGaugeSlice.actions.updateIncantationActive({
+        key: 'invokeDeath',
+        isActiveOverlay: event,
+    })))
+        .addCheckboxSetting('showDarkness', 'Show Darkness', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showDarkness') ?? true, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__.NecromancyGaugeSlice.actions.updateIncantationActive({
+        key: 'darkness',
+        isActiveOverlay: event,
+    })))
+        .addCheckboxSetting('showThreads', 'Show Threads of Fate', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showThreads') ?? true, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__.NecromancyGaugeSlice.actions.updateIncantationActive({
+        key: 'threads',
+        isActiveOverlay: event,
+    })))
+        .addCheckboxSetting('showSplitSoul', 'Show Split Soul', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showSplitSoul') ?? true, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__.NecromancyGaugeSlice.actions.updateIncantationActive({
+        key: 'splitSoul',
+        isActiveOverlay: event,
+    })))
+        .addCheckboxSetting('showSouls', 'Show Residual Souls', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showSouls') ?? true, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__.NecromancyGaugeSlice.actions.updateStacksAbility({
+        stackType: 'souls',
+        stack: { isActiveOverlay: event },
+    })))
+        .addCheckboxSetting('pre95Souls', 'Only show 3 Residual Souls / No Soulbound Lantern', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('pre95Souls') ?? false, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__.NecromancyGaugeSlice.actions.updateStacks({ pre95Souls: event })))
+        .addCheckboxSetting('showNecrosis', 'Show Necrosis', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showNecrosis') ?? true, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__.NecromancyGaugeSlice.actions.updateStacksAbility({
+        stackType: 'necrosis',
+        stack: { isActiveOverlay: event },
+    })))
+        .addCheckboxSetting('dupeRow', 'Show 2nd row of Necrosis stacks', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('dupeRow') ?? false, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__.NecromancyGaugeSlice.actions.updateStacks({ duplicateNecrosisRow: event })))
+        .addCheckboxSetting('useColoredNecrosis', 'Use orange and red Necrosis Stacks when above certain thresholds', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('useColoredNecrosis') ?? false, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__.NecromancyGaugeSlice.actions.updateStacks({ useColoredNecrosis: event })))
+        .addCheckboxSetting('showBloat', 'Show Bloat', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showBloat') ?? true, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__.NecromancyGaugeSlice.actions.updateBloat({ isActiveOverlay: event })))
         .addSeperator()
         .addHeader('h2', 'Alarms')
         .addFileSetting('customAlarms', 'Upload a custom alarm', '')
         .addHeader('h3', 'Residual Souls Alarm')
-        .addRangeSetting('alarmSoulsThreshold', 'Alert when at or above this many souls', { defaultValue: '5', min: 2, max: 5, unit: ' souls' })
+        .addRangeSetting('alarmSoulsThreshold', 'Alert when at or above this many souls', { defaultValue: '5', min: 2, max: 5, unit: ' souls' }, (threshold) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__.NecromancyGaugeSlice.actions.updateStackAlarm({
+        stackName: 'souls',
+        alarm: { threshold },
+    })))
         .addAlarmSetting('alarmSouls', '')
         .addSeperator()
         .addHeader('h3', 'Necrosis Stacks Alarm')
-        .addRangeSetting('alarmNecrosisThreshold', 'Alert when at or above this many stacks', { defaultValue: '12', min: 2, max: 12, unit: ' stacks' })
+        .addRangeSetting('alarmNecrosisThreshold', 'Alert when at or above this many stacks', { defaultValue: '12', min: 2, max: 12, unit: ' stacks' }, (threshold) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__.NecromancyGaugeSlice.actions.updateStackAlarm({
+        stackName: 'necrosis',
+        alarm: { threshold },
+    })))
         .addAlarmSetting('alarmNecrosis', '')
         .addSeperator()
         .addButton('openPatchNotes', 'Open Patch Notes', patchNotes.showPatchNotes, { classes: ['nisbutton'] })
@@ -19032,27 +19006,30 @@ const renderSettings = async (gauges) => {
         .build();
     db.allDocs({ include_docs: true, attachments: true, binary: true })
         .then((result) => {
-        result.rows.forEach((row) => {
-            let alarmDropdowns = document.querySelectorAll('.alarm-dropdown');
+        for (const row of result.rows) {
+            if (!row.doc) {
+                console.error(`Doc for row was undefined.`);
+                return;
+            }
+            const alarmDropdowns = document.querySelectorAll('.alarm-dropdown');
             for (let i = 0; i < alarmDropdowns.length; i++) {
-                let option = document.createElement('option');
-                // @ts-ignore
+                const option = document.createElement('option');
                 option.value = `Custom:${row.doc._id}`;
                 // @ts-ignore
                 option.innerText = `${row.doc.name}`;
                 alarmDropdowns[i].appendChild(option);
             }
-        });
+        }
     })
         .then(() => {
-        let alarmDropdowns = document.querySelectorAll('.alarm-dropdown');
+        const alarmDropdowns = document.querySelectorAll('.alarm-dropdown');
         alarmDropdowns.forEach((dropdown) => {
             dropdown.addEventListener('change', (e) => {
-                let target = e.target;
-                let settingName = target.id;
+                const target = e.target;
+                const settingName = target.id;
                 (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.updateSetting)(settingName, target.value);
             });
-            let dd = dropdown;
+            const dd = dropdown;
             dd.value = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)(dropdown.id);
         });
     });
@@ -19093,7 +19070,7 @@ const AbilityCooldowns = new Map([
     ['Instability', { ...defaultCooldowns, positionY: 30 }],
     ['Tsunami', { ...defaultCooldowns }],
     ['CrystalRain', { ...defaultCooldowns }],
-    ['OdeToDeceit', { ...defaultCooldowns }],
+    ['Soulfire', { ...defaultCooldowns }],
     ['LivingDeath', { ...defaultCooldowns }],
 ]);
 /**
@@ -19106,9 +19083,10 @@ const AbilityCooldown = new Map();
  * Handles ticking down an abilities cooldown and ending it when it's over or active.
  * @param abilityData Metadata about the ability to get positioning and ending cooldowns.
  * @param abilityName Strongly typed name for consistent overlay updating.
- * @param greater If the cooldown is great...er(?) (Ask Nyu)
+ * @param greater If the ability is the greater variant
+ * @param updateStateCallback Have the caller set state cooldown.
  */
-function startAbilityCooldown(abilityData, abilityName, greater) {
+function startAbilityCooldown(abilityData, abilityName, greater, updateStateCallback) {
     const { scaleFactor, position, ability } = abilityData;
     if (!ability.isActiveOverlay) {
         return;
@@ -19117,6 +19095,7 @@ function startAbilityCooldown(abilityData, abilityName, greater) {
     // If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
     if (ability.active) {
         AbilityCooldown.set(abilityName, false);
+        updateStateCallback();
         return endAbilityCooldown(abilityData.ability, abilityName);
     }
     // If there's already a timer active... no need to do anything else.
@@ -19140,7 +19119,8 @@ function startAbilityCooldown(abilityData, abilityName, greater) {
         if (ability.active || cooldown <= 0) {
             clearInterval(timer);
             AbilityCooldown.set(abilityName, false);
-            return endAbilityCooldown(abilityData.ability, abilityName);
+            updateStateCallback();
+            return (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)(`${abilityName}_Cooldown_Text`);
         }
         cooldown -= 1;
         const cooldownText = `${abilityName}_Cooldown_Text`;
@@ -19161,8 +19141,6 @@ function startAbilityCooldown(abilityData, abilityName, greater) {
  * @param name Strongly typed name to clear overlay.
  */
 function endAbilityCooldown(ability, name) {
-    ability.isOnCooldown = false;
-    ability.cooldownDuration = 0;
     (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)(`${name}_Cooldown_Text`);
 }
 /**
@@ -19203,6 +19181,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   adjustPositionForScale: () => (/* binding */ adjustPositionForScale),
 /* harmony export */   adjustPositionWithoutScale: () => (/* binding */ adjustPositionWithoutScale),
+/* harmony export */   alarmLoop: () => (/* binding */ alarmLoop),
 /* harmony export */   black: () => (/* binding */ black),
 /* harmony export */   blue: () => (/* binding */ blue),
 /* harmony export */   clearTextOverlays: () => (/* binding */ clearTextOverlays),
@@ -19215,8 +19194,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   green: () => (/* binding */ green),
 /* harmony export */   handleResizingImages: () => (/* binding */ handleResizingImages),
 /* harmony export */   helperItems: () => (/* binding */ helperItems),
-/* harmony export */   pauseAlert: () => (/* binding */ pauseAlert),
-/* harmony export */   playAlert: () => (/* binding */ playAlert),
 /* harmony export */   red: () => (/* binding */ red),
 /* harmony export */   resizeGaugesWithMousePosition: () => (/* binding */ resizeGaugesWithMousePosition),
 /* harmony export */   resizeImageData: () => (/* binding */ resizeImageData),
@@ -19225,23 +19202,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   updateLocation: () => (/* binding */ updateLocation),
 /* harmony export */   white: () => (/* binding */ white)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../a1sauce/Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
 /* harmony import */ var _a1sauce_Utils_timeout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../a1sauce/Utils/timeout */ "./a1sauce/Utils/timeout.ts");
 /* harmony import */ var pouchdb__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! pouchdb */ "../node_modules/pouchdb/lib/index-browser.es.js");
 /* harmony import */ var _data_constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../data/constants */ "./data/constants.ts");
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../state */ "./state/index.ts");
+/* harmony import */ var _state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../state/gauge-data/necromancy-gauge.state */ "./state/gauge-data/necromancy-gauge.state.ts");
+/* harmony import */ var _state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../state/gauge-data/magic-gauge.state */ "./state/gauge-data/magic-gauge.state.ts");
+/* harmony import */ var _state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../state/gauge-data/range-gauge.state */ "./state/gauge-data/range-gauge.state.ts");
+/* harmony import */ var _state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../state/gauge-data/gauge-data.state */ "./state/gauge-data/gauge-data.state.ts");
+
+
+
+
+
 
 
 
 
 
 const db = new pouchdb__WEBPACK_IMPORTED_MODULE_2__["default"](_data_constants__WEBPACK_IMPORTED_MODULE_3__.appName);
-const white = alt1__WEBPACK_IMPORTED_MODULE_4__.mixColor(255, 255, 255);
-const red = alt1__WEBPACK_IMPORTED_MODULE_4__.mixColor(255, 0, 0);
-const green = alt1__WEBPACK_IMPORTED_MODULE_4__.mixColor(0, 255, 0);
-const blue = alt1__WEBPACK_IMPORTED_MODULE_4__.mixColor(0, 0, 255);
-const black = alt1__WEBPACK_IMPORTED_MODULE_4__.mixColor(1, 1, 1);
+const white = alt1__WEBPACK_IMPORTED_MODULE_9__.mixColor(255, 255, 255);
+const red = alt1__WEBPACK_IMPORTED_MODULE_9__.mixColor(255, 0, 0);
+const green = alt1__WEBPACK_IMPORTED_MODULE_9__.mixColor(0, 255, 0);
+const blue = alt1__WEBPACK_IMPORTED_MODULE_9__.mixColor(0, 0, 255);
+const black = alt1__WEBPACK_IMPORTED_MODULE_9__.mixColor(1, 1, 1);
 /*
  * Should only return null if a typo is made as elements
  * that are fetched are created by A1 Sauce
@@ -19253,28 +19240,32 @@ const helperItems = {
     Output: getByID('output'),
     settings: getByID('Settings'),
 };
-let updatingOverlayPosition = false;
-async function setOverlayPosition(gauges) {
-    updatingOverlayPosition = true;
-    alt1__WEBPACK_IMPORTED_MODULE_4__.once('alt1pressed', updateLocation);
+async function setOverlayPosition() {
+    _state__WEBPACK_IMPORTED_MODULE_4__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_8__.GaugeDataSlice.actions.updateState({ updatingOverlayPosition: true }));
+    alt1__WEBPACK_IMPORTED_MODULE_9__.once('alt1pressed', updateLocation);
     alt1.setTooltip('Press Primary Keybind to save position (default keybind is alt+1)');
     setTimeout(() => {
         alt1.clearTooltip();
     }, 3000);
-    while (updatingOverlayPosition) {
-        await (0,_a1sauce_Utils_timeout__WEBPACK_IMPORTED_MODULE_1__.timeout)(1000);
+    while (true) {
+        const { gaugeData } = _state__WEBPACK_IMPORTED_MODULE_4__.store.getState();
+        if (!gaugeData.updatingOverlayPosition) {
+            break;
+        }
+        await (0,_a1sauce_Utils_timeout__WEBPACK_IMPORTED_MODULE_1__.timeout)(500);
         freezeOverlays();
         //TODO: Per-gauge repositioning will be needed here as well
-        resizeGaugesWithMousePosition(gauges);
+        resizeGaugesWithMousePosition();
         continueOverlays();
     }
+    const { necromancy } = _state__WEBPACK_IMPORTED_MODULE_4__.store.getState();
     (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.updateSetting)('overlayPosition', {
-        x: gauges.necromancy.position.x,
-        y: gauges.necromancy.position.y,
+        x: necromancy.position.x,
+        y: necromancy.position.y,
     });
 }
 function updateLocation() {
-    updatingOverlayPosition = false;
+    _state__WEBPACK_IMPORTED_MODULE_4__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_8__.GaugeDataSlice.actions.updateState({ updatingOverlayPosition: false }));
     alt1.overLayClearGroup('overlayPositionHelper');
     alt1.overLayRefreshGroup('overlayPositionHelper');
     alt1.clearTooltip();
@@ -19299,12 +19290,13 @@ const overlays = [
     'Souls',
     'Sunshine',
     'Instability',
-    'OdeToDeceit',
+    'Soulfire',
     'Tsunami',
     'DeathsSwiftness',
     'CrystalRain',
     'PerfectEquilibrium',
     'SplitSoul',
+    'Spells',
 ];
 function freezeOverlays() {
     overlays.forEach((overlay) => {
@@ -19347,10 +19339,10 @@ function clearTextOverlays() {
     alt1.overLayRefreshGroup('Instability_Text');
     alt1.overLayClearGroup('Instability_Cooldown_Text');
     alt1.overLayRefreshGroup('Instability_Cooldown_Text');
-    alt1.overLayClearGroup('OdeToDeceit_Text');
-    alt1.overLayRefreshGroup('OdeToDeceit_Text');
-    alt1.overLayClearGroup('OdeToDeceit_Cooldown_Text');
-    alt1.overLayRefreshGroup('OdeToDeceit_Cooldown_Text');
+    alt1.overLayClearGroup('Soulfire_Text');
+    alt1.overLayRefreshGroup('Soulfire_Text');
+    alt1.overLayClearGroup('Soulfire_Cooldown_Text');
+    alt1.overLayRefreshGroup('Soulfire_Cooldown_Text');
     alt1.overLayClearGroup('Tsunami_Text');
     alt1.overLayRefreshGroup('Tsunami_Text');
     alt1.overLayClearGroup('Tsunami_Cooldown_Text');
@@ -19376,21 +19368,19 @@ function adjustPositionForScale(position, scaleFactor) {
 function adjustPositionWithoutScale(position, scaleFactor) {
     return parseInt(roundedToFixed(position * (1 / scaleFactor), 1), 10);
 }
-// TODO: Use future overlays[] to iterate over active overlays
-/*
- * getMousePosition() can be null if the mouse is off the client screen
- * but the error is silent and doesn't cause problems so I'm going to
- * suppress the null checks to avoid adding lots of unnecessary noise
- */
-function resizeGaugesWithMousePosition(gauges) {
-    gauges.necromancy.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_4__.getMousePosition().x, gauges.scaleFactor);
-    gauges.necromancy.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_4__.getMousePosition().y, gauges.scaleFactor);
-    gauges.magic.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_4__.getMousePosition().x, gauges.scaleFactor);
-    gauges.magic.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_4__.getMousePosition().y, gauges.scaleFactor);
-    gauges.ranged.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_4__.getMousePosition().x, gauges.scaleFactor);
-    gauges.ranged.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_4__.getMousePosition().y, gauges.scaleFactor);
-    gauges.melee.position.x = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_4__.getMousePosition().x, gauges.scaleFactor);
-    gauges.melee.position.y = adjustPositionWithoutScale(alt1__WEBPACK_IMPORTED_MODULE_4__.getMousePosition().y, gauges.scaleFactor);
+function resizeGaugesWithMousePosition() {
+    const position = alt1__WEBPACK_IMPORTED_MODULE_9__.getMousePosition();
+    if (!position) {
+        return;
+    }
+    const { gaugeData } = _state__WEBPACK_IMPORTED_MODULE_4__.store.getState();
+    const { x, y } = position;
+    const adjustedXPosition = adjustPositionWithoutScale(x, gaugeData.scaleFactor);
+    const adjustedYPosition = adjustPositionWithoutScale(y, gaugeData.scaleFactor);
+    _state__WEBPACK_IMPORTED_MODULE_4__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_5__.NecromancyGaugeSlice.actions.updatePosition({ x: adjustedXPosition, y: adjustedYPosition }));
+    _state__WEBPACK_IMPORTED_MODULE_4__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_6__.MagicGaugeSlice.actions.updatePosition({ x: adjustedXPosition, y: adjustedYPosition }));
+    _state__WEBPACK_IMPORTED_MODULE_4__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_7__.RangeGaugeSlice.actions.updatePosition({ x: adjustedXPosition, y: adjustedYPosition }));
+    // Add melee sometime lol
 }
 function roundedToFixed(input, digits) {
     const rounder = Math.pow(10, digits);
@@ -19432,42 +19422,62 @@ function resizeImageData(imageData, scaleFactor) {
     // Extract the new image data from the resized canvas
     return context.getImageData(0, 0, newWidth, newHeight);
 }
-async function playAlert(alarm) {
-    loadAlarm(alarm);
-    alarm.loop = Boolean((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)(alarm.id + 'Loop'));
-    alarm.volume = Number((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)(alarm.id + 'Volume')) / 100;
-    await (0,_a1sauce_Utils_timeout__WEBPACK_IMPORTED_MODULE_1__.timeout)(20).then(() => {
-        alarm.pause();
-        loadAlarm(alarm);
-        alarm.play();
-    });
+async function createAlarmElement(alarmId) {
+    const alertElement = new Audio();
+    const volume = Number((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)(alarmId + 'Volume')) / 100;
+    alertElement.id = alarmId;
+    alertElement.volume = volume;
+    await loadAlarm(alertElement);
+    document.body.appendChild(alertElement);
+    return alertElement;
 }
-function loadAlarm(alarm) {
-    if (alarm.src.startsWith('custom:') || alarm.src.startsWith('Custom:')) {
-        let customAudio = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)(alarm.id + 'AlertSound').substring(7);
-        db.get(customAudio, { attachments: true })
-            .then((doc) => {
-            // @ts-ignore
-            alarm.src = `data:${doc._attachments.filename.content_type};base64,${doc._attachments.filename.data}`;
-        })
-            .then(() => {
-            alarm.load();
-        })
-            .catch((err) => {
-            console.error(err);
-        });
+const AlarmHasPlayed = new Map();
+async function alarmLoop() {
+    const necrosisAlarm = await createAlarmElement('alarmNecrosis');
+    const soulsAlarm = await createAlarmElement('alarmSouls');
+    while (true) {
+        // Arbitrary wait time, this number holds no meaning besides how often we want to check to play an alarm.
+        await (0,_a1sauce_Utils_timeout__WEBPACK_IMPORTED_MODULE_1__.timeout)(200);
+        const { necromancy } = _state__WEBPACK_IMPORTED_MODULE_4__.store.getState();
+        const { stacks: { necrosis, souls } } = necromancy;
+        const shouldNecrosisAlarmPlay = (necrosis.alarm.isLooping || !AlarmHasPlayed.has('alarmNecrosis')) && necrosis.alarm.isActive;
+        if (shouldNecrosisAlarmPlay && necrosis.stacks >= necrosis.alarm.threshold) {
+            AlarmHasPlayed.set('alarmNecrosis', true);
+            necrosisAlarm.play();
+        }
+        else if (necrosis.stacks < necrosis.alarm.threshold && AlarmHasPlayed.has('alarmNecrosis')) {
+            AlarmHasPlayed.delete('alarmNecrosis');
+            necrosisAlarm.pause();
+            necrosisAlarm.currentTime = 0;
+        }
+        const shouldSoulsAlarmPlay = (souls.alarm.isLooping || !AlarmHasPlayed.has('alarmSouls')) && souls.alarm.isActive;
+        if (shouldSoulsAlarmPlay && souls.stacks >= souls.alarm.threshold) {
+            AlarmHasPlayed.set('alarmSouls', true);
+            soulsAlarm.play();
+        }
+        else if (souls.stacks < souls.alarm.threshold && AlarmHasPlayed.has('alarmSouls')) {
+            AlarmHasPlayed.delete('alarmSouls');
+            soulsAlarm.pause();
+            soulsAlarm.currentTime = 0;
+        }
     }
-    else if (!alarm.src.startsWith('data')) {
+}
+async function loadAlarm(alarm) {
+    const alarmSrc = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)(alarm.id + 'AlertSound');
+    if (!alarmSrc.startsWith('custom:') && !alarmSrc.startsWith('Custom:') && !alarmSrc.startsWith('data')) {
         alarm.src = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.getSetting)(alarm.id + 'AlertSound');
+        return alarm.load();
+    }
+    try {
+        const customAudio = alarmSrc.substring(7);
+        const doc = await db.get(customAudio, { attachments: true });
+        // @ts-ignore
+        alarm.src = `data:${doc._attachments?.filename.content_type};base64,${doc._attachments?.filename.data}`;
         alarm.load();
     }
-}
-function pauseAlert(alarm) {
-    alarm.volume = 0;
-    alarm.play().then(() => {
-        alarm.currentTime = 0;
-        alarm.pause();
-    });
+    catch (e) {
+        console.error(`Encountered an error loading custom audio source: ${JSON.stringify(e)}`);
+    }
 }
 
 
@@ -19599,6 +19609,398 @@ const notes = [
         ],
     },
 ];
+
+
+/***/ }),
+
+/***/ "./state/alarms/alarm.state.ts":
+/*!*************************************!*\
+  !*** ./state/alarms/alarm.state.ts ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   AlarmSlice: () => (/* binding */ AlarmSlice)
+/* harmony export */ });
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @reduxjs/toolkit */ "../node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs");
+
+const initialState = {
+    alarmNecrosisActive: false,
+    alarmNecrosisAlertSound: './a1sauce/Settings/Library/Controls/Alarms/alarm2.wav',
+    alarmNecrosisLoop: false,
+    alarmNecrosisThreshold: 12,
+    alarmNecrosisVolume: 100,
+    alarmSoulsActive: false,
+    alarmSoulsAlertSound: './a1sauce/Settings/Library/Controls/Alarms/alarm2.wav',
+    alarmSoulsLoop: false,
+    alarmSoulsThreshold: 5,
+    alarmSoulsVolume: 100,
+};
+const AlarmSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createSlice)({
+    name: 'Alarm',
+    initialState,
+    reducers: {
+        updateState: (state, action) => ({
+            ...state,
+            ...action.payload,
+        }),
+    },
+});
+
+
+/***/ }),
+
+/***/ "./state/gauge-data/gauge-data.state.ts":
+/*!**********************************************!*\
+  !*** ./state/gauge-data/gauge-data.state.ts ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   GaugeDataSlice: () => (/* binding */ GaugeDataSlice)
+/* harmony export */ });
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../types */ "./types/index.ts");
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @reduxjs/toolkit */ "../node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs");
+
+
+const initialState = {
+    scaleFactor: 1,
+    hasBeenOutOfCombat: 5,
+    automaticSwapping: false,
+    checkCombatStatus: false,
+    isInCombat: false,
+    combatStyle: _types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.mage,
+    updatingOverlayPosition: false,
+    selectedOrientation: 'reverse_split'
+};
+const GaugeDataSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)({
+    name: 'GaugeData',
+    initialState,
+    reducers: {
+        updateState: (state, action) => ({
+            ...state,
+            ...action.payload,
+        }),
+        updateCombatStyle: (state, action) => ({
+            ...state,
+            combatStyle: action.payload,
+        }),
+    },
+});
+
+
+/***/ }),
+
+/***/ "./state/gauge-data/magic-gauge.state.ts":
+/*!***********************************************!*\
+  !*** ./state/gauge-data/magic-gauge.state.ts ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   MagicGaugeSlice: () => (/* binding */ MagicGaugeSlice)
+/* harmony export */ });
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @reduxjs/toolkit */ "../node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs");
+/* harmony import */ var _data_magicGauge__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../data/magicGauge */ "./data/magicGauge.ts");
+
+
+const initialState = {
+    ..._data_magicGauge__WEBPACK_IMPORTED_MODULE_0__.magic_gauge,
+};
+const MagicGaugeSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)({
+    name: 'MagicGauge',
+    initialState,
+    reducers: {
+        updateState: (state, action) => ({
+            ...state,
+            ...action.payload,
+        }),
+        updateAbility: (state, action) => ({
+            ...state,
+            [action.payload.abilityName]: {
+                ...state[action.payload.abilityName],
+                ...action.payload.ability,
+            },
+        }),
+        updateAbilityTime: (state, action) => ({
+            ...state,
+            [action.payload.abilityName]: {
+                ...state[action.payload.abilityName],
+                time: action.payload.time,
+            },
+        }),
+        updateSpell: (state, action) => ({
+            ...state,
+            spells: {
+                ...state.spells,
+                [action.payload.spellName]: {
+                    ...state.spells[action.payload.spellName],
+                    ...action.payload.spell,
+                },
+            },
+        }),
+        updateActiveSpell: (state, action) => ({
+            ...state,
+            spells: {
+                ...state.spells,
+                ...action.payload,
+            },
+        }),
+        updatePosition: (state, action) => ({
+            ...state,
+            position: {
+                ...state.position,
+                ...action.payload,
+            },
+        }),
+    },
+});
+
+
+/***/ }),
+
+/***/ "./state/gauge-data/necromancy-gauge.state.ts":
+/*!****************************************************!*\
+  !*** ./state/gauge-data/necromancy-gauge.state.ts ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   NecromancyGaugeSlice: () => (/* binding */ NecromancyGaugeSlice)
+/* harmony export */ });
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @reduxjs/toolkit */ "../node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs");
+/* harmony import */ var _data_necromancyGauge__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../data/necromancyGauge */ "./data/necromancyGauge.ts");
+
+
+const initialState = {
+    ..._data_necromancyGauge__WEBPACK_IMPORTED_MODULE_0__.necromancy_gauge,
+};
+const NecromancyGaugeSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)({
+    name: 'NecromancyGauge',
+    initialState,
+    reducers: {
+        updateState: (state, action) => ({
+            ...state,
+            ...action.payload,
+        }),
+        updateAbility: (state, action) => ({
+            ...state,
+            [action.payload.key]: {
+                ...state[action.payload.key],
+                ...action.payload.ability,
+            },
+        }),
+        updateStacksAbility: (state, action) => {
+            state.stacks[action.payload.stackType] = {
+                ...state.stacks[action.payload.stackType],
+                ...action.payload.stack,
+            };
+            return state;
+        },
+        updateStacks: (state, action) => {
+            state.stacks = {
+                ...state.stacks,
+                ...action.payload,
+            };
+            return state;
+        },
+        updateConjures: (state, action) => {
+            state.conjures[action.payload.conjureType] = {
+                ...state.conjures[action.payload.conjureType],
+                ...action.payload.conjure,
+            };
+            state.conjures.active = !!action.payload.conjure.active;
+            return state;
+        },
+        updateActiveIncantation: (state, action) => {
+            state.incantations.active[action.payload.incantation] = action.payload.active;
+            return state;
+        },
+        updateIncantationActive: (state, action) => {
+            state.incantations[action.payload.key].isActiveOverlay = action.payload.isActiveOverlay;
+            return state;
+        },
+        updateBloat: (state, action) => {
+            state.bloat = {
+                ...state.bloat,
+                ...action.payload,
+            };
+            return state;
+        },
+        updateAbilityCooldown: (state, action) => {
+            state[action.payload.abilityName] = {
+                ...state[action.payload.abilityName],
+                ...action.payload.ability,
+            };
+            return state;
+        },
+        updateAbilityTime: (state, action) => {
+            state[action.payload.abilityName] = {
+                ...state[action.payload.abilityName],
+                time: action.payload.time,
+            };
+            return state;
+        },
+        updateStackAlarm: (state, action) => {
+            state.stacks[action.payload.stackName].alarm = {
+                ...state.stacks[action.payload.stackName].alarm,
+                ...action.payload.alarm,
+            };
+            return state;
+        },
+        updatePosition: (state, action) => {
+            state.position = {
+                ...state.position,
+                ...action.payload,
+            };
+            return state;
+        },
+        updateIsActiveOverlay: (state, action) => {
+            state[action.payload.key].isActiveOverlay = action.payload.isActiveOverlay;
+            return state;
+        },
+        updateActiveOrientation: (state, action) => {
+            console.log(`Updating orientation:`, action.payload);
+            // Conjures
+            state.conjures.position.active_orientation = {
+                ...state.conjures.position[action.payload],
+            };
+            // Stacks
+            state.stacks.souls.position.active_orientation = {
+                ...state.stacks.souls.position[action.payload],
+            };
+            state.stacks.necrosis.position.active_orientation = {
+                ...state.stacks.necrosis.position[action.payload],
+            };
+            // Incantations
+            state.incantations.invokeDeath.position.active_orientation = {
+                ...state.incantations.invokeDeath.position[action.payload],
+            };
+            state.incantations.darkness.position.active_orientation = {
+                ...state.incantations.darkness.position[action.payload],
+            };
+            state.incantations.splitSoul.position.active_orientation = {
+                ...state.incantations.splitSoul.position[action.payload],
+            };
+            state.incantations.threads.position.active_orientation = {
+                ...state.incantations.threads.position[action.payload],
+            };
+            // Abilities
+            state.livingDeath.position.active_orientation = {
+                ...state.livingDeath.position[action.payload],
+            };
+            state.bloat.position.active_orientation = {
+                ...state.bloat.position[action.payload],
+            };
+            return state;
+        },
+    },
+});
+
+
+/***/ }),
+
+/***/ "./state/gauge-data/range-gauge.state.ts":
+/*!***********************************************!*\
+  !*** ./state/gauge-data/range-gauge.state.ts ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   RangeGaugeSlice: () => (/* binding */ RangeGaugeSlice)
+/* harmony export */ });
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @reduxjs/toolkit */ "../node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs");
+/* harmony import */ var _data_rangedGauge__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../data/rangedGauge */ "./data/rangedGauge.ts");
+
+
+const initialState = {
+    ..._data_rangedGauge__WEBPACK_IMPORTED_MODULE_0__.ranged_gauge,
+};
+const RangeGaugeSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)({
+    name: 'RangeGauge',
+    initialState,
+    reducers: {
+        updateState: (state, action) => ({
+            ...state,
+            ...action.payload,
+        }),
+        updateAbilityTime: (state, action) => {
+            state[action.payload.abilityName] = {
+                ...state[action.payload.abilityName],
+                time: action.payload.time,
+            };
+            return state;
+        },
+        updateAbility: (state, action) => {
+            state[action.payload.abilityName] = {
+                ...state[action.payload.abilityName],
+                ...action.payload.ability,
+            };
+            return state;
+        },
+        updatePerfectEquilibriumStack: (state, action) => {
+            state.perfectEquilibrium.stacks = action.payload.stacks;
+            return state;
+        },
+        updateBalanceByForce: (state, action) => {
+            state.balanceByForce = action.payload.active;
+            return state;
+        },
+        updatePosition: (state, action) => {
+            state.position = {
+                ...state.position,
+                ...action.payload,
+            };
+            return state;
+        },
+    },
+});
+
+
+/***/ }),
+
+/***/ "./state/index.ts":
+/*!************************!*\
+  !*** ./state/index.ts ***!
+  \************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   store: () => (/* binding */ store)
+/* harmony export */ });
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @reduxjs/toolkit */ "../node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs");
+/* harmony import */ var _gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./gauge-data/gauge-data.state */ "./state/gauge-data/gauge-data.state.ts");
+/* harmony import */ var _alarms_alarm_state__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./alarms/alarm.state */ "./state/alarms/alarm.state.ts");
+/* harmony import */ var _gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./gauge-data/magic-gauge.state */ "./state/gauge-data/magic-gauge.state.ts");
+/* harmony import */ var _gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./gauge-data/range-gauge.state */ "./state/gauge-data/range-gauge.state.ts");
+/* harmony import */ var _gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./gauge-data/necromancy-gauge.state */ "./state/gauge-data/necromancy-gauge.state.ts");
+
+
+
+
+
+
+const store = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_5__.configureStore)({
+    reducer: {
+        gaugeData: _gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_0__.GaugeDataSlice.reducer,
+        alarms: _alarms_alarm_state__WEBPACK_IMPORTED_MODULE_1__.AlarmSlice.reducer,
+        magic: _gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_2__.MagicGaugeSlice.reducer,
+        ranged: _gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangeGaugeSlice.reducer,
+        necromancy: _gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_4__.NecromancyGaugeSlice.reducer,
+    },
+});
 
 
 /***/ }),
@@ -24716,6 +25118,3551 @@ module.exports = JSON.parse('{"chars":[{"width":7,"bonus":140,"chr":"a","pixels"
 
 /***/ }),
 
+/***/ "../node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs":
+/*!**********************************************************************!*\
+  !*** ../node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ReducerType: () => (/* binding */ ReducerType),
+/* harmony export */   SHOULD_AUTOBATCH: () => (/* binding */ SHOULD_AUTOBATCH),
+/* harmony export */   TaskAbortError: () => (/* binding */ TaskAbortError),
+/* harmony export */   Tuple: () => (/* binding */ Tuple),
+/* harmony export */   __DO_NOT_USE__ActionTypes: () => (/* reexport safe */ redux__WEBPACK_IMPORTED_MODULE_0__.__DO_NOT_USE__ActionTypes),
+/* harmony export */   addListener: () => (/* binding */ addListener),
+/* harmony export */   applyMiddleware: () => (/* reexport safe */ redux__WEBPACK_IMPORTED_MODULE_0__.applyMiddleware),
+/* harmony export */   asyncThunkCreator: () => (/* binding */ asyncThunkCreator),
+/* harmony export */   autoBatchEnhancer: () => (/* binding */ autoBatchEnhancer),
+/* harmony export */   bindActionCreators: () => (/* reexport safe */ redux__WEBPACK_IMPORTED_MODULE_0__.bindActionCreators),
+/* harmony export */   buildCreateSlice: () => (/* binding */ buildCreateSlice),
+/* harmony export */   clearAllListeners: () => (/* binding */ clearAllListeners),
+/* harmony export */   combineReducers: () => (/* reexport safe */ redux__WEBPACK_IMPORTED_MODULE_0__.combineReducers),
+/* harmony export */   combineSlices: () => (/* binding */ combineSlices),
+/* harmony export */   compose: () => (/* reexport safe */ redux__WEBPACK_IMPORTED_MODULE_0__.compose),
+/* harmony export */   configureStore: () => (/* binding */ configureStore),
+/* harmony export */   createAction: () => (/* binding */ createAction),
+/* harmony export */   createActionCreatorInvariantMiddleware: () => (/* binding */ createActionCreatorInvariantMiddleware),
+/* harmony export */   createAsyncThunk: () => (/* binding */ createAsyncThunk),
+/* harmony export */   createDraftSafeSelector: () => (/* binding */ createDraftSafeSelector),
+/* harmony export */   createDraftSafeSelectorCreator: () => (/* binding */ createDraftSafeSelectorCreator),
+/* harmony export */   createDynamicMiddleware: () => (/* binding */ createDynamicMiddleware),
+/* harmony export */   createEntityAdapter: () => (/* binding */ createEntityAdapter),
+/* harmony export */   createImmutableStateInvariantMiddleware: () => (/* binding */ createImmutableStateInvariantMiddleware),
+/* harmony export */   createListenerMiddleware: () => (/* binding */ createListenerMiddleware),
+/* harmony export */   createNextState: () => (/* reexport safe */ immer__WEBPACK_IMPORTED_MODULE_2__.produce),
+/* harmony export */   createReducer: () => (/* binding */ createReducer),
+/* harmony export */   createSelector: () => (/* reexport safe */ reselect__WEBPACK_IMPORTED_MODULE_1__.createSelector),
+/* harmony export */   createSelectorCreator: () => (/* reexport safe */ reselect__WEBPACK_IMPORTED_MODULE_1__.createSelectorCreator),
+/* harmony export */   createSerializableStateInvariantMiddleware: () => (/* binding */ createSerializableStateInvariantMiddleware),
+/* harmony export */   createSlice: () => (/* binding */ createSlice),
+/* harmony export */   createStore: () => (/* reexport safe */ redux__WEBPACK_IMPORTED_MODULE_0__.createStore),
+/* harmony export */   current: () => (/* reexport safe */ immer__WEBPACK_IMPORTED_MODULE_2__.current),
+/* harmony export */   findNonSerializableValue: () => (/* binding */ findNonSerializableValue),
+/* harmony export */   formatProdErrorMessage: () => (/* binding */ formatProdErrorMessage),
+/* harmony export */   freeze: () => (/* reexport safe */ immer__WEBPACK_IMPORTED_MODULE_2__.freeze),
+/* harmony export */   isAction: () => (/* reexport safe */ redux__WEBPACK_IMPORTED_MODULE_0__.isAction),
+/* harmony export */   isActionCreator: () => (/* binding */ isActionCreator),
+/* harmony export */   isAllOf: () => (/* binding */ isAllOf),
+/* harmony export */   isAnyOf: () => (/* binding */ isAnyOf),
+/* harmony export */   isAsyncThunkAction: () => (/* binding */ isAsyncThunkAction),
+/* harmony export */   isDraft: () => (/* reexport safe */ immer__WEBPACK_IMPORTED_MODULE_2__.isDraft),
+/* harmony export */   isFluxStandardAction: () => (/* binding */ isFSA),
+/* harmony export */   isFulfilled: () => (/* binding */ isFulfilled),
+/* harmony export */   isImmutableDefault: () => (/* binding */ isImmutableDefault),
+/* harmony export */   isPending: () => (/* binding */ isPending),
+/* harmony export */   isPlain: () => (/* binding */ isPlain),
+/* harmony export */   isPlainObject: () => (/* reexport safe */ redux__WEBPACK_IMPORTED_MODULE_0__.isPlainObject),
+/* harmony export */   isRejected: () => (/* binding */ isRejected),
+/* harmony export */   isRejectedWithValue: () => (/* binding */ isRejectedWithValue),
+/* harmony export */   legacy_createStore: () => (/* reexport safe */ redux__WEBPACK_IMPORTED_MODULE_0__.legacy_createStore),
+/* harmony export */   lruMemoize: () => (/* reexport safe */ reselect__WEBPACK_IMPORTED_MODULE_1__.lruMemoize),
+/* harmony export */   miniSerializeError: () => (/* binding */ miniSerializeError),
+/* harmony export */   nanoid: () => (/* binding */ nanoid),
+/* harmony export */   original: () => (/* reexport safe */ immer__WEBPACK_IMPORTED_MODULE_2__.original),
+/* harmony export */   prepareAutoBatched: () => (/* binding */ prepareAutoBatched),
+/* harmony export */   removeListener: () => (/* binding */ removeListener),
+/* harmony export */   unwrapResult: () => (/* binding */ unwrapResult),
+/* harmony export */   weakMapMemoize: () => (/* reexport safe */ reselect__WEBPACK_IMPORTED_MODULE_1__.weakMapMemoize)
+/* harmony export */ });
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "../node_modules/redux/dist/redux.mjs");
+/* harmony import */ var immer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! immer */ "../node_modules/immer/dist/immer.mjs");
+/* harmony import */ var reselect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! reselect */ "../node_modules/reselect/dist/reselect.mjs");
+/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux-thunk */ "../node_modules/redux-thunk/dist/redux-thunk.mjs");
+// src/index.ts
+
+
+
+
+// src/createDraftSafeSelector.ts
+
+
+var createDraftSafeSelectorCreator = (...args) => {
+  const createSelector2 = (0,reselect__WEBPACK_IMPORTED_MODULE_1__.createSelectorCreator)(...args);
+  const createDraftSafeSelector2 = Object.assign((...args2) => {
+    const selector = createSelector2(...args2);
+    const wrappedSelector = (value, ...rest) => selector((0,immer__WEBPACK_IMPORTED_MODULE_2__.isDraft)(value) ? (0,immer__WEBPACK_IMPORTED_MODULE_2__.current)(value) : value, ...rest);
+    Object.assign(wrappedSelector, selector);
+    return wrappedSelector;
+  }, {
+    withTypes: () => createDraftSafeSelector2
+  });
+  return createDraftSafeSelector2;
+};
+var createDraftSafeSelector = /* @__PURE__ */ createDraftSafeSelectorCreator(reselect__WEBPACK_IMPORTED_MODULE_1__.weakMapMemoize);
+
+// src/configureStore.ts
+
+
+// src/devtoolsExtension.ts
+
+var composeWithDevTools = typeof window !== "undefined" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : function() {
+  if (arguments.length === 0) return void 0;
+  if (typeof arguments[0] === "object") return redux__WEBPACK_IMPORTED_MODULE_0__.compose;
+  return redux__WEBPACK_IMPORTED_MODULE_0__.compose.apply(null, arguments);
+};
+var devToolsEnhancer = typeof window !== "undefined" && window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__ : function() {
+  return function(noop3) {
+    return noop3;
+  };
+};
+
+// src/getDefaultMiddleware.ts
+
+
+// src/createAction.ts
+
+
+// src/tsHelpers.ts
+var hasMatchFunction = (v) => {
+  return v && typeof v.match === "function";
+};
+
+// src/createAction.ts
+function createAction(type, prepareAction) {
+  function actionCreator(...args) {
+    if (prepareAction) {
+      let prepared = prepareAction(...args);
+      if (!prepared) {
+        throw new Error( false ? 0 : "prepareAction did not return an object");
+      }
+      return {
+        type,
+        payload: prepared.payload,
+        ..."meta" in prepared && {
+          meta: prepared.meta
+        },
+        ..."error" in prepared && {
+          error: prepared.error
+        }
+      };
+    }
+    return {
+      type,
+      payload: args[0]
+    };
+  }
+  actionCreator.toString = () => `${type}`;
+  actionCreator.type = type;
+  actionCreator.match = (action) => (0,redux__WEBPACK_IMPORTED_MODULE_0__.isAction)(action) && action.type === type;
+  return actionCreator;
+}
+function isActionCreator(action) {
+  return typeof action === "function" && "type" in action && // hasMatchFunction only wants Matchers but I don't see the point in rewriting it
+  hasMatchFunction(action);
+}
+function isFSA(action) {
+  return (0,redux__WEBPACK_IMPORTED_MODULE_0__.isAction)(action) && Object.keys(action).every(isValidKey);
+}
+function isValidKey(key) {
+  return ["type", "payload", "error", "meta"].indexOf(key) > -1;
+}
+
+// src/actionCreatorInvariantMiddleware.ts
+function getMessage(type) {
+  const splitType = type ? `${type}`.split("/") : [];
+  const actionName = splitType[splitType.length - 1] || "actionCreator";
+  return `Detected an action creator with type "${type || "unknown"}" being dispatched. 
+Make sure you're calling the action creator before dispatching, i.e. \`dispatch(${actionName}())\` instead of \`dispatch(${actionName})\`. This is necessary even if the action has no payload.`;
+}
+function createActionCreatorInvariantMiddleware(options = {}) {
+  if (false) {}
+  const {
+    isActionCreator: isActionCreator2 = isActionCreator
+  } = options;
+  return () => (next) => (action) => {
+    if (isActionCreator2(action)) {
+      console.warn(getMessage(action.type));
+    }
+    return next(action);
+  };
+}
+
+// src/utils.ts
+
+function getTimeMeasureUtils(maxDelay, fnName) {
+  let elapsed = 0;
+  return {
+    measureTime(fn) {
+      const started = Date.now();
+      try {
+        return fn();
+      } finally {
+        const finished = Date.now();
+        elapsed += finished - started;
+      }
+    },
+    warnIfExceeded() {
+      if (elapsed > maxDelay) {
+        console.warn(`${fnName} took ${elapsed}ms, which is more than the warning threshold of ${maxDelay}ms. 
+If your state or actions are very large, you may want to disable the middleware as it might cause too much of a slowdown in development mode. See https://redux-toolkit.js.org/api/getDefaultMiddleware for instructions.
+It is disabled in production builds, so you don't need to worry about that.`);
+      }
+    }
+  };
+}
+function find(iterable, comparator) {
+  for (const entry of iterable) {
+    if (comparator(entry)) {
+      return entry;
+    }
+  }
+  return void 0;
+}
+var Tuple = class _Tuple extends Array {
+  constructor(...items) {
+    super(...items);
+    Object.setPrototypeOf(this, _Tuple.prototype);
+  }
+  static get [Symbol.species]() {
+    return _Tuple;
+  }
+  concat(...arr) {
+    return super.concat.apply(this, arr);
+  }
+  prepend(...arr) {
+    if (arr.length === 1 && Array.isArray(arr[0])) {
+      return new _Tuple(...arr[0].concat(this));
+    }
+    return new _Tuple(...arr.concat(this));
+  }
+};
+function freezeDraftable(val) {
+  return (0,immer__WEBPACK_IMPORTED_MODULE_2__.isDraftable)(val) ? (0,immer__WEBPACK_IMPORTED_MODULE_2__.produce)(val, () => {
+  }) : val;
+}
+function emplace(map, key, handler) {
+  if (map.has(key)) {
+    let value = map.get(key);
+    if (handler.update) {
+      value = handler.update(value, key, map);
+      map.set(key, value);
+    }
+    return value;
+  }
+  if (!handler.insert) throw new Error( false ? 0 : "No insert provided for key not already in map");
+  const inserted = handler.insert(key, map);
+  map.set(key, inserted);
+  return inserted;
+}
+
+// src/immutableStateInvariantMiddleware.ts
+function isImmutableDefault(value) {
+  return typeof value !== "object" || value == null || Object.isFrozen(value);
+}
+function trackForMutations(isImmutable, ignorePaths, obj) {
+  const trackedProperties = trackProperties(isImmutable, ignorePaths, obj);
+  return {
+    detectMutations() {
+      return detectMutations(isImmutable, ignorePaths, trackedProperties, obj);
+    }
+  };
+}
+function trackProperties(isImmutable, ignorePaths = [], obj, path = "", checkedObjects = /* @__PURE__ */ new Set()) {
+  const tracked = {
+    value: obj
+  };
+  if (!isImmutable(obj) && !checkedObjects.has(obj)) {
+    checkedObjects.add(obj);
+    tracked.children = {};
+    for (const key in obj) {
+      const childPath = path ? path + "." + key : key;
+      if (ignorePaths.length && ignorePaths.indexOf(childPath) !== -1) {
+        continue;
+      }
+      tracked.children[key] = trackProperties(isImmutable, ignorePaths, obj[key], childPath);
+    }
+  }
+  return tracked;
+}
+function detectMutations(isImmutable, ignoredPaths = [], trackedProperty, obj, sameParentRef = false, path = "") {
+  const prevObj = trackedProperty ? trackedProperty.value : void 0;
+  const sameRef = prevObj === obj;
+  if (sameParentRef && !sameRef && !Number.isNaN(obj)) {
+    return {
+      wasMutated: true,
+      path
+    };
+  }
+  if (isImmutable(prevObj) || isImmutable(obj)) {
+    return {
+      wasMutated: false
+    };
+  }
+  const keysToDetect = {};
+  for (let key in trackedProperty.children) {
+    keysToDetect[key] = true;
+  }
+  for (let key in obj) {
+    keysToDetect[key] = true;
+  }
+  const hasIgnoredPaths = ignoredPaths.length > 0;
+  for (let key in keysToDetect) {
+    const nestedPath = path ? path + "." + key : key;
+    if (hasIgnoredPaths) {
+      const hasMatches = ignoredPaths.some((ignored) => {
+        if (ignored instanceof RegExp) {
+          return ignored.test(nestedPath);
+        }
+        return nestedPath === ignored;
+      });
+      if (hasMatches) {
+        continue;
+      }
+    }
+    const result = detectMutations(isImmutable, ignoredPaths, trackedProperty.children[key], obj[key], sameRef, nestedPath);
+    if (result.wasMutated) {
+      return result;
+    }
+  }
+  return {
+    wasMutated: false
+  };
+}
+function createImmutableStateInvariantMiddleware(options = {}) {
+  if (false) {} else {
+    let stringify2 = function(obj, serializer, indent, decycler) {
+      return JSON.stringify(obj, getSerialize2(serializer, decycler), indent);
+    }, getSerialize2 = function(serializer, decycler) {
+      let stack = [], keys = [];
+      if (!decycler) decycler = function(_, value) {
+        if (stack[0] === value) return "[Circular ~]";
+        return "[Circular ~." + keys.slice(0, stack.indexOf(value)).join(".") + "]";
+      };
+      return function(key, value) {
+        if (stack.length > 0) {
+          var thisPos = stack.indexOf(this);
+          ~thisPos ? stack.splice(thisPos + 1) : stack.push(this);
+          ~thisPos ? keys.splice(thisPos, Infinity, key) : keys.push(key);
+          if (~stack.indexOf(value)) value = decycler.call(this, key, value);
+        } else stack.push(value);
+        return serializer == null ? value : serializer.call(this, key, value);
+      };
+    };
+    var stringify = stringify2, getSerialize = getSerialize2;
+    let {
+      isImmutable = isImmutableDefault,
+      ignoredPaths,
+      warnAfter = 32
+    } = options;
+    const track = trackForMutations.bind(null, isImmutable, ignoredPaths);
+    return ({
+      getState
+    }) => {
+      let state = getState();
+      let tracker = track(state);
+      let result;
+      return (next) => (action) => {
+        const measureUtils = getTimeMeasureUtils(warnAfter, "ImmutableStateInvariantMiddleware");
+        measureUtils.measureTime(() => {
+          state = getState();
+          result = tracker.detectMutations();
+          tracker = track(state);
+          if (result.wasMutated) {
+            throw new Error( false ? 0 : `A state mutation was detected between dispatches, in the path '${result.path || ""}'.  This may cause incorrect behavior. (https://redux.js.org/style-guide/style-guide#do-not-mutate-state)`);
+          }
+        });
+        const dispatchedAction = next(action);
+        measureUtils.measureTime(() => {
+          state = getState();
+          result = tracker.detectMutations();
+          tracker = track(state);
+          if (result.wasMutated) {
+            throw new Error( false ? 0 : `A state mutation was detected inside a dispatch, in the path: ${result.path || ""}. Take a look at the reducer(s) handling the action ${stringify2(action)}. (https://redux.js.org/style-guide/style-guide#do-not-mutate-state)`);
+          }
+        });
+        measureUtils.warnIfExceeded();
+        return dispatchedAction;
+      };
+    };
+  }
+}
+
+// src/serializableStateInvariantMiddleware.ts
+
+function isPlain(val) {
+  const type = typeof val;
+  return val == null || type === "string" || type === "boolean" || type === "number" || Array.isArray(val) || (0,redux__WEBPACK_IMPORTED_MODULE_0__.isPlainObject)(val);
+}
+function findNonSerializableValue(value, path = "", isSerializable = isPlain, getEntries, ignoredPaths = [], cache) {
+  let foundNestedSerializable;
+  if (!isSerializable(value)) {
+    return {
+      keyPath: path || "<root>",
+      value
+    };
+  }
+  if (typeof value !== "object" || value === null) {
+    return false;
+  }
+  if (cache?.has(value)) return false;
+  const entries = getEntries != null ? getEntries(value) : Object.entries(value);
+  const hasIgnoredPaths = ignoredPaths.length > 0;
+  for (const [key, nestedValue] of entries) {
+    const nestedPath = path ? path + "." + key : key;
+    if (hasIgnoredPaths) {
+      const hasMatches = ignoredPaths.some((ignored) => {
+        if (ignored instanceof RegExp) {
+          return ignored.test(nestedPath);
+        }
+        return nestedPath === ignored;
+      });
+      if (hasMatches) {
+        continue;
+      }
+    }
+    if (!isSerializable(nestedValue)) {
+      return {
+        keyPath: nestedPath,
+        value: nestedValue
+      };
+    }
+    if (typeof nestedValue === "object") {
+      foundNestedSerializable = findNonSerializableValue(nestedValue, nestedPath, isSerializable, getEntries, ignoredPaths, cache);
+      if (foundNestedSerializable) {
+        return foundNestedSerializable;
+      }
+    }
+  }
+  if (cache && isNestedFrozen(value)) cache.add(value);
+  return false;
+}
+function isNestedFrozen(value) {
+  if (!Object.isFrozen(value)) return false;
+  for (const nestedValue of Object.values(value)) {
+    if (typeof nestedValue !== "object" || nestedValue === null) continue;
+    if (!isNestedFrozen(nestedValue)) return false;
+  }
+  return true;
+}
+function createSerializableStateInvariantMiddleware(options = {}) {
+  if (false) {} else {
+    const {
+      isSerializable = isPlain,
+      getEntries,
+      ignoredActions = [],
+      ignoredActionPaths = ["meta.arg", "meta.baseQueryMeta"],
+      ignoredPaths = [],
+      warnAfter = 32,
+      ignoreState = false,
+      ignoreActions = false,
+      disableCache = false
+    } = options;
+    const cache = !disableCache && WeakSet ? /* @__PURE__ */ new WeakSet() : void 0;
+    return (storeAPI) => (next) => (action) => {
+      if (!(0,redux__WEBPACK_IMPORTED_MODULE_0__.isAction)(action)) {
+        return next(action);
+      }
+      const result = next(action);
+      const measureUtils = getTimeMeasureUtils(warnAfter, "SerializableStateInvariantMiddleware");
+      if (!ignoreActions && !(ignoredActions.length && ignoredActions.indexOf(action.type) !== -1)) {
+        measureUtils.measureTime(() => {
+          const foundActionNonSerializableValue = findNonSerializableValue(action, "", isSerializable, getEntries, ignoredActionPaths, cache);
+          if (foundActionNonSerializableValue) {
+            const {
+              keyPath,
+              value
+            } = foundActionNonSerializableValue;
+            console.error(`A non-serializable value was detected in an action, in the path: \`${keyPath}\`. Value:`, value, "\nTake a look at the logic that dispatched this action: ", action, "\n(See https://redux.js.org/faq/actions#why-should-type-be-a-string-or-at-least-serializable-why-should-my-action-types-be-constants)", "\n(To allow non-serializable values see: https://redux-toolkit.js.org/usage/usage-guide#working-with-non-serializable-data)");
+          }
+        });
+      }
+      if (!ignoreState) {
+        measureUtils.measureTime(() => {
+          const state = storeAPI.getState();
+          const foundStateNonSerializableValue = findNonSerializableValue(state, "", isSerializable, getEntries, ignoredPaths, cache);
+          if (foundStateNonSerializableValue) {
+            const {
+              keyPath,
+              value
+            } = foundStateNonSerializableValue;
+            console.error(`A non-serializable value was detected in the state, in the path: \`${keyPath}\`. Value:`, value, `
+Take a look at the reducer(s) handling this action type: ${action.type}.
+(See https://redux.js.org/faq/organizing-state#can-i-put-functions-promises-or-other-non-serializable-items-in-my-store-state)`);
+          }
+        });
+        measureUtils.warnIfExceeded();
+      }
+      return result;
+    };
+  }
+}
+
+// src/getDefaultMiddleware.ts
+function isBoolean(x) {
+  return typeof x === "boolean";
+}
+var buildGetDefaultMiddleware = () => function getDefaultMiddleware(options) {
+  const {
+    thunk = true,
+    immutableCheck = true,
+    serializableCheck = true,
+    actionCreatorCheck = true
+  } = options ?? {};
+  let middlewareArray = new Tuple();
+  if (thunk) {
+    if (isBoolean(thunk)) {
+      middlewareArray.push(redux_thunk__WEBPACK_IMPORTED_MODULE_3__.thunk);
+    } else {
+      middlewareArray.push((0,redux_thunk__WEBPACK_IMPORTED_MODULE_3__.withExtraArgument)(thunk.extraArgument));
+    }
+  }
+  if (true) {
+    if (immutableCheck) {
+      let immutableOptions = {};
+      if (!isBoolean(immutableCheck)) {
+        immutableOptions = immutableCheck;
+      }
+      middlewareArray.unshift(createImmutableStateInvariantMiddleware(immutableOptions));
+    }
+    if (serializableCheck) {
+      let serializableOptions = {};
+      if (!isBoolean(serializableCheck)) {
+        serializableOptions = serializableCheck;
+      }
+      middlewareArray.push(createSerializableStateInvariantMiddleware(serializableOptions));
+    }
+    if (actionCreatorCheck) {
+      let actionCreatorOptions = {};
+      if (!isBoolean(actionCreatorCheck)) {
+        actionCreatorOptions = actionCreatorCheck;
+      }
+      middlewareArray.unshift(createActionCreatorInvariantMiddleware(actionCreatorOptions));
+    }
+  }
+  return middlewareArray;
+};
+
+// src/autoBatchEnhancer.ts
+var SHOULD_AUTOBATCH = "RTK_autoBatch";
+var prepareAutoBatched = () => (payload) => ({
+  payload,
+  meta: {
+    [SHOULD_AUTOBATCH]: true
+  }
+});
+var createQueueWithTimer = (timeout) => {
+  return (notify) => {
+    setTimeout(notify, timeout);
+  };
+};
+var rAF = typeof window !== "undefined" && window.requestAnimationFrame ? window.requestAnimationFrame : createQueueWithTimer(10);
+var autoBatchEnhancer = (options = {
+  type: "raf"
+}) => (next) => (...args) => {
+  const store = next(...args);
+  let notifying = true;
+  let shouldNotifyAtEndOfTick = false;
+  let notificationQueued = false;
+  const listeners = /* @__PURE__ */ new Set();
+  const queueCallback = options.type === "tick" ? queueMicrotask : options.type === "raf" ? rAF : options.type === "callback" ? options.queueNotification : createQueueWithTimer(options.timeout);
+  const notifyListeners = () => {
+    notificationQueued = false;
+    if (shouldNotifyAtEndOfTick) {
+      shouldNotifyAtEndOfTick = false;
+      listeners.forEach((l) => l());
+    }
+  };
+  return Object.assign({}, store, {
+    // Override the base `store.subscribe` method to keep original listeners
+    // from running if we're delaying notifications
+    subscribe(listener2) {
+      const wrappedListener = () => notifying && listener2();
+      const unsubscribe = store.subscribe(wrappedListener);
+      listeners.add(listener2);
+      return () => {
+        unsubscribe();
+        listeners.delete(listener2);
+      };
+    },
+    // Override the base `store.dispatch` method so that we can check actions
+    // for the `shouldAutoBatch` flag and determine if batching is active
+    dispatch(action) {
+      try {
+        notifying = !action?.meta?.[SHOULD_AUTOBATCH];
+        shouldNotifyAtEndOfTick = !notifying;
+        if (shouldNotifyAtEndOfTick) {
+          if (!notificationQueued) {
+            notificationQueued = true;
+            queueCallback(notifyListeners);
+          }
+        }
+        return store.dispatch(action);
+      } finally {
+        notifying = true;
+      }
+    }
+  });
+};
+
+// src/getDefaultEnhancers.ts
+var buildGetDefaultEnhancers = (middlewareEnhancer) => function getDefaultEnhancers(options) {
+  const {
+    autoBatch = true
+  } = options ?? {};
+  let enhancerArray = new Tuple(middlewareEnhancer);
+  if (autoBatch) {
+    enhancerArray.push(autoBatchEnhancer(typeof autoBatch === "object" ? autoBatch : void 0));
+  }
+  return enhancerArray;
+};
+
+// src/configureStore.ts
+function configureStore(options) {
+  const getDefaultMiddleware = buildGetDefaultMiddleware();
+  const {
+    reducer = void 0,
+    middleware,
+    devTools = true,
+    preloadedState = void 0,
+    enhancers = void 0
+  } = options || {};
+  let rootReducer;
+  if (typeof reducer === "function") {
+    rootReducer = reducer;
+  } else if ((0,redux__WEBPACK_IMPORTED_MODULE_0__.isPlainObject)(reducer)) {
+    rootReducer = (0,redux__WEBPACK_IMPORTED_MODULE_0__.combineReducers)(reducer);
+  } else {
+    throw new Error( false ? 0 : "`reducer` is a required argument, and must be a function or an object of functions that can be passed to combineReducers");
+  }
+  if ( true && middleware && typeof middleware !== "function") {
+    throw new Error( false ? 0 : "`middleware` field must be a callback");
+  }
+  let finalMiddleware;
+  if (typeof middleware === "function") {
+    finalMiddleware = middleware(getDefaultMiddleware);
+    if ( true && !Array.isArray(finalMiddleware)) {
+      throw new Error( false ? 0 : "when using a middleware builder function, an array of middleware must be returned");
+    }
+  } else {
+    finalMiddleware = getDefaultMiddleware();
+  }
+  if ( true && finalMiddleware.some((item) => typeof item !== "function")) {
+    throw new Error( false ? 0 : "each middleware provided to configureStore must be a function");
+  }
+  let finalCompose = redux__WEBPACK_IMPORTED_MODULE_0__.compose;
+  if (devTools) {
+    finalCompose = composeWithDevTools({
+      // Enable capture of stack traces for dispatched Redux actions
+      trace: "development" !== "production",
+      ...typeof devTools === "object" && devTools
+    });
+  }
+  const middlewareEnhancer = (0,redux__WEBPACK_IMPORTED_MODULE_0__.applyMiddleware)(...finalMiddleware);
+  const getDefaultEnhancers = buildGetDefaultEnhancers(middlewareEnhancer);
+  if ( true && enhancers && typeof enhancers !== "function") {
+    throw new Error( false ? 0 : "`enhancers` field must be a callback");
+  }
+  let storeEnhancers = typeof enhancers === "function" ? enhancers(getDefaultEnhancers) : getDefaultEnhancers();
+  if ( true && !Array.isArray(storeEnhancers)) {
+    throw new Error( false ? 0 : "`enhancers` callback must return an array");
+  }
+  if ( true && storeEnhancers.some((item) => typeof item !== "function")) {
+    throw new Error( false ? 0 : "each enhancer provided to configureStore must be a function");
+  }
+  if ( true && finalMiddleware.length && !storeEnhancers.includes(middlewareEnhancer)) {
+    console.error("middlewares were provided, but middleware enhancer was not included in final enhancers - make sure to call `getDefaultEnhancers`");
+  }
+  const composedEnhancer = finalCompose(...storeEnhancers);
+  return (0,redux__WEBPACK_IMPORTED_MODULE_0__.createStore)(rootReducer, preloadedState, composedEnhancer);
+}
+
+// src/createReducer.ts
+
+
+// src/mapBuilders.ts
+function executeReducerBuilderCallback(builderCallback) {
+  const actionsMap = {};
+  const actionMatchers = [];
+  let defaultCaseReducer;
+  const builder = {
+    addCase(typeOrActionCreator, reducer) {
+      if (true) {
+        if (actionMatchers.length > 0) {
+          throw new Error( false ? 0 : "`builder.addCase` should only be called before calling `builder.addMatcher`");
+        }
+        if (defaultCaseReducer) {
+          throw new Error( false ? 0 : "`builder.addCase` should only be called before calling `builder.addDefaultCase`");
+        }
+      }
+      const type = typeof typeOrActionCreator === "string" ? typeOrActionCreator : typeOrActionCreator.type;
+      if (!type) {
+        throw new Error( false ? 0 : "`builder.addCase` cannot be called with an empty action type");
+      }
+      if (type in actionsMap) {
+        throw new Error( false ? 0 : `\`builder.addCase\` cannot be called with two reducers for the same action type '${type}'`);
+      }
+      actionsMap[type] = reducer;
+      return builder;
+    },
+    addMatcher(matcher, reducer) {
+      if (true) {
+        if (defaultCaseReducer) {
+          throw new Error( false ? 0 : "`builder.addMatcher` should only be called before calling `builder.addDefaultCase`");
+        }
+      }
+      actionMatchers.push({
+        matcher,
+        reducer
+      });
+      return builder;
+    },
+    addDefaultCase(reducer) {
+      if (true) {
+        if (defaultCaseReducer) {
+          throw new Error( false ? 0 : "`builder.addDefaultCase` can only be called once");
+        }
+      }
+      defaultCaseReducer = reducer;
+      return builder;
+    }
+  };
+  builderCallback(builder);
+  return [actionsMap, actionMatchers, defaultCaseReducer];
+}
+
+// src/createReducer.ts
+function isStateFunction(x) {
+  return typeof x === "function";
+}
+function createReducer(initialState, mapOrBuilderCallback) {
+  if (true) {
+    if (typeof mapOrBuilderCallback === "object") {
+      throw new Error( false ? 0 : "The object notation for `createReducer` has been removed. Please use the 'builder callback' notation instead: https://redux-toolkit.js.org/api/createReducer");
+    }
+  }
+  let [actionsMap, finalActionMatchers, finalDefaultCaseReducer] = executeReducerBuilderCallback(mapOrBuilderCallback);
+  let getInitialState;
+  if (isStateFunction(initialState)) {
+    getInitialState = () => freezeDraftable(initialState());
+  } else {
+    const frozenInitialState = freezeDraftable(initialState);
+    getInitialState = () => frozenInitialState;
+  }
+  function reducer(state = getInitialState(), action) {
+    let caseReducers = [actionsMap[action.type], ...finalActionMatchers.filter(({
+      matcher
+    }) => matcher(action)).map(({
+      reducer: reducer2
+    }) => reducer2)];
+    if (caseReducers.filter((cr) => !!cr).length === 0) {
+      caseReducers = [finalDefaultCaseReducer];
+    }
+    return caseReducers.reduce((previousState, caseReducer) => {
+      if (caseReducer) {
+        if ((0,immer__WEBPACK_IMPORTED_MODULE_2__.isDraft)(previousState)) {
+          const draft = previousState;
+          const result = caseReducer(draft, action);
+          if (result === void 0) {
+            return previousState;
+          }
+          return result;
+        } else if (!(0,immer__WEBPACK_IMPORTED_MODULE_2__.isDraftable)(previousState)) {
+          const result = caseReducer(previousState, action);
+          if (result === void 0) {
+            if (previousState === null) {
+              return previousState;
+            }
+            throw new Error( false ? 0 : "A case reducer on a non-draftable value must not return undefined");
+          }
+          return result;
+        } else {
+          return (0,immer__WEBPACK_IMPORTED_MODULE_2__.produce)(previousState, (draft) => {
+            return caseReducer(draft, action);
+          });
+        }
+      }
+      return previousState;
+    }, state);
+  }
+  reducer.getInitialState = getInitialState;
+  return reducer;
+}
+
+// src/matchers.ts
+var matches = (matcher, action) => {
+  if (hasMatchFunction(matcher)) {
+    return matcher.match(action);
+  } else {
+    return matcher(action);
+  }
+};
+function isAnyOf(...matchers) {
+  return (action) => {
+    return matchers.some((matcher) => matches(matcher, action));
+  };
+}
+function isAllOf(...matchers) {
+  return (action) => {
+    return matchers.every((matcher) => matches(matcher, action));
+  };
+}
+function hasExpectedRequestMetadata(action, validStatus) {
+  if (!action || !action.meta) return false;
+  const hasValidRequestId = typeof action.meta.requestId === "string";
+  const hasValidRequestStatus = validStatus.indexOf(action.meta.requestStatus) > -1;
+  return hasValidRequestId && hasValidRequestStatus;
+}
+function isAsyncThunkArray(a) {
+  return typeof a[0] === "function" && "pending" in a[0] && "fulfilled" in a[0] && "rejected" in a[0];
+}
+function isPending(...asyncThunks) {
+  if (asyncThunks.length === 0) {
+    return (action) => hasExpectedRequestMetadata(action, ["pending"]);
+  }
+  if (!isAsyncThunkArray(asyncThunks)) {
+    return isPending()(asyncThunks[0]);
+  }
+  return isAnyOf(...asyncThunks.map((asyncThunk) => asyncThunk.pending));
+}
+function isRejected(...asyncThunks) {
+  if (asyncThunks.length === 0) {
+    return (action) => hasExpectedRequestMetadata(action, ["rejected"]);
+  }
+  if (!isAsyncThunkArray(asyncThunks)) {
+    return isRejected()(asyncThunks[0]);
+  }
+  return isAnyOf(...asyncThunks.map((asyncThunk) => asyncThunk.rejected));
+}
+function isRejectedWithValue(...asyncThunks) {
+  const hasFlag = (action) => {
+    return action && action.meta && action.meta.rejectedWithValue;
+  };
+  if (asyncThunks.length === 0) {
+    return isAllOf(isRejected(...asyncThunks), hasFlag);
+  }
+  if (!isAsyncThunkArray(asyncThunks)) {
+    return isRejectedWithValue()(asyncThunks[0]);
+  }
+  return isAllOf(isRejected(...asyncThunks), hasFlag);
+}
+function isFulfilled(...asyncThunks) {
+  if (asyncThunks.length === 0) {
+    return (action) => hasExpectedRequestMetadata(action, ["fulfilled"]);
+  }
+  if (!isAsyncThunkArray(asyncThunks)) {
+    return isFulfilled()(asyncThunks[0]);
+  }
+  return isAnyOf(...asyncThunks.map((asyncThunk) => asyncThunk.fulfilled));
+}
+function isAsyncThunkAction(...asyncThunks) {
+  if (asyncThunks.length === 0) {
+    return (action) => hasExpectedRequestMetadata(action, ["pending", "fulfilled", "rejected"]);
+  }
+  if (!isAsyncThunkArray(asyncThunks)) {
+    return isAsyncThunkAction()(asyncThunks[0]);
+  }
+  return isAnyOf(...asyncThunks.flatMap((asyncThunk) => [asyncThunk.pending, asyncThunk.rejected, asyncThunk.fulfilled]));
+}
+
+// src/nanoid.ts
+var urlAlphabet = "ModuleSymbhasOwnPr-0123456789ABCDEFGHNRVfgctiUvz_KqYTJkLxpZXIjQW";
+var nanoid = (size = 21) => {
+  let id = "";
+  let i = size;
+  while (i--) {
+    id += urlAlphabet[Math.random() * 64 | 0];
+  }
+  return id;
+};
+
+// src/createAsyncThunk.ts
+var commonProperties = ["name", "message", "stack", "code"];
+var RejectWithValue = class {
+  constructor(payload, meta) {
+    this.payload = payload;
+    this.meta = meta;
+  }
+  /*
+  type-only property to distinguish between RejectWithValue and FulfillWithMeta
+  does not exist at runtime
+  */
+  _type;
+};
+var FulfillWithMeta = class {
+  constructor(payload, meta) {
+    this.payload = payload;
+    this.meta = meta;
+  }
+  /*
+  type-only property to distinguish between RejectWithValue and FulfillWithMeta
+  does not exist at runtime
+  */
+  _type;
+};
+var miniSerializeError = (value) => {
+  if (typeof value === "object" && value !== null) {
+    const simpleError = {};
+    for (const property of commonProperties) {
+      if (typeof value[property] === "string") {
+        simpleError[property] = value[property];
+      }
+    }
+    return simpleError;
+  }
+  return {
+    message: String(value)
+  };
+};
+var createAsyncThunk = /* @__PURE__ */ (() => {
+  function createAsyncThunk2(typePrefix, payloadCreator, options) {
+    const fulfilled = createAction(typePrefix + "/fulfilled", (payload, requestId, arg, meta) => ({
+      payload,
+      meta: {
+        ...meta || {},
+        arg,
+        requestId,
+        requestStatus: "fulfilled"
+      }
+    }));
+    const pending = createAction(typePrefix + "/pending", (requestId, arg, meta) => ({
+      payload: void 0,
+      meta: {
+        ...meta || {},
+        arg,
+        requestId,
+        requestStatus: "pending"
+      }
+    }));
+    const rejected = createAction(typePrefix + "/rejected", (error, requestId, arg, payload, meta) => ({
+      payload,
+      error: (options && options.serializeError || miniSerializeError)(error || "Rejected"),
+      meta: {
+        ...meta || {},
+        arg,
+        requestId,
+        rejectedWithValue: !!payload,
+        requestStatus: "rejected",
+        aborted: error?.name === "AbortError",
+        condition: error?.name === "ConditionError"
+      }
+    }));
+    function actionCreator(arg) {
+      return (dispatch, getState, extra) => {
+        const requestId = options?.idGenerator ? options.idGenerator(arg) : nanoid();
+        const abortController = new AbortController();
+        let abortHandler;
+        let abortReason;
+        function abort(reason) {
+          abortReason = reason;
+          abortController.abort();
+        }
+        const promise = async function() {
+          let finalAction;
+          try {
+            let conditionResult = options?.condition?.(arg, {
+              getState,
+              extra
+            });
+            if (isThenable(conditionResult)) {
+              conditionResult = await conditionResult;
+            }
+            if (conditionResult === false || abortController.signal.aborted) {
+              throw {
+                name: "ConditionError",
+                message: "Aborted due to condition callback returning false."
+              };
+            }
+            const abortedPromise = new Promise((_, reject) => {
+              abortHandler = () => {
+                reject({
+                  name: "AbortError",
+                  message: abortReason || "Aborted"
+                });
+              };
+              abortController.signal.addEventListener("abort", abortHandler);
+            });
+            dispatch(pending(requestId, arg, options?.getPendingMeta?.({
+              requestId,
+              arg
+            }, {
+              getState,
+              extra
+            })));
+            finalAction = await Promise.race([abortedPromise, Promise.resolve(payloadCreator(arg, {
+              dispatch,
+              getState,
+              extra,
+              requestId,
+              signal: abortController.signal,
+              abort,
+              rejectWithValue: (value, meta) => {
+                return new RejectWithValue(value, meta);
+              },
+              fulfillWithValue: (value, meta) => {
+                return new FulfillWithMeta(value, meta);
+              }
+            })).then((result) => {
+              if (result instanceof RejectWithValue) {
+                throw result;
+              }
+              if (result instanceof FulfillWithMeta) {
+                return fulfilled(result.payload, requestId, arg, result.meta);
+              }
+              return fulfilled(result, requestId, arg);
+            })]);
+          } catch (err) {
+            finalAction = err instanceof RejectWithValue ? rejected(null, requestId, arg, err.payload, err.meta) : rejected(err, requestId, arg);
+          } finally {
+            if (abortHandler) {
+              abortController.signal.removeEventListener("abort", abortHandler);
+            }
+          }
+          const skipDispatch = options && !options.dispatchConditionRejection && rejected.match(finalAction) && finalAction.meta.condition;
+          if (!skipDispatch) {
+            dispatch(finalAction);
+          }
+          return finalAction;
+        }();
+        return Object.assign(promise, {
+          abort,
+          requestId,
+          arg,
+          unwrap() {
+            return promise.then(unwrapResult);
+          }
+        });
+      };
+    }
+    return Object.assign(actionCreator, {
+      pending,
+      rejected,
+      fulfilled,
+      settled: isAnyOf(rejected, fulfilled),
+      typePrefix
+    });
+  }
+  createAsyncThunk2.withTypes = () => createAsyncThunk2;
+  return createAsyncThunk2;
+})();
+function unwrapResult(action) {
+  if (action.meta && action.meta.rejectedWithValue) {
+    throw action.payload;
+  }
+  if (action.error) {
+    throw action.error;
+  }
+  return action.payload;
+}
+function isThenable(value) {
+  return value !== null && typeof value === "object" && typeof value.then === "function";
+}
+
+// src/createSlice.ts
+var asyncThunkSymbol = /* @__PURE__ */ Symbol.for("rtk-slice-createasyncthunk");
+var asyncThunkCreator = {
+  [asyncThunkSymbol]: createAsyncThunk
+};
+var ReducerType = /* @__PURE__ */ ((ReducerType2) => {
+  ReducerType2["reducer"] = "reducer";
+  ReducerType2["reducerWithPrepare"] = "reducerWithPrepare";
+  ReducerType2["asyncThunk"] = "asyncThunk";
+  return ReducerType2;
+})(ReducerType || {});
+function getType(slice, actionKey) {
+  return `${slice}/${actionKey}`;
+}
+function buildCreateSlice({
+  creators
+} = {}) {
+  const cAT = creators?.asyncThunk?.[asyncThunkSymbol];
+  return function createSlice2(options) {
+    const {
+      name,
+      reducerPath = name
+    } = options;
+    if (!name) {
+      throw new Error( false ? 0 : "`name` is a required option for createSlice");
+    }
+    if (typeof process !== "undefined" && "development" === "development") {
+      if (options.initialState === void 0) {
+        console.error("You must provide an `initialState` value that is not `undefined`. You may have misspelled `initialState`");
+      }
+    }
+    const reducers = (typeof options.reducers === "function" ? options.reducers(buildReducerCreators()) : options.reducers) || {};
+    const reducerNames = Object.keys(reducers);
+    const context = {
+      sliceCaseReducersByName: {},
+      sliceCaseReducersByType: {},
+      actionCreators: {},
+      sliceMatchers: []
+    };
+    const contextMethods = {
+      addCase(typeOrActionCreator, reducer2) {
+        const type = typeof typeOrActionCreator === "string" ? typeOrActionCreator : typeOrActionCreator.type;
+        if (!type) {
+          throw new Error( false ? 0 : "`context.addCase` cannot be called with an empty action type");
+        }
+        if (type in context.sliceCaseReducersByType) {
+          throw new Error( false ? 0 : "`context.addCase` cannot be called with two reducers for the same action type: " + type);
+        }
+        context.sliceCaseReducersByType[type] = reducer2;
+        return contextMethods;
+      },
+      addMatcher(matcher, reducer2) {
+        context.sliceMatchers.push({
+          matcher,
+          reducer: reducer2
+        });
+        return contextMethods;
+      },
+      exposeAction(name2, actionCreator) {
+        context.actionCreators[name2] = actionCreator;
+        return contextMethods;
+      },
+      exposeCaseReducer(name2, reducer2) {
+        context.sliceCaseReducersByName[name2] = reducer2;
+        return contextMethods;
+      }
+    };
+    reducerNames.forEach((reducerName) => {
+      const reducerDefinition = reducers[reducerName];
+      const reducerDetails = {
+        reducerName,
+        type: getType(name, reducerName),
+        createNotation: typeof options.reducers === "function"
+      };
+      if (isAsyncThunkSliceReducerDefinition(reducerDefinition)) {
+        handleThunkCaseReducerDefinition(reducerDetails, reducerDefinition, contextMethods, cAT);
+      } else {
+        handleNormalReducerDefinition(reducerDetails, reducerDefinition, contextMethods);
+      }
+    });
+    function buildReducer() {
+      if (true) {
+        if (typeof options.extraReducers === "object") {
+          throw new Error( false ? 0 : "The object notation for `createSlice.extraReducers` has been removed. Please use the 'builder callback' notation instead: https://redux-toolkit.js.org/api/createSlice");
+        }
+      }
+      const [extraReducers = {}, actionMatchers = [], defaultCaseReducer = void 0] = typeof options.extraReducers === "function" ? executeReducerBuilderCallback(options.extraReducers) : [options.extraReducers];
+      const finalCaseReducers = {
+        ...extraReducers,
+        ...context.sliceCaseReducersByType
+      };
+      return createReducer(options.initialState, (builder) => {
+        for (let key in finalCaseReducers) {
+          builder.addCase(key, finalCaseReducers[key]);
+        }
+        for (let sM of context.sliceMatchers) {
+          builder.addMatcher(sM.matcher, sM.reducer);
+        }
+        for (let m of actionMatchers) {
+          builder.addMatcher(m.matcher, m.reducer);
+        }
+        if (defaultCaseReducer) {
+          builder.addDefaultCase(defaultCaseReducer);
+        }
+      });
+    }
+    const selectSelf = (state) => state;
+    const injectedSelectorCache = /* @__PURE__ */ new Map();
+    let _reducer;
+    function reducer(state, action) {
+      if (!_reducer) _reducer = buildReducer();
+      return _reducer(state, action);
+    }
+    function getInitialState() {
+      if (!_reducer) _reducer = buildReducer();
+      return _reducer.getInitialState();
+    }
+    function makeSelectorProps(reducerPath2, injected = false) {
+      function selectSlice(state) {
+        let sliceState = state[reducerPath2];
+        if (typeof sliceState === "undefined") {
+          if (injected) {
+            sliceState = getInitialState();
+          } else if (true) {
+            throw new Error( false ? 0 : "selectSlice returned undefined for an uninjected slice reducer");
+          }
+        }
+        return sliceState;
+      }
+      function getSelectors(selectState = selectSelf) {
+        const selectorCache = emplace(injectedSelectorCache, injected, {
+          insert: () => /* @__PURE__ */ new WeakMap()
+        });
+        return emplace(selectorCache, selectState, {
+          insert: () => {
+            const map = {};
+            for (const [name2, selector] of Object.entries(options.selectors ?? {})) {
+              map[name2] = wrapSelector(selector, selectState, getInitialState, injected);
+            }
+            return map;
+          }
+        });
+      }
+      return {
+        reducerPath: reducerPath2,
+        getSelectors,
+        get selectors() {
+          return getSelectors(selectSlice);
+        },
+        selectSlice
+      };
+    }
+    const slice = {
+      name,
+      reducer,
+      actions: context.actionCreators,
+      caseReducers: context.sliceCaseReducersByName,
+      getInitialState,
+      ...makeSelectorProps(reducerPath),
+      injectInto(injectable, {
+        reducerPath: pathOpt,
+        ...config
+      } = {}) {
+        const newReducerPath = pathOpt ?? reducerPath;
+        injectable.inject({
+          reducerPath: newReducerPath,
+          reducer
+        }, config);
+        return {
+          ...slice,
+          ...makeSelectorProps(newReducerPath, true)
+        };
+      }
+    };
+    return slice;
+  };
+}
+function wrapSelector(selector, selectState, getInitialState, injected) {
+  function wrapper(rootState, ...args) {
+    let sliceState = selectState(rootState);
+    if (typeof sliceState === "undefined") {
+      if (injected) {
+        sliceState = getInitialState();
+      } else if (true) {
+        throw new Error( false ? 0 : "selectState returned undefined for an uninjected slice reducer");
+      }
+    }
+    return selector(sliceState, ...args);
+  }
+  wrapper.unwrapped = selector;
+  return wrapper;
+}
+var createSlice = /* @__PURE__ */ buildCreateSlice();
+function buildReducerCreators() {
+  function asyncThunk(payloadCreator, config) {
+    return {
+      _reducerDefinitionType: "asyncThunk" /* asyncThunk */,
+      payloadCreator,
+      ...config
+    };
+  }
+  asyncThunk.withTypes = () => asyncThunk;
+  return {
+    reducer(caseReducer) {
+      return Object.assign({
+        // hack so the wrapping function has the same name as the original
+        // we need to create a wrapper so the `reducerDefinitionType` is not assigned to the original
+        [caseReducer.name](...args) {
+          return caseReducer(...args);
+        }
+      }[caseReducer.name], {
+        _reducerDefinitionType: "reducer" /* reducer */
+      });
+    },
+    preparedReducer(prepare, reducer) {
+      return {
+        _reducerDefinitionType: "reducerWithPrepare" /* reducerWithPrepare */,
+        prepare,
+        reducer
+      };
+    },
+    asyncThunk
+  };
+}
+function handleNormalReducerDefinition({
+  type,
+  reducerName,
+  createNotation
+}, maybeReducerWithPrepare, context) {
+  let caseReducer;
+  let prepareCallback;
+  if ("reducer" in maybeReducerWithPrepare) {
+    if (createNotation && !isCaseReducerWithPrepareDefinition(maybeReducerWithPrepare)) {
+      throw new Error( false ? 0 : "Please use the `create.preparedReducer` notation for prepared action creators with the `create` notation.");
+    }
+    caseReducer = maybeReducerWithPrepare.reducer;
+    prepareCallback = maybeReducerWithPrepare.prepare;
+  } else {
+    caseReducer = maybeReducerWithPrepare;
+  }
+  context.addCase(type, caseReducer).exposeCaseReducer(reducerName, caseReducer).exposeAction(reducerName, prepareCallback ? createAction(type, prepareCallback) : createAction(type));
+}
+function isAsyncThunkSliceReducerDefinition(reducerDefinition) {
+  return reducerDefinition._reducerDefinitionType === "asyncThunk" /* asyncThunk */;
+}
+function isCaseReducerWithPrepareDefinition(reducerDefinition) {
+  return reducerDefinition._reducerDefinitionType === "reducerWithPrepare" /* reducerWithPrepare */;
+}
+function handleThunkCaseReducerDefinition({
+  type,
+  reducerName
+}, reducerDefinition, context, cAT) {
+  if (!cAT) {
+    throw new Error( false ? 0 : "Cannot use `create.asyncThunk` in the built-in `createSlice`. Use `buildCreateSlice({ creators: { asyncThunk: asyncThunkCreator } })` to create a customised version of `createSlice`.");
+  }
+  const {
+    payloadCreator,
+    fulfilled,
+    pending,
+    rejected,
+    settled,
+    options
+  } = reducerDefinition;
+  const thunk = cAT(type, payloadCreator, options);
+  context.exposeAction(reducerName, thunk);
+  if (fulfilled) {
+    context.addCase(thunk.fulfilled, fulfilled);
+  }
+  if (pending) {
+    context.addCase(thunk.pending, pending);
+  }
+  if (rejected) {
+    context.addCase(thunk.rejected, rejected);
+  }
+  if (settled) {
+    context.addMatcher(thunk.settled, settled);
+  }
+  context.exposeCaseReducer(reducerName, {
+    fulfilled: fulfilled || noop,
+    pending: pending || noop,
+    rejected: rejected || noop,
+    settled: settled || noop
+  });
+}
+function noop() {
+}
+
+// src/entities/entity_state.ts
+function getInitialEntityState() {
+  return {
+    ids: [],
+    entities: {}
+  };
+}
+function createInitialStateFactory(stateAdapter) {
+  function getInitialState(additionalState = {}, entities) {
+    const state = Object.assign(getInitialEntityState(), additionalState);
+    return entities ? stateAdapter.setAll(state, entities) : state;
+  }
+  return {
+    getInitialState
+  };
+}
+
+// src/entities/state_selectors.ts
+function createSelectorsFactory() {
+  function getSelectors(selectState, options = {}) {
+    const {
+      createSelector: createSelector2 = createDraftSafeSelector
+    } = options;
+    const selectIds = (state) => state.ids;
+    const selectEntities = (state) => state.entities;
+    const selectAll = createSelector2(selectIds, selectEntities, (ids, entities) => ids.map((id) => entities[id]));
+    const selectId = (_, id) => id;
+    const selectById = (entities, id) => entities[id];
+    const selectTotal = createSelector2(selectIds, (ids) => ids.length);
+    if (!selectState) {
+      return {
+        selectIds,
+        selectEntities,
+        selectAll,
+        selectTotal,
+        selectById: createSelector2(selectEntities, selectId, selectById)
+      };
+    }
+    const selectGlobalizedEntities = createSelector2(selectState, selectEntities);
+    return {
+      selectIds: createSelector2(selectState, selectIds),
+      selectEntities: selectGlobalizedEntities,
+      selectAll: createSelector2(selectState, selectAll),
+      selectTotal: createSelector2(selectState, selectTotal),
+      selectById: createSelector2(selectGlobalizedEntities, selectId, selectById)
+    };
+  }
+  return {
+    getSelectors
+  };
+}
+
+// src/entities/state_adapter.ts
+
+var isDraftTyped = immer__WEBPACK_IMPORTED_MODULE_2__.isDraft;
+function createSingleArgumentStateOperator(mutator) {
+  const operator = createStateOperator((_, state) => mutator(state));
+  return function operation(state) {
+    return operator(state, void 0);
+  };
+}
+function createStateOperator(mutator) {
+  return function operation(state, arg) {
+    function isPayloadActionArgument(arg2) {
+      return isFSA(arg2);
+    }
+    const runMutator = (draft) => {
+      if (isPayloadActionArgument(arg)) {
+        mutator(arg.payload, draft);
+      } else {
+        mutator(arg, draft);
+      }
+    };
+    if (isDraftTyped(state)) {
+      runMutator(state);
+      return state;
+    }
+    return (0,immer__WEBPACK_IMPORTED_MODULE_2__.produce)(state, runMutator);
+  };
+}
+
+// src/entities/utils.ts
+
+function selectIdValue(entity, selectId) {
+  const key = selectId(entity);
+  if ( true && key === void 0) {
+    console.warn("The entity passed to the `selectId` implementation returned undefined.", "You should probably provide your own `selectId` implementation.", "The entity that was passed:", entity, "The `selectId` implementation:", selectId.toString());
+  }
+  return key;
+}
+function ensureEntitiesArray(entities) {
+  if (!Array.isArray(entities)) {
+    entities = Object.values(entities);
+  }
+  return entities;
+}
+function getCurrent(value) {
+  return (0,immer__WEBPACK_IMPORTED_MODULE_2__.isDraft)(value) ? (0,immer__WEBPACK_IMPORTED_MODULE_2__.current)(value) : value;
+}
+function splitAddedUpdatedEntities(newEntities, selectId, state) {
+  newEntities = ensureEntitiesArray(newEntities);
+  const existingIdsArray = getCurrent(state.ids);
+  const existingIds = new Set(existingIdsArray);
+  const added = [];
+  const updated = [];
+  for (const entity of newEntities) {
+    const id = selectIdValue(entity, selectId);
+    if (existingIds.has(id)) {
+      updated.push({
+        id,
+        changes: entity
+      });
+    } else {
+      added.push(entity);
+    }
+  }
+  return [added, updated, existingIdsArray];
+}
+
+// src/entities/unsorted_state_adapter.ts
+function createUnsortedStateAdapter(selectId) {
+  function addOneMutably(entity, state) {
+    const key = selectIdValue(entity, selectId);
+    if (key in state.entities) {
+      return;
+    }
+    state.ids.push(key);
+    state.entities[key] = entity;
+  }
+  function addManyMutably(newEntities, state) {
+    newEntities = ensureEntitiesArray(newEntities);
+    for (const entity of newEntities) {
+      addOneMutably(entity, state);
+    }
+  }
+  function setOneMutably(entity, state) {
+    const key = selectIdValue(entity, selectId);
+    if (!(key in state.entities)) {
+      state.ids.push(key);
+    }
+    ;
+    state.entities[key] = entity;
+  }
+  function setManyMutably(newEntities, state) {
+    newEntities = ensureEntitiesArray(newEntities);
+    for (const entity of newEntities) {
+      setOneMutably(entity, state);
+    }
+  }
+  function setAllMutably(newEntities, state) {
+    newEntities = ensureEntitiesArray(newEntities);
+    state.ids = [];
+    state.entities = {};
+    addManyMutably(newEntities, state);
+  }
+  function removeOneMutably(key, state) {
+    return removeManyMutably([key], state);
+  }
+  function removeManyMutably(keys, state) {
+    let didMutate = false;
+    keys.forEach((key) => {
+      if (key in state.entities) {
+        delete state.entities[key];
+        didMutate = true;
+      }
+    });
+    if (didMutate) {
+      state.ids = state.ids.filter((id) => id in state.entities);
+    }
+  }
+  function removeAllMutably(state) {
+    Object.assign(state, {
+      ids: [],
+      entities: {}
+    });
+  }
+  function takeNewKey(keys, update, state) {
+    const original3 = state.entities[update.id];
+    if (original3 === void 0) {
+      return false;
+    }
+    const updated = Object.assign({}, original3, update.changes);
+    const newKey = selectIdValue(updated, selectId);
+    const hasNewKey = newKey !== update.id;
+    if (hasNewKey) {
+      keys[update.id] = newKey;
+      delete state.entities[update.id];
+    }
+    ;
+    state.entities[newKey] = updated;
+    return hasNewKey;
+  }
+  function updateOneMutably(update, state) {
+    return updateManyMutably([update], state);
+  }
+  function updateManyMutably(updates, state) {
+    const newKeys = {};
+    const updatesPerEntity = {};
+    updates.forEach((update) => {
+      if (update.id in state.entities) {
+        updatesPerEntity[update.id] = {
+          id: update.id,
+          // Spreads ignore falsy values, so this works even if there isn't
+          // an existing update already at this key
+          changes: {
+            ...updatesPerEntity[update.id]?.changes,
+            ...update.changes
+          }
+        };
+      }
+    });
+    updates = Object.values(updatesPerEntity);
+    const didMutateEntities = updates.length > 0;
+    if (didMutateEntities) {
+      const didMutateIds = updates.filter((update) => takeNewKey(newKeys, update, state)).length > 0;
+      if (didMutateIds) {
+        state.ids = Object.values(state.entities).map((e) => selectIdValue(e, selectId));
+      }
+    }
+  }
+  function upsertOneMutably(entity, state) {
+    return upsertManyMutably([entity], state);
+  }
+  function upsertManyMutably(newEntities, state) {
+    const [added, updated] = splitAddedUpdatedEntities(newEntities, selectId, state);
+    updateManyMutably(updated, state);
+    addManyMutably(added, state);
+  }
+  return {
+    removeAll: createSingleArgumentStateOperator(removeAllMutably),
+    addOne: createStateOperator(addOneMutably),
+    addMany: createStateOperator(addManyMutably),
+    setOne: createStateOperator(setOneMutably),
+    setMany: createStateOperator(setManyMutably),
+    setAll: createStateOperator(setAllMutably),
+    updateOne: createStateOperator(updateOneMutably),
+    updateMany: createStateOperator(updateManyMutably),
+    upsertOne: createStateOperator(upsertOneMutably),
+    upsertMany: createStateOperator(upsertManyMutably),
+    removeOne: createStateOperator(removeOneMutably),
+    removeMany: createStateOperator(removeManyMutably)
+  };
+}
+
+// src/entities/sorted_state_adapter.ts
+function findInsertIndex(sortedItems, item, comparisonFunction) {
+  let lowIndex = 0;
+  let highIndex = sortedItems.length;
+  while (lowIndex < highIndex) {
+    let middleIndex = lowIndex + highIndex >>> 1;
+    const currentItem = sortedItems[middleIndex];
+    const res = comparisonFunction(item, currentItem);
+    if (res >= 0) {
+      lowIndex = middleIndex + 1;
+    } else {
+      highIndex = middleIndex;
+    }
+  }
+  return lowIndex;
+}
+function insert(sortedItems, item, comparisonFunction) {
+  const insertAtIndex = findInsertIndex(sortedItems, item, comparisonFunction);
+  sortedItems.splice(insertAtIndex, 0, item);
+  return sortedItems;
+}
+function createSortedStateAdapter(selectId, comparer) {
+  const {
+    removeOne,
+    removeMany,
+    removeAll
+  } = createUnsortedStateAdapter(selectId);
+  function addOneMutably(entity, state) {
+    return addManyMutably([entity], state);
+  }
+  function addManyMutably(newEntities, state, existingIds) {
+    newEntities = ensureEntitiesArray(newEntities);
+    const existingKeys = new Set(existingIds ?? getCurrent(state.ids));
+    const models = newEntities.filter((model) => !existingKeys.has(selectIdValue(model, selectId)));
+    if (models.length !== 0) {
+      mergeFunction(state, models);
+    }
+  }
+  function setOneMutably(entity, state) {
+    return setManyMutably([entity], state);
+  }
+  function setManyMutably(newEntities, state) {
+    newEntities = ensureEntitiesArray(newEntities);
+    if (newEntities.length !== 0) {
+      for (const item of newEntities) {
+        delete state.entities[selectId(item)];
+      }
+      mergeFunction(state, newEntities);
+    }
+  }
+  function setAllMutably(newEntities, state) {
+    newEntities = ensureEntitiesArray(newEntities);
+    state.entities = {};
+    state.ids = [];
+    addManyMutably(newEntities, state, []);
+  }
+  function updateOneMutably(update, state) {
+    return updateManyMutably([update], state);
+  }
+  function updateManyMutably(updates, state) {
+    let appliedUpdates = false;
+    let replacedIds = false;
+    for (let update of updates) {
+      const entity = state.entities[update.id];
+      if (!entity) {
+        continue;
+      }
+      appliedUpdates = true;
+      Object.assign(entity, update.changes);
+      const newId = selectId(entity);
+      if (update.id !== newId) {
+        replacedIds = true;
+        delete state.entities[update.id];
+        const oldIndex = state.ids.indexOf(update.id);
+        state.ids[oldIndex] = newId;
+        state.entities[newId] = entity;
+      }
+    }
+    if (appliedUpdates) {
+      mergeFunction(state, [], appliedUpdates, replacedIds);
+    }
+  }
+  function upsertOneMutably(entity, state) {
+    return upsertManyMutably([entity], state);
+  }
+  function upsertManyMutably(newEntities, state) {
+    const [added, updated, existingIdsArray] = splitAddedUpdatedEntities(newEntities, selectId, state);
+    if (updated.length) {
+      updateManyMutably(updated, state);
+    }
+    if (added.length) {
+      addManyMutably(added, state, existingIdsArray);
+    }
+  }
+  function areArraysEqual(a, b) {
+    if (a.length !== b.length) {
+      return false;
+    }
+    for (let i = 0; i < a.length; i++) {
+      if (a[i] === b[i]) {
+        continue;
+      }
+      return false;
+    }
+    return true;
+  }
+  const mergeFunction = (state, addedItems, appliedUpdates, replacedIds) => {
+    const currentEntities = getCurrent(state.entities);
+    const currentIds = getCurrent(state.ids);
+    const stateEntities = state.entities;
+    let ids = currentIds;
+    if (replacedIds) {
+      ids = new Set(currentIds);
+    }
+    let sortedEntities = [];
+    for (const id of ids) {
+      const entity = currentEntities[id];
+      if (entity) {
+        sortedEntities.push(entity);
+      }
+    }
+    const wasPreviouslyEmpty = sortedEntities.length === 0;
+    for (const item of addedItems) {
+      stateEntities[selectId(item)] = item;
+      if (!wasPreviouslyEmpty) {
+        insert(sortedEntities, item, comparer);
+      }
+    }
+    if (wasPreviouslyEmpty) {
+      sortedEntities = addedItems.slice().sort(comparer);
+    } else if (appliedUpdates) {
+      sortedEntities.sort(comparer);
+    }
+    const newSortedIds = sortedEntities.map(selectId);
+    if (!areArraysEqual(currentIds, newSortedIds)) {
+      state.ids = newSortedIds;
+    }
+  };
+  return {
+    removeOne,
+    removeMany,
+    removeAll,
+    addOne: createStateOperator(addOneMutably),
+    updateOne: createStateOperator(updateOneMutably),
+    upsertOne: createStateOperator(upsertOneMutably),
+    setOne: createStateOperator(setOneMutably),
+    setMany: createStateOperator(setManyMutably),
+    setAll: createStateOperator(setAllMutably),
+    addMany: createStateOperator(addManyMutably),
+    updateMany: createStateOperator(updateManyMutably),
+    upsertMany: createStateOperator(upsertManyMutably)
+  };
+}
+
+// src/entities/create_adapter.ts
+function createEntityAdapter(options = {}) {
+  const {
+    selectId,
+    sortComparer
+  } = {
+    sortComparer: false,
+    selectId: (instance) => instance.id,
+    ...options
+  };
+  const stateAdapter = sortComparer ? createSortedStateAdapter(selectId, sortComparer) : createUnsortedStateAdapter(selectId);
+  const stateFactory = createInitialStateFactory(stateAdapter);
+  const selectorsFactory = createSelectorsFactory();
+  return {
+    selectId,
+    sortComparer,
+    ...stateFactory,
+    ...selectorsFactory,
+    ...stateAdapter
+  };
+}
+
+// src/listenerMiddleware/index.ts
+
+
+// src/listenerMiddleware/exceptions.ts
+var task = "task";
+var listener = "listener";
+var completed = "completed";
+var cancelled = "cancelled";
+var taskCancelled = `task-${cancelled}`;
+var taskCompleted = `task-${completed}`;
+var listenerCancelled = `${listener}-${cancelled}`;
+var listenerCompleted = `${listener}-${completed}`;
+var TaskAbortError = class {
+  constructor(code) {
+    this.code = code;
+    this.message = `${task} ${cancelled} (reason: ${code})`;
+  }
+  name = "TaskAbortError";
+  message;
+};
+
+// src/listenerMiddleware/utils.ts
+var assertFunction = (func, expected) => {
+  if (typeof func !== "function") {
+    throw new Error( false ? 0 : `${expected} is not a function`);
+  }
+};
+var noop2 = () => {
+};
+var catchRejection = (promise, onError = noop2) => {
+  promise.catch(onError);
+  return promise;
+};
+var addAbortSignalListener = (abortSignal, callback) => {
+  abortSignal.addEventListener("abort", callback, {
+    once: true
+  });
+  return () => abortSignal.removeEventListener("abort", callback);
+};
+var abortControllerWithReason = (abortController, reason) => {
+  const signal = abortController.signal;
+  if (signal.aborted) {
+    return;
+  }
+  if (!("reason" in signal)) {
+    Object.defineProperty(signal, "reason", {
+      enumerable: true,
+      value: reason,
+      configurable: true,
+      writable: true
+    });
+  }
+  ;
+  abortController.abort(reason);
+};
+
+// src/listenerMiddleware/task.ts
+var validateActive = (signal) => {
+  if (signal.aborted) {
+    const {
+      reason
+    } = signal;
+    throw new TaskAbortError(reason);
+  }
+};
+function raceWithSignal(signal, promise) {
+  let cleanup = noop2;
+  return new Promise((resolve, reject) => {
+    const notifyRejection = () => reject(new TaskAbortError(signal.reason));
+    if (signal.aborted) {
+      notifyRejection();
+      return;
+    }
+    cleanup = addAbortSignalListener(signal, notifyRejection);
+    promise.finally(() => cleanup()).then(resolve, reject);
+  }).finally(() => {
+    cleanup = noop2;
+  });
+}
+var runTask = async (task2, cleanUp) => {
+  try {
+    await Promise.resolve();
+    const value = await task2();
+    return {
+      status: "ok",
+      value
+    };
+  } catch (error) {
+    return {
+      status: error instanceof TaskAbortError ? "cancelled" : "rejected",
+      error
+    };
+  } finally {
+    cleanUp?.();
+  }
+};
+var createPause = (signal) => {
+  return (promise) => {
+    return catchRejection(raceWithSignal(signal, promise).then((output) => {
+      validateActive(signal);
+      return output;
+    }));
+  };
+};
+var createDelay = (signal) => {
+  const pause = createPause(signal);
+  return (timeoutMs) => {
+    return pause(new Promise((resolve) => setTimeout(resolve, timeoutMs)));
+  };
+};
+
+// src/listenerMiddleware/index.ts
+var {
+  assign
+} = Object;
+var INTERNAL_NIL_TOKEN = {};
+var alm = "listenerMiddleware";
+var createFork = (parentAbortSignal, parentBlockingPromises) => {
+  const linkControllers = (controller) => addAbortSignalListener(parentAbortSignal, () => abortControllerWithReason(controller, parentAbortSignal.reason));
+  return (taskExecutor, opts) => {
+    assertFunction(taskExecutor, "taskExecutor");
+    const childAbortController = new AbortController();
+    linkControllers(childAbortController);
+    const result = runTask(async () => {
+      validateActive(parentAbortSignal);
+      validateActive(childAbortController.signal);
+      const result2 = await taskExecutor({
+        pause: createPause(childAbortController.signal),
+        delay: createDelay(childAbortController.signal),
+        signal: childAbortController.signal
+      });
+      validateActive(childAbortController.signal);
+      return result2;
+    }, () => abortControllerWithReason(childAbortController, taskCompleted));
+    if (opts?.autoJoin) {
+      parentBlockingPromises.push(result.catch(noop2));
+    }
+    return {
+      result: createPause(parentAbortSignal)(result),
+      cancel() {
+        abortControllerWithReason(childAbortController, taskCancelled);
+      }
+    };
+  };
+};
+var createTakePattern = (startListening, signal) => {
+  const take = async (predicate, timeout) => {
+    validateActive(signal);
+    let unsubscribe = () => {
+    };
+    const tuplePromise = new Promise((resolve, reject) => {
+      let stopListening = startListening({
+        predicate,
+        effect: (action, listenerApi) => {
+          listenerApi.unsubscribe();
+          resolve([action, listenerApi.getState(), listenerApi.getOriginalState()]);
+        }
+      });
+      unsubscribe = () => {
+        stopListening();
+        reject();
+      };
+    });
+    const promises = [tuplePromise];
+    if (timeout != null) {
+      promises.push(new Promise((resolve) => setTimeout(resolve, timeout, null)));
+    }
+    try {
+      const output = await raceWithSignal(signal, Promise.race(promises));
+      validateActive(signal);
+      return output;
+    } finally {
+      unsubscribe();
+    }
+  };
+  return (predicate, timeout) => catchRejection(take(predicate, timeout));
+};
+var getListenerEntryPropsFrom = (options) => {
+  let {
+    type,
+    actionCreator,
+    matcher,
+    predicate,
+    effect
+  } = options;
+  if (type) {
+    predicate = createAction(type).match;
+  } else if (actionCreator) {
+    type = actionCreator.type;
+    predicate = actionCreator.match;
+  } else if (matcher) {
+    predicate = matcher;
+  } else if (predicate) {
+  } else {
+    throw new Error( false ? 0 : "Creating or removing a listener requires one of the known fields for matching an action");
+  }
+  assertFunction(effect, "options.listener");
+  return {
+    predicate,
+    type,
+    effect
+  };
+};
+var createListenerEntry = /* @__PURE__ */ assign((options) => {
+  const {
+    type,
+    predicate,
+    effect
+  } = getListenerEntryPropsFrom(options);
+  const id = nanoid();
+  const entry = {
+    id,
+    effect,
+    type,
+    predicate,
+    pending: /* @__PURE__ */ new Set(),
+    unsubscribe: () => {
+      throw new Error( false ? 0 : "Unsubscribe not initialized");
+    }
+  };
+  return entry;
+}, {
+  withTypes: () => createListenerEntry
+});
+var cancelActiveListeners = (entry) => {
+  entry.pending.forEach((controller) => {
+    abortControllerWithReason(controller, listenerCancelled);
+  });
+};
+var createClearListenerMiddleware = (listenerMap) => {
+  return () => {
+    listenerMap.forEach(cancelActiveListeners);
+    listenerMap.clear();
+  };
+};
+var safelyNotifyError = (errorHandler, errorToNotify, errorInfo) => {
+  try {
+    errorHandler(errorToNotify, errorInfo);
+  } catch (errorHandlerError) {
+    setTimeout(() => {
+      throw errorHandlerError;
+    }, 0);
+  }
+};
+var addListener = /* @__PURE__ */ assign(/* @__PURE__ */ createAction(`${alm}/add`), {
+  withTypes: () => addListener
+});
+var clearAllListeners = /* @__PURE__ */ createAction(`${alm}/removeAll`);
+var removeListener = /* @__PURE__ */ assign(/* @__PURE__ */ createAction(`${alm}/remove`), {
+  withTypes: () => removeListener
+});
+var defaultErrorHandler = (...args) => {
+  console.error(`${alm}/error`, ...args);
+};
+var createListenerMiddleware = (middlewareOptions = {}) => {
+  const listenerMap = /* @__PURE__ */ new Map();
+  const {
+    extra,
+    onError = defaultErrorHandler
+  } = middlewareOptions;
+  assertFunction(onError, "onError");
+  const insertEntry = (entry) => {
+    entry.unsubscribe = () => listenerMap.delete(entry.id);
+    listenerMap.set(entry.id, entry);
+    return (cancelOptions) => {
+      entry.unsubscribe();
+      if (cancelOptions?.cancelActive) {
+        cancelActiveListeners(entry);
+      }
+    };
+  };
+  const startListening = (options) => {
+    let entry = find(Array.from(listenerMap.values()), (existingEntry) => existingEntry.effect === options.effect);
+    if (!entry) {
+      entry = createListenerEntry(options);
+    }
+    return insertEntry(entry);
+  };
+  assign(startListening, {
+    withTypes: () => startListening
+  });
+  const stopListening = (options) => {
+    const {
+      type,
+      effect,
+      predicate
+    } = getListenerEntryPropsFrom(options);
+    const entry = find(Array.from(listenerMap.values()), (entry2) => {
+      const matchPredicateOrType = typeof type === "string" ? entry2.type === type : entry2.predicate === predicate;
+      return matchPredicateOrType && entry2.effect === effect;
+    });
+    if (entry) {
+      entry.unsubscribe();
+      if (options.cancelActive) {
+        cancelActiveListeners(entry);
+      }
+    }
+    return !!entry;
+  };
+  assign(stopListening, {
+    withTypes: () => stopListening
+  });
+  const notifyListener = async (entry, action, api, getOriginalState) => {
+    const internalTaskController = new AbortController();
+    const take = createTakePattern(startListening, internalTaskController.signal);
+    const autoJoinPromises = [];
+    try {
+      entry.pending.add(internalTaskController);
+      await Promise.resolve(entry.effect(
+        action,
+        // Use assign() rather than ... to avoid extra helper functions added to bundle
+        assign({}, api, {
+          getOriginalState,
+          condition: (predicate, timeout) => take(predicate, timeout).then(Boolean),
+          take,
+          delay: createDelay(internalTaskController.signal),
+          pause: createPause(internalTaskController.signal),
+          extra,
+          signal: internalTaskController.signal,
+          fork: createFork(internalTaskController.signal, autoJoinPromises),
+          unsubscribe: entry.unsubscribe,
+          subscribe: () => {
+            listenerMap.set(entry.id, entry);
+          },
+          cancelActiveListeners: () => {
+            entry.pending.forEach((controller, _, set) => {
+              if (controller !== internalTaskController) {
+                abortControllerWithReason(controller, listenerCancelled);
+                set.delete(controller);
+              }
+            });
+          },
+          cancel: () => {
+            abortControllerWithReason(internalTaskController, listenerCancelled);
+            entry.pending.delete(internalTaskController);
+          },
+          throwIfCancelled: () => {
+            validateActive(internalTaskController.signal);
+          }
+        })
+      ));
+    } catch (listenerError) {
+      if (!(listenerError instanceof TaskAbortError)) {
+        safelyNotifyError(onError, listenerError, {
+          raisedBy: "effect"
+        });
+      }
+    } finally {
+      await Promise.all(autoJoinPromises);
+      abortControllerWithReason(internalTaskController, listenerCompleted);
+      entry.pending.delete(internalTaskController);
+    }
+  };
+  const clearListenerMiddleware = createClearListenerMiddleware(listenerMap);
+  const middleware = (api) => (next) => (action) => {
+    if (!(0,redux__WEBPACK_IMPORTED_MODULE_0__.isAction)(action)) {
+      return next(action);
+    }
+    if (addListener.match(action)) {
+      return startListening(action.payload);
+    }
+    if (clearAllListeners.match(action)) {
+      clearListenerMiddleware();
+      return;
+    }
+    if (removeListener.match(action)) {
+      return stopListening(action.payload);
+    }
+    let originalState = api.getState();
+    const getOriginalState = () => {
+      if (originalState === INTERNAL_NIL_TOKEN) {
+        throw new Error( false ? 0 : `${alm}: getOriginalState can only be called synchronously`);
+      }
+      return originalState;
+    };
+    let result;
+    try {
+      result = next(action);
+      if (listenerMap.size > 0) {
+        const currentState = api.getState();
+        const listenerEntries = Array.from(listenerMap.values());
+        for (const entry of listenerEntries) {
+          let runListener = false;
+          try {
+            runListener = entry.predicate(action, currentState, originalState);
+          } catch (predicateError) {
+            runListener = false;
+            safelyNotifyError(onError, predicateError, {
+              raisedBy: "predicate"
+            });
+          }
+          if (!runListener) {
+            continue;
+          }
+          notifyListener(entry, action, api, getOriginalState);
+        }
+      }
+    } finally {
+      originalState = INTERNAL_NIL_TOKEN;
+    }
+    return result;
+  };
+  return {
+    middleware,
+    startListening,
+    stopListening,
+    clearListeners: clearListenerMiddleware
+  };
+};
+
+// src/dynamicMiddleware/index.ts
+
+var createMiddlewareEntry = (middleware) => ({
+  id: nanoid(),
+  middleware,
+  applied: /* @__PURE__ */ new Map()
+});
+var matchInstance = (instanceId) => (action) => action?.meta?.instanceId === instanceId;
+var createDynamicMiddleware = () => {
+  const instanceId = nanoid();
+  const middlewareMap = /* @__PURE__ */ new Map();
+  const withMiddleware = Object.assign(createAction("dynamicMiddleware/add", (...middlewares) => ({
+    payload: middlewares,
+    meta: {
+      instanceId
+    }
+  })), {
+    withTypes: () => withMiddleware
+  });
+  const addMiddleware = Object.assign(function addMiddleware2(...middlewares) {
+    middlewares.forEach((middleware2) => {
+      let entry = find(Array.from(middlewareMap.values()), (entry2) => entry2.middleware === middleware2);
+      if (!entry) {
+        entry = createMiddlewareEntry(middleware2);
+      }
+      middlewareMap.set(entry.id, entry);
+    });
+  }, {
+    withTypes: () => addMiddleware
+  });
+  const getFinalMiddleware = (api) => {
+    const appliedMiddleware = Array.from(middlewareMap.values()).map((entry) => emplace(entry.applied, api, {
+      insert: () => entry.middleware(api)
+    }));
+    return (0,redux__WEBPACK_IMPORTED_MODULE_0__.compose)(...appliedMiddleware);
+  };
+  const isWithMiddleware = isAllOf(withMiddleware, matchInstance(instanceId));
+  const middleware = (api) => (next) => (action) => {
+    if (isWithMiddleware(action)) {
+      addMiddleware(...action.payload);
+      return api.dispatch;
+    }
+    return getFinalMiddleware(api)(next)(action);
+  };
+  return {
+    middleware,
+    addMiddleware,
+    withMiddleware,
+    instanceId
+  };
+};
+
+// src/combineSlices.ts
+
+var isSliceLike = (maybeSliceLike) => "reducerPath" in maybeSliceLike && typeof maybeSliceLike.reducerPath === "string";
+var getReducers = (slices) => slices.flatMap((sliceOrMap) => isSliceLike(sliceOrMap) ? [[sliceOrMap.reducerPath, sliceOrMap.reducer]] : Object.entries(sliceOrMap));
+var ORIGINAL_STATE = Symbol.for("rtk-state-proxy-original");
+var isStateProxy = (value) => !!value && !!value[ORIGINAL_STATE];
+var stateProxyMap = /* @__PURE__ */ new WeakMap();
+var createStateProxy = (state, reducerMap) => emplace(stateProxyMap, state, {
+  insert: () => new Proxy(state, {
+    get: (target, prop, receiver) => {
+      if (prop === ORIGINAL_STATE) return target;
+      const result = Reflect.get(target, prop, receiver);
+      if (typeof result === "undefined") {
+        const reducer = reducerMap[prop.toString()];
+        if (reducer) {
+          const reducerResult = reducer(void 0, {
+            type: nanoid()
+          });
+          if (typeof reducerResult === "undefined") {
+            throw new Error( false ? 0 : `The slice reducer for key "${prop.toString()}" returned undefined when called for selector(). If the state passed to the reducer is undefined, you must explicitly return the initial state. The initial state may not be undefined. If you don't want to set a value for this reducer, you can use null instead of undefined.`);
+          }
+          return reducerResult;
+        }
+      }
+      return result;
+    }
+  })
+});
+var original = (state) => {
+  if (!isStateProxy(state)) {
+    throw new Error( false ? 0 : "original must be used on state Proxy");
+  }
+  return state[ORIGINAL_STATE];
+};
+var noopReducer = (state = {}) => state;
+function combineSlices(...slices) {
+  const reducerMap = Object.fromEntries(getReducers(slices));
+  const getReducer = () => Object.keys(reducerMap).length ? (0,redux__WEBPACK_IMPORTED_MODULE_0__.combineReducers)(reducerMap) : noopReducer;
+  let reducer = getReducer();
+  function combinedReducer(state, action) {
+    return reducer(state, action);
+  }
+  combinedReducer.withLazyLoadedSlices = () => combinedReducer;
+  const inject = (slice, config = {}) => {
+    const {
+      reducerPath,
+      reducer: reducerToInject
+    } = slice;
+    const currentReducer = reducerMap[reducerPath];
+    if (!config.overrideExisting && currentReducer && currentReducer !== reducerToInject) {
+      if (typeof process !== "undefined" && "development" === "development") {
+        console.error(`called \`inject\` to override already-existing reducer ${reducerPath} without specifying \`overrideExisting: true\``);
+      }
+      return combinedReducer;
+    }
+    reducerMap[reducerPath] = reducerToInject;
+    reducer = getReducer();
+    return combinedReducer;
+  };
+  const selector = Object.assign(function makeSelector(selectorFn, selectState) {
+    return function selector2(state, ...args) {
+      return selectorFn(createStateProxy(selectState ? selectState(state, ...args) : state, reducerMap), ...args);
+    };
+  }, {
+    original
+  });
+  return Object.assign(combinedReducer, {
+    inject,
+    selector
+  });
+}
+
+// src/formatProdErrorMessage.ts
+function formatProdErrorMessage(code) {
+  return `Minified Redux Toolkit error #${code}; visit https://redux-toolkit.js.org/Errors?code=${code} for the full message or use the non-minified dev environment for full errors. `;
+}
+
+//# sourceMappingURL=redux-toolkit.modern.mjs.map
+
+/***/ }),
+
+/***/ "../node_modules/immer/dist/immer.mjs":
+/*!********************************************!*\
+  !*** ../node_modules/immer/dist/immer.mjs ***!
+  \********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Immer: () => (/* binding */ Immer2),
+/* harmony export */   applyPatches: () => (/* binding */ applyPatches),
+/* harmony export */   castDraft: () => (/* binding */ castDraft),
+/* harmony export */   castImmutable: () => (/* binding */ castImmutable),
+/* harmony export */   createDraft: () => (/* binding */ createDraft),
+/* harmony export */   current: () => (/* binding */ current),
+/* harmony export */   enableMapSet: () => (/* binding */ enableMapSet),
+/* harmony export */   enablePatches: () => (/* binding */ enablePatches),
+/* harmony export */   finishDraft: () => (/* binding */ finishDraft),
+/* harmony export */   freeze: () => (/* binding */ freeze),
+/* harmony export */   immerable: () => (/* binding */ DRAFTABLE),
+/* harmony export */   isDraft: () => (/* binding */ isDraft),
+/* harmony export */   isDraftable: () => (/* binding */ isDraftable),
+/* harmony export */   nothing: () => (/* binding */ NOTHING),
+/* harmony export */   original: () => (/* binding */ original),
+/* harmony export */   produce: () => (/* binding */ produce),
+/* harmony export */   produceWithPatches: () => (/* binding */ produceWithPatches),
+/* harmony export */   setAutoFreeze: () => (/* binding */ setAutoFreeze),
+/* harmony export */   setUseStrictShallowCopy: () => (/* binding */ setUseStrictShallowCopy)
+/* harmony export */ });
+// src/utils/env.ts
+var NOTHING = Symbol.for("immer-nothing");
+var DRAFTABLE = Symbol.for("immer-draftable");
+var DRAFT_STATE = Symbol.for("immer-state");
+
+// src/utils/errors.ts
+var errors =  true ? [
+  // All error codes, starting by 0:
+  function(plugin) {
+    return `The plugin for '${plugin}' has not been loaded into Immer. To enable the plugin, import and call \`enable${plugin}()\` when initializing your application.`;
+  },
+  function(thing) {
+    return `produce can only be called on things that are draftable: plain objects, arrays, Map, Set or classes that are marked with '[immerable]: true'. Got '${thing}'`;
+  },
+  "This object has been frozen and should not be mutated",
+  function(data) {
+    return "Cannot use a proxy that has been revoked. Did you pass an object from inside an immer function to an async process? " + data;
+  },
+  "An immer producer returned a new value *and* modified its draft. Either return a new value *or* modify the draft.",
+  "Immer forbids circular references",
+  "The first or second argument to `produce` must be a function",
+  "The third argument to `produce` must be a function or undefined",
+  "First argument to `createDraft` must be a plain object, an array, or an immerable object",
+  "First argument to `finishDraft` must be a draft returned by `createDraft`",
+  function(thing) {
+    return `'current' expects a draft, got: ${thing}`;
+  },
+  "Object.defineProperty() cannot be used on an Immer draft",
+  "Object.setPrototypeOf() cannot be used on an Immer draft",
+  "Immer only supports deleting array indices",
+  "Immer only supports setting array indices and the 'length' property",
+  function(thing) {
+    return `'original' expects a draft, got: ${thing}`;
+  }
+  // Note: if more errors are added, the errorOffset in Patches.ts should be increased
+  // See Patches.ts for additional errors
+] : 0;
+function die(error, ...args) {
+  if (true) {
+    const e = errors[error];
+    const msg = typeof e === "function" ? e.apply(null, args) : e;
+    throw new Error(`[Immer] ${msg}`);
+  }
+  throw new Error(
+    `[Immer] minified error nr: ${error}. Full error at: https://bit.ly/3cXEKWf`
+  );
+}
+
+// src/utils/common.ts
+var getPrototypeOf = Object.getPrototypeOf;
+function isDraft(value) {
+  return !!value && !!value[DRAFT_STATE];
+}
+function isDraftable(value) {
+  if (!value)
+    return false;
+  return isPlainObject(value) || Array.isArray(value) || !!value[DRAFTABLE] || !!value.constructor?.[DRAFTABLE] || isMap(value) || isSet(value);
+}
+var objectCtorString = Object.prototype.constructor.toString();
+function isPlainObject(value) {
+  if (!value || typeof value !== "object")
+    return false;
+  const proto = getPrototypeOf(value);
+  if (proto === null) {
+    return true;
+  }
+  const Ctor = Object.hasOwnProperty.call(proto, "constructor") && proto.constructor;
+  if (Ctor === Object)
+    return true;
+  return typeof Ctor == "function" && Function.toString.call(Ctor) === objectCtorString;
+}
+function original(value) {
+  if (!isDraft(value))
+    die(15, value);
+  return value[DRAFT_STATE].base_;
+}
+function each(obj, iter) {
+  if (getArchtype(obj) === 0 /* Object */) {
+    Reflect.ownKeys(obj).forEach((key) => {
+      iter(key, obj[key], obj);
+    });
+  } else {
+    obj.forEach((entry, index) => iter(index, entry, obj));
+  }
+}
+function getArchtype(thing) {
+  const state = thing[DRAFT_STATE];
+  return state ? state.type_ : Array.isArray(thing) ? 1 /* Array */ : isMap(thing) ? 2 /* Map */ : isSet(thing) ? 3 /* Set */ : 0 /* Object */;
+}
+function has(thing, prop) {
+  return getArchtype(thing) === 2 /* Map */ ? thing.has(prop) : Object.prototype.hasOwnProperty.call(thing, prop);
+}
+function get(thing, prop) {
+  return getArchtype(thing) === 2 /* Map */ ? thing.get(prop) : thing[prop];
+}
+function set(thing, propOrOldValue, value) {
+  const t = getArchtype(thing);
+  if (t === 2 /* Map */)
+    thing.set(propOrOldValue, value);
+  else if (t === 3 /* Set */) {
+    thing.add(value);
+  } else
+    thing[propOrOldValue] = value;
+}
+function is(x, y) {
+  if (x === y) {
+    return x !== 0 || 1 / x === 1 / y;
+  } else {
+    return x !== x && y !== y;
+  }
+}
+function isMap(target) {
+  return target instanceof Map;
+}
+function isSet(target) {
+  return target instanceof Set;
+}
+function latest(state) {
+  return state.copy_ || state.base_;
+}
+function shallowCopy(base, strict) {
+  if (isMap(base)) {
+    return new Map(base);
+  }
+  if (isSet(base)) {
+    return new Set(base);
+  }
+  if (Array.isArray(base))
+    return Array.prototype.slice.call(base);
+  const isPlain = isPlainObject(base);
+  if (strict === true || strict === "class_only" && !isPlain) {
+    const descriptors = Object.getOwnPropertyDescriptors(base);
+    delete descriptors[DRAFT_STATE];
+    let keys = Reflect.ownKeys(descriptors);
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      const desc = descriptors[key];
+      if (desc.writable === false) {
+        desc.writable = true;
+        desc.configurable = true;
+      }
+      if (desc.get || desc.set)
+        descriptors[key] = {
+          configurable: true,
+          writable: true,
+          // could live with !!desc.set as well here...
+          enumerable: desc.enumerable,
+          value: base[key]
+        };
+    }
+    return Object.create(getPrototypeOf(base), descriptors);
+  } else {
+    const proto = getPrototypeOf(base);
+    if (proto !== null && isPlain) {
+      return { ...base };
+    }
+    const obj = Object.create(proto);
+    return Object.assign(obj, base);
+  }
+}
+function freeze(obj, deep = false) {
+  if (isFrozen(obj) || isDraft(obj) || !isDraftable(obj))
+    return obj;
+  if (getArchtype(obj) > 1) {
+    obj.set = obj.add = obj.clear = obj.delete = dontMutateFrozenCollections;
+  }
+  Object.freeze(obj);
+  if (deep)
+    Object.entries(obj).forEach(([key, value]) => freeze(value, true));
+  return obj;
+}
+function dontMutateFrozenCollections() {
+  die(2);
+}
+function isFrozen(obj) {
+  return Object.isFrozen(obj);
+}
+
+// src/utils/plugins.ts
+var plugins = {};
+function getPlugin(pluginKey) {
+  const plugin = plugins[pluginKey];
+  if (!plugin) {
+    die(0, pluginKey);
+  }
+  return plugin;
+}
+function loadPlugin(pluginKey, implementation) {
+  if (!plugins[pluginKey])
+    plugins[pluginKey] = implementation;
+}
+
+// src/core/scope.ts
+var currentScope;
+function getCurrentScope() {
+  return currentScope;
+}
+function createScope(parent_, immer_) {
+  return {
+    drafts_: [],
+    parent_,
+    immer_,
+    // Whenever the modified draft contains a draft from another scope, we
+    // need to prevent auto-freezing so the unowned draft can be finalized.
+    canAutoFreeze_: true,
+    unfinalizedDrafts_: 0
+  };
+}
+function usePatchesInScope(scope, patchListener) {
+  if (patchListener) {
+    getPlugin("Patches");
+    scope.patches_ = [];
+    scope.inversePatches_ = [];
+    scope.patchListener_ = patchListener;
+  }
+}
+function revokeScope(scope) {
+  leaveScope(scope);
+  scope.drafts_.forEach(revokeDraft);
+  scope.drafts_ = null;
+}
+function leaveScope(scope) {
+  if (scope === currentScope) {
+    currentScope = scope.parent_;
+  }
+}
+function enterScope(immer2) {
+  return currentScope = createScope(currentScope, immer2);
+}
+function revokeDraft(draft) {
+  const state = draft[DRAFT_STATE];
+  if (state.type_ === 0 /* Object */ || state.type_ === 1 /* Array */)
+    state.revoke_();
+  else
+    state.revoked_ = true;
+}
+
+// src/core/finalize.ts
+function processResult(result, scope) {
+  scope.unfinalizedDrafts_ = scope.drafts_.length;
+  const baseDraft = scope.drafts_[0];
+  const isReplaced = result !== void 0 && result !== baseDraft;
+  if (isReplaced) {
+    if (baseDraft[DRAFT_STATE].modified_) {
+      revokeScope(scope);
+      die(4);
+    }
+    if (isDraftable(result)) {
+      result = finalize(scope, result);
+      if (!scope.parent_)
+        maybeFreeze(scope, result);
+    }
+    if (scope.patches_) {
+      getPlugin("Patches").generateReplacementPatches_(
+        baseDraft[DRAFT_STATE].base_,
+        result,
+        scope.patches_,
+        scope.inversePatches_
+      );
+    }
+  } else {
+    result = finalize(scope, baseDraft, []);
+  }
+  revokeScope(scope);
+  if (scope.patches_) {
+    scope.patchListener_(scope.patches_, scope.inversePatches_);
+  }
+  return result !== NOTHING ? result : void 0;
+}
+function finalize(rootScope, value, path) {
+  if (isFrozen(value))
+    return value;
+  const state = value[DRAFT_STATE];
+  if (!state) {
+    each(
+      value,
+      (key, childValue) => finalizeProperty(rootScope, state, value, key, childValue, path)
+    );
+    return value;
+  }
+  if (state.scope_ !== rootScope)
+    return value;
+  if (!state.modified_) {
+    maybeFreeze(rootScope, state.base_, true);
+    return state.base_;
+  }
+  if (!state.finalized_) {
+    state.finalized_ = true;
+    state.scope_.unfinalizedDrafts_--;
+    const result = state.copy_;
+    let resultEach = result;
+    let isSet2 = false;
+    if (state.type_ === 3 /* Set */) {
+      resultEach = new Set(result);
+      result.clear();
+      isSet2 = true;
+    }
+    each(
+      resultEach,
+      (key, childValue) => finalizeProperty(rootScope, state, result, key, childValue, path, isSet2)
+    );
+    maybeFreeze(rootScope, result, false);
+    if (path && rootScope.patches_) {
+      getPlugin("Patches").generatePatches_(
+        state,
+        path,
+        rootScope.patches_,
+        rootScope.inversePatches_
+      );
+    }
+  }
+  return state.copy_;
+}
+function finalizeProperty(rootScope, parentState, targetObject, prop, childValue, rootPath, targetIsSet) {
+  if ( true && childValue === targetObject)
+    die(5);
+  if (isDraft(childValue)) {
+    const path = rootPath && parentState && parentState.type_ !== 3 /* Set */ && // Set objects are atomic since they have no keys.
+    !has(parentState.assigned_, prop) ? rootPath.concat(prop) : void 0;
+    const res = finalize(rootScope, childValue, path);
+    set(targetObject, prop, res);
+    if (isDraft(res)) {
+      rootScope.canAutoFreeze_ = false;
+    } else
+      return;
+  } else if (targetIsSet) {
+    targetObject.add(childValue);
+  }
+  if (isDraftable(childValue) && !isFrozen(childValue)) {
+    if (!rootScope.immer_.autoFreeze_ && rootScope.unfinalizedDrafts_ < 1) {
+      return;
+    }
+    finalize(rootScope, childValue);
+    if ((!parentState || !parentState.scope_.parent_) && typeof prop !== "symbol" && Object.prototype.propertyIsEnumerable.call(targetObject, prop))
+      maybeFreeze(rootScope, childValue);
+  }
+}
+function maybeFreeze(scope, value, deep = false) {
+  if (!scope.parent_ && scope.immer_.autoFreeze_ && scope.canAutoFreeze_) {
+    freeze(value, deep);
+  }
+}
+
+// src/core/proxy.ts
+function createProxyProxy(base, parent) {
+  const isArray = Array.isArray(base);
+  const state = {
+    type_: isArray ? 1 /* Array */ : 0 /* Object */,
+    // Track which produce call this is associated with.
+    scope_: parent ? parent.scope_ : getCurrentScope(),
+    // True for both shallow and deep changes.
+    modified_: false,
+    // Used during finalization.
+    finalized_: false,
+    // Track which properties have been assigned (true) or deleted (false).
+    assigned_: {},
+    // The parent draft state.
+    parent_: parent,
+    // The base state.
+    base_: base,
+    // The base proxy.
+    draft_: null,
+    // set below
+    // The base copy with any updated values.
+    copy_: null,
+    // Called by the `produce` function.
+    revoke_: null,
+    isManual_: false
+  };
+  let target = state;
+  let traps = objectTraps;
+  if (isArray) {
+    target = [state];
+    traps = arrayTraps;
+  }
+  const { revoke, proxy } = Proxy.revocable(target, traps);
+  state.draft_ = proxy;
+  state.revoke_ = revoke;
+  return proxy;
+}
+var objectTraps = {
+  get(state, prop) {
+    if (prop === DRAFT_STATE)
+      return state;
+    const source = latest(state);
+    if (!has(source, prop)) {
+      return readPropFromProto(state, source, prop);
+    }
+    const value = source[prop];
+    if (state.finalized_ || !isDraftable(value)) {
+      return value;
+    }
+    if (value === peek(state.base_, prop)) {
+      prepareCopy(state);
+      return state.copy_[prop] = createProxy(value, state);
+    }
+    return value;
+  },
+  has(state, prop) {
+    return prop in latest(state);
+  },
+  ownKeys(state) {
+    return Reflect.ownKeys(latest(state));
+  },
+  set(state, prop, value) {
+    const desc = getDescriptorFromProto(latest(state), prop);
+    if (desc?.set) {
+      desc.set.call(state.draft_, value);
+      return true;
+    }
+    if (!state.modified_) {
+      const current2 = peek(latest(state), prop);
+      const currentState = current2?.[DRAFT_STATE];
+      if (currentState && currentState.base_ === value) {
+        state.copy_[prop] = value;
+        state.assigned_[prop] = false;
+        return true;
+      }
+      if (is(value, current2) && (value !== void 0 || has(state.base_, prop)))
+        return true;
+      prepareCopy(state);
+      markChanged(state);
+    }
+    if (state.copy_[prop] === value && // special case: handle new props with value 'undefined'
+    (value !== void 0 || prop in state.copy_) || // special case: NaN
+    Number.isNaN(value) && Number.isNaN(state.copy_[prop]))
+      return true;
+    state.copy_[prop] = value;
+    state.assigned_[prop] = true;
+    return true;
+  },
+  deleteProperty(state, prop) {
+    if (peek(state.base_, prop) !== void 0 || prop in state.base_) {
+      state.assigned_[prop] = false;
+      prepareCopy(state);
+      markChanged(state);
+    } else {
+      delete state.assigned_[prop];
+    }
+    if (state.copy_) {
+      delete state.copy_[prop];
+    }
+    return true;
+  },
+  // Note: We never coerce `desc.value` into an Immer draft, because we can't make
+  // the same guarantee in ES5 mode.
+  getOwnPropertyDescriptor(state, prop) {
+    const owner = latest(state);
+    const desc = Reflect.getOwnPropertyDescriptor(owner, prop);
+    if (!desc)
+      return desc;
+    return {
+      writable: true,
+      configurable: state.type_ !== 1 /* Array */ || prop !== "length",
+      enumerable: desc.enumerable,
+      value: owner[prop]
+    };
+  },
+  defineProperty() {
+    die(11);
+  },
+  getPrototypeOf(state) {
+    return getPrototypeOf(state.base_);
+  },
+  setPrototypeOf() {
+    die(12);
+  }
+};
+var arrayTraps = {};
+each(objectTraps, (key, fn) => {
+  arrayTraps[key] = function() {
+    arguments[0] = arguments[0][0];
+    return fn.apply(this, arguments);
+  };
+});
+arrayTraps.deleteProperty = function(state, prop) {
+  if ( true && isNaN(parseInt(prop)))
+    die(13);
+  return arrayTraps.set.call(this, state, prop, void 0);
+};
+arrayTraps.set = function(state, prop, value) {
+  if ( true && prop !== "length" && isNaN(parseInt(prop)))
+    die(14);
+  return objectTraps.set.call(this, state[0], prop, value, state[0]);
+};
+function peek(draft, prop) {
+  const state = draft[DRAFT_STATE];
+  const source = state ? latest(state) : draft;
+  return source[prop];
+}
+function readPropFromProto(state, source, prop) {
+  const desc = getDescriptorFromProto(source, prop);
+  return desc ? `value` in desc ? desc.value : (
+    // This is a very special case, if the prop is a getter defined by the
+    // prototype, we should invoke it with the draft as context!
+    desc.get?.call(state.draft_)
+  ) : void 0;
+}
+function getDescriptorFromProto(source, prop) {
+  if (!(prop in source))
+    return void 0;
+  let proto = getPrototypeOf(source);
+  while (proto) {
+    const desc = Object.getOwnPropertyDescriptor(proto, prop);
+    if (desc)
+      return desc;
+    proto = getPrototypeOf(proto);
+  }
+  return void 0;
+}
+function markChanged(state) {
+  if (!state.modified_) {
+    state.modified_ = true;
+    if (state.parent_) {
+      markChanged(state.parent_);
+    }
+  }
+}
+function prepareCopy(state) {
+  if (!state.copy_) {
+    state.copy_ = shallowCopy(
+      state.base_,
+      state.scope_.immer_.useStrictShallowCopy_
+    );
+  }
+}
+
+// src/core/immerClass.ts
+var Immer2 = class {
+  constructor(config) {
+    this.autoFreeze_ = true;
+    this.useStrictShallowCopy_ = false;
+    /**
+     * The `produce` function takes a value and a "recipe function" (whose
+     * return value often depends on the base state). The recipe function is
+     * free to mutate its first argument however it wants. All mutations are
+     * only ever applied to a __copy__ of the base state.
+     *
+     * Pass only a function to create a "curried producer" which relieves you
+     * from passing the recipe function every time.
+     *
+     * Only plain objects and arrays are made mutable. All other objects are
+     * considered uncopyable.
+     *
+     * Note: This function is __bound__ to its `Immer` instance.
+     *
+     * @param {any} base - the initial state
+     * @param {Function} recipe - function that receives a proxy of the base state as first argument and which can be freely modified
+     * @param {Function} patchListener - optional function that will be called with all the patches produced here
+     * @returns {any} a new state, or the initial state if nothing was modified
+     */
+    this.produce = (base, recipe, patchListener) => {
+      if (typeof base === "function" && typeof recipe !== "function") {
+        const defaultBase = recipe;
+        recipe = base;
+        const self = this;
+        return function curriedProduce(base2 = defaultBase, ...args) {
+          return self.produce(base2, (draft) => recipe.call(this, draft, ...args));
+        };
+      }
+      if (typeof recipe !== "function")
+        die(6);
+      if (patchListener !== void 0 && typeof patchListener !== "function")
+        die(7);
+      let result;
+      if (isDraftable(base)) {
+        const scope = enterScope(this);
+        const proxy = createProxy(base, void 0);
+        let hasError = true;
+        try {
+          result = recipe(proxy);
+          hasError = false;
+        } finally {
+          if (hasError)
+            revokeScope(scope);
+          else
+            leaveScope(scope);
+        }
+        usePatchesInScope(scope, patchListener);
+        return processResult(result, scope);
+      } else if (!base || typeof base !== "object") {
+        result = recipe(base);
+        if (result === void 0)
+          result = base;
+        if (result === NOTHING)
+          result = void 0;
+        if (this.autoFreeze_)
+          freeze(result, true);
+        if (patchListener) {
+          const p = [];
+          const ip = [];
+          getPlugin("Patches").generateReplacementPatches_(base, result, p, ip);
+          patchListener(p, ip);
+        }
+        return result;
+      } else
+        die(1, base);
+    };
+    this.produceWithPatches = (base, recipe) => {
+      if (typeof base === "function") {
+        return (state, ...args) => this.produceWithPatches(state, (draft) => base(draft, ...args));
+      }
+      let patches, inversePatches;
+      const result = this.produce(base, recipe, (p, ip) => {
+        patches = p;
+        inversePatches = ip;
+      });
+      return [result, patches, inversePatches];
+    };
+    if (typeof config?.autoFreeze === "boolean")
+      this.setAutoFreeze(config.autoFreeze);
+    if (typeof config?.useStrictShallowCopy === "boolean")
+      this.setUseStrictShallowCopy(config.useStrictShallowCopy);
+  }
+  createDraft(base) {
+    if (!isDraftable(base))
+      die(8);
+    if (isDraft(base))
+      base = current(base);
+    const scope = enterScope(this);
+    const proxy = createProxy(base, void 0);
+    proxy[DRAFT_STATE].isManual_ = true;
+    leaveScope(scope);
+    return proxy;
+  }
+  finishDraft(draft, patchListener) {
+    const state = draft && draft[DRAFT_STATE];
+    if (!state || !state.isManual_)
+      die(9);
+    const { scope_: scope } = state;
+    usePatchesInScope(scope, patchListener);
+    return processResult(void 0, scope);
+  }
+  /**
+   * Pass true to automatically freeze all copies created by Immer.
+   *
+   * By default, auto-freezing is enabled.
+   */
+  setAutoFreeze(value) {
+    this.autoFreeze_ = value;
+  }
+  /**
+   * Pass true to enable strict shallow copy.
+   *
+   * By default, immer does not copy the object descriptors such as getter, setter and non-enumrable properties.
+   */
+  setUseStrictShallowCopy(value) {
+    this.useStrictShallowCopy_ = value;
+  }
+  applyPatches(base, patches) {
+    let i;
+    for (i = patches.length - 1; i >= 0; i--) {
+      const patch = patches[i];
+      if (patch.path.length === 0 && patch.op === "replace") {
+        base = patch.value;
+        break;
+      }
+    }
+    if (i > -1) {
+      patches = patches.slice(i + 1);
+    }
+    const applyPatchesImpl = getPlugin("Patches").applyPatches_;
+    if (isDraft(base)) {
+      return applyPatchesImpl(base, patches);
+    }
+    return this.produce(
+      base,
+      (draft) => applyPatchesImpl(draft, patches)
+    );
+  }
+};
+function createProxy(value, parent) {
+  const draft = isMap(value) ? getPlugin("MapSet").proxyMap_(value, parent) : isSet(value) ? getPlugin("MapSet").proxySet_(value, parent) : createProxyProxy(value, parent);
+  const scope = parent ? parent.scope_ : getCurrentScope();
+  scope.drafts_.push(draft);
+  return draft;
+}
+
+// src/core/current.ts
+function current(value) {
+  if (!isDraft(value))
+    die(10, value);
+  return currentImpl(value);
+}
+function currentImpl(value) {
+  if (!isDraftable(value) || isFrozen(value))
+    return value;
+  const state = value[DRAFT_STATE];
+  let copy;
+  if (state) {
+    if (!state.modified_)
+      return state.base_;
+    state.finalized_ = true;
+    copy = shallowCopy(value, state.scope_.immer_.useStrictShallowCopy_);
+  } else {
+    copy = shallowCopy(value, true);
+  }
+  each(copy, (key, childValue) => {
+    set(copy, key, currentImpl(childValue));
+  });
+  if (state) {
+    state.finalized_ = false;
+  }
+  return copy;
+}
+
+// src/plugins/patches.ts
+function enablePatches() {
+  const errorOffset = 16;
+  if (true) {
+    errors.push(
+      'Sets cannot have "replace" patches.',
+      function(op) {
+        return "Unsupported patch operation: " + op;
+      },
+      function(path) {
+        return "Cannot apply patch, path doesn't resolve: " + path;
+      },
+      "Patching reserved attributes like __proto__, prototype and constructor is not allowed"
+    );
+  }
+  const REPLACE = "replace";
+  const ADD = "add";
+  const REMOVE = "remove";
+  function generatePatches_(state, basePath, patches, inversePatches) {
+    switch (state.type_) {
+      case 0 /* Object */:
+      case 2 /* Map */:
+        return generatePatchesFromAssigned(
+          state,
+          basePath,
+          patches,
+          inversePatches
+        );
+      case 1 /* Array */:
+        return generateArrayPatches(state, basePath, patches, inversePatches);
+      case 3 /* Set */:
+        return generateSetPatches(
+          state,
+          basePath,
+          patches,
+          inversePatches
+        );
+    }
+  }
+  function generateArrayPatches(state, basePath, patches, inversePatches) {
+    let { base_, assigned_ } = state;
+    let copy_ = state.copy_;
+    if (copy_.length < base_.length) {
+      ;
+      [base_, copy_] = [copy_, base_];
+      [patches, inversePatches] = [inversePatches, patches];
+    }
+    for (let i = 0; i < base_.length; i++) {
+      if (assigned_[i] && copy_[i] !== base_[i]) {
+        const path = basePath.concat([i]);
+        patches.push({
+          op: REPLACE,
+          path,
+          // Need to maybe clone it, as it can in fact be the original value
+          // due to the base/copy inversion at the start of this function
+          value: clonePatchValueIfNeeded(copy_[i])
+        });
+        inversePatches.push({
+          op: REPLACE,
+          path,
+          value: clonePatchValueIfNeeded(base_[i])
+        });
+      }
+    }
+    for (let i = base_.length; i < copy_.length; i++) {
+      const path = basePath.concat([i]);
+      patches.push({
+        op: ADD,
+        path,
+        // Need to maybe clone it, as it can in fact be the original value
+        // due to the base/copy inversion at the start of this function
+        value: clonePatchValueIfNeeded(copy_[i])
+      });
+    }
+    for (let i = copy_.length - 1; base_.length <= i; --i) {
+      const path = basePath.concat([i]);
+      inversePatches.push({
+        op: REMOVE,
+        path
+      });
+    }
+  }
+  function generatePatchesFromAssigned(state, basePath, patches, inversePatches) {
+    const { base_, copy_ } = state;
+    each(state.assigned_, (key, assignedValue) => {
+      const origValue = get(base_, key);
+      const value = get(copy_, key);
+      const op = !assignedValue ? REMOVE : has(base_, key) ? REPLACE : ADD;
+      if (origValue === value && op === REPLACE)
+        return;
+      const path = basePath.concat(key);
+      patches.push(op === REMOVE ? { op, path } : { op, path, value });
+      inversePatches.push(
+        op === ADD ? { op: REMOVE, path } : op === REMOVE ? { op: ADD, path, value: clonePatchValueIfNeeded(origValue) } : { op: REPLACE, path, value: clonePatchValueIfNeeded(origValue) }
+      );
+    });
+  }
+  function generateSetPatches(state, basePath, patches, inversePatches) {
+    let { base_, copy_ } = state;
+    let i = 0;
+    base_.forEach((value) => {
+      if (!copy_.has(value)) {
+        const path = basePath.concat([i]);
+        patches.push({
+          op: REMOVE,
+          path,
+          value
+        });
+        inversePatches.unshift({
+          op: ADD,
+          path,
+          value
+        });
+      }
+      i++;
+    });
+    i = 0;
+    copy_.forEach((value) => {
+      if (!base_.has(value)) {
+        const path = basePath.concat([i]);
+        patches.push({
+          op: ADD,
+          path,
+          value
+        });
+        inversePatches.unshift({
+          op: REMOVE,
+          path,
+          value
+        });
+      }
+      i++;
+    });
+  }
+  function generateReplacementPatches_(baseValue, replacement, patches, inversePatches) {
+    patches.push({
+      op: REPLACE,
+      path: [],
+      value: replacement === NOTHING ? void 0 : replacement
+    });
+    inversePatches.push({
+      op: REPLACE,
+      path: [],
+      value: baseValue
+    });
+  }
+  function applyPatches_(draft, patches) {
+    patches.forEach((patch) => {
+      const { path, op } = patch;
+      let base = draft;
+      for (let i = 0; i < path.length - 1; i++) {
+        const parentType = getArchtype(base);
+        let p = path[i];
+        if (typeof p !== "string" && typeof p !== "number") {
+          p = "" + p;
+        }
+        if ((parentType === 0 /* Object */ || parentType === 1 /* Array */) && (p === "__proto__" || p === "constructor"))
+          die(errorOffset + 3);
+        if (typeof base === "function" && p === "prototype")
+          die(errorOffset + 3);
+        base = get(base, p);
+        if (typeof base !== "object")
+          die(errorOffset + 2, path.join("/"));
+      }
+      const type = getArchtype(base);
+      const value = deepClonePatchValue(patch.value);
+      const key = path[path.length - 1];
+      switch (op) {
+        case REPLACE:
+          switch (type) {
+            case 2 /* Map */:
+              return base.set(key, value);
+            case 3 /* Set */:
+              die(errorOffset);
+            default:
+              return base[key] = value;
+          }
+        case ADD:
+          switch (type) {
+            case 1 /* Array */:
+              return key === "-" ? base.push(value) : base.splice(key, 0, value);
+            case 2 /* Map */:
+              return base.set(key, value);
+            case 3 /* Set */:
+              return base.add(value);
+            default:
+              return base[key] = value;
+          }
+        case REMOVE:
+          switch (type) {
+            case 1 /* Array */:
+              return base.splice(key, 1);
+            case 2 /* Map */:
+              return base.delete(key);
+            case 3 /* Set */:
+              return base.delete(patch.value);
+            default:
+              return delete base[key];
+          }
+        default:
+          die(errorOffset + 1, op);
+      }
+    });
+    return draft;
+  }
+  function deepClonePatchValue(obj) {
+    if (!isDraftable(obj))
+      return obj;
+    if (Array.isArray(obj))
+      return obj.map(deepClonePatchValue);
+    if (isMap(obj))
+      return new Map(
+        Array.from(obj.entries()).map(([k, v]) => [k, deepClonePatchValue(v)])
+      );
+    if (isSet(obj))
+      return new Set(Array.from(obj).map(deepClonePatchValue));
+    const cloned = Object.create(getPrototypeOf(obj));
+    for (const key in obj)
+      cloned[key] = deepClonePatchValue(obj[key]);
+    if (has(obj, DRAFTABLE))
+      cloned[DRAFTABLE] = obj[DRAFTABLE];
+    return cloned;
+  }
+  function clonePatchValueIfNeeded(obj) {
+    if (isDraft(obj)) {
+      return deepClonePatchValue(obj);
+    } else
+      return obj;
+  }
+  loadPlugin("Patches", {
+    applyPatches_,
+    generatePatches_,
+    generateReplacementPatches_
+  });
+}
+
+// src/plugins/mapset.ts
+function enableMapSet() {
+  class DraftMap extends Map {
+    constructor(target, parent) {
+      super();
+      this[DRAFT_STATE] = {
+        type_: 2 /* Map */,
+        parent_: parent,
+        scope_: parent ? parent.scope_ : getCurrentScope(),
+        modified_: false,
+        finalized_: false,
+        copy_: void 0,
+        assigned_: void 0,
+        base_: target,
+        draft_: this,
+        isManual_: false,
+        revoked_: false
+      };
+    }
+    get size() {
+      return latest(this[DRAFT_STATE]).size;
+    }
+    has(key) {
+      return latest(this[DRAFT_STATE]).has(key);
+    }
+    set(key, value) {
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      if (!latest(state).has(key) || latest(state).get(key) !== value) {
+        prepareMapCopy(state);
+        markChanged(state);
+        state.assigned_.set(key, true);
+        state.copy_.set(key, value);
+        state.assigned_.set(key, true);
+      }
+      return this;
+    }
+    delete(key) {
+      if (!this.has(key)) {
+        return false;
+      }
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      prepareMapCopy(state);
+      markChanged(state);
+      if (state.base_.has(key)) {
+        state.assigned_.set(key, false);
+      } else {
+        state.assigned_.delete(key);
+      }
+      state.copy_.delete(key);
+      return true;
+    }
+    clear() {
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      if (latest(state).size) {
+        prepareMapCopy(state);
+        markChanged(state);
+        state.assigned_ = /* @__PURE__ */ new Map();
+        each(state.base_, (key) => {
+          state.assigned_.set(key, false);
+        });
+        state.copy_.clear();
+      }
+    }
+    forEach(cb, thisArg) {
+      const state = this[DRAFT_STATE];
+      latest(state).forEach((_value, key, _map) => {
+        cb.call(thisArg, this.get(key), key, this);
+      });
+    }
+    get(key) {
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      const value = latest(state).get(key);
+      if (state.finalized_ || !isDraftable(value)) {
+        return value;
+      }
+      if (value !== state.base_.get(key)) {
+        return value;
+      }
+      const draft = createProxy(value, state);
+      prepareMapCopy(state);
+      state.copy_.set(key, draft);
+      return draft;
+    }
+    keys() {
+      return latest(this[DRAFT_STATE]).keys();
+    }
+    values() {
+      const iterator = this.keys();
+      return {
+        [Symbol.iterator]: () => this.values(),
+        next: () => {
+          const r = iterator.next();
+          if (r.done)
+            return r;
+          const value = this.get(r.value);
+          return {
+            done: false,
+            value
+          };
+        }
+      };
+    }
+    entries() {
+      const iterator = this.keys();
+      return {
+        [Symbol.iterator]: () => this.entries(),
+        next: () => {
+          const r = iterator.next();
+          if (r.done)
+            return r;
+          const value = this.get(r.value);
+          return {
+            done: false,
+            value: [r.value, value]
+          };
+        }
+      };
+    }
+    [(DRAFT_STATE, Symbol.iterator)]() {
+      return this.entries();
+    }
+  }
+  function proxyMap_(target, parent) {
+    return new DraftMap(target, parent);
+  }
+  function prepareMapCopy(state) {
+    if (!state.copy_) {
+      state.assigned_ = /* @__PURE__ */ new Map();
+      state.copy_ = new Map(state.base_);
+    }
+  }
+  class DraftSet extends Set {
+    constructor(target, parent) {
+      super();
+      this[DRAFT_STATE] = {
+        type_: 3 /* Set */,
+        parent_: parent,
+        scope_: parent ? parent.scope_ : getCurrentScope(),
+        modified_: false,
+        finalized_: false,
+        copy_: void 0,
+        base_: target,
+        draft_: this,
+        drafts_: /* @__PURE__ */ new Map(),
+        revoked_: false,
+        isManual_: false
+      };
+    }
+    get size() {
+      return latest(this[DRAFT_STATE]).size;
+    }
+    has(value) {
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      if (!state.copy_) {
+        return state.base_.has(value);
+      }
+      if (state.copy_.has(value))
+        return true;
+      if (state.drafts_.has(value) && state.copy_.has(state.drafts_.get(value)))
+        return true;
+      return false;
+    }
+    add(value) {
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      if (!this.has(value)) {
+        prepareSetCopy(state);
+        markChanged(state);
+        state.copy_.add(value);
+      }
+      return this;
+    }
+    delete(value) {
+      if (!this.has(value)) {
+        return false;
+      }
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      prepareSetCopy(state);
+      markChanged(state);
+      return state.copy_.delete(value) || (state.drafts_.has(value) ? state.copy_.delete(state.drafts_.get(value)) : (
+        /* istanbul ignore next */
+        false
+      ));
+    }
+    clear() {
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      if (latest(state).size) {
+        prepareSetCopy(state);
+        markChanged(state);
+        state.copy_.clear();
+      }
+    }
+    values() {
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      prepareSetCopy(state);
+      return state.copy_.values();
+    }
+    entries() {
+      const state = this[DRAFT_STATE];
+      assertUnrevoked(state);
+      prepareSetCopy(state);
+      return state.copy_.entries();
+    }
+    keys() {
+      return this.values();
+    }
+    [(DRAFT_STATE, Symbol.iterator)]() {
+      return this.values();
+    }
+    forEach(cb, thisArg) {
+      const iterator = this.values();
+      let result = iterator.next();
+      while (!result.done) {
+        cb.call(thisArg, result.value, result.value, this);
+        result = iterator.next();
+      }
+    }
+  }
+  function proxySet_(target, parent) {
+    return new DraftSet(target, parent);
+  }
+  function prepareSetCopy(state) {
+    if (!state.copy_) {
+      state.copy_ = /* @__PURE__ */ new Set();
+      state.base_.forEach((value) => {
+        if (isDraftable(value)) {
+          const draft = createProxy(value, state);
+          state.drafts_.set(value, draft);
+          state.copy_.add(draft);
+        } else {
+          state.copy_.add(value);
+        }
+      });
+    }
+  }
+  function assertUnrevoked(state) {
+    if (state.revoked_)
+      die(3, JSON.stringify(latest(state)));
+  }
+  loadPlugin("MapSet", { proxyMap_, proxySet_ });
+}
+
+// src/immer.ts
+var immer = new Immer2();
+var produce = immer.produce;
+var produceWithPatches = immer.produceWithPatches.bind(
+  immer
+);
+var setAutoFreeze = immer.setAutoFreeze.bind(immer);
+var setUseStrictShallowCopy = immer.setUseStrictShallowCopy.bind(immer);
+var applyPatches = immer.applyPatches.bind(immer);
+var createDraft = immer.createDraft.bind(immer);
+var finishDraft = immer.finishDraft.bind(immer);
+function castDraft(value) {
+  return value;
+}
+function castImmutable(value) {
+  return value;
+}
+
+//# sourceMappingURL=immer.mjs.map
+
+/***/ }),
+
 /***/ "../node_modules/nanoid/index.browser.js":
 /*!***********************************************!*\
   !*** ../node_modules/nanoid/index.browser.js ***!
@@ -24778,6 +28725,1199 @@ __webpack_require__.r(__webpack_exports__);
 const urlAlphabet =
   'useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict'
 
+
+/***/ }),
+
+/***/ "../node_modules/redux-thunk/dist/redux-thunk.mjs":
+/*!********************************************************!*\
+  !*** ../node_modules/redux-thunk/dist/redux-thunk.mjs ***!
+  \********************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   thunk: () => (/* binding */ thunk),
+/* harmony export */   withExtraArgument: () => (/* binding */ withExtraArgument)
+/* harmony export */ });
+// src/index.ts
+function createThunkMiddleware(extraArgument) {
+  const middleware = ({ dispatch, getState }) => (next) => (action) => {
+    if (typeof action === "function") {
+      return action(dispatch, getState, extraArgument);
+    }
+    return next(action);
+  };
+  return middleware;
+}
+var thunk = createThunkMiddleware();
+var withExtraArgument = createThunkMiddleware;
+
+
+
+/***/ }),
+
+/***/ "../node_modules/redux/dist/redux.mjs":
+/*!********************************************!*\
+  !*** ../node_modules/redux/dist/redux.mjs ***!
+  \********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   __DO_NOT_USE__ActionTypes: () => (/* binding */ actionTypes_default),
+/* harmony export */   applyMiddleware: () => (/* binding */ applyMiddleware),
+/* harmony export */   bindActionCreators: () => (/* binding */ bindActionCreators),
+/* harmony export */   combineReducers: () => (/* binding */ combineReducers),
+/* harmony export */   compose: () => (/* binding */ compose),
+/* harmony export */   createStore: () => (/* binding */ createStore),
+/* harmony export */   isAction: () => (/* binding */ isAction),
+/* harmony export */   isPlainObject: () => (/* binding */ isPlainObject),
+/* harmony export */   legacy_createStore: () => (/* binding */ legacy_createStore)
+/* harmony export */ });
+// src/utils/formatProdErrorMessage.ts
+function formatProdErrorMessage(code) {
+  return `Minified Redux error #${code}; visit https://redux.js.org/Errors?code=${code} for the full message or use the non-minified dev environment for full errors. `;
+}
+
+// src/utils/symbol-observable.ts
+var $$observable = /* @__PURE__ */ (() => typeof Symbol === "function" && Symbol.observable || "@@observable")();
+var symbol_observable_default = $$observable;
+
+// src/utils/actionTypes.ts
+var randomString = () => Math.random().toString(36).substring(7).split("").join(".");
+var ActionTypes = {
+  INIT: `@@redux/INIT${/* @__PURE__ */ randomString()}`,
+  REPLACE: `@@redux/REPLACE${/* @__PURE__ */ randomString()}`,
+  PROBE_UNKNOWN_ACTION: () => `@@redux/PROBE_UNKNOWN_ACTION${randomString()}`
+};
+var actionTypes_default = ActionTypes;
+
+// src/utils/isPlainObject.ts
+function isPlainObject(obj) {
+  if (typeof obj !== "object" || obj === null)
+    return false;
+  let proto = obj;
+  while (Object.getPrototypeOf(proto) !== null) {
+    proto = Object.getPrototypeOf(proto);
+  }
+  return Object.getPrototypeOf(obj) === proto || Object.getPrototypeOf(obj) === null;
+}
+
+// src/utils/kindOf.ts
+function miniKindOf(val) {
+  if (val === void 0)
+    return "undefined";
+  if (val === null)
+    return "null";
+  const type = typeof val;
+  switch (type) {
+    case "boolean":
+    case "string":
+    case "number":
+    case "symbol":
+    case "function": {
+      return type;
+    }
+  }
+  if (Array.isArray(val))
+    return "array";
+  if (isDate(val))
+    return "date";
+  if (isError(val))
+    return "error";
+  const constructorName = ctorName(val);
+  switch (constructorName) {
+    case "Symbol":
+    case "Promise":
+    case "WeakMap":
+    case "WeakSet":
+    case "Map":
+    case "Set":
+      return constructorName;
+  }
+  return Object.prototype.toString.call(val).slice(8, -1).toLowerCase().replace(/\s/g, "");
+}
+function ctorName(val) {
+  return typeof val.constructor === "function" ? val.constructor.name : null;
+}
+function isError(val) {
+  return val instanceof Error || typeof val.message === "string" && val.constructor && typeof val.constructor.stackTraceLimit === "number";
+}
+function isDate(val) {
+  if (val instanceof Date)
+    return true;
+  return typeof val.toDateString === "function" && typeof val.getDate === "function" && typeof val.setDate === "function";
+}
+function kindOf(val) {
+  let typeOfVal = typeof val;
+  if (true) {
+    typeOfVal = miniKindOf(val);
+  }
+  return typeOfVal;
+}
+
+// src/createStore.ts
+function createStore(reducer, preloadedState, enhancer) {
+  if (typeof reducer !== "function") {
+    throw new Error( false ? 0 : `Expected the root reducer to be a function. Instead, received: '${kindOf(reducer)}'`);
+  }
+  if (typeof preloadedState === "function" && typeof enhancer === "function" || typeof enhancer === "function" && typeof arguments[3] === "function") {
+    throw new Error( false ? 0 : "It looks like you are passing several store enhancers to createStore(). This is not supported. Instead, compose them together to a single function. See https://redux.js.org/tutorials/fundamentals/part-4-store#creating-a-store-with-enhancers for an example.");
+  }
+  if (typeof preloadedState === "function" && typeof enhancer === "undefined") {
+    enhancer = preloadedState;
+    preloadedState = void 0;
+  }
+  if (typeof enhancer !== "undefined") {
+    if (typeof enhancer !== "function") {
+      throw new Error( false ? 0 : `Expected the enhancer to be a function. Instead, received: '${kindOf(enhancer)}'`);
+    }
+    return enhancer(createStore)(reducer, preloadedState);
+  }
+  let currentReducer = reducer;
+  let currentState = preloadedState;
+  let currentListeners = /* @__PURE__ */ new Map();
+  let nextListeners = currentListeners;
+  let listenerIdCounter = 0;
+  let isDispatching = false;
+  function ensureCanMutateNextListeners() {
+    if (nextListeners === currentListeners) {
+      nextListeners = /* @__PURE__ */ new Map();
+      currentListeners.forEach((listener, key) => {
+        nextListeners.set(key, listener);
+      });
+    }
+  }
+  function getState() {
+    if (isDispatching) {
+      throw new Error( false ? 0 : "You may not call store.getState() while the reducer is executing. The reducer has already received the state as an argument. Pass it down from the top reducer instead of reading it from the store.");
+    }
+    return currentState;
+  }
+  function subscribe(listener) {
+    if (typeof listener !== "function") {
+      throw new Error( false ? 0 : `Expected the listener to be a function. Instead, received: '${kindOf(listener)}'`);
+    }
+    if (isDispatching) {
+      throw new Error( false ? 0 : "You may not call store.subscribe() while the reducer is executing. If you would like to be notified after the store has been updated, subscribe from a component and invoke store.getState() in the callback to access the latest state. See https://redux.js.org/api/store#subscribelistener for more details.");
+    }
+    let isSubscribed = true;
+    ensureCanMutateNextListeners();
+    const listenerId = listenerIdCounter++;
+    nextListeners.set(listenerId, listener);
+    return function unsubscribe() {
+      if (!isSubscribed) {
+        return;
+      }
+      if (isDispatching) {
+        throw new Error( false ? 0 : "You may not unsubscribe from a store listener while the reducer is executing. See https://redux.js.org/api/store#subscribelistener for more details.");
+      }
+      isSubscribed = false;
+      ensureCanMutateNextListeners();
+      nextListeners.delete(listenerId);
+      currentListeners = null;
+    };
+  }
+  function dispatch(action) {
+    if (!isPlainObject(action)) {
+      throw new Error( false ? 0 : `Actions must be plain objects. Instead, the actual type was: '${kindOf(action)}'. You may need to add middleware to your store setup to handle dispatching other values, such as 'redux-thunk' to handle dispatching functions. See https://redux.js.org/tutorials/fundamentals/part-4-store#middleware and https://redux.js.org/tutorials/fundamentals/part-6-async-logic#using-the-redux-thunk-middleware for examples.`);
+    }
+    if (typeof action.type === "undefined") {
+      throw new Error( false ? 0 : 'Actions may not have an undefined "type" property. You may have misspelled an action type string constant.');
+    }
+    if (typeof action.type !== "string") {
+      throw new Error( false ? 0 : `Action "type" property must be a string. Instead, the actual type was: '${kindOf(action.type)}'. Value was: '${action.type}' (stringified)`);
+    }
+    if (isDispatching) {
+      throw new Error( false ? 0 : "Reducers may not dispatch actions.");
+    }
+    try {
+      isDispatching = true;
+      currentState = currentReducer(currentState, action);
+    } finally {
+      isDispatching = false;
+    }
+    const listeners = currentListeners = nextListeners;
+    listeners.forEach((listener) => {
+      listener();
+    });
+    return action;
+  }
+  function replaceReducer(nextReducer) {
+    if (typeof nextReducer !== "function") {
+      throw new Error( false ? 0 : `Expected the nextReducer to be a function. Instead, received: '${kindOf(nextReducer)}`);
+    }
+    currentReducer = nextReducer;
+    dispatch({
+      type: actionTypes_default.REPLACE
+    });
+  }
+  function observable() {
+    const outerSubscribe = subscribe;
+    return {
+      /**
+       * The minimal observable subscription method.
+       * @param observer Any object that can be used as an observer.
+       * The observer object should have a `next` method.
+       * @returns An object with an `unsubscribe` method that can
+       * be used to unsubscribe the observable from the store, and prevent further
+       * emission of values from the observable.
+       */
+      subscribe(observer) {
+        if (typeof observer !== "object" || observer === null) {
+          throw new Error( false ? 0 : `Expected the observer to be an object. Instead, received: '${kindOf(observer)}'`);
+        }
+        function observeState() {
+          const observerAsObserver = observer;
+          if (observerAsObserver.next) {
+            observerAsObserver.next(getState());
+          }
+        }
+        observeState();
+        const unsubscribe = outerSubscribe(observeState);
+        return {
+          unsubscribe
+        };
+      },
+      [symbol_observable_default]() {
+        return this;
+      }
+    };
+  }
+  dispatch({
+    type: actionTypes_default.INIT
+  });
+  const store = {
+    dispatch,
+    subscribe,
+    getState,
+    replaceReducer,
+    [symbol_observable_default]: observable
+  };
+  return store;
+}
+function legacy_createStore(reducer, preloadedState, enhancer) {
+  return createStore(reducer, preloadedState, enhancer);
+}
+
+// src/utils/warning.ts
+function warning(message) {
+  if (typeof console !== "undefined" && typeof console.error === "function") {
+    console.error(message);
+  }
+  try {
+    throw new Error(message);
+  } catch (e) {
+  }
+}
+
+// src/combineReducers.ts
+function getUnexpectedStateShapeWarningMessage(inputState, reducers, action, unexpectedKeyCache) {
+  const reducerKeys = Object.keys(reducers);
+  const argumentName = action && action.type === actionTypes_default.INIT ? "preloadedState argument passed to createStore" : "previous state received by the reducer";
+  if (reducerKeys.length === 0) {
+    return "Store does not have a valid reducer. Make sure the argument passed to combineReducers is an object whose values are reducers.";
+  }
+  if (!isPlainObject(inputState)) {
+    return `The ${argumentName} has unexpected type of "${kindOf(inputState)}". Expected argument to be an object with the following keys: "${reducerKeys.join('", "')}"`;
+  }
+  const unexpectedKeys = Object.keys(inputState).filter((key) => !reducers.hasOwnProperty(key) && !unexpectedKeyCache[key]);
+  unexpectedKeys.forEach((key) => {
+    unexpectedKeyCache[key] = true;
+  });
+  if (action && action.type === actionTypes_default.REPLACE)
+    return;
+  if (unexpectedKeys.length > 0) {
+    return `Unexpected ${unexpectedKeys.length > 1 ? "keys" : "key"} "${unexpectedKeys.join('", "')}" found in ${argumentName}. Expected to find one of the known reducer keys instead: "${reducerKeys.join('", "')}". Unexpected keys will be ignored.`;
+  }
+}
+function assertReducerShape(reducers) {
+  Object.keys(reducers).forEach((key) => {
+    const reducer = reducers[key];
+    const initialState = reducer(void 0, {
+      type: actionTypes_default.INIT
+    });
+    if (typeof initialState === "undefined") {
+      throw new Error( false ? 0 : `The slice reducer for key "${key}" returned undefined during initialization. If the state passed to the reducer is undefined, you must explicitly return the initial state. The initial state may not be undefined. If you don't want to set a value for this reducer, you can use null instead of undefined.`);
+    }
+    if (typeof reducer(void 0, {
+      type: actionTypes_default.PROBE_UNKNOWN_ACTION()
+    }) === "undefined") {
+      throw new Error( false ? 0 : `The slice reducer for key "${key}" returned undefined when probed with a random type. Don't try to handle '${actionTypes_default.INIT}' or other actions in "redux/*" namespace. They are considered private. Instead, you must return the current state for any unknown actions, unless it is undefined, in which case you must return the initial state, regardless of the action type. The initial state may not be undefined, but can be null.`);
+    }
+  });
+}
+function combineReducers(reducers) {
+  const reducerKeys = Object.keys(reducers);
+  const finalReducers = {};
+  for (let i = 0; i < reducerKeys.length; i++) {
+    const key = reducerKeys[i];
+    if (true) {
+      if (typeof reducers[key] === "undefined") {
+        warning(`No reducer provided for key "${key}"`);
+      }
+    }
+    if (typeof reducers[key] === "function") {
+      finalReducers[key] = reducers[key];
+    }
+  }
+  const finalReducerKeys = Object.keys(finalReducers);
+  let unexpectedKeyCache;
+  if (true) {
+    unexpectedKeyCache = {};
+  }
+  let shapeAssertionError;
+  try {
+    assertReducerShape(finalReducers);
+  } catch (e) {
+    shapeAssertionError = e;
+  }
+  return function combination(state = {}, action) {
+    if (shapeAssertionError) {
+      throw shapeAssertionError;
+    }
+    if (true) {
+      const warningMessage = getUnexpectedStateShapeWarningMessage(state, finalReducers, action, unexpectedKeyCache);
+      if (warningMessage) {
+        warning(warningMessage);
+      }
+    }
+    let hasChanged = false;
+    const nextState = {};
+    for (let i = 0; i < finalReducerKeys.length; i++) {
+      const key = finalReducerKeys[i];
+      const reducer = finalReducers[key];
+      const previousStateForKey = state[key];
+      const nextStateForKey = reducer(previousStateForKey, action);
+      if (typeof nextStateForKey === "undefined") {
+        const actionType = action && action.type;
+        throw new Error( false ? 0 : `When called with an action of type ${actionType ? `"${String(actionType)}"` : "(unknown type)"}, the slice reducer for key "${key}" returned undefined. To ignore an action, you must explicitly return the previous state. If you want this reducer to hold no value, you can return null instead of undefined.`);
+      }
+      nextState[key] = nextStateForKey;
+      hasChanged = hasChanged || nextStateForKey !== previousStateForKey;
+    }
+    hasChanged = hasChanged || finalReducerKeys.length !== Object.keys(state).length;
+    return hasChanged ? nextState : state;
+  };
+}
+
+// src/bindActionCreators.ts
+function bindActionCreator(actionCreator, dispatch) {
+  return function(...args) {
+    return dispatch(actionCreator.apply(this, args));
+  };
+}
+function bindActionCreators(actionCreators, dispatch) {
+  if (typeof actionCreators === "function") {
+    return bindActionCreator(actionCreators, dispatch);
+  }
+  if (typeof actionCreators !== "object" || actionCreators === null) {
+    throw new Error( false ? 0 : `bindActionCreators expected an object or a function, but instead received: '${kindOf(actionCreators)}'. Did you write "import ActionCreators from" instead of "import * as ActionCreators from"?`);
+  }
+  const boundActionCreators = {};
+  for (const key in actionCreators) {
+    const actionCreator = actionCreators[key];
+    if (typeof actionCreator === "function") {
+      boundActionCreators[key] = bindActionCreator(actionCreator, dispatch);
+    }
+  }
+  return boundActionCreators;
+}
+
+// src/compose.ts
+function compose(...funcs) {
+  if (funcs.length === 0) {
+    return (arg) => arg;
+  }
+  if (funcs.length === 1) {
+    return funcs[0];
+  }
+  return funcs.reduce((a, b) => (...args) => a(b(...args)));
+}
+
+// src/applyMiddleware.ts
+function applyMiddleware(...middlewares) {
+  return (createStore2) => (reducer, preloadedState) => {
+    const store = createStore2(reducer, preloadedState);
+    let dispatch = () => {
+      throw new Error( false ? 0 : "Dispatching while constructing your middleware is not allowed. Other middleware would not be applied to this dispatch.");
+    };
+    const middlewareAPI = {
+      getState: store.getState,
+      dispatch: (action, ...args) => dispatch(action, ...args)
+    };
+    const chain = middlewares.map((middleware) => middleware(middlewareAPI));
+    dispatch = compose(...chain)(store.dispatch);
+    return {
+      ...store,
+      dispatch
+    };
+  };
+}
+
+// src/utils/isAction.ts
+function isAction(action) {
+  return isPlainObject(action) && "type" in action && typeof action.type === "string";
+}
+
+//# sourceMappingURL=redux.mjs.map
+
+/***/ }),
+
+/***/ "../node_modules/reselect/dist/reselect.mjs":
+/*!**************************************************!*\
+  !*** ../node_modules/reselect/dist/reselect.mjs ***!
+  \**************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createSelector: () => (/* binding */ createSelector),
+/* harmony export */   createSelectorCreator: () => (/* binding */ createSelectorCreator),
+/* harmony export */   createStructuredSelector: () => (/* binding */ createStructuredSelector),
+/* harmony export */   lruMemoize: () => (/* binding */ lruMemoize),
+/* harmony export */   referenceEqualityCheck: () => (/* binding */ referenceEqualityCheck),
+/* harmony export */   setGlobalDevModeChecks: () => (/* binding */ setGlobalDevModeChecks),
+/* harmony export */   unstable_autotrackMemoize: () => (/* binding */ autotrackMemoize),
+/* harmony export */   weakMapMemoize: () => (/* binding */ weakMapMemoize)
+/* harmony export */ });
+// src/devModeChecks/identityFunctionCheck.ts
+var runIdentityFunctionCheck = (resultFunc, inputSelectorsResults, outputSelectorResult) => {
+  if (inputSelectorsResults.length === 1 && inputSelectorsResults[0] === outputSelectorResult) {
+    let isInputSameAsOutput = false;
+    try {
+      const emptyObject = {};
+      if (resultFunc(emptyObject) === emptyObject)
+        isInputSameAsOutput = true;
+    } catch {
+    }
+    if (isInputSameAsOutput) {
+      let stack = void 0;
+      try {
+        throw new Error();
+      } catch (e) {
+        ;
+        ({ stack } = e);
+      }
+      console.warn(
+        "The result function returned its own inputs without modification. e.g\n`createSelector([state => state.todos], todos => todos)`\nThis could lead to inefficient memoization and unnecessary re-renders.\nEnsure transformation logic is in the result function, and extraction logic is in the input selectors.",
+        { stack }
+      );
+    }
+  }
+};
+
+// src/devModeChecks/inputStabilityCheck.ts
+var runInputStabilityCheck = (inputSelectorResultsObject, options, inputSelectorArgs) => {
+  const { memoize, memoizeOptions } = options;
+  const { inputSelectorResults, inputSelectorResultsCopy } = inputSelectorResultsObject;
+  const createAnEmptyObject = memoize(() => ({}), ...memoizeOptions);
+  const areInputSelectorResultsEqual = createAnEmptyObject.apply(null, inputSelectorResults) === createAnEmptyObject.apply(null, inputSelectorResultsCopy);
+  if (!areInputSelectorResultsEqual) {
+    let stack = void 0;
+    try {
+      throw new Error();
+    } catch (e) {
+      ;
+      ({ stack } = e);
+    }
+    console.warn(
+      "An input selector returned a different result when passed same arguments.\nThis means your output selector will likely run more frequently than intended.\nAvoid returning a new reference inside your input selector, e.g.\n`createSelector([state => state.todos.map(todo => todo.id)], todoIds => todoIds.length)`",
+      {
+        arguments: inputSelectorArgs,
+        firstInputs: inputSelectorResults,
+        secondInputs: inputSelectorResultsCopy,
+        stack
+      }
+    );
+  }
+};
+
+// src/devModeChecks/setGlobalDevModeChecks.ts
+var globalDevModeChecks = {
+  inputStabilityCheck: "once",
+  identityFunctionCheck: "once"
+};
+var setGlobalDevModeChecks = (devModeChecks) => {
+  Object.assign(globalDevModeChecks, devModeChecks);
+};
+
+// src/utils.ts
+var NOT_FOUND = /* @__PURE__ */ Symbol("NOT_FOUND");
+function assertIsFunction(func, errorMessage = `expected a function, instead received ${typeof func}`) {
+  if (typeof func !== "function") {
+    throw new TypeError(errorMessage);
+  }
+}
+function assertIsObject(object, errorMessage = `expected an object, instead received ${typeof object}`) {
+  if (typeof object !== "object") {
+    throw new TypeError(errorMessage);
+  }
+}
+function assertIsArrayOfFunctions(array, errorMessage = `expected all items to be functions, instead received the following types: `) {
+  if (!array.every((item) => typeof item === "function")) {
+    const itemTypes = array.map(
+      (item) => typeof item === "function" ? `function ${item.name || "unnamed"}()` : typeof item
+    ).join(", ");
+    throw new TypeError(`${errorMessage}[${itemTypes}]`);
+  }
+}
+var ensureIsArray = (item) => {
+  return Array.isArray(item) ? item : [item];
+};
+function getDependencies(createSelectorArgs) {
+  const dependencies = Array.isArray(createSelectorArgs[0]) ? createSelectorArgs[0] : createSelectorArgs;
+  assertIsArrayOfFunctions(
+    dependencies,
+    `createSelector expects all input-selectors to be functions, but received the following types: `
+  );
+  return dependencies;
+}
+function collectInputSelectorResults(dependencies, inputSelectorArgs) {
+  const inputSelectorResults = [];
+  const { length } = dependencies;
+  for (let i = 0; i < length; i++) {
+    inputSelectorResults.push(dependencies[i].apply(null, inputSelectorArgs));
+  }
+  return inputSelectorResults;
+}
+var getDevModeChecksExecutionInfo = (firstRun, devModeChecks) => {
+  const { identityFunctionCheck, inputStabilityCheck } = {
+    ...globalDevModeChecks,
+    ...devModeChecks
+  };
+  return {
+    identityFunctionCheck: {
+      shouldRun: identityFunctionCheck === "always" || identityFunctionCheck === "once" && firstRun,
+      run: runIdentityFunctionCheck
+    },
+    inputStabilityCheck: {
+      shouldRun: inputStabilityCheck === "always" || inputStabilityCheck === "once" && firstRun,
+      run: runInputStabilityCheck
+    }
+  };
+};
+
+// src/autotrackMemoize/autotracking.ts
+var $REVISION = 0;
+var CURRENT_TRACKER = null;
+var Cell = class {
+  revision = $REVISION;
+  _value;
+  _lastValue;
+  _isEqual = tripleEq;
+  constructor(initialValue, isEqual = tripleEq) {
+    this._value = this._lastValue = initialValue;
+    this._isEqual = isEqual;
+  }
+  // Whenever a storage value is read, it'll add itself to the current tracker if
+  // one exists, entangling its state with that cache.
+  get value() {
+    CURRENT_TRACKER?.add(this);
+    return this._value;
+  }
+  // Whenever a storage value is updated, we bump the global revision clock,
+  // assign the revision for this storage to the new value, _and_ we schedule a
+  // rerender. This is important, and it's what makes autotracking  _pull_
+  // based. We don't actively tell the caches which depend on the storage that
+  // anything has happened. Instead, we recompute the caches when needed.
+  set value(newValue) {
+    if (this.value === newValue)
+      return;
+    this._value = newValue;
+    this.revision = ++$REVISION;
+  }
+};
+function tripleEq(a, b) {
+  return a === b;
+}
+var TrackingCache = class {
+  _cachedValue;
+  _cachedRevision = -1;
+  _deps = [];
+  hits = 0;
+  fn;
+  constructor(fn) {
+    this.fn = fn;
+  }
+  clear() {
+    this._cachedValue = void 0;
+    this._cachedRevision = -1;
+    this._deps = [];
+    this.hits = 0;
+  }
+  get value() {
+    if (this.revision > this._cachedRevision) {
+      const { fn } = this;
+      const currentTracker = /* @__PURE__ */ new Set();
+      const prevTracker = CURRENT_TRACKER;
+      CURRENT_TRACKER = currentTracker;
+      this._cachedValue = fn();
+      CURRENT_TRACKER = prevTracker;
+      this.hits++;
+      this._deps = Array.from(currentTracker);
+      this._cachedRevision = this.revision;
+    }
+    CURRENT_TRACKER?.add(this);
+    return this._cachedValue;
+  }
+  get revision() {
+    return Math.max(...this._deps.map((d) => d.revision), 0);
+  }
+};
+function getValue(cell) {
+  if (!(cell instanceof Cell)) {
+    console.warn("Not a valid cell! ", cell);
+  }
+  return cell.value;
+}
+function setValue(storage, value) {
+  if (!(storage instanceof Cell)) {
+    throw new TypeError(
+      "setValue must be passed a tracked store created with `createStorage`."
+    );
+  }
+  storage.value = storage._lastValue = value;
+}
+function createCell(initialValue, isEqual = tripleEq) {
+  return new Cell(initialValue, isEqual);
+}
+function createCache(fn) {
+  assertIsFunction(
+    fn,
+    "the first parameter to `createCache` must be a function"
+  );
+  return new TrackingCache(fn);
+}
+
+// src/autotrackMemoize/tracking.ts
+var neverEq = (a, b) => false;
+function createTag() {
+  return createCell(null, neverEq);
+}
+function dirtyTag(tag, value) {
+  setValue(tag, value);
+}
+var consumeCollection = (node) => {
+  let tag = node.collectionTag;
+  if (tag === null) {
+    tag = node.collectionTag = createTag();
+  }
+  getValue(tag);
+};
+var dirtyCollection = (node) => {
+  const tag = node.collectionTag;
+  if (tag !== null) {
+    dirtyTag(tag, null);
+  }
+};
+
+// src/autotrackMemoize/proxy.ts
+var REDUX_PROXY_LABEL = Symbol();
+var nextId = 0;
+var proto = Object.getPrototypeOf({});
+var ObjectTreeNode = class {
+  constructor(value) {
+    this.value = value;
+    this.value = value;
+    this.tag.value = value;
+  }
+  proxy = new Proxy(this, objectProxyHandler);
+  tag = createTag();
+  tags = {};
+  children = {};
+  collectionTag = null;
+  id = nextId++;
+};
+var objectProxyHandler = {
+  get(node, key) {
+    function calculateResult() {
+      const { value } = node;
+      const childValue = Reflect.get(value, key);
+      if (typeof key === "symbol") {
+        return childValue;
+      }
+      if (key in proto) {
+        return childValue;
+      }
+      if (typeof childValue === "object" && childValue !== null) {
+        let childNode = node.children[key];
+        if (childNode === void 0) {
+          childNode = node.children[key] = createNode(childValue);
+        }
+        if (childNode.tag) {
+          getValue(childNode.tag);
+        }
+        return childNode.proxy;
+      } else {
+        let tag = node.tags[key];
+        if (tag === void 0) {
+          tag = node.tags[key] = createTag();
+          tag.value = childValue;
+        }
+        getValue(tag);
+        return childValue;
+      }
+    }
+    const res = calculateResult();
+    return res;
+  },
+  ownKeys(node) {
+    consumeCollection(node);
+    return Reflect.ownKeys(node.value);
+  },
+  getOwnPropertyDescriptor(node, prop) {
+    return Reflect.getOwnPropertyDescriptor(node.value, prop);
+  },
+  has(node, prop) {
+    return Reflect.has(node.value, prop);
+  }
+};
+var ArrayTreeNode = class {
+  constructor(value) {
+    this.value = value;
+    this.value = value;
+    this.tag.value = value;
+  }
+  proxy = new Proxy([this], arrayProxyHandler);
+  tag = createTag();
+  tags = {};
+  children = {};
+  collectionTag = null;
+  id = nextId++;
+};
+var arrayProxyHandler = {
+  get([node], key) {
+    if (key === "length") {
+      consumeCollection(node);
+    }
+    return objectProxyHandler.get(node, key);
+  },
+  ownKeys([node]) {
+    return objectProxyHandler.ownKeys(node);
+  },
+  getOwnPropertyDescriptor([node], prop) {
+    return objectProxyHandler.getOwnPropertyDescriptor(node, prop);
+  },
+  has([node], prop) {
+    return objectProxyHandler.has(node, prop);
+  }
+};
+function createNode(value) {
+  if (Array.isArray(value)) {
+    return new ArrayTreeNode(value);
+  }
+  return new ObjectTreeNode(value);
+}
+function updateNode(node, newValue) {
+  const { value, tags, children } = node;
+  node.value = newValue;
+  if (Array.isArray(value) && Array.isArray(newValue) && value.length !== newValue.length) {
+    dirtyCollection(node);
+  } else {
+    if (value !== newValue) {
+      let oldKeysSize = 0;
+      let newKeysSize = 0;
+      let anyKeysAdded = false;
+      for (const _key in value) {
+        oldKeysSize++;
+      }
+      for (const key in newValue) {
+        newKeysSize++;
+        if (!(key in value)) {
+          anyKeysAdded = true;
+          break;
+        }
+      }
+      const isDifferent = anyKeysAdded || oldKeysSize !== newKeysSize;
+      if (isDifferent) {
+        dirtyCollection(node);
+      }
+    }
+  }
+  for (const key in tags) {
+    const childValue = value[key];
+    const newChildValue = newValue[key];
+    if (childValue !== newChildValue) {
+      dirtyCollection(node);
+      dirtyTag(tags[key], newChildValue);
+    }
+    if (typeof newChildValue === "object" && newChildValue !== null) {
+      delete tags[key];
+    }
+  }
+  for (const key in children) {
+    const childNode = children[key];
+    const newChildValue = newValue[key];
+    const childValue = childNode.value;
+    if (childValue === newChildValue) {
+      continue;
+    } else if (typeof newChildValue === "object" && newChildValue !== null) {
+      updateNode(childNode, newChildValue);
+    } else {
+      deleteNode(childNode);
+      delete children[key];
+    }
+  }
+}
+function deleteNode(node) {
+  if (node.tag) {
+    dirtyTag(node.tag, null);
+  }
+  dirtyCollection(node);
+  for (const key in node.tags) {
+    dirtyTag(node.tags[key], null);
+  }
+  for (const key in node.children) {
+    deleteNode(node.children[key]);
+  }
+}
+
+// src/lruMemoize.ts
+function createSingletonCache(equals) {
+  let entry;
+  return {
+    get(key) {
+      if (entry && equals(entry.key, key)) {
+        return entry.value;
+      }
+      return NOT_FOUND;
+    },
+    put(key, value) {
+      entry = { key, value };
+    },
+    getEntries() {
+      return entry ? [entry] : [];
+    },
+    clear() {
+      entry = void 0;
+    }
+  };
+}
+function createLruCache(maxSize, equals) {
+  let entries = [];
+  function get(key) {
+    const cacheIndex = entries.findIndex((entry) => equals(key, entry.key));
+    if (cacheIndex > -1) {
+      const entry = entries[cacheIndex];
+      if (cacheIndex > 0) {
+        entries.splice(cacheIndex, 1);
+        entries.unshift(entry);
+      }
+      return entry.value;
+    }
+    return NOT_FOUND;
+  }
+  function put(key, value) {
+    if (get(key) === NOT_FOUND) {
+      entries.unshift({ key, value });
+      if (entries.length > maxSize) {
+        entries.pop();
+      }
+    }
+  }
+  function getEntries() {
+    return entries;
+  }
+  function clear() {
+    entries = [];
+  }
+  return { get, put, getEntries, clear };
+}
+var referenceEqualityCheck = (a, b) => a === b;
+function createCacheKeyComparator(equalityCheck) {
+  return function areArgumentsShallowlyEqual(prev, next) {
+    if (prev === null || next === null || prev.length !== next.length) {
+      return false;
+    }
+    const { length } = prev;
+    for (let i = 0; i < length; i++) {
+      if (!equalityCheck(prev[i], next[i])) {
+        return false;
+      }
+    }
+    return true;
+  };
+}
+function lruMemoize(func, equalityCheckOrOptions) {
+  const providedOptions = typeof equalityCheckOrOptions === "object" ? equalityCheckOrOptions : { equalityCheck: equalityCheckOrOptions };
+  const {
+    equalityCheck = referenceEqualityCheck,
+    maxSize = 1,
+    resultEqualityCheck
+  } = providedOptions;
+  const comparator = createCacheKeyComparator(equalityCheck);
+  let resultsCount = 0;
+  const cache = maxSize <= 1 ? createSingletonCache(comparator) : createLruCache(maxSize, comparator);
+  function memoized() {
+    let value = cache.get(arguments);
+    if (value === NOT_FOUND) {
+      value = func.apply(null, arguments);
+      resultsCount++;
+      if (resultEqualityCheck) {
+        const entries = cache.getEntries();
+        const matchingEntry = entries.find(
+          (entry) => resultEqualityCheck(entry.value, value)
+        );
+        if (matchingEntry) {
+          value = matchingEntry.value;
+          resultsCount !== 0 && resultsCount--;
+        }
+      }
+      cache.put(arguments, value);
+    }
+    return value;
+  }
+  memoized.clearCache = () => {
+    cache.clear();
+    memoized.resetResultsCount();
+  };
+  memoized.resultsCount = () => resultsCount;
+  memoized.resetResultsCount = () => {
+    resultsCount = 0;
+  };
+  return memoized;
+}
+
+// src/autotrackMemoize/autotrackMemoize.ts
+function autotrackMemoize(func) {
+  const node = createNode(
+    []
+  );
+  let lastArgs = null;
+  const shallowEqual = createCacheKeyComparator(referenceEqualityCheck);
+  const cache = createCache(() => {
+    const res = func.apply(null, node.proxy);
+    return res;
+  });
+  function memoized() {
+    if (!shallowEqual(lastArgs, arguments)) {
+      updateNode(node, arguments);
+      lastArgs = arguments;
+    }
+    return cache.value;
+  }
+  memoized.clearCache = () => {
+    return cache.clear();
+  };
+  return memoized;
+}
+
+// src/weakMapMemoize.ts
+var StrongRef = class {
+  constructor(value) {
+    this.value = value;
+  }
+  deref() {
+    return this.value;
+  }
+};
+var Ref = typeof WeakRef !== "undefined" ? WeakRef : StrongRef;
+var UNTERMINATED = 0;
+var TERMINATED = 1;
+function createCacheNode() {
+  return {
+    s: UNTERMINATED,
+    v: void 0,
+    o: null,
+    p: null
+  };
+}
+function weakMapMemoize(func, options = {}) {
+  let fnNode = createCacheNode();
+  const { resultEqualityCheck } = options;
+  let lastResult;
+  let resultsCount = 0;
+  function memoized() {
+    let cacheNode = fnNode;
+    const { length } = arguments;
+    for (let i = 0, l = length; i < l; i++) {
+      const arg = arguments[i];
+      if (typeof arg === "function" || typeof arg === "object" && arg !== null) {
+        let objectCache = cacheNode.o;
+        if (objectCache === null) {
+          cacheNode.o = objectCache = /* @__PURE__ */ new WeakMap();
+        }
+        const objectNode = objectCache.get(arg);
+        if (objectNode === void 0) {
+          cacheNode = createCacheNode();
+          objectCache.set(arg, cacheNode);
+        } else {
+          cacheNode = objectNode;
+        }
+      } else {
+        let primitiveCache = cacheNode.p;
+        if (primitiveCache === null) {
+          cacheNode.p = primitiveCache = /* @__PURE__ */ new Map();
+        }
+        const primitiveNode = primitiveCache.get(arg);
+        if (primitiveNode === void 0) {
+          cacheNode = createCacheNode();
+          primitiveCache.set(arg, cacheNode);
+        } else {
+          cacheNode = primitiveNode;
+        }
+      }
+    }
+    const terminatedNode = cacheNode;
+    let result;
+    if (cacheNode.s === TERMINATED) {
+      result = cacheNode.v;
+    } else {
+      result = func.apply(null, arguments);
+      resultsCount++;
+      if (resultEqualityCheck) {
+        const lastResultValue = lastResult?.deref?.() ?? lastResult;
+        if (lastResultValue != null && resultEqualityCheck(lastResultValue, result)) {
+          result = lastResultValue;
+          resultsCount !== 0 && resultsCount--;
+        }
+        const needsWeakRef = typeof result === "object" && result !== null || typeof result === "function";
+        lastResult = needsWeakRef ? new Ref(result) : result;
+      }
+    }
+    terminatedNode.s = TERMINATED;
+    terminatedNode.v = result;
+    return result;
+  }
+  memoized.clearCache = () => {
+    fnNode = createCacheNode();
+    memoized.resetResultsCount();
+  };
+  memoized.resultsCount = () => resultsCount;
+  memoized.resetResultsCount = () => {
+    resultsCount = 0;
+  };
+  return memoized;
+}
+
+// src/createSelectorCreator.ts
+function createSelectorCreator(memoizeOrOptions, ...memoizeOptionsFromArgs) {
+  const createSelectorCreatorOptions = typeof memoizeOrOptions === "function" ? {
+    memoize: memoizeOrOptions,
+    memoizeOptions: memoizeOptionsFromArgs
+  } : memoizeOrOptions;
+  const createSelector2 = (...createSelectorArgs) => {
+    let recomputations = 0;
+    let dependencyRecomputations = 0;
+    let lastResult;
+    let directlyPassedOptions = {};
+    let resultFunc = createSelectorArgs.pop();
+    if (typeof resultFunc === "object") {
+      directlyPassedOptions = resultFunc;
+      resultFunc = createSelectorArgs.pop();
+    }
+    assertIsFunction(
+      resultFunc,
+      `createSelector expects an output function after the inputs, but received: [${typeof resultFunc}]`
+    );
+    const combinedOptions = {
+      ...createSelectorCreatorOptions,
+      ...directlyPassedOptions
+    };
+    const {
+      memoize,
+      memoizeOptions = [],
+      argsMemoize = weakMapMemoize,
+      argsMemoizeOptions = [],
+      devModeChecks = {}
+    } = combinedOptions;
+    const finalMemoizeOptions = ensureIsArray(memoizeOptions);
+    const finalArgsMemoizeOptions = ensureIsArray(argsMemoizeOptions);
+    const dependencies = getDependencies(createSelectorArgs);
+    const memoizedResultFunc = memoize(function recomputationWrapper() {
+      recomputations++;
+      return resultFunc.apply(
+        null,
+        arguments
+      );
+    }, ...finalMemoizeOptions);
+    let firstRun = true;
+    const selector = argsMemoize(function dependenciesChecker() {
+      dependencyRecomputations++;
+      const inputSelectorResults = collectInputSelectorResults(
+        dependencies,
+        arguments
+      );
+      lastResult = memoizedResultFunc.apply(null, inputSelectorResults);
+      if (true) {
+        const { identityFunctionCheck, inputStabilityCheck } = getDevModeChecksExecutionInfo(firstRun, devModeChecks);
+        if (identityFunctionCheck.shouldRun) {
+          identityFunctionCheck.run(
+            resultFunc,
+            inputSelectorResults,
+            lastResult
+          );
+        }
+        if (inputStabilityCheck.shouldRun) {
+          const inputSelectorResultsCopy = collectInputSelectorResults(
+            dependencies,
+            arguments
+          );
+          inputStabilityCheck.run(
+            { inputSelectorResults, inputSelectorResultsCopy },
+            { memoize, memoizeOptions: finalMemoizeOptions },
+            arguments
+          );
+        }
+        if (firstRun)
+          firstRun = false;
+      }
+      return lastResult;
+    }, ...finalArgsMemoizeOptions);
+    return Object.assign(selector, {
+      resultFunc,
+      memoizedResultFunc,
+      dependencies,
+      dependencyRecomputations: () => dependencyRecomputations,
+      resetDependencyRecomputations: () => {
+        dependencyRecomputations = 0;
+      },
+      lastResult: () => lastResult,
+      recomputations: () => recomputations,
+      resetRecomputations: () => {
+        recomputations = 0;
+      },
+      memoize,
+      argsMemoize
+    });
+  };
+  Object.assign(createSelector2, {
+    withTypes: () => createSelector2
+  });
+  return createSelector2;
+}
+var createSelector = /* @__PURE__ */ createSelectorCreator(weakMapMemoize);
+
+// src/createStructuredSelector.ts
+var createStructuredSelector = Object.assign(
+  (inputSelectorsObject, selectorCreator = createSelector) => {
+    assertIsObject(
+      inputSelectorsObject,
+      `createStructuredSelector expects first argument to be an object where each property is a selector, instead received a ${typeof inputSelectorsObject}`
+    );
+    const inputSelectorKeys = Object.keys(inputSelectorsObject);
+    const dependencies = inputSelectorKeys.map(
+      (key) => inputSelectorsObject[key]
+    );
+    const structuredSelector = selectorCreator(
+      dependencies,
+      (...inputSelectorResults) => {
+        return inputSelectorResults.reduce((composition, value, index) => {
+          composition[inputSelectorKeys[index]] = value;
+          return composition;
+        }, {});
+      }
+    );
+    return structuredSelector;
+  },
+  { withTypes: () => createStructuredSelector }
+);
+
+//# sourceMappingURL=reselect.mjs.map
 
 /***/ })
 

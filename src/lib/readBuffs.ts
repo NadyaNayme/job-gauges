@@ -43,7 +43,7 @@ const buffsImages = a1lib.webpackImages({
     bloodTithe: require('../asset/data/buffs/magic/blood-tithe.data.png'),
     glacialEmbrace: require('../asset/data/buffs/magic/glacial-embrace.data.png'),
     instability: require('../asset/data/buffs/magic/instability.data.png'),
-    odeToDeceit: require('../asset/data/debuffs/ode-to-deceit.data.png'),
+    soulfire: require('../asset/data/debuffs/soulfire.data.png'),
     tsunami: require('../asset/data/buffs/magic/critical-strike.data.png'),
 
     /* Ranged */
@@ -335,9 +335,9 @@ export async function readBuffs() {
             );
             updateBuffData(
                 debuffReader,
-                buffsImages.odeToDeceit,
-                9,
-                (time) => updateMagicAbility(time, false, 'OdeToDeceit'),
+                buffsImages.soulfire,
+                25,
+                (time) => updateMagicAbility(time, false, 'Soulfire'),
                 false,
             );
             break;
@@ -400,9 +400,17 @@ function updateBuffData(
 
         /**
          * "THIS IS A HACK"
-         * Issues with Ode to Deceit false positives
+         * Issues with Soulfire false positives
          */
-        if (buffImage === buffsImages.odeToDeceit && time >= 46) {
+        if (buffImage === buffsImages.soulfire && time >= 46) {
+            return false;
+        }
+
+        /**
+         * TODO: Update this function to take in a failureThreshold
+         * for now just being lazy and hard coding it in for Soulfire
+         */
+        if (buffImage === buffsImages.soulfire && match.failed >= 10) {
             return false;
         }
 
@@ -643,7 +651,7 @@ async function updateConjures() {
 
 const MagicAbilityToName = {
     'Sunshine': 'sunshine',
-    'OdeToDeceit': 'odeToDeceit',
+    'Soulfire': 'soulfire',
     'Tsunami': 'tsunami',
     'Instability': 'instability',
 } satisfies Record<MagicAbilities, MagicPropertyAbilities>;
@@ -688,7 +696,7 @@ function updateMagicAbility(time: number, greater: boolean, abilityName: MagicAb
             }));
 
             // We don't want these abilities to trigger the cooldown overlay.
-            if (abilityName === 'OdeToDeceit') {
+            if (abilityName === 'Soulfire') {
                 return;
             }
 
