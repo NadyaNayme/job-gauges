@@ -132,8 +132,6 @@ export const NecromancyGaugeSlice = createSlice({
             return state;
         },
         updateActiveOrientation: (state, action: PayloadAction<OrientationTypes>) => {
-            console.log(`Updating orientation:`, action.payload);
-
             // Conjures
             state.conjures.position.active_orientation = {
                 ...state.conjures.position[action.payload],
@@ -173,4 +171,3 @@ export const NecromancyGaugeSlice = createSlice({
         },
     },
 });
-

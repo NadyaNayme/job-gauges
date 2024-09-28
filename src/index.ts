@@ -133,7 +133,7 @@ export async function startApp() {
      */
     if (localGaugeData) {
         const { magic, ranged, necromancy, melee, gaugeData, alarms } = JSON.parse(localGaugeData);
-        console.log(gaugeData);
+
         store.dispatch(GaugeDataSlice.actions.updateState(gaugeData));
         store.dispatch(MagicGaugeSlice.actions.updateState(magic));
         store.dispatch(RangeGaugeSlice.actions.updateState(ranged));
@@ -269,16 +269,9 @@ function addEventListeners() {
 
     document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
         checkbox.addEventListener('change', () => {
-            //console.log();
-            // setNecromancyGaugeData();
             utility.freezeAndContinueOverlays(); // Force an instant redraw
             const state = store.getState();
             updateSetting('gauge-data', JSON.stringify(state));
-            // store.dispatch(GaugeDataSlice.actions.updateState({
-            //
-            // }))
-            //const gaugeData = getGaugeData()!;
-            //Object.assign(, gaugeData);
         });
     });
 

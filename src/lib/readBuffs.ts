@@ -89,8 +89,6 @@ export function findBuffsBar() {
     }
 
     if (!buffReader.find()) {
-        console.log(`Failed to find those buffs`);
-
         errorLogger.showError({
             title: 'No Buffs Found',
             message: `<p>Job Gauges could not locate your buffs bar. Please use a defensive ability or some other way of obtaining a buff and Job Gauges will attempt to search again shortly or click the button below.</p>`,
@@ -218,7 +216,7 @@ export async function readBuffs() {
     updateBuffData(
         buffReader,
         buffsImages.deathsSwiftness,
-        125,
+        500,
         (time) => updateRangeAbility(time, false, 'DeathsSwiftness'),
         false,
     );
@@ -232,7 +230,7 @@ export async function readBuffs() {
     updateBuffData(
         buffReader,
         buffsImages.sunshine,
-        300,
+        500,
         (time) => updateMagicAbility(time, false, 'Sunshine'),
         false,
     );
@@ -405,6 +403,12 @@ function updateBuffData(
         if (buffImage === buffsImages.soulfire && time >= 46) {
             return false;
         }
+
+        // if (buffImage === buffsImages.sunshine) {
+        //     console.log(
+        //         `BuffPosition: ${buff.bufferx / 30 == 0 ? 0 : buff.bufferx / 30} | Time: ${time.toString()} \n Tested: ${match.tested} | Skipped: ${match.skipped} \n Passed: ${match.passed} | Failed: ${match.failed}`,
+        //     );
+        // }
 
         /**
          * TODO: Update this function to take in a failureThreshold
@@ -744,7 +748,7 @@ function updateRangeAbility(time: number, greater: boolean, abilityName: RangeAb
         }));
 
         if (gaugeData.automaticSwapping && abilityName === 'DeathsSwiftness' || abilityName === 'SplitSoul') {
-            changeCombatStyles(CombatStyle.mage);
+            changeCombatStyles(CombatStyle.necro);
         }
     }
 
