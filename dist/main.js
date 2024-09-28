@@ -18362,7 +18362,7 @@ async function readBuffs(gauges) {
     if (!buffReader.pos) {
         return;
     }
-    updateBuffData(buffReader, gauges, buffsImages.deathsSwiftness, 100, updateDeathsSwiftness, false);
+    updateBuffData(buffReader, gauges, buffsImages.deathsSwiftness, 125, updateDeathsSwiftness, false);
     updateBuffData(buffReader, gauges, buffsImages.greaterDeathsSwiftness, 350, updateDeathsSwiftness, true);
     updateBuffData(buffReader, gauges, buffsImages.sunshine, 300, updateSunshine, false);
     updateBuffData(buffReader, gauges, buffsImages.greaterSunshine, 100, updateSunshine, true);

@@ -218,7 +218,7 @@ export async function readBuffs() {
     updateBuffData(
         buffReader,
         buffsImages.deathsSwiftness,
-        100,
+        125,
         (time) => updateRangeAbility(time, false, 'DeathsSwiftness'),
         false,
     );
