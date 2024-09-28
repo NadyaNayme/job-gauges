@@ -108,15 +108,9 @@ function displayAmmoName(): void {
     alt1.overLayTextEx(
         ranged.ammo.activeAmmo,
         white,
-        14,
-        adjustPositionForScale(
-            ranged.position.x + 96,
-            gaugeData.scaleFactor,
-        ),
-        adjustPositionForScale(
-            ranged.position.y + 24,
-            gaugeData.scaleFactor,
-        ),
+        Math.ceil(14 * (gaugeData.scaleFactor * 0.75)),
+        adjustPositionForScale(ranged.position.x + 96, gaugeData.scaleFactor),
+        adjustPositionForScale(ranged.position.y + 24, gaugeData.scaleFactor),
         3000,
         '',
         true,

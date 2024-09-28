@@ -78,7 +78,7 @@ export async function livingDeathOverlay() {
         alt1.overLayTextEx(
             `${livingDeath.time}`,
             white,
-            14,
+            Math.ceil(14 * (gaugeData.scaleFactor * 0.75)),
             adjustPositionForScale(
                 necromancy.position.x + active_orientation.x + 26,
                 gaugeData.scaleFactor,

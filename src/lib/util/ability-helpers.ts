@@ -124,7 +124,7 @@ export function startAbilityCooldown(
         alt1.overLayTextEx(
             `${cooldown}`,
             white,
-            14,
+            Math.ceil(14 * (scaleFactor * 0.75)),
             adjustPositionForScale(xPositionAdjusted, scaleFactor),
             adjustPositionForScale(yPositionAdjusted, scaleFactor),
             3000,

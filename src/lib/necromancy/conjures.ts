@@ -77,11 +77,11 @@ export async function conjureOverlay() {
         alt1.overLayTextEx(
             `${minValue}`,
             white,
-            14,
+            Math.ceil(14 * (gaugeData.scaleFactor * 0.75)),
             adjustPositionForScale(
                 necromancy.position.x +
-                26 +
-                necromancy.conjures.position.active_orientation.x,
+                    26 +
+                    necromancy.conjures.position.active_orientation.x,
                 gaugeData.scaleFactor,
             ),
             adjustPositionForScale(

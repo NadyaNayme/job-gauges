@@ -108,7 +108,7 @@ export async function spellsOverlay() {
         alt1.overLayTextEx(
             `${spell.stacks || ''}`,
             white,
-            14,
+            Math.ceil(14 * (gaugeData.scaleFactor * 0.75)),
             adjustPositionForScale(
                 magic.position.x + x + 26,
                 gaugeData.scaleFactor,

@@ -67,7 +67,7 @@ export async function rangedSplitSoulOverlay() {
         alt1.overLayTextEx(
             `${splitSoul.time || ''}`,
             white,
-            14,
+            Math.ceil(14 * (gaugeData.scaleFactor * 0.75)),
             adjustPositionForScale(
                 ranged.position.x + active_orientation.x + 26,
                 gaugeData.scaleFactor,

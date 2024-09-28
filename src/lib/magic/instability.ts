@@ -73,7 +73,7 @@ export async function fsoaOverlay() {
         alt1.overLayTextEx(
             `${instability.time || ''}`,
             white,
-            14,
+            Math.ceil(14 * (gaugeData.scaleFactor * 0.75)),
             adjustPositionForScale(
                 magic.position.x + active_orientation.x + 26,
                 gaugeData.scaleFactor,
