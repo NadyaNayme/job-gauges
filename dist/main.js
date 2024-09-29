@@ -15160,7 +15160,7 @@ const createRangeSetting = (name, description, options = {}, callback) => {
     const rangeInput = (0,_Components__WEBPACK_IMPORTED_MODULE_1__.createInput)('range', name, defaultValue);
     rangeInput.setAttribute('min', min.toString());
     rangeInput.setAttribute('max', max.toString());
-    const value = ((parseInt(rangeInput.value, 10) - parseInt(rangeInput.min, 10)) /
+    const value = ((parseInt(defaultValue, 10) - parseInt(rangeInput.min, 10)) /
         (parseInt(rangeInput.max, 10) - parseInt(rangeInput.min))) *
         100;
     rangeInput.style.background =
@@ -15180,6 +15180,12 @@ const createRangeSetting = (name, description, options = {}, callback) => {
                 value +
                 '%, #0d1c24 100%)';
     };
+    function updateRangeInputBackground(rangeInput) {
+        const value = ((parseInt(rangeInput.value, 10) - parseInt(rangeInput.min, 10)) /
+            (parseInt(rangeInput.max, 10) - parseInt(rangeInput.min))) *
+            100;
+        rangeInput.style.background = `linear-gradient(to right, #3e5765 0%, #3e5765 ${value}%, #0d1c24 ${value}%, #0d1c24 100%)`;
+    }
     async function updateRangeValue(rangeInput, add) {
         if (add) {
             rangeInput.value = String(parseInt(rangeInput.value, 10) + 1);
@@ -15237,7 +15243,7 @@ const createRangeSetting = (name, description, options = {}, callback) => {
     const output = (0,_Components__WEBPACK_IMPORTED_MODULE_1__.createOutput)();
     output.setAttribute('id', `${name}Output`);
     output.setAttribute('for', name);
-    output.innerHTML = rangeInput.value + unit;
+    output.innerText = rangeInput.value + unit;
     output.after(unit);
     const container = (0,_Components__WEBPACK_IMPORTED_MODULE_1__.createFlexContainer)();
     if (classes.length) {
@@ -15249,11 +15255,12 @@ const createRangeSetting = (name, description, options = {}, callback) => {
     container.appendChild(label);
     flexcontainer.appendChild(minusButton);
     flexcontainer.appendChild(rangeInput);
+    updateRangeInputBackground(rangeInput);
     flexcontainer.appendChild(plusButton);
     container.appendChild(flexcontainer);
     container.appendChild(output);
     rangeInput.addEventListener('input', () => {
-        output.innerHTML = rangeInput.value + unit;
+        output.innerText = rangeInput.value + unit;
     });
     return container;
 };
@@ -15774,7 +15781,7 @@ const appName = 'job-gauges';
 const versionUrl = 'https://nadyanayme.github.io/job-gauges/dist/version.json';
 const majorVersion = 1;
 const minorVersion = 2;
-const patchVersion = 0;
+const patchVersion = 1;
 
 
 /***/ }),
@@ -16413,7 +16420,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./state/gauge-data/gauge-data.state */ "./state/gauge-data/gauge-data.state.ts");
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./state */ "./state/index.ts");
 /* harmony import */ var _state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./state/gauge-data/magic-gauge.state */ "./state/gauge-data/magic-gauge.state.ts");
-/* harmony import */ var _state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./state/gauge-data/range-gauge.state */ "./state/gauge-data/range-gauge.state.ts");
+/* harmony import */ var _state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./state/gauge-data/ranged-gauge.state */ "./state/gauge-data/ranged-gauge.state.ts");
 /* harmony import */ var _state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./state/gauge-data/necromancy-gauge.state */ "./state/gauge-data/necromancy-gauge.state.ts");
 
 
@@ -16469,30 +16476,39 @@ async function renderOverlays() {
     }
     await (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_2__.readBuffs)();
     switch (gaugeData.combatStyle) {
-        case _types__WEBPACK_IMPORTED_MODULE_1__.CombatStyle.necro:
-            await (0,_lib_necromancy_livingDeath__WEBPACK_IMPORTED_MODULE_8__.livingDeathOverlay)();
-            await (0,_lib_necromancy_conjures__WEBPACK_IMPORTED_MODULE_4__.conjureOverlay)();
-            await (0,_lib_necromancy_soul__WEBPACK_IMPORTED_MODULE_5__.soulsOverlay)();
-            await (0,_lib_necromancy_necrosis__WEBPACK_IMPORTED_MODULE_6__.necrosisOverlay)();
-            await (0,_lib_necromancy_incantations__WEBPACK_IMPORTED_MODULE_7__.incantationsOverlay)();
-            await (0,_lib_necromancy_bloat__WEBPACK_IMPORTED_MODULE_9__.bloatOverlay)();
+        case _types__WEBPACK_IMPORTED_MODULE_1__.CombatStyle.necromancy:
+            await renderNecromancyOverlays();
             break;
-        case _types__WEBPACK_IMPORTED_MODULE_1__.CombatStyle.mage:
-            await (0,_lib_magic_sunshine__WEBPACK_IMPORTED_MODULE_23__.sunshineOverlay)();
-            await (0,_lib_magic_activeSpell__WEBPACK_IMPORTED_MODULE_24__.spellsOverlay)();
-            await (0,_lib_magic_instability__WEBPACK_IMPORTED_MODULE_25__.fsoaOverlay)();
-            await (0,_lib_magic_tsunami__WEBPACK_IMPORTED_MODULE_26__.tsunamiOverlay)();
-            await (0,_lib_magic_soulfire__WEBPACK_IMPORTED_MODULE_30__.soulfireOverlay)();
+        case _types__WEBPACK_IMPORTED_MODULE_1__.CombatStyle.magic:
+            await renderMagicOverlays();
             break;
         case _types__WEBPACK_IMPORTED_MODULE_1__.CombatStyle.ranged:
-            await (0,_lib_ranged_deathsSwiftness__WEBPACK_IMPORTED_MODULE_27__.deathsSwiftnessOverlay)();
-            await (0,_lib_ranged_crystalRain__WEBPACK_IMPORTED_MODULE_28__.crystalRainOverlay)();
-            await (0,_lib_ranged_perfectEquilibrium__WEBPACK_IMPORTED_MODULE_29__.peOverlay)();
-            await (0,_lib_ranged_splitSoul__WEBPACK_IMPORTED_MODULE_31__.rangedSplitSoulOverlay)();
+            await renderRangedOverlays();
             break;
         case _types__WEBPACK_IMPORTED_MODULE_1__.CombatStyle.melee:
             break;
     }
+}
+async function renderNecromancyOverlays() {
+    await (0,_lib_necromancy_livingDeath__WEBPACK_IMPORTED_MODULE_8__.livingDeathOverlay)();
+    await (0,_lib_necromancy_conjures__WEBPACK_IMPORTED_MODULE_4__.conjureOverlay)();
+    await (0,_lib_necromancy_soul__WEBPACK_IMPORTED_MODULE_5__.soulsOverlay)();
+    await (0,_lib_necromancy_necrosis__WEBPACK_IMPORTED_MODULE_6__.necrosisOverlay)();
+    await (0,_lib_necromancy_incantations__WEBPACK_IMPORTED_MODULE_7__.incantationsOverlay)();
+    await (0,_lib_necromancy_bloat__WEBPACK_IMPORTED_MODULE_9__.bloatOverlay)();
+}
+async function renderMagicOverlays() {
+    await (0,_lib_magic_sunshine__WEBPACK_IMPORTED_MODULE_23__.sunshineOverlay)();
+    await (0,_lib_magic_activeSpell__WEBPACK_IMPORTED_MODULE_24__.spellsOverlay)();
+    await (0,_lib_magic_instability__WEBPACK_IMPORTED_MODULE_25__.fsoaOverlay)();
+    await (0,_lib_magic_tsunami__WEBPACK_IMPORTED_MODULE_26__.tsunamiOverlay)();
+    await (0,_lib_magic_soulfire__WEBPACK_IMPORTED_MODULE_30__.soulfireOverlay)();
+}
+async function renderRangedOverlays() {
+    await (0,_lib_ranged_deathsSwiftness__WEBPACK_IMPORTED_MODULE_27__.deathsSwiftnessOverlay)();
+    await (0,_lib_ranged_crystalRain__WEBPACK_IMPORTED_MODULE_28__.crystalRainOverlay)();
+    await (0,_lib_ranged_perfectEquilibrium__WEBPACK_IMPORTED_MODULE_29__.peOverlay)();
+    await (0,_lib_ranged_splitSoul__WEBPACK_IMPORTED_MODULE_31__.rangedSplitSoulOverlay)();
 }
 async function startApp() {
     if (!window.alt1) {
@@ -16537,7 +16553,7 @@ async function startApp() {
         const { magic, ranged, necromancy, melee, gaugeData, alarms } = JSON.parse(localGaugeData);
         _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_33__.GaugeDataSlice.actions.updateState(gaugeData));
         _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_35__.MagicGaugeSlice.actions.updateState(magic));
-        _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_36__.RangeGaugeSlice.actions.updateState(ranged));
+        _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_36__.RangedGaugeSlice.actions.updateState(ranged));
         _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_37__.NecromancyGaugeSlice.actions.updateState(necromancy));
     }
     _state__WEBPACK_IMPORTED_MODULE_34__.store.subscribe(() => {
@@ -16614,34 +16630,11 @@ function addEventListeners() {
     (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('selectedOrientation').addEventListener('change', () => {
         updateActiveOrientationFromLocalStorage();
     });
-    // For some reason this one calculates incorrectly on load so we override the initial styles here
-    const scaleRange = (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('scale');
-    const scaleRangevalue = ((parseInt(scaleRange.value, 10) - parseInt(scaleRange.min, 10)) /
-        (parseInt(scaleRange.max, 10) - parseInt(scaleRange.min))) *
-        100;
-    scaleRange.style.background =
-        'linear-gradient(to right, #3e5765 0%, #3e5765 ' +
-            scaleRangevalue +
-            '%, #0d1c24 ' +
-            scaleRangevalue +
-            '%, #0d1c24 100%)';
     (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('scale').addEventListener('change', async (e) => {
         const scaleFactor = Number(e.target.value);
         _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_33__.GaugeDataSlice.actions.updateState({ scaleFactor: scaleFactor / 100 }));
         location.reload();
     });
-    const combatTimerRange = (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('combatTimer');
-    const combatTimervalue = ((parseInt(combatTimerRange.value, 10) -
-        parseInt(combatTimerRange.min, 10)) /
-        (parseInt(combatTimerRange.max, 10) -
-            parseInt(combatTimerRange.min))) *
-        100;
-    combatTimerRange.style.background =
-        'linear-gradient(to right, #3e5765 0%, #3e5765 ' +
-            combatTimervalue +
-            '%, #0d1c24 ' +
-            combatTimervalue +
-            '%, #0d1c24 100%)';
     document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
         checkbox.addEventListener('change', () => {
             _lib_utility__WEBPACK_IMPORTED_MODULE_0__.freezeAndContinueOverlays(); // Force an instant redraw
@@ -17093,7 +17086,7 @@ async function sunshineOverlay() {
     (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('Sunshine_Cooldown_Text');
     if (gaugeData.automaticSwapping) {
         _state__WEBPACK_IMPORTED_MODULE_3__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_5__.GaugeDataSlice.actions.updateState({
-            combatStyle: _types__WEBPACK_IMPORTED_MODULE_1__.CombatStyle.mage,
+            combatStyle: _types__WEBPACK_IMPORTED_MODULE_1__.CombatStyle.magic,
         }));
     }
     (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_2__.handleAbilityActiveState)(abilityData, 'Sunshine', true);
@@ -17499,7 +17492,7 @@ async function livingDeathOverlay() {
     }));
     (0,_utility__WEBPACK_IMPORTED_MODULE_1__.forceClearOverlay)('LivingDeath_Cooldown_Text');
     if (gaugeData.automaticSwapping) {
-        _state__WEBPACK_IMPORTED_MODULE_3__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_4__.GaugeDataSlice.actions.updateCombatStyle(_types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.necro));
+        _state__WEBPACK_IMPORTED_MODULE_3__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_4__.GaugeDataSlice.actions.updateCombatStyle(_types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.necromancy));
     }
     (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_2__.handleAbilityActiveState)(abilityData, 'LivingDeath', true);
     if (lastValue !== livingDeath.time) {
@@ -17693,7 +17686,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
-/* harmony import */ var _state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../state/gauge-data/range-gauge.state */ "./state/gauge-data/range-gauge.state.ts");
+/* harmony import */ var _state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../state/gauge-data/ranged-gauge.state */ "./state/gauge-data/ranged-gauge.state.ts");
 
 
 
@@ -17770,7 +17763,7 @@ async function findAmmo(buffs) {
             ammoActive++;
         }
     }
-    _state__WEBPACK_IMPORTED_MODULE_1__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_2__.RangeGaugeSlice.actions.updateState({
+    _state__WEBPACK_IMPORTED_MODULE_1__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_2__.RangedGaugeSlice.actions.updateState({
         ammo: {
             activeAmmo: ammoActive ? currentAmmo : '',
             isActiveOverlay: ranged.ammo.isActiveOverlay,
@@ -17806,7 +17799,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/ability-helpers */ "./lib/util/ability-helpers.ts");
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
-/* harmony import */ var _state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state/gauge-data/range-gauge.state */ "./state/gauge-data/range-gauge.state.ts");
+/* harmony import */ var _state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state/gauge-data/ranged-gauge.state */ "./state/gauge-data/ranged-gauge.state.ts");
 
 
 
@@ -17844,14 +17837,14 @@ async function crystalRainOverlay() {
         alt1.overLayClearGroup('CrystalRain_Text');
         return (lastValue = crystalRain.time);
     }
-    _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangeGaugeSlice.actions.updateAbility({
+    _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangedGaugeSlice.actions.updateAbility({
         abilityName: 'crystalRain',
         ability: { isOnCooldown: false },
     }));
     (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('CrystalRain_Cooldown_Text');
     (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'CrystalRain', false);
     if (lastValue !== crystalRain.time) {
-        _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangeGaugeSlice.actions.updateAbility({
+        _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangedGaugeSlice.actions.updateAbility({
             abilityName: 'crystalRain',
             ability: { cooldownDuration: 0 },
         }));
@@ -17884,7 +17877,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/ability-helpers */ "./lib/util/ability-helpers.ts");
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
-/* harmony import */ var _state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state/gauge-data/range-gauge.state */ "./state/gauge-data/range-gauge.state.ts");
+/* harmony import */ var _state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state/gauge-data/ranged-gauge.state */ "./state/gauge-data/ranged-gauge.state.ts");
 
 
 
@@ -17922,14 +17915,14 @@ async function deathsSwiftnessOverlay() {
         alt1.overLayClearGroup('DeathsSwiftness_Text');
         return (lastValue = deathsSwiftness.time);
     }
-    _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangeGaugeSlice.actions.updateAbility({
+    _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangedGaugeSlice.actions.updateAbility({
         abilityName: 'deathsSwiftness',
         ability: { isOnCooldown: false },
     }));
     (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('DeathsSwiftness_Cooldown_Text');
     (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'DeathsSwiftness', true);
     if (lastValue !== deathsSwiftness.time) {
-        _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangeGaugeSlice.actions.updateAbility({
+        _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangedGaugeSlice.actions.updateAbility({
             abilityName: 'deathsSwiftness',
             ability: { cooldownDuration: 0 },
         }));
@@ -18026,7 +18019,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/ability-helpers */ "./lib/util/ability-helpers.ts");
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
-/* harmony import */ var _state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state/gauge-data/range-gauge.state */ "./state/gauge-data/range-gauge.state.ts");
+/* harmony import */ var _state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state/gauge-data/ranged-gauge.state */ "./state/gauge-data/ranged-gauge.state.ts");
 
 
 
@@ -18064,14 +18057,14 @@ async function rangedSplitSoulOverlay() {
         alt1.overLayClearGroup('SplitSoul_Text');
         return (lastValue = splitSoul.time);
     }
-    _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangeGaugeSlice.actions.updateAbility({
+    _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangedGaugeSlice.actions.updateAbility({
         abilityName: 'splitSoul',
         ability: { isOnCooldown: false },
     }));
     (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('SplitSoul_Cooldown_Text');
     (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'SplitSoul', true);
     if (lastValue !== splitSoul.time) {
-        _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangeGaugeSlice.actions.updateAbility({
+        _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangedGaugeSlice.actions.updateAbility({
             abilityName: 'splitSoul',
             ability: { cooldownDuration: 0 },
         }));
@@ -18119,7 +18112,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./utility */ "./lib/utility.ts");
 /* harmony import */ var _state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../state/gauge-data/magic-gauge.state */ "./state/gauge-data/magic-gauge.state.ts");
 /* harmony import */ var _state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../state/gauge-data/gauge-data.state */ "./state/gauge-data/gauge-data.state.ts");
-/* harmony import */ var _state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../state/gauge-data/range-gauge.state */ "./state/gauge-data/range-gauge.state.ts");
+/* harmony import */ var _state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../state/gauge-data/ranged-gauge.state */ "./state/gauge-data/ranged-gauge.state.ts");
 
 
 
@@ -18301,7 +18294,7 @@ async function readBuffs() {
         updateBuffData(buffReader, buffsImages.living_death, 400, updateLivingDeath, false);
     }
     switch (gaugeData.combatStyle) {
-        case _types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.necro:
+        case _types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.necromancy:
             updateBuffData(buffReader, buffsImages.soul, 200, (stacks) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_9__.NecromancyGaugeSlice.actions.updateStacksAbility({
                 stackType: 'souls',
                 stack: {
@@ -18323,7 +18316,7 @@ async function readBuffs() {
                 updateBuffData(buffReader, buffsImages.split_soul, 350, updateSplitSoul, false);
             }
             break;
-        case _types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.mage:
+        case _types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.magic:
             updateBuffData(buffReader, buffsImages.instability, 60, (time) => updateMagicAbility(time, false, 'Instability'), false);
             updateBuffData(buffReader, buffsImages.tsunami, 200, (time) => updateMagicAbility(time, false, 'Tsunami'), false);
             updateStackData(buffsImages.bloodTithe, 30, (active) => updateSpell('bloodTithe', active));
@@ -18434,7 +18427,7 @@ function updateLivingDeath(value) {
             },
             abilityName: 'livingDeath',
         }));
-        changeCombatStyles(_types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.necro);
+        changeCombatStyles(_types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.necromancy);
     }
     // When only 1 second of the buff exists
     if (value == 1 && necromancy.livingDeath.active) {
@@ -18557,7 +18550,7 @@ function updateMagicAbility(time, greater, abilityName) {
             },
         }));
         if (gaugeData.automaticSwapping && abilityName === 'Sunshine') {
-            changeCombatStyles(_types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.mage);
+            changeCombatStyles(_types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.magic);
         }
     }
     if (time === 1 && ability.active) {
@@ -18587,19 +18580,19 @@ function updateMagicAbility(time, greater, abilityName) {
         }, 1050);
     }
 }
-const RangeAbilityToName = {
+const RangedAbilityToName = {
     'DeathsSwiftness': 'deathsSwiftness',
     'CrystalRain': 'crystalRain',
     'SplitSoul': 'splitSoul',
 };
 function updateRangeAbility(time, greater, abilityName) {
-    const property = RangeAbilityToName[abilityName];
+    const property = RangedAbilityToName[abilityName];
     const { ranged, gaugeData } = _state__WEBPACK_IMPORTED_MODULE_8__.store.getState();
     const ability = ranged[property];
     const { position } = ranged;
     const { scaleFactor } = gaugeData;
     if (time > 1) {
-        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangeGaugeSlice.actions.updateAbility({
+        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangedGaugeSlice.actions.updateAbility({
             abilityName: property,
             ability: {
                 isOnCooldown: false,
@@ -18614,9 +18607,9 @@ function updateRangeAbility(time, greater, abilityName) {
     }
     if (time === 1 && ability.active) {
         // Make sure to update the text one final time
-        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangeGaugeSlice.actions.updateAbilityTime({ abilityName: property, time }));
+        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangedGaugeSlice.actions.updateAbilityTime({ abilityName: property, time }));
         setTimeout(() => {
-            _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangeGaugeSlice.actions.updateAbility({
+            _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangedGaugeSlice.actions.updateAbility({
                 abilityName: property,
                 ability: {
                     isOnCooldown: true,
@@ -18631,7 +18624,7 @@ function updateRangeAbility(time, greater, abilityName) {
             const { ranged } = _state__WEBPACK_IMPORTED_MODULE_8__.store.getState();
             const ability = ranged[property];
             (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_6__.startAbilityCooldown)({ ability, position, scaleFactor }, abilityName, greater, () => {
-                _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangeGaugeSlice.actions.updateAbility({
+                _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangedGaugeSlice.actions.updateAbility({
                     abilityName: property,
                     ability: { isOnCooldown: false, cooldownDuration: 0 },
                 }));
@@ -18658,10 +18651,10 @@ function changeCombatStyles(combatStyle) {
     (0,_utility__WEBPACK_IMPORTED_MODULE_10__.clearTextOverlays)();
 }
 function updatePeCount(stacks) {
-    _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangeGaugeSlice.actions.updatePerfectEquilibriumStack({ stacks }));
+    _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangedGaugeSlice.actions.updatePerfectEquilibriumStack({ stacks }));
 }
 function updateBalanceByForce(active) {
-    _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangeGaugeSlice.actions.updateBalanceByForce({ active }));
+    _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangedGaugeSlice.actions.updateBalanceByForce({ active }));
 }
 /**
  * Keeping around until I figure out why it's special.
@@ -18673,7 +18666,7 @@ function updateRangedSplitSoul(time) {
     //   - it must be active
     //   - The remaining time is its timer
     if (time > 1) {
-        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangeGaugeSlice.actions.updateAbility({
+        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangedGaugeSlice.actions.updateAbility({
             abilityName: 'splitSoul',
             ability: {
                 isOnCooldown: false,
@@ -18686,12 +18679,12 @@ function updateRangedSplitSoul(time) {
     // When only 1 second of the buff exists
     if (time == 1 && ranged.splitSoul.active) {
         // Make sure to update the text one final time
-        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangeGaugeSlice.actions.updateAbilityTime({ abilityName: 'splitSoul', time }));
+        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangedGaugeSlice.actions.updateAbilityTime({ abilityName: 'splitSoul', time }));
         // Then start a timer to wait just past the last second
         //  - Clear the timer
         //  - DS is now on Cooldown so is not active
         setTimeout(() => {
-            _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangeGaugeSlice.actions.updateAbility({
+            _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangedGaugeSlice.actions.updateAbility({
                 abilityName: 'splitSoul',
                 ability: {
                     active: false,
@@ -18711,7 +18704,7 @@ function startRangedSplitSoul() {
     }
     // If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
     if (ranged.splitSoul.active) {
-        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangeGaugeSlice.actions.updateAbility({
+        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangedGaugeSlice.actions.updateAbility({
             abilityName: 'splitSoul',
             ability: {
                 isOnCooldown: false,
@@ -18909,10 +18902,12 @@ const renderSettings = () => {
         .addHeader('h3', 'General')
         .addCheckboxSetting('checkForUpdates', 'Periodically check if a new update is available', false)
         .addCheckboxSetting('rememberUiPosition', 'Remember last known position of buff/debuff bars to avoid needing to scan on every app start', true)
-        .addButton('necroCombatStyle', 'Select Necro Overlay', () => updateCombatStyle(_types__WEBPACK_IMPORTED_MODULE_11__.CombatStyle.necro), { classes: ['nisbutton'] })
-        .addButton('mageCombatStyle', 'Select Mage Overlay', () => updateCombatStyle(_types__WEBPACK_IMPORTED_MODULE_11__.CombatStyle.mage), { classes: ['nisbutton'] })
-        .addButton('rangeCombatStyle', 'Select Range Overlay', () => updateCombatStyle(_types__WEBPACK_IMPORTED_MODULE_11__.CombatStyle.ranged), { classes: ['nisbutton'] })
-        .addCheckboxSetting('automaticSwapping', 'Swap gauge automatically when Living Death, Sunshine, or Death\'s Swiftness are used', false, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_9__.GaugeDataSlice.actions.updateState({ automaticSwapping: event })))
+        .addButton('necromancyCombatStyle', 'Swap to Necromancy Gauge', () => updateCombatStyle(_types__WEBPACK_IMPORTED_MODULE_11__.CombatStyle.necromancy), { classes: ['nisbutton'] })
+        .addButton('magicCombatStyle', 'Swap to Magic Gauge', () => updateCombatStyle(_types__WEBPACK_IMPORTED_MODULE_11__.CombatStyle.magic), { classes: ['nisbutton'] })
+        .addButton('rangedCombatStyle', 'Swap to Ranged Gauge', () => updateCombatStyle(_types__WEBPACK_IMPORTED_MODULE_11__.CombatStyle.ranged), { classes: ['nisbutton'] })
+        .addCheckboxSetting('automaticSwapping', "Swap gauge automatically when Living Death, Sunshine, or Death's Swiftness are used", false, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_9__.GaugeDataSlice.actions.updateState({
+        automaticSwapping: event,
+    })))
         .addCheckboxSetting('hideOutsideCombat', 'Show gauges only while "In Combat"', false, (event) => {
         _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_9__.GaugeDataSlice.actions.updateState({
             checkCombatStatus: event,
@@ -18921,11 +18916,14 @@ const renderSettings = () => {
     })
         .addRangeSetting('combatTimer', 'Seconds until Player is no longer "In Combat" after Target Information goes away', { defaultValue: '5', min: 1, max: 600, unit: 's' })
         .addSeperator()
-        .addButton('repositionOverlay', 'Reposition Overlay', () => (0,_utility__WEBPACK_IMPORTED_MODULE_6__.setOverlayPosition)(), { classes: ['nisbutton'] })
+        .addButton('repositionOverlay', 'Position Active Gauge', () => (0,_utility__WEBPACK_IMPORTED_MODULE_6__.setOverlayPosition)(false), { classes: ['nisbutton'] })
+        .addButton('repositionOverlay', 'Position All Gauges', () => (0,_utility__WEBPACK_IMPORTED_MODULE_6__.setOverlayPosition)(true), { classes: ['nisbutton'] })
         .addSeperator()
         .addHeader('h3', 'Scale')
         .addRangeSetting('scale', 'Adjusts the size of the overlay. You must reload and reposition the overlay after scaling.', { defaultValue: '100', min: 50, max: 300 }, (scaleFactor) => {
-        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_9__.GaugeDataSlice.actions.updateState({ scaleFactor: scaleFactor / 100 }));
+        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_9__.GaugeDataSlice.actions.updateState({
+            scaleFactor: scaleFactor / 100,
+        }));
         location.reload();
     })
         .addSeperator()
@@ -18970,14 +18968,22 @@ const renderSettings = () => {
         stackType: 'souls',
         stack: { isActiveOverlay: event },
     })))
-        .addCheckboxSetting('pre95Souls', 'Only show 3 Residual Souls / No Soulbound Lantern', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('pre95Souls') ?? false, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__.NecromancyGaugeSlice.actions.updateStacks({ pre95Souls: event })))
+        .addCheckboxSetting('pre95Souls', 'Only show 3 Residual Souls / No Soulbound Lantern', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('pre95Souls') ?? false, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__.NecromancyGaugeSlice.actions.updateStacks({
+        pre95Souls: event,
+    })))
         .addCheckboxSetting('showNecrosis', 'Show Necrosis', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showNecrosis') ?? true, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__.NecromancyGaugeSlice.actions.updateStacksAbility({
         stackType: 'necrosis',
         stack: { isActiveOverlay: event },
     })))
-        .addCheckboxSetting('dupeRow', 'Show 2nd row of Necrosis stacks', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('dupeRow') ?? false, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__.NecromancyGaugeSlice.actions.updateStacks({ duplicateNecrosisRow: event })))
-        .addCheckboxSetting('useColoredNecrosis', 'Use orange and red Necrosis Stacks when above certain thresholds', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('useColoredNecrosis') ?? false, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__.NecromancyGaugeSlice.actions.updateStacks({ useColoredNecrosis: event })))
-        .addCheckboxSetting('showBloat', 'Show Bloat', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showBloat') ?? true, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__.NecromancyGaugeSlice.actions.updateBloat({ isActiveOverlay: event })))
+        .addCheckboxSetting('dupeRow', 'Show 2nd row of Necrosis stacks', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('dupeRow') ?? false, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__.NecromancyGaugeSlice.actions.updateStacks({
+        duplicateNecrosisRow: event,
+    })))
+        .addCheckboxSetting('useColoredNecrosis', 'Use orange and red Necrosis Stacks when above certain thresholds', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('useColoredNecrosis') ?? false, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__.NecromancyGaugeSlice.actions.updateStacks({
+        useColoredNecrosis: event,
+    })))
+        .addCheckboxSetting('showBloat', 'Show Bloat', (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_3__.getSetting)('showBloat') ?? true, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__.NecromancyGaugeSlice.actions.updateBloat({
+        isActiveOverlay: event,
+    })))
         .addSeperator()
         .addHeader('h2', 'Alarms')
         .addFileSetting('customAlarms', 'Upload a custom alarm', '')
@@ -19197,8 +19203,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   updateLocation: () => (/* binding */ updateLocation),
 /* harmony export */   white: () => (/* binding */ white)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../a1sauce/Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
 /* harmony import */ var _a1sauce_Utils_timeout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../a1sauce/Utils/timeout */ "./a1sauce/Utils/timeout.ts");
 /* harmony import */ var pouchdb__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! pouchdb */ "../node_modules/pouchdb/lib/index-browser.es.js");
@@ -19206,8 +19212,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../state */ "./state/index.ts");
 /* harmony import */ var _state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../state/gauge-data/necromancy-gauge.state */ "./state/gauge-data/necromancy-gauge.state.ts");
 /* harmony import */ var _state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../state/gauge-data/magic-gauge.state */ "./state/gauge-data/magic-gauge.state.ts");
-/* harmony import */ var _state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../state/gauge-data/range-gauge.state */ "./state/gauge-data/range-gauge.state.ts");
+/* harmony import */ var _state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../state/gauge-data/ranged-gauge.state */ "./state/gauge-data/ranged-gauge.state.ts");
 /* harmony import */ var _state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../state/gauge-data/gauge-data.state */ "./state/gauge-data/gauge-data.state.ts");
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../types */ "./types/index.ts");
+
 
 
 
@@ -19219,11 +19227,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const db = new pouchdb__WEBPACK_IMPORTED_MODULE_2__["default"](_data_constants__WEBPACK_IMPORTED_MODULE_3__.appName);
-const white = alt1__WEBPACK_IMPORTED_MODULE_9__.mixColor(255, 255, 255);
-const red = alt1__WEBPACK_IMPORTED_MODULE_9__.mixColor(255, 0, 0);
-const green = alt1__WEBPACK_IMPORTED_MODULE_9__.mixColor(0, 255, 0);
-const blue = alt1__WEBPACK_IMPORTED_MODULE_9__.mixColor(0, 0, 255);
-const black = alt1__WEBPACK_IMPORTED_MODULE_9__.mixColor(1, 1, 1);
+const white = alt1__WEBPACK_IMPORTED_MODULE_10__.mixColor(255, 255, 255);
+const red = alt1__WEBPACK_IMPORTED_MODULE_10__.mixColor(255, 0, 0);
+const green = alt1__WEBPACK_IMPORTED_MODULE_10__.mixColor(0, 255, 0);
+const blue = alt1__WEBPACK_IMPORTED_MODULE_10__.mixColor(0, 0, 255);
+const black = alt1__WEBPACK_IMPORTED_MODULE_10__.mixColor(1, 1, 1);
 /*
  * Should only return null if a typo is made as elements
  * that are fetched are created by A1 Sauce
@@ -19235,9 +19243,9 @@ const helperItems = {
     Output: getByID('output'),
     settings: getByID('Settings'),
 };
-async function setOverlayPosition() {
+async function setOverlayPosition(all) {
     _state__WEBPACK_IMPORTED_MODULE_4__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_8__.GaugeDataSlice.actions.updateState({ updatingOverlayPosition: true }));
-    alt1__WEBPACK_IMPORTED_MODULE_9__.once('alt1pressed', updateLocation);
+    alt1__WEBPACK_IMPORTED_MODULE_10__.once('alt1pressed', updateLocation);
     alt1.setTooltip('Press Primary Keybind to save position (default keybind is alt+1)');
     setTimeout(() => {
         alt1.clearTooltip();
@@ -19249,20 +19257,12 @@ async function setOverlayPosition() {
         }
         await (0,_a1sauce_Utils_timeout__WEBPACK_IMPORTED_MODULE_1__.timeout)(500);
         freezeOverlays();
-        //TODO: Per-gauge repositioning will be needed here as well
-        resizeGaugesWithMousePosition();
+        resizeGaugesWithMousePosition(all);
         continueOverlays();
     }
-    const { necromancy } = _state__WEBPACK_IMPORTED_MODULE_4__.store.getState();
-    (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__.updateSetting)('overlayPosition', {
-        x: necromancy.position.x,
-        y: necromancy.position.y,
-    });
 }
 function updateLocation() {
     _state__WEBPACK_IMPORTED_MODULE_4__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_8__.GaugeDataSlice.actions.updateState({ updatingOverlayPosition: false }));
-    alt1.overLayClearGroup('overlayPositionHelper');
-    alt1.overLayRefreshGroup('overlayPositionHelper');
     alt1.clearTooltip();
 }
 function forceClearOverlay(overlay) {
@@ -19363,8 +19363,8 @@ function adjustPositionForScale(position, scaleFactor) {
 function adjustPositionWithoutScale(position, scaleFactor) {
     return parseInt(roundedToFixed(position * (1 / scaleFactor), 1), 10);
 }
-function resizeGaugesWithMousePosition() {
-    const position = alt1__WEBPACK_IMPORTED_MODULE_9__.getMousePosition();
+function resizeGaugesWithMousePosition(all) {
+    const position = alt1__WEBPACK_IMPORTED_MODULE_10__.getMousePosition();
     if (!position) {
         return;
     }
@@ -19372,10 +19372,41 @@ function resizeGaugesWithMousePosition() {
     const { x, y } = position;
     const adjustedXPosition = adjustPositionWithoutScale(x, gaugeData.scaleFactor);
     const adjustedYPosition = adjustPositionWithoutScale(y, gaugeData.scaleFactor);
-    _state__WEBPACK_IMPORTED_MODULE_4__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_5__.NecromancyGaugeSlice.actions.updatePosition({ x: adjustedXPosition, y: adjustedYPosition }));
-    _state__WEBPACK_IMPORTED_MODULE_4__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_6__.MagicGaugeSlice.actions.updatePosition({ x: adjustedXPosition, y: adjustedYPosition }));
-    _state__WEBPACK_IMPORTED_MODULE_4__.store.dispatch(_state_gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_7__.RangeGaugeSlice.actions.updatePosition({ x: adjustedXPosition, y: adjustedYPosition }));
-    // Add melee sometime lol
+    if (all) {
+        _state__WEBPACK_IMPORTED_MODULE_4__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_6__.MagicGaugeSlice.actions.updatePosition({
+            x: adjustedXPosition,
+            y: adjustedYPosition,
+        }));
+        _state__WEBPACK_IMPORTED_MODULE_4__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_7__.RangedGaugeSlice.actions.updatePosition({
+            x: adjustedXPosition,
+            y: adjustedYPosition,
+        }));
+        _state__WEBPACK_IMPORTED_MODULE_4__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_5__.NecromancyGaugeSlice.actions.updatePosition({
+            x: adjustedXPosition,
+            y: adjustedYPosition,
+        }));
+        return;
+    }
+    switch (gaugeData.combatStyle) {
+        case _types__WEBPACK_IMPORTED_MODULE_9__.CombatStyle.magic:
+            _state__WEBPACK_IMPORTED_MODULE_4__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_6__.MagicGaugeSlice.actions.updatePosition({
+                x: adjustedXPosition,
+                y: adjustedYPosition,
+            }));
+            break;
+        case _types__WEBPACK_IMPORTED_MODULE_9__.CombatStyle.ranged:
+            _state__WEBPACK_IMPORTED_MODULE_4__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_7__.RangedGaugeSlice.actions.updatePosition({
+                x: adjustedXPosition,
+                y: adjustedYPosition,
+            }));
+            break;
+        case _types__WEBPACK_IMPORTED_MODULE_9__.CombatStyle.necromancy:
+            _state__WEBPACK_IMPORTED_MODULE_4__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_5__.NecromancyGaugeSlice.actions.updatePosition({
+                x: adjustedXPosition,
+                y: adjustedYPosition,
+            }));
+            break;
+    }
 }
 function roundedToFixed(input, digits) {
     const rounder = Math.pow(10, digits);
@@ -19491,6 +19522,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 const notes = [
     // Add patch notes to top
+    {
+        date: '09/28/2024 - Hotfix" v.1.2.1',
+        note: [
+            `Added ability to position each job gauge independently of one another for those looking for a little more control over placement so you don't need to reposition the gauge anytime you change combat styles`,
+            `Alongside that is a button to move all of the gauges at once - like before - for people who don't care about individually positioning each gauge`,
+            `ECB spec no longer swaps the user to the Ranged Job Gauge`,
+            `Fixed Death's Swiftness tracking by using the updated buff image from Oct. 2023`,
+            `Fixed various issues such as using Death's Swiftness swapping the user to Necromancy Gauge instead of Ranged Gauge`,
+        ],
+    },
     {
         date: '09/28/2024 - Redux Refactor" v.1.2.0',
         note: [
@@ -19682,7 +19723,7 @@ const initialState = {
     automaticSwapping: false,
     checkCombatStatus: false,
     isInCombat: false,
-    combatStyle: _types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.necro,
+    combatStyle: _types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.necromancy,
     updatingOverlayPosition: false,
     selectedOrientation: 'reverse_split'
 };
@@ -19916,16 +19957,16 @@ const NecromancyGaugeSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.cr
 
 /***/ }),
 
-/***/ "./state/gauge-data/range-gauge.state.ts":
-/*!***********************************************!*\
-  !*** ./state/gauge-data/range-gauge.state.ts ***!
-  \***********************************************/
+/***/ "./state/gauge-data/ranged-gauge.state.ts":
+/*!************************************************!*\
+  !*** ./state/gauge-data/ranged-gauge.state.ts ***!
+  \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   RangeGaugeSlice: () => (/* binding */ RangeGaugeSlice)
+/* harmony export */   RangedGaugeSlice: () => (/* binding */ RangedGaugeSlice)
 /* harmony export */ });
 /* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @reduxjs/toolkit */ "../node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs");
 /* harmony import */ var _data_rangedGauge__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../data/rangedGauge */ "./data/rangedGauge.ts");
@@ -19934,8 +19975,8 @@ __webpack_require__.r(__webpack_exports__);
 const initialState = {
     ..._data_rangedGauge__WEBPACK_IMPORTED_MODULE_0__.ranged_gauge,
 };
-const RangeGaugeSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)({
-    name: 'RangeGauge',
+const RangedGaugeSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)({
+    name: 'RangedGauge',
     initialState,
     reducers: {
         updateState: (state, action) => ({
@@ -19992,7 +20033,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./gauge-data/gauge-data.state */ "./state/gauge-data/gauge-data.state.ts");
 /* harmony import */ var _alarms_alarm_state__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./alarms/alarm.state */ "./state/alarms/alarm.state.ts");
 /* harmony import */ var _gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./gauge-data/magic-gauge.state */ "./state/gauge-data/magic-gauge.state.ts");
-/* harmony import */ var _gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./gauge-data/range-gauge.state */ "./state/gauge-data/range-gauge.state.ts");
+/* harmony import */ var _gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./gauge-data/ranged-gauge.state */ "./state/gauge-data/ranged-gauge.state.ts");
 /* harmony import */ var _gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./gauge-data/necromancy-gauge.state */ "./state/gauge-data/necromancy-gauge.state.ts");
 
 
@@ -20005,7 +20046,7 @@ const store = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_5__.configureStore)({
         gaugeData: _gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_0__.GaugeDataSlice.reducer,
         alarms: _alarms_alarm_state__WEBPACK_IMPORTED_MODULE_1__.AlarmSlice.reducer,
         magic: _gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_2__.MagicGaugeSlice.reducer,
-        ranged: _gauge_data_range_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangeGaugeSlice.reducer,
+        ranged: _gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangedGaugeSlice.reducer,
         necromancy: _gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_4__.NecromancyGaugeSlice.reducer,
     },
 });
@@ -20101,8 +20142,8 @@ var CombatStyle;
 (function (CombatStyle) {
     CombatStyle[CombatStyle["melee"] = 1] = "melee";
     CombatStyle[CombatStyle["ranged"] = 2] = "ranged";
-    CombatStyle[CombatStyle["mage"] = 3] = "mage";
-    CombatStyle[CombatStyle["necro"] = 4] = "necro";
+    CombatStyle[CombatStyle["magic"] = 3] = "magic";
+    CombatStyle[CombatStyle["necromancy"] = 4] = "necromancy";
 })(CombatStyle || (CombatStyle = {}));
 
 

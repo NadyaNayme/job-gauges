@@ -3,6 +3,16 @@ import { PatchNote } from './a1sauce/Patches/patchNotes';
 export const notes: PatchNote[] = [
     // Add patch notes to top
     {
+        date: '09/28/2024 - Hotfix" v.1.2.1',
+        note: [
+            `Added ability to position each job gauge independently of one another for those looking for a little more control over placement so you don't need to reposition the gauge anytime you change combat styles`,
+            `Alongside that is a button to move all of the gauges at once - like before - for people who don't care about individually positioning each gauge`,
+            `ECB spec no longer swaps the user to the Ranged Job Gauge`,
+            `Fixed Death's Swiftness tracking by using the updated buff image from Oct. 2023`,
+            `Fixed various issues such as using Death's Swiftness swapping the user to Necromancy Gauge instead of Ranged Gauge`,
+        ],
+    },
+    {
         date: '09/28/2024 - Redux Refactor" v.1.2.0',
         note: [
             `More wizardry from Panku - most of Job Gauges has been rewritten to track the state of things better and by doing so a number of improvements were made.`,
