@@ -246,6 +246,15 @@ function updateActiveOrientationFromLocalStorage(): void {
 // Null suppressions are used as these items
 // are added via A1Sauce.Settings and thus will always exist
 function addEventListeners() {
+
+    if (getSetting('hideExternalButtons')) {
+        getById('Settings')?.classList.add('no-external');
+    }
+
+    getById('hideExternalButtons')!.addEventListener('change', () => {
+        getById('Settings')?.classList.toggle('no-external');
+    });
+
     getById('selectedOrientation')!.addEventListener('change', () => {
         updateActiveOrientationFromLocalStorage();
     });
