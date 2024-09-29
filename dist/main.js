@@ -1062,36 +1062,36 @@ ___CSS_LOADER_EXPORT___.push([module.id, `body:has(#Error) {
 
 body:has(#Error)::before {
     content: '';
-    display: block;
-    width: 500vh;
-    height: 500vh;
-    z-index: 95;
-    background-color: rgba(0,0,0,.7);
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 95;
+    display: block;
+    width: 500vh;
+    height: 500vh;
+    background-color: rgb(0 0 0 / 70%);
 }
 
 #Error {
 	position: fixed;
-	z-index: 99;
 	top: 2rem;
 	left: 5%;
+	z-index: 99;
 	width: 100vw;
 	max-width: 80%;
-	background-image: url(${___CSS_LOADER_URL_REPLACEMENT_0___});
 	padding: 2rem;
 	border: solid 2px #ffcb05;
+	background-image: url(${___CSS_LOADER_URL_REPLACEMENT_0___});
 }
 
 #Error .title-row {
+	position: sticky;
+	top: 0;
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
-	position: sticky;
-	top: 0;
-	background-image: url(${___CSS_LOADER_URL_REPLACEMENT_0___});
 	border-bottom: solid 2px #ffcb05;
+	background-image: url(${___CSS_LOADER_URL_REPLACEMENT_0___});
 }
 
 #Error p {
@@ -1105,13 +1105,13 @@ body:has(#Error)::before {
 
 #Error h2, #Error h3 {
 	color: #ffcb05;
-    text-shadow: 1px 1px #000000;
+    text-shadow: 1px 1px #000;
 	letter-spacing: 1px;
 }
 
 #Error .close-button {
-	white-space: nowrap;
 	margin-left: 3rem;
+	white-space: nowrap;
 }
 
 #Error .close-button:hover {
@@ -1119,8 +1119,8 @@ body:has(#Error)::before {
 }
 
 #Error li {
-	margin-bottom: .35rem;
 	max-width: 80vw;
+	margin-bottom: .35rem;
 }
 `, ""]);
 // Exports
@@ -1160,42 +1160,42 @@ ___CSS_LOADER_EXPORT___.push([module.id, `body:has(#PatchNotes) {
 
 body:has(#PatchNotes)::before {
     content: '';
-    display: block;
-    width: 500vh;
-    height: 500vh;
-    z-index: 95;
-    background-color: rgba(0,0,0,.7);
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 95;
+    display: block;
+    width: 500vh;
+    height: 500vh;
+    background-color: rgb(0 0 0 / 70%);
 }
 
 #PatchNotes {
 	position: fixed;
-	z-index: 99;
 	top: 2rem;
 	left: 5%;
+	z-index: 99;
 	width: 100vw;
 	max-width: 80%;
-	background-image: url(${___CSS_LOADER_URL_REPLACEMENT_0___});
 	padding: 2rem;
 	border: solid 2px #ffcb05;
+	background-image: url(${___CSS_LOADER_URL_REPLACEMENT_0___});
 }
 
 #PatchNotes .title-row {
+	position: sticky;
+	top: 0;
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
-	position: sticky;
-	top: 0;
-	background-image: url(${___CSS_LOADER_URL_REPLACEMENT_0___});
 	border-bottom: solid 2px #ffcb05;
+	background-image: url(${___CSS_LOADER_URL_REPLACEMENT_0___});
 }
 
 #PatchNotes .patch-notes {
 	max-height: 80vh;
-	overflow-y: auto;
 	margin-top: 2rem;
+	overflow-y: auto;
 }
 
 #PatchNotes .note {
@@ -1204,13 +1204,13 @@ body:has(#PatchNotes)::before {
 
 #PatchNotes h2, #PatchNotes h3 {
 	color: #ffcb05;
-    text-shadow: 1px 1px #000000;
+    text-shadow: 1px 1px #000;
 	letter-spacing: 1px;
 }
 
 #PatchNotes .close-button {
-	white-space: nowrap;
 	margin-left: 3rem;
+	white-space: nowrap;
 }
 
 #PatchNotes .close-button:hover {
@@ -1218,8 +1218,8 @@ body:has(#PatchNotes)::before {
 }
 
 #PatchNotes li {
-	margin-bottom: .35rem;
 	max-width: 80vw;
+	margin-bottom: .35rem;
 }
 `, ""]);
 // Exports
@@ -1268,11 +1268,100 @@ ___CSS_LOADER_EXPORT___.push([module.id, `#Settings .alarm-setting,
 }
 
 #Settings .alarm-setting p {
+	margin-bottom: 3px;
     font-family: sans-serif;
     font-size: 14px;
     color: #94afbd;
-    text-shadow: 1px 1px #000000;
-	margin-bottom: 3px;
+    text-shadow: 1px 1px #000;
+}
+`, ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "../node_modules/css-loader/dist/cjs.js!./a1sauce/Settings/Library/Styles/button.css":
+/*!*******************************************************************************************!*\
+  !*** ../node_modules/css-loader/dist/cjs.js!./a1sauce/Settings/Library/Styles/button.css ***!
+  \*******************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/noSourceMaps.js */ "../node_modules/css-loader/dist/runtime/noSourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "../node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/getUrl.js */ "../node_modules/css-loader/dist/runtime/getUrl.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__);
+// Imports
+
+
+
+var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(/*! ../../../NIS/images/button_small.png */ "./a1sauce/NIS/images/button_small.png"), __webpack_require__.b);
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `.nisbutton-small {
+	position: relative;
+	min-width: 215px;
+	margin: 5px 3px;
+	padding: 3px 1rem;
+	border: solid 1px rgba(136 146 152 / 75%);
+	border-radius: 4px;
+	box-shadow: inset 1px 1px rgb(96 107 111 / 100%);
+	background-color: #0d2d3d;
+	background-image: url(${___CSS_LOADER_URL_REPLACEMENT_0___});
+	font-size: 12px;
+	font-weight: 300;
+	color: #abcdddfa;
+    text-align: center;
+	overflow: hidden;
+	cursor: pointer;
+	background-repeat: repeat-x;
+}
+
+.nisbutton-small::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 3;
+	display: block;
+	width: calc(100% - 2px);
+	height: calc(100% - 3px);
+	border: solid 1px rgb(24 27 27 / 90%);
+	border-radius: 5px;
+	border-bottom-width: 2px;
+	border-bottom-color: rgb(0 0 0 / 70%);
+	opacity: 1;
+}
+
+.nisbutton-small::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 2;
+	display: block;
+	width: 100%;
+	height: 100%;
+	border-radius: 5px;
+	background-image: linear-gradient(to bottom, rgb(255 255 255.15) 10%, #0d2d3d);
+	opacity: .1;
+}
+
+.nisbutton-small:hover {
+	color: #ffffffe8;
+}
+
+.nisbutton-small:hover::after {
+	background-image: linear-gradient(to bottom, rgb(87 175 223 / 93.8%) 75%, #284351);
+	opacity: .2;
 }
 `, ""]);
 // Exports
@@ -1351,41 +1440,41 @@ var ___CSS_LOADER_URL_REPLACEMENT_2___ = _node_modules_css_loader_dist_runtime_g
 ___CSS_LOADER_EXPORT___.push([module.id, `#Settings input[type="range"] {
    -webkit-appearance: none;
     appearance: none;
-	transition: background 450ms ease-in;
-    cursor: pointer;
+	position: relative;
 	height: 8px;
 	border: solid 1px #697479;
 	border-radius: 3px;
-	position: relative;
+	transition: background 450ms ease-in;
+    cursor: pointer;
 }
 
 #Settings input[type="range"]::before {
-	position: absolute;
-	display: block;
 	content: '';
-	width: calc(100% - 6px);
-	height: 1px;
+	position: absolute;
 	top: auto;
 	bottom: -3px;
-	background-color: #3e5765;
-	z-index: 5;
 	left: 50%;
+	z-index: 5;
+	display: block;
+	width: calc(100% - 6px);
+	height: 1px;
+	background-color: #3e5765;
     transform: translate(-50%);
 }
 
 #Settings input[type="range"]::after {
-	position: absolute;
-	display: block;
 	content: '';
-	width: calc(100% - 1px);
-	height: 2px;
+	position: absolute;
 	top: 1px;
 	bottom: auto;
-	background-color: #09141b;
-	z-index: 2;
 	left: 50%;
+	z-index: 2;
+	display: block;
+	width: calc(100% - 1px);
+	height: 2px;
+	box-shadow: 0 19px 0 #09141b;
+	background-color: #09141b;
     transform: translate(-50%);
-	box-shadow: 0px 19px 0px #09141b;
 }
 
 #Settings input[type="range"]:focus {
@@ -1395,15 +1484,13 @@ ___CSS_LOADER_EXPORT___.push([module.id, `#Settings input[type="range"] {
 #Settings input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
    appearance: none;
-
-
+   position: relative;
+   z-index: 6;
+   width: 9px;
+   height: 20px;
    background-image: url(${___CSS_LOADER_URL_REPLACEMENT_0___});
    background-position: 50% 50%;
    background-repeat: no-repeat;
-   width: 9px;
-   height: 20px;
-   position: relative;
-   z-index: 6;
 }
 
 #Settings .flex-between-middle {
@@ -1420,23 +1507,24 @@ ___CSS_LOADER_EXPORT___.push([module.id, `#Settings input[type="range"] {
 #Settings .minus-btn {
 	width: 16px;
 	height: 16px;
-	background-image: url(${___CSS_LOADER_URL_REPLACEMENT_1___});
-	background-position: 0px 0px;
 	margin-top: 2px;
+	background-image: url(${___CSS_LOADER_URL_REPLACEMENT_1___});
+	background-position: 0 0;
 }
 
 #Settings .plus-btn {
 	width: 16px;
 	height: 16px;
-	background-image: url(${___CSS_LOADER_URL_REPLACEMENT_2___});
-	background-position: 0px 0px;
 	margin-top: 2px;
 	margin-right: 5px;
+	background-image: url(${___CSS_LOADER_URL_REPLACEMENT_2___});
+	background-position: 0 0;
 }
+
 #Settings .minus-btn:hover,
 #Settings .plus-btn:hover {
 	cursor: pointer;
-	background-position: 16px 0px;
+	background-position: 16px 0;
 }
 `, ""]);
 // Exports
@@ -1488,13 +1576,12 @@ ___CSS_LOADER_EXPORT___.push([module.id, `:root {
 
 body {
   display: block;
+  margin: 0;
   padding: 0 .5rem;
   background-color: #0F0F0F;
   background-image: url(${___CSS_LOADER_URL_REPLACEMENT_0___});
-  color: #FFFFFF;
-  overflow-x: hidden;
-  overflow-y: auto;
-  margin: 0;
+  color: #FFF;
+  overflow: hidden auto;
   opacity: 1;
 }
 
@@ -1533,19 +1620,19 @@ body {
 #Settings h2,
 #Settings h3 {
   color: #ffcb05;
-  text-shadow: 1px 1px #000000;
+  text-shadow: 1px 1px #000;
 }
 
 #Settings label {
   font-family: sans-serif;
   font-size: 14px;
   color: #94afbd;
-  text-shadow: 1px 1px #000000;
+  text-shadow: 1px 1px #000;
 }
 
 #Settings .setting:nth-child(2n+0) {
-  background-color: #1c2c34;
   padding: 4px;
+  background-color: #1c2c34;
 }
 
 #Settings .setting:nth-child(2n+0):hover {
@@ -1553,8 +1640,8 @@ body {
 }
 
 #Settings .setting:nth-child(2n+1) {
-  background-color: #071820;
   padding: 4px;
+  background-color: #071820;
 }
 
 #Settings .setting:nth-child(2n+1):hover {
@@ -1570,18 +1657,74 @@ body {
 #Settings .flex u,
 #Settings .reverse-setting u {
   display: block;
-  text-decoration: none;
-  color: #a4c2d1;
   margin-bottom: 2px;
+  color: #a4c2d1;
+  text-decoration: none;
+}
+
+#Settings > p:nth-child(1) {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 0 auto;
+  transform: scale(.7);
+  transform-origin: right;
+}
+
+#Settings.no-external > p:nth-child(1) {
+  display: none !important;
+}
+
+.external-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: .5rem;
+  padding: .5rem 1rem;
+  border: solid 2px rgba(0 0 0 / 70%);
+  border-radius: 1rem;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none !important;
+  text-shadow: 1px 1px 2px rgba(15 15 15 / 80%);
+}
+
+.external-button svg {
+  position: relative;
+  top: 1px;
+  width: 20px;
+  max-width: 20px;
+  max-height: 20px;
+  margin-right: 8px;
+  fill: white;
+}
+
+.discord-button {
+  background-color: #5865f2;
+  color: #fff !important;
+}
+
+.discord-button:hover {
+  background-color: #434b57;
+}
+
+.kofi-button {
+  padding: .3rem 1rem;
+  background-color: #FF5E5B;
+  color: #fff !important;
+}
+
+.kofi-button:hover {
+  background-color: #434b57;
 }
 
 li.disabled {
   display: none !important;
-  height: 0 !important;
   width: 0 !important;
+  height: 0 !important;
+  border: none !important;
   visibility: hidden;
   opacity: 0;
-  border: none !important;
   pointer-events: none;
 }
 
@@ -1608,19 +1751,19 @@ h3 {
 }
 
 #Settings input[type="range"] ~ output {
+  margin-top: .4rem;
   font-size: 14px;
   color: #94afbd;
-  text-shadow: 1px 1px #000000;
-  margin-top: .4rem;
+  text-shadow: 1px 1px #000;
 }
 
 input[type="color"] {
-  margin-right: .5rem;
   width: 21px;
   height: 24px;
-  background-color: transparent;
+  margin-right: .5rem;
   padding: 0;
   border: none;
+  background-color: transparent;
 }
 
 input[type="text"],
@@ -1638,14 +1781,14 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"] ~ span.checkbox {
-  display: block;
   content: '';
+  display: block;
   width: 12px;
   height: 12px;
-  background-color: #181616;
-  border: solid 2px #3a5462;
   margin-left: 2.5rem;
+  border: solid 2px #3a5462;
   border-radius: 2px;
+  background-color: #181616;
 }
 
 .reverse-setting:hover input[type="checkbox"] ~ span.checkbox {
@@ -1653,16 +1796,16 @@ input[type="checkbox"] ~ span.checkbox {
 }
 
 input[type="checkbox"]:checked ~ span.checkbox::after {
-  position: absolute;
   content: '';
+  position: absolute;
+  top: 50%;
+  right: 2px;
+  z-index: 2;
   display: block;
   width: 12px;
   height: 11px;
-  top: 50%;
-  right: 2px;
-  transform: translateY(-50%);
   background-image: url(${___CSS_LOADER_URL_REPLACEMENT_1___});
-  z-index: 2;
+  transform: translateY(-50%);
 }
 
 .reverse-setting:hover input[type="checkbox"]:checked ~ span.checkbox {
@@ -1675,8 +1818,8 @@ input[type="color"]:hover {
 }
 
 input[type="number"] {
-  margin: 0 .5rem;
   max-width: 40px;
+  margin: 0 .5rem;
   margin-left: 0;
 }
 
@@ -1692,8 +1835,8 @@ small {
 .nisimgbutton {
     width: 20px;
     height: 20px;
-    border: 3px solid #212B2D;
     box-sizing: border-box;
+    border: 3px solid #212B2D;
     border-image: url(${___CSS_LOADER_URL_REPLACEMENT_2___}) 3 fill;
     cursor: pointer;
 }
@@ -1702,48 +1845,48 @@ small {
     filter: brightness(1.2);
 }
 
-/*font stolen from jagex*/
+/* font stolen from jagex */
 @font-face{
 	font-family:'trajan-pro-3';
 	src:url(${___CSS_LOADER_URL_REPLACEMENT_3___});
 }
 
-/*Chromium custom scrollbars, will only work on chromium browsers (such as alt1) */
+/* Chromium custom scrollbars, will only work on chromium browsers (such as alt1) */
 body::-webkit-scrollbar,
 body *:not(.normalscroll)::-webkit-scrollbar
 {width:10px; height:10px;}
 
 body::-webkit-scrollbar-button:start:vertical,
 body *:not(.normalscroll)::-webkit-scrollbar-button:start:vertical
-{background-image:url(${___CSS_LOADER_URL_REPLACEMENT_4___}); background-position:0px 0px; height:15px;}
+{ height:15px;background-image:url(${___CSS_LOADER_URL_REPLACEMENT_4___}); background-position:0 0;}
 
 body::-webkit-scrollbar-button:end:vertical,
 body *:not(.normalscroll)::-webkit-scrollbar-button:end:vertical
-{background-image:url(${___CSS_LOADER_URL_REPLACEMENT_4___}); background-position:-45px 0px; height:15px;}
+{ height:15px;background-image:url(${___CSS_LOADER_URL_REPLACEMENT_4___}); background-position:-45px 0;}
 
 body::-webkit-scrollbar-track:vertical,
 body *:not(.normalscroll)::-webkit-scrollbar-track:vertical
-{background-image:url(${___CSS_LOADER_URL_REPLACEMENT_4___}); background-position:-15px 0px;}
+{background-image:url(${___CSS_LOADER_URL_REPLACEMENT_4___}); background-position:-15px 0;}
 
 body::-webkit-scrollbar-thumb:vertical,
 body *:not(.normalscroll)::-webkit-scrollbar-thumb:vertical
-{background-image:url(${___CSS_LOADER_URL_REPLACEMENT_4___}); background-position:-30px 0px; border-radius:5px;}
+{ border-radius:5px;background-image:url(${___CSS_LOADER_URL_REPLACEMENT_4___}); background-position:-30px 0;}
 
 body::-webkit-scrollbar-button:start:horizontal,
 body *:not(.normalscroll)::-webkit-scrollbar-button:start:horizontal
-{background-image:url(${___CSS_LOADER_URL_REPLACEMENT_5___}); background-position:0px 0px; width:15px;}
+{ width:15px;background-image:url(${___CSS_LOADER_URL_REPLACEMENT_5___}); background-position:0 0;}
 
 body::-webkit-scrollbar-button:end:horizontal,
 body *:not(.normalscroll)::-webkit-scrollbar-button:end:horizontal
-{background-image:url(${___CSS_LOADER_URL_REPLACEMENT_5___}); background-position:0px -45px; width:15px;}
+{ width:15px;background-image:url(${___CSS_LOADER_URL_REPLACEMENT_5___}); background-position:0 -45px;}
 
 body::-webkit-scrollbar-track:horizontal,
 body *:not(.normalscroll)::-webkit-scrollbar-track:horizontal
-{background-image:url(${___CSS_LOADER_URL_REPLACEMENT_5___}); background-position:0px -15px;}
+{background-image:url(${___CSS_LOADER_URL_REPLACEMENT_5___}); background-position:0 -15px;}
 
 body::-webkit-scrollbar-thumb:horizontal,
 body *:not(.normalscroll)::-webkit-scrollbar-thumb:horizontal
-{background-image:url(${___CSS_LOADER_URL_REPLACEMENT_5___}); background-position:0px -30px; border-radius:5px;}
+{ border-radius:5px;background-image:url(${___CSS_LOADER_URL_REPLACEMENT_5___}); background-position:0 -30px;}
 
 body::-webkit-scrollbar-corner,
 body *:not(.normalscroll)::-webkit-scrollbar-corner
@@ -1753,58 +1896,58 @@ input[type="text"],
 input[type="number"],
 input[type="input"],
 select
-	{height:20px; cursor:text; color:#B1AFAE; outline:none; position:relative; padding:0px 4px; box-sizing:border-box; background:linear-gradient(to bottom, #191714,#292222,#100C0C); border:1px solid #514949; font-family:sans-serif; font-size:13px;}
+	{ position:relative;height:20px; padding:0 4px; box-sizing:border-box; border:1px solid #514949; outline:none; background:linear-gradient(to bottom, #191714,#292222,#100C0C); font-family:sans-serif; font-size:13px; color:#B1AFAE; cursor:text;}
 
-select{height:19px; cursor:pointer; outline:none; box-sizing:border-box; padding:0px 0px 0px 4px;}
+select{height:19px; padding:0 0 0 4px; box-sizing:border-box; outline:none; cursor:pointer;}
 select>option{background:#1D190D;}
 
 hr {
-  width:100%; height:0px; border-top:1px solid #000; border-bottom:1px solid #41555F;
+  width:100%; height:0; border-top:1px solid #000; border-bottom:1px solid #41555F;
 }
 
 .nisbutton {
-    height: 32px;
     position: relative;
-    background: url(${___CSS_LOADER_URL_REPLACEMENT_6___}) 0px -100%/24px 400% repeat content-box;
+    height: 32px;
+    margin: 5px;
+    padding: 0 12px;
+    background: url(${___CSS_LOADER_URL_REPLACEMENT_6___}) 0 -100%/24px 400% repeat content-box;
+    font-family: 'trajan-pro-3';
+    font-size: 18px;
+    line-height: 32px;
+    color: #000;
     cursor: pointer;
     text-align: center;
-    color: #000;
-    font-family: 'trajan-pro-3';
     text-shadow: 1px 1px 2px #ecc622;
-    font-size: 18px;
-    margin: 5px;
-    padding: 0px 12px;
-    line-height: 32px;
-    user-select: none;
     -webkit-user-select: none;
+    user-select: none;
 }
 
 .nisbutton::before {
-    width: 12px;
-    height: 100%;
     content: "";
     position: absolute;
-    top: 0px;
-    left: 0px;
-    background: url(${___CSS_LOADER_URL_REPLACEMENT_6___}) 0px 0px / 24px 400%;
+    top: 0;
+    left: 0;
+    width: 12px;
+    height: 100%;
+    background: url(${___CSS_LOADER_URL_REPLACEMENT_6___}) 0 0 / 24px 400%;
 }
 
 .nisbutton::after {
-    width: 12px;
-    height: 100%;
     content: "";
     position: absolute;
-    top: 0px;
-    right: 0px;
-    background: url(${___CSS_LOADER_URL_REPLACEMENT_6___}) -12px 0px / 24px 400%;
+    top: 0;
+    right: 0;
+    width: 12px;
+    height: 100%;
+    background: url(${___CSS_LOADER_URL_REPLACEMENT_6___}) -12px 0 / 24px 400%;
 }
 
 .nisbutton:not([disabled]):hover {
-    background-position: 0px -300%;
+    background-position: 0 -300%;
 }
 
 .nisbutton:not([disabled]):hover::before {
-    background-position: 0px -200%;
+    background-position: 0 -200%;
 }
 
 .nisbutton:not([disabled]):hover::after {
@@ -13992,6 +14135,59 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./a1sauce/Settings/Library/Styles/button.css":
+/*!****************************************************!*\
+  !*** ./a1sauce/Settings/Library/Styles/button.css ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "../node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "../node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "../node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "../node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_button_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../../../node_modules/css-loader/dist/cjs.js!./button.css */ "../node_modules/css-loader/dist/cjs.js!./a1sauce/Settings/Library/Styles/button.css");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_button_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_button_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_button_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_button_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
 /***/ "./a1sauce/Settings/Library/Styles/file.css":
 /*!**************************************************!*\
   !*** ./a1sauce/Settings/Library/Styles/file.css ***!
@@ -14887,6 +15083,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   createButton: () => (/* binding */ createButton)
 /* harmony export */ });
+/* harmony import */ var _Styles_button_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Styles/button.css */ "./a1sauce/Settings/Library/Styles/button.css");
+
 const createButton = (name, content, 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 fn, options) => {
@@ -16627,6 +16825,12 @@ function updateActiveOrientationFromLocalStorage() {
 // Null suppressions are used as these items
 // are added via A1Sauce.Settings and thus will always exist
 function addEventListeners() {
+    if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_16__.getSetting)('hideExternalButtons')) {
+        (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('Settings')?.classList.add('no-external');
+    }
+    (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('hideExternalButtons').addEventListener('change', () => {
+        (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('Settings')?.classList.toggle('no-external');
+    });
     (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('selectedOrientation').addEventListener('change', () => {
         updateActiveOrientationFromLocalStorage();
     });
@@ -18896,15 +19100,24 @@ function updateCombatStyle(combatStyle) {
 }
 const renderSettings = () => {
     settings
-        .addHeader('h2', 'Job Gauges - v' + sauce.getVersion())
-        .addText(`Please <a href="https://discord.gg/KJ2SgWyJFF" target="_blank" rel="nofollow">join the Discord</a> for any suggestions or support`)
+        .addText(`
+            <a class="external-button discord-button" href="https://discord.gg/KJ2SgWyJFF" target="_blank" rel="nofollow"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.14 96.36"><path fill="#fff" d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/></svg></span>Join the Discord Server</a>
+            <a class="external-button kofi-button" href="https://ko-fi.com/nadyanayme" target="_blank" rel="nofollow"><span class="icon"><svg width="800px" height="800px" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg"><path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.667-2.059 3.015z"/></svg></span>Support me on Ko-fi</a>
+            `)
+        .addSeperator()
+        .addHeader('h2', 'Job Gauges ' + sauce.getVersion())
+        .addSeperator()
+        .addHeader('h3', 'Change Active Gauge')
+        .addButton('necromancyCombatStyle', 'Necromancy', () => updateCombatStyle(_types__WEBPACK_IMPORTED_MODULE_11__.CombatStyle.necromancy), { classes: ['nisbutton-small'] })
+        .addButton('magicCombatStyle', 'Magic', () => updateCombatStyle(_types__WEBPACK_IMPORTED_MODULE_11__.CombatStyle.magic), { classes: ['nisbutton-small'] })
+        .addButton('rangedCombatStyle', 'Ranged', () => updateCombatStyle(_types__WEBPACK_IMPORTED_MODULE_11__.CombatStyle.ranged), { classes: ['nisbutton-small'] })
+        .addSeperator()
+        .addButton('repositionOverlay', 'Position Active Gauge', () => (0,_utility__WEBPACK_IMPORTED_MODULE_6__.setOverlayPosition)(false), { classes: ['nisbutton'] })
+        .addButton('repositionOverlay', 'Position All Gauges', () => (0,_utility__WEBPACK_IMPORTED_MODULE_6__.setOverlayPosition)(true), { classes: ['nisbutton'] })
         .addSeperator()
         .addHeader('h3', 'General')
         .addCheckboxSetting('checkForUpdates', 'Periodically check if a new update is available', false)
         .addCheckboxSetting('rememberUiPosition', 'Remember last known position of buff/debuff bars to avoid needing to scan on every app start', true)
-        .addButton('necromancyCombatStyle', 'Swap to Necromancy Gauge', () => updateCombatStyle(_types__WEBPACK_IMPORTED_MODULE_11__.CombatStyle.necromancy), { classes: ['nisbutton'] })
-        .addButton('magicCombatStyle', 'Swap to Magic Gauge', () => updateCombatStyle(_types__WEBPACK_IMPORTED_MODULE_11__.CombatStyle.magic), { classes: ['nisbutton'] })
-        .addButton('rangedCombatStyle', 'Swap to Ranged Gauge', () => updateCombatStyle(_types__WEBPACK_IMPORTED_MODULE_11__.CombatStyle.ranged), { classes: ['nisbutton'] })
         .addCheckboxSetting('automaticSwapping', "Swap gauge automatically when Living Death, Sunshine, or Death's Swiftness are used", false, (event) => _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_9__.GaugeDataSlice.actions.updateState({
         automaticSwapping: event,
     })))
@@ -18915,9 +19128,7 @@ const renderSettings = () => {
         }));
     })
         .addRangeSetting('combatTimer', 'Seconds until Player is no longer "In Combat" after Target Information goes away', { defaultValue: '5', min: 1, max: 600, unit: 's' })
-        .addSeperator()
-        .addButton('repositionOverlay', 'Position Active Gauge', () => (0,_utility__WEBPACK_IMPORTED_MODULE_6__.setOverlayPosition)(false), { classes: ['nisbutton'] })
-        .addButton('repositionOverlay', 'Position All Gauges', () => (0,_utility__WEBPACK_IMPORTED_MODULE_6__.setOverlayPosition)(true), { classes: ['nisbutton'] })
+        .addCheckboxSetting('hideExternalButtons', 'Hide Discord & Ko-fi buttons', false)
         .addSeperator()
         .addHeader('h3', 'Scale')
         .addRangeSetting('scale', 'Adjusts the size of the overlay. You must reload and reposition the overlay after scaling.', { defaultValue: '100', min: 50, max: 300 }, (scaleFactor) => {
@@ -20520,6 +20731,17 @@ module.exports = "data:font/opentype;base64,d09GRk9UVE8AAIM0AAwAAAAAr4QAAAAAAAAA
 
 "use strict";
 module.exports = __webpack_require__.p + "button.png";
+
+/***/ }),
+
+/***/ "./a1sauce/NIS/images/button_small.png":
+/*!*********************************************!*\
+  !*** ./a1sauce/NIS/images/button_small.png ***!
+  \*********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+module.exports = __webpack_require__.p + "button_small.png";
 
 /***/ }),
 
