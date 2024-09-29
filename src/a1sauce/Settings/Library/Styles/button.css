@@ -1,0 +1,55 @@
+.nisbutton-small {
+	position: relative;
+    text-align: center;
+	border-radius: 4px;
+	background-color: #0d2d3d;
+	color: #abcdddfa;
+	margin: 1px 3px 10px;
+	border: solid 1px #889298d3;
+	box-shadow: inset 1px 1px rgba(96, 107, 111, 1);
+	padding: 4px 1rem 4px;
+	font-size: 12px;
+	overflow: hidden;
+	cursor: pointer;
+	font-weight: 300;
+	background-image: url('../../../NIS/images/button_small.png');
+	background-repeat: repeat-x;
+}
+
+.nisbutton-small::before {
+	display: block;
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: calc(100% + 2px);
+	height: calc(100% + 2px);
+	border: solid 1px rgba(96, 107, 111, .9);
+	opacity: 1;
+	z-index: 3;
+	border-radius: 5px;
+	border-bottom: solid 3px rgba(0,0,0,.8);
+}
+
+.nisbutton-small::after {
+	display: block;
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: linear-gradient(to bottom, rgba(255,255,255.15) 10%, #0d2d3d);
+	opacity: .1;
+	z-index: 2;
+	border-radius: 5px;
+}
+
+.nisbutton-small:hover {
+	color: #FFFFFF;
+}
+
+.nisbutton-small:hover::after {
+	background-image: linear-gradient(to bottom, rgba(87, 175, 223, 0.938) 75%, #284351);
+	opacity: .2;
+}

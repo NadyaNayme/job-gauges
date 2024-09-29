@@ -1,3 +1,5 @@
+import '../Styles/button.css';
+
 export const createButton = (
     name: string,
     content: string,

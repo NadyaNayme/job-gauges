@@ -35,6 +35,26 @@ export const renderSettings = () => {
             `Please <a href="https://discord.gg/KJ2SgWyJFF" target="_blank" rel="nofollow">join the Discord</a> for any suggestions or support`,
         )
         .addSeperator()
+        .addHeader('h3', 'Change Active Gauge')
+        .addButton(
+            'necromancyCombatStyle',
+            'Necromancy Gauge',
+            () => updateCombatStyle(CombatStyle.necromancy),
+            { classes: ['nisbutton-small'] },
+        )
+        .addButton(
+            'magicCombatStyle',
+            'Magic Gauge',
+            () => updateCombatStyle(CombatStyle.magic),
+            { classes: ['nisbutton-small'] },
+        )
+        .addButton(
+            'rangedCombatStyle',
+            'Ranged Gauge',
+            () => updateCombatStyle(CombatStyle.ranged),
+            { classes: ['nisbutton-small'] },
+        )
+        .addSeperator()
         .addHeader('h3', 'General')
         .addCheckboxSetting(
             'checkForUpdates',
@@ -45,24 +65,6 @@ export const renderSettings = () => {
             'rememberUiPosition',
             'Remember last known position of buff/debuff bars to avoid needing to scan on every app start',
             true,
-        )
-        .addButton(
-            'necromancyCombatStyle',
-            'Swap to Necromancy Gauge',
-            () => updateCombatStyle(CombatStyle.necromancy),
-            { classes: ['nisbutton'] },
-        )
-        .addButton(
-            'magicCombatStyle',
-            'Swap to Magic Gauge',
-            () => updateCombatStyle(CombatStyle.magic),
-            { classes: ['nisbutton'] },
-        )
-        .addButton(
-            'rangedCombatStyle',
-            'Swap to Ranged Gauge',
-            () => updateCombatStyle(CombatStyle.ranged),
-            { classes: ['nisbutton'] },
         )
         .addCheckboxSetting(
             'automaticSwapping',
