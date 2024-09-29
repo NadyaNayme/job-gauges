@@ -38,19 +38,19 @@ export const renderSettings = () => {
         .addHeader('h3', 'Change Active Gauge')
         .addButton(
             'necromancyCombatStyle',
-            'Necromancy Gauge',
+            'Necromancy',
             () => updateCombatStyle(CombatStyle.necromancy),
             { classes: ['nisbutton-small'] },
         )
         .addButton(
             'magicCombatStyle',
-            'Magic Gauge',
+            'Magic',
             () => updateCombatStyle(CombatStyle.magic),
             { classes: ['nisbutton-small'] },
         )
         .addButton(
             'rangedCombatStyle',
-            'Ranged Gauge',
+            'Ranged',
             () => updateCombatStyle(CombatStyle.ranged),
             { classes: ['nisbutton-small'] },
         )

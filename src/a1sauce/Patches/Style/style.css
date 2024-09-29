@@ -4,42 +4,42 @@ body:has(#PatchNotes) {
 
 body:has(#PatchNotes)::before {
     content: '';
-    display: block;
-    width: 500vh;
-    height: 500vh;
-    z-index: 95;
-    background-color: rgba(0,0,0,.7);
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 95;
+    display: block;
+    width: 500vh;
+    height: 500vh;
+    background-color: rgb(0 0 0 / 70%);
 }
 
 #PatchNotes {
 	position: fixed;
-	z-index: 99;
 	top: 2rem;
 	left: 5%;
+	z-index: 99;
 	width: 100vw;
 	max-width: 80%;
-	background-image: url("../../NIS/images/nis-bg.png");
 	padding: 2rem;
 	border: solid 2px #ffcb05;
+	background-image: url("../../NIS/images/nis-bg.png");
 }
 
 #PatchNotes .title-row {
+	position: sticky;
+	top: 0;
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
-	position: sticky;
-	top: 0;
-	background-image: url("../../NIS/images/nis-bg.png");
 	border-bottom: solid 2px #ffcb05;
+	background-image: url("../../NIS/images/nis-bg.png");
 }
 
 #PatchNotes .patch-notes {
 	max-height: 80vh;
-	overflow-y: auto;
 	margin-top: 2rem;
+	overflow-y: auto;
 }
 
 #PatchNotes .note {
@@ -48,13 +48,13 @@ body:has(#PatchNotes)::before {
 
 #PatchNotes h2, #PatchNotes h3 {
 	color: #ffcb05;
-    text-shadow: 1px 1px #000000;
+    text-shadow: 1px 1px #000;
 	letter-spacing: 1px;
 }
 
 #PatchNotes .close-button {
-	white-space: nowrap;
 	margin-left: 3rem;
+	white-space: nowrap;
 }
 
 #PatchNotes .close-button:hover {
@@ -62,6 +62,6 @@ body:has(#PatchNotes)::before {
 }
 
 #PatchNotes li {
-	margin-bottom: .35rem;
 	max-width: 80vw;
+	margin-bottom: .35rem;
 }

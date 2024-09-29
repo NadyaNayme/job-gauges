@@ -18,9 +18,9 @@
 }
 
 #Settings .alarm-setting p {
+	margin-bottom: 3px;
     font-family: sans-serif;
     font-size: 14px;
     color: #94afbd;
-    text-shadow: 1px 1px #000000;
-	margin-bottom: 3px;
+    text-shadow: 1px 1px #000;
 }
