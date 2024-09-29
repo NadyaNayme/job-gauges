@@ -36,7 +36,7 @@ export const createRangeSetting = (
     rangeInput.setAttribute('max', max.toString());
 
     const value =
-        ((parseInt(rangeInput.value, 10) - parseInt(rangeInput.min, 10)) /
+        ((parseInt(defaultValue, 10) - parseInt(rangeInput.min, 10)) /
             (parseInt(rangeInput.max, 10) - parseInt(rangeInput.min))) *
         100;
 
@@ -59,6 +59,15 @@ export const createRangeSetting = (
             value +
             '%, #0d1c24 100%)';
     };
+
+    function updateRangeInputBackground(rangeInput: HTMLInputElement) {
+        const value =
+            ((parseInt(rangeInput.value, 10) - parseInt(rangeInput.min, 10)) /
+                (parseInt(rangeInput.max, 10) - parseInt(rangeInput.min))) *
+            100;
+
+        rangeInput.style.background = `linear-gradient(to right, #3e5765 0%, #3e5765 ${value}%, #0d1c24 ${value}%, #0d1c24 100%)`;
+    }
 
     async function updateRangeValue(rangeInput: HTMLInputElement, add: boolean) {
         if (add) {
@@ -129,7 +138,7 @@ export const createRangeSetting = (
     const output = createOutput();
     output.setAttribute('id', `${name}Output`);
     output.setAttribute('for', name);
-    output.innerHTML = rangeInput.value + unit;
+    output.innerText = rangeInput.value + unit;
     output.after(unit);
 
     const container = createFlexContainer();
@@ -143,11 +152,12 @@ export const createRangeSetting = (
     container.appendChild(label);
     flexcontainer.appendChild(minusButton);
     flexcontainer.appendChild(rangeInput);
+    updateRangeInputBackground(rangeInput);
     flexcontainer.appendChild(plusButton);
     container.appendChild(flexcontainer);
     container.appendChild(output);
     rangeInput.addEventListener('input', () => {
-        output.innerHTML = rangeInput.value + unit;
+        output.innerText = rangeInput.value + unit;
     });
     return container;
 };

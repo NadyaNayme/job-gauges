@@ -250,38 +250,11 @@ function addEventListeners() {
         updateActiveOrientationFromLocalStorage();
     });
 
-    // For some reason this one calculates incorrectly on load so we override the initial styles here
-    const scaleRange = <HTMLInputElement>getById('scale');
-    const scaleRangevalue =
-        ((parseInt(scaleRange.value, 10) - parseInt(scaleRange.min, 10)) /
-            (parseInt(scaleRange.max, 10) - parseInt(scaleRange.min))) *
-        100;
-    scaleRange.style.background =
-        'linear-gradient(to right, #3e5765 0%, #3e5765 ' +
-        scaleRangevalue +
-        '%, #0d1c24 ' +
-        scaleRangevalue +
-        '%, #0d1c24 100%)';
-
     getById('scale')!.addEventListener('change', async (e) => {
         const scaleFactor = Number((e.target as HTMLInputElement).value);
         store.dispatch(GaugeDataSlice.actions.updateState({ scaleFactor: scaleFactor / 100 }));
         location.reload();
     });
-
-    const combatTimerRange = <HTMLInputElement>getById('combatTimer');
-    const combatTimervalue =
-        ((parseInt(combatTimerRange.value, 10) -
-                parseInt(combatTimerRange.min, 10)) /
-            (parseInt(combatTimerRange.max, 10) -
-                parseInt(combatTimerRange.min))) *
-        100;
-    combatTimerRange.style.background =
-        'linear-gradient(to right, #3e5765 0%, #3e5765 ' +
-        combatTimervalue +
-        '%, #0d1c24 ' +
-        combatTimervalue +
-        '%, #0d1c24 100%)';
 
     document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
         checkbox.addEventListener('change', () => {
