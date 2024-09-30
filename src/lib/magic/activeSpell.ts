@@ -98,7 +98,7 @@ export async function spellsOverlay() {
                 x: adjustPositionForScale(xPosition, scaleFactor),
                 y: adjustPositionForScale(yPosition, scaleFactor),
             },
-            duration: 10000,
+            duration: 30000,
             image: a1lib.encodeImageString(image.toDrawableData()),
             width: image.width,
             category: 'Magic',

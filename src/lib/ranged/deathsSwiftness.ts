@@ -4,6 +4,8 @@ import { clearAbilityOverlays, handleAbilityActiveState } from '../util/ability-
 import { store } from '../../state';
 import { RangedGaugeSlice } from '../../state/gauge-data/ranged-gauge.state';
 import { OverlaysManager } from '../../a1sauce/Overlays';
+import { CombatStyle } from '../../types';
+import { GaugeDataSlice } from '../../state/gauge-data/gauge-data.state';
 
 const ultimateImages = a1lib.webpackImages({
     active: require('../../asset/gauge-ui/ranged/deaths-swiftness/active.data.png'),
@@ -16,7 +18,9 @@ let scaledOnce = false;
 export async function deathsSwiftnessOverlay() {
     const { ranged, gaugeData } = store.getState();
     const { deathsSwiftness } = ranged;
-    const { x, y } = deathsSwiftness.offset;
+    const {
+        offset: { x, y },
+    } = deathsSwiftness;
 
     if (!deathsSwiftness.isActiveOverlay) {
         clearAbilityOverlays('DeathsSwiftness');
@@ -57,6 +61,14 @@ export async function deathsSwiftnessOverlay() {
     }));
 
     OverlaysManager.forceClearOverlay('DeathsSwiftness_Cooldown_Text');
+
+    if (gaugeData.automaticSwapping) {
+        store.dispatch(
+            GaugeDataSlice.actions.updateState({
+                combatStyle: CombatStyle.magic,
+            }),
+        );
+    }
 
     handleAbilityActiveState(abilityData, 'DeathsSwiftness', true);
 

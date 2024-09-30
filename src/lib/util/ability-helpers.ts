@@ -180,18 +180,18 @@ export function handleAbilityActiveState(
         case 'Threads':
         case 'Invoke_Death':
         case 'Darkness':
-            category = 'Necromancy';
+            category = '4';
             break;
         case 'Sunshine':
         case 'Instability':
         case 'Tsunami':
         case 'Soulfire':
-            category = 'Magic';
+            category = '2';
             break;
         case 'DeathsSwiftness':
         case 'CrystalRain':
         case 'RangedSplitSoul':
-            category = 'Ranged';
+            category = '3';
             break;
     }
 
@@ -202,7 +202,7 @@ export function handleAbilityActiveState(
                 x: adjustPositionForScale(xPosition, scaleFactor),
                 y: adjustPositionForScale(yPosition, scaleFactor),
             },
-        duration: 10000,
+        duration: 30000,
         image: a1lib.encodeImageString(image.toDrawableData()),
         width: image.width,
         category: category,

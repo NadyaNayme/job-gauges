@@ -176,27 +176,6 @@ export async function startApp() {
      */
     alarmLoop();
 
-    // Apparently setting GroupZIndex is a pretty expensive call to do in the loop - so let's only do it once
-    alt1.overLaySetGroupZIndex('Undead_Army_Text', 1);
-    alt1.overLaySetGroupZIndex('LivingDeath_Text', 1);
-    alt1.overLaySetGroupZIndex('LivingDeath_Cooldown_Text', 1);
-
-    alt1.overLaySetGroupZIndex('Sunshine_Text', 1);
-    alt1.overLaySetGroupZIndex('Sunshine_Cooldown_Text', 1);
-    alt1.overLaySetGroupZIndex('Instability_Text', 1);
-    alt1.overLaySetGroupZIndex('Instability_Cooldown_Text', 1);
-    alt1.overLaySetGroupZIndex('Tsunami_Text', 1);
-    alt1.overLaySetGroupZIndex('Tsunami_Cooldown_Text', 1);
-    alt1.overLaySetGroupZIndex('Soulfire_Text', 1);
-    alt1.overLaySetGroupZIndex('Soulfire_Cooldown_Text', 1);
-
-    alt1.overLaySetGroupZIndex('DeathsSwiftness_Text', 1);
-    alt1.overLaySetGroupZIndex('DeathsSwiftness_Cooldown_Text', 1);
-    alt1.overLaySetGroupZIndex('CrystalRain_Text', 1);
-    alt1.overLaySetGroupZIndex('CrystalRain_Cooldown_Text', 1);
-    alt1.overLaySetGroupZIndex('PerfectEquilibrium_Text', 1);
-    alt1.overLaySetGroupZIndex('SplitSoul_Text', 1);
-
     findBuffAndDebuffBars();
     beginRendering();
 }
@@ -213,7 +192,7 @@ export function resetPositionsAndFindBuffAndDebuffBars() {
 }
 
 export function beginRendering() {
-    setInterval(() => renderOverlays(), 80);
+    setInterval(() => renderOverlays(), 150);
 }
 
 function calibrationWarning(): void {
@@ -235,18 +214,18 @@ function calibrationWarning(): void {
     }, 8000);
 }
 
+// TODO: Changing Orientation should update Offsets for Necromancy Gauge Components
 function updateActiveOrientationFromLocalStorage(): void {
-    const selectedOrientation = getSetting('selectedOrientation');
-
-    // store.dispatch(NecromancyGaugeSlice.actions.updateActiveOrientation(selectedOrientation));
-    OverlaysManager.forceClearOverlays();
+    return;
 }
 
-// TODO: Get rid of this crap
 // Null suppressions are used as these items
 // are added via A1Sauce.Settings and thus will always exist
 function addEventListeners() {
 
+    /**
+     * Allow users to disable the Discord and Ko-fi buttons
+     */
     if (getSetting('hideExternalButtons')) {
         getById('Settings')?.classList.add('no-external');
     }
@@ -255,19 +234,28 @@ function addEventListeners() {
         getById('Settings')?.classList.toggle('no-external');
     });
 
+    /**
+     * Allow users to select between 1 of 3 premade Necromancy Gauge layouts
+     */
     getById('selectedOrientation')!.addEventListener('change', () => {
         updateActiveOrientationFromLocalStorage();
     });
 
+    /**
+     * Allow users to control the scale of the gauges
+     */
     getById('scale')!.addEventListener('change', async (e) => {
         const scaleFactor = Number((e.target as HTMLInputElement).value);
         store.dispatch(GaugeDataSlice.actions.updateState({ scaleFactor: scaleFactor / 100 }));
         location.reload();
     });
 
+    /**
+     * Allow users to toggle the visibility of individual components
+     */
     document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
         checkbox.addEventListener('change', () => {
-            OverlaysManager.forceClearOverlays(); // Force an instant redraw
+            OverlaysManager.forceClearOverlays();
             const state = store.getState();
             updateSetting('gauge-data', JSON.stringify(state));
         });

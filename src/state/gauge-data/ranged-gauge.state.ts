@@ -11,7 +11,7 @@ const initialState: RangedGaugeState = {
 };
 
 export type RangedPropertyAbilities = 'splitSoul' | 'deathsSwiftness' | 'crystalRain';
-export type RangedAbilities = Extract<Abilities, 'DeathsSwiftness' | 'CrystalRain' | 'SplitSoul'>
+export type RangedAbilities = Extract<Abilities, 'DeathsSwiftness' | 'CrystalRain' | 'RangedSplitSoul'>
 
 export const RangedGaugeSlice = createSlice({
     name: 'RangedGauge',

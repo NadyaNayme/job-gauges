@@ -55,10 +55,10 @@ export async function peOverlay() {
                 x: adjustPositionForScale(xPosition, scaleFactor),
                 y: adjustPositionForScale(yPosition, scaleFactor),
             },
-            duration: 10000,
+            duration: 30000,
             image: a1lib.encodeImageString(image.toDrawableData()),
             width: image.width,
-            category: 'Ranged',
+            category: '3',
         };
         OverlaysManager.updateOverlay(abilityImageOverlay);
     }

@@ -14695,33 +14695,43 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 const OverlaysManager = {
     Overlays: [],
+    overlayTimeouts: new Map(),
     /**
      * Updates an existing managed overlay and if one does not exist adds it to the managed overlays
      * @param overlay - All necessary metadata to draw the overlay
      */
     updateOverlay(overlay) {
         const existingOverlayIndex = OverlaysManager.Overlays.findIndex((existing) => existing.name === overlay.name);
+        // If the overlay exists in Overlays[]
         if (existingOverlayIndex >= 0) {
+            const existingOverlay = OverlaysManager.Overlays[existingOverlayIndex];
+            if (OverlaysManager.overlayTimeouts.has(overlay.name)) {
+                return;
+            }
+            const timeoutId = window.setInterval(() => {
+                OverlaysManager.drawOverlaysByCategory(overlay.category);
+                OverlaysManager.overlayTimeouts.delete(overlay.name);
+            }, 30000);
+            OverlaysManager.overlayTimeouts.set(overlay.name, timeoutId);
+            // Data is different, update the existing overlay
             OverlaysManager.Overlays[existingOverlayIndex] = {
-                ...OverlaysManager.Overlays[existingOverlayIndex],
+                ...existingOverlay,
                 ...overlay,
             };
+            // Redraw the overlay as we have new data
+            OverlaysManager.drawOverlays(overlay);
+            return;
         }
-        else {
-            OverlaysManager.Overlays.push(overlay);
-            // Text overlays should always draw one higher than image overlays so that they appear above
-            if (isTextOverlay(overlay)) {
-                alt1.overLaySetGroupZIndex(overlay.name, 3);
-            }
-            if (isImageOverlay(overlay)) {
-                alt1.overLaySetGroupZIndex(overlay.name, 1);
-            }
+        OverlaysManager.Overlays.push(overlay);
+        // We are adding the overlay to our OverlaysManager - draw them
+        // Text overlays should always draw one higher than image overlays so that they appear above
+        if (isTextOverlay(overlay)) {
+            alt1.overLaySetGroupZIndex(overlay.name, 3);
+            OverlaysManager.drawTextOverlay(overlay);
         }
         if (isImageOverlay(overlay)) {
+            alt1.overLaySetGroupZIndex(overlay.name, 1);
             OverlaysManager.drawImageOverlay(overlay);
-        }
-        if (isTextOverlay(overlay)) {
-            OverlaysManager.drawTextOverlay(overlay);
         }
         if (isRectOverlay(overlay)) {
             OverlaysManager.drawRectOverlay(overlay);
@@ -14785,22 +14795,58 @@ const OverlaysManager = {
         alt1.overLayContinueGroup(name);
     },
     forceClearOverlay(name) {
-        OverlaysManager.freezeOverlay(name);
-        OverlaysManager.clearOverlay(name);
-        OverlaysManager.continueOverlay(name);
+        alt1.overLaySetGroup(name);
+        alt1.overLayFreezeGroup(name);
+        alt1.overLayClearGroup(name);
+        alt1.overLayContinueGroup(name);
+    },
+    /**
+     * Draws all overlays that match the specified category.
+     * @param category - The category to filter overlays by.
+     */
+    drawOverlaysByCategory(category) {
+        // First, clear overlays that do not match the category
+        OverlaysManager.removeOverlaysByCategory(category);
+        // Now draw the remaining overlays that match the category
+        OverlaysManager.Overlays.forEach((overlay) => {
+            if (overlay.category === category) {
+                OverlaysManager.drawOverlays(overlay);
+            }
+            else {
+                OverlaysManager.forceClearOverlay(overlay.name);
+            }
+        });
+    },
+    drawOverlays(overlay) {
+        const existingOverlayIndex = OverlaysManager.Overlays.findIndex((existing) => existing.name === overlay.name);
+        if (isImageOverlay(overlay) && existingOverlayIndex >= 0) {
+            const existingOverlay = OverlaysManager.Overlays[existingOverlayIndex];
+            if (isImageOverlay(existingOverlay) &&
+                !(overlay.image === existingOverlay.image)) {
+                OverlaysManager.drawImageOverlay(overlay);
+            }
+        }
+        if (isTextOverlay(overlay) && existingOverlayIndex >= 0) {
+            const existingOverlay = OverlaysManager.Overlays[existingOverlayIndex];
+            if (isTextOverlay(existingOverlay) &&
+                !(overlay.text === existingOverlay.text)) {
+                OverlaysManager.drawTextOverlay(overlay);
+            }
+        }
+        if (isRectOverlay(overlay)) {
+            OverlaysManager.drawRectOverlay(overlay);
+        }
     },
     drawImageOverlay(overlay) {
         if (!OverlaysManager.overlayExists(overlay.name))
             return;
-        alt1.overLayFreezeGroup(overlay.name);
-        forceClearOverlay(overlay.name);
+        OverlaysManager.forceClearOverlay(overlay.name);
         alt1.overLayImage(overlay.position.x, overlay.position.y, overlay.image, overlay.width, overlay.duration);
-        this.continueOverlay(overlay.name);
     },
     drawTextOverlay(overlay) {
         if (!OverlaysManager.overlayExists(overlay.name))
             return;
-        forceClearOverlay(overlay.name);
+        OverlaysManager.forceClearOverlay(overlay.name);
         alt1.overLayTextEx(overlay.text, overlay.color, overlay.size, overlay.position.x, overlay.position.y, overlay.duration, '', true, true);
         alt1.overLayRefreshGroup(overlay.name);
     },
@@ -14810,12 +14856,30 @@ const OverlaysManager = {
         alt1.overLaySetGroup(overlay.name);
         alt1.overLayRect(overlay.color, overlay.position.x, overlay.position.y, overlay.width, overlay.height, overlay.duration, overlay.lineWidth);
     },
-};
-const forceClearOverlay = (name) => {
-    alt1.overLaySetGroup(name);
-    alt1.overLayFreezeGroup(name);
-    alt1.overLayClearGroup(name);
-    alt1.overLayContinueGroup(name);
+    /**
+     * Removes all overlays and their timers from Overlays[] and overlayTimeouts that
+     * do not match the specified category.
+     * @param category - The category to filter overlays by.
+     */
+    removeOverlaysByCategory(category) {
+        const remainingOverlays = [];
+        OverlaysManager.Overlays.forEach((overlay) => {
+            if (overlay.category === category) {
+                remainingOverlays.push(overlay); // Keep overlays that match the category
+            }
+            else {
+                // If it does not match, clear the timeout and overlays
+                const timeoutId = OverlaysManager.overlayTimeouts.get(overlay.name);
+                if (timeoutId) {
+                    clearTimeout(timeoutId);
+                    OverlaysManager.overlayTimeouts.delete(overlay.name);
+                    console.log(`${timeoutId} removed`);
+                }
+                OverlaysManager.forceClearOverlay(overlay.name);
+            }
+        });
+        OverlaysManager.Overlays = remainingOverlays;
+    },
 };
 const isImageOverlay = (overlay) => {
     return overlay.image !== undefined;
@@ -16818,24 +16882,6 @@ async function startApp() {
      * the state of alarms and what needs to play or not.
      */
     (0,_lib_utility__WEBPACK_IMPORTED_MODULE_0__.alarmLoop)();
-    // Apparently setting GroupZIndex is a pretty expensive call to do in the loop - so let's only do it once
-    alt1.overLaySetGroupZIndex('Undead_Army_Text', 1);
-    alt1.overLaySetGroupZIndex('LivingDeath_Text', 1);
-    alt1.overLaySetGroupZIndex('LivingDeath_Cooldown_Text', 1);
-    alt1.overLaySetGroupZIndex('Sunshine_Text', 1);
-    alt1.overLaySetGroupZIndex('Sunshine_Cooldown_Text', 1);
-    alt1.overLaySetGroupZIndex('Instability_Text', 1);
-    alt1.overLaySetGroupZIndex('Instability_Cooldown_Text', 1);
-    alt1.overLaySetGroupZIndex('Tsunami_Text', 1);
-    alt1.overLaySetGroupZIndex('Tsunami_Cooldown_Text', 1);
-    alt1.overLaySetGroupZIndex('Soulfire_Text', 1);
-    alt1.overLaySetGroupZIndex('Soulfire_Cooldown_Text', 1);
-    alt1.overLaySetGroupZIndex('DeathsSwiftness_Text', 1);
-    alt1.overLaySetGroupZIndex('DeathsSwiftness_Cooldown_Text', 1);
-    alt1.overLaySetGroupZIndex('CrystalRain_Text', 1);
-    alt1.overLaySetGroupZIndex('CrystalRain_Cooldown_Text', 1);
-    alt1.overLaySetGroupZIndex('PerfectEquilibrium_Text', 1);
-    alt1.overLaySetGroupZIndex('SplitSoul_Text', 1);
     findBuffAndDebuffBars();
     beginRendering();
 }
@@ -16849,7 +16895,7 @@ function resetPositionsAndFindBuffAndDebuffBars() {
     findBuffAndDebuffBars();
 }
 function beginRendering() {
-    setInterval(() => renderOverlays(), 80);
+    setInterval(() => renderOverlays(), 150);
 }
 function calibrationWarning() {
     alt1.setTooltip('[JG] Use a Defensive ability such as Freedom or Anticipate to capture buffs location.');
@@ -16865,32 +16911,42 @@ function calibrationWarning() {
         (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_2__.findDebuffsBar)();
     }, 8000);
 }
+// TODO: Changing Orientation should update Offsets for Necromancy Gauge Components
 function updateActiveOrientationFromLocalStorage() {
-    const selectedOrientation = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_16__.getSetting)('selectedOrientation');
-    // store.dispatch(NecromancyGaugeSlice.actions.updateActiveOrientation(selectedOrientation));
-    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_38__.OverlaysManager.forceClearOverlays();
+    return;
 }
-// TODO: Get rid of this crap
 // Null suppressions are used as these items
 // are added via A1Sauce.Settings and thus will always exist
 function addEventListeners() {
+    /**
+     * Allow users to disable the Discord and Ko-fi buttons
+     */
     if ((0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_16__.getSetting)('hideExternalButtons')) {
         (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('Settings')?.classList.add('no-external');
     }
     (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('hideExternalButtons').addEventListener('change', () => {
         (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('Settings')?.classList.toggle('no-external');
     });
+    /**
+     * Allow users to select between 1 of 3 premade Necromancy Gauge layouts
+     */
     (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('selectedOrientation').addEventListener('change', () => {
         updateActiveOrientationFromLocalStorage();
     });
+    /**
+     * Allow users to control the scale of the gauges
+     */
     (0,_a1sauce_Utils_getById__WEBPACK_IMPORTED_MODULE_17__.getById)('scale').addEventListener('change', async (e) => {
         const scaleFactor = Number(e.target.value);
         _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_33__.GaugeDataSlice.actions.updateState({ scaleFactor: scaleFactor / 100 }));
         location.reload();
     });
+    /**
+     * Allow users to toggle the visibility of individual components
+     */
     document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
         checkbox.addEventListener('change', () => {
-            _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_38__.OverlaysManager.forceClearOverlays(); // Force an instant redraw
+            _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_38__.OverlaysManager.forceClearOverlays();
             const state = _state__WEBPACK_IMPORTED_MODULE_34__.store.getState();
             (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_16__.updateSetting)('gauge-data', JSON.stringify(state));
         });
@@ -17094,7 +17150,7 @@ async function spellsOverlay() {
                 x: (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(xPosition, scaleFactor),
                 y: (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(yPosition, scaleFactor),
             },
-            duration: 10000,
+            duration: 30000,
             image: alt1__WEBPACK_IMPORTED_MODULE_5__.encodeImageString(image.toDrawableData()),
             width: image.width,
             category: 'Magic',
@@ -18174,20 +18230,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   deathsSwiftnessOverlay: () => (/* binding */ deathsSwiftnessOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/ability-helpers */ "./lib/util/ability-helpers.ts");
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
 /* harmony import */ var _state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state/gauge-data/ranged-gauge.state */ "./state/gauge-data/ranged-gauge.state.ts");
 /* harmony import */ var _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../a1sauce/Overlays */ "./a1sauce/Overlays/index.ts");
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../types */ "./types/index.ts");
+/* harmony import */ var _state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../state/gauge-data/gauge-data.state */ "./state/gauge-data/gauge-data.state.ts");
 
 
 
 
 
 
-const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_5__.webpackImages({
+
+
+const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_7__.webpackImages({
     active: __webpack_require__(/*! ../../asset/gauge-ui/ranged/deaths-swiftness/active.data.png */ "./asset/gauge-ui/ranged/deaths-swiftness/active.data.png"),
     inactive: __webpack_require__(/*! ../../asset/gauge-ui/ranged/deaths-swiftness/inactive.data.png */ "./asset/gauge-ui/ranged/deaths-swiftness/inactive.data.png"),
 });
@@ -18196,7 +18256,7 @@ let scaledOnce = false;
 async function deathsSwiftnessOverlay() {
     const { ranged, gaugeData } = _state__WEBPACK_IMPORTED_MODULE_2__.store.getState();
     const { deathsSwiftness } = ranged;
-    const { x, y } = deathsSwiftness.offset;
+    const { offset: { x, y }, } = deathsSwiftness;
     if (!deathsSwiftness.isActiveOverlay) {
         (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.clearAbilityOverlays)('DeathsSwiftness');
         return;
@@ -18224,6 +18284,11 @@ async function deathsSwiftnessOverlay() {
         ability: { isOnCooldown: false },
     }));
     _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_4__.OverlaysManager.forceClearOverlay('DeathsSwiftness_Cooldown_Text');
+    if (gaugeData.automaticSwapping) {
+        _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_6__.GaugeDataSlice.actions.updateState({
+            combatStyle: _types__WEBPACK_IMPORTED_MODULE_5__.CombatStyle.magic,
+        }));
+    }
     (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'DeathsSwiftness', true);
     if (lastValue !== deathsSwiftness.time) {
         _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangedGaugeSlice.actions.updateAbility({
@@ -18305,10 +18370,10 @@ async function peOverlay() {
                 x: (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(xPosition, scaleFactor),
                 y: (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(yPosition, scaleFactor),
             },
-            duration: 10000,
+            duration: 30000,
             image: alt1__WEBPACK_IMPORTED_MODULE_3__.encodeImageString(image.toDrawableData()),
             width: image.width,
-            category: 'Ranged',
+            category: '3',
         };
         _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_2__.OverlaysManager.updateOverlay(abilityImageOverlay);
     }
@@ -18906,7 +18971,7 @@ function updateMagicAbility(time, greater, abilityName) {
 const RangedAbilityToName = {
     'DeathsSwiftness': 'deathsSwiftness',
     'CrystalRain': 'crystalRain',
-    'SplitSoul': 'splitSoul',
+    'RangedSplitSoul': 'splitSoul',
 };
 function updateRangeAbility(time, greater, abilityName) {
     const property = RangedAbilityToName[abilityName];
@@ -18962,6 +19027,7 @@ function updateSpell(spellName, active) {
     }));
 }
 function changeCombatStyles(combatStyle) {
+    console.log(combatStyle);
     const { gaugeData } = _state__WEBPACK_IMPORTED_MODULE_8__.store.getState();
     // If the style hasn't changed we don't need to mess with state or overlays.
     if (gaugeData.combatStyle === combatStyle) {
@@ -18970,7 +19036,7 @@ function changeCombatStyles(combatStyle) {
     _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_11__.GaugeDataSlice.actions.updateState({
         combatStyle,
     }));
-    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_13__.OverlaysManager.forceClearOverlays();
+    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_13__.OverlaysManager.drawOverlaysByCategory(combatStyle.toString());
 }
 function updatePeCount(stacks) {
     _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_12__.RangedGaugeSlice.actions.updatePerfectEquilibriumStack({ stacks }));
@@ -19217,6 +19283,7 @@ patchNotes.setNotes(_patchnotes__WEBPACK_IMPORTED_MODULE_5__.notes);
 function updateCombatStyle(combatStyle) {
     _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_9__.GaugeDataSlice.actions.updateCombatStyle(combatStyle));
     _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_12__.OverlaysManager.forceClearOverlays();
+    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_12__.OverlaysManager.drawOverlaysByCategory(combatStyle.toString());
 }
 const renderSettings = () => {
     settings
@@ -19496,18 +19563,18 @@ function handleAbilityActiveState(abilityData, name, active) {
         case 'Threads':
         case 'Invoke_Death':
         case 'Darkness':
-            category = 'Necromancy';
+            category = '4';
             break;
         case 'Sunshine':
         case 'Instability':
         case 'Tsunami':
         case 'Soulfire':
-            category = 'Magic';
+            category = '2';
             break;
         case 'DeathsSwiftness':
         case 'CrystalRain':
         case 'RangedSplitSoul':
-            category = 'Ranged';
+            category = '3';
             break;
     }
     const abilityImageOverlay = {
@@ -19517,7 +19584,7 @@ function handleAbilityActiveState(abilityData, name, active) {
             x: (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(xPosition, scaleFactor),
             y: (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(yPosition, scaleFactor),
         },
-        duration: 10000,
+        duration: 30000,
         image: alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(image.toDrawableData()),
         width: image.width,
         category: category,

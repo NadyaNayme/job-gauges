@@ -725,7 +725,7 @@ function updateMagicAbility(time: number, greater: boolean, abilityName: MagicAb
 const RangedAbilityToName = {
     'DeathsSwiftness': 'deathsSwiftness',
     'CrystalRain': 'crystalRain',
-    'SplitSoul': 'splitSoul',
+    'RangedSplitSoul': 'splitSoul',
 } satisfies Record<RangedAbilities, RangedPropertyAbilities>;
 
 function updateRangeAbility(time: number, greater: boolean, abilityName: RangedAbilities) {
@@ -797,6 +797,7 @@ function updateSpell(spellName: 'bloodTithe' | 'glacialEmbrace', active: number)
 }
 
 function changeCombatStyles(combatStyle: CombatStyle) {
+    console.log(combatStyle);
     const { gaugeData } = store.getState();
 
     // If the style hasn't changed we don't need to mess with state or overlays.
@@ -807,8 +808,7 @@ function changeCombatStyles(combatStyle: CombatStyle) {
     store.dispatch(GaugeDataSlice.actions.updateState({
         combatStyle,
     }));
-
-    OverlaysManager.forceClearOverlays();
+    OverlaysManager.drawOverlaysByCategory(combatStyle.toString());
 }
 
 function updatePeCount(stacks: number) {

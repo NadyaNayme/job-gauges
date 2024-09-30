@@ -18,7 +18,7 @@ type ImageOverlayData = {
 
 type TextOverlayData = {
     text: string;
-	size: number;
+    size: number;
     color: number;
 };
 
@@ -40,6 +40,7 @@ type Overlays = ImageOverlay | TextOverlay | RectOverlay;
 
 interface OverlaysManagerInterface {
     Overlays: Overlays[];
+    overlayTimeouts: Map<string, number>;
 
     updateOverlay(overlay: Overlays): void;
     getOverlay(name: string): Overlay | undefined;
@@ -53,13 +54,17 @@ interface OverlaysManagerInterface {
     clearOverlay(name: string): void;
     continueOverlay(name: string): void;
     forceClearOverlay(name: string): void;
+    drawOverlaysByCategory(category: string): void;
+    drawOverlays(overlay: Overlays): void;
     drawImageOverlay(overlay: ImageOverlay): void;
     drawTextOverlay(overlay: TextOverlay): void;
     drawRectOverlay(overlay: RectOverlay): void;
+    removeOverlaysByCategory(category: string): void;
 }
 
 export const OverlaysManager: OverlaysManagerInterface = {
     Overlays: [],
+    overlayTimeouts: new Map<string, number>(),
 
     /**
      * Updates an existing managed overlay and if one does not exist adds it to the managed overlays
@@ -69,27 +74,42 @@ export const OverlaysManager: OverlaysManagerInterface = {
         const existingOverlayIndex = OverlaysManager.Overlays.findIndex(
             (existing) => existing.name === overlay.name,
         );
+
+        // If the overlay exists in Overlays[]
         if (existingOverlayIndex >= 0) {
+            const existingOverlay =
+                OverlaysManager.Overlays[existingOverlayIndex];
+
+            if (OverlaysManager.overlayTimeouts.has(overlay.name)) {
+                return;
+            }
+            const timeoutId = window.setInterval(() => {
+                OverlaysManager.drawOverlaysByCategory(overlay.category);
+                OverlaysManager.overlayTimeouts.delete(overlay.name);
+            }, 30000);
+
+            OverlaysManager.overlayTimeouts.set(overlay.name, timeoutId);
+
+            // Data is different, update the existing overlay
             OverlaysManager.Overlays[existingOverlayIndex] = {
-                ...OverlaysManager.Overlays[existingOverlayIndex],
+                ...existingOverlay,
                 ...overlay,
             };
-        } else {
-            OverlaysManager.Overlays.push(overlay);
+            // Redraw the overlay as we have new data
+            OverlaysManager.drawOverlays(overlay);
+            return;
+        }
+        OverlaysManager.Overlays.push(overlay);
 
-            // Text overlays should always draw one higher than image overlays so that they appear above
-            if (isTextOverlay(overlay)) {
-                alt1.overLaySetGroupZIndex(overlay.name, 3);
-            }
-            if (isImageOverlay(overlay)) {
-                alt1.overLaySetGroupZIndex(overlay.name, 1);
-            }
+        // We are adding the overlay to our OverlaysManager - draw them
+        // Text overlays should always draw one higher than image overlays so that they appear above
+        if (isTextOverlay(overlay)) {
+            alt1.overLaySetGroupZIndex(overlay.name, 3);
+            OverlaysManager.drawTextOverlay(overlay);
         }
         if (isImageOverlay(overlay)) {
+            alt1.overLaySetGroupZIndex(overlay.name, 1);
             OverlaysManager.drawImageOverlay(overlay);
-        }
-        if (isTextOverlay(overlay)) {
-            OverlaysManager.drawTextOverlay(overlay);
         }
         if (isRectOverlay(overlay)) {
             OverlaysManager.drawRectOverlay(overlay);
@@ -166,15 +186,64 @@ export const OverlaysManager: OverlaysManagerInterface = {
     },
 
     forceClearOverlay(name: string) {
-        OverlaysManager.freezeOverlay(name);
-        OverlaysManager.clearOverlay(name);
-        OverlaysManager.continueOverlay(name);
+        alt1.overLaySetGroup(name);
+        alt1.overLayFreezeGroup(name);
+        alt1.overLayClearGroup(name);
+        alt1.overLayContinueGroup(name);
+    },
+
+    /**
+     * Draws all overlays that match the specified category.
+     * @param category - The category to filter overlays by.
+     */
+    drawOverlaysByCategory(category: string) {
+        // First, clear overlays that do not match the category
+        OverlaysManager.removeOverlaysByCategory(category);
+
+        // Now draw the remaining overlays that match the category
+        OverlaysManager.Overlays.forEach((overlay) => {
+            if (overlay.category === category) {
+                OverlaysManager.drawOverlays(overlay);
+            } else {
+                OverlaysManager.forceClearOverlay(overlay.name);
+            }
+        });
+    },
+
+    drawOverlays(overlay: Overlays) {
+        const existingOverlayIndex = OverlaysManager.Overlays.findIndex(
+            (existing) => existing.name === overlay.name,
+        );
+        if (isImageOverlay(overlay) && existingOverlayIndex >= 0) {
+            const existingOverlay =
+                OverlaysManager.Overlays[existingOverlayIndex];
+            if (
+                isImageOverlay(existingOverlay) &&
+                !(overlay.image === existingOverlay.image)
+            ) {
+                OverlaysManager.drawImageOverlay(overlay);
+            }
+        }
+        if (isTextOverlay(overlay) && existingOverlayIndex >= 0) {
+            const existingOverlay =
+                OverlaysManager.Overlays[existingOverlayIndex];
+            if (
+                isTextOverlay(existingOverlay) &&
+                !(overlay.text === existingOverlay.text)
+            ) {
+                OverlaysManager.drawTextOverlay(overlay);
+            }
+        }
+        if (isRectOverlay(overlay)) {
+            OverlaysManager.drawRectOverlay(overlay);
+        }
     },
 
     drawImageOverlay(overlay: ImageOverlay) {
         if (!OverlaysManager.overlayExists(overlay.name)) return;
-        alt1.overLayFreezeGroup(overlay.name);
-        forceClearOverlay(overlay.name);
+
+        OverlaysManager.forceClearOverlay(overlay.name);
+
         alt1.overLayImage(
             overlay.position.x,
             overlay.position.y,
@@ -182,12 +251,13 @@ export const OverlaysManager: OverlaysManagerInterface = {
             overlay.width,
             overlay.duration,
         );
-        this.continueOverlay(overlay.name);
     },
 
     drawTextOverlay(overlay: TextOverlay) {
         if (!OverlaysManager.overlayExists(overlay.name)) return;
-        forceClearOverlay(overlay.name);
+
+        OverlaysManager.forceClearOverlay(overlay.name);
+
         alt1.overLayTextEx(
             overlay.text,
             overlay.color,
@@ -215,23 +285,44 @@ export const OverlaysManager: OverlaysManagerInterface = {
             overlay.lineWidth,
         );
     },
+
+    /**
+     * Removes all overlays and their timers from Overlays[] and overlayTimeouts that
+     * do not match the specified category.
+     * @param category - The category to filter overlays by.
+     */
+    removeOverlaysByCategory(category: string) {
+        const remainingOverlays: Overlays[] = [];
+
+        OverlaysManager.Overlays.forEach((overlay) => {
+            if (overlay.category === category) {
+                remainingOverlays.push(overlay); // Keep overlays that match the category
+            } else {
+                // If it does not match, clear the timeout and overlays
+                const timeoutId = OverlaysManager.overlayTimeouts.get(
+                    overlay.name,
+                );
+                if (timeoutId) {
+                    clearTimeout(timeoutId);
+                    OverlaysManager.overlayTimeouts.delete(overlay.name);
+                    console.log(`${timeoutId} removed`);
+                }
+                OverlaysManager.forceClearOverlay(overlay.name);
+            }
+        });
+
+        OverlaysManager.Overlays = remainingOverlays;
+    },
 };
 
-const forceClearOverlay = (name: string) => {
-	alt1.overLaySetGroup(name);
-	alt1.overLayFreezeGroup(name);
-	alt1.overLayClearGroup(name);
-	alt1.overLayContinueGroup(name);
-}
-
 const isImageOverlay = (overlay: Overlay): overlay is ImageOverlay => {
-	return (overlay as ImageOverlay).image !== undefined;
-}
+    return (overlay as ImageOverlay).image !== undefined;
+};
 
 const isTextOverlay = (overlay: Overlay): overlay is TextOverlay => {
-	return (overlay as TextOverlay).text !== undefined;
-}
+    return (overlay as TextOverlay).text !== undefined;
+};
 
 const isRectOverlay = (overlay: Overlay): overlay is RectOverlay => {
-	return (overlay as RectOverlay).lineWidth !== undefined;
-}
+    return (overlay as RectOverlay).lineWidth !== undefined;
+};
