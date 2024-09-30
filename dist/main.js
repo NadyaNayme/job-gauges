@@ -14701,21 +14701,21 @@ const OverlaysManager = {
      * @param overlay - All necessary metadata to draw the overlay
      */
     updateOverlay(overlay) {
-        const existingOverlayIndex = OverlaysManager.Overlays.findIndex((existing) => existing.name === overlay.name);
         // If the overlay exists in Overlays[]
-        if (existingOverlayIndex >= 0) {
+        if (OverlaysManager.overlayExists(overlay.name)) {
             // Data is different, update the existing overlay with the new data
+            const existingOverlayIndex = OverlaysManager.Overlays.findIndex((existing) => existing.name === overlay.name);
             const existingOverlay = OverlaysManager.Overlays[existingOverlayIndex];
             OverlaysManager.Overlays[existingOverlayIndex] = {
                 ...existingOverlay,
                 ...overlay,
             };
-            // Draw the overlay - which will also create a timer to redraw
+            // Redraw the overlay - which will also create a timer to redraw
             OverlaysManager.drawOverlays(overlay);
             return;
         }
+        // If the overlay doesn't exist - add it to Overlays[] then draw them
         OverlaysManager.Overlays.push(overlay);
-        // We are adding the overlay to our OverlaysManager - draw them
         // Text overlays should always draw one higher than image overlays so that they appear above
         if (isTextOverlay(overlay)) {
             alt1.overLaySetGroupZIndex(overlay.name, 3);
@@ -14778,6 +14778,7 @@ const OverlaysManager = {
             }
             alt1.overLayClearGroup(overlay.name);
         });
+        OverlaysManager.Overlays = [];
         OverlaysManager.freezeOverlays();
         OverlaysManager.clearOverlays();
         OverlaysManager.continueOverlays();
@@ -14838,6 +14839,7 @@ const OverlaysManager = {
         /* Start a timer for the overlay to redraw if a timer doesn't already exist */
         if (!OverlaysManager.overlayTimers.get(overlay.name)) {
             const timeoutId = window.setTimeout(() => {
+                OverlaysManager.removeOverlaysByCategory(overlay.category);
                 OverlaysManager.overlayTimers.delete(overlay.name);
                 // Order of operations really matters here. We must delete the key before drawing
                 // otherwise we never recreate the key. (Nyu is very stupid)
@@ -16903,7 +16905,7 @@ function resetPositionsAndFindBuffAndDebuffBars() {
     findBuffAndDebuffBars();
 }
 function beginRendering() {
-    setInterval(() => renderOverlays(), 150);
+    setInterval(() => renderOverlays(), 80);
 }
 function calibrationWarning() {
     alt1.setTooltip('[JG] Use a Defensive ability such as Freedom or Anticipate to capture buffs location.');

@@ -192,7 +192,7 @@ export function resetPositionsAndFindBuffAndDebuffBars() {
 }
 
 export function beginRendering() {
-    setInterval(() => renderOverlays(), 150);
+    setInterval(() => renderOverlays(), 80);
 }
 
 function calibrationWarning(): void {
