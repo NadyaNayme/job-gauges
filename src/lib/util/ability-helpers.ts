@@ -2,6 +2,7 @@
 import * as a1lib from 'alt1';
 import { adjustPositionForScale, white } from '../utility';
 import { ImageOverlay, OverlaysManager } from '../../a1sauce/Overlays';
+import { CombatStyle } from '../../types';
 
 export type AbilityCooldown = {
     positionX: number;
@@ -180,18 +181,18 @@ export function handleAbilityActiveState(
         case 'Threads':
         case 'Invoke_Death':
         case 'Darkness':
-            category = '4';
+            category = CombatStyle.necromancy;
             break;
         case 'Sunshine':
         case 'Instability':
         case 'Tsunami':
         case 'Soulfire':
-            category = '2';
+            category = CombatStyle.magic;
             break;
         case 'DeathsSwiftness':
         case 'CrystalRain':
         case 'RangedSplitSoul':
-            category = '3';
+            category = CombatStyle.ranged;
             break;
     }
 

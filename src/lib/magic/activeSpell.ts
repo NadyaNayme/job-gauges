@@ -1,6 +1,6 @@
 import * as a1lib from 'alt1';
 import ChatReader from 'alt1/chatbox';
-import { ActiveSpellNames, ActiveSpells } from '../../types';
+import { ActiveSpellNames, ActiveSpells, CombatStyle } from '../../types';
 import { StackingPlayerBuff } from '../../types/common';
 import { adjustPositionForScale, handleResizingImages, white } from '../utility';
 import { store } from '../../state';
@@ -101,7 +101,7 @@ export async function spellsOverlay() {
             duration: 30000,
             image: a1lib.encodeImageString(image.toDrawableData()),
             width: image.width,
-            category: 'Magic',
+            category: CombatStyle.magic,
         };
         OverlaysManager.updateOverlay(abilityImageOverlay);
     }

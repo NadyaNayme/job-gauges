@@ -1,3 +1,5 @@
+import { CombatStyle } from "../../types";
+
 type Position = {
     x: number;
     y: number;
@@ -8,7 +10,7 @@ type Overlay = {
     active: boolean;
     position: Position;
     duration: number;
-    category: string;
+    category: number;
 };
 
 type ImageOverlayData = {
@@ -54,12 +56,12 @@ interface OverlaysManagerInterface {
     clearOverlay(name: string): void;
     continueOverlay(name: string): void;
     forceClearOverlay(name: string): void;
-    drawOverlaysByCategory(category: string): void;
+    drawOverlaysByCategory(category: number): void;
     drawOverlays(overlay: Overlays): void;
     drawImageOverlay(overlay: ImageOverlay): void;
     drawTextOverlay(overlay: TextOverlay): void;
     drawRectOverlay(overlay: RectOverlay): void;
-    removeOverlaysByCategory(category: string): void;
+    removeOverlaysByCategory(category: number): void;
 }
 
 export const OverlaysManager: OverlaysManagerInterface = {
@@ -195,7 +197,7 @@ export const OverlaysManager: OverlaysManagerInterface = {
      * Draws all overlays that match the specified category.
      * @param category - The category to filter overlays by.
      */
-    drawOverlaysByCategory(category: string) {
+    drawOverlaysByCategory(category: number) {
         // First, clear overlays that do not match the category
         OverlaysManager.removeOverlaysByCategory(category);
 
@@ -227,7 +229,8 @@ export const OverlaysManager: OverlaysManagerInterface = {
             const existingOverlay =
                 OverlaysManager.Overlays[existingOverlayIndex];
             if (
-                isTextOverlay(existingOverlay) && !OverlaysManager.overlayTimers.get(overlay.name)
+                isTextOverlay(existingOverlay) &&
+                !OverlaysManager.overlayTimers.get(overlay.name)
             ) {
                 OverlaysManager.drawTextOverlay(overlay);
             }
@@ -239,7 +242,9 @@ export const OverlaysManager: OverlaysManagerInterface = {
         /* Start a timer for the overlay to redraw if a timer doesn't already exist */
         if (!OverlaysManager.overlayTimers.get(overlay.name)) {
             const timeoutId = window.setTimeout(() => {
-                OverlaysManager.removeOverlaysByCategory(overlay.category);
+                OverlaysManager.removeOverlaysByCategory(
+                    overlay.category,
+                );
                 OverlaysManager.overlayTimers.delete(overlay.name);
 
                 // Order of operations really matters here. We must delete the key before drawing
@@ -302,7 +307,7 @@ export const OverlaysManager: OverlaysManagerInterface = {
      * do not match the specified category.
      * @param category - The category to filter overlays by.
      */
-    removeOverlaysByCategory(category: string) {
+    removeOverlaysByCategory(category: number) {
         const remainingOverlays: Overlays[] = [];
 
         OverlaysManager.Overlays.forEach((overlay) => {
@@ -320,7 +325,6 @@ export const OverlaysManager: OverlaysManagerInterface = {
         });
 
         OverlaysManager.Overlays = remainingOverlays;
-
     },
 };
 

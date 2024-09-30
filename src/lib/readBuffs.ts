@@ -808,7 +808,7 @@ function changeCombatStyles(combatStyle: CombatStyle) {
     store.dispatch(GaugeDataSlice.actions.updateState({
         combatStyle,
     }));
-    OverlaysManager.drawOverlaysByCategory(combatStyle.toString());
+    OverlaysManager.drawOverlaysByCategory(combatStyle);
 }
 
 function updatePeCount(stacks: number) {

@@ -14829,7 +14829,8 @@ const OverlaysManager = {
         }
         if (isTextOverlay(overlay) && existingOverlayIndex >= 0) {
             const existingOverlay = OverlaysManager.Overlays[existingOverlayIndex];
-            if (isTextOverlay(existingOverlay) && !OverlaysManager.overlayTimers.get(overlay.name)) {
+            if (isTextOverlay(existingOverlay) &&
+                !OverlaysManager.overlayTimers.get(overlay.name)) {
                 OverlaysManager.drawTextOverlay(overlay);
             }
         }
@@ -17163,7 +17164,7 @@ async function spellsOverlay() {
             duration: 30000,
             image: alt1__WEBPACK_IMPORTED_MODULE_5__.encodeImageString(image.toDrawableData()),
             width: image.width,
-            category: 'Magic',
+            category: _types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.magic,
         };
         _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_4__.OverlaysManager.updateOverlay(abilityImageOverlay);
     }
@@ -17542,16 +17543,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   bloatOverlay: () => (/* binding */ bloatOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
 /* harmony import */ var _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../a1sauce/Overlays */ "./a1sauce/Overlays/index.ts");
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../types */ "./types/index.ts");
 
 
 
 
-const bloatImages = alt1__WEBPACK_IMPORTED_MODULE_3__.webpackImages({
+
+const bloatImages = alt1__WEBPACK_IMPORTED_MODULE_4__.webpackImages({
     bloat_100: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/bloat/100.data.png */ "./asset/gauge-ui/necromancy/bloat/100.data.png"),
     bloat_90: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/bloat/90.data.png */ "./asset/gauge-ui/necromancy/bloat/90.data.png"),
     bloat_80: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/bloat/80.data.png */ "./asset/gauge-ui/necromancy/bloat/80.data.png"),
@@ -17618,7 +17621,7 @@ async function bloatOverlay() {
         image = bloatImages.bloat_expired;
     }
     alt1.overLaySetGroup('Bloat');
-    alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.x + bloat.offset.x, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.y + bloat.offset.y, gaugeData.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_3__.encodeImageString(image), image.width, 1000);
+    alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.x + bloat.offset.x, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.y + bloat.offset.y, gaugeData.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_4__.encodeImageString(image), image.width, 1000);
     alt1.overLayRefreshGroup('Bloat');
     const { x, y } = bloat.offset;
     const xPosition = necromancy.position.x + x;
@@ -17631,9 +17634,9 @@ async function bloatOverlay() {
             y: (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(yPosition, gaugeData.scaleFactor),
         },
         duration: 4000,
-        image: alt1__WEBPACK_IMPORTED_MODULE_3__.encodeImageString(image.toDrawableData()),
+        image: alt1__WEBPACK_IMPORTED_MODULE_4__.encodeImageString(image.toDrawableData()),
         width: image.width,
-        category: 'Necromancy',
+        category: _types__WEBPACK_IMPORTED_MODULE_3__.CombatStyle.necromancy,
     };
     _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_2__.OverlaysManager.updateOverlay(abilityImageOverlay);
 }
@@ -18329,16 +18332,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   peOverlay: () => (/* binding */ peOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
 /* harmony import */ var _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../a1sauce/Overlays */ "./a1sauce/Overlays/index.ts");
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../types */ "./types/index.ts");
 
 
 
 
-const bolgImage = alt1__WEBPACK_IMPORTED_MODULE_3__.webpackImages({
+
+const bolgImage = alt1__WEBPACK_IMPORTED_MODULE_4__.webpackImages({
     active: __webpack_require__(/*! ../../asset/gauge-ui/ranged/perfect-equilibrium/active.data.png */ "./asset/gauge-ui/ranged/perfect-equilibrium/active.data.png"),
     inactive: __webpack_require__(/*! ../../asset/gauge-ui/ranged/perfect-equilibrium/inactive.data.png */ "./asset/gauge-ui/ranged/perfect-equilibrium/inactive.data.png"),
 });
@@ -18381,9 +18386,9 @@ async function peOverlay() {
                 y: (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(yPosition, scaleFactor),
             },
             duration: 30000,
-            image: alt1__WEBPACK_IMPORTED_MODULE_3__.encodeImageString(image.toDrawableData()),
+            image: alt1__WEBPACK_IMPORTED_MODULE_4__.encodeImageString(image.toDrawableData()),
             width: image.width,
-            category: '3',
+            category: _types__WEBPACK_IMPORTED_MODULE_3__.CombatStyle.ranged,
         };
         _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_2__.OverlaysManager.updateOverlay(abilityImageOverlay);
     }
@@ -19046,7 +19051,7 @@ function changeCombatStyles(combatStyle) {
     _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_11__.GaugeDataSlice.actions.updateState({
         combatStyle,
     }));
-    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_13__.OverlaysManager.drawOverlaysByCategory(combatStyle.toString());
+    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_13__.OverlaysManager.drawOverlaysByCategory(combatStyle);
 }
 function updatePeCount(stacks) {
     _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_12__.RangedGaugeSlice.actions.updatePerfectEquilibriumStack({ stacks }));
@@ -19293,7 +19298,7 @@ patchNotes.setNotes(_patchnotes__WEBPACK_IMPORTED_MODULE_5__.notes);
 function updateCombatStyle(combatStyle) {
     _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_9__.GaugeDataSlice.actions.updateCombatStyle(combatStyle));
     _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_12__.OverlaysManager.forceClearOverlays();
-    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_12__.OverlaysManager.drawOverlaysByCategory(combatStyle.toString());
+    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_12__.OverlaysManager.drawOverlaysByCategory(combatStyle);
 }
 const renderSettings = () => {
     settings
@@ -19462,10 +19467,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   handleAbilityActiveState: () => (/* binding */ handleAbilityActiveState),
 /* harmony export */   startAbilityCooldown: () => (/* binding */ startAbilityCooldown)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../a1sauce/Overlays */ "./a1sauce/Overlays/index.ts");
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../types */ "./types/index.ts");
+
 
 
 
@@ -19573,18 +19580,18 @@ function handleAbilityActiveState(abilityData, name, active) {
         case 'Threads':
         case 'Invoke_Death':
         case 'Darkness':
-            category = '4';
+            category = _types__WEBPACK_IMPORTED_MODULE_2__.CombatStyle.necromancy;
             break;
         case 'Sunshine':
         case 'Instability':
         case 'Tsunami':
         case 'Soulfire':
-            category = '2';
+            category = _types__WEBPACK_IMPORTED_MODULE_2__.CombatStyle.magic;
             break;
         case 'DeathsSwiftness':
         case 'CrystalRain':
         case 'RangedSplitSoul':
-            category = '3';
+            category = _types__WEBPACK_IMPORTED_MODULE_2__.CombatStyle.ranged;
             break;
     }
     const abilityImageOverlay = {
@@ -19595,7 +19602,7 @@ function handleAbilityActiveState(abilityData, name, active) {
             y: (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(yPosition, scaleFactor),
         },
         duration: 30000,
-        image: alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(image.toDrawableData()),
+        image: alt1__WEBPACK_IMPORTED_MODULE_3__.encodeImageString(image.toDrawableData()),
         width: image.width,
         category: category,
     };

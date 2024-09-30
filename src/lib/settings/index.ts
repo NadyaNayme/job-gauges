@@ -27,7 +27,7 @@ function updateCombatStyle(combatStyle: CombatStyle) {
     store.dispatch(GaugeDataSlice.actions.updateCombatStyle(combatStyle));
 
     OverlaysManager.forceClearOverlays();
-    OverlaysManager.drawOverlaysByCategory(combatStyle.toString());
+    OverlaysManager.drawOverlaysByCategory(combatStyle);
 }
 
 export const renderSettings = () => {

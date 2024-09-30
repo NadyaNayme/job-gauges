@@ -2,6 +2,7 @@ import * as a1lib from 'alt1';
 import { adjustPositionForScale, handleResizingImages, white } from '../utility';
 import { store } from '../../state';
 import { ImageOverlay, OverlaysManager } from '../../a1sauce/Overlays';
+import { CombatStyle } from '../../types';
 
 const bolgImage = a1lib.webpackImages({
     active: require('../../asset/gauge-ui/ranged/perfect-equilibrium/active.data.png'),
@@ -58,7 +59,7 @@ export async function peOverlay() {
             duration: 30000,
             image: a1lib.encodeImageString(image.toDrawableData()),
             width: image.width,
-            category: '3',
+            category: CombatStyle.ranged,
         };
         OverlaysManager.updateOverlay(abilityImageOverlay);
     }
