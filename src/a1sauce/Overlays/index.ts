@@ -40,7 +40,7 @@ type Overlays = ImageOverlay | TextOverlay | RectOverlay;
 
 interface OverlaysManagerInterface {
     Overlays: Overlays[];
-    overlayTimeouts: Map<string, number>;
+    overlayTimers: Map<string, number>;
 
     updateOverlay(overlay: Overlays): void;
     getOverlay(name: string): Overlay | undefined;
@@ -64,7 +64,7 @@ interface OverlaysManagerInterface {
 
 export const OverlaysManager: OverlaysManagerInterface = {
     Overlays: [],
-    overlayTimeouts: new Map<string, number>(),
+    overlayTimers: new Map<string, number>(),
 
     /**
      * Updates an existing managed overlay and if one does not exist adds it to the managed overlays
@@ -77,25 +77,15 @@ export const OverlaysManager: OverlaysManagerInterface = {
 
         // If the overlay exists in Overlays[]
         if (existingOverlayIndex >= 0) {
+            // Data is different, update the existing overlay with the new data
             const existingOverlay =
                 OverlaysManager.Overlays[existingOverlayIndex];
-
-            if (OverlaysManager.overlayTimeouts.has(overlay.name)) {
-                return;
-            }
-            const timeoutId = window.setInterval(() => {
-                OverlaysManager.drawOverlaysByCategory(overlay.category);
-                OverlaysManager.overlayTimeouts.delete(overlay.name);
-            }, 30000);
-
-            OverlaysManager.overlayTimeouts.set(overlay.name, timeoutId);
-
-            // Data is different, update the existing overlay
             OverlaysManager.Overlays[existingOverlayIndex] = {
                 ...existingOverlay,
                 ...overlay,
             };
-            // Redraw the overlay as we have new data
+
+            // Draw the overlay - which will also create a timer to redraw
             OverlaysManager.drawOverlays(overlay);
             return;
         }
@@ -161,9 +151,17 @@ export const OverlaysManager: OverlaysManagerInterface = {
     },
 
     /**
-     * Used to force a redraw of all existing managed overlays at once
+     * Used to force a redraw of all existing managed overlays at once and reset any existing timers
      */
     forceClearOverlays() {
+        OverlaysManager.Overlays.forEach((overlay) => {
+            const timeoutId = OverlaysManager.overlayTimers.get(overlay.name);
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+                OverlaysManager.overlayTimers.delete(overlay.name);
+            }
+            alt1.overLayClearGroup(overlay.name);
+        });
         OverlaysManager.freezeOverlays();
         OverlaysManager.clearOverlays();
         OverlaysManager.continueOverlays();
@@ -219,7 +217,7 @@ export const OverlaysManager: OverlaysManagerInterface = {
                 OverlaysManager.Overlays[existingOverlayIndex];
             if (
                 isImageOverlay(existingOverlay) &&
-                !(overlay.image === existingOverlay.image)
+                !OverlaysManager.overlayTimers.get(overlay.name)
             ) {
                 OverlaysManager.drawImageOverlay(overlay);
             }
@@ -228,14 +226,25 @@ export const OverlaysManager: OverlaysManagerInterface = {
             const existingOverlay =
                 OverlaysManager.Overlays[existingOverlayIndex];
             if (
-                isTextOverlay(existingOverlay) &&
-                !(overlay.text === existingOverlay.text)
+                isTextOverlay(existingOverlay) && !OverlaysManager.overlayTimers.get(overlay.name)
             ) {
                 OverlaysManager.drawTextOverlay(overlay);
             }
         }
         if (isRectOverlay(overlay)) {
             OverlaysManager.drawRectOverlay(overlay);
+        }
+
+        /* Start a timer for the overlay to redraw if a timer doesn't already exist */
+        if (!OverlaysManager.overlayTimers.get(overlay.name)) {
+            const timeoutId = window.setTimeout(() => {
+                OverlaysManager.overlayTimers.delete(overlay.name);
+
+                // Order of operations really matters here. We must delete the key before drawing
+                // otherwise we never recreate the key. (Nyu is very stupid)
+                OverlaysManager.drawOverlays(overlay);
+            }, 15000);
+            OverlaysManager.overlayTimers.set(overlay.name, timeoutId);
         }
     },
 
@@ -287,7 +296,7 @@ export const OverlaysManager: OverlaysManagerInterface = {
     },
 
     /**
-     * Removes all overlays and their timers from Overlays[] and overlayTimeouts that
+     * Removes all overlays and their timers from Overlays[] and overlayTimers that
      * do not match the specified category.
      * @param category - The category to filter overlays by.
      */
@@ -298,20 +307,18 @@ export const OverlaysManager: OverlaysManagerInterface = {
             if (overlay.category === category) {
                 remainingOverlays.push(overlay); // Keep overlays that match the category
             } else {
-                // If it does not match, clear the timeout and overlays
-                const timeoutId = OverlaysManager.overlayTimeouts.get(
-                    overlay.name,
-                );
-                if (timeoutId) {
-                    clearTimeout(timeoutId);
-                    OverlaysManager.overlayTimeouts.delete(overlay.name);
-                    console.log(`${timeoutId} removed`);
-                }
+                // If it does not match clear the overlays
                 OverlaysManager.forceClearOverlay(overlay.name);
+            }
+            const timeoutId = OverlaysManager.overlayTimers.get(overlay.name);
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+                OverlaysManager.overlayTimers.delete(overlay.name);
             }
         });
 
         OverlaysManager.Overlays = remainingOverlays;
+
     },
 };
 
