@@ -62,8 +62,8 @@ export async function spellsOverlay() {
         scaledOnce = true;
     }
 
-    const { position } = spells.bloodTithe;
-    const { x, y } = position.active_orientation;
+    const { offset } = spells.bloodTithe;
+    const { x, y } = offset;
 
     alt1.overLaySetGroup('Spells');
 

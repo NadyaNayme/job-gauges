@@ -44,8 +44,8 @@ export async function necrosisOverlay() {
         scaledOnce = true;
     }
 
-    const { position, stacks } = necrosis;
-    const { x, y } = position.active_orientation;
+    const { offset, stacks } = necrosis;
+    const { x, y } = offset;
     const bloatVisible = !necromancy.bloat.isActiveOverlay;
 
     let bloatSpace = 0;

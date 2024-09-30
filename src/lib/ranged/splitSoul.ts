@@ -3,6 +3,7 @@ import { adjustPositionForScale, forceClearOverlay, handleResizingImages, white 
 import { clearAbilityOverlays, handleAbilityActiveState } from '../util/ability-helpers';
 import { store } from '../../state';
 import { RangedGaugeSlice } from '../../state/gauge-data/ranged-gauge.state';
+import { split } from 'lodash';
 
 const ultimateImages = a1lib.webpackImages({
     active: require('../../asset/gauge-ui/ranged/split-soul/active.data.png'),
@@ -15,7 +16,7 @@ let scaledOnce = false;
 export async function rangedSplitSoulOverlay() {
     const { gaugeData, ranged } = store.getState();
     const { splitSoul } = ranged;
-    const { active_orientation } = ranged.splitSoul.position;
+    const { x, y } = ranged.splitSoul.offset;
 
     if (!splitSoul.isActiveOverlay) {
         clearAbilityOverlays('SplitSoul');
@@ -69,11 +70,11 @@ export async function rangedSplitSoulOverlay() {
             white,
             Math.ceil(14 * (gaugeData.scaleFactor * 0.75)),
             adjustPositionForScale(
-                ranged.position.x + active_orientation.x + 26,
+                ranged.position.x + x + 26,
                 gaugeData.scaleFactor,
             ),
             adjustPositionForScale(
-                ranged.position.y + active_orientation.y + 26,
+                ranged.position.y + y + 26,
                 gaugeData.scaleFactor,
             ),
             3000,

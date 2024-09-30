@@ -14,23 +14,9 @@ export const magic_gauge: MagicGauge = {
             isActiveOverlay: true,
             active: true,
             stacks: 0,
-            position: {
-                active_orientation: {
-                    x: 68,
-                    y: 12,
-                },
-                grouped: {
-                    x: 68,
-                    y: 12,
-                },
-                split: {
-                    x: 68,
-                    y: 12,
-                },
-                reverse_split: {
-                    x: 68,
-                    y: 12,
-                },
+            offset: {
+                x: 68,
+                y: 12,
             },
         },
         glacialEmbrace: {
@@ -38,23 +24,9 @@ export const magic_gauge: MagicGauge = {
             isActiveOverlay: true,
             active: true,
             stacks: 0,
-            position: {
-                active_orientation: {
-                    x: 68,
-                    y: 12,
-                },
-                grouped: {
-                    x: 68,
-                    y: 12,
-                },
-                split: {
-                    x: 68,
-                    y: 12,
-                },
-                reverse_split: {
-                    x: 68,
-                    y: 12,
-                },
+            offset: {
+                x: 68,
+                y: 12,
             },
         },
     },
@@ -64,23 +36,9 @@ export const magic_gauge: MagicGauge = {
         time: 0,
         isOnCooldown: false,
         cooldownDuration: 0,
-        position: {
-            active_orientation: {
-                x: 30,
-                y: 5,
-            },
-            grouped: {
-                x: 30,
-                y: 5,
-            },
-            split: {
-                x: 30,
-                y: 5,
-            },
-            reverse_split: {
-                x: 30,
-                y: 5,
-            },
+        offset: {
+            x: 30,
+            y: 5,
         },
     },
     soulfire: {
@@ -89,23 +47,9 @@ export const magic_gauge: MagicGauge = {
         time: 0,
         isOnCooldown: false,
         cooldownDuration: 0,
-        position: {
-            active_orientation: {
-                x: -3,
-                y: 5,
-            },
-            grouped: {
-                x: -3,
-                y: 5,
-            },
-            split: {
-                x: -3,
-                y: 5,
-            },
-            reverse_split: {
-                x: -3,
-                y: 5,
-            },
+        offset: {
+            x: -3,
+            y: 5,
         },
     },
     tsunami: {
@@ -114,23 +58,9 @@ export const magic_gauge: MagicGauge = {
         time: 0,
         isOnCooldown: false,
         cooldownDuration: 0,
-        position: {
-            active_orientation: {
-                x: 55,
-                y: 45,
-            },
-            grouped: {
-                x: 55,
-                y: 45,
-            },
-            split: {
-                x: 55,
-                y: 45,
-            },
-            reverse_split: {
-                x: 55,
-                y: 45,
-            },
+        offset: {
+            x: 55,
+            y: 45,
         },
     },
     sunshine: {
@@ -139,23 +69,9 @@ export const magic_gauge: MagicGauge = {
         time: 0,
         isOnCooldown: false,
         cooldownDuration: 0,
-        position: {
-            active_orientation: {
-                x: 10,
-                y: 45,
-            },
-            grouped: {
-                x: 10,
-                y: 45,
-            },
-            split: {
-                x: 10,
-                y: 45,
-            },
-            reverse_split: {
-                x: 10,
-                y: 45,
-            },
+        offset: {
+            x: 10,
+            y: 45,
         },
     },
 };

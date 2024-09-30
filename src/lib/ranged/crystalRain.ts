@@ -15,7 +15,7 @@ let scaledOnce = false;
 export async function crystalRainOverlay() {
     const { ranged, gaugeData } = store.getState();
     const { crystalRain } = ranged;
-    const { active_orientation } = crystalRain.position;
+    const { x, y } = ranged.crystalRain.offset;
 
     if (!crystalRain.isActiveOverlay) {
         clearAbilityOverlays('CrystalRain');
@@ -69,11 +69,11 @@ export async function crystalRainOverlay() {
             white,
             Math.ceil(14 * (gaugeData.scaleFactor * 0.75)),
             adjustPositionForScale(
-                ranged.position.x + active_orientation.x + 26,
+                ranged.position.x + x + 26,
                 gaugeData.scaleFactor,
             ),
             adjustPositionForScale(
-                ranged.position.y + active_orientation.y + 26,
+                ranged.position.y + y + 26,
                 gaugeData.scaleFactor,
             ),
             3000,

@@ -15,7 +15,7 @@ let scaledOnce = false;
 export async function deathsSwiftnessOverlay() {
     const { ranged, gaugeData } = store.getState();
     const { deathsSwiftness } = ranged;
-    const { active_orientation } = ranged.deathsSwiftness.position;
+    const { x, y } = ranged.deathsSwiftness.offset;
 
     if (!deathsSwiftness.isActiveOverlay) {
         clearAbilityOverlays('DeathsSwiftness');
@@ -74,11 +74,11 @@ export async function deathsSwiftnessOverlay() {
             white,
             Math.ceil(14 * (gaugeData.scaleFactor * 0.75)),
             adjustPositionForScale(
-                ranged.position.x + active_orientation.x + 26,
+                ranged.position.x + x + 26,
                 gaugeData.scaleFactor,
             ),
             adjustPositionForScale(
-                ranged.position.y + active_orientation.y + 26,
+                ranged.position.y + y + 26,
                 gaugeData.scaleFactor,
             ),
             3000,

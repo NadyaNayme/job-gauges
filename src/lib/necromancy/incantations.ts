@@ -48,7 +48,7 @@ export async function incantationsOverlay() {
     if (isInvokeDeathVisible) {
         handleIncantationOverlays(
             'Invoke_Death',
-            invokeDeath.position.active_orientation.x,
+            invokeDeath.offset.x,
             0,
             invokeDeathImage,
         );
@@ -64,8 +64,8 @@ export async function incantationsOverlay() {
     if (isDarknessVisible) {
         handleIncantationOverlays(
             'Darkness',
-            darknessBuff.position.active_orientation.x,
-            darknessBuff.position.active_orientation.y,
+            darknessBuff.offset.x,
+            darknessBuff.offset.y,
             darknessImage,
         );
     }
@@ -80,7 +80,7 @@ export async function incantationsOverlay() {
     if (isThreadsVisible) {
         handleIncantationOverlays(
             'Threads',
-            threadsAbility.position.active_orientation.x * 2,
+            threadsAbility.offset.x * 2,
             0,
             threadsImage,
         );
@@ -96,8 +96,8 @@ export async function incantationsOverlay() {
     if (isSplitSoulVisible) {
         handleIncantationOverlays(
             'SplitSoul',
-            splitSoul.position.active_orientation.x * 2,
-            splitSoul.position.active_orientation.y,
+            splitSoul.offset.x * 2,
+            splitSoul.offset.y,
             splitSoulImage,
         );
     }

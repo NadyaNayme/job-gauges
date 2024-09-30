@@ -12,23 +12,9 @@ export const melee_gauge: MeleeGauge = {
         time: 0,
         isOnCooldown: false,
         cooldownDuration: 0,
-        position: {
-            active_orientation: {
-                x: 0,
-                y: 0,
-            },
-            grouped: {
-                x: 0,
-                y: 0,
-            },
-            split: {
-                x: 0,
-                y: 0,
-            },
-            reverse_split: {
-                x: 0,
-                y: 0,
-            },
+        offset: {
+            x: 0,
+            y: 0,
         },
     },
 };

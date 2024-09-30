@@ -15,7 +15,7 @@ let scaledOnce = false;
 export async function tsunamiOverlay() {
     const { magic, gaugeData } = store.getState();
     const { tsunami } = magic;
-    const { active_orientation } = tsunami.position;
+    const { x, y } = tsunami.offset;
 
     if (!tsunami.isActiveOverlay) {
         clearAbilityOverlays('Tsunami');
@@ -70,11 +70,11 @@ export async function tsunamiOverlay() {
             white,
             Math.ceil(14 * (gaugeData.scaleFactor * 0.75)),
             adjustPositionForScale(
-                magic.position.x + active_orientation.x + 26,
+                magic.position.x + x + 26,
                 gaugeData.scaleFactor,
             ),
             adjustPositionForScale(
-                magic.position.y + active_orientation.y + 26,
+                magic.position.y + y + 26,
                 gaugeData.scaleFactor,
             ),
             3000,

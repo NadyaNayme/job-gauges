@@ -14682,6 +14682,152 @@ class LogError {
 
 /***/ }),
 
+/***/ "./a1sauce/Overlays/index.ts":
+/*!***********************************!*\
+  !*** ./a1sauce/Overlays/index.ts ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   OverlaysManager: () => (/* binding */ OverlaysManager)
+/* harmony export */ });
+const OverlaysManager = {
+    Overlays: [],
+    /**
+     * Updates an existing managed overlay and if one does not exist adds it to the managed overlays
+     * @param overlay - All necessary metadata to draw the overlay
+     */
+    updateOverlay(overlay) {
+        const existingOverlayIndex = OverlaysManager.Overlays.findIndex((existing) => existing.name === overlay.name);
+        if (existingOverlayIndex >= 0) {
+            OverlaysManager.Overlays[existingOverlayIndex] = {
+                ...OverlaysManager.Overlays[existingOverlayIndex],
+                ...overlay,
+            };
+        }
+        else {
+            OverlaysManager.Overlays.push(overlay);
+            // Text overlays should always draw one higher than image overlays so that they appear above
+            if (isTextOverlay(overlay)) {
+                alt1.overLaySetGroupZIndex(overlay.name, 3);
+            }
+            if (isImageOverlay(overlay)) {
+                alt1.overLaySetGroupZIndex(overlay.name, 1);
+            }
+        }
+        if (isImageOverlay(overlay)) {
+            OverlaysManager.drawImageOverlay(overlay);
+        }
+        if (isTextOverlay(overlay)) {
+            OverlaysManager.drawTextOverlay(overlay);
+        }
+        if (isRectOverlay(overlay)) {
+            OverlaysManager.drawRectOverlay(overlay);
+        }
+        console.log(overlay);
+    },
+    /**
+     * Get an overlay by name
+     * @param name - String that is used to refer to the Overlay
+     * @returns Overlay with matching name
+     */
+    getOverlay(name) {
+        return OverlaysManager.Overlays.find((overlay) => {
+            overlay.name === name;
+        });
+    },
+    overlayExists(name) {
+        return OverlaysManager.Overlays.some((overlay) => overlay.name === name);
+    },
+    /**
+     * Freezes all managed overlays. This will prevent Alt1 from updating them until continueOverlays() is called
+     */
+    freezeOverlays() {
+        OverlaysManager.Overlays.forEach((overlay) => {
+            alt1.overLayFreezeGroup(overlay.name);
+        });
+    },
+    /**
+     * Clears all existing overlays
+     */
+    clearOverlays() {
+        OverlaysManager.Overlays.forEach((overlay) => {
+            alt1.overLayClearGroup(overlay.name);
+        });
+    },
+    /**
+     * Continue rendering all managed overlays
+     */
+    continueOverlays() {
+        OverlaysManager.Overlays.forEach((overlay) => {
+            alt1.overLayContinueGroup(overlay.name);
+        });
+    },
+    /**
+     * Used to force a redraw of all existing managed overlays at once
+     */
+    forceClearOverlays() {
+        OverlaysManager.freezeOverlays();
+        OverlaysManager.clearOverlays();
+        OverlaysManager.continueOverlays();
+    },
+    drawImageOverlay(overlay) {
+        if (!OverlaysManager.overlayExists(overlay.name))
+            return;
+        alt1.overLayImage(overlay.position.x, overlay.position.y, overlay.image, overlay.width, overlay.duration);
+    },
+    drawTextOverlay(overlay) {
+        if (!OverlaysManager.overlayExists(overlay.name))
+            return;
+        forceClearOverlay(overlay.name);
+        alt1.overLayTextEx(overlay.text, overlay.color, overlay.size, overlay.position.x, overlay.position.y, overlay.duration, '', true, true);
+        alt1.overLayRefreshGroup(overlay.name);
+    },
+    drawRectOverlay(overlay) {
+        if (!OverlaysManager.overlayExists(overlay.name))
+            return;
+        alt1.overLaySetGroup(overlay.name);
+        alt1.overLayRect(overlay.color, overlay.position.x, overlay.position.y, overlay.width, overlay.height, overlay.duration, overlay.lineWidth);
+    },
+    /**
+     * TODO: Determine if this is wanted or even needed
+     * Siblings are Overlays that depend on one another in some way
+     * For example, Active and Inactive Overlays are siblings that should never appear together
+     * Text and Cooldown_Text Overlays should also never appear together
+     *
+     * Siblings often share Positional data and should generally be updated together
+     *
+     * @param overlays - Array of overlays that should be joined together as siblings
+     */
+    makeIntoSiblings(overlays) {
+        overlays.forEach((overlay) => {
+            if (!overlays.some((overlay) => overlay.name === overlay.name)) {
+                overlay.siblings?.push(overlay);
+            }
+        });
+    },
+};
+const forceClearOverlay = (name) => {
+    alt1.overLaySetGroup(name);
+    alt1.overLayFreezeGroup(name);
+    alt1.overLayClearGroup(name);
+    alt1.overLayContinueGroup(name);
+};
+const isImageOverlay = (overlay) => {
+    return overlay.image !== undefined;
+};
+const isTextOverlay = (overlay) => {
+    return overlay.text !== undefined;
+};
+const isRectOverlay = (overlay) => {
+    return overlay.lineWidth !== undefined;
+};
+
+
+/***/ }),
+
 /***/ "./a1sauce/Patches/patchNotes.ts":
 /*!***************************************!*\
   !*** ./a1sauce/Patches/patchNotes.ts ***!
@@ -16009,23 +16155,9 @@ const magic_gauge = {
             isActiveOverlay: true,
             active: true,
             stacks: 0,
-            position: {
-                active_orientation: {
-                    x: 68,
-                    y: 12,
-                },
-                grouped: {
-                    x: 68,
-                    y: 12,
-                },
-                split: {
-                    x: 68,
-                    y: 12,
-                },
-                reverse_split: {
-                    x: 68,
-                    y: 12,
-                },
+            offset: {
+                x: 68,
+                y: 12,
             },
         },
         glacialEmbrace: {
@@ -16033,23 +16165,9 @@ const magic_gauge = {
             isActiveOverlay: true,
             active: true,
             stacks: 0,
-            position: {
-                active_orientation: {
-                    x: 68,
-                    y: 12,
-                },
-                grouped: {
-                    x: 68,
-                    y: 12,
-                },
-                split: {
-                    x: 68,
-                    y: 12,
-                },
-                reverse_split: {
-                    x: 68,
-                    y: 12,
-                },
+            offset: {
+                x: 68,
+                y: 12,
             },
         },
     },
@@ -16059,23 +16177,9 @@ const magic_gauge = {
         time: 0,
         isOnCooldown: false,
         cooldownDuration: 0,
-        position: {
-            active_orientation: {
-                x: 30,
-                y: 5,
-            },
-            grouped: {
-                x: 30,
-                y: 5,
-            },
-            split: {
-                x: 30,
-                y: 5,
-            },
-            reverse_split: {
-                x: 30,
-                y: 5,
-            },
+        offset: {
+            x: 30,
+            y: 5,
         },
     },
     soulfire: {
@@ -16084,23 +16188,9 @@ const magic_gauge = {
         time: 0,
         isOnCooldown: false,
         cooldownDuration: 0,
-        position: {
-            active_orientation: {
-                x: -3,
-                y: 5,
-            },
-            grouped: {
-                x: -3,
-                y: 5,
-            },
-            split: {
-                x: -3,
-                y: 5,
-            },
-            reverse_split: {
-                x: -3,
-                y: 5,
-            },
+        offset: {
+            x: -3,
+            y: 5,
         },
     },
     tsunami: {
@@ -16109,23 +16199,9 @@ const magic_gauge = {
         time: 0,
         isOnCooldown: false,
         cooldownDuration: 0,
-        position: {
-            active_orientation: {
-                x: 55,
-                y: 45,
-            },
-            grouped: {
-                x: 55,
-                y: 45,
-            },
-            split: {
-                x: 55,
-                y: 45,
-            },
-            reverse_split: {
-                x: 55,
-                y: 45,
-            },
+        offset: {
+            x: 55,
+            y: 45,
         },
     },
     sunshine: {
@@ -16134,23 +16210,9 @@ const magic_gauge = {
         time: 0,
         isOnCooldown: false,
         cooldownDuration: 0,
-        position: {
-            active_orientation: {
-                x: 10,
-                y: 45,
-            },
-            grouped: {
-                x: 10,
-                y: 45,
-            },
-            split: {
-                x: 10,
-                y: 45,
-            },
-            reverse_split: {
-                x: 10,
-                y: 45,
-            },
+        offset: {
+            x: 10,
+            y: 45,
         },
     },
 };
@@ -16181,23 +16243,27 @@ const necromancy_gauge = {
             isActiveOverlay: true,
             active: true,
             stacks: 0,
-            position: {
-                active_orientation: {
-                    x: 0,
-                    y: 0,
-                },
-                grouped: {
-                    x: -10,
-                    y: 50,
-                },
-                split: {
-                    x: -10,
-                    y: 50,
-                },
-                reverse_split: {
-                    x: -10,
-                    y: 50,
-                },
+            // position: {
+            //     active_orientation: {
+            //         x: 0,
+            //         y: 0,
+            //     },
+            //     grouped: {
+            //         x: -10,
+            //         y: 50,
+            //     },
+            //     split: {
+            //         x: -10,
+            //         y: 50,
+            //     },
+            //     reverse_split: {
+            //         x: -10,
+            //         y: 50,
+            //     },
+            // },
+            offset: {
+                x: -10,
+                y: 50,
             },
             alarm: {
                 isActive: false,
@@ -16212,23 +16278,27 @@ const necromancy_gauge = {
             isActiveOverlay: true,
             active: true,
             stacks: 0,
-            position: {
-                active_orientation: {
-                    x: 0,
-                    y: 0,
-                },
-                grouped: {
-                    x: -10,
-                    y: 99,
-                },
-                split: {
-                    x: -10,
-                    y: 99,
-                },
-                reverse_split: {
-                    x: -10,
-                    y: 99,
-                },
+            // position: {
+            //     active_orientation: {
+            //         x: 0,
+            //         y: 0,
+            //     },
+            //     grouped: {
+            //         x: -10,
+            //         y: 99,
+            //     },
+            //     split: {
+            //         x: -10,
+            //         y: 99,
+            //     },
+            //     reverse_split: {
+            //         x: -10,
+            //         y: 99,
+            //     },
+            // },
+            offset: {
+                x: -10,
+                y: 99,
             },
             alarm: {
                 isActive: false,
@@ -16245,23 +16315,27 @@ const necromancy_gauge = {
     conjures: {
         active: false,
         isActiveOverlay: true,
-        position: {
-            active_orientation: {
-                x: 0,
-                y: 0,
-            },
-            grouped: {
-                x: -12,
-                y: 5,
-            },
-            split: {
-                x: 15,
-                y: 5,
-            },
-            reverse_split: {
-                x: -12,
-                y: 5,
-            },
+        // position: {
+        //     active_orientation: {
+        //         x: 0,
+        //         y: 0,
+        //     },
+        //     grouped: {
+        //         x: -12,
+        //         y: 5,
+        //     },
+        //     split: {
+        //         x: 15,
+        //         y: 5,
+        //     },
+        //     reverse_split: {
+        //         x: -12,
+        //         y: 5,
+        //     },
+        // },
+        offset: {
+            x: -12,
+            y: 5,
         },
         skeleton: {
             name: 'Skeleton_Warrior',
@@ -16295,23 +16369,27 @@ const necromancy_gauge = {
             isActiveOverlay: true,
             time: 0,
             active: false,
-            position: {
-                active_orientation: {
-                    x: 0,
-                    y: 0,
-                },
-                grouped: {
-                    x: 72,
-                    y: 5,
-                },
-                split: {
-                    x: -9,
-                    y: 0,
-                },
-                reverse_split: {
-                    x: 29,
-                    y: 0,
-                },
+            // position: {
+            //     active_orientation: {
+            //         x: 0,
+            //         y: 0,
+            //     },
+            //     grouped: {
+            //         x: 72,
+            //         y: 5,
+            //     },
+            //     split: {
+            //         x: -9,
+            //         y: 0,
+            //     },
+            //     reverse_split: {
+            //         x: 29,
+            //         y: 0,
+            //     },
+            // },
+            offset: {
+                x: 29,
+                y: 0,
             },
         },
         darkness: {
@@ -16319,23 +16397,27 @@ const necromancy_gauge = {
             isActiveOverlay: true,
             time: 0,
             active: false,
-            position: {
-                active_orientation: {
-                    x: 0,
-                    y: 0,
-                },
-                grouped: {
-                    x: 72,
-                    y: 24,
-                },
-                split: {
-                    x: -9,
-                    y: 24,
-                },
-                reverse_split: {
-                    x: 29,
-                    y: 24,
-                },
+            // position: {
+            //     active_orientation: {
+            //         x: 0,
+            //         y: 0,
+            //     },
+            //     grouped: {
+            //         x: 72,
+            //         y: 24,
+            //     },
+            //     split: {
+            //         x: -9,
+            //         y: 24,
+            //     },
+            //     reverse_split: {
+            //         x: 29,
+            //         y: 24,
+            //     },
+            // },
+            offset: {
+                x: 29,
+                y: 24,
             },
         },
         splitSoul: {
@@ -16344,23 +16426,27 @@ const necromancy_gauge = {
             time: 0,
             isOnCooldown: false,
             cooldownDuration: 41,
-            position: {
-                active_orientation: {
-                    x: 0,
-                    y: 0,
-                },
-                grouped: {
-                    x: 50,
-                    y: 24,
-                },
-                split: {
-                    x: 49,
-                    y: 24,
-                },
-                reverse_split: {
-                    x: 28,
-                    y: 24,
-                },
+            // position: {
+            //     active_orientation: {
+            //         x: 0,
+            //         y: 0,
+            //     },
+            //     grouped: {
+            //         x: 50,
+            //         y: 24,
+            //     },
+            //     split: {
+            //         x: 49,
+            //         y: 24,
+            //     },
+            //     reverse_split: {
+            //         x: 28,
+            //         y: 24,
+            //     },
+            // },
+            offset: {
+                x: 28,
+                y: 24,
             },
         },
         threads: {
@@ -16369,23 +16455,27 @@ const necromancy_gauge = {
             time: 0,
             isOnCooldown: false,
             cooldownDuration: 40,
-            position: {
-                active_orientation: {
-                    x: 0,
-                    y: 0,
-                },
-                grouped: {
-                    x: 50,
-                    y: 0,
-                },
-                split: {
-                    x: 49,
-                    y: 0,
-                },
-                reverse_split: {
-                    x: 28,
-                    y: 0,
-                },
+            // position: {
+            //     active_orientation: {
+            //         x: 0,
+            //         y: 0,
+            //     },
+            //     grouped: {
+            //         x: 50,
+            //         y: 0,
+            //     },
+            //     split: {
+            //         x: 49,
+            //         y: 0,
+            //     },
+            //     reverse_split: {
+            //         x: 28,
+            //         y: 0,
+            //     },
+            // },
+            offset: {
+                x: 28,
+                y: 0,
             },
         },
     },
@@ -16395,46 +16485,54 @@ const necromancy_gauge = {
         time: 0,
         isOnCooldown: false,
         cooldownDuration: 60,
-        position: {
-            active_orientation: {
-                x: 0,
-                y: 0,
-            },
-            grouped: {
-                x: 30,
-                y: 5,
-            },
-            split: {
-                x: 58,
-                y: 5,
-            },
-            reverse_split: {
-                x: 81,
-                y: 5,
-            },
+        // position: {
+        //     active_orientation: {
+        //         x: 0,
+        //         y: 0,
+        //     },
+        //     grouped: {
+        //         x: 30,
+        //         y: 5,
+        //     },
+        //     split: {
+        //         x: 58,
+        //         y: 5,
+        //     },
+        //     reverse_split: {
+        //         x: 81,
+        //         y: 5,
+        //     },
+        // },
+        offset: {
+            x: 81,
+            y: 5,
         },
     },
     bloat: {
         isActiveOverlay: true,
         active: false,
         time: 0,
-        position: {
-            active_orientation: {
-                x: 0,
-                y: 0,
-            },
-            grouped: {
-                x: -10,
-                y: 74,
-            },
-            split: {
-                x: -10,
-                y: 74,
-            },
-            reverse_split: {
-                x: -10,
-                y: 74,
-            },
+        // position: {
+        //     active_orientation: {
+        //         x: 0,
+        //         y: 0,
+        //     },
+        //     grouped: {
+        //         x: -10,
+        //         y: 74,
+        //     },
+        //     split: {
+        //         x: -10,
+        //         y: 74,
+        //     },
+        //     reverse_split: {
+        //         x: -10,
+        //         y: 74,
+        //     },
+        // },
+        offset: {
+            x: -10,
+            y: 74,
         },
     },
 };
@@ -16462,6 +16560,10 @@ const ranged_gauge = {
     ammo: {
         isActiveOverlay: true,
         activeAmmo: '',
+        offset: {
+            x: 10,
+            y: 45,
+        }
     },
     balanceByForce: false,
     deathsSwiftness: {
@@ -16470,23 +16572,9 @@ const ranged_gauge = {
         time: 0,
         isOnCooldown: false,
         cooldownDuration: 0,
-        position: {
-            active_orientation: {
-                x: 10,
-                y: 45,
-            },
-            grouped: {
-                x: 10,
-                y: 45,
-            },
-            split: {
-                x: 10,
-                y: 45,
-            },
-            reverse_split: {
-                x: 10,
-                y: 45,
-            },
+        offset: {
+            x: 10,
+            y: 45,
         },
     },
     crystalRain: {
@@ -16495,23 +16583,9 @@ const ranged_gauge = {
         time: 0,
         isOnCooldown: false,
         cooldownDuration: 0,
-        position: {
-            active_orientation: {
-                x: 35,
-                y: 5,
-            },
-            grouped: {
-                x: 35,
-                y: 5,
-            },
-            split: {
-                x: 35,
-                y: 5,
-            },
-            reverse_split: {
-                x: 35,
-                y: 5,
-            },
+        offset: {
+            x: 35,
+            y: 5,
         },
     },
     splitSoul: {
@@ -16520,23 +16594,9 @@ const ranged_gauge = {
         time: 0,
         isOnCooldown: false,
         cooldownDuration: 0,
-        position: {
-            active_orientation: {
-                x: -3,
-                y: 5,
-            },
-            grouped: {
-                x: -3,
-                y: 5,
-            },
-            split: {
-                x: -3,
-                y: 5,
-            },
-            reverse_split: {
-                x: -3,
-                y: 5,
-            },
+        offset: {
+            x: -3,
+            y: 5,
         },
     },
     perfectEquilibrium: {
@@ -16544,23 +16604,9 @@ const ranged_gauge = {
         isActiveOverlay: true,
         active: true,
         stacks: 0,
-        position: {
-            active_orientation: {
-                x: 55,
-                y: 45,
-            },
-            grouped: {
-                x: 55,
-                y: 45,
-            },
-            split: {
-                x: 55,
-                y: 45,
-            },
-            reverse_split: {
-                x: 55,
-                y: 45,
-            },
+        offset: {
+            x: 55,
+            y: 45,
         },
     },
 };
@@ -16818,7 +16864,7 @@ function calibrationWarning() {
 }
 function updateActiveOrientationFromLocalStorage() {
     const selectedOrientation = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_16__.getSetting)('selectedOrientation');
-    _state__WEBPACK_IMPORTED_MODULE_34__.store.dispatch(_state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_37__.NecromancyGaugeSlice.actions.updateActiveOrientation(selectedOrientation));
+    // store.dispatch(NecromancyGaugeSlice.actions.updateActiveOrientation(selectedOrientation));
     (0,_lib_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlays)();
 }
 // TODO: Get rid of this crap
@@ -17012,8 +17058,8 @@ async function spellsOverlay() {
         (0,_utility__WEBPACK_IMPORTED_MODULE_1__.handleResizingImages)(spellImages, gaugeData.scaleFactor);
         scaledOnce = true;
     }
-    const { position } = spells.bloodTithe;
-    const { x, y } = position.active_orientation;
+    const { offset } = spells.bloodTithe;
+    const { x, y } = offset;
     alt1.overLaySetGroup('Spells');
     switch (spells.activeSpell) {
         case 1:
@@ -17100,7 +17146,7 @@ let scaledOnce = false;
 async function fsoaOverlay() {
     const { magic, gaugeData } = _state__WEBPACK_IMPORTED_MODULE_2__.store.getState();
     const { instability } = magic;
-    const { active_orientation } = instability.position;
+    const { x, y } = instability.offset;
     if (!instability.isActiveOverlay) {
         (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.clearAbilityOverlays)('Instability');
         return;
@@ -17138,7 +17184,7 @@ async function fsoaOverlay() {
         alt1.overLaySetGroup('Instability_Text');
         alt1.overLayFreezeGroup('Instability_Text');
         alt1.overLayClearGroup('Instability_Text');
-        alt1.overLayTextEx(`${instability.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.y + active_orientation.y + 30, gaugeData.scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${instability.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.x + x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.y + y + 30, gaugeData.scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup('Instability_Text');
     }
     lastValue = instability.time;
@@ -17178,7 +17224,7 @@ let scaledOnce = false;
 async function soulfireOverlay() {
     const { magic, gaugeData } = _state__WEBPACK_IMPORTED_MODULE_2__.store.getState();
     const { soulfire } = magic;
-    const { active_orientation } = soulfire.position;
+    const { x, y } = soulfire.offset;
     if (!soulfire.isActiveOverlay) {
         (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.clearAbilityOverlays)('Soulfire');
         return;
@@ -17216,7 +17262,7 @@ async function soulfireOverlay() {
         alt1.overLaySetGroup('Soulfire_Text');
         alt1.overLayFreezeGroup('Soulfire_Text');
         alt1.overLayClearGroup('Soulfire_Text');
-        alt1.overLayTextEx(`${soulfire.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.y + active_orientation.y + 30, gaugeData.scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${soulfire.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.x + x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.y + y + 30, gaugeData.scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup('Soulfire_Text');
     }
     lastValue = soulfire.time;
@@ -17260,7 +17306,7 @@ let scaledOnce = false;
 async function sunshineOverlay() {
     const { magic, gaugeData } = _state__WEBPACK_IMPORTED_MODULE_3__.store.getState();
     const { sunshine } = magic;
-    const { position: { active_orientation }, } = sunshine;
+    const { offset: { x, y }, } = sunshine;
     if (!sunshine.isActiveOverlay) {
         (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_2__.clearAbilityOverlays)('Sunshine');
         return;
@@ -17303,7 +17349,7 @@ async function sunshineOverlay() {
         alt1.overLaySetGroup('Sunshine_Text');
         alt1.overLayFreezeGroup('Sunshine_Text');
         alt1.overLayClearGroup('Sunshine_Text');
-        alt1.overLayTextEx(`${sunshine.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.y + active_orientation.y + 26, gaugeData.scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${sunshine.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.x + x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.y + y + 26, gaugeData.scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup('Sunshine_Text');
     }
     lastValue = sunshine.time;
@@ -17343,7 +17389,7 @@ let scaledOnce = false;
 async function tsunamiOverlay() {
     const { magic, gaugeData } = _state__WEBPACK_IMPORTED_MODULE_2__.store.getState();
     const { tsunami } = magic;
-    const { active_orientation } = tsunami.position;
+    const { x, y } = tsunami.offset;
     if (!tsunami.isActiveOverlay) {
         (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.clearAbilityOverlays)('Tsunami');
         return;
@@ -17381,7 +17427,7 @@ async function tsunamiOverlay() {
         alt1.overLaySetGroup('Tsunami_Text');
         alt1.overLayFreezeGroup('Tsunami_Text');
         alt1.overLayClearGroup('Tsunami_Text');
-        alt1.overLayTextEx(`${tsunami.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.y + active_orientation.y + 26, gaugeData.scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${tsunami.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.x + x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(magic.position.y + y + 26, gaugeData.scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup('Tsunami_Text');
     }
     lastValue = tsunami.time;
@@ -17475,7 +17521,7 @@ async function bloatOverlay() {
         image = bloatImages.bloat_expired;
     }
     alt1.overLaySetGroup('Bloat');
-    alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.x + bloat.position.active_orientation.x, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.y + bloat.position.active_orientation.y, gaugeData.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(image), image.width, 1000);
+    alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.x + bloat.offset.x, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.y + bloat.offset.y, gaugeData.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(image), image.width, 1000);
     alt1.overLayRefreshGroup('Bloat');
 }
 
@@ -17520,13 +17566,13 @@ async function conjureOverlay() {
     alt1.overLaySetGroup('Undead_Army');
     if (necromancy.conjures.active) {
         alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.x +
-            necromancy.conjures.position.active_orientation.x, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.y +
-            necromancy.conjures.position.active_orientation.y, gaugeData.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(conjureImages.active.toDrawableData()), conjureImages.active.width, 1000);
+            necromancy.conjures.offset.x, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.y +
+            necromancy.conjures.offset.y, gaugeData.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(conjureImages.active.toDrawableData()), conjureImages.active.width, 1000);
     }
     else {
         alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.x +
-            necromancy.conjures.position.active_orientation.x, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.y +
-            necromancy.conjures.position.active_orientation.y, gaugeData.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(conjureImages.inactive.toDrawableData()), conjureImages.inactive.width, 1000);
+            necromancy.conjures.offset.x, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.y +
+            necromancy.conjures.offset.y, gaugeData.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(conjureImages.inactive.toDrawableData()), conjureImages.inactive.width, 1000);
     }
     const earliest_conjure = [
         necromancy.conjures.skeleton.time,
@@ -17541,7 +17587,7 @@ async function conjureOverlay() {
         alt1.overLayClearGroup('Undead_Army_Text');
         alt1.overLayTextEx(`${minValue}`, white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.x +
             26 +
-            necromancy.conjures.position.active_orientation.x, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.y + 32, gaugeData.scaleFactor), 10000, '', true, true);
+            necromancy.conjures.offset.x, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.y + 32, gaugeData.scaleFactor), 10000, '', true, true);
         lastMinValue = minValue;
     }
     alt1.overLayRefreshGroup('Undead_Army_Text');
@@ -17597,7 +17643,7 @@ async function incantationsOverlay() {
         ? incantationImages.invoke_death
         : incantationImages.invoke_death_inactive;
     if (isInvokeDeathVisible) {
-        handleIncantationOverlays('Invoke_Death', invokeDeath.position.active_orientation.x, 0, invokeDeathImage);
+        handleIncantationOverlays('Invoke_Death', invokeDeath.offset.x, 0, invokeDeathImage);
     }
     const isDarknessVisible = darknessBuff.isActiveOverlay && incantations.isActiveOverlay;
     const isDarknessActive = incantations.active[1];
@@ -17605,7 +17651,7 @@ async function incantationsOverlay() {
         ? incantationImages.darkness
         : incantationImages.darkness_inactive;
     if (isDarknessVisible) {
-        handleIncantationOverlays('Darkness', darknessBuff.position.active_orientation.x, darknessBuff.position.active_orientation.y, darknessImage);
+        handleIncantationOverlays('Darkness', darknessBuff.offset.x, darknessBuff.offset.y, darknessImage);
     }
     const isThreadsVisible = threadsAbility.isActiveOverlay && incantations.isActiveOverlay;
     const isThreadsActive = incantations.active[2];
@@ -17613,7 +17659,7 @@ async function incantationsOverlay() {
         ? incantationImages.threads_inactive
         : incantationImages.threads;
     if (isThreadsVisible) {
-        handleIncantationOverlays('Threads', threadsAbility.position.active_orientation.x * 2, 0, threadsImage);
+        handleIncantationOverlays('Threads', threadsAbility.offset.x * 2, 0, threadsImage);
     }
     const isSplitSoulVisible = splitSoul.isActiveOverlay && incantations.isActiveOverlay;
     const isSplitSoulActive = incantations.active[3];
@@ -17621,7 +17667,7 @@ async function incantationsOverlay() {
         ? incantationImages.split_soul_inactive
         : incantationImages.split_soul;
     if (isSplitSoulVisible) {
-        handleIncantationOverlays('SplitSoul', splitSoul.position.active_orientation.x * 2, splitSoul.position.active_orientation.y, splitSoulImage);
+        handleIncantationOverlays('SplitSoul', splitSoul.offset.x * 2, splitSoul.offset.y, splitSoulImage);
     }
     function handleIncantationOverlays(name, xOffset, yOffset, image) {
         alt1.overLaySetGroup(name);
@@ -17667,7 +17713,7 @@ let scaledOnce = false;
 async function livingDeathOverlay() {
     const { gaugeData, necromancy } = _state__WEBPACK_IMPORTED_MODULE_3__.store.getState();
     const { livingDeath } = necromancy;
-    const { active_orientation } = livingDeath.position;
+    const { x, y } = livingDeath.offset;
     if (!livingDeath.isActiveOverlay) {
         (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_2__.clearAbilityOverlays)('LivingDeath');
         return;
@@ -17708,7 +17754,7 @@ async function livingDeathOverlay() {
         alt1.overLaySetGroup('LivingDeath_Text');
         alt1.overLayFreezeGroup('LivingDeath_Text');
         alt1.overLayClearGroup('LivingDeath_Text');
-        alt1.overLayTextEx(`${livingDeath.time}`, _utility__WEBPACK_IMPORTED_MODULE_1__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(necromancy.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(necromancy.position.y + active_orientation.y + 26, gaugeData.scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${livingDeath.time}`, _utility__WEBPACK_IMPORTED_MODULE_1__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(necromancy.position.x + x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(necromancy.position.y + y + 26, gaugeData.scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup('LivingDeath_Text');
     }
     lastValue = livingDeath.time;
@@ -17769,8 +17815,8 @@ async function necrosisOverlay() {
         (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(necrosisImages, gaugeData.scaleFactor);
         scaledOnce = true;
     }
-    const { position, stacks } = necrosis;
-    const { x, y } = position.active_orientation;
+    const { offset, stacks } = necrosis;
+    const { x, y } = offset;
     const bloatVisible = !necromancy.bloat.isActiveOverlay;
     let bloatSpace = 0;
     if (bloatVisible) {
@@ -17841,8 +17887,8 @@ async function soulsOverlay() {
         scaledOnce = true;
     }
     const activeSoulImages = necromancy.stacks.pre95Souls ? pre95SoulImages : soulImages;
-    const { position } = souls;
-    const { x, y } = position.active_orientation;
+    const { offset } = souls;
+    const { x, y } = offset;
     alt1.overLaySetGroup('Souls');
     const displaySoulImage = (image) => {
         alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.x + x, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.y + y, gaugeData.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(image.toDrawableData()), image.width, 1000);
@@ -17969,8 +18015,9 @@ async function findAmmo(buffs) {
     }
     _state__WEBPACK_IMPORTED_MODULE_1__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_2__.RangedGaugeSlice.actions.updateState({
         ammo: {
-            activeAmmo: ammoActive ? currentAmmo : '',
             isActiveOverlay: ranged.ammo.isActiveOverlay,
+            activeAmmo: ammoActive ? currentAmmo : '',
+            offset: ranged.ammo.offset,
         }
     }));
     displayAmmoName();
@@ -18018,7 +18065,7 @@ let scaledOnce = false;
 async function crystalRainOverlay() {
     const { ranged, gaugeData } = _state__WEBPACK_IMPORTED_MODULE_2__.store.getState();
     const { crystalRain } = ranged;
-    const { active_orientation } = crystalRain.position;
+    const { x, y } = ranged.crystalRain.offset;
     if (!crystalRain.isActiveOverlay) {
         (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.clearAbilityOverlays)('CrystalRain');
         return;
@@ -18056,7 +18103,7 @@ async function crystalRainOverlay() {
         alt1.overLaySetGroup('CrystalRain_Text');
         alt1.overLayFreezeGroup('CrystalRain_Text');
         alt1.overLayClearGroup('CrystalRain_Text');
-        alt1.overLayTextEx(`${crystalRain.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + active_orientation.y + 26, gaugeData.scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${crystalRain.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + y + 26, gaugeData.scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup('CrystalRain_Text');
     }
     lastValue = crystalRain.time;
@@ -18096,7 +18143,7 @@ let scaledOnce = false;
 async function deathsSwiftnessOverlay() {
     const { ranged, gaugeData } = _state__WEBPACK_IMPORTED_MODULE_2__.store.getState();
     const { deathsSwiftness } = ranged;
-    const { active_orientation } = ranged.deathsSwiftness.position;
+    const { x, y } = ranged.deathsSwiftness.offset;
     if (!deathsSwiftness.isActiveOverlay) {
         (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.clearAbilityOverlays)('DeathsSwiftness');
         return;
@@ -18134,7 +18181,7 @@ async function deathsSwiftnessOverlay() {
         alt1.overLaySetGroup('DeathsSwiftness_Text');
         alt1.overLayFreezeGroup('DeathsSwiftness_Text');
         alt1.overLayClearGroup('DeathsSwiftness_Text');
-        alt1.overLayTextEx(`${deathsSwiftness.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + active_orientation.y + 26, gaugeData.scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${deathsSwiftness.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + y + 26, gaugeData.scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup('DeathsSwiftness_Text');
     }
     lastValue = deathsSwiftness.time;
@@ -18171,6 +18218,7 @@ async function peOverlay() {
     const { ranged, gaugeData } = _state__WEBPACK_IMPORTED_MODULE_1__.store.getState();
     const { perfectEquilibrium } = ranged;
     const { stacks } = ranged.perfectEquilibrium;
+    const { x, y } = ranged.perfectEquilibrium.offset;
     if (!perfectEquilibrium.isActiveOverlay) {
         return;
     }
@@ -18179,8 +18227,6 @@ async function peOverlay() {
         (0,_utility__WEBPACK_IMPORTED_MODULE_0__.handleResizingImages)(bolgImage, gaugeData.scaleFactor);
         scaledOnce = true;
     }
-    const { position } = perfectEquilibrium;
-    const { x, y } = position.active_orientation;
     alt1.overLaySetGroup('PerfectEquilibrium');
     if (ranged.balanceByForce) {
         displayBuffImage(bolgImage.active);
@@ -18238,7 +18284,7 @@ let scaledOnce = false;
 async function rangedSplitSoulOverlay() {
     const { gaugeData, ranged } = _state__WEBPACK_IMPORTED_MODULE_2__.store.getState();
     const { splitSoul } = ranged;
-    const { active_orientation } = ranged.splitSoul.position;
+    const { x, y } = ranged.splitSoul.offset;
     if (!splitSoul.isActiveOverlay) {
         (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.clearAbilityOverlays)('SplitSoul');
         return;
@@ -18276,7 +18322,7 @@ async function rangedSplitSoulOverlay() {
         alt1.overLaySetGroup('SplitSoul_Text');
         alt1.overLayFreezeGroup('SplitSoul_Text');
         alt1.overLayClearGroup('SplitSoul_Text');
-        alt1.overLayTextEx(`${splitSoul.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + active_orientation.x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + active_orientation.y + 26, gaugeData.scaleFactor), 3000, '', true, true);
+        alt1.overLayTextEx(`${splitSoul.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + y + 26, gaugeData.scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup('SplitSoul_Text');
     }
     lastValue = splitSoul.time;
@@ -19265,9 +19311,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   handleAbilityActiveState: () => (/* binding */ handleAbilityActiveState),
 /* harmony export */   startAbilityCooldown: () => (/* binding */ startAbilityCooldown)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
+/* harmony import */ var _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../a1sauce/Overlays */ "./a1sauce/Overlays/index.ts");
+
 
 
 const defaultCooldowns = {
@@ -19338,10 +19386,10 @@ function startAbilityCooldown(abilityData, abilityName, greater, updateStateCall
         const cooldownText = `${abilityName}_Cooldown_Text`;
         (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)(cooldownText);
         const xPositionAdjusted = position.x +
-            (ability.position?.active_orientation.x ?? 0) +
+            (ability.offset.x) +
             positionX;
         const yPositionAdjusted = position.y +
-            (ability.position?.active_orientation.y ?? 0) +
+            (ability.offset.y) +
             positionY;
         alt1.overLayTextEx(`${cooldown}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(xPositionAdjusted, scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(yPositionAdjusted, scaleFactor), 3000, '', true, true);
         alt1.overLayRefreshGroup(cooldownText);
@@ -19363,11 +19411,22 @@ function endAbilityCooldown(ability, name) {
  */
 function handleAbilityActiveState(abilityData, name, active) {
     const { position, ability, scaleFactor, images } = abilityData;
+    const { x, y } = ability.offset;
     const image = active ? images.active : images.inactive;
-    const xPosition = position.x + ability.position.active_orientation.x;
-    const yPosition = position.y + ability.position.active_orientation.y;
-    alt1.overLaySetGroup(name);
-    alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(xPosition, scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(yPosition, scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_1__.encodeImageString(image.toDrawableData()), image.width, 1000);
+    const xPosition = position.x + x;
+    const yPosition = position.y + y;
+    const abilityImageOverlay = {
+        name: name,
+        active: active,
+        position: {
+            x: (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(xPosition, scaleFactor),
+            y: (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(yPosition, scaleFactor),
+        },
+        duration: 4000,
+        image: alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(image.toDrawableData()),
+        width: image.width,
+    };
+    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_1__.OverlaysManager.updateOverlay(abilityImageOverlay);
 }
 /**
  * Clear an abilities cooldown text and normal text.
@@ -19936,7 +19995,6 @@ const initialState = {
     isInCombat: false,
     combatStyle: _types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.necromancy,
     updatingOverlayPosition: false,
-    selectedOrientation: 'reverse_split'
 };
 const GaugeDataSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)({
     name: 'GaugeData',
@@ -20082,11 +20140,13 @@ const NecromancyGaugeSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.cr
             return state;
         },
         updateActiveIncantation: (state, action) => {
-            state.incantations.active[action.payload.incantation] = action.payload.active;
+            state.incantations.active[action.payload.incantation] =
+                action.payload.active;
             return state;
         },
         updateIncantationActive: (state, action) => {
-            state.incantations[action.payload.key].isActiveOverlay = action.payload.isActiveOverlay;
+            state.incantations[action.payload.key].isActiveOverlay =
+                action.payload.isActiveOverlay;
             return state;
         },
         updateBloat: (state, action) => {
@@ -20125,41 +20185,8 @@ const NecromancyGaugeSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.cr
             return state;
         },
         updateIsActiveOverlay: (state, action) => {
-            state[action.payload.key].isActiveOverlay = action.payload.isActiveOverlay;
-            return state;
-        },
-        updateActiveOrientation: (state, action) => {
-            // Conjures
-            state.conjures.position.active_orientation = {
-                ...state.conjures.position[action.payload],
-            };
-            // Stacks
-            state.stacks.souls.position.active_orientation = {
-                ...state.stacks.souls.position[action.payload],
-            };
-            state.stacks.necrosis.position.active_orientation = {
-                ...state.stacks.necrosis.position[action.payload],
-            };
-            // Incantations
-            state.incantations.invokeDeath.position.active_orientation = {
-                ...state.incantations.invokeDeath.position[action.payload],
-            };
-            state.incantations.darkness.position.active_orientation = {
-                ...state.incantations.darkness.position[action.payload],
-            };
-            state.incantations.splitSoul.position.active_orientation = {
-                ...state.incantations.splitSoul.position[action.payload],
-            };
-            state.incantations.threads.position.active_orientation = {
-                ...state.incantations.threads.position[action.payload],
-            };
-            // Abilities
-            state.livingDeath.position.active_orientation = {
-                ...state.livingDeath.position[action.payload],
-            };
-            state.bloat.position.active_orientation = {
-                ...state.bloat.position[action.payload],
-            };
+            state[action.payload.key].isActiveOverlay =
+                action.payload.isActiveOverlay;
             return state;
         },
     },

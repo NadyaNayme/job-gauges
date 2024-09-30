@@ -15,7 +15,7 @@ let scaledOnce = false;
 export async function soulfireOverlay() {
     const { magic, gaugeData } = store.getState();
     const { soulfire } = magic;
-    const { active_orientation } = soulfire.position;
+    const { x, y } = soulfire.offset;
 
     if (!soulfire.isActiveOverlay) {
         clearAbilityOverlays('Soulfire');
@@ -70,11 +70,11 @@ export async function soulfireOverlay() {
             white,
             Math.ceil(14 * (gaugeData.scaleFactor * 0.75)),
             adjustPositionForScale(
-                magic.position.x + active_orientation.x + 26,
+                magic.position.x + x + 26,
                 gaugeData.scaleFactor,
             ),
             adjustPositionForScale(
-                magic.position.y + active_orientation.y + 30,
+                magic.position.y + y + 30,
                 gaugeData.scaleFactor,
             ),
             3000,

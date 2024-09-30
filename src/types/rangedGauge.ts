@@ -3,6 +3,7 @@ import { Position, Ability, StackingPlayerBuff } from './common';
 export type Ammo = {
     isActiveOverlay: boolean;
     activeAmmo: string;
+    offset: Position;
 };
 
 export type RangedGauge = {

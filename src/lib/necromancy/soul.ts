@@ -40,8 +40,8 @@ export async function soulsOverlay() {
 
     const activeSoulImages = necromancy.stacks.pre95Souls ? pre95SoulImages : soulImages;
 
-    const { position } = souls;
-    const { x, y } = position.active_orientation;
+    const { offset } = souls;
+    const { x, y } = offset;
 
     alt1.overLaySetGroup('Souls');
 

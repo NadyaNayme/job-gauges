@@ -15,7 +15,7 @@ let scaledOnce = false;
 export async function fsoaOverlay() {
     const { magic, gaugeData } = store.getState();
     const { instability } = magic;
-    const { active_orientation } = instability.position;
+    const { x, y } = instability.offset;
 
     if (!instability.isActiveOverlay) {
         clearAbilityOverlays('Instability');
@@ -75,11 +75,11 @@ export async function fsoaOverlay() {
             white,
             Math.ceil(14 * (gaugeData.scaleFactor * 0.75)),
             adjustPositionForScale(
-                magic.position.x + active_orientation.x + 26,
+                magic.position.x + x + 26,
                 gaugeData.scaleFactor,
             ),
             adjustPositionForScale(
-                magic.position.y + active_orientation.y + 30,
+                magic.position.y + y + 30,
                 gaugeData.scaleFactor,
             ),
             3000,

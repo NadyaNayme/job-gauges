@@ -14,6 +14,7 @@ export async function peOverlay() {
     const { ranged, gaugeData } = store.getState();
     const { perfectEquilibrium } = ranged;
     const { stacks } = ranged.perfectEquilibrium;
+    const { x, y } = ranged.perfectEquilibrium.offset;
 
     if (!perfectEquilibrium.isActiveOverlay) {
         return;
@@ -26,9 +27,6 @@ export async function peOverlay() {
 
         scaledOnce = true;
     }
-
-    const { position } = perfectEquilibrium;
-    const { x, y } = position.active_orientation;
 
     alt1.overLaySetGroup('PerfectEquilibrium');
 

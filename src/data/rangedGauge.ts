@@ -9,6 +9,10 @@ export const ranged_gauge: RangedGauge = {
     ammo: {
         isActiveOverlay: true,
         activeAmmo: '',
+        offset: {
+            x: 10,
+            y: 45,
+        }
     },
     balanceByForce: false,
     deathsSwiftness: {
@@ -17,23 +21,9 @@ export const ranged_gauge: RangedGauge = {
         time: 0,
         isOnCooldown: false,
         cooldownDuration: 0,
-        position: {
-            active_orientation: {
-                x: 10,
-                y: 45,
-            },
-            grouped: {
-                x: 10,
-                y: 45,
-            },
-            split: {
-                x: 10,
-                y: 45,
-            },
-            reverse_split: {
-                x: 10,
-                y: 45,
-            },
+        offset: {
+            x: 10,
+            y: 45,
         },
     },
     crystalRain: {
@@ -42,23 +32,9 @@ export const ranged_gauge: RangedGauge = {
         time: 0,
         isOnCooldown: false,
         cooldownDuration: 0,
-        position: {
-            active_orientation: {
-                x: 35,
-                y: 5,
-            },
-            grouped: {
-                x: 35,
-                y: 5,
-            },
-            split: {
-                x: 35,
-                y: 5,
-            },
-            reverse_split: {
-                x: 35,
-                y: 5,
-            },
+        offset: {
+            x: 35,
+            y: 5,
         },
     },
     splitSoul: {
@@ -67,23 +43,9 @@ export const ranged_gauge: RangedGauge = {
         time: 0,
         isOnCooldown: false,
         cooldownDuration: 0,
-        position: {
-            active_orientation: {
-                x: -3,
-                y: 5,
-            },
-            grouped: {
-                x: -3,
-                y: 5,
-            },
-            split: {
-                x: -3,
-                y: 5,
-            },
-            reverse_split: {
-                x: -3,
-                y: 5,
-            },
+        offset: {
+            x: -3,
+            y: 5,
         },
     },
     perfectEquilibrium: {
@@ -91,23 +53,9 @@ export const ranged_gauge: RangedGauge = {
         isActiveOverlay: true,
         active: true,
         stacks: 0,
-        position: {
-            active_orientation: {
-                x: 55,
-                y: 45,
-            },
-            grouped: {
-                x: 55,
-                y: 45,
-            },
-            split: {
-                x: 55,
-                y: 45,
-            },
-            reverse_split: {
-                x: 55,
-                y: 45,
-            },
+        offset: {
+            x: 55,
+            y: 45,
         },
     },
 };

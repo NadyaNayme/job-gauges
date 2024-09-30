@@ -1,5 +1,5 @@
-interface HasOrientation {
-    position: Orientation;
+interface HasOffset {
+    offset: Position;
 }
 
 interface HasOverlay {
@@ -42,21 +42,8 @@ export type Position = {
     y: number;
 };
 
-/**
- * Necromancy Gauge has multiple defualt Orientations that serves to override the position for most of its components
- * A mistake I hope not to repeat with the other combat styles.
- */
-export type Orientation = {
-    active_orientation: Position;
-    grouped: Position;
-    split: Position;
-    reverse_split: Position;
-};
-
-export type OrientationTypes = keyof Orientation;
-
 export type Ability = HasOverlay &
-    HasOrientation &
+    HasOffset &
     HasCooldown &
     HasTime &
     HasActiveState;
@@ -64,7 +51,7 @@ export type Ability = HasOverlay &
 /**
  * A PlayerBuff is the base class for the types of buffs a player can have. It should not be used on its own and a subtype (TimedPlayerBuff, StackingPLayerBuff, StackingTimedPlayerBuff) should be used instead.
  */
-export type PlayerBuff = HasOverlay & HasOrientation & HasActiveState;
+export type PlayerBuff = HasOverlay & HasOffset & HasActiveState;
 
 /**
  * A TimedPlayerBuff is an overlay that tracks a buff which has a duration of time that it lasts for. The Remaining Duration of the buff is displayed over the buff's icon.
@@ -89,14 +76,11 @@ export type StackingTimedPlayerBuff = PlayerBuff &
  */
 
 export type PlayerDebuff = HasOverlay &
-    HasOrientation &
+    HasOffset &
     HasTime &
     HasActiveState;
 
 /**
  * An EnemyDebuff is an overlay that tracks debuffs from the enemy nameplate. Enemy nameplates do not show the duration a debuff lasts for - the debuff duration is hard coded and tracked by Job Gauges.
  */
-export type EnemyDebuff = HasOverlay &
-    HasOrientation &
-    HasTime &
-    HasActiveState;
+export type EnemyDebuff = HasOverlay & HasOffset & HasTime & HasActiveState;

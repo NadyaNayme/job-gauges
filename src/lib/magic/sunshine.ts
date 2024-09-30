@@ -18,7 +18,7 @@ export async function sunshineOverlay() {
     const { magic, gaugeData } = store.getState();
     const { sunshine } = magic;
     const {
-        position: { active_orientation },
+        offset: { x, y },
     } = sunshine;
 
     if (!sunshine.isActiveOverlay) {
@@ -83,11 +83,11 @@ export async function sunshineOverlay() {
             white,
             Math.ceil(14 * (gaugeData.scaleFactor * 0.75)),
             adjustPositionForScale(
-                magic.position.x + active_orientation.x + 26,
+                magic.position.x + x + 26,
                 gaugeData.scaleFactor,
             ),
             adjustPositionForScale(
-                magic.position.y + active_orientation.y + 26,
+                magic.position.y + y + 26,
                 gaugeData.scaleFactor,
             ),
             3000,

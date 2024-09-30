@@ -238,7 +238,7 @@ function calibrationWarning(): void {
 function updateActiveOrientationFromLocalStorage(): void {
     const selectedOrientation = getSetting('selectedOrientation');
 
-    store.dispatch(NecromancyGaugeSlice.actions.updateActiveOrientation(selectedOrientation));
+    // store.dispatch(NecromancyGaugeSlice.actions.updateActiveOrientation(selectedOrientation));
     forceClearOverlays();
 }
 

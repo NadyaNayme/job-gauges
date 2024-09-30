@@ -32,12 +32,12 @@ export async function conjureOverlay() {
         alt1.overLayImage(
             adjustPositionForScale(
                 necromancy.position.x +
-                necromancy.conjures.position.active_orientation.x,
+                necromancy.conjures.offset.x,
                 gaugeData.scaleFactor,
             ),
             adjustPositionForScale(
                 necromancy.position.y +
-                necromancy.conjures.position.active_orientation.y,
+                necromancy.conjures.offset.y,
                 gaugeData.scaleFactor,
             ),
             a1lib.encodeImageString(conjureImages.active.toDrawableData()),
@@ -48,12 +48,12 @@ export async function conjureOverlay() {
         alt1.overLayImage(
             adjustPositionForScale(
                 necromancy.position.x +
-                necromancy.conjures.position.active_orientation.x,
+                necromancy.conjures.offset.x,
                 gaugeData.scaleFactor,
             ),
             adjustPositionForScale(
                 necromancy.position.y +
-                necromancy.conjures.position.active_orientation.y,
+                necromancy.conjures.offset.y,
                 gaugeData.scaleFactor,
             ),
             a1lib.encodeImageString(conjureImages.inactive.toDrawableData()),
@@ -81,7 +81,7 @@ export async function conjureOverlay() {
             adjustPositionForScale(
                 necromancy.position.x +
                     26 +
-                    necromancy.conjures.position.active_orientation.x,
+                    necromancy.conjures.offset.x,
                 gaugeData.scaleFactor,
             ),
             adjustPositionForScale(

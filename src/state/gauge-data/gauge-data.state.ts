@@ -1,11 +1,9 @@
 import { CombatStyle, Overlay } from '../../types';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import { OrientationTypes } from '../../types/common';
 
 export type GaugeDataState = Overlay & {
     updatingOverlayPosition: boolean;
-    selectedOrientation: OrientationTypes;
 };
 
 const initialState: Omit<GaugeDataState, 'ranged' | 'necromancy' | 'magic' | 'melee'> = {
@@ -16,7 +14,6 @@ const initialState: Omit<GaugeDataState, 'ranged' | 'necromancy' | 'magic' | 'me
     isInCombat: false,
     combatStyle: CombatStyle.necromancy,
     updatingOverlayPosition: false,
-    selectedOrientation: 'reverse_split'
 };
 
 export const GaugeDataSlice = createSlice({

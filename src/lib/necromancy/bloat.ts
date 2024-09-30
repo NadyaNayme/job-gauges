@@ -70,11 +70,11 @@ export async function bloatOverlay() {
 
     alt1.overLayImage(
         adjustPositionForScale(
-            necromancy.position.x + bloat.position.active_orientation.x,
+            necromancy.position.x + bloat.offset.x,
             gaugeData.scaleFactor,
         ),
         adjustPositionForScale(
-            necromancy.position.y + bloat.position.active_orientation.y,
+            necromancy.position.y + bloat.offset.y,
             gaugeData.scaleFactor,
         ),
         a1lib.encodeImageString(image),

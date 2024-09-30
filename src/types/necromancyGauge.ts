@@ -1,7 +1,6 @@
 import {
     EnemyDebuff,
     Position,
-    Orientation,
     Ability,
     TimedPlayerBuff,
     StackingPlayerBuff,
@@ -19,11 +18,11 @@ export type StackingAbilities = {
 type Conjures = {
     active: boolean;
     isActiveOverlay: boolean;
-    position: Orientation;
-    skeleton: Omit<TimedPlayerBuff, 'position'>;
-    zombie: Omit<TimedPlayerBuff, 'position'>;
-    ghost: Omit<TimedPlayerBuff, 'position'>;
-    phantom: Omit<TimedPlayerBuff, 'position'>;
+    offset: Position;
+    skeleton: Omit<TimedPlayerBuff, 'offset'>;
+    zombie: Omit<TimedPlayerBuff, 'offset'>;
+    ghost: Omit<TimedPlayerBuff, 'offset'>;
+    phantom: Omit<TimedPlayerBuff, 'offset'>;
 };
 
 type Incantations = {

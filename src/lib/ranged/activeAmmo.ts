@@ -91,8 +91,9 @@ export async function findAmmo(buffs: BuffReader.Buff[] | null) {
 
     store.dispatch(RangedGaugeSlice.actions.updateState({
         ammo: {
-            activeAmmo: ammoActive ? currentAmmo : '',
             isActiveOverlay: ranged.ammo.isActiveOverlay,
+            activeAmmo: ammoActive ? currentAmmo : '',
+            offset: ranged.ammo.offset,
         }
     }));
 

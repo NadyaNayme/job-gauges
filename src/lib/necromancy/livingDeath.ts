@@ -12,13 +12,12 @@ const ultimateImages = a1lib.webpackImages({
 });
 
 let lastValue: number;
-
 let scaledOnce = false;
 
 export async function livingDeathOverlay() {
     const { gaugeData, necromancy } = store.getState();
     const { livingDeath } = necromancy;
-    const { active_orientation } = livingDeath.position;
+    const { x, y } = livingDeath.offset;
 
     if (!livingDeath.isActiveOverlay) {
         clearAbilityOverlays('LivingDeath');
@@ -80,11 +79,11 @@ export async function livingDeathOverlay() {
             white,
             Math.ceil(14 * (gaugeData.scaleFactor * 0.75)),
             adjustPositionForScale(
-                necromancy.position.x + active_orientation.x + 26,
+                necromancy.position.x + x + 26,
                 gaugeData.scaleFactor,
             ),
             adjustPositionForScale(
-                necromancy.position.y + active_orientation.y + 26,
+                necromancy.position.y + y + 26,
                 gaugeData.scaleFactor,
             ),
             3000,

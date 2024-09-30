@@ -1,6 +1,7 @@
 ﻿import { Ability, Position } from '../../types/common';
 import * as a1lib from 'alt1';
 import { adjustPositionForScale, forceClearOverlay, white } from '../utility';
+import { ImageOverlay, OverlaysManager } from '../../a1sauce/Overlays';
 
 export type AbilityCooldown = {
     positionX: number;
@@ -114,11 +115,11 @@ export function startAbilityCooldown(
 
         const xPositionAdjusted =
             position.x +
-            (ability.position?.active_orientation.x ?? 0) +
+            (ability.offset.x) +
             positionX;
         const yPositionAdjusted =
             position.y +
-            (ability.position?.active_orientation.y ?? 0) +
+            (ability.offset.y) +
             positionY;
 
         alt1.overLayTextEx(
@@ -166,18 +167,24 @@ export function handleAbilityActiveState(
     active: boolean,
 ) {
     const { position, ability, scaleFactor, images } = abilityData;
+    const { x, y } = ability.offset;
     const image = active ? images.active : images.inactive;
-    const xPosition = position.x + ability.position.active_orientation.x;
-    const yPosition = position.y + ability.position.active_orientation.y;
+    const xPosition = position.x + x;
+    const yPosition = position.y + y;
 
-    alt1.overLaySetGroup(name);
-    alt1.overLayImage(
-        adjustPositionForScale(xPosition, scaleFactor),
-        adjustPositionForScale(yPosition, scaleFactor),
-        a1lib.encodeImageString(image.toDrawableData()),
-        image.width,
-        1000,
-    );
+    const abilityImageOverlay: ImageOverlay = {
+        name: name,
+        active: active,
+        position: {
+                x: adjustPositionForScale(xPosition, scaleFactor),
+                y: adjustPositionForScale(yPosition, scaleFactor),
+            },
+        duration: 4000,
+        image: a1lib.encodeImageString(image.toDrawableData()),
+        width: image.width,
+    };
+
+    OverlaysManager.updateOverlay(abilityImageOverlay);
 }
 
 /**
