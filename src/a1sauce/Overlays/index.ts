@@ -8,7 +8,7 @@ type Overlay = {
     active: boolean;
     position: Position;
     duration: number;
-    siblings?: Overlay[];
+    category: string;
 };
 
 type ImageOverlayData = {
@@ -43,15 +43,19 @@ interface OverlaysManagerInterface {
 
     updateOverlay(overlay: Overlays): void;
     getOverlay(name: string): Overlay | undefined;
-	overlayExists(name: string): boolean;
+    overlayExists(name: string): boolean;
     freezeOverlays(): void;
     clearOverlays(): void;
     continueOverlays(): void;
     forceClearOverlays(): void;
+    refreshOverlay(name: string): void;
+    freezeOverlay(name: string): void;
+    clearOverlay(name: string): void;
+    continueOverlay(name: string): void;
+    forceClearOverlay(name: string): void;
     drawImageOverlay(overlay: ImageOverlay): void;
     drawTextOverlay(overlay: TextOverlay): void;
     drawRectOverlay(overlay: RectOverlay): void;
-    makeIntoSiblings(overlays: Overlay[]): void;
 }
 
 export const OverlaysManager: OverlaysManagerInterface = {
@@ -81,16 +85,15 @@ export const OverlaysManager: OverlaysManagerInterface = {
                 alt1.overLaySetGroupZIndex(overlay.name, 1);
             }
         }
-		if (isImageOverlay(overlay)) {
+        if (isImageOverlay(overlay)) {
             OverlaysManager.drawImageOverlay(overlay);
-		}
-		if (isTextOverlay(overlay)) {
+        }
+        if (isTextOverlay(overlay)) {
             OverlaysManager.drawTextOverlay(overlay);
         }
-		if (isRectOverlay(overlay)) {
+        if (isRectOverlay(overlay)) {
             OverlaysManager.drawRectOverlay(overlay);
         }
-		console.log(overlay);
     },
 
     /**
@@ -104,9 +107,11 @@ export const OverlaysManager: OverlaysManagerInterface = {
         });
     },
 
-	overlayExists(name: string): boolean {
-		return OverlaysManager.Overlays.some((overlay) => overlay.name === name);
-	},
+    overlayExists(name: string): boolean {
+        return OverlaysManager.Overlays.some(
+            (overlay) => overlay.name === name,
+        );
+    },
 
     /**
      * Freezes all managed overlays. This will prevent Alt1 from updating them until continueOverlays() is called
@@ -144,8 +149,32 @@ export const OverlaysManager: OverlaysManagerInterface = {
         OverlaysManager.continueOverlays();
     },
 
+    refreshOverlay(name: string) {
+        alt1.overLayRefreshGroup(name);
+    },
+
+    freezeOverlay(name: string) {
+        alt1.overLayFreezeGroup(name);
+    },
+
+    clearOverlay(name: string) {
+        alt1.overLayClearGroup(name);
+    },
+
+    continueOverlay(name: string) {
+        alt1.overLayContinueGroup(name);
+    },
+
+    forceClearOverlay(name: string) {
+        OverlaysManager.freezeOverlay(name);
+        OverlaysManager.clearOverlay(name);
+        OverlaysManager.continueOverlay(name);
+    },
+
     drawImageOverlay(overlay: ImageOverlay) {
         if (!OverlaysManager.overlayExists(overlay.name)) return;
+        alt1.overLayFreezeGroup(overlay.name);
+        forceClearOverlay(overlay.name);
         alt1.overLayImage(
             overlay.position.x,
             overlay.position.y,
@@ -153,6 +182,7 @@ export const OverlaysManager: OverlaysManagerInterface = {
             overlay.width,
             overlay.duration,
         );
+        this.continueOverlay(overlay.name);
     },
 
     drawTextOverlay(overlay: TextOverlay) {
@@ -184,24 +214,6 @@ export const OverlaysManager: OverlaysManagerInterface = {
             overlay.duration,
             overlay.lineWidth,
         );
-    },
-
-    /**
-     * TODO: Determine if this is wanted or even needed
-     * Siblings are Overlays that depend on one another in some way
-     * For example, Active and Inactive Overlays are siblings that should never appear together
-     * Text and Cooldown_Text Overlays should also never appear together
-     *
-     * Siblings often share Positional data and should generally be updated together
-     *
-     * @param overlays - Array of overlays that should be joined together as siblings
-     */
-    makeIntoSiblings(overlays: Overlay[]) {
-        overlays.forEach((overlay) => {
-            if (!overlays.some((overlay) => overlay.name === overlay.name)) {
-                overlay.siblings?.push(overlay);
-            }
-        });
     },
 };
 

@@ -14726,7 +14726,6 @@ const OverlaysManager = {
         if (isRectOverlay(overlay)) {
             OverlaysManager.drawRectOverlay(overlay);
         }
-        console.log(overlay);
     },
     /**
      * Get an overlay by name
@@ -14773,10 +14772,30 @@ const OverlaysManager = {
         OverlaysManager.clearOverlays();
         OverlaysManager.continueOverlays();
     },
+    refreshOverlay(name) {
+        alt1.overLayRefreshGroup(name);
+    },
+    freezeOverlay(name) {
+        alt1.overLayFreezeGroup(name);
+    },
+    clearOverlay(name) {
+        alt1.overLayClearGroup(name);
+    },
+    continueOverlay(name) {
+        alt1.overLayContinueGroup(name);
+    },
+    forceClearOverlay(name) {
+        OverlaysManager.freezeOverlay(name);
+        OverlaysManager.clearOverlay(name);
+        OverlaysManager.continueOverlay(name);
+    },
     drawImageOverlay(overlay) {
         if (!OverlaysManager.overlayExists(overlay.name))
             return;
+        alt1.overLayFreezeGroup(overlay.name);
+        forceClearOverlay(overlay.name);
         alt1.overLayImage(overlay.position.x, overlay.position.y, overlay.image, overlay.width, overlay.duration);
+        this.continueOverlay(overlay.name);
     },
     drawTextOverlay(overlay) {
         if (!OverlaysManager.overlayExists(overlay.name))
@@ -14790,23 +14809,6 @@ const OverlaysManager = {
             return;
         alt1.overLaySetGroup(overlay.name);
         alt1.overLayRect(overlay.color, overlay.position.x, overlay.position.y, overlay.width, overlay.height, overlay.duration, overlay.lineWidth);
-    },
-    /**
-     * TODO: Determine if this is wanted or even needed
-     * Siblings are Overlays that depend on one another in some way
-     * For example, Active and Inactive Overlays are siblings that should never appear together
-     * Text and Cooldown_Text Overlays should also never appear together
-     *
-     * Siblings often share Positional data and should generally be updated together
-     *
-     * @param overlays - Array of overlays that should be joined together as siblings
-     */
-    makeIntoSiblings(overlays) {
-        overlays.forEach((overlay) => {
-            if (!overlays.some((overlay) => overlay.name === overlay.name)) {
-                overlay.siblings?.push(overlay);
-            }
-        });
     },
 };
 const forceClearOverlay = (name) => {
@@ -16666,13 +16668,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./state/gauge-data/magic-gauge.state */ "./state/gauge-data/magic-gauge.state.ts");
 /* harmony import */ var _state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./state/gauge-data/ranged-gauge.state */ "./state/gauge-data/ranged-gauge.state.ts");
 /* harmony import */ var _state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./state/gauge-data/necromancy-gauge.state */ "./state/gauge-data/necromancy-gauge.state.ts");
-
+/* harmony import */ var _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./a1sauce/Overlays */ "./a1sauce/Overlays/index.ts");
 
 
 // General Purpose
 
 
 // Necromancy Gauge
+
 
 
 
@@ -16716,7 +16719,7 @@ async function renderOverlays() {
     const { gaugeData } = _state__WEBPACK_IMPORTED_MODULE_34__.store.getState();
     await (0,_lib_readEnemy__WEBPACK_IMPORTED_MODULE_3__.readEnemy)();
     if (!gaugeData.isInCombat && !gaugeData.updatingOverlayPosition) {
-        return _lib_utility__WEBPACK_IMPORTED_MODULE_0__.clearTextOverlays();
+        return _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_38__.OverlaysManager.forceClearOverlays();
     }
     await (0,_lib_readBuffs__WEBPACK_IMPORTED_MODULE_2__.readBuffs)();
     switch (gaugeData.combatStyle) {
@@ -16865,7 +16868,7 @@ function calibrationWarning() {
 function updateActiveOrientationFromLocalStorage() {
     const selectedOrientation = (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_16__.getSetting)('selectedOrientation');
     // store.dispatch(NecromancyGaugeSlice.actions.updateActiveOrientation(selectedOrientation));
-    (0,_lib_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlays)();
+    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_38__.OverlaysManager.forceClearOverlays();
 }
 // TODO: Get rid of this crap
 // Null suppressions are used as these items
@@ -16887,7 +16890,7 @@ function addEventListeners() {
     });
     document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
         checkbox.addEventListener('change', () => {
-            _lib_utility__WEBPACK_IMPORTED_MODULE_0__.freezeAndContinueOverlays(); // Force an instant redraw
+            _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_38__.OverlaysManager.forceClearOverlays(); // Force an instant redraw
             const state = _state__WEBPACK_IMPORTED_MODULE_34__.store.getState();
             (0,_a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_16__.updateSetting)('gauge-data', JSON.stringify(state));
         });
@@ -17000,34 +17003,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   spellsOverlay: () => (/* binding */ spellsOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var alt1_chatbox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! alt1/chatbox */ "../node_modules/alt1/dist/chatbox/index.js");
-/* harmony import */ var alt1_chatbox__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(alt1_chatbox__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var alt1_chatbox__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! alt1/chatbox */ "../node_modules/alt1/dist/chatbox/index.js");
+/* harmony import */ var alt1_chatbox__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(alt1_chatbox__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../types */ "./types/index.ts");
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
 /* harmony import */ var _state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state/gauge-data/magic-gauge.state */ "./state/gauge-data/magic-gauge.state.ts");
+/* harmony import */ var _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../a1sauce/Overlays */ "./a1sauce/Overlays/index.ts");
 
 
 
 
 
 
-const spellImages = alt1__WEBPACK_IMPORTED_MODULE_4__.webpackImages({
+
+const spellImages = alt1__WEBPACK_IMPORTED_MODULE_5__.webpackImages({
     bloodTithe: __webpack_require__(/*! ../.././asset/gauge-ui/magic/active-spell/blood-tithe.data.png */ "./asset/gauge-ui/magic/active-spell/blood-tithe.data.png"),
     glacialEmbrace: __webpack_require__(/*! ../.././asset/gauge-ui/magic/active-spell/glacial-embrace.data.png */ "./asset/gauge-ui/magic/active-spell/glacial-embrace.data.png"),
     iceBarrage: __webpack_require__(/*! ../.././asset/gauge-ui/magic/active-spell/ice-barrage.data.png */ "./asset/gauge-ui/magic/active-spell/ice-barrage.data.png"),
     noSpell: __webpack_require__(/*! ../.././asset/gauge-ui/magic/active-spell/no-spell.data.png */ "./asset/gauge-ui/magic/active-spell/no-spell.data.png"),
 });
-const chat = new (alt1_chatbox__WEBPACK_IMPORTED_MODULE_5___default());
+const chat = new (alt1_chatbox__WEBPACK_IMPORTED_MODULE_6___default());
 chat.diffRead = true;
 chat.diffReadUseTimestamps = true;
 chat.readargs = {
     colors: [
-        alt1__WEBPACK_IMPORTED_MODULE_4__.mixColor(255, 255, 255),
-        alt1__WEBPACK_IMPORTED_MODULE_4__.mixColor(127, 169, 255),
-        alt1__WEBPACK_IMPORTED_MODULE_4__.mixColor(132, 212, 119),
+        alt1__WEBPACK_IMPORTED_MODULE_5__.mixColor(255, 255, 255),
+        alt1__WEBPACK_IMPORTED_MODULE_5__.mixColor(127, 169, 255),
+        alt1__WEBPACK_IMPORTED_MODULE_5__.mixColor(132, 212, 119),
     ],
 };
 const SPELL_TEXT = {
@@ -17078,7 +17083,23 @@ async function spellsOverlay() {
             break;
     }
     function displaySpellImage(image) {
-        alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(magic.position.x + x, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(magic.position.y + y, gaugeData.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_4__.encodeImageString(image.toDrawableData()), image.width, 1000);
+        const scaleFactor = gaugeData.scaleFactor;
+        const position = magic.position;
+        const xPosition = position.x + x;
+        const yPosition = position.y + y;
+        const abilityImageOverlay = {
+            name: 'Spells',
+            active: true,
+            position: {
+                x: (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(xPosition, scaleFactor),
+                y: (0,_utility__WEBPACK_IMPORTED_MODULE_1__.adjustPositionForScale)(yPosition, scaleFactor),
+            },
+            duration: 10000,
+            image: alt1__WEBPACK_IMPORTED_MODULE_5__.encodeImageString(image.toDrawableData()),
+            width: image.width,
+            category: 'Magic',
+        };
+        _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_4__.OverlaysManager.updateOverlay(abilityImageOverlay);
     }
     function displaySpellStacks(spell) {
         if (isNaN(spell.stacks))
@@ -17126,18 +17147,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   fsoaOverlay: () => (/* binding */ fsoaOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/ability-helpers */ "./lib/util/ability-helpers.ts");
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
 /* harmony import */ var _state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state/gauge-data/magic-gauge.state */ "./state/gauge-data/magic-gauge.state.ts");
+/* harmony import */ var _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../a1sauce/Overlays */ "./a1sauce/Overlays/index.ts");
 
 
 
 
 
-const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_4__.webpackImages({
+
+const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_5__.webpackImages({
     active: __webpack_require__(/*! ../../asset/gauge-ui/magic/instability/active.data.png */ "./asset/gauge-ui/magic/instability/active.data.png"),
     inactive: __webpack_require__(/*! ../../asset/gauge-ui/magic/instability/inactive.data.png */ "./asset/gauge-ui/magic/instability/inactive.data.png"),
 });
@@ -17173,14 +17196,14 @@ async function fsoaOverlay() {
         abilityName: 'instability',
         ability: { isOnCooldown: false },
     }));
-    (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('Instability_Cooldown_Text');
+    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_4__.OverlaysManager.forceClearOverlay('Instability_Cooldown_Text');
     (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'Instability', true);
     if (lastValue !== instability.time) {
         _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_3__.MagicGaugeSlice.actions.updateAbility({
             abilityName: 'instability',
             ability: { cooldownDuration: 0 },
         }));
-        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('Instability_Cooldown_Text');
+        _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_4__.OverlaysManager.forceClearOverlay('Instability_Cooldown_Text');
         alt1.overLaySetGroup('Instability_Text');
         alt1.overLayFreezeGroup('Instability_Text');
         alt1.overLayClearGroup('Instability_Text');
@@ -17204,18 +17227,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   soulfireOverlay: () => (/* binding */ soulfireOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/ability-helpers */ "./lib/util/ability-helpers.ts");
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
 /* harmony import */ var _state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state/gauge-data/magic-gauge.state */ "./state/gauge-data/magic-gauge.state.ts");
+/* harmony import */ var _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../a1sauce/Overlays */ "./a1sauce/Overlays/index.ts");
 
 
 
 
 
-const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_4__.webpackImages({
+
+const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_5__.webpackImages({
     active: __webpack_require__(/*! ../../asset/gauge-ui/magic/ode-to-deceit/active.data.png */ "./asset/gauge-ui/magic/ode-to-deceit/active.data.png"),
     inactive: __webpack_require__(/*! ../../asset/gauge-ui/magic/ode-to-deceit/inactive.data.png */ "./asset/gauge-ui/magic/ode-to-deceit/inactive.data.png"),
 });
@@ -17251,14 +17276,14 @@ async function soulfireOverlay() {
         abilityName: 'soulfire',
         ability: { isOnCooldown: false },
     }));
-    (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('Soulfire_Cooldown_Text');
+    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_4__.OverlaysManager.forceClearOverlay('Soulfire_Cooldown_Text');
     (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'Soulfire', false);
     if (lastValue !== soulfire.time) {
         _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_3__.MagicGaugeSlice.actions.updateAbility({
             abilityName: 'soulfire',
             ability: { cooldownDuration: 0 },
         }));
-        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('Soulfire_Cooldown_Text');
+        _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_4__.OverlaysManager.forceClearOverlay('Soulfire_Cooldown_Text');
         alt1.overLaySetGroup('Soulfire_Text');
         alt1.overLayFreezeGroup('Soulfire_Text');
         alt1.overLayClearGroup('Soulfire_Text');
@@ -17282,14 +17307,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   sunshineOverlay: () => (/* binding */ sunshineOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../types */ "./types/index.ts");
 /* harmony import */ var _util_ability_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../util/ability-helpers */ "./lib/util/ability-helpers.ts");
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
 /* harmony import */ var _state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../state/gauge-data/magic-gauge.state */ "./state/gauge-data/magic-gauge.state.ts");
 /* harmony import */ var _state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../state/gauge-data/gauge-data.state */ "./state/gauge-data/gauge-data.state.ts");
+/* harmony import */ var _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../a1sauce/Overlays */ "./a1sauce/Overlays/index.ts");
 
 
 
@@ -17297,7 +17323,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_6__.webpackImages({
+
+const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_7__.webpackImages({
     active: __webpack_require__(/*! ../../asset/gauge-ui/magic/sunshine/active.data.png */ "./asset/gauge-ui/magic/sunshine/active.data.png"),
     inactive: __webpack_require__(/*! ../../asset/gauge-ui/magic/sunshine/inactive.data.png */ "./asset/gauge-ui/magic/sunshine/inactive.data.png"),
 });
@@ -17333,7 +17360,7 @@ async function sunshineOverlay() {
         abilityName: 'sunshine',
         ability: { isOnCooldown: false },
     }));
-    (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('Sunshine_Cooldown_Text');
+    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_6__.OverlaysManager.forceClearOverlay('Sunshine_Cooldown_Text');
     if (gaugeData.automaticSwapping) {
         _state__WEBPACK_IMPORTED_MODULE_3__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_5__.GaugeDataSlice.actions.updateState({
             combatStyle: _types__WEBPACK_IMPORTED_MODULE_1__.CombatStyle.magic,
@@ -17345,7 +17372,7 @@ async function sunshineOverlay() {
             abilityName: 'sunshine',
             ability: { cooldownDuration: 0 },
         }));
-        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('Sunshine_Cooldown_Text');
+        _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_6__.OverlaysManager.forceClearOverlay('Sunshine_Cooldown_Text');
         alt1.overLaySetGroup('Sunshine_Text');
         alt1.overLayFreezeGroup('Sunshine_Text');
         alt1.overLayClearGroup('Sunshine_Text');
@@ -17369,18 +17396,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   tsunamiOverlay: () => (/* binding */ tsunamiOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/ability-helpers */ "./lib/util/ability-helpers.ts");
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
 /* harmony import */ var _state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state/gauge-data/magic-gauge.state */ "./state/gauge-data/magic-gauge.state.ts");
+/* harmony import */ var _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../a1sauce/Overlays */ "./a1sauce/Overlays/index.ts");
 
 
 
 
 
-const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_4__.webpackImages({
+
+const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_5__.webpackImages({
     active: __webpack_require__(/*! ../.././asset/gauge-ui/magic/tsunami/active.data.png */ "./asset/gauge-ui/magic/tsunami/active.data.png"),
     inactive: __webpack_require__(/*! ../.././asset/gauge-ui/magic/tsunami/inactive.data.png */ "./asset/gauge-ui/magic/tsunami/inactive.data.png"),
 });
@@ -17416,14 +17445,14 @@ async function tsunamiOverlay() {
         abilityName: 'tsunami',
         ability: { isOnCooldown: false },
     }));
-    (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('Tsunami_Cooldown_Text');
+    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_4__.OverlaysManager.forceClearOverlay('Tsunami_Cooldown_Text');
     (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'Tsunami', true);
     if (lastValue !== tsunami.time) {
         _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_3__.MagicGaugeSlice.actions.updateAbility({
             abilityName: 'tsunami',
             ability: { cooldownDuration: 0 },
         }));
-        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('Tsunami_Cooldown_Text');
+        _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_4__.OverlaysManager.forceClearOverlay('Tsunami_Cooldown_Text');
         alt1.overLaySetGroup('Tsunami_Text');
         alt1.overLayFreezeGroup('Tsunami_Text');
         alt1.overLayClearGroup('Tsunami_Text');
@@ -17447,14 +17476,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   bloatOverlay: () => (/* binding */ bloatOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
+/* harmony import */ var _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../a1sauce/Overlays */ "./a1sauce/Overlays/index.ts");
 
 
 
-const bloatImages = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
+
+const bloatImages = alt1__WEBPACK_IMPORTED_MODULE_3__.webpackImages({
     bloat_100: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/bloat/100.data.png */ "./asset/gauge-ui/necromancy/bloat/100.data.png"),
     bloat_90: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/bloat/90.data.png */ "./asset/gauge-ui/necromancy/bloat/90.data.png"),
     bloat_80: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/bloat/80.data.png */ "./asset/gauge-ui/necromancy/bloat/80.data.png"),
@@ -17521,8 +17552,24 @@ async function bloatOverlay() {
         image = bloatImages.bloat_expired;
     }
     alt1.overLaySetGroup('Bloat');
-    alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.x + bloat.offset.x, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.y + bloat.offset.y, gaugeData.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(image), image.width, 1000);
+    alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.x + bloat.offset.x, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(necromancy.position.y + bloat.offset.y, gaugeData.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_3__.encodeImageString(image), image.width, 1000);
     alt1.overLayRefreshGroup('Bloat');
+    const { x, y } = bloat.offset;
+    const xPosition = necromancy.position.x + x;
+    const yPosition = necromancy.position.y + y;
+    const abilityImageOverlay = {
+        name: 'Bloat',
+        active: true,
+        position: {
+            x: (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(xPosition, gaugeData.scaleFactor),
+            y: (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(yPosition, gaugeData.scaleFactor),
+        },
+        duration: 4000,
+        image: alt1__WEBPACK_IMPORTED_MODULE_3__.encodeImageString(image.toDrawableData()),
+        width: image.width,
+        category: 'Necromancy',
+    };
+    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_2__.OverlaysManager.updateOverlay(abilityImageOverlay);
 }
 
 
@@ -17689,14 +17736,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   livingDeathOverlay: () => (/* binding */ livingDeathOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../types */ "./types/index.ts");
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _util_ability_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../util/ability-helpers */ "./lib/util/ability-helpers.ts");
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
 /* harmony import */ var _state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../state/gauge-data/gauge-data.state */ "./state/gauge-data/gauge-data.state.ts");
 /* harmony import */ var _state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../state/gauge-data/necromancy-gauge.state */ "./state/gauge-data/necromancy-gauge.state.ts");
+/* harmony import */ var _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../a1sauce/Overlays */ "./a1sauce/Overlays/index.ts");
 
 
 
@@ -17704,7 +17752,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_6__.webpackImages({
+
+const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_7__.webpackImages({
     active: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/living-death/active.data.png */ "./asset/gauge-ui/necromancy/living-death/active.data.png"),
     inactive: __webpack_require__(/*! ../../asset/gauge-ui/necromancy/living-death/inactive.data.png */ "./asset/gauge-ui/necromancy/living-death/inactive.data.png"),
 });
@@ -17740,7 +17789,7 @@ async function livingDeathOverlay() {
         key: 'livingDeath',
         ability: { isOnCooldown: false },
     }));
-    (0,_utility__WEBPACK_IMPORTED_MODULE_1__.forceClearOverlay)('LivingDeath_Cooldown_Text');
+    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_6__.OverlaysManager.forceClearOverlay('LivingDeath_Cooldown_Text');
     if (gaugeData.automaticSwapping) {
         _state__WEBPACK_IMPORTED_MODULE_3__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_4__.GaugeDataSlice.actions.updateCombatStyle(_types__WEBPACK_IMPORTED_MODULE_0__.CombatStyle.necromancy));
     }
@@ -17750,7 +17799,7 @@ async function livingDeathOverlay() {
             key: 'livingDeath',
             ability: { cooldownDuration: 0 },
         }));
-        (0,_utility__WEBPACK_IMPORTED_MODULE_1__.forceClearOverlay)('LivingDeath_Cooldown_Text');
+        _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_6__.OverlaysManager.forceClearOverlay('LivingDeath_Cooldown_Text');
         alt1.overLaySetGroup('LivingDeath_Text');
         alt1.overLayFreezeGroup('LivingDeath_Text');
         alt1.overLayClearGroup('LivingDeath_Text');
@@ -18045,18 +18094,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   crystalRainOverlay: () => (/* binding */ crystalRainOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/ability-helpers */ "./lib/util/ability-helpers.ts");
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
 /* harmony import */ var _state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state/gauge-data/ranged-gauge.state */ "./state/gauge-data/ranged-gauge.state.ts");
+/* harmony import */ var _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../a1sauce/Overlays */ "./a1sauce/Overlays/index.ts");
 
 
 
 
 
-const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_4__.webpackImages({
+
+const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_5__.webpackImages({
     active: __webpack_require__(/*! ../../asset/gauge-ui/ranged/crystal-rain/active.data.png */ "./asset/gauge-ui/ranged/crystal-rain/active.data.png"),
     inactive: __webpack_require__(/*! ../../asset/gauge-ui/ranged/crystal-rain/inactive.data.png */ "./asset/gauge-ui/ranged/crystal-rain/inactive.data.png"),
 });
@@ -18065,7 +18116,7 @@ let scaledOnce = false;
 async function crystalRainOverlay() {
     const { ranged, gaugeData } = _state__WEBPACK_IMPORTED_MODULE_2__.store.getState();
     const { crystalRain } = ranged;
-    const { x, y } = ranged.crystalRain.offset;
+    const { x, y } = crystalRain.offset;
     if (!crystalRain.isActiveOverlay) {
         (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.clearAbilityOverlays)('CrystalRain');
         return;
@@ -18092,14 +18143,14 @@ async function crystalRainOverlay() {
         abilityName: 'crystalRain',
         ability: { isOnCooldown: false },
     }));
-    (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('CrystalRain_Cooldown_Text');
+    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_4__.OverlaysManager.forceClearOverlay('CrystalRain_Cooldown_Text');
     (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'CrystalRain', false);
     if (lastValue !== crystalRain.time) {
         _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangedGaugeSlice.actions.updateAbility({
             abilityName: 'crystalRain',
             ability: { cooldownDuration: 0 },
         }));
-        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('CrystalRain_Cooldown_Text');
+        _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_4__.OverlaysManager.forceClearOverlay('CrystalRain_Cooldown_Text');
         alt1.overLaySetGroup('CrystalRain_Text');
         alt1.overLayFreezeGroup('CrystalRain_Text');
         alt1.overLayClearGroup('CrystalRain_Text');
@@ -18123,18 +18174,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   deathsSwiftnessOverlay: () => (/* binding */ deathsSwiftnessOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/ability-helpers */ "./lib/util/ability-helpers.ts");
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
 /* harmony import */ var _state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state/gauge-data/ranged-gauge.state */ "./state/gauge-data/ranged-gauge.state.ts");
+/* harmony import */ var _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../a1sauce/Overlays */ "./a1sauce/Overlays/index.ts");
 
 
 
 
 
-const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_4__.webpackImages({
+
+const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_5__.webpackImages({
     active: __webpack_require__(/*! ../../asset/gauge-ui/ranged/deaths-swiftness/active.data.png */ "./asset/gauge-ui/ranged/deaths-swiftness/active.data.png"),
     inactive: __webpack_require__(/*! ../../asset/gauge-ui/ranged/deaths-swiftness/inactive.data.png */ "./asset/gauge-ui/ranged/deaths-swiftness/inactive.data.png"),
 });
@@ -18143,7 +18196,7 @@ let scaledOnce = false;
 async function deathsSwiftnessOverlay() {
     const { ranged, gaugeData } = _state__WEBPACK_IMPORTED_MODULE_2__.store.getState();
     const { deathsSwiftness } = ranged;
-    const { x, y } = ranged.deathsSwiftness.offset;
+    const { x, y } = deathsSwiftness.offset;
     if (!deathsSwiftness.isActiveOverlay) {
         (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.clearAbilityOverlays)('DeathsSwiftness');
         return;
@@ -18170,14 +18223,14 @@ async function deathsSwiftnessOverlay() {
         abilityName: 'deathsSwiftness',
         ability: { isOnCooldown: false },
     }));
-    (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('DeathsSwiftness_Cooldown_Text');
+    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_4__.OverlaysManager.forceClearOverlay('DeathsSwiftness_Cooldown_Text');
     (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'DeathsSwiftness', true);
     if (lastValue !== deathsSwiftness.time) {
         _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangedGaugeSlice.actions.updateAbility({
             abilityName: 'deathsSwiftness',
             ability: { cooldownDuration: 0 },
         }));
-        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('DeathsSwiftness_Cooldown_Text');
+        _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_4__.OverlaysManager.forceClearOverlay('DeathsSwiftness_Cooldown_Text');
         alt1.overLaySetGroup('DeathsSwiftness_Text');
         alt1.overLayFreezeGroup('DeathsSwiftness_Text');
         alt1.overLayClearGroup('DeathsSwiftness_Text');
@@ -18201,14 +18254,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   peOverlay: () => (/* binding */ peOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
+/* harmony import */ var _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../a1sauce/Overlays */ "./a1sauce/Overlays/index.ts");
 
 
 
-const bolgImage = alt1__WEBPACK_IMPORTED_MODULE_2__.webpackImages({
+
+const bolgImage = alt1__WEBPACK_IMPORTED_MODULE_3__.webpackImages({
     active: __webpack_require__(/*! ../../asset/gauge-ui/ranged/perfect-equilibrium/active.data.png */ "./asset/gauge-ui/ranged/perfect-equilibrium/active.data.png"),
     inactive: __webpack_require__(/*! ../../asset/gauge-ui/ranged/perfect-equilibrium/inactive.data.png */ "./asset/gauge-ui/ranged/perfect-equilibrium/inactive.data.png"),
 });
@@ -18218,7 +18273,7 @@ async function peOverlay() {
     const { ranged, gaugeData } = _state__WEBPACK_IMPORTED_MODULE_1__.store.getState();
     const { perfectEquilibrium } = ranged;
     const { stacks } = ranged.perfectEquilibrium;
-    const { x, y } = ranged.perfectEquilibrium.offset;
+    const { x, y } = perfectEquilibrium.offset;
     if (!perfectEquilibrium.isActiveOverlay) {
         return;
     }
@@ -18239,7 +18294,23 @@ async function peOverlay() {
         lastStacks = stacks;
     }
     function displayBuffImage(image) {
-        alt1.overLayImage((0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + x, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + y, gaugeData.scaleFactor), alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(image.toDrawableData()), image.width, 1000);
+        const scaleFactor = gaugeData.scaleFactor;
+        const position = ranged.position;
+        const xPosition = position.x + x;
+        const yPosition = position.y + y;
+        const abilityImageOverlay = {
+            name: 'PerfectEquilibrium',
+            active: true,
+            position: {
+                x: (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(xPosition, scaleFactor),
+                y: (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(yPosition, scaleFactor),
+            },
+            duration: 10000,
+            image: alt1__WEBPACK_IMPORTED_MODULE_3__.encodeImageString(image.toDrawableData()),
+            width: image.width,
+            category: 'Ranged',
+        };
+        _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_2__.OverlaysManager.updateOverlay(abilityImageOverlay);
     }
     function displayStacks(stacks) {
         alt1.overLaySetGroup(`PerfectEquilibrium_Text`);
@@ -18264,18 +18335,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   rangedSplitSoulOverlay: () => (/* binding */ rangedSplitSoulOverlay)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utility */ "./lib/utility.ts");
 /* harmony import */ var _util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/ability-helpers */ "./lib/util/ability-helpers.ts");
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../state */ "./state/index.ts");
 /* harmony import */ var _state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state/gauge-data/ranged-gauge.state */ "./state/gauge-data/ranged-gauge.state.ts");
+/* harmony import */ var _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../a1sauce/Overlays */ "./a1sauce/Overlays/index.ts");
 
 
 
 
 
-const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_4__.webpackImages({
+
+const ultimateImages = alt1__WEBPACK_IMPORTED_MODULE_5__.webpackImages({
     active: __webpack_require__(/*! ../../asset/gauge-ui/ranged/split-soul/active.data.png */ "./asset/gauge-ui/ranged/split-soul/active.data.png"),
     inactive: __webpack_require__(/*! ../../asset/gauge-ui/ranged/split-soul/inactive.data.png */ "./asset/gauge-ui/ranged/split-soul/inactive.data.png"),
 });
@@ -18284,9 +18357,9 @@ let scaledOnce = false;
 async function rangedSplitSoulOverlay() {
     const { gaugeData, ranged } = _state__WEBPACK_IMPORTED_MODULE_2__.store.getState();
     const { splitSoul } = ranged;
-    const { x, y } = ranged.splitSoul.offset;
+    const { x, y } = splitSoul.offset;
     if (!splitSoul.isActiveOverlay) {
-        (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.clearAbilityOverlays)('SplitSoul');
+        (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.clearAbilityOverlays)('RangedSplitSoul');
         return;
     }
     await ultimateImages.promise;
@@ -18302,28 +18375,28 @@ async function rangedSplitSoulOverlay() {
     };
     // If Split Soul is not Active and is not on cooldown it should appear as able to be activated
     if (!splitSoul.active) {
-        (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'SplitSoul', false);
-        alt1.overLayRefreshGroup('SplitSoul_Text');
-        alt1.overLayClearGroup('SplitSoul_Text');
+        (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'RangedSplitSoul', false);
+        alt1.overLayRefreshGroup('RangedSplitSoul_Text');
+        alt1.overLayClearGroup('RangedSplitSoul_Text');
         return (lastValue = splitSoul.time);
     }
     _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangedGaugeSlice.actions.updateAbility({
         abilityName: 'splitSoul',
         ability: { isOnCooldown: false },
     }));
-    (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('SplitSoul_Cooldown_Text');
-    (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'SplitSoul', true);
+    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_4__.OverlaysManager.forceClearOverlay('RangedSplitSoul_Cooldown_Text');
+    (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_1__.handleAbilityActiveState)(abilityData, 'RangedSplitSoul', true);
     if (lastValue !== splitSoul.time) {
         _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_3__.RangedGaugeSlice.actions.updateAbility({
             abilityName: 'splitSoul',
             ability: { cooldownDuration: 0 },
         }));
-        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)('SplitSoul_Cooldown_Text');
-        alt1.overLaySetGroup('SplitSoul_Text');
-        alt1.overLayFreezeGroup('SplitSoul_Text');
-        alt1.overLayClearGroup('SplitSoul_Text');
+        _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_4__.OverlaysManager.forceClearOverlay('RangedSplitSoul_Cooldown_Text');
+        alt1.overLaySetGroup('RangedSplitSoul_Text');
+        alt1.overLayFreezeGroup('RangedSplitSoul_Text');
+        alt1.overLayClearGroup('RangedSplitSoul_Text');
         alt1.overLayTextEx(`${splitSoul.time || ''}`, _utility__WEBPACK_IMPORTED_MODULE_0__.white, Math.ceil(14 * (gaugeData.scaleFactor * 0.75)), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.x + x + 26, gaugeData.scaleFactor), (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(ranged.position.y + y + 26, gaugeData.scaleFactor), 3000, '', true, true);
-        alt1.overLayRefreshGroup('SplitSoul_Text');
+        alt1.overLayRefreshGroup('RangedSplitSoul_Text');
     }
     lastValue = splitSoul.time;
 }
@@ -18359,10 +18432,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../a1sauce/Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../state */ "./state/index.ts");
 /* harmony import */ var _state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../state/gauge-data/necromancy-gauge.state */ "./state/gauge-data/necromancy-gauge.state.ts");
-/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./utility */ "./lib/utility.ts");
-/* harmony import */ var _state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../state/gauge-data/magic-gauge.state */ "./state/gauge-data/magic-gauge.state.ts");
-/* harmony import */ var _state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../state/gauge-data/gauge-data.state */ "./state/gauge-data/gauge-data.state.ts");
-/* harmony import */ var _state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../state/gauge-data/ranged-gauge.state */ "./state/gauge-data/ranged-gauge.state.ts");
+/* harmony import */ var _state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../state/gauge-data/magic-gauge.state */ "./state/gauge-data/magic-gauge.state.ts");
+/* harmony import */ var _state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../state/gauge-data/gauge-data.state */ "./state/gauge-data/gauge-data.state.ts");
+/* harmony import */ var _state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../state/gauge-data/ranged-gauge.state */ "./state/gauge-data/ranged-gauge.state.ts");
+/* harmony import */ var _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../a1sauce/Overlays */ "./a1sauce/Overlays/index.ts");
 
 
 
@@ -18790,7 +18863,7 @@ function updateMagicAbility(time, greater, abilityName) {
     const { scaleFactor } = gaugeData;
     const ability = magic[property];
     if (time > 1) {
-        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_11__.MagicGaugeSlice.actions.updateAbility({
+        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_10__.MagicGaugeSlice.actions.updateAbility({
             abilityName: property,
             ability: {
                 isOnCooldown: false,
@@ -18805,9 +18878,9 @@ function updateMagicAbility(time, greater, abilityName) {
     }
     if (time === 1 && ability.active) {
         // Make sure to update the text one final time
-        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_11__.MagicGaugeSlice.actions.updateAbilityTime({ abilityName: property, time }));
+        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_10__.MagicGaugeSlice.actions.updateAbilityTime({ abilityName: property, time }));
         setTimeout(() => {
-            _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_11__.MagicGaugeSlice.actions.updateAbility({
+            _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_10__.MagicGaugeSlice.actions.updateAbility({
                 abilityName: property,
                 ability: {
                     isOnCooldown: true,
@@ -18822,7 +18895,7 @@ function updateMagicAbility(time, greater, abilityName) {
             const { magic } = _state__WEBPACK_IMPORTED_MODULE_8__.store.getState();
             const ability = magic[property];
             (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_6__.startAbilityCooldown)({ ability, position, scaleFactor }, abilityName, greater, () => {
-                _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_11__.MagicGaugeSlice.actions.updateAbility({
+                _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_10__.MagicGaugeSlice.actions.updateAbility({
                     abilityName: property,
                     ability: { isOnCooldown: false, cooldownDuration: 0, active: true },
                 }));
@@ -18842,7 +18915,7 @@ function updateRangeAbility(time, greater, abilityName) {
     const { position } = ranged;
     const { scaleFactor } = gaugeData;
     if (time > 1) {
-        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangedGaugeSlice.actions.updateAbility({
+        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_12__.RangedGaugeSlice.actions.updateAbility({
             abilityName: property,
             ability: {
                 isOnCooldown: false,
@@ -18857,9 +18930,9 @@ function updateRangeAbility(time, greater, abilityName) {
     }
     if (time === 1 && ability.active) {
         // Make sure to update the text one final time
-        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangedGaugeSlice.actions.updateAbilityTime({ abilityName: property, time }));
+        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_12__.RangedGaugeSlice.actions.updateAbilityTime({ abilityName: property, time }));
         setTimeout(() => {
-            _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangedGaugeSlice.actions.updateAbility({
+            _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_12__.RangedGaugeSlice.actions.updateAbility({
                 abilityName: property,
                 ability: {
                     isOnCooldown: true,
@@ -18874,7 +18947,7 @@ function updateRangeAbility(time, greater, abilityName) {
             const { ranged } = _state__WEBPACK_IMPORTED_MODULE_8__.store.getState();
             const ability = ranged[property];
             (0,_util_ability_helpers__WEBPACK_IMPORTED_MODULE_6__.startAbilityCooldown)({ ability, position, scaleFactor }, abilityName, greater, () => {
-                _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangedGaugeSlice.actions.updateAbility({
+                _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_12__.RangedGaugeSlice.actions.updateAbility({
                     abilityName: property,
                     ability: { isOnCooldown: false, cooldownDuration: 0 },
                 }));
@@ -18883,7 +18956,7 @@ function updateRangeAbility(time, greater, abilityName) {
     }
 }
 function updateSpell(spellName, active) {
-    _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_11__.MagicGaugeSlice.actions.updateSpell({
+    _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_10__.MagicGaugeSlice.actions.updateSpell({
         spellName,
         spell: { active: !!active },
     }));
@@ -18894,17 +18967,16 @@ function changeCombatStyles(combatStyle) {
     if (gaugeData.combatStyle === combatStyle) {
         return;
     }
-    _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_12__.GaugeDataSlice.actions.updateState({
+    _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_11__.GaugeDataSlice.actions.updateState({
         combatStyle,
     }));
-    (0,_utility__WEBPACK_IMPORTED_MODULE_10__.forceClearOverlays)();
-    (0,_utility__WEBPACK_IMPORTED_MODULE_10__.clearTextOverlays)();
+    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_13__.OverlaysManager.forceClearOverlays();
 }
 function updatePeCount(stacks) {
-    _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangedGaugeSlice.actions.updatePerfectEquilibriumStack({ stacks }));
+    _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_12__.RangedGaugeSlice.actions.updatePerfectEquilibriumStack({ stacks }));
 }
 function updateBalanceByForce(active) {
-    _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangedGaugeSlice.actions.updateBalanceByForce({ active }));
+    _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_12__.RangedGaugeSlice.actions.updateBalanceByForce({ active }));
 }
 /**
  * Keeping around until I figure out why it's special.
@@ -18916,7 +18988,7 @@ function updateRangedSplitSoul(time) {
     //   - it must be active
     //   - The remaining time is its timer
     if (time > 1) {
-        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangedGaugeSlice.actions.updateAbility({
+        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_12__.RangedGaugeSlice.actions.updateAbility({
             abilityName: 'splitSoul',
             ability: {
                 isOnCooldown: false,
@@ -18929,12 +19001,12 @@ function updateRangedSplitSoul(time) {
     // When only 1 second of the buff exists
     if (time == 1 && ranged.splitSoul.active) {
         // Make sure to update the text one final time
-        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangedGaugeSlice.actions.updateAbilityTime({ abilityName: 'splitSoul', time }));
+        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_12__.RangedGaugeSlice.actions.updateAbilityTime({ abilityName: 'splitSoul', time }));
         // Then start a timer to wait just past the last second
         //  - Clear the timer
         //  - DS is now on Cooldown so is not active
         setTimeout(() => {
-            _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangedGaugeSlice.actions.updateAbility({
+            _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_12__.RangedGaugeSlice.actions.updateAbility({
                 abilityName: 'splitSoul',
                 ability: {
                     active: false,
@@ -18954,17 +19026,17 @@ function startRangedSplitSoul() {
     }
     // If the buff is active we don't need to do a cooldown and can clear the Cooldown text and exit early
     if (ranged.splitSoul.active) {
-        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_13__.RangedGaugeSlice.actions.updateAbility({
+        _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_12__.RangedGaugeSlice.actions.updateAbility({
             abilityName: 'splitSoul',
             ability: {
                 isOnCooldown: false,
                 cooldownDuration: 0,
             },
         }));
-        return (0,_utility__WEBPACK_IMPORTED_MODULE_10__.forceClearOverlay)('SplitSoul_Text');
+        return _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_13__.OverlaysManager.forceClearOverlay('SplitSoul_Text');
     }
     // Otherwise cooldown has started and we can clear the Active text
-    (0,_utility__WEBPACK_IMPORTED_MODULE_10__.forceClearOverlay)('SplitSoul_Text');
+    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_13__.OverlaysManager.forceClearOverlay('SplitSoul_Text');
 }
 
 
@@ -19121,6 +19193,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../state/gauge-data/gauge-data.state */ "./state/gauge-data/gauge-data.state.ts");
 /* harmony import */ var _state_gauge_data_necromancy_gauge_state__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../state/gauge-data/necromancy-gauge.state */ "./state/gauge-data/necromancy-gauge.state.ts");
 /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../types */ "./types/index.ts");
+/* harmony import */ var _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../a1sauce/Overlays */ "./a1sauce/Overlays/index.ts");
+
 
 
 
@@ -19142,7 +19216,7 @@ const patchNotes = new _a1sauce_Patches_patchNotes__WEBPACK_IMPORTED_MODULE_2__.
 patchNotes.setNotes(_patchnotes__WEBPACK_IMPORTED_MODULE_5__.notes);
 function updateCombatStyle(combatStyle) {
     _state__WEBPACK_IMPORTED_MODULE_8__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_9__.GaugeDataSlice.actions.updateCombatStyle(combatStyle));
-    (0,_utility__WEBPACK_IMPORTED_MODULE_6__.forceClearOverlays)();
+    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_12__.OverlaysManager.forceClearOverlays();
 }
 const renderSettings = () => {
     settings
@@ -19365,7 +19439,7 @@ function startAbilityCooldown(abilityData, abilityName, greater, updateStateCall
     // We're going to begin the cooldown, so set to true to prevent any extra operations for this ability.
     AbilityCooldown.set(abilityName, true);
     // Otherwise cooldown has started and we can clear the Active text
-    (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)(`${abilityName}_Text`);
+    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_1__.OverlaysManager.forceClearOverlay(`${abilityName}_Text`);
     alt1.overLaySetGroupZIndex(`${abilityName}_Cooldown_Text`, 1);
     const cooldowns = AbilityCooldowns.get(abilityName);
     if (!cooldowns) {
@@ -19380,11 +19454,11 @@ function startAbilityCooldown(abilityData, abilityName, greater, updateStateCall
             clearInterval(timer);
             AbilityCooldown.set(abilityName, false);
             updateStateCallback();
-            return (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)(`${abilityName}_Cooldown_Text`);
+            return _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_1__.OverlaysManager.forceClearOverlay(`${abilityName}_Cooldown_Text`);
         }
         cooldown -= 1;
         const cooldownText = `${abilityName}_Cooldown_Text`;
-        (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)(cooldownText);
+        _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_1__.OverlaysManager.forceClearOverlay(cooldownText);
         const xPositionAdjusted = position.x +
             (ability.offset.x) +
             positionX;
@@ -19401,7 +19475,7 @@ function startAbilityCooldown(abilityData, abilityName, greater, updateStateCall
  * @param name Strongly typed name to clear overlay.
  */
 function endAbilityCooldown(ability, name) {
-    (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)(`${name}_Cooldown_Text`);
+    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_1__.OverlaysManager.forceClearOverlay(`${name}_Cooldown_Text`);
 }
 /**
  * Handle drawing abilities that have an active or inactive state.
@@ -19415,16 +19489,38 @@ function handleAbilityActiveState(abilityData, name, active) {
     const image = active ? images.active : images.inactive;
     const xPosition = position.x + x;
     const yPosition = position.y + y;
+    let category;
+    switch (name) {
+        case 'LivingDeath':
+        case 'SplitSoul':
+        case 'Threads':
+        case 'Invoke_Death':
+        case 'Darkness':
+            category = 'Necromancy';
+            break;
+        case 'Sunshine':
+        case 'Instability':
+        case 'Tsunami':
+        case 'Soulfire':
+            category = 'Magic';
+            break;
+        case 'DeathsSwiftness':
+        case 'CrystalRain':
+        case 'RangedSplitSoul':
+            category = 'Ranged';
+            break;
+    }
     const abilityImageOverlay = {
         name: name,
-        active: active,
+        active: true,
         position: {
             x: (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(xPosition, scaleFactor),
             y: (0,_utility__WEBPACK_IMPORTED_MODULE_0__.adjustPositionForScale)(yPosition, scaleFactor),
         },
-        duration: 4000,
+        duration: 10000,
         image: alt1__WEBPACK_IMPORTED_MODULE_2__.encodeImageString(image.toDrawableData()),
         width: image.width,
+        category: category,
     };
     _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_1__.OverlaysManager.updateOverlay(abilityImageOverlay);
 }
@@ -19433,9 +19529,9 @@ function handleAbilityActiveState(abilityData, name, active) {
  * @param ability Strongly typed name of the ability to clear.
  */
 function clearAbilityOverlays(ability) {
-    (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)(`${ability}_Text`);
-    (0,_utility__WEBPACK_IMPORTED_MODULE_0__.forceClearOverlay)(`${ability}_Cooldown_Text`);
-    alt1.overLayClearGroup(ability);
+    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_1__.OverlaysManager.forceClearOverlay(`${ability}`);
+    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_1__.OverlaysManager.forceClearOverlay(`${ability}_Text`);
+    _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_1__.OverlaysManager.forceClearOverlay(`${ability}_Cooldown_Text`);
 }
 
 
@@ -19455,12 +19551,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   alarmLoop: () => (/* binding */ alarmLoop),
 /* harmony export */   black: () => (/* binding */ black),
 /* harmony export */   blue: () => (/* binding */ blue),
-/* harmony export */   clearTextOverlays: () => (/* binding */ clearTextOverlays),
-/* harmony export */   continueOverlays: () => (/* binding */ continueOverlays),
-/* harmony export */   forceClearOverlay: () => (/* binding */ forceClearOverlay),
-/* harmony export */   forceClearOverlays: () => (/* binding */ forceClearOverlays),
-/* harmony export */   freezeAndContinueOverlays: () => (/* binding */ freezeAndContinueOverlays),
-/* harmony export */   freezeOverlays: () => (/* binding */ freezeOverlays),
 /* harmony export */   getByID: () => (/* binding */ getByID),
 /* harmony export */   green: () => (/* binding */ green),
 /* harmony export */   handleResizingImages: () => (/* binding */ handleResizingImages),
@@ -19473,8 +19563,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   updateLocation: () => (/* binding */ updateLocation),
 /* harmony export */   white: () => (/* binding */ white)
 /* harmony export */ });
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
-/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! alt1 */ "../node_modules/alt1/dist/base/index.js");
+/* harmony import */ var alt1__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(alt1__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _a1sauce_Settings_Storage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../a1sauce/Settings/Storage */ "./a1sauce/Settings/Storage/index.ts");
 /* harmony import */ var _a1sauce_Utils_timeout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../a1sauce/Utils/timeout */ "./a1sauce/Utils/timeout.ts");
 /* harmony import */ var pouchdb__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! pouchdb */ "../node_modules/pouchdb/lib/index-browser.es.js");
@@ -19485,6 +19575,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _state_gauge_data_ranged_gauge_state__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../state/gauge-data/ranged-gauge.state */ "./state/gauge-data/ranged-gauge.state.ts");
 /* harmony import */ var _state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../state/gauge-data/gauge-data.state */ "./state/gauge-data/gauge-data.state.ts");
 /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../types */ "./types/index.ts");
+/* harmony import */ var _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../a1sauce/Overlays */ "./a1sauce/Overlays/index.ts");
+
 
 
 
@@ -19497,11 +19589,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const db = new pouchdb__WEBPACK_IMPORTED_MODULE_2__["default"](_data_constants__WEBPACK_IMPORTED_MODULE_3__.appName);
-const white = alt1__WEBPACK_IMPORTED_MODULE_10__.mixColor(255, 255, 255);
-const red = alt1__WEBPACK_IMPORTED_MODULE_10__.mixColor(255, 0, 0);
-const green = alt1__WEBPACK_IMPORTED_MODULE_10__.mixColor(0, 255, 0);
-const blue = alt1__WEBPACK_IMPORTED_MODULE_10__.mixColor(0, 0, 255);
-const black = alt1__WEBPACK_IMPORTED_MODULE_10__.mixColor(1, 1, 1);
+const white = alt1__WEBPACK_IMPORTED_MODULE_11__.mixColor(255, 255, 255);
+const red = alt1__WEBPACK_IMPORTED_MODULE_11__.mixColor(255, 0, 0);
+const green = alt1__WEBPACK_IMPORTED_MODULE_11__.mixColor(0, 255, 0);
+const blue = alt1__WEBPACK_IMPORTED_MODULE_11__.mixColor(0, 0, 255);
+const black = alt1__WEBPACK_IMPORTED_MODULE_11__.mixColor(1, 1, 1);
 /*
  * Should only return null if a typo is made as elements
  * that are fetched are created by A1 Sauce
@@ -19515,7 +19607,7 @@ const helperItems = {
 };
 async function setOverlayPosition(all) {
     _state__WEBPACK_IMPORTED_MODULE_4__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_8__.GaugeDataSlice.actions.updateState({ updatingOverlayPosition: true }));
-    alt1__WEBPACK_IMPORTED_MODULE_10__.once('alt1pressed', updateLocation);
+    alt1__WEBPACK_IMPORTED_MODULE_11__.once('alt1pressed', updateLocation);
     alt1.setTooltip('Press Primary Keybind to save position (default keybind is alt+1)');
     setTimeout(() => {
         alt1.clearTooltip();
@@ -19526,106 +19618,14 @@ async function setOverlayPosition(all) {
             break;
         }
         await (0,_a1sauce_Utils_timeout__WEBPACK_IMPORTED_MODULE_1__.timeout)(500);
-        freezeOverlays();
+        _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_10__.OverlaysManager.freezeOverlays();
         resizeGaugesWithMousePosition(all);
-        continueOverlays();
+        _a1sauce_Overlays__WEBPACK_IMPORTED_MODULE_10__.OverlaysManager.continueOverlays();
     }
 }
 function updateLocation() {
     _state__WEBPACK_IMPORTED_MODULE_4__.store.dispatch(_state_gauge_data_gauge_data_state__WEBPACK_IMPORTED_MODULE_8__.GaugeDataSlice.actions.updateState({ updatingOverlayPosition: false }));
     alt1.clearTooltip();
-}
-function forceClearOverlay(overlay) {
-    alt1.overLaySetGroup(overlay);
-    alt1.overLayFreezeGroup(overlay);
-    alt1.overLayClearGroup(overlay);
-    alt1.overLayRefreshGroup(overlay);
-}
-// TODO: Overlays need to be able to add/remove themselves from this list
-const overlays = [
-    'Bloat',
-    'Undead_Army',
-    'Invoke_Death',
-    'Darkness',
-    'Threads',
-    'SplitSoul',
-    'LivingDeath',
-    'Necrosis',
-    'Necrosis_Row2',
-    'Souls',
-    'Sunshine',
-    'Instability',
-    'Soulfire',
-    'Tsunami',
-    'DeathsSwiftness',
-    'CrystalRain',
-    'PerfectEquilibrium',
-    'SplitSoul',
-    'Spells',
-];
-function freezeOverlays() {
-    overlays.forEach((overlay) => {
-        alt1.overLayFreezeGroup(overlay);
-        alt1.overLayClearGroup(overlay);
-        alt1.overLayRefreshGroup(overlay);
-    });
-}
-function continueOverlays() {
-    overlays.forEach((overlay) => {
-        alt1.overLayContinueGroup(overlay);
-    });
-}
-function freezeAndContinueOverlays() {
-    freezeOverlays();
-    continueOverlays();
-}
-function forceClearOverlays() {
-    overlays.forEach((overlay) => {
-        alt1.overLaySetGroup(overlay);
-        alt1.overLayFreezeGroup(overlay);
-        alt1.overLayClearGroup(overlay);
-        alt1.overLayRefreshGroup(overlay);
-        alt1.overLayContinueGroup(overlay);
-        clearTextOverlays();
-    });
-}
-function clearTextOverlays() {
-    alt1.overLayClearGroup('Undead_Army_Text');
-    alt1.overLayRefreshGroup('Undead_Army_Text');
-    alt1.overLayClearGroup('LivingDeath_Text');
-    alt1.overLayRefreshGroup('LivingDeath_Text');
-    alt1.overLayClearGroup('LivingDeath_Cooldown_Text');
-    alt1.overLayRefreshGroup('LivingDeath_Cooldown_Text');
-    alt1.overLayClearGroup('Sunshine_Text');
-    alt1.overLayRefreshGroup('Sunshine_Text');
-    alt1.overLayClearGroup('Sunshine_Cooldown_Text');
-    alt1.overLayRefreshGroup('Sunshine_Cooldown_Text');
-    alt1.overLayClearGroup('Instability_Text');
-    alt1.overLayRefreshGroup('Instability_Text');
-    alt1.overLayClearGroup('Instability_Cooldown_Text');
-    alt1.overLayRefreshGroup('Instability_Cooldown_Text');
-    alt1.overLayClearGroup('Soulfire_Text');
-    alt1.overLayRefreshGroup('Soulfire_Text');
-    alt1.overLayClearGroup('Soulfire_Cooldown_Text');
-    alt1.overLayRefreshGroup('Soulfire_Cooldown_Text');
-    alt1.overLayClearGroup('Tsunami_Text');
-    alt1.overLayRefreshGroup('Tsunami_Text');
-    alt1.overLayClearGroup('Tsunami_Cooldown_Text');
-    alt1.overLayRefreshGroup('Tsunami_Cooldown_Text');
-    alt1.overLayClearGroup('Spell_Text');
-    alt1.overLayRefreshGroup('Spell_Text');
-    alt1.overLayClearGroup('DeathsSwifness_Text');
-    alt1.overLayRefreshGroup('DeathsSwifness_Text');
-    alt1.overLayClearGroup('DeathsSwifness_Cooldown_Text');
-    alt1.overLayRefreshGroup('DeathsSwifness_Cooldown_Text');
-    alt1.overLayClearGroup('CrystalRain_Text');
-    alt1.overLayRefreshGroup('CrystalRain_Text');
-    alt1.overLayClearGroup('CrystalRain_Cooldown_Text');
-    alt1.overLayRefreshGroup('CrystalRain_Cooldown_Text');
-    alt1.overLayClearGroup('SplitSoul_Text');
-    alt1.overLayRefreshGroup('SplitSoul_Text');
-    alt1.overLayClearGroup('Ammo_Text');
-    alt1.overLayRefreshGroup('Ammo_Text');
 }
 function adjustPositionForScale(position, scaleFactor) {
     return parseInt(roundedToFixed(position * scaleFactor, 1), 10);
@@ -19634,7 +19634,7 @@ function adjustPositionWithoutScale(position, scaleFactor) {
     return parseInt(roundedToFixed(position * (1 / scaleFactor), 1), 10);
 }
 function resizeGaugesWithMousePosition(all) {
-    const position = alt1__WEBPACK_IMPORTED_MODULE_10__.getMousePosition();
+    const position = alt1__WEBPACK_IMPORTED_MODULE_11__.getMousePosition();
     if (!position) {
         return;
     }

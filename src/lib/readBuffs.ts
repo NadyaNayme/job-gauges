@@ -10,10 +10,10 @@ import { startAbilityCooldown } from './util/ability-helpers';
 import { getSetting, updateSetting } from '../a1sauce/Settings/Storage';
 import { store } from '../state';
 import { NecromancyGaugeSlice } from '../state/gauge-data/necromancy-gauge.state';
-import { clearTextOverlays, forceClearOverlay, forceClearOverlays } from './utility';
 import { MagicAbilities, MagicGaugeSlice, MagicPropertyAbilities } from '../state/gauge-data/magic-gauge.state';
 import { GaugeDataSlice } from '../state/gauge-data/gauge-data.state';
 import { RangedAbilities, RangedGaugeSlice, RangedPropertyAbilities } from '../state/gauge-data/ranged-gauge.state';
+import { OverlaysManager } from '../a1sauce/Overlays';
 
 const sauce = A1Sauce.instance;
 sauce.setName(appName);
@@ -808,8 +808,7 @@ function changeCombatStyles(combatStyle: CombatStyle) {
         combatStyle,
     }));
 
-    forceClearOverlays();
-    clearTextOverlays();
+    OverlaysManager.forceClearOverlays();
 }
 
 function updatePeCount(stacks: number) {
@@ -883,9 +882,9 @@ function startRangedSplitSoul() {
             },
         }));
 
-        return forceClearOverlay('SplitSoul_Text');
+        return OverlaysManager.forceClearOverlay('SplitSoul_Text');
     }
 
     // Otherwise cooldown has started and we can clear the Active text
-    forceClearOverlay('SplitSoul_Text');
+    OverlaysManager.forceClearOverlay('SplitSoul_Text');
 }

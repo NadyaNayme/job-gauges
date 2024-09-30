@@ -1,5 +1,4 @@
-import * as utility from './lib/utility';
-import { alarmLoop, forceClearOverlays } from './lib/utility';
+import { alarmLoop } from './lib/utility';
 import { CombatStyle } from './types';
 
 // General Purpose
@@ -42,6 +41,7 @@ import { store } from './state';
 import { MagicGaugeSlice } from './state/gauge-data/magic-gauge.state';
 import { RangedGaugeSlice } from './state/gauge-data/ranged-gauge.state';
 import { NecromancyGaugeSlice } from './state/gauge-data/necromancy-gauge.state';
+import { OverlaysManager } from './a1sauce/Overlays';
 
 const sauce = A1Sauce.instance;
 sauce.setName(appName);
@@ -55,7 +55,7 @@ async function renderOverlays() {
     await readEnemy();
 
     if (!gaugeData.isInCombat && !gaugeData.updatingOverlayPosition) {
-        return utility.clearTextOverlays();
+        return OverlaysManager.forceClearOverlays();
     }
 
     await readBuffs();
@@ -239,7 +239,7 @@ function updateActiveOrientationFromLocalStorage(): void {
     const selectedOrientation = getSetting('selectedOrientation');
 
     // store.dispatch(NecromancyGaugeSlice.actions.updateActiveOrientation(selectedOrientation));
-    forceClearOverlays();
+    OverlaysManager.forceClearOverlays();
 }
 
 // TODO: Get rid of this crap
@@ -267,7 +267,7 @@ function addEventListeners() {
 
     document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
         checkbox.addEventListener('change', () => {
-            utility.freezeAndContinueOverlays(); // Force an instant redraw
+            OverlaysManager.forceClearOverlays(); // Force an instant redraw
             const state = store.getState();
             updateSetting('gauge-data', JSON.stringify(state));
         });

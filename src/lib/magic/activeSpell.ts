@@ -5,6 +5,7 @@ import { StackingPlayerBuff } from '../../types/common';
 import { adjustPositionForScale, handleResizingImages, white } from '../utility';
 import { store } from '../../state';
 import { MagicGaugeSlice } from '../../state/gauge-data/magic-gauge.state';
+import { ImageOverlay, OverlaysManager } from '../../a1sauce/Overlays';
 
 const spellImages = a1lib.webpackImages({
     bloodTithe: require('../.././asset/gauge-ui/magic/active-spell/blood-tithe.data.png'),
@@ -85,19 +86,24 @@ export async function spellsOverlay() {
     }
 
     function displaySpellImage(image: ImageData): void {
-        alt1.overLayImage(
-            adjustPositionForScale(
-                magic.position.x + x,
-                gaugeData.scaleFactor,
-            ),
-            adjustPositionForScale(
-                magic.position.y + y,
-                gaugeData.scaleFactor,
-            ),
-            a1lib.encodeImageString(image.toDrawableData()),
-            image.width,
-            1000,
-        );
+        const scaleFactor = gaugeData.scaleFactor;
+        const position = magic.position;
+        const xPosition = position.x + x;
+        const yPosition = position.y + y;
+
+        const abilityImageOverlay: ImageOverlay = {
+            name: 'Spells',
+            active: true,
+            position: {
+                x: adjustPositionForScale(xPosition, scaleFactor),
+                y: adjustPositionForScale(yPosition, scaleFactor),
+            },
+            duration: 10000,
+            image: a1lib.encodeImageString(image.toDrawableData()),
+            width: image.width,
+            category: 'Magic',
+        };
+        OverlaysManager.updateOverlay(abilityImageOverlay);
     }
 
     function displaySpellStacks(spell: StackingPlayerBuff): void {

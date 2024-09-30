@@ -1,8 +1,9 @@
 import * as a1lib from 'alt1';
-import { adjustPositionForScale, forceClearOverlay, handleResizingImages, white } from '../utility';
+import { adjustPositionForScale, handleResizingImages, white } from '../utility';
 import { clearAbilityOverlays, handleAbilityActiveState } from '../util/ability-helpers';
 import { store } from '../../state';
 import { MagicGaugeSlice } from '../../state/gauge-data/magic-gauge.state';
+import { OverlaysManager } from '../../a1sauce/Overlays';
 
 const ultimateImages = a1lib.webpackImages({
     active: require('../../asset/gauge-ui/magic/ode-to-deceit/active.data.png'),
@@ -51,7 +52,7 @@ export async function soulfireOverlay() {
         ability: { isOnCooldown: false },
     }));
 
-    forceClearOverlay('Soulfire_Cooldown_Text');
+    OverlaysManager.forceClearOverlay('Soulfire_Cooldown_Text');
 
     handleAbilityActiveState(abilityData, 'Soulfire', false);
 
@@ -61,7 +62,7 @@ export async function soulfireOverlay() {
             ability: { cooldownDuration: 0 },
         }));
 
-        forceClearOverlay('Soulfire_Cooldown_Text');
+        OverlaysManager.forceClearOverlay('Soulfire_Cooldown_Text');
         alt1.overLaySetGroup('Soulfire_Text');
         alt1.overLayFreezeGroup('Soulfire_Text');
         alt1.overLayClearGroup('Soulfire_Text');

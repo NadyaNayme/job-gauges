@@ -1,6 +1,7 @@
 import * as a1lib from 'alt1';
 import { adjustPositionForScale, handleResizingImages } from '../utility';
 import { store } from '../../state';
+import { ImageOverlay, OverlaysManager } from '../../a1sauce/Overlays';
 
 const bloatImages = a1lib.webpackImages({
     bloat_100: require('../../asset/gauge-ui/necromancy/bloat/100.data.png'),
@@ -82,4 +83,24 @@ export async function bloatOverlay() {
         1000,
     );
     alt1.overLayRefreshGroup('Bloat');
+
+    const { x, y } = bloat.offset;
+    const xPosition = necromancy.position.x + x;
+    const yPosition = necromancy.position.y + y;
+
+    const abilityImageOverlay: ImageOverlay = {
+        name: 'Bloat',
+        active: true,
+        position: {
+            x: adjustPositionForScale(xPosition, gaugeData.scaleFactor),
+            y: adjustPositionForScale(yPosition, gaugeData.scaleFactor),
+        },
+        duration: 4000,
+        image: a1lib.encodeImageString(image.toDrawableData()),
+        width: image.width,
+        category: 'Necromancy',
+    };
+
+    OverlaysManager.updateOverlay(abilityImageOverlay);
+
 }

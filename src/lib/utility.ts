@@ -11,6 +11,7 @@ import { MagicGaugeSlice } from '../state/gauge-data/magic-gauge.state';
 import { RangedGaugeSlice } from '../state/gauge-data/ranged-gauge.state';
 import { GaugeDataSlice } from '../state/gauge-data/gauge-data.state';
 import { CombatStyle } from '../types';
+import { OverlaysManager } from '../a1sauce/Overlays';
 
 const db = new PouchDB(appName);
 
@@ -55,9 +56,9 @@ export async function setOverlayPosition(all: boolean) {
 
         await timeout(500);
 
-        freezeOverlays();
+        OverlaysManager.freezeOverlays();
         resizeGaugesWithMousePosition(all);
-        continueOverlays();
+        OverlaysManager.continueOverlays();
     }
 }
 
@@ -67,115 +68,6 @@ export function updateLocation(): void {
 }
 
 export type AbilitiesOverlayText = `${Abilities}_${'Text' | 'Cooldown_Text'}`;
-
-export function forceClearOverlay(overlay: AbilitiesOverlayText): void {
-    alt1.overLaySetGroup(overlay);
-    alt1.overLayFreezeGroup(overlay);
-    alt1.overLayClearGroup(overlay);
-    alt1.overLayRefreshGroup(overlay);
-}
-
-// TODO: Overlays need to be able to add/remove themselves from this list
-const overlays = [
-    'Bloat',
-    'Undead_Army',
-    'Invoke_Death',
-    'Darkness',
-    'Threads',
-    'SplitSoul',
-    'LivingDeath',
-    'Necrosis',
-    'Necrosis_Row2',
-    'Souls',
-    'Sunshine',
-    'Instability',
-    'Soulfire',
-    'Tsunami',
-    'DeathsSwiftness',
-    'CrystalRain',
-    'PerfectEquilibrium',
-    'SplitSoul',
-    'Spells',
-];
-
-export function freezeOverlays(): void {
-    overlays.forEach((overlay) => {
-        alt1.overLayFreezeGroup(overlay);
-        alt1.overLayClearGroup(overlay);
-        alt1.overLayRefreshGroup(overlay);
-    });
-}
-
-export function continueOverlays(): void {
-    overlays.forEach((overlay) => {
-        alt1.overLayContinueGroup(overlay);
-    });
-}
-
-export function freezeAndContinueOverlays(): void {
-    freezeOverlays();
-    continueOverlays();
-}
-
-export function forceClearOverlays(): void {
-    overlays.forEach((overlay) => {
-        alt1.overLaySetGroup(overlay);
-        alt1.overLayFreezeGroup(overlay);
-        alt1.overLayClearGroup(overlay);
-        alt1.overLayRefreshGroup(overlay);
-        alt1.overLayContinueGroup(overlay);
-        clearTextOverlays();
-    });
-}
-
-export function clearTextOverlays(): void {
-    alt1.overLayClearGroup('Undead_Army_Text');
-    alt1.overLayRefreshGroup('Undead_Army_Text');
-
-    alt1.overLayClearGroup('LivingDeath_Text');
-    alt1.overLayRefreshGroup('LivingDeath_Text');
-    alt1.overLayClearGroup('LivingDeath_Cooldown_Text');
-    alt1.overLayRefreshGroup('LivingDeath_Cooldown_Text');
-
-    alt1.overLayClearGroup('Sunshine_Text');
-    alt1.overLayRefreshGroup('Sunshine_Text');
-    alt1.overLayClearGroup('Sunshine_Cooldown_Text');
-    alt1.overLayRefreshGroup('Sunshine_Cooldown_Text');
-
-    alt1.overLayClearGroup('Instability_Text');
-    alt1.overLayRefreshGroup('Instability_Text');
-    alt1.overLayClearGroup('Instability_Cooldown_Text');
-    alt1.overLayRefreshGroup('Instability_Cooldown_Text');
-
-    alt1.overLayClearGroup('Soulfire_Text');
-    alt1.overLayRefreshGroup('Soulfire_Text');
-    alt1.overLayClearGroup('Soulfire_Cooldown_Text');
-    alt1.overLayRefreshGroup('Soulfire_Cooldown_Text');
-
-    alt1.overLayClearGroup('Tsunami_Text');
-    alt1.overLayRefreshGroup('Tsunami_Text');
-    alt1.overLayClearGroup('Tsunami_Cooldown_Text');
-    alt1.overLayRefreshGroup('Tsunami_Cooldown_Text');
-
-    alt1.overLayClearGroup('Spell_Text');
-    alt1.overLayRefreshGroup('Spell_Text');
-
-    alt1.overLayClearGroup('DeathsSwifness_Text');
-    alt1.overLayRefreshGroup('DeathsSwifness_Text');
-    alt1.overLayClearGroup('DeathsSwifness_Cooldown_Text');
-    alt1.overLayRefreshGroup('DeathsSwifness_Cooldown_Text');
-
-    alt1.overLayClearGroup('CrystalRain_Text');
-    alt1.overLayRefreshGroup('CrystalRain_Text');
-    alt1.overLayClearGroup('CrystalRain_Cooldown_Text');
-    alt1.overLayRefreshGroup('CrystalRain_Cooldown_Text');
-
-    alt1.overLayClearGroup('SplitSoul_Text');
-    alt1.overLayRefreshGroup('SplitSoul_Text');
-
-    alt1.overLayClearGroup('Ammo_Text');
-    alt1.overLayRefreshGroup('Ammo_Text');
-}
 
 export function adjustPositionForScale(
     position: number,

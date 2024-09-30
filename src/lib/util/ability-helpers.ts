@@ -1,6 +1,6 @@
 ﻿import { Ability, Position } from '../../types/common';
 import * as a1lib from 'alt1';
-import { adjustPositionForScale, forceClearOverlay, white } from '../utility';
+import { adjustPositionForScale, white } from '../utility';
 import { ImageOverlay, OverlaysManager } from '../../a1sauce/Overlays';
 
 export type AbilityCooldown = {
@@ -15,6 +15,7 @@ export type Abilities =
     | 'Instability'
     | 'Tsunami'
     | 'DeathsSwiftness'
+    | 'RangedSplitSoul'
     | 'CrystalRain'
     | 'Soulfire'
     | 'LivingDeath'
@@ -85,7 +86,7 @@ export function startAbilityCooldown(
     AbilityCooldown.set(abilityName, true);
 
     // Otherwise cooldown has started and we can clear the Active text
-    forceClearOverlay(`${abilityName}_Text`);
+    OverlaysManager.forceClearOverlay(`${abilityName}_Text`);
     alt1.overLaySetGroupZIndex(`${abilityName}_Cooldown_Text`, 1);
 
     const cooldowns = AbilityCooldowns.get(abilityName);
@@ -105,13 +106,13 @@ export function startAbilityCooldown(
             clearInterval(timer);
             AbilityCooldown.set(abilityName, false);
             updateStateCallback();
-            return forceClearOverlay(`${abilityName}_Cooldown_Text`)
+            return OverlaysManager.forceClearOverlay(`${abilityName}_Cooldown_Text`)
         }
 
         cooldown -= 1;
 
         const cooldownText: AbilityCooldownText = `${abilityName}_Cooldown_Text`;
-        forceClearOverlay(cooldownText);
+        OverlaysManager.forceClearOverlay(cooldownText);
 
         const xPositionAdjusted =
             position.x +
@@ -144,7 +145,7 @@ export function startAbilityCooldown(
  * @param name Strongly typed name to clear overlay.
  */
 export function endAbilityCooldown(ability: Ability, name: Abilities) {
-    forceClearOverlay(`${name}_Cooldown_Text`);
+    OverlaysManager.forceClearOverlay(`${name}_Cooldown_Text`);
 }
 
 /**
@@ -172,16 +173,39 @@ export function handleAbilityActiveState(
     const xPosition = position.x + x;
     const yPosition = position.y + y;
 
+    let category;
+    switch (name) {
+        case 'LivingDeath':
+        case 'SplitSoul':
+        case 'Threads':
+        case 'Invoke_Death':
+        case 'Darkness':
+            category = 'Necromancy';
+            break;
+        case 'Sunshine':
+        case 'Instability':
+        case 'Tsunami':
+        case 'Soulfire':
+            category = 'Magic';
+            break;
+        case 'DeathsSwiftness':
+        case 'CrystalRain':
+        case 'RangedSplitSoul':
+            category = 'Ranged';
+            break;
+    }
+
     const abilityImageOverlay: ImageOverlay = {
         name: name,
-        active: active,
+        active: true,
         position: {
                 x: adjustPositionForScale(xPosition, scaleFactor),
                 y: adjustPositionForScale(yPosition, scaleFactor),
             },
-        duration: 4000,
+        duration: 10000,
         image: a1lib.encodeImageString(image.toDrawableData()),
         width: image.width,
+        category: category,
     };
 
     OverlaysManager.updateOverlay(abilityImageOverlay);
@@ -192,7 +216,7 @@ export function handleAbilityActiveState(
  * @param ability Strongly typed name of the ability to clear.
  */
 export function clearAbilityOverlays(ability: Abilities): void {
-    forceClearOverlay(`${ability}_Text`);
-    forceClearOverlay(`${ability}_Cooldown_Text`);
-    alt1.overLayClearGroup(ability);
+    OverlaysManager.forceClearOverlay(`${ability}`);
+    OverlaysManager.forceClearOverlay(`${ability}_Text`);
+    OverlaysManager.forceClearOverlay(`${ability}_Cooldown_Text`);
 }

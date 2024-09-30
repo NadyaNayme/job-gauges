@@ -4,13 +4,14 @@ import { Patches } from '../../a1sauce/Patches/patchNotes';
 import { getSetting, updateSetting } from '../../a1sauce/Settings/Storage';
 import { appName, majorVersion, minorVersion, patchVersion } from '../../data/constants';
 import { notes } from '../../patchnotes';
-import { forceClearOverlays, setOverlayPosition } from '../utility';
+import { setOverlayPosition } from '../utility';
 
 import PouchDB from 'pouchdb';
 import { store } from '../../state';
 import { GaugeDataSlice } from '../../state/gauge-data/gauge-data.state';
 import { NecromancyGaugeSlice } from '../../state/gauge-data/necromancy-gauge.state';
 import { CombatStyle } from '../../types';
+import { OverlaysManager } from '../../a1sauce/Overlays';
 
 const sauce = A1Sauce.instance;
 sauce.setName(appName);
@@ -25,7 +26,7 @@ patchNotes.setNotes(notes);
 function updateCombatStyle(combatStyle: CombatStyle) {
     store.dispatch(GaugeDataSlice.actions.updateCombatStyle(combatStyle));
 
-    forceClearOverlays();
+    OverlaysManager.forceClearOverlays();
 }
 
 export const renderSettings = () => {

@@ -1,6 +1,7 @@
 import * as a1lib from 'alt1';
 import { adjustPositionForScale, handleResizingImages, white } from '../utility';
 import { store } from '../../state';
+import { ImageOverlay, OverlaysManager } from '../../a1sauce/Overlays';
 
 const bolgImage = a1lib.webpackImages({
     active: require('../../asset/gauge-ui/ranged/perfect-equilibrium/active.data.png'),
@@ -14,7 +15,7 @@ export async function peOverlay() {
     const { ranged, gaugeData } = store.getState();
     const { perfectEquilibrium } = ranged;
     const { stacks } = ranged.perfectEquilibrium;
-    const { x, y } = ranged.perfectEquilibrium.offset;
+    const { x, y } = perfectEquilibrium.offset;
 
     if (!perfectEquilibrium.isActiveOverlay) {
         return;
@@ -42,19 +43,24 @@ export async function peOverlay() {
     }
 
     function displayBuffImage(image: ImageData): void {
-        alt1.overLayImage(
-            adjustPositionForScale(
-                ranged.position.x + x,
-                gaugeData.scaleFactor,
-            ),
-            adjustPositionForScale(
-                ranged.position.y + y,
-                gaugeData.scaleFactor,
-            ),
-            a1lib.encodeImageString(image.toDrawableData()),
-            image.width,
-            1000,
-        );
+        const scaleFactor = gaugeData.scaleFactor;
+        const position = ranged.position;
+        const xPosition = position.x + x;
+        const yPosition = position.y + y;
+
+        const abilityImageOverlay: ImageOverlay = {
+            name: 'PerfectEquilibrium',
+            active: true,
+            position: {
+                x: adjustPositionForScale(xPosition, scaleFactor),
+                y: adjustPositionForScale(yPosition, scaleFactor),
+            },
+            duration: 10000,
+            image: a1lib.encodeImageString(image.toDrawableData()),
+            width: image.width,
+            category: 'Ranged',
+        };
+        OverlaysManager.updateOverlay(abilityImageOverlay);
     }
 
     function displayStacks(stacks: number): void {

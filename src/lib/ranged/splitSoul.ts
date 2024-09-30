@@ -1,9 +1,9 @@
 import * as a1lib from 'alt1';
-import { adjustPositionForScale, forceClearOverlay, handleResizingImages, white } from '../utility';
+import { adjustPositionForScale, handleResizingImages, white } from '../utility';
 import { clearAbilityOverlays, handleAbilityActiveState } from '../util/ability-helpers';
 import { store } from '../../state';
 import { RangedGaugeSlice } from '../../state/gauge-data/ranged-gauge.state';
-import { split } from 'lodash';
+import { OverlaysManager } from '../../a1sauce/Overlays';
 
 const ultimateImages = a1lib.webpackImages({
     active: require('../../asset/gauge-ui/ranged/split-soul/active.data.png'),
@@ -16,10 +16,10 @@ let scaledOnce = false;
 export async function rangedSplitSoulOverlay() {
     const { gaugeData, ranged } = store.getState();
     const { splitSoul } = ranged;
-    const { x, y } = ranged.splitSoul.offset;
+    const { x, y } = splitSoul.offset;
 
     if (!splitSoul.isActiveOverlay) {
-        clearAbilityOverlays('SplitSoul');
+        clearAbilityOverlays('RangedSplitSoul');
         return;
     }
 
@@ -40,9 +40,9 @@ export async function rangedSplitSoulOverlay() {
 
     // If Split Soul is not Active and is not on cooldown it should appear as able to be activated
     if (!splitSoul.active) {
-        handleAbilityActiveState(abilityData, 'SplitSoul', false);
-        alt1.overLayRefreshGroup('SplitSoul_Text');
-        alt1.overLayClearGroup('SplitSoul_Text');
+        handleAbilityActiveState(abilityData, 'RangedSplitSoul', false);
+        alt1.overLayRefreshGroup('RangedSplitSoul_Text');
+        alt1.overLayClearGroup('RangedSplitSoul_Text');
         return (lastValue = splitSoul.time);
     }
 
@@ -51,9 +51,9 @@ export async function rangedSplitSoulOverlay() {
         ability: { isOnCooldown: false },
     }));
 
-    forceClearOverlay('SplitSoul_Cooldown_Text');
+    OverlaysManager.forceClearOverlay('RangedSplitSoul_Cooldown_Text');
 
-    handleAbilityActiveState(abilityData, 'SplitSoul', true);
+    handleAbilityActiveState(abilityData, 'RangedSplitSoul', true);
 
     if (lastValue !== splitSoul.time) {
         store.dispatch(RangedGaugeSlice.actions.updateAbility({
@@ -61,10 +61,10 @@ export async function rangedSplitSoulOverlay() {
             ability: { cooldownDuration: 0 },
         }));
 
-        forceClearOverlay('SplitSoul_Cooldown_Text');
-        alt1.overLaySetGroup('SplitSoul_Text');
-        alt1.overLayFreezeGroup('SplitSoul_Text');
-        alt1.overLayClearGroup('SplitSoul_Text');
+        OverlaysManager.forceClearOverlay('RangedSplitSoul_Cooldown_Text');
+        alt1.overLaySetGroup('RangedSplitSoul_Text');
+        alt1.overLayFreezeGroup('RangedSplitSoul_Text');
+        alt1.overLayClearGroup('RangedSplitSoul_Text');
         alt1.overLayTextEx(
             `${splitSoul.time || ''}`,
             white,
@@ -82,7 +82,7 @@ export async function rangedSplitSoulOverlay() {
             true,
             true,
         );
-        alt1.overLayRefreshGroup('SplitSoul_Text');
+        alt1.overLayRefreshGroup('RangedSplitSoul_Text');
     }
 
     lastValue = splitSoul.time;
