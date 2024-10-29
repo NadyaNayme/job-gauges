@@ -26156,7 +26156,7 @@ function createReducer(initialState, mapOrBuilderCallback) {
             if (previousState === null) {
               return previousState;
             }
-            throw new Error( false ? 0 : "A case reducer on a non-draftable value must not return undefined");
+            throw Error("A case reducer on a non-draftable value must not return undefined");
           }
           return result;
         } else {
@@ -27172,7 +27172,7 @@ var TaskAbortError = class {
 // src/listenerMiddleware/utils.ts
 var assertFunction = (func, expected) => {
   if (typeof func !== "function") {
-    throw new Error( false ? 0 : `${expected} is not a function`);
+    throw new TypeError( false ? 0 : `${expected} is not a function`);
   }
 };
 var noop2 = () => {
