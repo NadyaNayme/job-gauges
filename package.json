@@ -9,7 +9,7 @@
 	"dependencies": {
 		"@reduxjs/toolkit": "^2.5.0",
 		"@types/pouchdb": "^6.4.2",
-		"alt1": "^0.0.7",
+		"alt1": "^0.0.10",
 		"lodash": "^4.17.21",
 		"luxon": "^3.4.3",
 		"nanoid": "^5.0.7",
