@@ -32,7 +32,7 @@
 		"sharp": "^0.31.3",
 		"style-loader": "^4.0.0",
 		"stylelint": "^16.12.0",
-		"stylelint-config-standard": "^36.0.1",
+		"stylelint-config-standard": "^37.0.0",
 		"stylelint-order": "^6.0.4",
 		"ts-loader": "^9.5.2",
 		"typescript": "^5.7.3",
