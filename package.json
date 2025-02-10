@@ -13,7 +13,7 @@
 		"lodash": "^4.17.21",
 		"luxon": "^3.4.3",
 		"nanoid": "^5.0.7",
-		"npm": "^11.0.0",
+		"npm": "^11.1.0",
 		"pouchdb": "^9.0.0"
 	},
 	"devDependencies": {
