@@ -16986,12 +16986,13 @@ chat.readargs = {
 };
 const SPELL_TEXT = {
     'Main-hand spell set to: Exsanguinate.': 'Exsanguinate',
-    'Main-hand and off-hand spells set to: Exsanguinate.': 'Exsanguinate',
+    'Main-hand and Off-hand spell set to: Exsanguinate.': 'Exsanguinate',
     'Main-hand spell set to: Incite Fear.': 'Incite_Fear',
-    'Main-hand and off-hand spells set to: Incite Fear.': 'Incite_Fear',
+    'Main-hand and Off-hand spell set to: Incite Fear.': 'Incite_Fear',
     'Main-hand spell set to: Ice Barrage.': 'Ice_Barrage',
     'Main-hand and off-hand spells set to: Ice Barrage.': 'Ice_Barrage',
 };
+// const imgRef = a1lib.captureHoldFullRs();
 const getChat = () => {
     if (!chat.pos) {
         chat.find();
@@ -17047,10 +17048,18 @@ async function spellsOverlay() {
         if (!chat.pos || !chat.pos.boxes[0]) {
             return;
         }
+        // Force the first "main" chatbox found to be the actual main chatbox
+        if (chat.pos.boxes[0].type === 'main') {
+            chat.pos.mainbox = chat.pos.boxes[0];
+        }
         const chatLines = chat.read();
         const pocketMessages = Object.keys(SPELL_TEXT);
         for (const line of chatLines ?? []) {
+            console.log("line.text");
+            console.log(line.text);
+            console.log(pocketMessages);
             const match = pocketMessages.find((m) => line.text.includes(m));
+            console.log(match);
             if (!match)
                 continue;
             _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_3__.MagicGaugeSlice.actions.updateActiveSpell({
@@ -23500,7 +23509,17 @@ return /******/ (() => { // webpackBootstrap
   \**********************************************************/
 /***/ ((module, __unused_webpack_exports, __nested_webpack_require_945__) => {
 
-module.exports=(__nested_webpack_require_945__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAMAAAC67D+PAAAAAW5vUEUAYtdMlAAAAARub1BFAAAAAEEgjiIAAAAzUExURQsICCEdHPN8c6ppYgAAAVg0VYpLRWAsKIZ/fn9ANUolG9CHhTAUEjElGzIwL/WkmQAAAEMXxE8AAAARdFJOU/////////////////////8AJa2ZYgAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAEpJREFUGFc9ygEKwDAIA8B0Oq3Wrv7/tXUdLGA4MMg/h/i6rl3UDvkmEVHUj4h7ZzEUncfgKOZ8Yq3wqC3M1PXdFmlOO0youyNzA+CIA80l09uxAAAAAElFTkSuQmCC")
+module.exports=(__nested_webpack_require_945__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAACW5vUEUAAAAAAAAAAAChinLVAAAA/UlEQVQYlZ2Qv0vDUBDHPy81cMgDpyZIhiB0skPGQkqXSmdXNzfRxcHFqf+EDopOboJQFzcR0cnRpSIi2A6lrToYyPAkkOegKfXH5G3H3efL505Za/lXaRGrRX7RarqplH17vLkOwMrOPo8vY/VjUdmt5YjIjxk9dSdgN+vTuRmRGqMcLWKP1jaI/JjVgz1UvYWqt9g+v6bqhrQbNbSIdQq6c3UGQLOU0SxlAJz0HibpM6kxavfy1AaOS6XssbgQfPl6BI7L4e09qTFKFZe2GzXGswmvyRvJMGdu3iEZ5lz0nz8dp8UjP+Zu8M4gz6i64d/v0SJ2KfS+DYs0gA/Ek1ie1JEnzAAAAABJRU5ErkJggg==")
+
+/***/ }),
+
+/***/ "./src/chatbox/imgs/badge_broadcast_death.data.png":
+/*!*********************************************************!*\
+  !*** ./src/chatbox/imgs/badge_broadcast_death.data.png ***!
+  \*********************************************************/
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_1820__) => {
+
+module.exports=(__nested_webpack_require_1820__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAAsAAAALBAMAAABbgmoVAAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAABJQTFRFAAAAXkAg/////+bFAAAB26VSQcM5ewAAAAZ0Uk5TAP//////enng/gAAAExJREFUeJxjZBBkYPj/gZFRUZDh33lGYX4g9y6jsOF7Rv6zjKL67xkFTzOKOjxgUNjNyBj08L/cekYGYQWGux+AFAPDXwTFKMDwngEAJCwVTOO24P0AAAAASUVORK5CYII=")
 
 /***/ }),
 
@@ -23508,9 +23527,9 @@ module.exports=(__nested_webpack_require_945__(/*! alt1/base */ "alt1/base").Ima
 /*!********************************************************!*\
   !*** ./src/chatbox/imgs/badge_broadcast_gold.data.png ***!
   \********************************************************/
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_1736__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_2535__) => {
 
-module.exports=(__nested_webpack_require_1736__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAMAAAC67D+PAAAAAW5vUEUAYtdMlAAAAARub1BFAAAAAEEgjiIAAAAzUExURQAAAAsICKyWbaCGWgAAAWtiTzAgF11CIIdmNjIrICEdHNukUc+cJXpWKUolG39ANQAAAPj2qJUAAAARdFJOU/////////////////////8AJa2ZYgAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAE5JREFUGFc9jEsWgDAIA/mkQFup3P+0oguzmuS9DNWfRhYR5Rehw8wDRRg2RedyEGTo3tEzcSD2lXCmco/MPKdvK63j65Xh5D3xebs0VD3I+wPSC+2UNgAAAABJRU5ErkJggg==")
+module.exports=(__nested_webpack_require_2535__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABG5vUEUAAAAAQSCOIgAACktub1BFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM0mDyUAAAAgbm9QRQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxDpOEwAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAQpJREFUGJWNkDtLwwAUhb8rSiN0ElOpWJEqaHErLmYScZQ6uamTLg4iOPkLnERw0MGtDg6dBH9A6RCXIJniW2iG0vgiSMGC0OsQU5rNA5d74X7DOUdUlf9I4iNtGHp2sJ54bu2f02q3pQcUvTja5Np+wXY9wrBDycoyPjrA7qkDqAiI7qwuYrseAHvbywAcnlwRhh2s2UHK1Tr9APNWnnjPZT4AWFsa4+b2jWLBjMC0kSJ4cDmuOOSHvyCTI2g+4Tf6KFfrf/5TkceNhQkFKBZMAPzGDwDPd58AXN77IgBT5oiWrCw1L+gmjv1VXlt8e+/SrQdEV6ZzTM4MAVDzApzHJqA9TLJajSapX1xkW1Tn4drcAAAAAElFTkSuQmCC")
 
 /***/ }),
 
@@ -23518,9 +23537,19 @@ module.exports=(__nested_webpack_require_1736__(/*! alt1/base */ "alt1/base").Im
 /*!**********************************************************!*\
   !*** ./src/chatbox/imgs/badge_broadcast_silver.data.png ***!
   \**********************************************************/
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_2543__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_7038__) => {
 
-module.exports=(__nested_webpack_require_2543__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAMAAAC67D+PAAAAAW5vUEUAYtdMlAAAAARub1BFAAAAAEEgjiIAAAAwUExURQAAAAsICCEdHJaWlgAAAUZHR2ZmZlpVVzs8OoZ/fq2trdPT08bGxzAwL+Dg4AAAADwgKvoAAAAQdFJOU////////////////////wDgI10ZAAAACW5vUEUAAAAAAAAAAAChinLVAAAASklEQVQYVz3MSQ6AMAwDwOxJS03+/1tKJfBpZFmm/nPI/FFU5dA8IrKsycZkVRtpxBHzWupu1Ki6F0T2ljO9dnk4gHB+z6QAcPcD17YDp+hpqhwAAAAASUVORK5CYII=")
+module.exports=(__nested_webpack_require_7038__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABG5vUEUAAAAAQSCOIgAACktub1BFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM0mDyUAAAAgbm9QRQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxDpOEwAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAPJJREFUGJWdj71KA1EQhb8RwStcBWG1E3YrNQoq+hQGTCOxEV9AsLZUsLL29v6QcluDWOwb2AvqKooBDSTsXuN2Y+MuprFwmlPMOTPnE1XlX2ONUWvM3+kwitQ5p845DaNoyCw/opv1OjOzYbXIen3u39+4TRJABRDdPzjSOI7VGlNdBNGTw2Ntbu8oiI5aMwZA+ybhvNViaW2Vjs9x7pTrq/bw68Xask4GFoCzi0s6PmevuQvA51fGU5qKlKQbjS0ACt/nI+8xPTHF62BQdRz5Tba+MM9D+kLW9RVYWU1K03gt0JVgjqzrq+Dz4x2+KATgGwttYvJ5rvvrAAAAAElFTkSuQmCC")
+
+/***/ }),
+
+/***/ "./src/chatbox/imgs/badgegim.data.png":
+/*!********************************************!*\
+  !*** ./src/chatbox/imgs/badgegim.data.png ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_11453__) => {
+
+module.exports=(__nested_webpack_require_11453__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAAkAAAALCAYAAACtWacbAAAACW5vUEUAAAAAAAAAAAChinLVAAAA+klEQVQYlWWQMUsCYRiAn/dUaDCuJaNCkHDpPyT+ixpaHJocxMGchbaaaq4/ETgFDVnjTS1eZ3J4kNbV4Qd2SFKfQ3eG1wMvPMMD78srRBTXN3TsPf8tMi0AEgcFM0+5VkX1OwyGMwKri6s8ev6rGHFwc3eO6nd4cnwAyrUqBTMPiBYQrV/uOT69XAQAK9k1ppMx1+02KZDW5/cPZ80jnr9ybBd3yRrvmKspPoIQ23FIA5g7JWRrjyT7B4cAGACPD7ecXFwtBY16helk/Bclw0a9snSfARBY3X+rAEJ7BEAatLjK01igNjMADIYzQnuEq7zFQyNE/07SYQ5ojWXiETiVvgAAAABJRU5ErkJggg==")
 
 /***/ }),
 
@@ -23528,9 +23557,9 @@ module.exports=(__nested_webpack_require_2543__(/*! alt1/base */ "alt1/base").Im
 /*!*********************************************!*\
   !*** ./src/chatbox/imgs/badgehcim.data.png ***!
   \*********************************************/
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_3286__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_12276__) => {
 
-module.exports=(__nested_webpack_require_3286__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAMAAACecocUAAAAAW5vUEUAYtdMlAAAAARub1BFAAAAAEEgjiIAAAAYUExURQAAAFwAAP8AAP99c9YAAAAAAf9bWwAAAKtA5IgAAAAIdFJOU/////////8A3oO9WQAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAEFJREFUGFdlzUEOADEIAkClUP7/46X1skn1MiaoZfeUXW6sBZDtalyfIZZC6Zh/k9iJxM4AzW5uJoJwfPvxPLb9AWP8AZpOsiu3AAAAAElFTkSuQmCC")
+module.exports=(__nested_webpack_require_12276__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACW5vUEUAAAAAAAAAAAChinLVAAAAdklEQVQYlY2R0Q2AIAxEX4nLsJOuwCcfrqMz4Tj1g9Y0IomXXOCacnBUMKygTHCCEBsVVGvpNN2MbrSsoMfEMQMXsHepjyuIgjyusebuCTv9B8k3DaV5xlrGWgzoYfz6r4DjjwS+GxMvbGHNszf/gUTxNcU4vRugtlCi8k6MwAAAAABJRU5ErkJggg==")
 
 /***/ }),
 
@@ -23538,9 +23567,9 @@ module.exports=(__nested_webpack_require_3286__(/*! alt1/base */ "alt1/base").Im
 /*!************************************************!*\
   !*** ./src/chatbox/imgs/badgeironman.data.png ***!
   \************************************************/
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_3985__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_12935__) => {
 
-module.exports=(__nested_webpack_require_3985__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAA0AAAAJCAMAAADepFZYAAAAAW5vUEUAYtdMlAAAAARub1BFAAAAAEEgjiIAAAAbUExURQAAAFpVVzIrIMbGxwAAATs8OiEdHDAwLwAAANYXi4cAAAAJdFJOU///////////AFNPeBIAAAAJbm9QRQAAAAAAAAAAAKGKctUAAAA9SURBVBhXXcxBDgAgCANBi7jy/xcL6sHYBNK5tMWbXzLtJlmqX/WSD8lVN+RHlSPym1kKb8G8K5NcAbaAWKaXAn7TGFt5AAAAAElFTkSuQmCC")
+module.exports=(__nested_webpack_require_12935__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAA0AAAAJCAYAAADpeqZqAAAACW5vUEUAAAAAAAAAAAChinLVAAAAtElEQVQYlWP8//8/A6mAiWQdMBAWHvPfRFXyf1h4DFZrw8Jj/sPUwG3Kqi3Fayi6PAsDA+P/yqwsBik1Y6gQ438/b2+4gk1btzJMa+5mePz8PkTN7a3/WbCZvGnrVrw2szAwMDA8f/yMgUGWgUGWR4CBgYGBQVtLD67g6rVLcPala1dhmv4zMjAw/P/94TcDgyQDAwPDf8ar1y6iGw6RhzAZ4c578/k1w5tTr7E659Spoyh8AJR3PqIS2PMJAAAAAElFTkSuQmCC")
 
 /***/ }),
 
@@ -23548,9 +23577,9 @@ module.exports=(__nested_webpack_require_3985__(/*! alt1/base */ "alt1/base").Im
 /*!*********************************************!*\
   !*** ./src/chatbox/imgs/badgepmod.data.png ***!
   \*********************************************/
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_4672__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_13662__) => {
 
-module.exports=(__nested_webpack_require_4672__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAA0AAAALCAMAAACTbPdTAAAAAW5vUEUAYtdMlAAAAARub1BFAAAAAEEgjiIAAAASUExURZaWlgAAAODg4KKiogAAAQAAAJ/NAioAAAAGdFJOU///////ALO/pL8AAAAJbm9QRQAAAAAAAAAAAKGKctUAAAA3SURBVBhXbYxJDgAwCAKJy/+/XMT20FYwZOYikJW9sAJz7WcEc9e+JuyAz26jRtQR29TJcJK5AISjAaw7YIwNAAAAAElFTkSuQmCC")
+module.exports=(__nested_webpack_require_13662__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAA0AAAALCAMAAACTbPdTAAAAAW5vUEUAYtdMlAAAAARub1BFAAAAAEEgjiIAAAASUExURZaWlgAAAODg4KKiogAAAQAAAJ/NAioAAAAGdFJOU///////ALO/pL8AAAAJbm9QRQAAAAAAAAAAAKGKctUAAAA3SURBVBhXbYxJDgAwCAKJy/+/XMT20FYwZOYikJW9sAJz7WcEc9e+JuyAz26jRtQR29TJcJK5AISjAaw7YIwNAAAAAElFTkSuQmCC")
 
 /***/ }),
 
@@ -23558,9 +23587,19 @@ module.exports=(__nested_webpack_require_4672__(/*! alt1/base */ "alt1/base").Im
 /*!************************************************!*\
   !*** ./src/chatbox/imgs/badgepmodvip.data.png ***!
   \************************************************/
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_5347__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_14337__) => {
 
-module.exports=(__nested_webpack_require_5347__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAA0AAAALCAMAAACTbPdTAAAAAW5vUEUAYtdMlAAAAARub1BFAAAAAEEgjiIAAAAPUExURQAAAJaWlq2trQAAAQAAAIuYQeUAAAAFdFJOU/////8A+7YOUwAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAEJJREFUGFc1jYkNADEIwzB0/5kvjy5FFIsA8yL6ldhiCFFwiETWuHHnUFtOEOzZ6zkuz3Ndsl0Tp+qiSVWT6L/M8j52yAF52AYCBwAAAABJRU5ErkJggg==")
+module.exports=(__nested_webpack_require_14337__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAA0AAAALCAMAAACTbPdTAAAAAW5vUEUAYtdMlAAAAARub1BFAAAAAEEgjiIAAAAPUExURQAAAJaWlq2trQAAAQAAAIuYQeUAAAAFdFJOU/////8A+7YOUwAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAEJJREFUGFc1jYkNADEIwzB0/5kvjy5FFIsA8yL6ldhiCFFwiETWuHHnUFtOEOzZ6zkuz3Ndsl0Tp+qiSVWT6L/M8j52yAF52AYCBwAAAABJRU5ErkJggg==")
+
+/***/ }),
+
+/***/ "./src/chatbox/imgs/badgergim.data.png":
+/*!*********************************************!*\
+  !*** ./src/chatbox/imgs/badgergim.data.png ***!
+  \*********************************************/
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_15012__) => {
+
+module.exports=(__nested_webpack_require_15012__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAA0AAAALCAYAAACksgdhAAAACW5vUEUAAAAAAAAAAAChinLVAAABWUlEQVQokW2SP0tCYRTGfzeEoCEXowgMkaBNGrpbIugHaMkaWhpabsRFyvoCNRnCTQIX6wsUfYHIQXNKh2rxz+UiOigZ0g0Ro+FtqPvirR544T3w/HjOORz4kXgIC0NTxeLMrHygCFCEoaniPh0SjldxgLPLEefXLQJePxF9F9sq0up80q9Uadpt9tYXWFn8YPXgSZm4T4dEqWBL4LZwhm0VqTd6AET0XQJeP4lsmbI5iaGpwuNEmr0XGo83HKZyEhgN3ngu5ZlamgMTKQ9A2ZwE4DCV4/Roh5PrGgC2VQSg3vg2W6/TBH3veBiTNxhGmV/ltzY2t1z1xHjxXMpznLlwGZKJbUaDNzfktPYfmExsy/kcWa/T7qR+pfqnNYBhretOSmQfFAA9HqVpt+lXqnIBrc4nw1qXpt1Gj0cJ+t7JXN0pkjY0VejxmLyC/bVl+dfjMWFoqryIL5m9mkOjusTLAAAAAElFTkSuQmCC")
 
 /***/ }),
 
@@ -23568,9 +23607,9 @@ module.exports=(__nested_webpack_require_5347__(/*! alt1/base */ "alt1/base").Im
 /*!********************************************!*\
   !*** ./src/chatbox/imgs/badgevip.data.png ***!
   \********************************************/
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_6018__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_15955__) => {
 
-module.exports=(__nested_webpack_require_6018__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAA0AAAALCAMAAACTbPdTAAAAAW5vUEUAYtdMlAAAAARub1BFAAAAAEEgjiIAAAAMUExURQAAACGI3iFR3gAAANRJuUMAAAAEdFJOU////wBAKqn0AAAACW5vUEUAAAAAAAAAAAChinLVAAAAPUlEQVQYVzWNgQ0AIAjDmPz/sxuFxajNilZPxAHpgUMyDZYmpqRSENc2F+Nmbs3M8QjVmVmYubGZ7mc99QddvAEtcdAPjgAAAABJRU5ErkJggg==")
+module.exports=(__nested_webpack_require_15955__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAA0AAAALCAYAAACksgdhAAAACW5vUEUAAAAAAAAAAAChinLVAAAAaElEQVQokXWQURXAMAgDw5ysJmatEmoNE6uU7YuWAskvHLkHQHKP92OziwLKwQTFxQoUqqEAnlpPjmtaLwH7wOxNJGlUoANWUwILPQMA8r3VRnQXlPSsRbPF2eSA2ZtE0LK/p245JM5/n7U13r3PcvMAAAAASUVORK5CYII=")
 
 /***/ }),
 
@@ -23578,9 +23617,9 @@ module.exports=(__nested_webpack_require_6018__(/*! alt1/base */ "alt1/base").Im
 /*!****************************************************!*\
   !*** ./src/chatbox/imgs/chatLegacyBorder.data.png ***!
   \****************************************************/
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_6709__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_16610__) => {
 
-module.exports=(__nested_webpack_require_6709__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAAQAAAAPCAIAAABMVPnqAAAAIUlEQVQYV2P4jwRAnNk92RA0mDjzJuRCOUAWlAMF//8DAJmOfBu3Ydq7AAAAAElFTkSuQmCC")
+module.exports=(__nested_webpack_require_16610__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAAQAAAAPCAIAAABMVPnqAAAAIUlEQVQYV2P4jwRAnNk92RA0mDjzJuRCOUAWlAMF//8DAJmOfBu3Ydq7AAAAAElFTkSuQmCC")
 
 /***/ }),
 
@@ -23588,9 +23627,9 @@ module.exports=(__nested_webpack_require_6709__(/*! alt1/base */ "alt1/base").Im
 /*!*********************************************!*\
   !*** ./src/chatbox/imgs/chat_link.data.png ***!
   \*********************************************/
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_7212__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_17113__) => {
 
-module.exports=(__nested_webpack_require_7212__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAZ0lEQVQY02NgwAOsbaz+gzADIeDm7v7f19Tnf4RJKH4NIIUgRTA+Xg3oikE2YCgGKQBhkGK8CmGeMTDQBysG0Vg9CBLwAZqA7IxwkxAwxlDoi6QQphhnWKL7HKdiZA0gG1zxKSQltgDRP03waXSEwgAAAABJRU5ErkJggg==")
+module.exports=(__nested_webpack_require_17113__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAMAAACecocUAAAAAW5vUEUAYtdMlAAAAARub1BFAAAAAEEgjiIAAAAPUExURT08PFI0UU1MTG49QAAAAF99wrkAAAAFdFJOU/////8A+7YOUwAAAAlub1BFAAAAAAAAAAAAoYpy1QAAAD5JREFUGFc1zQEOwDAIAkCg/P/NA3UmNZcWLbyF4AwSZ9Fmn+r3m1TZDADldBbJimm5nN6hdbLjXX2eL1P2B1fHAVK6b6twAAAAAElFTkSuQmCC")
 
 /***/ }),
 
@@ -23598,9 +23637,19 @@ module.exports=(__nested_webpack_require_7212__(/*! alt1/base */ "alt1/base").Im
 /*!**********************************************!*\
   !*** ./src/chatbox/imgs/chatbubble.data.png ***!
   \**********************************************/
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_7815__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_17784__) => {
 
-module.exports=(__nested_webpack_require_7815__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAA0AAAAJCAYAAADpeqZqAAAAoElEQVQoU5WRwQ3DIAxF2Sg9t1KvySSM0d46AgNw55aukAzAAizADE6eIxCy1EMPH4z9nxHGiYjq835JCEG+69rF2Xsv87zIbZpO2+XtQM5ZSilSa1URo23btUGMsYOOThRGYARpZkGFKFjAQiil9D/EbQrxSBIYrCzQb3o873qggMkam3gP01SIaRCQHE00ItfMDdDpsTTwl/gS9ssr7gAl2lnMS+w6XAAAAABJRU5ErkJggg==")
+module.exports=(__nested_webpack_require_17784__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACW5vUEUAAAAAAAAAAAChinLVAAAAfklEQVQYlX2Quw2AUAhFD0ZnsbEwcQFXcTIncgALo50DaGu0AcUP3oIE3uHyQEBQ7cQSDQKw99PwSc3rQl2UACIgv6CpLkqSaK4HTZ/wExyz7YLndTmBCAS3YNt30Y9o8gp0Qaudp7NGhdQUUmcgvsncuAO33E94PUSne4EABza8K521cSgfAAAAAElFTkSuQmCC")
+
+/***/ }),
+
+/***/ "./src/chatbox/imgs/clan.data.png":
+/*!****************************************!*\
+  !*** ./src/chatbox/imgs/clan.data.png ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_18419__) => {
+
+module.exports=(__nested_webpack_require_18419__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAABsAAAAJCAYAAADDylfFAAAACW5vUEUAAAAAAAAAAAChinLVAAAAnklEQVQoka1TwQ3EIAxzTh0BvgzBm3GuD3bpO52KJfgyhO9FhShUujss5RNbJIqNkESP8zyvZoxRboJfQXJYAAiAIQTONN/W3w+oKlV1ulDLrdkY4HEc04Hee773ndsKK1T1kU8pCQC8VgyLMUrOGdbae9oaLBkGAM45lFKekzu6dTV9ZHzb6zXGmMfkyuifAYCIXARJ6bnaq7peM8IHaltXKPxAmD0AAAAASUVORK5CYII=")
 
 /***/ }),
 
@@ -23608,9 +23657,9 @@ module.exports=(__nested_webpack_require_7815__(/*! alt1/base */ "alt1/base").Im
 /*!***********************************************!*\
   !*** ./src/chatbox/imgs/entertochat.data.png ***!
   \***********************************************/
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_8498__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_19126__) => {
 
-module.exports=(__nested_webpack_require_8498__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAABgAAAAJCAYAAAAo/ezGAAAAdElEQVQ4T62RSw7AIAhEOQTH8WCsXbvmuhRsTdQipqYmz88MJI4CM0tDB/zNPelipJT06Bee4oo9UbqV1+uDscLS5Zx163ulFN2OOiLWVxnEE1YpGq74FSISu/GsGy/hhDBBixgVecw9YYL6GQ+9uWPfI3ABK/Blt6d3IYgAAAAASUVORK5CYII=")
+module.exports=(__nested_webpack_require_19126__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAABgAAAAJCAYAAAAo/ezGAAAAAW5vUEUAYtdMlAAAAARub1BFAAAAAEEgjiIAAAAJbm9QRQAAAAAAAAAAAKGKctUAAAB5SURBVDhPY5w2bdp/BijIyspihDKpDkCW/LexsYFbRjcA8iGyL5EBLjl8enCB/01NTbg0/O/p6cGQExERAYmRZAlWQI5rSQYVFRX/oS7GAExQmiIgJyfH8ObNG6wpkOxkCtMH0wPyATZLYALI3iPaEiCA6cOhh4EBAK3yO+ASYtdMAAAAAElFTkSuQmCC")
 
 /***/ }),
 
@@ -23618,9 +23667,19 @@ module.exports=(__nested_webpack_require_8498__(/*! alt1/base */ "alt1/base").Im
 /*!************************************************!*\
   !*** ./src/chatbox/imgs/filterbutton.data.png ***!
   \************************************************/
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_9125__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_19825__) => {
 
-module.exports=(__nested_webpack_require_9125__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAA4AAAAPCAYAAADUFP50AAAAaElEQVQ4T9XLsQ2AMAxEUc+BxBysySTsQcEI7EF36JAcORdHoUMUv8jFz65jgXZuU2lf5zQD0OARonkg4+Eb6PcFMgc9GG8ryHpQ76qHp1D/WTOwCPXPS8fvINM/Lx1/CHWPpeMIAbAba/5W9dGOZAMAAAAASUVORK5CYII=")
+module.exports=(__nested_webpack_require_19825__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAA4AAAAPCAYAAADUFP50AAAAaElEQVQ4T9XLsQ2AMAxEUc+BxBysySTsQcEI7EF36JAcORdHoUMUv8jFz65jgXZuU2lf5zQD0OARonkg4+Eb6PcFMgc9GG8ryHpQ76qHp1D/WTOwCPXPS8fvINM/Lx1/CHWPpeMIAbAba/5W9dGOZAMAAAAASUVORK5CYII=")
+
+/***/ }),
+
+/***/ "./src/chatbox/imgs/friends.data.png":
+/*!*******************************************!*\
+  !*** ./src/chatbox/imgs/friends.data.png ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_20416__) => {
+
+module.exports=(__nested_webpack_require_20416__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAACkAAAAJCAYAAACvzAXAAAAACW5vUEUAAAAAAAAAAAChinLVAAAAk0lEQVQ4jc1TyQ3AIAxz+mQchmASPgzDO+O6jwqU0qKWHhKW8sDGkpVDSKJAVesjpSSYBGJDAoCIVILkFEGXliAppSxvu9xCVXmlj/gKXzWSt2v73tdCCF3de3+qAWCM8aABIAA657gb95OdbDvxxy5/spPWM+K7i0PIGbHknF+nvDqcUV97OJ91sox8dNQ9n12hFbcv1iTAIoVRAAAAAElFTkSuQmCC")
 
 /***/ }),
 
@@ -23628,9 +23687,9 @@ module.exports=(__nested_webpack_require_9125__(/*! alt1/base */ "alt1/base").Im
 /*!*******************************************!*\
   !*** ./src/chatbox/imgs/gameall.data.png ***!
   \*******************************************/
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_9716__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_21091__) => {
 
-module.exports=(__nested_webpack_require_9716__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAo0lEQVQ4T6XMsQkCQRAF0KnA5DA0MDG3A2uwlQuN7cVY07vgAkPBTA3FAixA5esXvuyeC+O6Cw+Gv/PH7oc5Hsf/sGupjxx2289Ar2c51LNrNwX1FzzqRQc0e6ID580YxFCzJ9y1y3oIYphDPTutBiCGmj3hbvmB3XICYphDveiA5hQVRfnXge1i9KY8/A9p7zP0FzzqlR9o6wolrEmEv2rqCk/yGcSB9N78JQAAAABJRU5ErkJggg==")
+module.exports=(__nested_webpack_require_21091__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAo0lEQVQ4T6XMsQkCQRAF0KnA5DA0MDG3A2uwlQuN7cVY07vgAkPBTA3FAixA5esXvuyeC+O6Cw+Gv/PH7oc5Hsf/sGupjxx2289Ar2c51LNrNwX1FzzqRQc0e6ID580YxFCzJ9y1y3oIYphDPTutBiCGmj3hbvmB3XICYphDveiA5hQVRfnXge1i9KY8/A9p7zP0FzzqlR9o6wolrEmEv2rqCk/yGcSB9N78JQAAAABJRU5ErkJggg==")
 
 /***/ }),
 
@@ -23638,9 +23697,9 @@ module.exports=(__nested_webpack_require_9716__(/*! alt1/base */ "alt1/base").Im
 /*!**********************************************!*\
   !*** ./src/chatbox/imgs/gamefilter.data.png ***!
   \**********************************************/
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_10399__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_21774__) => {
 
-module.exports=(__nested_webpack_require_10399__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAqUlEQVQ4T63MsQrCQBAE0P1LSzs7Sy3tBEvtFDFNwMYurVhY2lgKfkHyBXbJ6AQm3AnHcaeBB3ubnbGiaVE0XZZD3cI2jxd+MRR8Pkvxv4LVrQa5yxjeKucVaI7xChaXJ4jLFMp5BZpjvIJ5dQdxqTnGvbXZ6QriMoVyNi3PIC41E3+6bwVFe69gsq8QoqAMBaGDGOVsvD5mFzDbF7jUHPJ9b6PlDvm2eAMxAQErxoTm+QAAAABJRU5ErkJggg==")
+module.exports=(__nested_webpack_require_21774__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAqUlEQVQ4T63MsQrCQBAE0P1LSzs7Sy3tBEvtFDFNwMYurVhY2lgKfkHyBXbJ6AQm3AnHcaeBB3ubnbGiaVE0XZZD3cI2jxd+MRR8Pkvxv4LVrQa5yxjeKucVaI7xChaXJ4jLFMp5BZpjvIJ5dQdxqTnGvbXZ6QriMoVyNi3PIC41E3+6bwVFe69gsq8QoqAMBaGDGOVsvD5mFzDbF7jUHPJ9b6PlDvm2eAMxAQErxoTm+QAAAABJRU5ErkJggg==")
 
 /***/ }),
 
@@ -23648,9 +23707,39 @@ module.exports=(__nested_webpack_require_10399__(/*! alt1/base */ "alt1/base").I
 /*!*******************************************!*\
   !*** ./src/chatbox/imgs/gameoff.data.png ***!
   \*******************************************/
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_11078__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_22453__) => {
 
-module.exports=(__nested_webpack_require_11078__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAdUlEQVQ4T62MsQrAIAxE/bwOhS7tkMHBLi79/zVthAvaCjZq4MFx5J6jePEI8wTPOQsq2M/YJcAuBQHlH/LfuQILVQFyi0Kw+cCClMgt8t9CYEEFK3kVINfAEKBPI0FK5BoYAvSFwIIKloNYeD+0+Ah6GRQQ30BWZJSYN2VIAAAAAElFTkSuQmCC")
+module.exports=(__nested_webpack_require_22453__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAdUlEQVQ4T62MsQrAIAxE/bwOhS7tkMHBLi79/zVthAvaCjZq4MFx5J6jePEI8wTPOQsq2M/YJcAuBQHlH/LfuQILVQFyi0Kw+cCClMgt8t9CYEEFK3kVINfAEKBPI0FK5BoYAvSFwIIKloNYeD+0+Ah6GRQQ30BWZJSYN2VIAAAAAElFTkSuQmCC")
+
+/***/ }),
+
+/***/ "./src/chatbox/imgs/group.data.png":
+/*!*****************************************!*\
+  !*** ./src/chatbox/imgs/group.data.png ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_23052__) => {
+
+module.exports=(__nested_webpack_require_23052__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAEEAAAAJCAYAAABt/EFEAAAACW5vUEUAAAAAAAAAAAChinLVAAAA6ElEQVRIib1VORKEMAyTt6U1H6HmQ34CLbShhf/xEW2zYWCTcAY840bElidyhJDEf4zjOINmJsGBl+PxeUhGEwABsKoqps68mX6euq6zz3OpaBiGYJAYttfjbM2VXqlvS/yWMkewrUsEQFWlc+7yZTRNM/dq2zbaB0CUQ1UJ4JrqOXJ5YU9x7G2Dz8+eZ5iZdF0Xuud9L1oZXFEU2Tl8mJlM04SyLOMcTyqQ2qqYKjj4lO5yR7cy9lbOmpZzjqka1/crXFW5rDmzznfN13MvZyMJ+akQhIh4eQ7/l7dqRIRn8FTvnDP5+AIifJTAV+ThlQAAAABJRU5ErkJggg==")
+
+/***/ }),
+
+/***/ "./src/chatbox/imgs/groupironman.data.png":
+/*!************************************************!*\
+  !*** ./src/chatbox/imgs/groupironman.data.png ***!
+  \************************************************/
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_23863__) => {
+
+module.exports=(__nested_webpack_require_23863__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAFMAAAAJCAYAAABOpxCRAAAACW5vUEUAAAAAAAAAAAChinLVAAABMklEQVRIicVVq5aEMAxN1mKLHY3mm3ZEHT+Aqq1uvwqNx+Kxd8VuOV3oc4aZuefE5NGbpknKAOgIa+2ulFLyyeFNsNbik/zVABAUIgIRoe97xHxeLcYY/Kb4Gf5a+UoUmQHwNE2nzvA7N6VLwVqL2phHuVN23xbzy+W62x59BQp0TEgX6zjnL4SA1joYF+vMUp1SatelJszl4/y+7/fg+bE8XVzxxa8W//IxjneOedd1SR5jDHK1iI65g5SSlVLV45gDgH/ro2mayzlqMM9z8qOTUvKyLNS2bTTPbDGJiMZxvORHdbvluH+klLxt2xUUL8XtdqN1XeO1CO2Bkpb2RWuNVIyvF0LAj8mN1jAMSZ8c97NyPNvlHxL+218nMLNbbMVdmYphZtToS+3P5FuK0rN/AOEVJJ5y5tKyAAAAAElFTkSuQmCC")
+
+/***/ }),
+
+/***/ "./src/chatbox/imgs/guestclan.data.png":
+/*!*********************************************!*\
+  !*** ./src/chatbox/imgs/guestclan.data.png ***!
+  \*********************************************/
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_24758__) => {
+
+module.exports=(__nested_webpack_require_24758__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAD4AAAAJCAYAAABqvp9RAAAACW5vUEUAAAAAAAAAAAChinLVAAAA7ElEQVRIicWUPQ6DMAyFn6VOzDlJZmbukhswM9OO5lSchEO8DiVVCnGKKBRLXvynF39JhCSWNgzDOxhCkFXBn+0UPSSzDoAA6L2nVfNPj3rquj5Ej+SI77VIZknFImbVn6EhzYcQ5BQyTdOsqGAmVlXVR845RwCH3ioA7PvenOm9523LBrcQiZtW1VXu/niQZHbGNE2H/yE5DamN47iNeNd1m4hgphr9yj+hbVs650wNPw1X1UsP94s25N6CqrLUmObSrVp9Mb53UaX+NLasKRE3f3URed1d422KCHM5qy/GSzNLVupPtXzTHe0JdtDHDLnNhzQAAAAASUVORK5CYII=")
 
 /***/ }),
 
@@ -23658,9 +23747,9 @@ module.exports=(__nested_webpack_require_11078__(/*! alt1/base */ "alt1/base").I
 /*!************************************************!*\
   !*** ./src/chatbox/imgs/legacyreport.data.png ***!
   \************************************************/
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_11705__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_25573__) => {
 
-module.exports=(__nested_webpack_require_11705__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAACEAAAALCAYAAADx0+Q/AAAAlElEQVQ4T72OCQ4AIQgD/f+nXYuUgGLiukeTQVq8Sp2F7FdQWi2GKmz6CEh6Mfq4DQf/FfaO1EFt1ocKRX+SQ35lD/ErPcOafICfgp7kEGe9tF6gwYKiK/GaLrjbOx/mwSiQ9Ty8uuCgJ5YFo0zeKc0W+30+3kkgmYyXpJ5oZt5lRpZn+4DszQYbpI+fkoY7vPeJWi767hYjK0Ud6gAAAABJRU5ErkJggg==")
+module.exports=(__nested_webpack_require_25573__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAACEAAAALCAYAAADx0+Q/AAAAlElEQVQ4T72OCQ4AIQgD/f+nXYuUgGLiukeTQVq8Sp2F7FdQWi2GKmz6CEh6Mfq4DQf/FfaO1EFt1ocKRX+SQ35lD/ErPcOafICfgp7kEGe9tF6gwYKiK/GaLrjbOx/mwSiQ9Ty8uuCgJ5YFo0zeKc0W+30+3kkgmYyXpJ5oZt5lRpZn+4DszQYbpI+fkoY7vPeJWi767hYjK0Ud6gAAAABJRU5ErkJggg==")
 
 /***/ }),
 
@@ -23668,9 +23757,9 @@ module.exports=(__nested_webpack_require_11705__(/*! alt1/base */ "alt1/base").I
 /*!***********************************************!*\
   !*** ./src/chatbox/imgs/minusbutton.data.png ***!
   \***********************************************/
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_12372__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_26240__) => {
 
-module.exports=(__nested_webpack_require_12372__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAIAAACQKrqGAAABL0lEQVQoU2PIzMk01hbUVGDDg4AKgMoYgFRLCPOOOtbdLWxAtLeTHYIgXKA4EAEVAJUxaMizbilju75E9u4mNUx0Y7UqUGp3MzdQGYOKLCuQ9XCH7qPdxg+2Gt3aYgQkgWw4AqoGKgAqQ1EKVIep9NY2LRSlt5ZrXV6tc3axNgRdXgbiQhDQ1J1VfDClNcJAuSBTJjjy1GNy1WSyUWI0kWa8PE8JRem9VcaYirRFGIAIaOHmIhEUpQ9X2D1e74WGgIK3ZhluzRWFKt1VKXNvjgYE3exVujNZFYiQGViUQuSudCkD0bkGJSAJVAckUZQC+demaMBJoDpktClVEqRUVY6jOYRvR5HsznoVILklUxpIQhCQDUE1LtxAZQw6JgZAHfKSLLLi2BFQCqhAx8QAACI62b/ivxHFAAAAAElFTkSuQmCC")
+module.exports=(__nested_webpack_require_26240__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAIAAACQKrqGAAABL0lEQVQoU2PIzMk01hbUVGDDg4AKgMoYgFRLCPOOOtbdLWxAtLeTHYIgXKA4EAEVAJUxaMizbilju75E9u4mNUx0Y7UqUGp3MzdQGYOKLCuQ9XCH7qPdxg+2Gt3aYgQkgWw4AqoGKgAqQ1EKVIep9NY2LRSlt5ZrXV6tc3axNgRdXgbiQhDQ1J1VfDClNcJAuSBTJjjy1GNy1WSyUWI0kWa8PE8JRem9VcaYirRFGIAIaOHmIhEUpQ9X2D1e74WGgIK3ZhluzRWFKt1VKXNvjgYE3exVujNZFYiQGViUQuSudCkD0bkGJSAJVAckUZQC+demaMBJoDpktClVEqRUVY6jOYRvR5HsznoVILklUxpIQhCQDUE1LtxAZQw6JgZAHfKSLLLi2BFQCqhAx8QAACI62b/ivxHFAAAAAElFTkSuQmCC")
 
 /***/ }),
 
@@ -23678,9 +23767,39 @@ module.exports=(__nested_webpack_require_12372__(/*! alt1/base */ "alt1/base").I
 /*!**********************************************!*\
   !*** ./src/chatbox/imgs/plusbutton.data.png ***!
   \**********************************************/
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_13239__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_27107__) => {
 
-module.exports=(__nested_webpack_require_13239__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAIAAACQKrqGAAABT0lEQVQoU2PIzMk01hbUVGDDg4AKgMoYgFRLCPOOOtbdLWxAtLeTHYIgXKA4EAEVAJUxaMizbilju75E9u4mNSC6sVoVguBcoNTuZm6gMgYVWVYg6+EO3Ue7jYHo3irjIFOmYAumWztBXCC6tVwLqACoDEXprS1GQARUCkQQdSDBbahKgVovr9Y5u1j78jItTz0mIAJyIQjohp1VfDClNcJwFa6a6OjyPCUUpUAnAkUd1BiByEYJBQEt3FwkgqL04Qq7x+u9gCRQ2kKOEc69NcsQoXRXpcy9ORoQdKVL2USaEYhu9irdmawKREDG1lxRdKVACaAZ2iIMQHS1UweoDYJQlAL516aAjAQqvTLJBogutBmca1CCoE2pkiClqnIczSF8O4pkd9arAMktmdJAEoKAKoBcIKpx4QYqY9AxMQDqkJdkkRXHjoBSQAU6JgYAwvDKbZkKUHAAAAAASUVORK5CYII=")
+module.exports=(__nested_webpack_require_27107__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAIAAACQKrqGAAABT0lEQVQoU2PIzMk01hbUVGDDg4AKgMoYgFRLCPOOOtbdLWxAtLeTHYIgXKA4EAEVAJUxaMizbilju75E9u4mNSC6sVoVguBcoNTuZm6gMgYVWVYg6+EO3Ue7jYHo3irjIFOmYAumWztBXCC6tVwLqACoDEXprS1GQARUCkQQdSDBbahKgVovr9Y5u1j78jItTz0mIAJyIQjohp1VfDClNcJwFa6a6OjyPCUUpUAnAkUd1BiByEYJBQEt3FwkgqL04Qq7x+u9gCRQ2kKOEc69NcsQoXRXpcy9ORoQdKVL2USaEYhu9irdmawKREDG1lxRdKVACaAZ2iIMQHS1UweoDYJQlAL516aAjAQqvTLJBogutBmca1CCoE2pkiClqnIczSF8O4pkd9arAMktmdJAEoKAKoBcIKpx4QYqY9AxMQDqkJdkkRXHjoBSQAU6JgYAwvDKbZkKUHAAAAAASUVORK5CYII=")
+
+/***/ }),
+
+/***/ "./src/chatbox/imgs/private.data.png":
+/*!*******************************************!*\
+  !*** ./src/chatbox/imgs/private.data.png ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_28006__) => {
+
+module.exports=(__nested_webpack_require_28006__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAACgAAAAJCAYAAABADm7+AAAACW5vUEUAAAAAAAAAAAChinLVAAAAwElEQVQ4jc2SwQ2DMAxFX6qOEM5sw5k1sgFDAEdnSIb4vTRVUqAlCKn9kg9xbP/v5DtJJMQYX4cQguMfIKkIQID6vtf73S+iqtjMqkWbmbb6jubrN4JqkYDGcVz1ee+1NQ9Q13WSxD3/7iMelFTtTTPbzC/LUsxK/EX9ngfPvNQnCwzDIO/915k5P3CdmZO4vcXO+FcSt2maxEVo21a5BWKMSt8WQnBN0xRc0zyvuPMeAPfc+hI45wqBKQd13s17HtIubhmwKYH7AAAAAElFTkSuQmCC")
+
+/***/ }),
+
+/***/ "./src/chatbox/imgs/privateRecent.data.png":
+/*!*************************************************!*\
+  !*** ./src/chatbox/imgs/privateRecent.data.png ***!
+  \*************************************************/
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_28765__) => {
+
+module.exports=(__nested_webpack_require_28765__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAA4AAAAJCAYAAAACTR1pAAAACW5vUEUAAAAAAAAAAAChinLVAAAAUElEQVQokb2QuQ3AMAwDj15F+6+kFTQCUzhKZRd2EQJqBPCVbbOGNn8ABiBJRASZiaS+neBU3Rsu4U4yTlhvOt84fjh1/JFYVWaOc9exx3kAqNgZ4Q1XRz4AAAAASUVORK5CYII=")
+
+/***/ }),
+
+/***/ "./src/chatbox/imgs/public.data.png":
+/*!******************************************!*\
+  !*** ./src/chatbox/imgs/public.data.png ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_29348__) => {
+
+module.exports=(__nested_webpack_require_29348__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAACEAAAAJCAYAAAC8G0U0AAAACW5vUEUAAAAAAAAAAAChinLVAAAAi0lEQVQ4jcWTwQ3EIAwEd68GF0YRfOiFN5S7eRkBIdJxSnIr+YHXlswYKAmuWms7pJSItyRpCAACoBCCZu+pYE/iVznBHXpDz123AaAY4xY9ADIzDST+9SZO6yDZEpJeGeQzJyTR46qpJ3aLcs5f77GU0mrNTH2+91b1K8/97d9BUitKvsbZu6rvew6661SBlfK4XgAAAABJRU5ErkJggg==")
 
 /***/ }),
 
@@ -23688,9 +23807,9 @@ module.exports=(__nested_webpack_require_13239__(/*! alt1/base */ "alt1/base").I
 /*!************************************************!*\
   !*** ./src/chatbox/imgs/reportbutton.data.png ***!
   \************************************************/
-/***/ ((module, __unused_webpack_exports, __nested_webpack_require_14158__) => {
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_30035__) => {
 
-module.exports=(__nested_webpack_require_14158__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAA8AAAAQCAYAAADJViUEAAABAElEQVQ4T6WSvwtBURTHj0V+FknyB6AMZCH8ATbxByijwb9gsFsMBrvJaFAGu00sJilltlp0+N7Xua7rySuvPr1z7z2f77m9Ht0PdQbPR9cm2P8G3TZlBli4yUCabd5kqUG/W+FmI+8aJtB1lWUAWWrIvXaSS8WsCpHA9cg5E1xlQQJOi5y6RToVVQHST8d5nAEWUguXpSNDAoOOswc+5P0sxgL2MNkUzV4lo3E7DaoNvAWIkbCfC5moYtIL6OCfcqsWUqDGVATZAVqwZbAeJ/QbVyfy8WyYesnm5G+gBwG4gUwG+iPZgs3OkATPshuEHwDYB16g86LKwD7wwh8y0wNntoLFjD8QsQAAAABJRU5ErkJggg==")
+module.exports=(__nested_webpack_require_30035__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAAA8AAAAQCAYAAADJViUEAAABAElEQVQ4T6WSvwtBURTHj0V+FknyB6AMZCH8ATbxByijwb9gsFsMBrvJaFAGu00sJilltlp0+N7Xua7rySuvPr1z7z2f77m9Ht0PdQbPR9cm2P8G3TZlBli4yUCabd5kqUG/W+FmI+8aJtB1lWUAWWrIvXaSS8WsCpHA9cg5E1xlQQJOi5y6RToVVQHST8d5nAEWUguXpSNDAoOOswc+5P0sxgL2MNkUzV4lo3E7DaoNvAWIkbCfC5moYtIL6OCfcqsWUqDGVATZAVqwZbAeJ/QbVyfy8WyYesnm5G+gBwG4gUwG+iPZgs3OkATPshuEHwDYB16g86LKwD7wwh8y0wNntoLFjD8QsQAAAABJRU5ErkJggg==")
 
 /***/ }),
 
@@ -23698,7 +23817,7 @@ module.exports=(__nested_webpack_require_14158__(/*! alt1/base */ "alt1/base").I
 /*!******************************!*\
   !*** ./src/chatbox/index.ts ***!
   \******************************/
-/***/ (function(__unused_webpack_module, exports, __nested_webpack_require_14909__) {
+/***/ (function(__unused_webpack_module, exports, __nested_webpack_require_30786__) {
 
 "use strict";
 
@@ -23727,43 +23846,66 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.defaultcolors = void 0;
-const a1lib = __importStar(__nested_webpack_require_14909__(/*! alt1/base */ "alt1/base"));
-const base_1 = __nested_webpack_require_14909__(/*! alt1/base */ "alt1/base");
-const OCR = __importStar(__nested_webpack_require_14909__(/*! alt1/ocr */ "alt1/ocr"));
-const base_2 = __nested_webpack_require_14909__(/*! alt1/base */ "alt1/base");
-let chatfont = __nested_webpack_require_14909__(/*! ../fonts/aa_8px.fontmeta.json */ "./src/fonts/aa_8px.fontmeta.json");
+const a1lib = __importStar(__nested_webpack_require_30786__(/*! alt1/base */ "alt1/base"));
+const base_1 = __nested_webpack_require_30786__(/*! alt1/base */ "alt1/base");
+const OCR = __importStar(__nested_webpack_require_30786__(/*! alt1/ocr */ "alt1/ocr"));
+const base_2 = __nested_webpack_require_30786__(/*! alt1/base */ "alt1/base");
+let chatfont = __nested_webpack_require_30786__(/*! ../fonts/aa_8px.fontmeta.json */ "./src/fonts/aa_8px.fontmeta.json");
 let fonts = [
-    { name: "10pt", lineheight: 14, badgey: -9, dy: 2, def: __nested_webpack_require_14909__(/*! ../fonts/chatbox/10pt.fontmeta.json */ "./src/fonts/chatbox/10pt.fontmeta.json") },
-    { name: "12pt", lineheight: 16, badgey: -9, dy: -1, def: __nested_webpack_require_14909__(/*! ../fonts/chatbox/12pt.fontmeta.json */ "./src/fonts/chatbox/12pt.fontmeta.json") },
-    { name: "14pt", lineheight: 18, badgey: -10, dy: -3, def: __nested_webpack_require_14909__(/*! ../fonts/chatbox/14pt.fontmeta.json */ "./src/fonts/chatbox/14pt.fontmeta.json") },
-    { name: "16pt", lineheight: 21, badgey: -10, dy: -6, def: __nested_webpack_require_14909__(/*! ../fonts/chatbox/16pt.fontmeta.json */ "./src/fonts/chatbox/16pt.fontmeta.json") },
-    { name: "18pt", lineheight: 23, badgey: -11, dy: -8, def: __nested_webpack_require_14909__(/*! ../fonts/chatbox/18pt.fontmeta.json */ "./src/fonts/chatbox/18pt.fontmeta.json") },
-    { name: "20pt", lineheight: 25, badgey: -11, dy: -11, def: __nested_webpack_require_14909__(/*! ../fonts/chatbox/20pt.fontmeta.json */ "./src/fonts/chatbox/20pt.fontmeta.json") },
-    { name: "22pt", lineheight: 27, badgey: -12, dy: -13, def: __nested_webpack_require_14909__(/*! ../fonts/chatbox/22pt.fontmeta.json */ "./src/fonts/chatbox/22pt.fontmeta.json") },
+    { name: "10pt", lineheight: 14, badgey: -9, dy: 2, def: __nested_webpack_require_30786__(/*! ../fonts/chatbox/10pt.fontmeta.json */ "./src/fonts/chatbox/10pt.fontmeta.json") },
+    { name: "12pt", lineheight: 16, badgey: -9, dy: -1, def: __nested_webpack_require_30786__(/*! ../fonts/chatbox/12pt.fontmeta.json */ "./src/fonts/chatbox/12pt.fontmeta.json") },
+    { name: "14pt", lineheight: 18, badgey: -10, dy: -3, def: __nested_webpack_require_30786__(/*! ../fonts/chatbox/14pt.fontmeta.json */ "./src/fonts/chatbox/14pt.fontmeta.json") },
+    { name: "16pt", lineheight: 21, badgey: -10, dy: -6, def: __nested_webpack_require_30786__(/*! ../fonts/chatbox/16pt.fontmeta.json */ "./src/fonts/chatbox/16pt.fontmeta.json") },
+    { name: "18pt", lineheight: 23, badgey: -11, dy: -8, def: __nested_webpack_require_30786__(/*! ../fonts/chatbox/18pt.fontmeta.json */ "./src/fonts/chatbox/18pt.fontmeta.json") },
+    { name: "20pt", lineheight: 25, badgey: -11, dy: -11, def: __nested_webpack_require_30786__(/*! ../fonts/chatbox/20pt.fontmeta.json */ "./src/fonts/chatbox/20pt.fontmeta.json") },
+    { name: "22pt", lineheight: 27, badgey: -12, dy: -13, def: __nested_webpack_require_30786__(/*! ../fonts/chatbox/22pt.fontmeta.json */ "./src/fonts/chatbox/22pt.fontmeta.json") },
 ];
 const imgs = (0, base_2.webpackImages)({
-    plusbutton: __nested_webpack_require_14909__(/*! ./imgs/plusbutton.data.png */ "./src/chatbox/imgs/plusbutton.data.png"),
-    minusbutton: __nested_webpack_require_14909__(/*! ./imgs/minusbutton.data.png */ "./src/chatbox/imgs/minusbutton.data.png"),
-    filterbutton: __nested_webpack_require_14909__(/*! ./imgs/filterbutton.data.png */ "./src/chatbox/imgs/filterbutton.data.png"),
-    chatbubble: __nested_webpack_require_14909__(/*! ./imgs/chatbubble.data.png */ "./src/chatbox/imgs/chatbubble.data.png"),
-    chatLegacyBorder: __nested_webpack_require_14909__(/*! ./imgs/chatLegacyBorder.data.png */ "./src/chatbox/imgs/chatLegacyBorder.data.png"),
-    entertochat: __nested_webpack_require_14909__(/*! ./imgs/entertochat.data.png */ "./src/chatbox/imgs/entertochat.data.png"),
-    gameoff: __nested_webpack_require_14909__(/*! ./imgs/gameoff.data.png */ "./src/chatbox/imgs/gameoff.data.png"),
-    gamefilter: __nested_webpack_require_14909__(/*! ./imgs/gamefilter.data.png */ "./src/chatbox/imgs/gamefilter.data.png"),
-    gameall: __nested_webpack_require_14909__(/*! ./imgs/gameall.data.png */ "./src/chatbox/imgs/gameall.data.png"),
-    legacyreport: __nested_webpack_require_14909__(/*! ./imgs/legacyreport.data.png */ "./src/chatbox/imgs/legacyreport.data.png"),
-    reportbutton: __nested_webpack_require_14909__(/*! ./imgs/reportbutton.data.png */ "./src/chatbox/imgs/reportbutton.data.png"),
+    plusbutton: __nested_webpack_require_30786__(/*! ./imgs/plusbutton.data.png */ "./src/chatbox/imgs/plusbutton.data.png"),
+    minusbutton: __nested_webpack_require_30786__(/*! ./imgs/minusbutton.data.png */ "./src/chatbox/imgs/minusbutton.data.png"),
+    filterbutton: __nested_webpack_require_30786__(/*! ./imgs/filterbutton.data.png */ "./src/chatbox/imgs/filterbutton.data.png"),
+    chatbubble: __nested_webpack_require_30786__(/*! ./imgs/chatbubble.data.png */ "./src/chatbox/imgs/chatbubble.data.png"),
+    chatLegacyBorder: __nested_webpack_require_30786__(/*! ./imgs/chatLegacyBorder.data.png */ "./src/chatbox/imgs/chatLegacyBorder.data.png"),
+    entertochat: __nested_webpack_require_30786__(/*! ./imgs/entertochat.data.png */ "./src/chatbox/imgs/entertochat.data.png"),
+    gameoff: __nested_webpack_require_30786__(/*! ./imgs/gameoff.data.png */ "./src/chatbox/imgs/gameoff.data.png"),
+    gamefilter: __nested_webpack_require_30786__(/*! ./imgs/gamefilter.data.png */ "./src/chatbox/imgs/gamefilter.data.png"),
+    gameall: __nested_webpack_require_30786__(/*! ./imgs/gameall.data.png */ "./src/chatbox/imgs/gameall.data.png"),
+    legacyreport: __nested_webpack_require_30786__(/*! ./imgs/legacyreport.data.png */ "./src/chatbox/imgs/legacyreport.data.png"),
+    reportbutton: __nested_webpack_require_30786__(/*! ./imgs/reportbutton.data.png */ "./src/chatbox/imgs/reportbutton.data.png"),
 });
+const chatimgs = (0, base_2.webpackImages)({
+    public: __nested_webpack_require_30786__(/*! ./imgs/public.data.png */ "./src/chatbox/imgs/public.data.png"),
+    private: __nested_webpack_require_30786__(/*! ./imgs/private.data.png */ "./src/chatbox/imgs/private.data.png"),
+    privateRecent: __nested_webpack_require_30786__(/*! ./imgs/privateRecent.data.png */ "./src/chatbox/imgs/privateRecent.data.png"),
+    clan: __nested_webpack_require_30786__(/*! ./imgs/clan.data.png */ "./src/chatbox/imgs/clan.data.png"),
+    guestclan: __nested_webpack_require_30786__(/*! ./imgs/guestclan.data.png */ "./src/chatbox/imgs/guestclan.data.png"),
+    friends: __nested_webpack_require_30786__(/*! ./imgs/friends.data.png */ "./src/chatbox/imgs/friends.data.png"),
+    group: __nested_webpack_require_30786__(/*! ./imgs/group.data.png */ "./src/chatbox/imgs/group.data.png"),
+    groupironman: __nested_webpack_require_30786__(/*! ./imgs/groupironman.data.png */ "./src/chatbox/imgs/groupironman.data.png"),
+});
+const chatmap = {
+    public: "main",
+    private: "pc",
+    clan: "cc",
+    guestclan: "gcc",
+    friends: "fc",
+    group: "gc",
+    groupironman: "gimc",
+    privateRecent: "pc", // needs to be last to not mess with the buf
+};
 const chatbadges = (0, base_2.webpackImages)({
-    vip: __nested_webpack_require_14909__(/*! ./imgs/badgevip.data.png */ "./src/chatbox/imgs/badgevip.data.png"),
-    pmod: __nested_webpack_require_14909__(/*! ./imgs/badgepmod.data.png */ "./src/chatbox/imgs/badgepmod.data.png"),
-    pmodvip: __nested_webpack_require_14909__(/*! ./imgs/badgepmodvip.data.png */ "./src/chatbox/imgs/badgepmodvip.data.png"),
-    broadcast_gold: __nested_webpack_require_14909__(/*! ./imgs/badge_broadcast_gold.data.png */ "./src/chatbox/imgs/badge_broadcast_gold.data.png"),
-    broadcast_silver: __nested_webpack_require_14909__(/*! ./imgs/badge_broadcast_silver.data.png */ "./src/chatbox/imgs/badge_broadcast_silver.data.png"),
-    broadcast_bronze: __nested_webpack_require_14909__(/*! ./imgs/badge_broadcast_bronze.data.png */ "./src/chatbox/imgs/badge_broadcast_bronze.data.png"),
-    ironman: __nested_webpack_require_14909__(/*! ./imgs/badgeironman.data.png */ "./src/chatbox/imgs/badgeironman.data.png"),
-    hcim: __nested_webpack_require_14909__(/*! ./imgs/badgehcim.data.png */ "./src/chatbox/imgs/badgehcim.data.png"),
-    chatlink: __nested_webpack_require_14909__(/*! ./imgs/chat_link.data.png */ "./src/chatbox/imgs/chat_link.data.png"),
+    vip: __nested_webpack_require_30786__(/*! ./imgs/badgevip.data.png */ "./src/chatbox/imgs/badgevip.data.png"),
+    pmod: __nested_webpack_require_30786__(/*! ./imgs/badgepmod.data.png */ "./src/chatbox/imgs/badgepmod.data.png"),
+    pmodvip: __nested_webpack_require_30786__(/*! ./imgs/badgepmodvip.data.png */ "./src/chatbox/imgs/badgepmodvip.data.png"),
+    broadcast_gold: __nested_webpack_require_30786__(/*! ./imgs/badge_broadcast_gold.data.png */ "./src/chatbox/imgs/badge_broadcast_gold.data.png"),
+    broadcast_silver: __nested_webpack_require_30786__(/*! ./imgs/badge_broadcast_silver.data.png */ "./src/chatbox/imgs/badge_broadcast_silver.data.png"),
+    broadcast_bronze: __nested_webpack_require_30786__(/*! ./imgs/badge_broadcast_bronze.data.png */ "./src/chatbox/imgs/badge_broadcast_bronze.data.png"),
+    broadcast_death: __nested_webpack_require_30786__(/*! ./imgs/badge_broadcast_death.data.png */ "./src/chatbox/imgs/badge_broadcast_death.data.png"),
+    ironman: __nested_webpack_require_30786__(/*! ./imgs/badgeironman.data.png */ "./src/chatbox/imgs/badgeironman.data.png"),
+    hcim: __nested_webpack_require_30786__(/*! ./imgs/badgehcim.data.png */ "./src/chatbox/imgs/badgehcim.data.png"),
+    rgim: __nested_webpack_require_30786__(/*! ./imgs/badgergim.data.png */ "./src/chatbox/imgs/badgergim.data.png"),
+    gim: __nested_webpack_require_30786__(/*! ./imgs/badgegim.data.png */ "./src/chatbox/imgs/badgegim.data.png"),
+    chatlink: __nested_webpack_require_30786__(/*! ./imgs/chat_link.data.png */ "./src/chatbox/imgs/chat_link.data.png"),
 });
 const badgemap = {
     vip: "\u2730",
@@ -23772,8 +23914,11 @@ const badgemap = {
     broadcast_gold: "\u2746",
     broadcast_silver: "\u2746",
     broadcast_bronze: "\u2746",
+    broadcast_death: "\u{1F480}",
     ironman: "\u26AF",
     hcim: "\u{1F480}",
+    rgim: "\u328F",
+    gim: "\u3289",
     chatlink: "\u{1F517}", //LINK SYMBOL
 };
 exports.defaultcolors = [
@@ -23802,7 +23947,8 @@ exports.defaultcolors = [
     [255, 0, 0],
     [69, 178, 71],
     [164, 153, 125],
-    [215, 195, 119] //interface preset color
+    [215, 195, 119],
+    [255, 255, 176], //gim exclusive?
 ];
 class ChatBoxReader {
     constructor() {
@@ -24036,32 +24182,41 @@ class ChatBoxReader {
         img.findSubimage(imgs.chatbubble).forEach(loc => {
             //107,2 press enter to chat
             //102,2 click here to chat
-            var data = img.toData(loc.x + 102, loc.y + 1, 28 + (107 - 102), 10);
-            if (data.pixelCompare(imgs.entertochat, 0, 1) != Infinity || data.pixelCompare(imgs.entertochat, (107 - 102), 1) != Infinity) {
-                botlefts.push(loc);
-            }
-            //i don't even know anymore some times the bubble is 1px higher (i think it might be java related)
-            else if (data.pixelCompare(imgs.entertochat, 0, 0) != Infinity || data.pixelCompare(imgs.entertochat, (107 - 102), 0) != Infinity) {
-                loc.y -= 1;
-                botlefts.push(loc);
-            }
-            else {
-                var pixel = img.toData(loc.x, loc.y - 6, 1, 1);
-                var pixel2 = img.toData(loc.x, loc.y - 5, 1, 1);
-                if (pixel.data[0] == 255 && pixel.data[1] == 255 && pixel.data[2] == 255) {
+            // biggest chat size is 83 + 4 pixels
+            var data = img.toData(loc.x + 19, loc.y, 87 + (107 - 102), 10);
+            for (let chat in chatimgs.raw) {
+                let cimg = chatimgs.raw[chat];
+                if (data.pixelCompare(cimg, 0, 1) != Infinity || data.pixelCompare(cimg, (107 - 102), 1) != Infinity) {
                     botlefts.push(loc);
                 }
-                //the weird offset again
-                else if (pixel2.data[0] == 255 && pixel2.data[1] == 255 && pixel2.data[2] == 255) {
+                //i don't even know anymore some times the bubble is 1px higher (i think it might be java related)
+                else if (data.pixelCompare(cimg, 0, 0) != Infinity || data.pixelCompare(cimg, (107 - 102), 0) != Infinity) {
                     loc.y -= 1;
                     botlefts.push(loc);
                 }
+                //active chat
                 else {
-                    //console.log("unlinked quickchat bubble " + JSON.stringify(loc));
+                    var pixel = img.toData(loc.x, loc.y - 5, 1, 1);
+                    var pixel2 = img.toData(loc.x, loc.y - 4, 1, 1);
+                    if (pixel.data[0] == 255 && pixel.data[1] == 255 && pixel.data[2] == 255) {
+                        botlefts.push(loc);
+                    }
+                    //the weird offset again
+                    else if (pixel2.data[0] == 255 && pixel2.data[1] == 255 && pixel2.data[2] == 255) {
+                        loc.y -= 1;
+                        botlefts.push(loc);
+                    }
+                    else {
+                        //console.log("unlinked quickchat bubble " + JSON.stringify(loc));
+                    }
                 }
             }
         });
         img.findSubimage(imgs.chatLegacyBorder).forEach(loc => {
+            botlefts.push({ x: loc.x, y: loc.y - 1 });
+        });
+        // previously activated private chat showing "To"
+        img.findSubimage(chatimgs.privateRecent).forEach(loc => {
             botlefts.push({ x: loc.x, y: loc.y - 1 });
         });
         //check if we're in full-on legacy
@@ -24111,30 +24266,17 @@ class ChatBoxReader {
         }
         var mainbox = null;
         groups.forEach(group => {
-            let buf = img.toData(group.rect.x - 110, group.rect.y + group.rect.height - 5, 150, 20);
-            let nameread = OCR.readLine(buf, chatfont, [255, 255, 255], 110, 14, false, true);
-            if (nameread) {
-                var d = 0;
-                if (nameread.text == "Clan Chat") {
-                    group.type = "cc";
-                    d = 62;
-                }
-                else if (nameread.text == "Friends Chat") {
-                    group.type = "fc";
-                    d = 76;
-                }
-                else if (nameread.text == "Group Chat") {
-                    group.type = "gc";
-                    d = 69;
-                }
-                else if (nameread.text == "Guest Clan Chat") {
-                    group.type = "gcc";
-                    d = 98;
-                }
-                if (d != 0) {
-                    group.rect.x -= d;
-                    group.rect.width += d;
-                    group.leftfound = true;
+            // rect.x + 21 is the offset after chat bubble
+            // buff & comp needs to be different for recent private chat as it doesn't have the chat bubble
+            let buf = img.toData(group.rect.x + 19, group.rect.y + group.rect.height, 150, 10);
+            let pbuf = img.toData(group.rect.x, group.rect.y + group.rect.height, 150, 10);
+            for (let chat in chatmap) {
+                let cimg = chatimgs.raw[chat];
+                let comp = buf.pixelCompare(cimg, 0, 1);
+                let pcomp = pbuf.pixelCompare(cimg, 0, 1);
+                if (comp != Infinity || pcomp != Infinity) {
+                    group.type = chatmap[chat];
+                    break;
                 }
             }
             if (!group.leftfound && group.topright.type == "full") {
@@ -24158,7 +24300,7 @@ class ChatBoxReader {
             //alt1.overLayRect(a1lib.mixcolor(255, 255, 255), group.rect.x, group.rect.y, group.rect.width, group.rect.height, 10000, 2);
             //alt1.overLayTextEx(group.type, a1lib.mixcolor(255, 255, 255), 20, group.rect.x + group.rect.width / 2 | 0, group.rect.y + group.rect.height / 2 | 0, 10000, "", true, true);
             group.line0x = 0;
-            group.line0y = group.rect.height - 15; //12;//- 15;//-11//- 9;//-10 before mobile interface update
+            group.line0y = group.rect.height - 16; //15;//12;//- 15;//-11//- 9;//-10 before mobile interface update
             if (group.leftfound) {
                 group.timestamp = this.checkTimestamp(img, group);
             }
@@ -24447,7 +24589,7 @@ module.exports = JSON.parse('{"chars":[{"width":13,"bonus":455,"chr":"a","pixels
 /******/ 	var __webpack_module_cache__ = {};
 /******/ 	
 /******/ 	// The require function
-/******/ 	function __nested_webpack_require_499986__(moduleId) {
+/******/ 	function __nested_webpack_require_517563__(moduleId) {
 /******/ 		// Check if module is in cache
 /******/ 		var cachedModule = __webpack_module_cache__[moduleId];
 /******/ 		if (cachedModule !== undefined) {
@@ -24461,7 +24603,7 @@ module.exports = JSON.parse('{"chars":[{"width":13,"bonus":455,"chr":"a","pixels
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __nested_webpack_require_499986__);
+/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __nested_webpack_require_517563__);
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -24472,7 +24614,7 @@ module.exports = JSON.parse('{"chars":[{"width":13,"bonus":455,"chr":"a","pixels
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __nested_webpack_exports__ = __nested_webpack_require_499986__("./src/chatbox/index.ts");
+/******/ 	var __nested_webpack_exports__ = __nested_webpack_require_517563__("./src/chatbox/index.ts");
 /******/ 	
 /******/ 	return __nested_webpack_exports__;
 /******/ })()
@@ -25012,12 +25154,12 @@ function readChar(buffer, font, col, x, y, backwards, allowSecondary) {
     }
     //====== start reading the char ======
     var scores = [];
-    for (var chr = 0; chr < font.chars.length; chr++) {
+    charloop: for (var chr = 0; chr < font.chars.length; chr++) {
         var chrobj = font.chars[chr];
         if (chrobj.secondary && !allowSecondary) {
             continue;
         }
-        scores[chr] = { score: 0, sizescore: 0, chr: chrobj };
+        const scoreobj = { score: 0, sizescore: 0, chr: chrobj };
         var chrx = (backwards ? x - chrobj.width : x);
         if (exports.debug.trackread) {
             debugimg = new base_1.ImageData(font.width, font.height);
@@ -25034,22 +25176,31 @@ function readChar(buffer, font, col, x, y, backwards, allowSecondary) {
                 penalty = canblend(buffer.data[i], buffer.data[i + 1], buffer.data[i + 2], col[0] * lum, col[1] * lum, col[2] * lum, chrobj.pixels[a + 2] / 255);
                 a += 4;
             }
-            scores[chr].score += Math.max(0, penalty);
+            scoreobj.score += penalty;
+            // Short circuit the loop as soon as the penalty threshold (400) is reached
+            if (!debugobj && scoreobj.score > 400) {
+                continue charloop;
+            }
             //TODO add compiler flag to this to remove it for performance
             if (debugimg) {
                 debugimg.setPixel(chrobj.pixels[a], chrobj.pixels[a + 1], [penalty, penalty, penalty, 255]);
             }
         }
-        scores[chr].sizescore = scores[chr].score - chrobj.bonus;
+        scoreobj.sizescore = scoreobj.score - chrobj.bonus;
         if (debugobj) {
-            debugobj.push({ chr: chrobj.chr, score: scores[chr].sizescore, rawscore: scores[chr].score, img: debugimg });
+            debugobj.push({ chr: chrobj.chr, score: scoreobj.sizescore, rawscore: scoreobj.score, img: debugimg });
         }
+        scores.push(scoreobj);
     }
-    scores.sort((a, b) => a.sizescore - b.sizescore);
     if (exports.debug.printcharscores) {
+        scores.sort((a, b) => a.sizescore - b.sizescore);
         scores.slice(0, 5).forEach(q => console.log(q.chr.chr, q.score.toFixed(3), q.sizescore.toFixed(3)));
     }
-    var winchr = scores[0];
+    let winchr = null;
+    for (const chrscore of scores) {
+        if (!winchr || (chrscore && chrscore.sizescore < winchr.sizescore))
+            winchr = chrscore;
+    }
     if (!winchr || winchr.score > 400) {
         return null;
     }
@@ -25188,7 +25339,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alt1_base__;
 /******/ 	var __webpack_module_cache__ = {};
 /******/ 	
 /******/ 	// The require function
-/******/ 	function __nested_webpack_require_27427__(moduleId) {
+/******/ 	function __nested_webpack_require_27782__(moduleId) {
 /******/ 		// Check if module is in cache
 /******/ 		var cachedModule = __webpack_module_cache__[moduleId];
 /******/ 		if (cachedModule !== undefined) {
@@ -25202,7 +25353,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alt1_base__;
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __nested_webpack_require_27427__);
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __nested_webpack_require_27782__);
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -25213,7 +25364,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_alt1_base__;
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __nested_webpack_exports__ = __nested_webpack_require_27427__("./src/ocr/index.ts");
+/******/ 	var __nested_webpack_exports__ = __nested_webpack_require_27782__("./src/ocr/index.ts");
 /******/ 	
 /******/ 	return __nested_webpack_exports__;
 /******/ })()
@@ -25246,11 +25397,21 @@ module.exports=(__nested_webpack_require_905__(/*! alt1/base */ "alt1/base").Ima
 
 /***/ }),
 
+/***/ "./src/targetmob/imgs/detectimgLegacy.data.png":
+/*!*****************************************************!*\
+  !*** ./src/targetmob/imgs/detectimgLegacy.data.png ***!
+  \*****************************************************/
+/***/ ((module, __unused_webpack_exports, __nested_webpack_require_1696__) => {
+
+module.exports=(__nested_webpack_require_1696__(/*! alt1/base */ "alt1/base").ImageDetect.imageDataFromBase64)("iVBORw0KGgoAAAANSUhEUgAAABoAAAARBAMAAAAxo6E+AAAAAW5vUEUAYtdMlAAAAAlub1BFAAAAAAAAAAAAoYpy1QAAACRQTFRFAAAAbWRDHxwbTDgiPjUoUEUrVkwzSUIxXVk5YVxCdG9fIyAfxdcx+QAAAAx0Uk5TAP//////////////CcRQJgAAADVJREFUeJxjZIAARiVBASAJ46k4MrxngvMUwSSUx1HHfF8BzoOqGEy8VWAqDMrbDSL/u0F4AMZZBlfPT3X0AAAAAElFTkSuQmCC")
+
+/***/ }),
+
 /***/ "./src/targetmob/index.ts":
 /*!********************************!*\
   !*** ./src/targetmob/index.ts ***!
   \********************************/
-/***/ (function(__unused_webpack_module, exports, __nested_webpack_require_1620__) {
+/***/ (function(__unused_webpack_module, exports, __nested_webpack_require_2323__) {
 
 "use strict";
 
@@ -25278,23 +25439,31 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const a1lib = __importStar(__nested_webpack_require_1620__(/*! alt1/base */ "alt1/base"));
-const OCR = __importStar(__nested_webpack_require_1620__(/*! alt1/ocr */ "alt1/ocr"));
-const base_1 = __nested_webpack_require_1620__(/*! alt1/base */ "alt1/base");
-var chatfont = __nested_webpack_require_1620__(/*! ../fonts/aa_8px.fontmeta.json */ "./src/fonts/aa_8px.fontmeta.json");
+const a1lib = __importStar(__nested_webpack_require_2323__(/*! alt1/base */ "alt1/base"));
+const OCR = __importStar(__nested_webpack_require_2323__(/*! alt1/ocr */ "alt1/ocr"));
+const base_1 = __nested_webpack_require_2323__(/*! alt1/base */ "alt1/base");
+var chatfont = __nested_webpack_require_2323__(/*! ../fonts/aa_8px.fontmeta.json */ "./src/fonts/aa_8px.fontmeta.json");
 var imgs = (0, base_1.webpackImages)({
-    detectimg: __nested_webpack_require_1620__(/*! ./imgs/detectimg.data.png */ "./src/targetmob/imgs/detectimg.data.png")
+    detectimg: __nested_webpack_require_2323__(/*! ./imgs/detectimg.data.png */ "./src/targetmob/imgs/detectimg.data.png"),
+    detectleg: __nested_webpack_require_2323__(/*! ./imgs/detectimgLegacy.data.png */ "./src/targetmob/imgs/detectimgLegacy.data.png")
 });
 class TargetMobReader {
     constructor() {
         this.state = null;
         this.lastpos = null;
+        this.legacy = false;
     }
     read(img) {
         if (!img) {
             img = a1lib.captureHoldFullRs();
         }
-        var pos = img.findSubimage(imgs.detectimg);
+        if (!this.lastpos) {
+            var leg = img.findSubimage(imgs.detectleg);
+            if (leg.length != 0) {
+                this.legacy = true;
+            }
+        }
+        var pos = this.legacy ? img.findSubimage(imgs.detectleg) : img.findSubimage(imgs.detectimg);
         if (pos.length != 0) {
             var data = img.toData(pos[0].x - 151, pos[0].y - 16, 220, 44);
             var mobname = OCR.findReadLine(data, chatfont, [[255, 255, 255]], 62, 18, 20, 1);
@@ -25302,7 +25471,7 @@ class TargetMobReader {
             this.lastpos = pos[0];
             this.state = {
                 name: mobname.text,
-                hp: +mobhp.text
+                hp: +mobhp.text.replace(/,/g, "")
             };
         }
         else {
@@ -25355,7 +25524,7 @@ module.exports = JSON.parse('{"chars":[{"width":7,"bonus":140,"chr":"a","pixels"
 /******/ 	var __webpack_module_cache__ = {};
 /******/ 	
 /******/ 	// The require function
-/******/ 	function __nested_webpack_require_37481__(moduleId) {
+/******/ 	function __nested_webpack_require_38584__(moduleId) {
 /******/ 		// Check if module is in cache
 /******/ 		var cachedModule = __webpack_module_cache__[moduleId];
 /******/ 		if (cachedModule !== undefined) {
@@ -25369,7 +25538,7 @@ module.exports = JSON.parse('{"chars":[{"width":7,"bonus":140,"chr":"a","pixels"
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __nested_webpack_require_37481__);
+/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __nested_webpack_require_38584__);
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -25380,7 +25549,7 @@ module.exports = JSON.parse('{"chars":[{"width":7,"bonus":140,"chr":"a","pixels"
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __nested_webpack_exports__ = __nested_webpack_require_37481__("./src/targetmob/index.ts");
+/******/ 	var __nested_webpack_exports__ = __nested_webpack_require_38584__("./src/targetmob/index.ts");
 /******/ 	
 /******/ 	return __nested_webpack_exports__;
 /******/ })()
@@ -25594,14 +25763,6 @@ It is disabled in production builds, so you don't need to worry about that.`);
     }
   };
 }
-function find(iterable, comparator) {
-  for (const entry of iterable) {
-    if (comparator(entry)) {
-      return entry;
-    }
-  }
-  return void 0;
-}
 var Tuple = class _Tuple extends Array {
   constructor(...items) {
     super(...items);
@@ -25624,19 +25785,9 @@ function freezeDraftable(val) {
   return (0,immer__WEBPACK_IMPORTED_MODULE_2__.isDraftable)(val) ? (0,immer__WEBPACK_IMPORTED_MODULE_2__.produce)(val, () => {
   }) : val;
 }
-function emplace(map, key, handler) {
-  if (map.has(key)) {
-    let value = map.get(key);
-    if (handler.update) {
-      value = handler.update(value, key, map);
-      map.set(key, value);
-    }
-    return value;
-  }
-  if (!handler.insert) throw new Error( false ? 0 : "No insert provided for key not already in map");
-  const inserted = handler.insert(key, map);
-  map.set(key, inserted);
-  return inserted;
+function getOrInsertComputed(map, key, compute) {
+  if (map.has(key)) return map.get(key);
+  return map.set(key, compute(key)).get(key);
 }
 
 // src/immutableStateInvariantMiddleware.ts
@@ -25939,7 +26090,6 @@ var createQueueWithTimer = (timeout) => {
     setTimeout(notify, timeout);
   };
 };
-var rAF = typeof window !== "undefined" && window.requestAnimationFrame ? window.requestAnimationFrame : createQueueWithTimer(10);
 var autoBatchEnhancer = (options = {
   type: "raf"
 }) => (next) => (...args) => {
@@ -25948,7 +26098,10 @@ var autoBatchEnhancer = (options = {
   let shouldNotifyAtEndOfTick = false;
   let notificationQueued = false;
   const listeners = /* @__PURE__ */ new Set();
-  const queueCallback = options.type === "tick" ? queueMicrotask : options.type === "raf" ? rAF : options.type === "callback" ? options.queueNotification : createQueueWithTimer(options.timeout);
+  const queueCallback = options.type === "tick" ? queueMicrotask : options.type === "raf" ? (
+    // requestAnimationFrame won't exist in SSR environments. Fall back to a vague approximation just to keep from erroring.
+    typeof window !== "undefined" && window.requestAnimationFrame ? window.requestAnimationFrame : createQueueWithTimer(10)
+  ) : options.type === "callback" ? options.queueNotification : createQueueWithTimer(options.timeout);
   const notifyListeners = () => {
     notificationQueued = false;
     if (shouldNotifyAtEndOfTick) {
@@ -26571,17 +26724,13 @@ function buildCreateSlice({
         return sliceState;
       }
       function getSelectors(selectState = selectSelf) {
-        const selectorCache = emplace(injectedSelectorCache, injected, {
-          insert: () => /* @__PURE__ */ new WeakMap()
-        });
-        return emplace(selectorCache, selectState, {
-          insert: () => {
-            const map = {};
-            for (const [name2, selector] of Object.entries(options.selectors ?? {})) {
-              map[name2] = wrapSelector(selector, selectState, getInitialState, injected);
-            }
-            return map;
+        const selectorCache = getOrInsertComputed(injectedSelectorCache, injected, () => /* @__PURE__ */ new WeakMap());
+        return getOrInsertComputed(selectorCache, selectState, () => {
+          const map = {};
+          for (const [name2, selector] of Object.entries(options.selectors ?? {})) {
+            map[name2] = wrapSelector(selector, selectState, getInitialState, injected);
           }
+          return map;
         });
       }
       return {
@@ -27357,9 +27506,8 @@ var createListenerEntry = /* @__PURE__ */ assign((options) => {
     predicate,
     effect
   } = getListenerEntryPropsFrom(options);
-  const id = nanoid();
   const entry = {
-    id,
+    id: nanoid(),
     effect,
     type,
     predicate,
@@ -27372,6 +27520,17 @@ var createListenerEntry = /* @__PURE__ */ assign((options) => {
 }, {
   withTypes: () => createListenerEntry
 });
+var findListenerEntry = (listenerMap, options) => {
+  const {
+    type,
+    effect,
+    predicate
+  } = getListenerEntryPropsFrom(options);
+  return Array.from(listenerMap.values()).find((entry) => {
+    const matchPredicateOrType = typeof type === "string" ? entry.type === type : entry.predicate === predicate;
+    return matchPredicateOrType && entry.effect === effect;
+  });
+};
 var cancelActiveListeners = (entry) => {
   entry.pending.forEach((controller) => {
     abortControllerWithReason(controller, listenerCancelled);
@@ -27420,25 +27579,14 @@ var createListenerMiddleware = (middlewareOptions = {}) => {
     };
   };
   const startListening = (options) => {
-    let entry = find(Array.from(listenerMap.values()), (existingEntry) => existingEntry.effect === options.effect);
-    if (!entry) {
-      entry = createListenerEntry(options);
-    }
+    const entry = findListenerEntry(listenerMap, options) ?? createListenerEntry(options);
     return insertEntry(entry);
   };
   assign(startListening, {
     withTypes: () => startListening
   });
   const stopListening = (options) => {
-    const {
-      type,
-      effect,
-      predicate
-    } = getListenerEntryPropsFrom(options);
-    const entry = find(Array.from(listenerMap.values()), (entry2) => {
-      const matchPredicateOrType = typeof type === "string" ? entry2.type === type : entry2.predicate === predicate;
-      return matchPredicateOrType && entry2.effect === effect;
-    });
+    const entry = findListenerEntry(listenerMap, options);
     if (entry) {
       entry.unsubscribe();
       if (options.cancelActive) {
@@ -27561,7 +27709,6 @@ var createListenerMiddleware = (middlewareOptions = {}) => {
 // src/dynamicMiddleware/index.ts
 
 var createMiddlewareEntry = (middleware) => ({
-  id: nanoid(),
   middleware,
   applied: /* @__PURE__ */ new Map()
 });
@@ -27579,19 +27726,13 @@ var createDynamicMiddleware = () => {
   });
   const addMiddleware = Object.assign(function addMiddleware2(...middlewares) {
     middlewares.forEach((middleware2) => {
-      let entry = find(Array.from(middlewareMap.values()), (entry2) => entry2.middleware === middleware2);
-      if (!entry) {
-        entry = createMiddlewareEntry(middleware2);
-      }
-      middlewareMap.set(entry.id, entry);
+      getOrInsertComputed(middlewareMap, middleware2, createMiddlewareEntry);
     });
   }, {
     withTypes: () => addMiddleware
   });
   const getFinalMiddleware = (api) => {
-    const appliedMiddleware = Array.from(middlewareMap.values()).map((entry) => emplace(entry.applied, api, {
-      insert: () => entry.middleware(api)
-    }));
+    const appliedMiddleware = Array.from(middlewareMap.values()).map((entry) => getOrInsertComputed(entry.applied, api, entry.middleware));
     return (0,redux__WEBPACK_IMPORTED_MODULE_0__.compose)(...appliedMiddleware);
   };
   const isWithMiddleware = isAllOf(withMiddleware, matchInstance(instanceId));
@@ -27617,27 +27758,25 @@ var getReducers = (slices) => slices.flatMap((sliceOrMap) => isSliceLike(sliceOr
 var ORIGINAL_STATE = Symbol.for("rtk-state-proxy-original");
 var isStateProxy = (value) => !!value && !!value[ORIGINAL_STATE];
 var stateProxyMap = /* @__PURE__ */ new WeakMap();
-var createStateProxy = (state, reducerMap) => emplace(stateProxyMap, state, {
-  insert: () => new Proxy(state, {
-    get: (target, prop, receiver) => {
-      if (prop === ORIGINAL_STATE) return target;
-      const result = Reflect.get(target, prop, receiver);
-      if (typeof result === "undefined") {
-        const reducer = reducerMap[prop.toString()];
-        if (reducer) {
-          const reducerResult = reducer(void 0, {
-            type: nanoid()
-          });
-          if (typeof reducerResult === "undefined") {
-            throw new Error( false ? 0 : `The slice reducer for key "${prop.toString()}" returned undefined when called for selector(). If the state passed to the reducer is undefined, you must explicitly return the initial state. The initial state may not be undefined. If you don't want to set a value for this reducer, you can use null instead of undefined.`);
-          }
-          return reducerResult;
+var createStateProxy = (state, reducerMap) => getOrInsertComputed(stateProxyMap, state, () => new Proxy(state, {
+  get: (target, prop, receiver) => {
+    if (prop === ORIGINAL_STATE) return target;
+    const result = Reflect.get(target, prop, receiver);
+    if (typeof result === "undefined") {
+      const reducer = reducerMap[prop.toString()];
+      if (reducer) {
+        const reducerResult = reducer(void 0, {
+          type: nanoid()
+        });
+        if (typeof reducerResult === "undefined") {
+          throw new Error( false ? 0 : `The slice reducer for key "${prop.toString()}" returned undefined when called for selector(). If the state passed to the reducer is undefined, you must explicitly return the initial state. The initial state may not be undefined. If you don't want to set a value for this reducer, you can use null instead of undefined.`);
         }
+        return reducerResult;
       }
-      return result;
     }
-  })
-});
+    return result;
+  }
+}));
 var original = (state) => {
   if (!isStateProxy(state)) {
     throw new Error( false ? 0 : "original must be used on state Proxy");
@@ -28950,29 +29089,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   urlAlphabet: () => (/* reexport safe */ _url_alphabet_index_js__WEBPACK_IMPORTED_MODULE_0__.urlAlphabet)
 /* harmony export */ });
 /* harmony import */ var _url_alphabet_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./url-alphabet/index.js */ "../node_modules/nanoid/url-alphabet/index.js");
+/* @ts-self-types="./index.d.ts" */
 
 
 let random = bytes => crypto.getRandomValues(new Uint8Array(bytes))
 let customRandom = (alphabet, defaultSize, getRandom) => {
-  let mask = (2 << (Math.log(alphabet.length - 1) / Math.LN2)) - 1
+  let mask = (2 << Math.log2(alphabet.length - 1)) - 1
   let step = -~((1.6 * mask * defaultSize) / alphabet.length)
   return (size = defaultSize) => {
     let id = ''
     while (true) {
       let bytes = getRandom(step)
-      let j = step
+      let j = step | 0
       while (j--) {
         id += alphabet[bytes[j] & mask] || ''
-        if (id.length === size) return id
+        if (id.length >= size) return id
       }
     }
   }
 }
 let customAlphabet = (alphabet, size = 21) =>
-  customRandom(alphabet, size, random)
+  customRandom(alphabet, size | 0, random)
 let nanoid = (size = 21) => {
   let id = ''
-  let bytes = crypto.getRandomValues(new Uint8Array(size))
+  let bytes = crypto.getRandomValues(new Uint8Array((size |= 0)))
   while (size--) {
     id += _url_alphabet_index_js__WEBPACK_IMPORTED_MODULE_0__.urlAlphabet[bytes[size] & 63]
   }

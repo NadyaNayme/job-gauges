@@ -26,12 +26,14 @@ chat.readargs = {
 
 const SPELL_TEXT: Record<string, ActiveSpellNames> = {
     'Main-hand spell set to: Exsanguinate.': 'Exsanguinate',
-    'Main-hand and off-hand spells set to: Exsanguinate.': 'Exsanguinate',
+    'Main-hand and Off-hand spell set to: Exsanguinate.': 'Exsanguinate',
     'Main-hand spell set to: Incite Fear.': 'Incite_Fear',
-    'Main-hand and off-hand spells set to: Incite Fear.': 'Incite_Fear',
+    'Main-hand and Off-hand spell set to: Incite Fear.': 'Incite_Fear',
     'Main-hand spell set to: Ice Barrage.': 'Ice_Barrage',
     'Main-hand and off-hand spells set to: Ice Barrage.': 'Ice_Barrage',
 };
+
+// const imgRef = a1lib.captureHoldFullRs();
 
 const getChat = () => {
     if (!chat.pos) {
@@ -130,11 +132,20 @@ export async function spellsOverlay() {
             return;
         }
 
+        // Force the first "main" chatbox found to be the actual main chatbox
+		if (chat.pos.boxes[0].type === 'main') {
+			chat.pos.mainbox = chat.pos.boxes[0];
+		}
+
         const chatLines = chat.read();
         const pocketMessages = Object.keys(SPELL_TEXT);
 
         for (const line of chatLines ?? []) {
+            console.log("line.text")
+            console.log(line.text);
+            console.log(pocketMessages);
             const match = pocketMessages.find((m) => line.text.includes(m));
+            console.log(match);
 
             if (!match) continue;
 
