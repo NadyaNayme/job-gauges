@@ -27,10 +27,13 @@ chat.readargs = {
 const SPELL_TEXT: Record<string, ActiveSpellNames> = {
     'Main-hand spell set to: Exsanguinate.': 'Exsanguinate',
     'Main-hand and Off-hand spell set to: Exsanguinate.': 'Exsanguinate',
+    'Main-hand and off-hand spells set to: Exsanguinate.': 'Exsanguinate',
     'Main-hand spell set to: Incite Fear.': 'Incite_Fear',
     'Main-hand and Off-hand spell set to: Incite Fear.': 'Incite_Fear',
+    'Main-hand and off-hand spells set to: Incite Fear.': 'Incite_Fear',
     'Main-hand spell set to: Ice Barrage.': 'Ice_Barrage',
     'Main-hand and Off-hand spell set to: Ice Barrage.': 'Ice_Barrage',
+    'Main-hand and off-hand spells set to: Ice Barrage.': 'Ice_Barrage',
 };
 
 // const imgRef = a1lib.captureHoldFullRs();
