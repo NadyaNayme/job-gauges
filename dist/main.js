@@ -17058,11 +17058,7 @@ async function spellsOverlay() {
         const chatLines = chat.read();
         const pocketMessages = Object.keys(SPELL_TEXT);
         for (const line of chatLines ?? []) {
-            console.log("line.text");
-            console.log(line.text);
-            console.log(pocketMessages);
             const match = pocketMessages.find((m) => line.text.includes(m));
-            console.log(match);
             if (!match)
                 continue;
             _state__WEBPACK_IMPORTED_MODULE_2__.store.dispatch(_state_gauge_data_magic_gauge_state__WEBPACK_IMPORTED_MODULE_3__.MagicGaugeSlice.actions.updateActiveSpell({

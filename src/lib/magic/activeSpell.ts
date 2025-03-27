@@ -144,11 +144,7 @@ export async function spellsOverlay() {
         const pocketMessages = Object.keys(SPELL_TEXT);
 
         for (const line of chatLines ?? []) {
-            console.log("line.text")
-            console.log(line.text);
-            console.log(pocketMessages);
             const match = pocketMessages.find((m) => line.text.includes(m));
-            console.log(match);
 
             if (!match) continue;
 
