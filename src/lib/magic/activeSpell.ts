@@ -36,8 +36,6 @@ const SPELL_TEXT: Record<string, ActiveSpellNames> = {
     'Main-hand and off-hand spells set to: Ice Barrage.': 'Ice_Barrage',
 };
 
-// const imgRef = a1lib.captureHoldFullRs();
-
 const getChat = () => {
     if (!chat.pos) {
         chat.find();
