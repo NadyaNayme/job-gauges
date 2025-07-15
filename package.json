@@ -29,7 +29,7 @@
 		"http-server": "^14.1.1",
 		"jsdom": "^26.1.0",
 		"prettier": "^3.5.3",
-		"sharp": "^0.34.1",
+		"sharp": "^0.34.3",
 		"style-loader": "^4.0.0",
 		"stylelint": "^16.19.1",
 		"stylelint-config-standard": "^37.0.0",
