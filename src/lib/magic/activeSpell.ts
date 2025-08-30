@@ -27,10 +27,22 @@ chat.readargs = {
 const SPELL_TEXT: Record<string, ActiveSpellNames> = {
     'Main-hand spell set to: Exsanguinate.': 'Exsanguinate',
     'Main-hand and off-hand spells set to: Exsanguinate.': 'Exsanguinate',
+    'Main-hand and Off-hand spells set to: Exsanguinate.': 'Exsanguinate',
+    'Maln-hand spell set to: Exsanguinate.': 'Exsanguinate',
+    'Maln-hand and off-hand spells set to: Exsanguinate.': 'Exsanguinate',
+    'Maln-hand and Off-hand spells set to: Exsanguinate.': 'Exsanguinate',
     'Main-hand spell set to: Incite Fear.': 'Incite_Fear',
     'Main-hand and off-hand spells set to: Incite Fear.': 'Incite_Fear',
+    'Main-hand and Off-hand spells set to: Incite Fear.': 'Incite_Fear',
+    'Maln-hand spell set to: Incite Fear.': 'Incite_Fear',
+    'Maln-hand and off-hand spells set to: Incite Fear.': 'Incite_Fear',
+    'Maln-hand and Off-hand spells set to: Incite Fear.': 'Incite_Fear',
     'Main-hand spell set to: Ice Barrage.': 'Ice_Barrage',
     'Main-hand and off-hand spells set to: Ice Barrage.': 'Ice_Barrage',
+    'Main-hand and Off-hand spells set to: Ice Barrage.': 'Ice_Barrage',
+    'Maln-hand spell set to: Ice Barrage.': 'Ice_Barrage',
+    'Maln-hand and off-hand spells set to: Ice Barrage.': 'Ice_Barrage',
+    'Maln-hand and Off-hand spells set to: Ice Barrage.': 'Ice_Barrage',
 };
 
 const getChat = () => {
